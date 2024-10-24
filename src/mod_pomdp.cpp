@@ -6,6 +6,7 @@
 #include "pomdp/transformations.h"
 #include "pomdp/memory.h"
 #include "pomdp/quantitative_analysis.h"
+#include "pomdp/generator.h"
 #include <storm/adapters/RationalFunctionAdapter.h>
 
 PYBIND11_MODULE(pomdp, m) {
@@ -24,6 +25,7 @@ PYBIND11_MODULE(pomdp, m) {
     define_transformations<double>(m, "Double");
     define_transformations<storm::RationalNumber>(m, "Exact");
     define_belief_exploration<double>(m, "Double");
+    define_verimon_generator<double>(m, "Double");
 
     define_transformations<storm::RationalFunction>(m, "Rf");
 }

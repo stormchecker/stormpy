@@ -1,6 +1,7 @@
 from . import pomdp
 from .pomdp import *
 
+
 def make_canonic(model):
     """
     Make the POMDP canonic
@@ -12,6 +13,7 @@ def make_canonic(model):
         return pomdp._make_canonic_Rf(model)
     else:
         return pomdp._make_canonic_Double(model)
+
 
 def make_simple(model, keep_state_valuations=False):
     """
@@ -25,6 +27,7 @@ def make_simple(model, keep_state_valuations=False):
     else:
         return pomdp._make_simple_Double(model, keep_state_valuations)
 
+
 def unfold_memory(model, memory, add_memory_labels=False, keep_state_valuations=False):
     """
     Unfold the memory for an FSC into the POMDP
@@ -37,6 +40,7 @@ def unfold_memory(model, memory, add_memory_labels=False, keep_state_valuations=
         return pomdp._unfold_memory_Rf(model, memory, add_memory_labels, keep_state_valuations)
     else:
         return pomdp._unfold_memory_Double(model, memory, add_memory_labels, keep_state_valuations)
+
 
 def apply_unknown_fsc(model, mode):
     if model.supports_parameters:
@@ -64,15 +68,18 @@ def create_nondeterminstic_belief_tracker(model, reduction_timeout, track_timeou
         return pomdp.NondeterministicBeliefTrackerDoubleSparse(model, opts)
 
 
-def create_observation_trace_unfolder(model, risk_assessment, expr_manager):
+def create_observation_trace_unfolder(model, risk_assessment, expr_manager, rejection_sampling=True):
     """
 
     :param model:
     :param risk_assessment:
     :param expr_manager:
+    :param rejection_sampling:
     :return:
     """
+    options = pomdp.ObservationTraceUnfolderOptions()
+    options.rejection_sampling = rejection_sampling
     if model.is_exact:
-        return pomdp.ObservationTraceUnfolderExact(model, risk_assessment, expr_manager)
+        return pomdp.ObservationTraceUnfolderExact(model, risk_assessment, expr_manager, options)
     else:
-        return pomdp.ObservationTraceUnfolderDouble(model, risk_assessment, expr_manager)
+        return pomdp.ObservationTraceUnfolderDouble(model, risk_assessment, expr_manager, options)

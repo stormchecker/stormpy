@@ -34,6 +34,7 @@ class SetupConfig:
             "disable_pomdp": False,
             "debug": False,
             "jobs": str(no_jobs),
+            "asan": False,
             "pybind_version": ""
         }
 

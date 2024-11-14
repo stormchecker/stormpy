@@ -35,6 +35,7 @@ class CMakeBuild(build_ext):
         ('disable-pomdp', None, 'Disable support for POMDP analysis'),
         ('debug', None, 'Build in Debug mode'),
         ('jobs=', 'j', 'Number of jobs to use for compiling'),
+        ('asan', None, 'Turn on address sanitizer'),
         ('pybind-version=', None, 'Pybind11 version to use'),
     ]
 
@@ -129,6 +130,8 @@ class CMakeBuild(build_ext):
         cmake_args += ['-DUSE_STORM_GSPN=' + ('ON' if use_gspn else 'OFF')]
         cmake_args += ['-DUSE_STORM_PARS=' + ('ON' if use_pars else 'OFF')]
         cmake_args += ['-DUSE_STORM_POMDP=' + ('ON' if use_pomdp else 'OFF')]
+        cmake_args += ['-DSTORM_COMPILE_WITH_ADDRESS_SANITIZER=' + ('ON' if self.config.get_as_bool("asan") else 'OFF')]
+        # cmake_args += ['-DCMAKE_C_COMPILER=/usr/bin/clang', '-DCMAKE_CXX_COMPILER=/usr/bin/clang++']
 
         # Configure extensions
         env = os.environ.copy()
@@ -169,6 +172,7 @@ class CMakeBuild(build_ext):
         self.disable_pomdp = None
         self.debug = None
         self.jobs = None
+        self.asan = None
         self.pybind_version = None
 
     def finalize_options(self):
@@ -184,6 +188,7 @@ class CMakeBuild(build_ext):
         self.config.update("disable_pomdp", self.disable_pomdp)
         self.config.update("debug", self.debug)
         self.config.update("jobs", self.jobs)
+        self.config.update("asan", self.asan)
         self.config.update("pybind_version", self.pybind_version)
 
 

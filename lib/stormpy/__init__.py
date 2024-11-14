@@ -1,7 +1,7 @@
 import sys
 
 if sys.version_info[0] == 2:
-    raise ImportError('Python 2.x is not supported for stormpy.')
+    raise ImportError("Python 2.x is not supported for stormpy.")
 
 from ._config import *
 
@@ -138,7 +138,7 @@ def build_sparse_model(symbolic_description, properties=None):
 def build_sparse_parametric_model(symbolic_description, properties=None):
     """
     Build a parametric model in sparse representation from a symbolic description.
-    
+
     :param symbolic_description: Symbolic model description to translate into a model.
     :param List[Property] properties: List of properties that should be preserved during the translation. If None, then all properties are preserved.
     :return: Parametric model in sparse representation.
@@ -204,7 +204,7 @@ def build_model_from_drn(file, options=DirectEncodingParserOptions()):
     return _convert_sparse_model(intermediate, parametric=False)
 
 
-def build_parametric_model_from_drn(file, options = DirectEncodingParserOptions()):
+def build_parametric_model_from_drn(file, options=DirectEncodingParserOptions()):
     """
     Build a parametric model in sparse representation from the explicit DRN representation.
 
@@ -216,7 +216,7 @@ def build_parametric_model_from_drn(file, options = DirectEncodingParserOptions(
     return _convert_sparse_model(intermediate, parametric=True)
 
 
-def build_interval_model_from_drn(file, options = DirectEncodingParserOptions()):
+def build_interval_model_from_drn(file, options=DirectEncodingParserOptions()):
     """
     Build an interval model in sparse representation from the explicit DRN representation.
 
@@ -226,8 +226,12 @@ def build_interval_model_from_drn(file, options = DirectEncodingParserOptions())
     """
     intermediate = core._build_sparse_interval_model_from_drn(file, options)
     assert intermediate.supports_uncertainty
-    if intermediate.model_type == ModelType.MDP:
+    if intermediate.model_type == ModelType.DTMC:
+        return intermediate._as_sparse_idtmc()
+    elif intermediate.model_type == ModelType.MDP:
         return intermediate._as_sparse_imdp()
+    elif intermediate.model_type == ModelType.POMDP:
+        return intermediate._as_sparse_ipomdp()
     else:
         raise StormError("Not supported interval model constructed")
 
@@ -285,14 +289,19 @@ def model_checking(model, property, only_initial_states=False, extract_scheduler
     :rtype: CheckResult
     """
     if model.is_sparse_model:
-        return check_model_sparse(model, property, only_initial_states=only_initial_states,
-                                  extract_scheduler=extract_scheduler, force_fully_observable=force_fully_observable, environment=environment)
+        return check_model_sparse(
+            model,
+            property,
+            only_initial_states=only_initial_states,
+            extract_scheduler=extract_scheduler,
+            force_fully_observable=force_fully_observable,
+            environment=environment,
+        )
     else:
-        assert (model.is_symbolic_model)
+        assert model.is_symbolic_model
         if extract_scheduler:
             raise StormError("Model checking based on dd engine does not support extracting schedulers right now.")
-        return check_model_dd(model, property, only_initial_states=only_initial_states,
-                              environment=environment)
+        return check_model_dd(model, property, only_initial_states=only_initial_states, environment=environment)
 
 
 def check_model_sparse(model, property, only_initial_states=False, extract_scheduler=False, force_fully_observable=False, hint=None, environment=Environment()):
@@ -333,8 +342,6 @@ def check_model_sparse(model, property, only_initial_states=False, extract_sched
                 return core._model_checking_fully_observable(model, task, environment=environment)
         else:
             raise RuntimeError("Model checking of partially observable models is handled via dedicated methods, unless the force fully-observable is set.")
-
-
 
     if model.supports_parameters:
         task = core.ParametricCheckTask(formula, only_initial_states)
@@ -516,7 +523,7 @@ def topological_sort(model, forward=True, initial=[]):
         raise StormError("Unknown kind of model.")
 
 
-def get_reachable_states(model, initial_states, constraint_states, target_states, maximal_steps = None, choice_filter = None ):
+def get_reachable_states(model, initial_states, constraint_states, target_states, maximal_steps=None, choice_filter=None):
     """
     Get the states that are reachable in a sparse model
 
@@ -582,7 +589,7 @@ def construct_submodel(model, states, actions, keep_unreachable_states=True, opt
     return core._construct_subsystem_Double(model, states, actions, keep_unreachable_states, options)
 
 
-def eliminate_ECs(matrix, subsystem, possible_ecs, add_sink_row_states, add_self_loop_at_sink_states = False):
+def eliminate_ECs(matrix, subsystem, possible_ecs, add_sink_row_states, add_self_loop_at_sink_states=False):
     """
     For each such EC (that is not contained in another EC), we add a new state and redirect all incoming and outgoing
              transitions of the EC to (and from) this state.

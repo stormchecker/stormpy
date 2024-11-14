@@ -13,3 +13,5 @@ _build/
 cmake-build-debug/
 
 .DS_Store
+.vscode/
+.cache/

@@ -142,6 +142,9 @@ void define_model(py::module& m) {
         .def("_as_sparse_pdtmc", [](ModelBase &modelbase) {
                 return modelbase.as<SparseDtmc<RationalFunction>>();
             }, "Get model as sparse pDTMC")
+        .def("_as_sparse_idtmc", [](ModelBase &modelbase) {
+                return modelbase.as<SparseDtmc<storm::Interval>>();
+            }, "Get model as sparse interval DTMC")
         .def("_as_sparse_mdp", [](ModelBase &modelbase) {
                 return modelbase.as<SparseMdp<double>>();
             }, "Get model as sparse MDP")
@@ -157,6 +160,9 @@ void define_model(py::module& m) {
         .def("_as_sparse_pomdp", [](ModelBase &modelbase) {
                 return modelbase.as<SparsePomdp<double>>();
             }, "Get model as sparse POMDP")
+        .def("_as_sparse_ipomdp", [](ModelBase &modelbase) {
+                return modelbase.as<SparsePomdp<storm::Interval>>();
+            }, "Get model as sparse interval POMDP")
         .def("_as_sparse_ppomdp", [](ModelBase &modelbase) {
             return modelbase.as<SparsePomdp<RationalFunction>>();
         }, "Get model as sparse pPOMDP")

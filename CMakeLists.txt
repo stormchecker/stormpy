@@ -6,11 +6,17 @@ option(USE_STORM_DFT "Enable support for DFTs" ON)
 option(USE_STORM_GSPN "Enable support for GSPNs" ON)
 option(USE_STORM_PARS "Enable support for parametric models" ON)
 option(USE_STORM_POMDP "Enable support for POMDPs" ON)
+option(STORM_COMPILE_WITH_ADDRESS_SANITIZER "Sets whether to compile with AddressSanitizer enabled" OFF)
 option(STORMPY_DISABLE_SIGNATURE_DOC "Disable the signature in the documentation" OFF)
 MARK_AS_ADVANCED(STORMPY_DISABLE_SIGNATURE_DOC)
 set(PYBIND_VERSION "" CACHE STRING "Pybind11 version to use")
 MARK_AS_ADVANCED(PYBIND_VERSION)
 set(STORM_DIR_HINT "" CACHE STRING "A hint where the Storm library can be found.")
+
+if (STORM_COMPILE_WITH_ADDRESS_SANITIZER)
+    message(STATUS "Storm - Enabling AddressSanitizer")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -shared-libasan")
+endif()
 
 find_package(storm REQUIRED HINTS ${STORM_DIR_HINT})
 

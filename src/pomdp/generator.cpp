@@ -2,6 +2,8 @@
 #include "storm-pomdp/generator/GenerateMonitorVerifier.h"
 #include "storm/adapters/RationalNumberAdapter.h"
 #include "storm/storage/expressions/ExpressionManager.h"
+#include <cstdint>
+#include <string>
 
 template <typename ValueType>
 using GenerateMonitorVerifier =
@@ -23,8 +25,10 @@ void define_verimon_generator(py::module &m, std::string const &vtSuffix) {
       mv(m, ("MonitorVerifier" + vtSuffix).c_str(),
          "Container for monitor verifier POMDP with associated objects");
   mv.def(py::init<const SparsePomdp<ValueType> &,
-                  const std::map<std::pair<uint32_t, bool>, uint32_t> &>(),
-         py::arg("product"), py::arg("observation_map"));
+                  const std::map<std::pair<uint32_t, bool>, uint32_t> &,
+                  const std::map<uint32_t, std::string> &>(),
+         py::arg("product"), py::arg("observation_map"),
+         py::arg("default_action_map"));
   mv.def("get_product",
          &storm::generator::MonitorVerifier<ValueType>::getProduct,
          py::return_value_policy::copy);
@@ -32,6 +36,10 @@ void define_verimon_generator(py::module &m, std::string const &vtSuffix) {
       "observation_map",
       &storm::generator::MonitorVerifier<ValueType>::getObservationMap,
       py::return_value_policy::copy);
+  mv.def_property_readonly("default_action_map",
+                           &storm::generator::MonitorVerifier<
+                               ValueType>::getObservationDefaultAction,
+                           py::return_value_policy::copy);
 
   py::class_<storm::generator::GenerateMonitorVerifier<ValueType>> gmv(
       m, ("GenerateMonitorVerifier" + vtSuffix).c_str(),

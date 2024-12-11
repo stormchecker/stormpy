@@ -32,10 +32,14 @@ class SetupConfig:
             "disable_gspn": False,
             "disable_pars": False,
             "disable_pomdp": False,
+            "carl_dir": "",
+            "carl_parser_dir": "",
+            "disable_cln": False,
+            "disable_parser": False,
             "debug": False,
             "jobs": str(no_jobs),
             "asan": False,
-            "pybind_version": ""
+            "pybind_version": "",
         }
 
     def load_from_file(self, path):
@@ -53,7 +57,7 @@ class SetupConfig:
         Save config with build settings.
         :param path Path to config file.
         """
-        with open(path, 'w') as configfile:
+        with open(path, "w") as configfile:
             self.config.write(configfile)
 
     def get_as_bool(self, name):

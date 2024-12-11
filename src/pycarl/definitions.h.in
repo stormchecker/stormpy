@@ -1,0 +1,1 @@
+#cmakedefine PYCARL_HAS_CLN

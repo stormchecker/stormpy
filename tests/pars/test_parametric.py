@@ -77,11 +77,11 @@ class TestParametric:
         assert len(model.get_parameters()) == 4
 
     def test_constraints_collector(self):
-        from pycarl.formula import FormulaType, Relation
+        from stormpy.pycarl.formula import FormulaType, Relation
         if stormpy.info.storm_ratfunc_use_cln():
-            import pycarl.cln.formula
+            from stormpy.pycarl.cln import formula
         else:
-            import pycarl.gmp.formula
+            from stormpy.pycarl.gmp import formula
         program = stormpy.parse_prism_program(get_example_path("pdtmc", "brp16_2.pm"))
         prop = "P=? [F s=5]"
         formulas = stormpy.parse_properties_for_prism_program(prop, program)

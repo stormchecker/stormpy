@@ -1,7 +1,7 @@
 import stormpy
 import stormpy.info
 
-import pycarl
+from stormpy import pycarl
 
 import stormpy.examples
 import stormpy.examples.files
@@ -16,11 +16,11 @@ def example_parametric_models_02():
         return
 
     import stormpy.pars
-    from pycarl.formula import FormulaType, Relation
+    from stormpy.pycarl.formula import FormulaType, Relation
     if stormpy.info.storm_ratfunc_use_cln():
-        import pycarl.cln.formula
+        from stormpy.pycarl.cln import formula
     else:
-        import pycarl.gmp.formula
+        from stormpy.pycarl.gmp import formula
 
     path = stormpy.examples.files.prism_pdtmc_die
     prism_program = stormpy.parse_prism_program(path)

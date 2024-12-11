@@ -35,6 +35,21 @@ def parse_storm_version(version_string):
     return version, commit
 
 
+def parse_carl_version(version_string):
+    """
+    Parses the version of carl.
+
+    :param version_string: String containing version information.
+    :return: Tuple (version, commit)
+    """
+    split = version_string.split("-")
+    version = split[0]
+    commit = ""
+    if len(split) > 1:
+        commit = split[1]
+    return version, commit
+
+
 def obtain_version():
     """
     Obtains the version as specified in stormpy.
@@ -57,6 +72,7 @@ def obtain_version():
 
 
 def load_cmake_config(path):
+    print("Loading config from", path)
     """
     Load cmake config.
     :param path: Path.

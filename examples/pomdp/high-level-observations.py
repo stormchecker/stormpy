@@ -1,7 +1,7 @@
 import stormpy
 import stormpy.info
 
-import pycarl
+from stormpy import pycarl
 
 import stormpy.examples
 import stormpy.examples.files

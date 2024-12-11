@@ -36,3 +36,27 @@ pomdp = pytest.mark.skipif(not has_pomdp, reason="No support for POMDPs")
 spot = pytest.mark.skipif(not has_spot, reason="No support for LTL via spot")
 numpy_avail = pytest.mark.skipif(not has_numpy, reason="Numpy not available")
 plotting = pytest.mark.skipif(not has_matplotlib or not has_scipy, reason="Libraries for plotting not available")
+
+from stormpy import pycarl
+
+# Skip not supported functionality
+cln = pytest.mark.skipif(not pycarl.has_cln(), reason="No support for CLN")
+parser = pytest.mark.skipif(not pycarl.has_parser(), reason="No support for carlparser")
+
+# Parametrize available number types
+from stormpy.pycarl import gmp
+
+parameters = [pycarl.gmp]
+names = ["gmp"]
+
+if pycarl.has_cln():
+    from stormpy.pycarl import cln
+
+    parameters.append(pycarl.cln)
+    names.append("cln")
+
+
+class PackageSelector:
+    @pytest.fixture(params=parameters, ids=names)
+    def package(self, request):
+        return request.param

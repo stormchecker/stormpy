@@ -12,7 +12,7 @@ from .storage import *
 from .logic import *
 from .exceptions import *
 
-from pycarl import Variable  # needed for building parametric models
+from stormpy.pycarl import Variable  # needed for building parametric models
 
 __version__ = "unknown"
 try:

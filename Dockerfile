@@ -6,9 +6,8 @@
 # --build-arg STORM_BASE=<new_base_image>
 
 # Set Storm base image
-ARG STORM_BASE=movesrwth/storm:stable
+ARG STORM_BASE=lukovdm/storm:premise
 FROM $STORM_BASE
-MAINTAINER Matthias Volk <m.volk@utwente.nl>
 
 
 # Configuration arguments

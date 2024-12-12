@@ -287,7 +287,7 @@ setup(
     package_data={"stormpy.examples": ["examples/files/*"]},
     ext_package="stormpy",
     ext_modules=[
-        CMakeExtension("pycarl.core"),
+        CMakeExtension("pycarl_core"),
         CMakeExtension("pycarl.cln"),
         CMakeExtension("pycarl.gmp"),
         CMakeExtension("pycarl.formula"),

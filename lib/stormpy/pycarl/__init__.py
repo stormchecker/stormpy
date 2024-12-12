@@ -3,7 +3,8 @@ import sys
 if sys.version_info[0] == 2:
     raise ImportError("Python 2.x is not supported for pycarl.")
 
-from stormpy.pycarl_core import *
+from . import pycarl_core
+from .pycarl_core import *
 from . import infinity
 from stormpy.pycarl import _config
 

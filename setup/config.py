@@ -32,9 +32,13 @@ class SetupConfig:
             "disable_gspn": False,
             "disable_pars": False,
             "disable_pomdp": False,
+            "carl_dir": "",
+            "carl_parser_dir": "",
+            "disable_cln": False,
+            "disable_parser": False,
             "debug": False,
             "jobs": str(no_jobs),
-            "pybind_version": ""
+            "pybind_version": "",
         }
 
     def load_from_file(self, path):

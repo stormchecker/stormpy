@@ -1,6 +1,6 @@
 import stormpy
 from helpers.helper import get_example_path
-import pycarl
+from stormpy import pycarl
 
 import math
 from configurations import dft

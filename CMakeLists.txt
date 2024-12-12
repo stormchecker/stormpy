@@ -146,9 +146,10 @@ stormpy_module(utility)
 # Pycarl Core
 ######
 file(GLOB_RECURSE pycarl_core_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/pycarl/pycarl_core/*.cpp)
-pybind11_add_module(pycarl.core ${CMAKE_CURRENT_SOURCE_DIR}/src/pycarl/mod_core.cpp ${pycarl_core_SOURCES})
-target_include_directories(pycarl.core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/src/)
-target_link_libraries(pycarl.core PRIVATE lib_carl)
+pybind11_add_module(pycarl_core ${CMAKE_CURRENT_SOURCE_DIR}/src/pycarl/mod_core.cpp ${pycarl_core_SOURCES})
+target_include_directories(pycarl_core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/src/)
+target_link_libraries(pycarl_core PRIVATE lib_carl)
+set_target_properties(pycarl_core PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/pycarl" OUTPUT_NAME "pycarl_core")
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/pycarl_core_config.py.in ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/pycarl/_config.py @ONLY)
 
 # Optional modules
@@ -212,27 +213,27 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/pycarl_cln_config.py.in ${CMAKE
 
 
 # Parse
-#######
-file(GLOB_RECURSE PYCARL_PARSE_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/pycarl/parse/*.cpp)
+# #######
+# file(GLOB_RECURSE PYCARL_PARSE_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/pycarl/parse/*.cpp)
 
-pybind11_add_module(pycarl.parse ${CMAKE_CURRENT_SOURCE_DIR}/src/pycarl/mod_parse.cpp ${PYCARL_PARSE_SOURCES})
-target_include_directories(pycarl.parse PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}  ${CMAKE_CURRENT_BINARY_DIR}/src)
-target_link_libraries(pycarl.parse PRIVATE lib_carl carl-parser)
-set_target_properties(pycarl.parse PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/pycarl/parse" OUTPUT_NAME "parse")
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/pycarl_parser_config.py.in ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/pycarl/parse/_config.py @ONLY)
+# pybind11_add_module(pycarl.parse ${CMAKE_CURRENT_SOURCE_DIR}/src/pycarl/mod_parse.cpp ${PYCARL_PARSE_SOURCES})
+# target_include_directories(pycarl.parse PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}  ${CMAKE_CURRENT_BINARY_DIR}/src)
+# target_link_libraries(pycarl.parse PRIVATE lib_carl carl-parser)
+# set_target_properties(pycarl.parse PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/pycarl/parse" OUTPUT_NAME "parse")
+# configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/pycarl_parser_config.py.in ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/pycarl/parse/_config.py @ONLY)
 
-# Typed parse
-file(GLOB_RECURSE PYCARL_TYPED_PARSE_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/pycarl/typed_parse/*.cpp)
+# # Typed parse
+# file(GLOB_RECURSE PYCARL_TYPED_PARSE_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/pycarl/typed_parse/*.cpp)
 # GMP
-pybind11_add_module(pycarl.parse-gmp ${CMAKE_CURRENT_SOURCE_DIR}/src/pycarl/mod_typed_parse.cpp ${PYCARL_TYPED_PARSE_SOURCES})
-target_include_directories(pycarl.parse-gmp PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/src)
-target_link_libraries(pycarl.parse-gmp PRIVATE lib_carl carl-parser)
-set_target_properties(pycarl.parse-gmp PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/pycarl/gmp/parse" OUTPUT_NAME "parse")
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/pycarl_parser_config.py.in ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/pycarl/gmp/parse/_config.py @ONLY)
-# CLN
-pybind11_add_module(pycarl.parse-cln ${CMAKE_CURRENT_SOURCE_DIR}/src/pycarl/mod_typed_parse.cpp ${PYCARL_TYPED_PARSE_SOURCES})
-target_include_directories(pycarl.parse-cln PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/src)
-target_link_libraries(pycarl.parse-cln PRIVATE lib_carl carl-parser)
-target_compile_definitions(pycarl.parse-cln PUBLIC "PYCARL_USE_CLN=ON")
-set_target_properties(pycarl.parse-cln PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/pycarl/cln/parse" OUTPUT_NAME "parse")
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/pycarl_parser_config.py.in ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/pycarl/cln/parse/_config.py @ONLY)
+# pybind11_add_module(pycarl.parse-gmp ${CMAKE_CURRENT_SOURCE_DIR}/src/pycarl/mod_typed_parse.cpp ${PYCARL_TYPED_PARSE_SOURCES})
+# target_include_directories(pycarl.parse-gmp PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/src)
+# target_link_libraries(pycarl.parse-gmp PRIVATE lib_carl carl-parser)
+# set_target_properties(pycarl.parse-gmp PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/pycarl/gmp/parse" OUTPUT_NAME "parse")
+# configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/pycarl_parser_config.py.in ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/pycarl/gmp/parse/_config.py @ONLY)
+# # CLN
+# pybind11_add_module(pycarl.parse-cln ${CMAKE_CURRENT_SOURCE_DIR}/src/pycarl/mod_typed_parse.cpp ${PYCARL_TYPED_PARSE_SOURCES})
+# target_include_directories(pycarl.parse-cln PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/src)
+# target_link_libraries(pycarl.parse-cln PRIVATE lib_carl carl-parser)
+# target_compile_definitions(pycarl.parse-cln PUBLIC "PYCARL_USE_CLN=ON")
+# set_target_properties(pycarl.parse-cln PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/pycarl/cln/parse" OUTPUT_NAME "parse")
+# configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/pycarl_parser_config.py.in ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/pycarl/cln/parse/_config.py @ONLY)

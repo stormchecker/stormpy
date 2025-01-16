@@ -312,10 +312,6 @@ setup(
                     'packaging'
                     ],
     tests_require=['pytest', 'nbval', 'numpy'],
-    install_requires=['pycarl>=2.3.0'],
-    setup_requires=['pycarl>=2.3.0', # required to check pybind version used for pycarl
-                   'packaging'
-                   ],
     extras_require={
         "numpy":  ["numpy"],
         "plot":  ["matplotlib","numpy","scipy"],

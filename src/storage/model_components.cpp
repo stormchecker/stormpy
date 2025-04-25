@@ -39,6 +39,7 @@ void define_sparse_model_components(py::module& m, std::string const& vtSuffix) 
 
         // POMDP specific components
         .def_readwrite("observability_classes", &SparseModelComponents<ValueType>::observabilityClasses, "The POMDP observations")
+        .def_readwrite("observation_valuations", &SparseModelComponents<ValueType>::observationValuations, "The POMDP observation valuations")
 
         // Continuous time specific components (CTMCs, Markov Automata):
         .def_readwrite("rate_transitions", &SparseModelComponents<ValueType>::rateTransitions, "True iff the transition values (for Markovian choices) are interpreted as rates")

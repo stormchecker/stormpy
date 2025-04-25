@@ -1,4 +1,5 @@
 #include "transformations.h"
+#include <pybind11/attr.h>
 #include <storm-pomdp/transformer/ApplyFiniteSchedulerToPomdp.h>
 #include <storm-pomdp/transformer/BinaryPomdpTransformer.h>
 #include <storm-pomdp/transformer/MakePOMDPCanonic.h>
@@ -101,12 +102,12 @@ void define_transformations_int(py::module &m, std::string const &vtSuffix) {
       m, ("ObservationTraceUnfolder" + vtSuffix).c_str(),
       "Unfolds observation traces in models");
   unfolder.def(
-      py::init<storm::models::sparse::Pomdp<ValueType> const &,
+      py::init<storm::models::sparse::Pomdp<ValueType>,
                std::vector<ValueType> const &,
                std::shared_ptr<storm::expressions::ExpressionManager> &,
                storm::pomdp::ObservationTraceUnfolderOptions const &>(),
       py::arg("model"), py::arg("risk"), py::arg("expression_manager"),
-      py::arg("options"));
+      py::arg("options"), py::keep_alive<2, 1>());
   unfolder.def("is_rejection_sampling_set",
                &storm::pomdp::ObservationTraceUnfolder<
                    ValueType>::isRejectionSamplingSet);

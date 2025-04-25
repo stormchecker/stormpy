@@ -16,8 +16,7 @@ def example_dft_simulator_02():
     # Load DFT from Galileo
     path = stormpy.examples.files.dft_galileo_hecs
     dft = stormpy.dft.load_dft_galileo_file(path)
-    print("DFT with {} elements, {} BEs and {} dynamic elements.".format(dft.nr_elements(), dft.nr_be(),
-                                                                         dft.nr_dynamic()))
+    print("DFT with {} elements, {} BEs and {} dynamic elements.".format(dft.nr_elements(), dft.nr_be(), dft.nr_dynamic()))
 
     # Create simulator
     simulator = DftSimulator(dft, seed=42)
@@ -41,5 +40,5 @@ def example_dft_simulator_02():
     print("Result for time bound {}: {}".format(timebound, no_failed / no_runs))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     example_dft_simulator_02()

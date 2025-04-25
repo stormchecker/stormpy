@@ -1,11 +1,11 @@
-Pycarl formula
+Pycarl parse
 ************************
 
 
 Number independent types
 ---------------------------
 
-.. automodule:: pycarl.formula
+.. automodule:: stormpy.pycarl.parse
     :members:
     :undoc-members:
     :imported-members:
@@ -13,7 +13,7 @@ Number independent types
 Number dependent types (gmp)
 ------------------------------
 
-.. automodule:: pycarl.gmp.formula
+.. automodule:: stormpy.pycarl.gmp.parse
     :members:
     :undoc-members:
     :imported-members:
@@ -21,7 +21,7 @@ Number dependent types (gmp)
 Number dependent types (cln)
 ------------------------------
 
-.. automodule:: pycarl.cln.formula
+.. automodule:: stormpy.pycarl.cln.parse
     :members:
     :undoc-members:
     :imported-members:

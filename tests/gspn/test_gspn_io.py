@@ -23,7 +23,7 @@ class TestGSPNJani:
         jani_program = jani_builder.build()
 
         # Set properties
-        properties = stormpy.parse_properties_for_jani_model('P=? [F<=10 eating1=1]', jani_program)
+        properties = stormpy.parse_properties_for_jani_model("P=? [F<=10 eating1=1]", jani_program)
 
         # Build model
         model = stormpy.build_model(jani_program, properties)
@@ -56,7 +56,7 @@ class TestGSPNJani:
 
         # Build model
         # Leads to incorrect result
-        #model = stormpy.build_model(jani_program, properties)
+        # model = stormpy.build_model(jani_program, properties)
         model = stormpy.build_model(jani_program)
 
         # Model checking

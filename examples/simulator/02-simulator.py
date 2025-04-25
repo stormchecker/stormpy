@@ -8,6 +8,8 @@ import random
 """
 Simulator for nondeterministic models
 """
+
+
 def example_simulator_02():
     path = stormpy.examples.files.prism_mdp_maze
     prism_program = stormpy.parse_prism_program(path)
@@ -22,14 +24,14 @@ def example_simulator_02():
         path = [f"{state}"]
         for n in range(20):
             actions = simulator.available_actions()
-            select_action = random.randint(0,len(actions)-1)
-            #print(f"Randomly select action nr: {select_action} from actions {actions}")
+            select_action = random.randint(0, len(actions) - 1)
+            # print(f"Randomly select action nr: {select_action} from actions {actions}")
             path.append(f"--act={actions[select_action]}-->")
             state, reward, labels = simulator.step(actions[select_action])
-            #print(state)
+            # print(state)
             path.append(f"{state}")
             if simulator.is_done():
-                #print("Trapped!")
+                # print("Trapped!")
                 break
         paths.append(path)
     for path in paths:
@@ -51,20 +53,19 @@ def example_simulator_02():
         path = [f"{state}"]
         for n in range(20):
             actions = simulator.available_actions()
-            select_action = random.randint(0,len(actions)-1)
-            #print(f"Randomly select action nr: {select_action} from actions {actions}")
+            select_action = random.randint(0, len(actions) - 1)
+            # print(f"Randomly select action nr: {select_action} from actions {actions}")
             path.append(f"--act={actions[select_action]}-->")
             state, reward, labels = simulator.step(actions[select_action])
-            #print(state)
+            # print(state)
             path.append(f"{state}")
             if simulator.is_done():
-                #print("Trapped!")
+                # print("Trapped!")
                 break
         paths.append(path)
     for path in paths:
         print(" ".join(path))
 
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     example_simulator_02()

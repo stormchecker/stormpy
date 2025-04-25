@@ -7,6 +7,7 @@ import stormpy.examples.files
 
 import stormpy._config as config
 
+
 def example_parametric_models_03():
     if not config.storm_with_pars:
         print("Support parameters is missing. Try building storm-pars.")
@@ -15,7 +16,7 @@ def example_parametric_models_03():
     path = stormpy.examples.files.prism_dtmc_brp
     prism_program = stormpy.parse_prism_program(path)
 
-    formula_str = "P=? [F \"target\"]"
+    formula_str = 'P=? [F "target"]'
     properties = stormpy.parse_properties_for_prism_program(formula_str, prism_program)
     model = stormpy.build_parametric_model(prism_program, properties)
 
@@ -29,10 +30,9 @@ def example_parametric_models_03():
             for transition in action.transitions:
                 if transition.value().constant_part() == 1:
                     t += 1
-                    #print("From state {}, with probability {}, go to state {}".format(state, transition.value(), transition.column))
+                    # print("From state {}, with probability {}, go to state {}".format(state, transition.value(), transition.column))
     print(time.time() - start)
     print(t)
-
 
     t2 = 0
     start = time.time()
@@ -53,12 +53,12 @@ def example_parametric_models_03():
     t3 = 0
     start = time.time()
     for s in states_and_transitions:
-        for (v,c) in s:
+        for v, c in s:
             if v.constant_part() == 1:
                 t3 += 1
     print(time.time() - start)
     print(t3)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     example_parametric_models_03()

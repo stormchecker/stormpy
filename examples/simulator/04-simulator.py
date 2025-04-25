@@ -3,13 +3,16 @@ import stormpy.simulator
 
 import stormpy.examples
 import stormpy.examples.files
+
 """
 Simulator for programs
 """
+
+
 def example_simulator_04():
     path = stormpy.examples.files.prism_mdp_coin_2_2
     prism_program = stormpy.parse_prism_program(path)
-    #prism_program = stormpy.preprocess_symbolic_input(prism_program, [], "delay=10,fast=0.8")[0].as_prism_program()
+    # prism_program = stormpy.preprocess_symbolic_input(prism_program, [], "delay=10,fast=0.8")[0].as_prism_program()
     new_prism_program = prism_program.label_unlabelled_commands(dict())
 
     simulator = stormpy.simulator.create_simulator(new_prism_program, seed=42)
@@ -49,5 +52,5 @@ def example_simulator_04():
         simulator.restart()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     example_simulator_04()

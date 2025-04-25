@@ -43,6 +43,7 @@ void define_environment(py::module& m) {
 
     py::class_<storm::SolverEnvironment>(m, "SolverEnvironment", "Environment for solvers")
         .def("set_force_sound", &storm::SolverEnvironment::setForceSoundness, "force soundness", py::arg("new_value") = true)
+        .def("set_force_exact", &storm::SolverEnvironment::setForceExact, "force exact solving", py::arg("new_value") = true)
         .def("set_linear_equation_solver_type", &storm::SolverEnvironment::setLinearEquationSolverType, "set solver type to use", py::arg("new_value"), py::arg("set_from_default") = false)
         .def_property_readonly("minmax_solver_environment", [](storm::SolverEnvironment& senv) -> auto& { return senv.minMax(); })
         .def_property_readonly("native_solver_environment", [](storm::SolverEnvironment& senv) -> auto& {return senv.native(); })

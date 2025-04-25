@@ -1,8 +1,8 @@
 from stormpy import pycarl
-from configurations import cln
+from configurations import pycarl_cln
 
 
-@cln
+@pycarl_cln
 class TestClnConvert:
     def test_convert_int(self):
         original = 43

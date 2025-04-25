@@ -27,13 +27,14 @@ class TestDftLoad:
         json_node_a = '{"data": {"id":"0", "name":"A", "type":"be", "rate":"1", "dorm":"1", "label":"A (1)"}, "group":"nodes", "classes":"be"}'
         json_node_b = '{"data": {"id":"1", "name":"B", "type":"be", "rate":"1", "dorm":"1", "label":"B (1)"}, "group":"nodes", "classes":"be"}'
         json_node_c = '{"data": {"id":"6", "name":"Z", "type":"pand", "children":["0", "1"], "label":"Z"}, "group":"nodes", "classes":"pand"}'
-        json_string = '{"toplevel": "6", "parameters": {}, "nodes": [' + json_node_a + ',' + json_node_b + ',' + json_node_c + ']}'
+        json_string = '{"toplevel": "6", "parameters": {}, "nodes": [' + json_node_a + "," + json_node_b + "," + json_node_c + "]}"
         # Load
         dft = stormpy.dft.load_dft_json_string(json_string)
         assert dft.nr_elements() == 3
         assert dft.nr_be() == 2
         assert dft.nr_dynamic() == 1
         assert not dft.can_have_nondeterminism()
+
 
 @dft
 class TestDftExport:

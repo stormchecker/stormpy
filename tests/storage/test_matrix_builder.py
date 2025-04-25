@@ -63,7 +63,11 @@ class TestMatrixBuilder:
         assert matrix_5x5.nr_entries == 7
 
         for e in matrix_5x5:
-            assert (e.value() == stormpy.Rational(1) and e.column < 2) or (e.value() == stormpy.Rational(2) and e.column == 2) or (e.column > 2 and e.value() == stormpy.Rational("1/6"))
+            assert (
+                (e.value() == stormpy.Rational(1) and e.column < 2)
+                or (e.value() == stormpy.Rational(2) and e.column == 2)
+                or (e.column > 2 and e.value() == stormpy.Rational("1/6"))
+            )
 
     def test_parametric_matrix_builder(self):
         builder = stormpy.ParametricSparseMatrixBuilder(force_dimensions=True)
@@ -127,8 +131,12 @@ class TestMatrixBuilder:
 
         # Check if columns where replaced
         for e in matrix:
-            assert (e.value() == 0 and e.column == 0) or (e.value() == 3 and e.column == 1) or (
-                    e.value() == 2 and e.column == 2) or (e.value() == 1 and e.column == 3)
+            assert (
+                (e.value() == 0 and e.column == 0)
+                or (e.value() == 3 and e.column == 1)
+                or (e.value() == 2 and e.column == 2)
+                or (e.value() == 1 and e.column == 3)
+            )
 
     def test_parametric_matrix_replace_columns(self):
         builder = stormpy.ParametricSparseMatrixBuilder(3, 4, force_dimensions=False)
@@ -161,8 +169,7 @@ class TestMatrixBuilder:
 
         # Check if columns where replaced
         for e in matrix:
-            assert (e.value() == first_val and e.column == 1) or (e.value() == third_val and e.column == 2) or (
-                    e.value() == sec_val and e.column == 3)
+            assert (e.value() == first_val and e.column == 1) or (e.value() == third_val and e.column == 2) or (e.value() == sec_val and e.column == 3)
 
     def test_matrix_builder_row_grouping(self):
         num_rows = 5
@@ -201,10 +208,8 @@ class TestMatrixBuilder:
     @numpy_avail
     def test_matrix_from_numpy(self):
         import numpy as np
-        array = np.array([[0, 2],
-                          [3, 4],
-                          [0.1, 24],
-                          [-0.3, -4]], dtype='float64')
+
+        array = np.array([[0, 2], [3, 4], [0.1, 24], [-0.3, -4]], dtype="float64")
 
         matrix = stormpy.build_sparse_matrix(array)
 
@@ -222,10 +227,8 @@ class TestMatrixBuilder:
     @numpy_avail
     def test_matrix_from_numpy_zeros(self):
         import numpy as np
-        array = np.array([[0, 0, 1, 0],
-                          [0.1, 0, 0, 0.9],
-                          [0, 0, 0, 0],
-                          [1, 0, 0, 0]], dtype='float64')
+
+        array = np.array([[0, 0, 1, 0], [0.1, 0, 0, 0.9], [0, 0, 0, 0], [1, 0, 0, 0]], dtype="float64")
 
         matrix = stormpy.build_sparse_matrix(array)
 
@@ -243,6 +246,7 @@ class TestMatrixBuilder:
     @numpy_avail
     def test_parametric_matrix_from_numpy(self):
         import numpy as np
+
         zero = stormpy.RationalRF(0)
         one_pol = stormpy.RationalRF(1)
         one_pol = stormpy.FactorizedPolynomial(one_pol)
@@ -252,10 +256,7 @@ class TestMatrixBuilder:
         sec_val = stormpy.FactorizedRationalFunction(two_pol, two_pol)
         third_val = stormpy.FactorizedRationalFunction(one_pol, two_pol)
 
-        array = np.array([[sec_val, first_val],
-                          [first_val, zero],
-                          [0, sec_val],
-                          [third_val, third_val]])
+        array = np.array([[sec_val, first_val], [first_val, zero], [0, sec_val], [third_val, third_val]])
 
         matrix = stormpy.build_parametric_sparse_matrix(array)
 
@@ -273,10 +274,8 @@ class TestMatrixBuilder:
     @numpy_avail
     def test_matrix_from_numpy_row_grouping(self):
         import numpy as np
-        array = np.array([[0, 2],
-                          [3, 4],
-                          [0.1, 24],
-                          [-0.3, -4]], dtype='float64')
+
+        array = np.array([[0, 2], [3, 4], [0.1, 24], [-0.3, -4]], dtype="float64")
 
         matrix = stormpy.build_sparse_matrix(array, row_group_indices=[1, 3])
 
@@ -301,6 +300,7 @@ class TestMatrixBuilder:
     @numpy_avail
     def test_parametric_matrix_from_numpy_row_grouping(self):
         import numpy as np
+
         one_pol = stormpy.RationalRF(1)
         one_pol = stormpy.FactorizedPolynomial(one_pol)
         first_val = stormpy.FactorizedRationalFunction(one_pol, one_pol)
@@ -309,10 +309,7 @@ class TestMatrixBuilder:
         sec_val = stormpy.FactorizedRationalFunction(two_pol, two_pol)
         third_val = stormpy.FactorizedRationalFunction(one_pol, two_pol)
 
-        array = np.array([[sec_val, first_val],
-                          [first_val, sec_val],
-                          [sec_val, sec_val],
-                          [third_val, third_val]])
+        array = np.array([[sec_val, first_val], [first_val, sec_val], [sec_val, sec_val], [third_val, third_val]])
 
         matrix = stormpy.build_parametric_sparse_matrix(array, row_group_indices=[1, 3])
 

@@ -5,7 +5,6 @@ import stormpy.examples.files
 import stormpy.pomdp
 
 
-
 def example_building_models_01():
     path = stormpy.examples.files.drn_ctmc_dft
     model = stormpy.build_model_from_drn(path)
@@ -32,5 +31,6 @@ def example_building_models_01():
     # POMDPs need to be in a canonic representation
     pomdp = stormpy.pomdp.make_canonic(pomdp)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     example_building_models_01()

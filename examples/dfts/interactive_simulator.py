@@ -19,7 +19,7 @@ def get_status(simulator):
 def get_user_fail_be(candidates):
     while True:
         inp = input("Select index of BE to fail next (use 'q' to abort)\n")
-        if inp == 'q':
+        if inp == "q":
             return None
         try:
             inp_number = int(inp)
@@ -35,21 +35,21 @@ def get_user_fail_be(candidates):
 def get_user_dep_success():
     while True:
         inp = input("Should the failure due a dependency be successful? (y/n)\n")
-        if inp == 'y':
+        if inp == "y":
             return True
-        elif inp == 'n':
+        elif inp == "n":
             return False
         else:
             logging.error("Input is not valid.")
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Interactive simulator for DFTs.')
-    parser.add_argument('infile', help='Input Galileo file', type=str)
-    parser.add_argument('--verbose', '-v', help='print more output', action="store_true")
+    parser = argparse.ArgumentParser(description="Interactive simulator for DFTs.")
+    parser.add_argument("infile", help="Input Galileo file", type=str)
+    parser.add_argument("--verbose", "-v", help="print more output", action="store_true")
     args = parser.parse_args()
 
-    logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG if args.verbose else logging.INFO)
+    logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.DEBUG if args.verbose else logging.INFO)
 
     # Load DFT from file
     if pathlib.Path(args.infile).suffix == ".json":
@@ -60,7 +60,7 @@ def main():
     dft = stormpy.dft.prepare_for_analysis(dft)
 
     # Create simulator
-    simulator = DftSimulator(dft, seed=42, relevant=['all'])
+    simulator = DftSimulator(dft, seed=42, relevant=["all"])
 
     # Get initial state
     logging.info("Initial status:")

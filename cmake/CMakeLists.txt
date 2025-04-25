@@ -10,8 +10,7 @@ set(CARL_DIR_HINT "" CACHE STRING "A hint where the Carl library can be found.")
 set(CARLPARSER_DIR_HINT "" CACHE STRING "A hint where the Carl-parser library can be found.")
 
 if(INSTALL_STORM)
-    message("Installing Storm from scratch")
-else()
+    message(STATUS "Installing Storm from scratch")
 endif()
 
 find_package(storm REQUIRED HINTS ${STORM_DIR_HINT})
@@ -24,9 +23,6 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/macros.cmake)
 set(STORM_DIR ${storm_DIR})
 set(STORM_VERSION ${storm_VERSION})
 set(STORM_LIBS ${storm_LIBRARIES})
-
-message(STORM_DIR=${STORM_DIR})
-message(STORM_LIBS=${STORM_LIBS})
 
 # Check for optional Storm libraries
 storm_with_lib(DFT)
@@ -47,13 +43,13 @@ set_variable_string(HAVE_STORM_PARS_BOOL ${HAVE_STORM_PARS})
 set_variable_string(HAVE_STORM_POMDP_BOOL ${HAVE_STORM_POMDP})
 
 # Set configuration
-set_variable_string(CARL_DIR ${carl_DIR})
-set_variable_string(CARL_VERSION ${carl_VERSION})
+set(CARL_DIR ${carl_DIR})
+set(CARL_VERSION ${carl_VERSION})
 if(carlparser_FOUND)
-    set_variable_string(CARL_PARSER_DIR ${carlparser_DIR})
+    set(CARL_PARSER_DIR ${carlparser_DIR})
     set_variable_string(CARL_WITH_PARSER "True")
 else()
-    set_variable_string(CARL_PARSER_DIR "")
+    set(CARL_PARSER_DIR "")
     set_variable_string(CARL_WITH_PARSER "False")
 endif()
 if(CARL_USE_CLN_NUMBERS)

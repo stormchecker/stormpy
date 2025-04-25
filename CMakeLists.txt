@@ -172,12 +172,6 @@ if(HAVE_STORM_POMDP)
     stormpy_optional_module(pomdp storm-pomdp "${storm-pomdp_INCLUDE_DIR}")
 endif()
 
-message("Configure done")
-
-# TODO Extensions
-############
-
-
 # Typed core
 file(GLOB_RECURSE PYCARL_TYPED_CORE_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/pycarl/typed_core/*.cpp)
 # GMP
@@ -220,7 +214,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/pycarl_cln_config.py.in ${CMAKE
 
 # Parse
 # #######
-# file(GLOB_RECURSE PYCARL_PARSE_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/pycarl/parse/*.cpp)
+file(GLOB_RECURSE PYCARL_PARSE_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/pycarl/parse/*.cpp)
 
 # pybind11_add_module(pycarl.parse ${CMAKE_CURRENT_SOURCE_DIR}/src/pycarl/mod_parse.cpp ${PYCARL_PARSE_SOURCES})
 # target_include_directories(pycarl.parse PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}  ${CMAKE_CURRENT_BINARY_DIR}/src)

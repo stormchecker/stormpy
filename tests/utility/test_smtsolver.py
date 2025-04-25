@@ -2,7 +2,8 @@ import stormpy
 
 import pytest
 
-class TestSmtSolver():
+
+class TestSmtSolver:
     def test_smtsolver_init(self):
         manager = stormpy.ExpressionManager()
         solver = stormpy.utility.Z3SmtSolver(manager)
@@ -50,5 +51,3 @@ class TestSmtSolver():
         solver.add(c2)
         assert solver.check() == stormpy.utility.SmtCheckResult.Sat
         assert solver.model.get_integer_value(x) == 1
-
-

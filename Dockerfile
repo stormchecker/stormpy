@@ -19,12 +19,8 @@ FROM $STORM_BASE
 ARG build_type=Release
 # Additional arguments for compiling stormpy
 ARG setup_args=""
-# Additional CMake arguments for carl
-ARG carl_cmake_args=""
 # Number of threads to use for parallel compilation
 ARG no_threads=24
-# Carl-storm version
-ARG carl_version=master
 
 
 # Install dependencies

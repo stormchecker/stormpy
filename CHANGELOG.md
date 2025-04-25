@@ -204,8 +204,20 @@ Version 0.9.x
 ### Version 0.9 (2017/03)
 - Start of this changelog
 
-Appendix: Pycarl Changelog
+
+# Appendix: Pycarl Changelog
 =============
+
+Version 2.3.x
+-------------
+
+### Version 2.3.0 (2024/08)
+Requires carl-storm version >= 14.23
+
+- Added support for intervals with different number types
+- Automated code formatting
+- Developer: improved build and CMake support
+- Developer: improved CI
 
 
 Version 2.2.x

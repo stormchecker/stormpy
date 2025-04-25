@@ -67,7 +67,7 @@ def get_maximal_end_components(model):
     :return: Maximal end components.
     """
     if model.supports_parameters:
-        return stormpy.jMaximalEndComponentDecomposition_ratfunc(model)
+        return stormpy.MaximalEndComponentDecomposition_ratfunc(model)
     elif model.is_exact:
         return stormpy.MaximalEndComponentDecomposition_exact(model)
     elif model.supports_uncertainty:

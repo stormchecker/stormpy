@@ -28,6 +28,5 @@ def example_building_models_03():
     print(", ".join(["{}: {}".format(str(iv.name), valuations.get_integer_value(2, iv.expression_variable)) for iv in integer_variables]))
 
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     example_building_models_03()

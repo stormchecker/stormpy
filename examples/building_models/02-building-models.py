@@ -6,10 +6,11 @@ import stormpy.examples.files
 import stormpy.info
 from stormpy import pycarl
 
+
 def example_building_models_02():
 
-
     import stormpy.pars
+
     if stormpy.info.storm_ratfunc_use_cln():
         from stormpy.pycarl import cln as pc
     else:
@@ -21,11 +22,9 @@ def example_building_models_02():
         return pc.FactorizedRationalFunction(num, denom)
 
         # And the parametric
+
     path = stormpy.examples.files.drn_pdtmc_die
     model = stormpy.build_parametric_model_from_drn(path)
-
-
-
 
     parameters = model.collect_probability_parameters()
     bar_parameters = dict()
@@ -48,8 +47,9 @@ def example_building_models_02():
             if val_pol - sub == 0:
                 print("Found substitution")
                 e.set_value(make_factorized_rf(repl, cache))
-                break # Assume only one substitution per entry
+                break  # Assume only one substitution per entry
     print(matrix)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     example_building_models_02()

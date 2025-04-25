@@ -6,7 +6,7 @@ import stormpy.examples.files
 
 def example_reward_models_01():
     program = stormpy.parse_prism_program(stormpy.examples.files.prism_dtmc_die)
-    prop = "R=? [F \"done\"]"
+    prop = 'R=? [F "done"]'
     properties = stormpy.parse_properties_for_prism_program(prop, program, None)
     model = stormpy.build_model(program, properties)
     assert len(model.reward_models) == 1
@@ -27,5 +27,6 @@ def example_reward_models_01():
     assert len(model.reward_models) == 1
     assert reward_model_name == "coin_flips"
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     example_reward_models_01()

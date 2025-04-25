@@ -14,5 +14,5 @@ def example_getting_started_01():
     print("Labels: {}".format(model.labeling.get_labels()))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     example_getting_started_01()

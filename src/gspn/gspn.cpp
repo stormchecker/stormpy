@@ -17,7 +17,7 @@ using TransitionPartition = storm::gspn::TransitionPartition;
 
 void gspnToFile(GSPN const& gspn, std::string const& filepath, bool toPnpro) {
     std::ofstream fs;
-    storm::utility::openFile(filepath, fs);
+    storm::io::openFile(filepath, fs);
 
     if(toPnpro) {
         gspn.toPnpro(fs);
@@ -25,7 +25,7 @@ void gspnToFile(GSPN const& gspn, std::string const& filepath, bool toPnpro) {
     else {
         gspn.toPnml(fs);
     }
-    storm::utility::closeFile(fs);
+    storm::io::closeFile(fs);
 }
 
 

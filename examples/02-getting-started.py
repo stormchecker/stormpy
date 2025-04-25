@@ -28,5 +28,5 @@ def example_getting_started_02():
     print("Labels in the model: {}".format(model_for_formula_2.labeling.get_labels()))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     example_getting_started_02()

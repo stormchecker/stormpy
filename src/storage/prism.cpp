@@ -34,6 +34,8 @@ void define_prism(py::module& m) {
     program.def_property_readonly("constants", &Program::getConstants, "Get Program Constants")
             .def_property_readonly("global_boolean_variables", &Program::getGlobalBooleanVariables, "Retrieves the global boolean variables of the program")
             .def_property_readonly("global_integer_variables", &Program::getGlobalIntegerVariables, "Retrieves the global integer variables of the program")
+            .def_property_readonly("variables", [](Program const& prog) {return prog.getAllExpressionVariables(true);}, "Retrieves all expression variables (including constants) of the program")
+            .def("get_variables", &Program::getAllExpressionVariables, py::arg("include_constants") = true, "Get all expression variables (and constants) used by the program")
             .def_property_readonly("nr_modules", &storm::prism::Program::getNumberOfModules, "Number of modules")
             .def_property_readonly("modules", &storm::prism::Program::getModules, "Modules in the program")
             .def_property_readonly("model_type", &storm::prism::Program::getModelType, "Model type")
@@ -71,7 +73,6 @@ void define_prism(py::module& m) {
                     return program.toJani(properties, allVariablesGlobal, suffix);
                 }, "Transform to Jani program", py::arg("properties"), py::arg("all_variables_global") = true, py::arg("suffix") = "")
             .def("__str__", &streamToString<storm::prism::Program>)
-            .def_property_readonly("variables", &Program::getAllExpressionVariables, "Get all Expression Variables used by the program")
             .def("get_label_expression", [](storm::prism::Program const& program, std::string const& label){
                 return program.getLabelExpression(label);
             }, "Get the expression of the given label.", py::arg("label"))

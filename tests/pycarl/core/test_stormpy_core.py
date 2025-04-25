@@ -1,4 +1,4 @@
-from configurations import cln
+from configurations import pycarl_cln
 
 
 class TestPycarlCore:
@@ -56,7 +56,7 @@ class TestPycarlCore:
 
         self.pickle(pycarl.gmp)
 
-    @cln
+    @pycarl_cln
     def test_pickle_cln(self):
         from stormpy import pycarl
         from stormpy.pycarl import cln

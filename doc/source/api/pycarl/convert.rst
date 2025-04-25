@@ -5,7 +5,7 @@ Pycarl convert
 Number conversion
 ---------------------------
 
-.. automodule:: pycarl.convert
+.. automodule:: stormpy.pycarl.convert
     :members:
     :undoc-members:
     :imported-members:

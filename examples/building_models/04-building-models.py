@@ -3,9 +3,12 @@ import stormpy
 import stormpy.examples
 import stormpy.examples.files
 import json
+
 """
 Building with a fixed (permissive) policy
 """
+
+
 def example_building_models_04():
     path = stormpy.examples.files.prism_mdp_firewire
     prism_program = stormpy.parse_prism_program(path)
@@ -28,15 +31,15 @@ def example_building_models_04():
         # conditions on the action
         cond1 = action_name.startswith("snd")
         # conditions on the state (efficient)
-        cond2 = state_valuation.get_integer_value(prism_program.get_module("node2").get_integer_variable("x2").expression_variable) <20
+        cond2 = state_valuation.get_integer_value(prism_program.get_module("node2").get_integer_variable("x2").expression_variable) < 20
         # conditions on the json repr of the state (inefficient, string handling, etc)
         cond3 = json.loads(str(state_valuation.to_json()))["x1"] < 40
-        return (cond1 or (cond2 and cond3))
+        return cond1 or (cond2 and cond3)
 
     constructor = stormpy.make_sparse_model_builder(prism_program, options, stormpy.StateValuationFunctionActionMaskDouble(permissive_policy))
     model = constructor.build()
     print(model)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     example_building_models_04()

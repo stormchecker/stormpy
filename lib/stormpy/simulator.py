@@ -4,17 +4,20 @@ import stormpy.core
 
 
 class SimulatorObservationMode(Enum):
-    STATE_LEVEL = 0,
+    STATE_LEVEL = (0,)
     PROGRAM_LEVEL = 1
 
+
 class SimulatorActionMode(Enum):
-    INDEX_LEVEL = 0,
+    INDEX_LEVEL = (0,)
     GLOBAL_NAMES = 1
+
 
 class Simulator:
     """
     Abstract base class for simulators.
     """
+
     def __init__(self, seed=None):
         self._seed = seed
         self._observation_mode = SimulatorObservationMode.STATE_LEVEL
@@ -47,7 +50,7 @@ class Simulator:
         """
         raise NotImplementedError("Abstract superclass")
 
-    def restart(self, state = None):
+    def restart(self, state=None):
         """
         Reset the simulator to the initial state
         """
@@ -149,7 +152,7 @@ class SparseSimulator(Simulator):
         """
         :return:
         """
-        #TODO this should be ensured earlier
+        # TODO this should be ensured earlier
         assert self._model.model_type == stormpy.storage.ModelType.POMDP
         if self._observation_mode == SimulatorObservationMode.STATE_LEVEL:
             return self._model.get_observation(self._engine.get_current_state())
@@ -159,9 +162,9 @@ class SparseSimulator(Simulator):
 
     def _report_result(self):
         if self._full_observe:
-            return self._report_state(),  self._report_rewards(), self._report_labels()
+            return self._report_state(), self._report_rewards(), self._report_labels()
         else:
-            return self._report_observation(),  self._report_rewards(), self._report_labels()
+            return self._report_observation(), self._report_rewards(), self._report_labels()
 
     def _report_rewards(self):
         return self._engine.get_last_reward()
@@ -201,7 +204,7 @@ class SparseSimulator(Simulator):
             raise ValueError(f"Unrecognized type of action {action}")
         return self._report_result()
 
-    def restart(self, state = None):
+    def restart(self, state=None):
         if state is not None:
             raise RuntimeError("Not implemented")
         self._engine.reset_to_initial_state()
@@ -230,7 +233,7 @@ class PrismSimulator(Simulator):
     def __init__(self, program, seed=None, options=stormpy.BuilderOptions()):
         super().__init__(seed)
         self._program = program
-        #TODO support exact arithmetic here
+        # TODO support exact arithmetic here
         self._engine = stormpy.core._DiscreteTimePrismProgramSimulatorDouble(program, options)
         if seed is not None:
             self._engine.set_seed(seed)
@@ -259,9 +262,9 @@ class PrismSimulator(Simulator):
 
     def _report_result(self):
         if self._full_observe:
-            return self._report_state(),  self._report_rewards(), self._report_labels()
+            return self._report_state(), self._report_rewards(), self._report_labels()
         else:
-            return self._report_observation(),  self._report_rewards(), self._report_labels()
+            return self._report_observation(), self._report_rewards(), self._report_labels()
 
     def _report_rewards(self):
         return self._engine.get_last_reward()
@@ -304,13 +307,13 @@ class PrismSimulator(Simulator):
             raise ValueError(f"Unrecognized type of action {action}")
         return self._report_result()
 
-    def restart(self, state = None):
+    def restart(self, state=None):
         if state is None:
             self._engine.reset_to_initial_state()
         else:
-            if isinstance(state,stormpy.BitVector):
+            if isinstance(state, stormpy.BitVector):
                 self._engine._reset_to_state_from_compressed_state(state)
-            elif isinstance(state,stormpy.SimpleValuation):
+            elif isinstance(state, stormpy.SimpleValuation):
                 self._engine._reset_to_state_from_valuation(state)
             else:
                 raise ValueError(f"States of type {type(state)} are not supported yet.")
@@ -327,7 +330,12 @@ class PrismSimulator(Simulator):
     def get_reward_names(self):
         return self._engine.get_reward_names()
 
-def create_simulator(model, seed = None, options=None, ):
+
+def create_simulator(
+    model,
+    seed=None,
+    options=None,
+):
     """
     Factory method for creating a simulator.
 

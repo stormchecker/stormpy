@@ -13,7 +13,7 @@ if sys.version_info[0] == 2:
     sys.exit("Sorry, Python 2.x is not supported")
 
 # Minimal storm version required
-storm_min_version = "1.9.0"
+storm_min_version = "1.9.1"
 # Minimal carl version required
 carl_min_version = "14.23"
 carl_storm_version_prefix = "14."
@@ -43,7 +43,6 @@ class CMakeBuild(build_ext):
         ("disable-parser", None, "Disable parsing support"),
         ("debug", None, "Build in Debug mode"),
         ("jobs=", "j", "Number of jobs to use for compiling"),
-        ("asan", None, "Turn on address sanitizer"),
         ("pybind-version=", None, "Pybind11 version to use"),
     ]
 
@@ -178,8 +177,6 @@ class CMakeBuild(build_ext):
         cmake_args += ["-DUSE_STORM_GSPN=" + ("ON" if use_gspn else "OFF")]
         cmake_args += ["-DUSE_STORM_PARS=" + ("ON" if use_pars else "OFF")]
         cmake_args += ["-DUSE_STORM_POMDP=" + ("ON" if use_pomdp else "OFF")]
-        cmake_args += ["-DSTORM_COMPILE_WITH_ADDRESS_SANITIZER=" + ("ON" if self.config.get_as_bool("asan") else "OFF")]
-
         if carl_dir is not None:
             cmake_args += ["-DCARL_DIR_HINT=" + carl_dir]
         if use_parser and carl_parser_dir:
@@ -309,58 +306,13 @@ setup(
     cmdclass={"build_ext": CMakeBuild},
     zip_safe=False,
     install_requires=[],
-    setup_requires=["pytest-runner", "packaging"],
-    tests_require=["pytest", "nbval", "numpy"],
+    setup_requires=["packaging"],
     extras_require={
         "numpy": ["numpy"],
         "plot": ["matplotlib", "numpy", "scipy"],
         "test": ["pytest", "nbval", "numpy"],
-        "doc": ["Sphinx", "sphinx-bootstrap-theme", "nbsphinx", "ipython", "ipykernel"],  # also requires pandoc to be installed
+        "doc": ["Sphinx<8.2.0", "sphinx-bootstrap-theme", "nbsphinx", "ipython", "ipykernel"],  # also requires pandoc to be installed
+        "dev": ["black", "tox"],
     },
     python_requires=">=3.7",  # required by packaging
-    # name="pycarl",
-    # version=setup_helper.obtain_version(),
-    # author="S. Junges",
-    # author_email="sebastian.junges@cs.rwth-aachen.de",
-    # maintainer="M. Volk",
-    # maintainer_email="matthias.volk@cs.rwth-aachen.de",
-    # url="https://github.com/moves-rwth/pycarl/",
-    # description="pycarl - Python Bindings for CArL",
-    # long_description=long_description,
-    # long_description_content_type="text/markdown",
-    # project_urls={
-    #     "Documentation": "https://moves-rwth.github.io/pycarl/",
-    #     "Source": "https://github.com/moves-rwth/pycarl/",
-    #     "Bug reports": "https://github.com/moves-rwth/pycarl/issues",
-    # },
-    # classifiers=[
-    #     "Intended Audience :: Science/Research",
-    #     "Topic :: Scientific/Engineering",
-    #     "Topic :: Software Development :: Libraries :: Python Modules",
-    # ],
-    # packages=find_packages("lib"),
-    # package_dir={"": "lib"},
-    # include_package_data=True,
-    # package_data={"pycarl.examples": ["examples/files/*"]},
-    # ext_package="pycarl",
-    # ext_modules=[
-    #     CMakeExtension("core"),
-    #     CMakeExtension("cln"),
-    #     CMakeExtension("gmp"),
-    #     CMakeExtension("formula"),
-    #     CMakeExtension("formula-cln"),
-    #     CMakeExtension("formula-gmp"),
-    #     CMakeExtension("parse"),
-    #     CMakeExtension("parse-gmp"),
-    #     CMakeExtension("parse-cln"),
-    # ],
-    # cmdclass={"build_ext": CMakeBuild},
-    # zip_safe=False,
-    # setup_requires=["pytest-runner", "packaging"],
-    # tests_require=["pytest"],
-    # extras_require={
-    #     "doc": ["Sphinx", "sphinx-bootstrap-theme"],
-    #     "dev": ["black"],
-    # },
-    # python_requires=">=3.7",  # required by packaging
 )

@@ -17,5 +17,5 @@ def example_gspns_01():
     print("Number of timed transitions: {}.".format(gspn.get_number_of_timed_transitions()))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     example_gspns_01()

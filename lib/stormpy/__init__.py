@@ -12,8 +12,6 @@ from .storage import *
 from .logic import *
 from .exceptions import *
 
-# from .pycarl import Variable  # needed for building parametric models
-
 __version__ = "unknown"
 try:
     from ._version import __version__
@@ -57,6 +55,8 @@ def _convert_sparse_model(model, parametric=False):
             return model._as_sparse_ctmc()
         elif model.model_type == ModelType.MA:
             return model._as_sparse_ma()
+        elif model.model_type == ModelType.SMG:
+            return model._as_sparse_smg()
         else:
             raise StormError("Not supported non-parametric model constructed")
 
@@ -468,7 +468,7 @@ def prob01max_states(model, eventually_formula):
     labelprop = core.Property("label-prop", labelform)
     phiStates = BitVector(model.nr_states, True)
     psiStates = model_checking(model, labelprop).get_truth_values()
-    return compute_prob01min_states(model, phiStates, psiStates)
+    return compute_prob01max_states(model, phiStates, psiStates)
 
 
 def compute_prob01_states(model, phi_states, psi_states):
@@ -622,7 +622,7 @@ def parse_properties(properties, context=None, filters=None):
     if context is None:
         return core.parse_properties_without_context(properties, filters)
     elif type(context) == core.SymbolicModelDescription:
-        if context.is_prism_program():
+        if context.is_prism_program:
             return core.parse_properties_for_prism_program(properties, context.as_prism_program(), filters)
         else:
             return core.parse_properties_for_jani_program(properties, context.as_jani_model(), filters)

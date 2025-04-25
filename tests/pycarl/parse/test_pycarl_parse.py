@@ -1,9 +1,9 @@
 from stormpy import pycarl
 
-from configurations import PackageSelector, parser
+from configurations import PackageSelector, pycarl_parser
 
 
-@parser
+@pycarl_parser
 class TestPycarlParse(PackageSelector):
     def test_parse_number(self, package):
         num = pycarl.parse.deserialize("2", package)

@@ -16,3 +16,8 @@ Work in progress!
    api/dft
    api/gspn
    api/pars
+
+   api/pycarl/core
+   api/pycarl/convert
+   api/pycarl/formula
+   api/pycarl/parse

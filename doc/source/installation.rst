@@ -8,12 +8,7 @@ Requirements
 Before installing stormpy, make sure
 
 - Python 3 is available on your system.
-- `pycarl <https://moves-rwth.github.io/pycarl>`_ is available.
 - `Storm <https://www.stormchecker.org/>`_ is available on your system.
-
-To avoid issues, we suggest that both pycarl and Storm use the same version of `carl <https://smtrat.github.io/carl>`_.
-The simplest way of ensuring this is to first install carl as explained in the `Storm installation guide <https://www.stormchecker.org/documentation/obtain-storm/dependencies.html#carl>`_.
-You can then install Storm and pycarl independently.
 
 .. _compatibility_stormpy_storm:
 

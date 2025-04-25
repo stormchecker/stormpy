@@ -1,6 +1,7 @@
 import numpy as np
 import stormpy
 
+
 def plot_convex_pareto_curve_demo(ax, underapprox_points, overapprox_points, lowerleft, upperright):
     """
 
@@ -18,9 +19,9 @@ def plot_convex_pareto_curve_demo(ax, underapprox_points, overapprox_points, low
     ax.grid()
     under_hull = ConvexHull(underapprox_points)
     over_hull = ConvexHull(overapprox_points)
-    ax.set_facecolor('r')
-    ax.fill(overapprox_points[over_hull.vertices,0], overapprox_points[over_hull.vertices,1], 'w', 1)
-    ax.fill(underapprox_points[under_hull.vertices,0], underapprox_points[under_hull.vertices,1], 'g', 1)
+    ax.set_facecolor("r")
+    ax.fill(overapprox_points[over_hull.vertices, 0], overapprox_points[over_hull.vertices, 1], "w", 1)
+    ax.fill(underapprox_points[under_hull.vertices, 0], underapprox_points[under_hull.vertices, 1], "g", 1)
 
 
 def _prepare_points_for_convex_pareto_plotting(points, lower_corner, upper_corner, multi_obj_formula):
@@ -32,7 +33,8 @@ def _prepare_points_for_convex_pareto_plotting(points, lower_corner, upper_corne
     :param multi_obj_formula:
     :return:
     """
-    def direction_as_operation(dir : stormpy.OptimizationDirection):
+
+    def direction_as_operation(dir: stormpy.OptimizationDirection):
         return max if dir == stormpy.OptimizationDirection.Maximize else min
 
     if multi_obj_formula.nr_subformulas != 2:
@@ -43,12 +45,13 @@ def _prepare_points_for_convex_pareto_plotting(points, lower_corner, upper_corne
     origin_y = min(lower_corner[1], upper_corner[1]) if directions[1] == stormpy.OptimizationDirection.Maximize else max(lower_corner[1], upper_corner[1])
     origin = np.array([[origin_x, origin_y]])
     x_cut_x = direction_as_operation(directions[0])([p[0] for p in points])
-    x_cut = np.array([[x_cut_x, 0]])
+    x_cut = np.array([[x_cut_x, origin_y]])
     y_cut_y = direction_as_operation(directions[1])([p[1] for p in points])
-    y_cut = np.array([[0, y_cut_y]])
+    y_cut = np.array([[origin_x, y_cut_y]])
 
     points = np.concatenate((np.array(points), origin, x_cut, y_cut), axis=0)
     return points
+
 
 def prepare_multiobjective_result_for_plotting(result, lower_corner, upper_corner, formula):
     """

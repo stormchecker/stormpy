@@ -10,5 +10,4 @@ class TestInfo:
 
     def test_version_equal(self):
         assert stormpy.info.storm_version() in stormpy.info.Version.short
-        assert (stormpy.info.Version.development and stormpy.info.Version.short.endswith(
-            " (dev)")) or not stormpy.info.Version.development
+        assert (stormpy.info.Version.development and stormpy.info.Version.short.endswith(" (dev)")) or not stormpy.info.Version.development

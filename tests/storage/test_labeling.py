@@ -21,7 +21,7 @@ class TestStateLabeling:
 
     def test_label(self):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
-        formulas = stormpy.parse_properties_for_prism_program("P=? [ F \"one\" ]", program)
+        formulas = stormpy.parse_properties_for_prism_program('P=? [ F "one" ]', program)
         model = stormpy.build_model(program, formulas)
         labeling = model.labeling
         labels = labeling.get_labels()
@@ -47,6 +47,7 @@ class TestStateLabeling:
         initial_states = model.initial_states
         assert len(initial_states) == 1
         assert 0 in initial_states
+
 
 class TestChoiceLabeling:
     def test_label(self):

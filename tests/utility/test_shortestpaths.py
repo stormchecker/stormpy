@@ -10,6 +10,7 @@ import math
 
 # this is admittedly slightly overengineered
 
+
 class ModelWithKnownShortestPaths:
     """Knuth's die model with reference kSP methods"""
 
@@ -17,7 +18,7 @@ class ModelWithKnownShortestPaths:
         self.target_label = "one"
 
         program_path = get_example_path("dtmc", "die.pm")
-        raw_formula = "P=? [ F \"" + self.target_label + "\" ]"
+        raw_formula = 'P=? [ F "' + self.target_label + '" ]'
         program = stormpy.parse_prism_program(program_path)
         formulas = stormpy.parse_properties_for_prism_program(raw_formula, program)
 

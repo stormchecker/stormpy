@@ -25,6 +25,9 @@ void define_statevaluation(py::module& m) {
         .def("get_boolean_value", &storm::storage::sparse::StateValuations::getBooleanValue, py::arg("state"), py::arg("variable"))
         .def("get_integer_value", &storm::storage::sparse::StateValuations::getIntegerValue, py::arg("state"), py::arg("variable"))
         .def("get_rational_value", &storm::storage::sparse::StateValuations::getRationalValue, py::arg("state"), py::arg("variable"))
+        .def("get_boolean_values_states", &storm::storage::sparse::StateValuations::getBooleanValues, py::arg("variable"), "Get the value of the Boolean variable of all states. The i'th entry represents the value of state i.")
+        .def("get_integer_values_states", &storm::storage::sparse::StateValuations::getIntegerValues, py::arg("variable"), "Get the value of the integer variable of all states. The i'th entry represents the value of state i.")
+        .def("get_rational_values_states", &storm::storage::sparse::StateValuations::getRationalValues, py::arg("variable"), "Get the value of the rational variable of all states. The i'th entry represents the value of state i.")
         .def("get_string", &storm::storage::sparse::StateValuations::toString, py::arg("state"), py::arg("pretty")=true, py::arg("selected_variables")=boost::none)
         .def("get_json", &toJson, py::arg("state"), py::arg("selected_variables")=boost::none)
         .def("get_nr_of_states", &storm::storage::sparse::StateValuations::getNumberOfStates);

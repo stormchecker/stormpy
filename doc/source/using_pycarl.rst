@@ -1,5 +1,5 @@
 ****************************
-Getting Started
+Getting Started with Pycarl
 ****************************
 
 Before starting with this guide, one should follow the instructions for :doc:`installation`.

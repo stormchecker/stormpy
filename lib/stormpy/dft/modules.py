@@ -1,5 +1,6 @@
 import stormpy.dft
 
+
 def _get_tuple(dft, index):
     """
     Get json representation of element.
@@ -8,7 +9,8 @@ def _get_tuple(dft, index):
     :param index: Index (Id).
     :return: Dict with 'name' and 'index'.
     """
-    return {'id': str(index), 'name': dft.get_element(index).name}
+    return {"id": str(index), "name": dft.get_element(index).name}
+
 
 def _modules_json(dft, module):
     """
@@ -19,12 +21,12 @@ def _modules_json(dft, module):
     :return: JSON object containing all modules in a recursive hierarchy.
     """
     data = dict()
-    data['representative'] = _get_tuple(dft, module.representative())
-    data['elements'] = [_get_tuple(dft, elem) for elem in module.elements()]
+    data["representative"] = _get_tuple(dft, module.representative())
+    data["elements"] = [_get_tuple(dft, elem) for elem in module.elements()]
     submodules = []
     for submodule in module.submodules():
         submodules.append(_modules_json(dft, submodule))
-    data['submodules'] = submodules
+    data["submodules"] = submodules
     return data
 
 

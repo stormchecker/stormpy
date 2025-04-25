@@ -15,5 +15,6 @@ def example_analysis_01():
     print(prob0E)
     print(prob1A)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     example_analysis_01()

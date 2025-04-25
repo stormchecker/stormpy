@@ -12,18 +12,21 @@ has_pomdp = config.storm_with_pomdp
 
 try:
     import numpy
+
     has_numpy = True
 except ImportError:
     has_numpy = False
 
 try:
     import matplotlib
+
     has_matplotlib = True
 except ImportError:
     has_matplotlib = False
 
 try:
     import scipy
+
     has_scipy = True
 except ImportError:
     has_scipy = False
@@ -40,8 +43,8 @@ plotting = pytest.mark.skipif(not has_matplotlib or not has_scipy, reason="Libra
 from stormpy import pycarl
 
 # Skip not supported functionality
-cln = pytest.mark.skipif(not pycarl.has_cln(), reason="No support for CLN")
-parser = pytest.mark.skipif(not pycarl.has_parser(), reason="No support for carlparser")
+pycarl_cln = pytest.mark.skipif(not pycarl.has_cln(), reason="No support for CLN")
+pycarl_parser = pytest.mark.skipif(not pycarl.has_parser(), reason="No support for carlparser")
 
 # Parametrize available number types
 from stormpy.pycarl import gmp

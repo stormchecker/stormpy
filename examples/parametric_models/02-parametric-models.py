@@ -17,6 +17,7 @@ def example_parametric_models_02():
 
     import stormpy.pars
     from stormpy.pycarl.formula import FormulaType, Relation
+
     if stormpy.info.storm_ratfunc_use_cln():
         from stormpy.pycarl.cln import formula
     else:
@@ -42,5 +43,5 @@ def example_parametric_models_02():
         print(formula.get_constraint())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     example_parametric_models_02()

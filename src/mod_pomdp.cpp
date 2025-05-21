@@ -31,4 +31,5 @@ PYBIND11_MODULE(pomdp, m) {
   define_belief_exploration<double>(m, "Double");
 
   define_transformations_int<storm::Interval>(m, "Interval");
+  define_transformations_int<storm::RationalInterval>(m, "RationalInterval");
 }

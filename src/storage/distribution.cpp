@@ -18,3 +18,4 @@ void define_distribution(py::module& m, std::string vt_suffix) {
 template void define_distribution<double>(py::module&, std::string vt_suffix);
 template void define_distribution<storm::RationalNumber>(py::module&, std::string vt_suffix);
 template void define_distribution<storm::Interval>(py::module&, std::string vt_suffix);
+template void define_distribution<storm::RationalInterval>(py::module&, std::string vt_suffix);

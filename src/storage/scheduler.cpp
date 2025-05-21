@@ -32,7 +32,7 @@ void define_scheduler(py::module& m, std::string vt_suffix) {
                 }, py::arg("model"), py::arg("skip_unique_choices") = false, py::arg("skip_dont_care_states") = false)
     ;
 
-    if constexpr (!std::is_same_v<ValueType, storm::Interval>) {
+    if constexpr (!std::is_same_v<ValueType, storm::Interval> && !std::is_same_v<ValueType, storm::RationalInterval>) {
         // Conversion from Interval not implemented
         scheduler
             .def("cast_to_double_datatype", &Scheduler::template toValueType<double>, "Construct the scheduler with `double` value type")
@@ -42,6 +42,7 @@ void define_scheduler(py::module& m, std::string vt_suffix) {
         if constexpr (!std::is_same_v<ValueType, storm::RationalFunction>) {
             // Conversion from RationalFunction to Interval not implemented
             scheduler.def("cast_to_interval_datatype", &Scheduler::template toValueType<storm::Interval>, "Construct the scheduler with `interval` value type");
+            scheduler.def("cast_to_exact_interval_datatype", &Scheduler::template toValueType<storm::RationalInterval>, "Construct the scheduler with `interval` value type");
         }
     }
 
@@ -61,4 +62,5 @@ void define_scheduler(py::module& m, std::string vt_suffix) {
 template void define_scheduler<double>(py::module& m, std::string vt_suffix);
 template void define_scheduler<storm::RationalNumber>(py::module& m, std::string vt_suffix);
 template void define_scheduler<storm::Interval>(py::module& m, std::string vt_suffix);
+template void define_scheduler<storm::RationalInterval>(py::module& m, std::string vt_suffix);
 template void define_scheduler<storm::RationalFunction>(py::module& m, std::string vt_suffix);

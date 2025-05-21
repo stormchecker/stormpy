@@ -59,4 +59,5 @@ void define_sparse_model_components(py::module& m, std::string const& vtSuffix) 
 template void define_sparse_model_components<double>(py::module& m, std::string const& vtSuffix);
 template void define_sparse_model_components<storm::RationalNumber>(py::module& m, std::string const& vtSuffix);
 template void define_sparse_model_components<storm::Interval>(py::module& m, std::string const& vtSuffix);
+template void define_sparse_model_components<storm::RationalInterval>(py::module& m, std::string const& vtSuffix);
 template void define_sparse_model_components<storm::RationalFunction>(py::module& m, std::string const& vtSuffix);

@@ -35,18 +35,21 @@ PYBIND11_MODULE(storage, m) {
     define_sparse_model<double>(m, "");
     define_sparse_model<storm::RationalNumber>(m, "Exact");
     define_sparse_model<storm::Interval>(m, "Interval");
+    define_sparse_model<storm::RationalInterval>(m, "RationalInterval");
     define_sparse_parametric_model(m);
     define_statevaluation(m);
     define_simplevaluation(m);
     define_sparse_matrix<double>(m, "");
     define_sparse_matrix<storm::RationalNumber>(m, "Exact");
     define_sparse_matrix<storm::Interval>(m, "Interval");
+    define_sparse_matrix<storm::RationalInterval>(m, "RationalInterval");
     define_sparse_matrix<storm::RationalFunction>(m, "Parametric");
     define_sparse_matrix_nt(m);
     define_symbolic_model<storm::dd::DdType::Sylvan>(m, "Sylvan");
     define_state<double>(m, "");
     define_state<storm::RationalNumber>(m, "Exact");
     define_state<storm::Interval>(m, "Interval");
+    define_state<storm::RationalInterval>(m, "RationalInterval");
     define_state<storm::RationalFunction>(m, "Parametric");
     define_prism(m);
     define_jani(m);
@@ -57,13 +60,16 @@ PYBIND11_MODULE(storage, m) {
     define_scheduler<double>(m, "");
     define_scheduler<storm::RationalNumber>(m, "Exact");
     define_scheduler<storm::Interval>(m, "Interval");
+    define_scheduler<storm::RationalInterval>(m, "RationalInterval");
     define_scheduler<storm::RationalFunction>(m, "Parametric");
     define_distribution<double>(m, "");
     define_distribution<storm::RationalNumber>(m, "Exact");
     define_distribution<storm::Interval>(m, "Interval");
+    define_distribution<storm::RationalInterval>(m, "RationalInterval");
     define_sparse_model_components<double>(m, "");
     define_sparse_model_components<storm::RationalNumber>(m, "Exact");
     define_sparse_model_components<storm::Interval>(m, "Interval");
+    define_sparse_model_components<storm::RationalInterval>(m, "RationalInterval");
     define_sparse_model_components<storm::RationalFunction>(m, "Parametric");
     define_geometry<double>(m, "Double");
     define_geometry<storm::RationalNumber>(m, "Exact");
@@ -72,6 +78,7 @@ PYBIND11_MODULE(storage, m) {
     define_maximal_end_component_decomposition<double>(m, "_double");
     define_maximal_end_component_decomposition<storm::RationalNumber>(m, "_exact");
     define_maximal_end_component_decomposition<storm::Interval>(m, "_interval");
+    define_maximal_end_component_decomposition<storm::RationalInterval>(m, "_ratinterval");
     define_maximal_end_component_decomposition<storm::RationalFunction>(m, "_ratfunc");
 
 }

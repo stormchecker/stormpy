@@ -133,11 +133,11 @@ define_transformations<storm::RationalFunction>(py::module &m,
 
 template void define_transformations_int<double>(py::module &m,
                                                  std::string const &vtSuffix);
-template void
-define_transformations_int<storm::RationalNumber>(py::module &m,
+template void define_transformations_int<storm::RationalNumber>(py::module &m,
                                                   std::string const &vtSuffix);
 template void define_transformations_int<storm::RationalFunction>(
     py::module &m, std::string const &vtSuffix);
-template void
-define_transformations_int<storm::Interval>(py::module &m,
+template void define_transformations_int<storm::Interval>(py::module &m,
+                                            std::string const &vtSuffix);
+template void define_transformations_int<storm::RationalInterval>(py::module &m,
                                             std::string const &vtSuffix);

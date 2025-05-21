@@ -54,6 +54,11 @@ std::shared_ptr<storm::modelchecker::CheckResult> checkIntervalMdp(std::shared_p
     return checker.check(env, task);
 }
 
+std::shared_ptr<storm::modelchecker::CheckResult> checkRationalIntervalMdp(std::shared_ptr<storm::models::sparse::Mdp<storm::RationalInterval>> mdp, CheckTask<storm::RationalNumber> const& task, storm::Environment& env) {
+    auto checker = storm::modelchecker::SparseMdpPrctlModelChecker<storm::models::sparse::Mdp<storm::RationalInterval>>(*mdp);
+    return checker.check(env, task);
+}
+
 std::vector<double> computeAllUntilProbabilities(storm::Environment const& env, CheckTask<double> const& task, std::shared_ptr<storm::models::sparse::Ctmc<double>> ctmc, storm::storage::BitVector const& phiStates, storm::storage::BitVector const& psiStates) {
     storm::solver::SolveGoal<double> goal(*ctmc, task);
     return storm::modelchecker::helper::SparseCtmcCslHelper::computeAllUntilProbabilities(env, std::move(goal), ctmc->getTransitionMatrix(), ctmc->getExitRateVector(), ctmc->getInitialStates(), phiStates, psiStates);

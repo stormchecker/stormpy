@@ -37,6 +37,10 @@ class TestAnalysis:
 
     def test_explicit_model_builder_approximation(self):
         dft = stormpy.dft.load_dft_galileo_file(get_example_path("dft", "rc.dft"))
+        valid, output = stormpy.dft.is_well_formed(dft)
+        assert valid
+        issue, output = stormpy.dft.has_potential_modeling_issues(dft)
+        assert not issue
         properties = stormpy.parse_properties('T=? [ F "failed" ]')
         prop = properties[0]
         builder = stormpy.dft.ExplicitDFTModelBuilder_double(dft)
@@ -147,9 +151,13 @@ class TestAnalysis:
         dft = stormpy.dft.load_dft_galileo_file(get_example_path("dft", "rc2.dft"))
         valid, output = stormpy.dft.is_well_formed(dft)
         assert not valid
+        issue, output = stormpy.dft.has_potential_modeling_issues(dft)
+        assert issue
         dft = stormpy.dft.transform_dft(dft, unique_constant_be=True, binary_fdeps=True, exponential_distributions=True)
         valid, output = stormpy.dft.is_well_formed(dft)
         assert valid
+        issue, output = stormpy.dft.has_potential_modeling_issues(dft)
+        assert issue
         formulas = stormpy.parse_properties('Tmin=? [ F "failed" ]')
         results = stormpy.dft.analyze_dft(dft, [formulas[0].raw_formula])
         assert math.isclose(results[0], 6.380930905)

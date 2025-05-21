@@ -53,3 +53,11 @@ def is_well_formed(ft, check_valid_for_analysis=True):
     else:
         assert isinstance(ft, DFT_ratfunc)
         return dft._is_well_formed_ratfunc(ft, check_valid_for_analysis)
+
+
+def has_potential_modeling_issues(ft):
+    if isinstance(ft, DFT_double):
+        return dft._has_potential_modeling_issues_double(ft)
+    else:
+        assert isinstance(ft, DFT_ratfunc)
+        return dft._has_potential_modeling_issues_ratfunc(ft)

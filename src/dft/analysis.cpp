@@ -64,6 +64,7 @@ void define_analysis_typed(py::module& m, std::string const& vt_suffix) {
     m.def(("_compute_dependency_conflicts"+vt_suffix).c_str(), &storm::dft::api::computeDependencyConflicts<ValueType>, "Set conflicts between FDEPs. Is used in analysis.", py::arg("dft"), py::arg("use_smt") = false, py::arg("solver_timeout") = 0);
 
     m.def(("_is_well_formed"+vt_suffix).c_str(), &storm::dft::api::isWellFormed<ValueType>, "Check whether DFT is well-formed.", py::arg("dft"), py::arg("check_valid_for_analysis") = true);
+    m.def(("_has_potential_modeling_issues"+vt_suffix).c_str(), &storm::dft::api::hasPotentialModelingIssues<ValueType>, "Check whether DFT has potential modeling issues.", py::arg("dft"));
 }
 
 

@@ -133,7 +133,6 @@ void define_modelchecking(py::module& m) {
         .def("set_maybe_states", py::overload_cast<storm::storage::BitVector const&>(&storm::modelchecker::ExplicitModelCheckerHint<double>::setMaybeStates), "sets the maybe states. This is assumed to be correct.")
         .def("set_compute_only_maybe_states", &storm::modelchecker::ExplicitModelCheckerHint<double>::setComputeOnlyMaybeStates, "value")
         .def("set_result_hint", py::overload_cast<boost::optional<std::vector<double>> const&>(&storm::modelchecker::ExplicitModelCheckerHint<double>::setResultHint), "result_hint"_a);
-
     m.def("_get_reachable_states_double", &getReachableStates<double>, py::arg("model"), py::arg("initial_states"), py::arg("constraint_states"), py::arg("target_states"), py::arg("maximal_steps") = boost::none, py::arg("choice_filter") = boost::none);
     m.def("_get_reachable_states_exact", &getReachableStates<storm::RationalNumber>, py::arg("model"), py::arg("initial_states"), py::arg("constraint_states"), py::arg("target_states"), py::arg("maximal_steps") = boost::none, py::arg("choice_filter") = boost::none);
     m.def("_get_reachable_states_rf", &getReachableStates<storm::RationalFunction>, py::arg("model"), py::arg("initial_states"), py::arg("constraint_states"), py::arg("target_states"), py::arg("maximal_steps") = boost::none, py::arg("choice_filter") = boost::none);
@@ -155,6 +154,7 @@ void define_modelchecking(py::module& m) {
     m.def("_model_checking_hybrid_engine", &modelCheckingHybridEngine<storm::dd::DdType::Sylvan, double>, "Perform model checking using the hybrid engine", py::arg("model"), py::arg("task"), py::arg("environment") = storm::Environment());
     m.def("_parametric_model_checking_hybrid_engine", &modelCheckingHybridEngine<storm::dd::DdType::Sylvan, storm::RationalFunction>, "Perform parametric model checking using the hybrid engine", py::arg("model"), py::arg("task"), py::arg("environment") = storm::Environment());
     m.def("check_interval_mdp", &checkIntervalMdp, "Check interval MDP");
+    m.def("check_exact_interval_mdp", &checkRationalIntervalMdp, "Check exact interval MDP");
     m.def("compute_all_until_probabilities", &computeAllUntilProbabilities, "Compute forward until probabilities");
     m.def("compute_transient_probabilities", &computeTransientProbabilities, "Compute transient probabilities");
     m.def("_compute_prob01states_double", &computeProb01<double>, "Compute prob-0-1 states", py::arg("model"), py::arg("phi_states"), py::arg("psi_states"));

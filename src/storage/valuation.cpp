@@ -22,12 +22,12 @@ void add_state(storm::storage::sparse::StateValuationsBuilder& builder, storm::s
 void define_statevaluation(py::module& m) {
 
     py::class_<storm::storage::sparse::StateValuations, std::shared_ptr<storm::storage::sparse::StateValuations>>(m,"StateValuation", "Valuations for explicit states")
-        .def("get_boolean_value", &storm::storage::sparse::StateValuations::getBooleanValue, py::arg("state"), py::arg("variable"))
-        .def("get_integer_value", &storm::storage::sparse::StateValuations::getIntegerValue, py::arg("state"), py::arg("variable"))
-        .def("get_rational_value", &storm::storage::sparse::StateValuations::getRationalValue, py::arg("state"), py::arg("variable"))
-        .def("get_boolean_values_states", &storm::storage::sparse::StateValuations::getBooleanValues, py::arg("variable"), "Get the value of the Boolean variable of all states. The i'th entry represents the value of state i.")
-        .def("get_integer_values_states", &storm::storage::sparse::StateValuations::getIntegerValues, py::arg("variable"), "Get the value of the integer variable of all states. The i'th entry represents the value of state i.")
-        .def("get_rational_values_states", &storm::storage::sparse::StateValuations::getRationalValues, py::arg("variable"), "Get the value of the rational variable of all states. The i'th entry represents the value of state i.")
+        .def("_get_boolean_value", &storm::storage::sparse::StateValuations::getBooleanValue, py::arg("state"), py::arg("variable"))
+        .def("_get_integer_value", &storm::storage::sparse::StateValuations::getIntegerValue, py::arg("state"), py::arg("variable"))
+        .def("_get_rational_value", &storm::storage::sparse::StateValuations::getRationalValue, py::arg("state"), py::arg("variable"))
+        .def("_get_boolean_values_states", &storm::storage::sparse::StateValuations::getBooleanValues, py::arg("variable"), "Get the value of the Boolean variable of all states. The i'th entry represents the value of state i.")
+        .def("_get_integer_values_states", &storm::storage::sparse::StateValuations::getIntegerValues, py::arg("variable"), "Get the value of the integer variable of all states. The i'th entry represents the value of state i.")
+        .def("_get_rational_values_states", &storm::storage::sparse::StateValuations::getRationalValues, py::arg("variable"), "Get the value of the rational variable of all states. The i'th entry represents the value of state i.")
         .def("get_string", &storm::storage::sparse::StateValuations::toString, py::arg("state"), py::arg("pretty")=true, py::arg("selected_variables")=boost::none)
         .def("get_json", &toJson, py::arg("state"), py::arg("selected_variables")=boost::none)
         .def("get_nr_of_states", &storm::storage::sparse::StateValuations::getNumberOfStates);
@@ -46,10 +46,14 @@ void define_statevaluation(py::module& m) {
 void define_simplevaluation(py::module& m) {
     py::class_<storm::expressions::Valuation> val(m, "Valuation");
     val.def_property_readonly("expression_manager", &storm::expressions::Valuation::getManager);
-    py::class_<storm::expressions::SimpleValuation> sval(m, "SimpleValuation", val);
-    sval.def("to_json", &storm::expressions::SimpleValuation::toJson, "Convert to JSON");
-    sval.def("to_string", &storm::expressions::SimpleValuation::toString, py::arg("pretty")=true, "to string");
-    sval.def("get_boolean_value", &storm::expressions::SimpleValuation::getBooleanValue, py::arg("variable"), "Get Boolean Value for expression variable");
-    sval.def("get_integer_value", &storm::expressions::SimpleValuation::getIntegerValue, py::arg("variable"), "Get Integer Value for expression variable");
+
+    py::class_<storm::expressions::SimpleValuation>(m, "SimpleValuation", val)
+        .def("to_json", &storm::expressions::SimpleValuation::toJson, "Convert to JSON")
+        .def("to_string", &storm::expressions::SimpleValuation::toString, py::arg("pretty")=true, "to string")
+        .def("_get_boolean_value", &storm::expressions::SimpleValuation::getBooleanValue, py::arg("variable"), "Get Boolean value for expression variable")
+        .def("_get_integer_value", &storm::expressions::SimpleValuation::getIntegerValue, py::arg("variable"), "Get integer value for expression variable")
+        .def("_get_rational_value", &storm::expressions::SimpleValuation::getRationalValue, py::arg("variable"), "Get rational value for expression variable")
+        .def("_get_bitvector_value", &storm::expressions::SimpleValuation::getBitVectorValue, py::arg("variable"), "Get bitvector value for expression variable")
+    ;
 
 }

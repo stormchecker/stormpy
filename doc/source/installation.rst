@@ -21,7 +21,7 @@ You have two choices for stormpy depending on the version of Storm you are using
 1. **Release version**:
    You use the latest `release of Storm <https://github.com/moves-rwth/storm/releases>`_ or the ``stable`` branch.
    In these cases, you need to use the latest `release of stormpy <https://github.com/moves-rwth/stormpy/releases>`_.
-   For example, Storm 1.6.0 is compatible with stormpy 1.6.0.
+   For example, Storm |version| is compatible with stormpy |version|.
 
 2. **Master branch**:
    You use the ``master`` branch of Storm.
@@ -63,61 +63,54 @@ For the ``master`` of stormpy use::
 	$ git clone https://github.com/moves-rwth/stormpy.git
 	$ cd stormpy
 
-or for the latest release use (remember to use the correct version)::
+or for the latest release use the ``stable`` branch::
 
-    $ git clone https://github.com/moves-rwth/stormpy.git --branch 1.6.0
-    $ cd stormpy
+	$ git clone https://github.com/moves-rwth/stormpy.git -b stable
+	$ cd stormpy
 
-**Build** stormpy in develop mode using your favourite python distribution way of installing: e.g.::
+**Build** stormpy in using your favourite python distribution way of installing: e.g.::
 
-	$ python3 setup.py develop
-
-or::
-
-	$ pip install -ve .
+	$ pip install -v .
 
 
 Optional build arguments
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-The build step ``build_ext`` also takes optional arguments for a more advanced configuration of stormpy.
+The build step also takes optional CMake arguments via ``--config-settings=cmake.define.<cmake_option>=<value>`` for a more advanced configuration of stormpy.
+We refer to the section ``[tool.scikit-build.cmake.define]`` in ``pyproject.toml`` for a full list of configuration options.
 
 *	*Specifying which Storm library to use*
 
-	If you have multiple versions of Storm or cmake is not able to find your Storm version,
-	you can specify the ``--storm-dir YOUR-PATH-TO-STORM`` flag::
+	If you have multiple versions of Storm or CMake is not able to find your Storm version,
+	you can specify the directories via the following flags:
 
-	$ python3 setup.py build_ext --storm-dir YOUR-PATH-TO-STORM develop
+	* ``--config-settings=cmake.define.STORM_DIR_HINT=<dir>`` to set the hint for the Storm directory
+	* ``--config-settings=cmake.define.CARL_DIR_HINT=<dir>`` to set the hint for the carl-storm directory
+	* ``--config-settings=cmake.define.CARLPARSER_DIR_HINT=<dir>`` to set the hint for the carl-parser directory
 
 *	*Disabling functionality*
 
-	If you want to disable certain functionality in stormpy from being built you can use the following flags:
+	If you want to disable certain functionality in stormpy from being built you can add the following flags:
 
-	* ``--disable-dft`` to disable support for dynamic fault trees (DFTs)
-	* ``--disable-pars`` to disable support for parametric models
+	* ``--config-settings=cmake.define.USE_STORM_DFT=OFF`` to disable support for dynamic fault trees (DFTs)
+	* ``--config-settings=cmake.define.USE_STORM_GSPN=OFF`` to disable support for generalized stochastic Petri nets (GSPNs)
+	* ``--config-settings=cmake.define.USE_STORM_PARS=OFF`` to disable support for parametric models
+	* ``--config-settings=cmake.define.USE_STORM_POMDP=OFF`` to disable support for POMDPs
+	* ``--config-settings=cmake.define.USE_PARSER=OFF`` to disable support for the carl-parser
 
 *	*Building stormpy in debug mode*
 
-	If you want to build stormpy in debug mode you can add the ``--debug`` flag::
-
-	$ python3 setup.py build_ext --debug develop
+	If you want to build stormpy in debug mode you can add the flag ``--config-settings=cmake.build-type='Debug'``.
 
 *	*Setting number of build threads*
 
-	The build of stormpy uses all available cores per default.
-	If you want to configure the number of threads manually you can specify the ``--jobs`` (or ``-j``) flag::
-
-	$ python3 setup.py build_ext --jobs 2 develop
+	If you want to configure the number of threads used to build stormpy, use the flag ``--config-settings=cmake.define.CMAKE_BUILD_PARALLEL_LEVEL=<number_of_jobs>``.
 
 
 Testing stormpy installation
 ----------------------------
 
-After building, you can run the test files by either::
-
-	$ python3 setup.py test
-
-or by invoking pytest directly with::
+After building, you can run the test files by invoking pytest directly with::
 
 	$ pip install pytest
 	$ py.test tests/
@@ -131,11 +124,7 @@ Building stormpy documentation
 To build this documentation, you need additional python dependencies as well as `pandoc <https://pandoc.org/>`_.
 You can install the required python dependencies automatically with::
 
-	$ python setup.py develop easy_install stormpy[doc,numpy]
-
-or manually with::
-
-	$ pip install sphinx sphinx_bootstrap_theme nbsphinx ipykernel numpy
+	$ pip install .[doc,numpy]
 
 Then build the documentation::
 

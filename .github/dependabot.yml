@@ -1,11 +1,16 @@
-# Set update schedule for GitHub Actions
+# Set update schedule for GitHub Actions and Python packages
 
 version: 2
 updates:
 
+  # Check for updates to GitHub Actions every week
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      # Check for updates to GitHub Actions every week
       interval: "weekly"
 
+  # Check for updates to pip packages every week
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"

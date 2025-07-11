@@ -1,0 +1,213 @@
+name: Build and upload to PyPI
+
+on:
+  workflow_dispatch:
+  release:
+    types:
+      - published
+
+jobs:
+  build_wheels:
+    name: Build wheels for ${{ matrix.os }}
+    runs-on: ${{ matrix.runs-on }}
+    strategy:
+      matrix:
+        os: [ linux-intel, macos-intel, macos-arm ]
+        include:
+          # Set defaults
+          - archs: auto
+            platform: auto
+            xcode: ""
+            deploy_target: 13.0
+          - os: linux-intel
+            runs-on: ubuntu-latest
+            archs: x86_64
+          - os: macos-intel
+            runs-on: macos-13 # macos-13 was the last x86_64 runner
+            xcode: 14.3
+            deploy_target: 13.0
+          - os: macos-arm
+            runs-on: macos-14 # macos-14+ (including latest) are ARM64 runners
+            xcode: 15.3
+            deploy_target: 14.0
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: maxim-lobanov/setup-xcode@v1
+        if: ${{ matrix.xcode != '' }}
+        with:
+          xcode-version: ${{ matrix.xcode }}
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v3.0.0
+        env:
+          CIBW_PLATFORM: ${{ matrix.platform }}
+          CIBW_ARCHS: ${{ matrix.archs }}
+          MACOSX_DEPLOYMENT_TARGET: ${{ matrix.deploy_target }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
+          path: ./wheelhouse/*.whl
+
+
+  build_sdist:
+    name: Build source distribution
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build sdist
+        run: pipx run build --sdist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cibw-sdist
+          path: dist/*.tar.gz
+
+
+  test_wheels_linux:
+    name: Test wheel on ${{ matrix.distro }}
+    needs: [build_wheels]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        distro:
+          - ubuntu:24.04
+          - debian:12
+          - fedora:latest
+          - archlinux:latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: cibw-wheels-linux-intel-*
+          path: dist
+          merge-multiple: true
+      - name: Checkout test files
+        uses: actions/checkout@v4
+        with:
+          path: dist/test_files
+          sparse-checkout: |
+            tests
+      - name: Install from wheel and test
+        run: |
+          docker run -i --rm -v ./dist:/wheel ${{ matrix.distro }} /bin/bash << 'EOF'
+          set -euo pipefail
+          set -x
+
+          cd /wheel
+
+          # Install Python & pip (varies per distro)
+          if command -v apt; then
+            apt update && DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt install -y python3 python3-pip python3-venv
+          elif command -v dnf; then
+            dnf install -y python3 python3-pip
+          elif command -v pacman; then
+            pacman -Syu --noconfirm python python-pip
+          fi
+
+          # Get major+minor version (e.g. "311" for Python 3.11)
+          PY_VER=$(python3 -c "import sys; print(f'{sys.version_info.major}{sys.version_info.minor}')")
+          echo "Python version: $PY_VER"
+
+          # Look for a matching wheel in the current directory
+          WHEEL=$(ls stormpy-*-cp${PY_VER}-*.whl 2>/dev/null | head -n1 || true)
+          echo "Found wheel: $WHEEL"
+          if [ -z "$WHEEL" ]; then
+            echo "Error: No stormpy wheel found for Python ${PY_VER:0:1}.${PY_VER:1}." >&2
+            exit 1
+          fi
+
+          echo "Installing $WHEEL..."
+          python3 -m venv venv
+          source venv/bin/activate
+          python3 -m pip install "$WHEEL"
+
+          # Run a basic import test (replace with pytest if needed)
+          python3 -c "import stormpy; print('Import successful')"
+          pip install pytest nbval numpy
+          pytest test_files/tests
+          EOF
+
+
+  test_wheels_mac:
+    name: Test wheel on ${{ matrix.distro.name }}
+    needs: [build_wheels]
+    runs-on: ${{ matrix.distro.distro }}
+    strategy:
+      fail-fast: false
+      matrix:
+        distro:
+          - {name: "XCode 14.3, Intel",
+             os: macos-intel,
+             distro: "macos-13",
+             xcode: "14.3"
+          }
+          - {name: "XCode 15.4, ARM",
+             os: macos-arm,
+             distro: "macos-14",
+             xcode: "15.4"
+          }
+          - {name: "XCode 16.3, ARM",
+             os: macos-arm,
+             distro: "macos-15",
+             xcode: "16.3"
+          }
+    steps:
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: ${{ matrix.distro.xcode }}
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: cibw-wheels-${{ matrix.distro.os }}-*
+          path: dist
+          merge-multiple: true
+      - name: Install from wheel and test
+        working-directory: dist
+        run: |
+          # Get major+minor version (e.g. "311" for Python 3.11)
+          PY_VER=$(python3 -c "import sys; print(f'{sys.version_info.major}{sys.version_info.minor}')")
+          echo "Python version: $PY_VER"
+          # Look for a matching wheel in the current directory
+          WHEEL=$(ls stormpy-*-cp${PY_VER}-*.whl 2>/dev/null | head -n1 || true)
+          echo "Found wheel: $WHEEL"
+          if [ -z "$WHEEL" ]; then
+            echo "Error: No stormpy wheel found for Python ${PY_VER:0:1}.${PY_VER:1}." >&2
+            exit 1
+          fi
+          echo "Installing $WHEEL..."
+          python3 -m venv venv
+          source venv/bin/activate
+          python3 -m pip install "$WHEEL"
+      - name: Checkout test files
+        uses: actions/checkout@v4
+        with:
+          path: dist/test_files
+          sparse-checkout: |
+            tests
+      - name: Test
+        working-directory: dist
+        run: |
+          source venv/bin/activate
+          python3 -c "import stormpy; print('Import successful')"
+          python3 -m pip install pytest nbval numpy
+          pytest test_files/tests
+
+
+  upload_pypi:
+    needs: [build_wheels, build_sdist, test_wheels_linux, test_wheels_mac]
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    if: github.event_name == 'release' && github.event.action == 'published'
+    # or, alternatively, upload to PyPI on every tag starting with 'v' (remove on: release above to use this)
+    # if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          # unpacks all CIBW artifacts into dist/
+          pattern: cibw-*
+          path: dist
+          merge-multiple: true
+
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/

@@ -31,11 +31,11 @@ class TestState:
             else:
                 assert False
         # Values of s should be 0, ..., 6 and then 6 times 7
-        vals_s = model.state_valuations.get_integer_values_states(var_s)
+        vals_s = model.state_valuations.get_values_states(var_s)
         comp_s = [i for i in range(0, 7)] + [7] * 6
         assert vals_s == comp_s
         # Values of d should be 7 times 0 and then 1, ..., 6
-        vals_d = model.state_valuations.get_integer_values_states(var_d)
+        vals_d = model.state_valuations.get_values_states(var_d)
         comp_d = [0] * 7 + [i for i in range(1, 7)]
         assert vals_d == comp_d
 

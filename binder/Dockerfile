@@ -1,5 +1,10 @@
+# Binder image for stormpy
+# Build from root level with:
+#     docker build -t binder -f binder/Dockerfile .
+# Run with:
+#     docker run -it --rm -p 8888:8888 binder jupyter notebook --NotebookApp.default_url=/lab/ --ip=0.0.0.0 --port=8888
 FROM movesrwth/stormpy:1.9.0
-MAINTAINER Matthias Volk <m.volk@tue.nl>
+LABEL org.opencontainers.image.authors="dev@stormchecker.org"
 
 
 ##########

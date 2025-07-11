@@ -1,8 +1,8 @@
 #include "common.h"
 
-#include "pycarl_core/variable.h"
-#include "pycarl_core/monomial.h"
-#include "pycarl_core/bound_type.h"
+#include "core/variable.h"
+#include "core/monomial.h"
+#include "core/bound_type.h"
 #include "typed_core/interval.h"
 
 PYBIND11_MODULE(pycarl_core, m) {

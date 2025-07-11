@@ -25,7 +25,7 @@ state 0 {6} init
 		11 : 0.07692307692
 		12 : 0.07692307692
 		13 : 0.07692307692
-state 1 {1}
+state 1 {1} 
 	action east
 		2 : 1
 	action west
@@ -34,7 +34,7 @@ state 1 {1}
 		1 : 1
 	action south
 		6 : 1
-state 2 {4}
+state 2 {4} 
 	action east
 		3 : 1
 	action west
@@ -43,7 +43,7 @@ state 2 {4}
 		2 : 1
 	action south
 		2 : 1
-state 3 {7}
+state 3 {7} 
 	action east
 		4 : 1
 	action west
@@ -52,7 +52,7 @@ state 3 {7}
 		3 : 1
 	action south
 		7 : 1
-state 4 {4}
+state 4 {4} 
 	action east
 		5 : 1
 	action west
@@ -61,7 +61,7 @@ state 4 {4}
 		4 : 1
 	action south
 		4 : 1
-state 5 {3}
+state 5 {3} 
 	action east
 		5 : 1
 	action west
@@ -70,7 +70,7 @@ state 5 {3}
 		5 : 1
 	action south
 		8 : 1
-state 6 {0}
+state 6 {0} 
 	action east
 		6 : 1
 	action west
@@ -79,7 +79,7 @@ state 6 {0}
 		1 : 1
 	action south
 		9 : 1
-state 7 {0}
+state 7 {0} 
 	action east
 		7 : 1
 	action west
@@ -88,7 +88,7 @@ state 7 {0}
 		3 : 1
 	action south
 		10 : 1
-state 8 {0}
+state 8 {0} 
 	action east
 		8 : 1
 	action west
@@ -97,7 +97,7 @@ state 8 {0}
 		5 : 1
 	action south
 		11 : 1
-state 9 {0}
+state 9 {0} 
 	action east
 		9 : 1
 	action west
@@ -106,7 +106,7 @@ state 9 {0}
 		6 : 1
 	action south
 		12 : 1
-state 10 {0}
+state 10 {0} 
 	action east
 		10 : 1
 	action west
@@ -115,7 +115,7 @@ state 10 {0}
 		7 : 1
 	action south
 		14 : 1
-state 11 {0}
+state 11 {0} 
 	action east
 		11 : 1
 	action west
@@ -124,7 +124,7 @@ state 11 {0}
 		8 : 1
 	action south
 		13 : 1
-state 12 {2}
+state 12 {2} 
 	action east
 		12 : 1
 	action west
@@ -133,7 +133,7 @@ state 12 {2}
 		9 : 1
 	action south
 		12 : 1
-state 13 {2}
+state 13 {2} 
 	action east
 		13 : 1
 	action west

@@ -1,12 +1,11 @@
 #include "transformations.h"
-#include <pybind11/attr.h>
-#include <storm-pomdp/transformer/ApplyFiniteSchedulerToPomdp.h>
-#include <storm-pomdp/transformer/BinaryPomdpTransformer.h>
-#include <storm-pomdp/transformer/MakePOMDPCanonic.h>
-#include <storm-pomdp/transformer/ObservationTraceUnfolder.h>
-#include <storm-pomdp/transformer/PomdpMemoryUnfolder.h>
-#include <storm/adapters/RationalFunctionAdapter.h>
-#include <storm/storage/expressions/ExpressionManager.h>
+#include "storm-pomdp/transformer/ApplyFiniteSchedulerToPomdp.h"
+#include "storm-pomdp/transformer/BinaryPomdpTransformer.h"
+#include "storm-pomdp/transformer/MakePOMDPCanonic.h"
+#include "storm-pomdp/transformer/ObservationTraceUnfolder.h"
+#include "storm-pomdp/transformer/PomdpMemoryUnfolder.h"
+#include "storm/adapters/RationalFunctionAdapter.h"
+#include "storm/storage/expressions/ExpressionManager.h"
 
 template <typename ValueType>
 std::shared_ptr<storm::models::sparse::Pomdp<ValueType>>
@@ -133,11 +132,13 @@ define_transformations<storm::RationalFunction>(py::module &m,
 
 template void define_transformations_int<double>(py::module &m,
                                                  std::string const &vtSuffix);
-template void define_transformations_int<storm::RationalNumber>(py::module &m,
+template void
+define_transformations_int<storm::RationalNumber>(py::module &m,
                                                   std::string const &vtSuffix);
 template void define_transformations_int<storm::RationalFunction>(
     py::module &m, std::string const &vtSuffix);
-template void define_transformations_int<storm::Interval>(py::module &m,
+template void
+define_transformations_int<storm::Interval>(py::module &m,
                                             std::string const &vtSuffix);
-template void define_transformations_int<storm::RationalInterval>(py::module &m,
-                                            std::string const &vtSuffix);
+template void define_transformations_int<storm::RationalInterval>(
+    py::module &m, std::string const &vtSuffix);

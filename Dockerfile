@@ -8,6 +8,7 @@
 # Set Storm base image
 ARG STORM_BASE=lukovdm/storm:premise
 FROM $STORM_BASE
+LABEL org.opencontainers.image.authors="dev@stormchecker.org"
 
 
 # Configuration arguments
@@ -19,6 +20,8 @@ FROM $STORM_BASE
 ARG build_type=Release
 # Additional arguments for compiling stormpy
 ARG setup_args=""
+# Optional support to install for stormpy, such as '[test,doc]'
+ARG options=""
 # Number of threads to use for parallel compilation
 ARG no_threads=24
 
@@ -46,7 +49,7 @@ RUN mkdir -p /opt/carl-parser/build
 WORKDIR /opt/carl-parser/build
 
 # Configure carl-parser
-RUN cmake .. -DCMAKE_BUILD_TYPE=$build_type
+RUN cmake .. -DCMAKE_BUILD_TYPE=$build_type -DPORTABLE=ON
 
 # Build carl-parser
 RUN make carl-parser -j $no_threads
@@ -58,7 +61,6 @@ ENV VIRTUAL_ENV=/opt/venv
 RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
-RUN pip install setuptools
 
 # Build stormpy
 ###############
@@ -69,7 +71,8 @@ WORKDIR /opt/stormpy
 COPY . .
 
 # Build stormpy
-RUN python setup.py build_ext $setup_args -j $no_threads develop
-
-# Uncomment to build optional dependencies
-#RUN pip install -e '.[doc,numpy]'"
+RUN pip install -v \
+    --config-settings=cmake.define.CMAKE_BUILD_PARALLEL_LEVEL=$no_threads \
+    --config-settings=cmake.build-type=$build_type \
+    --config-settings=cmake.define.CARLPARSER_DIR_HINT=/opt/carl-parser/build/ \
+    $setup_args .$options

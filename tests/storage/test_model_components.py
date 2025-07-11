@@ -130,8 +130,8 @@ class TestSparseModelComponents:
         value_s = [None] * nr_states
         value_d = [None] * nr_states
         for s in range(0, dtmc.nr_states):
-            value_s[s] = dtmc.state_valuations.get_integer_value(s, var_s)
-            value_d[s] = dtmc.state_valuations.get_integer_value(s, var_d)
+            value_s[s] = dtmc.state_valuations.get_value(s, var_s)
+            value_d[s] = dtmc.state_valuations.get_value(s, var_d)
         assert value_s == [0, 1, 2, 3, 4, 5, 6, 7, 7, 7, 7, 7, 7]
         assert value_d == [0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6]
 
@@ -283,8 +283,8 @@ class TestSparseModelComponents:
         value_s = [None] * nr_states
         value_d = [None] * nr_states
         for s in range(0, mdp.nr_states):
-            value_s[s] = mdp.state_valuations.get_integer_value(s, var_s)
-            value_d[s] = mdp.state_valuations.get_integer_value(s, var_d)
+            value_s[s] = mdp.state_valuations.get_value(s, var_s)
+            value_d[s] = mdp.state_valuations.get_value(s, var_d)
         assert value_s == [0, 1, 2, 3, 4, 5, 6, 7, 7, 7, 7, 7, 7]
         assert value_d == [0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6]
 
@@ -434,10 +434,10 @@ class TestSparseModelComponents:
         value_s1 = [None] * nr_states
         value_s2 = [None] * nr_states
         for s in range(0, ctmc.nr_states):
-            value_s[s] = ctmc.state_valuations.get_integer_value(s, var_s)
-            value_a[s] = ctmc.state_valuations.get_integer_value(s, var_a)
-            value_s1[s] = ctmc.state_valuations.get_integer_value(s, var_s1)
-            value_s2[s] = ctmc.state_valuations.get_integer_value(s, var_s2)
+            value_s[s] = ctmc.state_valuations.get_value(s, var_s)
+            value_a[s] = ctmc.state_valuations.get_value(s, var_a)
+            value_s1[s] = ctmc.state_valuations.get_value(s, var_s1)
+            value_s2[s] = ctmc.state_valuations.get_value(s, var_s2)
         assert value_s == [1, 1, 1, 2, 1, 1, 2, 2, 1, 2, 2, 2]
         assert value_a == [0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1]
         assert value_s1 == [0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1]
@@ -587,7 +587,7 @@ class TestSparseModelComponents:
 
         value_s = [None] * nr_states
         for s in range(0, ma.nr_states):
-            value_s[s] = ma.state_valuations.get_integer_value(s, var_s)
+            value_s[s] = ma.state_valuations.get_value(s, var_s)
         assert value_s == [0, 2, 1, 4, 3]
 
         # Test choice origins
@@ -782,9 +782,9 @@ class TestSparseModelComponents:
         value_y = [None] * nr_states
         value_o = [None] * nr_states
         for s in range(0, pomdp.nr_states):
-            value_x[s] = pomdp.state_valuations.get_integer_value(s, var_x)
-            value_y[s] = pomdp.state_valuations.get_integer_value(s, var_y)
-            value_o[s] = pomdp.state_valuations.get_integer_value(s, var_o)
+            value_x[s] = pomdp.state_valuations.get_value(s, var_x)
+            value_y[s] = pomdp.state_valuations.get_value(s, var_y)
+            value_o[s] = pomdp.state_valuations.get_value(s, var_o)
         assert value_x == [0, 0, 0, 0, 1, 1, 1, 2, 2, 2]
         assert value_y == [0, 0, 1, 2, 0, 1, 2, 1, 2, 0]
         assert value_o == [0, 1, 1, 1, 1, 1, 1, 1, 1, 2]

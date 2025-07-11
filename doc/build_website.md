@@ -5,7 +5,7 @@ The Markdown files in `doc/source` are used as base and can be modified.
 ## Generate documentation
 To generate the documentation, first install the required dependencies:
 ```console
-pip3 install -e '.[doc]'
+pip install .[doc]
 ```
 Then build the documentation:
 ```console

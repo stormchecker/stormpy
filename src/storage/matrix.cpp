@@ -93,9 +93,9 @@ void define_sparse_matrix(py::module& m, std::string const& vtSuffix) {
                 }
                 return stream.str();
             }, py::arg("row"), "Print rows from start to end")
-        .def("submatrix", [](SparseMatrix<ValueType> const& matrix, storm::storage::BitVector const& rowConstraint, storm::storage::BitVector const& columnConstraint, bool insertDiagonalEntries = false) {
-                return matrix.getSubmatrix(true, rowConstraint, columnConstraint, insertDiagonalEntries);
-            }, py::arg("row_constraint"), py::arg("column_constraint"), py::arg("insert_diagonal_entries") = false, "Get submatrix")
+        .def("submatrix", [](SparseMatrix<ValueType> const& matrix, storm::storage::BitVector const& rowConstraint, storm::storage::BitVector const& columnConstraint, bool insertDiagonalEntries = false, bool useGroups = true) {
+                return matrix.getSubmatrix(useGroups, rowConstraint, columnConstraint, insertDiagonalEntries);
+            }, py::arg("row_constraint"), py::arg("column_constraint"), py::arg("insert_diagonal_entries") = false, py::arg("use_groups") = true, "Get submatrix")
         // Entry_index lead to problems
         .def("row_iter", [](SparseMatrix<ValueType>& matrix, row_index start, row_index end) {
                 return py::make_iterator(matrix.begin(start), matrix.end(end));

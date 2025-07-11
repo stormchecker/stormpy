@@ -8,12 +8,6 @@ from .pycarl_core import *
 from . import infinity
 from stormpy.pycarl import _config
 
-__version__ = "unknown"
-try:
-    from ._version import __version__
-except ImportError:
-    # We're running in a tree that doesn't have a _version.py, so we don't know what our version is.
-    pass
 
 inf = infinity.Infinity()
 
@@ -46,8 +40,6 @@ def print_info():
     """
     Print information about pycarl.
     """
-    print("Pycarl version {}".format(__version__))
-    print("Using carl in version {}".format(carl_version()))
     print("Support for CLN: {}".format(has_cln()))
     print("Support for parsing: {}".format(has_parser()))
 

@@ -2,12 +2,12 @@
 ###################################
 # The Docker image can be built by executing:
 # docker build -t yourusername/stormpy .
-# A different Storm base image can be set from the commandline with:
-# --build-arg STORM_BASE=<new_base_image>
+# A different Linux base image can be set from the commandline with:
+# --build-arg BASE_IMAGE=<new_base_image>
 
-# Set Storm base image
-ARG STORM_BASE=movesrwth/storm:stable
-FROM $STORM_BASE
+# Set base image
+ARG BASE_IMAGE=movesrwth/storm:stable
+FROM $BASE_IMAGE
 LABEL org.opencontainers.image.authors="dev@stormchecker.org"
 
 
@@ -28,31 +28,10 @@ ARG no_threads=2
 
 # Install dependencies
 ######################
-# Uncomment to update packages beforehand
 RUN apt-get update -qq
 RUN apt-get install -y --no-install-recommends \
-    maven \
-    uuid-dev \
     python3 \
     python3-venv
-# Packages maven and uuid-dev are required for carl-parser
-
-# Build carl-parser
-###################
-WORKDIR /opt/
-
-# Obtain carl-parser from public repository
-RUN git clone https://github.com/moves-rwth/carl-parser.git
-
-# Switch to build directory
-RUN mkdir -p /opt/carl-parser/build
-WORKDIR /opt/carl-parser/build
-
-# Configure carl-parser
-RUN cmake .. -DCMAKE_BUILD_TYPE=$build_type -DPORTABLE=ON
-
-# Build carl-parser
-RUN make carl-parser -j $no_threads
 
 
 # Set-up virtual environment
@@ -70,4 +49,8 @@ WORKDIR /opt/stormpy
 # Copy the content of the current local stormpy repository into the Docker image
 COPY . .
 
-# Stormpy is built from outside to catch exit code
+# Build stormpy
+RUN pip install -v \
+    --config-settings=cmake.define.CMAKE_BUILD_PARALLEL_LEVEL=$no_threads \
+    --config-settings=cmake.build-type=$build_type \
+    $setup_args .$options

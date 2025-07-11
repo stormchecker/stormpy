@@ -1,6 +1,7 @@
-name: apply-code-format
+name: Apply code format
 
-on: [ workflow_dispatch ]
+on:
+  workflow_dispatch:
 
 jobs:
   build:
@@ -27,7 +28,7 @@ jobs:
           fi
       - name: Create Pull Request
         id: cpr
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           branch: ci/apply-code-format
           delete-branch: true

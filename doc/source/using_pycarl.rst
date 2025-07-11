@@ -2,7 +2,7 @@
 Getting Started with Pycarl
 ****************************
 
-Before starting with this guide, one should follow the instructions for :doc:`installation`.
+Pycarl is shipped with the stormpy library and can be installed following the instructions for :doc:`installation`.
 
 A Quick Tour through pycarl
 ===========================
@@ -23,7 +23,7 @@ In this example we will use ``gmp`` numbers and therefore import the correspondi
 	
 Simple arithmetic operations
 ----------------------------
-.. seealso:: `01-getting-started.py <https://github.com/moves-rwth/pycarl/blob/master/examples/01-getting-started.py>`_
+.. seealso:: `01-getting-started.py <https://github.com/moves-rwth/stormpy/blob/master/examples/pycarl/01-pycarl-getting-started.py>`_
 
 We start by doing some simple arithmetic operations.
 First we create two variables ``x`` and ``y``::

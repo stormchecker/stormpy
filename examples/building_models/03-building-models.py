@@ -25,7 +25,7 @@ def example_building_models_03():
         print("module {}".format(module.name))
         integer_variables += module.integer_variables
 
-    print(", ".join(["{}: {}".format(str(iv.name), valuations.get_integer_value(2, iv.expression_variable)) for iv in integer_variables]))
+    print(", ".join(["{}: {}".format(str(iv.name), valuations.get_value(2, iv.expression_variable)) for iv in integer_variables]))
 
 
 if __name__ == "__main__":

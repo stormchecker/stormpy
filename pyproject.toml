@@ -1,11 +1,122 @@
+[build-system]
+requires = ["scikit-build-core", "pybind11"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "stormpy"
+description = "stormpy - Python Bindings for Storm"
+readme = "README.md"
+license.file = "LICENSE"
+dynamic = ["version"]
+authors = [
+    { name = "S. Junges", email = "sebastian.junges@ru.nl" },
+    { name = "M. Volk", email = "m.volk@tue.nl" }
+]
+requires-python = ">=3.9"
+dependencies = [
+    "Deprecated",
+]
+classifiers = [
+    'Intended Audience :: Science/Research',
+    'Topic :: Scientific/Engineering',
+    'Topic :: Software Development :: Libraries :: Python Modules',
+]
+
+[project.urls]
+Homepage = "https://github.com/moves-rwth/stormpy"
+Documentation = "https://moves-rwth.github.io/stormpy"
+"Bug Tracker" = "https://github.com/moves-rwth/stormpy/issues"
+
+[project.optional-dependencies]
+numpy = [
+    "numpy"
+]
+plot = [
+    "matplotlib",
+    "numpy",
+    "scipy",
+]
+doc = [
+    "Sphinx<8.2.0",
+    "sphinx-nefertiti",
+    "sphinx-copybutton",
+    "nbsphinx",
+    "ipython",
+    "ipykernel",
+] # also requires pandoc to be installed
+dev = [
+    # Formatting
+    "black[jupyter]",
+]
+test = [
+    "pytest",
+    "nbval",
+    "numpy",
+]
+
+[tool.scikit-build]
+cmake.build-type = "Release"
+build-dir = "build/{wheel_tag}"
+wheel.install-dir = "stormpy"
+cmake.args = [
+]
+wheel.packages = ["lib/stormpy"]
+sdist.include = [
+    "lib/stormpy/_config.py",
+    "lib/stormpy/info/_config.py",
+    "lib/stormpy/dft/_config.py",
+    "lib/stormpy/gspn/_config.py",
+    "lib/stormpy/pars/_config.py",
+    "lib/stormpy/pomdp/_config.py",
+    "lib/stormpy/pycarl/_config.py",
+    "lib/stormpy/pycarl/cln/_config.py",
+    "lib/stormpy/pycarl/cln/formula/_config.py",
+    "lib/stormpy/pycarl/parse/_config.py",
+    "lib/stormpy/pycarl/gmp/parse/_config.py",
+    "lib/stormpy/pycarl/cln/parse/_config.py",
+]
+
+[tool.scikit-build.cmake.define]
+STORM_DIR_HINT=""
+ALLOW_STORM_SYSTEM="ON"
+ALLOW_STORM_FETCH="ON"
+USE_STORM_DFT="ON"
+USE_STORM_GSPN="ON"
+USE_STORM_PARS="ON"
+USE_STORM_POMDP="ON"
+USE_CLN_NUMBERS="ON"
+USE_PARSER="ON"
+CARLPARSER_DIR_HINT=""
+COMPILE_WITH_CCACHE="ON"
+STORMPY_DISABLE_SIGNATURE_DOC="OFF"
+
+[tool.scikit-build.metadata.version]
+provider = "scikit_build_core.metadata.regex"
+input = "lib/stormpy/_version.py"
+
+[tool.cibuildwheel]
+manylinux-x86_64-image = "manylinux_2_34"
+skip = "*musllinux*"
+
+[tool.cibuildwheel.linux]
+before-all = ".github/workflows/before-all-linux.sh"
+repair-wheel-command = "auditwheel show --disable-isa-ext-check {wheel} && auditwheel repair --disable-isa-ext-check -w {dest_dir} {wheel}"
+
+[tool.cibuildwheel.macos]
+before-all = "brew install ccache automake boost cln ginac glpk hwloc z3 xerces-c"
+repair-wheel-command = "delocate-listdeps -vv --depending --all {wheel} && DYLD_LIBRARY_PATH=$REPAIR_LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}"
+
+[tool.cibuildwheel.config-settings]
+"cmake.args" = ["-DSTORM_PORTABLE=ON", "-DALLOW_STORM_SYSTEM='OFF'"]
+
 [tool.black]
 line-length = 160
 target-version = [
-    "py37",
-    "py38",
     "py39",
     "py310",
     "py311",
+    "py312",
+    "py313",
 ]
 
 [tool.pytest.ini_options]

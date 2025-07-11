@@ -1,6 +1,29 @@
 Changelog
 =============
 
+Version 1.10.x
+--------------
+
+### Version 1.10.0 (2025/05)
+Requires Storm version >= 1.10.0
+
+## What's Changed
+- Integrated pycarl into stormpy. Pycarl is no longer available as a separate library.
+- Support for forcing exact mode in environment
+- Support for building Prism SMGs
+- Support for building interval POMDPs from DRN
+- Added convenience functions for state valuations
+- Multi-objective plotting
+- Check DFT for potential modeling issues
+- Added argument `use_groups` to submatrix
+- Bug fixes in interactive belief explorer, `prob01max_states`, parsing properties and `program.variables`
+- Improved documentation
+- Adaption to changes in Storm
+- Developer: support for automatic code formatting
+- Developer: support for multi-platform Docker images
+- Developer: use C++20
+
+
 Version 1.9.x
 -------------
 

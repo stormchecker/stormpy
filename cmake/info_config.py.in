@@ -3,4 +3,3 @@
 storm_version = "@STORM_VERSION@"
 storm_cln_ea = @STORM_USE_CLN_EA_BOOL@
 storm_cln_rf = @STORM_USE_CLN_RF_BOOL@
-stormpy_pybind_version = "@PYBIND_VERSION@"

@@ -75,4 +75,5 @@ RUN pip install -v \
     --config-settings=cmake.define.CMAKE_BUILD_PARALLEL_LEVEL=$no_threads \
     --config-settings=cmake.build-type=$build_type \
     --config-settings=cmake.define.CARLPARSER_DIR_HINT=/opt/carl-parser/build/ \
+    --config-settings=cmake.define.STORM_DIR_HINT=/opt/storm/build/ \
     $setup_args .$options

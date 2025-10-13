@@ -11,5 +11,5 @@ _build/
 .pytest_cache/
 .idea/
 cmake-build-debug/
-
+.cache/
 .DS_Store

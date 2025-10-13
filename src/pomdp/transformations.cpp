@@ -47,6 +47,9 @@ void define_transformations_nt(py::module &m) {
             .value("full", storm::transformer::PomdpFscApplicationMode::FULL)
             ;
 
+    py::class_<storm::pomdp::ObservationTraceUnfolderOptions> options(m, "ObservationTraceUnfolderOptions", "Options for unfolding observation traces");
+    options.def(py::init<>());
+    options.def_readwrite("rejection_sampling", &storm::pomdp::ObservationTraceUnfolderOptions::rejectionSampling, "Use rejection sampling instead of restarts");
 }
 
 template<typename ValueType>
@@ -58,7 +61,7 @@ void define_transformations(py::module& m, std::string const& vtSuffix) {
     //m.def(("_unfold_trace_" + vtSuffix).c_str(), &unfold_trace<ValueType>, "Unfold observed trace", py::arg("pomdp"), py::arg("expression_manager"),py::arg("observation_trace"), py::arg("risk_definition"));
 
     py::class_<storm::pomdp::ObservationTraceUnfolder<ValueType>> unfolder(m, ("ObservationTraceUnfolder" + vtSuffix).c_str(), "Unfolds observation traces in models");
-    unfolder.def(py::init<storm::models::sparse::Pomdp<ValueType> const&,  std::vector<ValueType> const&, std::shared_ptr<storm::expressions::ExpressionManager>&>(), py::arg("model"), py::arg("risk"), py::arg("expression_manager"));
+    unfolder.def(py::init<storm::models::sparse::Pomdp<ValueType> const&,  std::vector<ValueType> const&, std::shared_ptr<storm::expressions::ExpressionManager>&, storm::pomdp::ObservationTraceUnfolderOptions const&>(), py::arg("model"), py::arg("risk"), py::arg("expression_manager"), py::arg("options"));
     unfolder.def("transform", &storm::pomdp::ObservationTraceUnfolder<ValueType>::transform, py::arg("trace"));
     unfolder.def("extend", &storm::pomdp::ObservationTraceUnfolder<ValueType>::extend, py::arg("new_observation"));
     unfolder.def("reset", &storm::pomdp::ObservationTraceUnfolder<ValueType>::reset, py::arg("new_observation"));

@@ -3,7 +3,7 @@
 #     docker build -t binder -f binder/Dockerfile .
 # Run with:
 #     docker run -it --rm -p 8888:8888 binder jupyter notebook --NotebookApp.default_url=/lab/ --ip=0.0.0.0 --port=8888
-FROM movesrwth/stormpy:1.10.0
+FROM movesrwth/stormpy:1.11.3
 LABEL org.opencontainers.image.authors="dev@stormchecker.org"
 
 

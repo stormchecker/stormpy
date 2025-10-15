@@ -4,16 +4,31 @@ name: Release Docker
 # https://docs.docker.com/build/ci/github-actions/multi-platform/#distribute-build-across-multiple-runners
 
 on:
+  # needed to reuse the workflow from another one
+  workflow_call:
+    inputs:
+      tag:
+        description: 'Docker tag (e.g. 1.1.0 or stable)'
+        required: true
+        type: string
+        default: 'x.y.z'
+      storm_tag:
+        description: 'Docker tag of Storm base image (e.g. 1.1.0 or stable)'
+        required: true
+        type: string
+        default: 'x.y.z'
   # needed to trigger the workflow manually
   workflow_dispatch:
     inputs:
       tag:
         description: 'Docker tag (e.g. 1.1.0 or stable)'
         required: true
+        type: string
         default: 'x.y.z'
-      stormTag:
+      storm_tag:
         description: 'Docker tag of Storm base image (e.g. 1.1.0 or stable)'
         required: true
+        type: string
         default: 'x.y.z'
 
 env:
@@ -28,15 +43,15 @@ jobs:
     strategy:
       matrix:
         image:
-          - {tag: "${{ github.event.inputs.tag }}-debug",
-             baseImg: "movesrwth/storm:${{ github.event.inputs.stormTag }}-debug",
-             file: "Dockerfile",
+          - {tag: "${{ inputs.tag }}-debug",
+             baseImg: "movesrwth/storm:${{ inputs.storm_tag }}-debug",
+             file: ".github/workflows/Dockerfile.release",
              buildType: "Debug",
              setupArgs: "--debug"
             }
-          - {tag: "${{ github.event.inputs.tag }}",
-             baseImg: "movesrwth/storm:${{ github.event.inputs.stormTag }}",
-             file: "Dockerfile",
+          - {tag: "${{ inputs.tag }}",
+             baseImg: "movesrwth/storm:${{ inputs.storm_tag }}",
+             file: ".github/workflows/Dockerfile.release",
              buildType: "Release",
              setupArgs: ""
             }
@@ -46,6 +61,8 @@ jobs:
     steps:
       - name: Git clone
         uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.tag }}
       - name: Prepare
         # Sanitize platform name
         run: |
@@ -103,8 +120,8 @@ jobs:
       matrix:
         image:
           # Must be the same as above
-          - {tag: "${{ github.event.inputs.tag }}-debug"}
-          - {tag: "${{ github.event.inputs.tag }}"}
+          - {tag: "${{ inputs.tag }}-debug"}
+          - {tag: "${{ inputs.tag }}"}
     steps:
       - name: Download digests
         uses: actions/download-artifact@v5

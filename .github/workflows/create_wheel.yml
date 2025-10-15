@@ -1,23 +1,22 @@
-name: Build and upload to PyPI
+name: Build and test wheels
 
 on:
-  # needed to trigger the workflow manually
-  workflow_dispatch:
+  # needed to reuse the workflow from another one
+  workflow_call:
     inputs:
-      testPypi:
-        description: 'Whether to use test.pypi instead of pypi'
-        required: true
-        default: true
-        type: boolean
-      stormVersion:
-        description: 'Storm version used as base (e.g. 1.1.0 or master)'
+      storm_version:
+        description: 'Storm version used as base (e.g. 1.1.0)'
         required: true
         type: string
         default: 'x.y.z'
-  # Trigger on release is deactivated because Storm version must be manually set
-  #release:
-  #  types:
-  #    - published
+  # needed to trigger the workflow manually
+  workflow_dispatch:
+    inputs:
+      storm_version:
+        description: 'Storm version used as base (e.g. 1.1.0)'
+        required: true
+        type: string
+        default: 'x.y.z'
 
 jobs:
   build_wheels:
@@ -25,7 +24,7 @@ jobs:
     runs-on: ${{ matrix.runs-on }}
     strategy:
       matrix:
-        os: [ linux-intel, macos-intel, macos-arm ]
+        os: [ linux-intel, linux-arm, macos-intel, macos-arm ]
         include:
           # Set defaults
           - archs: auto
@@ -35,13 +34,16 @@ jobs:
           - os: linux-intel
             runs-on: ubuntu-latest
             archs: x86_64
+          - os: linux-arm
+            runs-on: ubuntu-24.04-arm
+            archs: aarch64
           - os: macos-intel
-            runs-on: macos-13 # macos-13 was the last x86_64 runner
-            xcode: 14.3
-            deploy_target: 13.0
+            runs-on: macos-15-intel # x86_64 runner
+            xcode: latest-stable
+            deploy_target: 15.0
           - os: macos-arm
             runs-on: macos-14 # macos-14+ (including latest) are ARM64 runners
-            xcode: 15.3
+            xcode: latest-stable
             deploy_target: 14.0
       fail-fast: false
     steps:
@@ -51,15 +53,15 @@ jobs:
         with:
           xcode-version: ${{ matrix.xcode }}
       - name: Build wheels
-        uses: pypa/cibuildwheel@v3.1.4
+        uses: pypa/cibuildwheel@v3.2.1
         env:
           CIBW_PLATFORM: ${{ matrix.platform }}
           CIBW_ARCHS: ${{ matrix.archs }}
           MACOSX_DEPLOYMENT_TARGET: ${{ matrix.deploy_target }}
-          CIBW_ENVIRONMENT: STORM_VERSION=${{ github.event.inputs.stormVersion }} NR_JOBS=4
+          CIBW_ENVIRONMENT: STORM_VERSION=${{ inputs.storm_version }} NR_JOBS=4
       - uses: actions/upload-artifact@v4
         with:
-          name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
+          name: stormpy-wheels-${{ matrix.os }}
           path: ./wheelhouse/*.whl
 
 
@@ -72,26 +74,38 @@ jobs:
         run: pipx run build --sdist
       - uses: actions/upload-artifact@v4
         with:
-          name: cibw-sdist
+          name: stormpy-sdist
           path: dist/*.tar.gz
 
 
   test_wheels_linux:
-    name: Test wheel on ${{ matrix.distro }}
+    name: Test wheel on ${{ matrix.distro }} and ${{ matrix.arch.name }}
     needs: [build_wheels]
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.arch.runner }}
     strategy:
       fail-fast: false
       matrix:
+        arch:
+          - {name: linux-intel,
+             runner: ubuntu-latest
+          }
+          - {name: linux-arm,
+             runner: ubuntu-24.04-arm
+          }
         distro:
-          - ubuntu:24.04
-          - debian:12
+          - ubuntu:latest
+          - ubuntu:rolling
+          - debian:latest
           - fedora:latest
           - archlinux:latest
+        exclude:
+          - arch: {name: linux-arm, runner: ubuntu-24.04-arm}
+            distro: archlinux:latest
+
     steps:
       - uses: actions/download-artifact@v5
         with:
-          pattern: cibw-wheels-linux-intel-*
+          pattern: stormpy-wheels-${{ matrix.arch.name }}
           path: dist
           merge-multiple: true
       - name: Checkout test files
@@ -149,20 +163,20 @@ jobs:
       fail-fast: false
       matrix:
         distro:
-          - {name: "XCode 14.3, Intel",
-             os: macos-intel,
-             distro: "macos-13",
-             xcode: "14.3"
-          }
           - {name: "XCode 15.4, ARM",
              os: macos-arm,
              distro: "macos-14",
              xcode: "15.4"
           }
-          - {name: "XCode 16.3, ARM",
+          - {name: "XCode Latest, ARM",
              os: macos-arm,
              distro: "macos-15",
-             xcode: "16.3"
+             xcode: "latest-stable"
+          }
+          - {name: "XCode Latest, Intel",
+             os: macos-intel,
+             distro: "macos-15-intel",
+             xcode: "latest-stable"
           }
     steps:
       - uses: maxim-lobanov/setup-xcode@v1
@@ -170,7 +184,7 @@ jobs:
           xcode-version: ${{ matrix.distro.xcode }}
       - uses: actions/download-artifact@v5
         with:
-          pattern: cibw-wheels-${{ matrix.distro.os }}-*
+          pattern: stormpy-wheels-${{ matrix.distro.os }}
           path: dist
           merge-multiple: true
       - name: Install from wheel and test
@@ -203,52 +217,3 @@ jobs:
           python3 -c "import stormpy; print('Import successful')"
           python3 -m pip install pytest nbval numpy
           pytest test_files/tests
-
-
-  upload_pypi:
-    needs: [build_wheels, build_sdist, test_wheels_linux, test_wheels_mac]
-    runs-on: ubuntu-latest
-    environment:
-      name: pypi
-      url: https://pypi.org/p/stormpy
-    permissions:
-      id-token: write
-    # Only upload if not using test.pypi and using original repo and triggered by either a release or a manual workflow dispatch
-    if: ${{ !inputs.testPypi && github.repository_owner == 'moves-rwth' && ((github.event_name == 'release' && github.event.action == 'published') || github.event_name == 'workflow_dispatch') }}
-    steps:
-      - uses: actions/download-artifact@v5
-        with:
-          # unpacks all CIBW artifacts into dist/
-          pattern: cibw-*
-          path: dist
-          merge-multiple: true
-
-      - uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          verbose: true
-          skip-existing: true
-
-
-  upload_testpypi:
-    needs: [build_wheels, build_sdist, test_wheels_linux, test_wheels_mac]
-    runs-on: ubuntu-latest
-    environment:
-      name: testpypi
-      url: https://test.pypi.org/p/stormpy
-    permissions:
-      id-token: write
-    # Only upload if using test.pypi and using original repo and triggered by either a release or a manual workflow dispatch
-    if: ${{ inputs.testPypi && github.repository_owner == 'moves-rwth' && ((github.event_name == 'release' && github.event.action == 'published') || github.event_name == 'workflow_dispatch') }}
-    steps:
-      - uses: actions/download-artifact@v5
-        with:
-          # unpacks all CIBW artifacts into dist/
-          pattern: cibw-*
-          path: dist
-          merge-multiple: true
-
-      - uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          repository-url: https://test.pypi.org/legacy/
-          verbose: true
-          skip-existing: true

@@ -1,6 +1,41 @@
 Changelog
 =============
 
+Version 1.11.x
+--------------
+
+### Version 1.11.3 (2025/10)
+Requires Storm version >= 1.11.0. Binaries for this release are linked with Storm 1.11.1.
+
+- Use latest Storm version in CI workflow for releases.
+
+### Version 1.11.2 (2025/10)
+Requires Storm version >= 1.11.0. Binaries for this release are linked with Storm 1.11.0.
+
+- Prebuilt binaries on mac require at least macOS version 14 (Apple Silicon) or version 15 (Intel) 
+- Documentation: Revised installation guide
+- Developer: Improved workflow for creating wheels and added support for Linux ARM
+- Developer: Use fixed versions for Python dependencies
+
+### Version 1.11.1 (2025/09)
+Requires Storm version >= 1.11.0. 
+
+- Fixed issue in CI workflow for releases
+
+### Version 1.11.0 (2025/09)
+Requires Storm version >= 1.11.0
+
+- Restructured build process:
+    * Migrated build process to scikit-build-core
+    * Adaptions to build process of Storm
+    * Developer: added information on used Storm library (e.g. installation location) to `stormpy.info`
+    * Developer: internal libraries are denoted by underscore prefix (e.g. `_storage`) now
+- Generalized functions `get_value` and `get_values_states` for valuations
+- Adaption to changes in Storm
+- Documentation: Use Sphinx theme Nefertiti and updated documentation
+- Developer: CI workflow for new releases including publishing to pypi
+
+
 Version 1.10.x
 --------------
 

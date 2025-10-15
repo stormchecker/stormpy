@@ -1,5 +1,5 @@
 [build-system]
-requires = ["scikit-build-core", "pybind11"]
+requires = ["scikit-build-core==0.11.6", "pybind11==3.0.1"]
 build-backend = "scikit_build_core.build"
 
 [project]
@@ -90,7 +90,7 @@ CARLPARSER_DIR_HINT=""
 COMPILE_WITH_CCACHE="ON"
 STORMPY_DISABLE_SIGNATURE_DOC="OFF"
 STORM_GIT_REPO="https://github.com/moves-rwth/storm.git"
-STORM_GIT_TAG="master"
+STORM_GIT_TAG="1.11.1"
 
 
 [tool.scikit-build.metadata.version]
@@ -99,6 +99,7 @@ input = "lib/stormpy/_version.py"
 
 [tool.cibuildwheel]
 manylinux-x86_64-image = "manylinux_2_34"
+manylinux-aarch64-image = "manylinux_2_34"
 skip = "*musllinux*"
 
 [tool.cibuildwheel.linux]

@@ -1,0 +1,46 @@
+name: Update Storm version
+
+on:
+  # needed to reuse the workflow from another one
+  workflow_call:
+    inputs:
+      storm_version:
+        description: 'Storm version'
+        required: true
+        type: string
+        default: 'x.y.z'
+    secrets:
+      # needs permissions 'pull-request' and 'workflows'
+      personal_access_token:
+        required: true
+
+jobs:
+  update_stormpy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git clone
+        uses: actions/checkout@v5
+        with:
+          repository: moves-rwth/stormpy
+      - name: Update Storm version
+        run: |
+          # Update STORM_MIN_VERSION
+          sed -i -E 's/STORM_MIN_VERSION "(.+)"/STORM_MIN_VERSION "${{ inputs.storm_version }}"/' CMakeLists.txt
+          sed -i -E 's/STORM_GIT_TAG="(.+)"/STORM_GIT_TAG="${{ inputs.storm_version }}"/' pyproject.toml
+      - name: Commit update
+        run: |
+          git diff
+          git config user.name 'Stormchecker bot'
+          git config user.email 'dev@stormchecker.org'
+          git commit -am "Use Storm ${{ inputs.storm_version }}"
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.personal_access_token }}
+          branch: ci/update-storm
+          delete-branch: true
+          title: 'Update Storm ${{ inputs.storm_version }}'
+          body: |
+            Auto-generated pull request triggered by a new Storm version.
+            - Manually close and reopen this PR to trigger the CI.

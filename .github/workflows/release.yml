@@ -1,0 +1,136 @@
+name: Release new version
+# Triggered by new a release on Github
+# - deploys Docker containers
+# - updates stable branch
+# - create new pypi package
+# - update stormpy version in Binder image
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  env_storm_version:
+    # Set Storm version in environment variable for later use
+    runs-on: ubuntu-latest
+    outputs:
+      storm_version: ${{ steps.getVersion.outputs.storm_version }}
+    steps:
+      - name: Git clone
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.release.tag_name }}
+      - name: Get Storm version
+        id: getVersion
+        run: |
+          # Get Storm version from STORM_GIT_TAG in pyproject.toml
+          echo "STORM_VERSION=$(sed -n -E 's/STORM_GIT_TAG="(.+)"/\1/p' pyproject.toml)" >> "$GITHUB_OUTPUT"
+
+  deploy_docker:
+    # Create Docker images for tag
+    needs: env_storm_version
+    uses: ./.github/workflows/release_docker.yml
+    with:
+      # Use the tag from the release
+      tag: ${{ github.event.release.tag_name }}
+      storm_tag: ${{ needs.env_storm_version.outputs.storm_version }}
+    secrets: inherit
+
+  update_stable:
+    # Update stable branch
+    needs: env_storm_version
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Git clone
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.release.tag_name }}
+          fetch-depth: 0
+      - name: Rebase
+        run: |
+          git config user.name 'Stormchecker bot'
+          git config user.email 'dev@stormchecker.org'
+          git fetch origin stable
+          git checkout stable
+          git rebase ${{ github.event.release.tag_name }}
+          git push origin stable
+
+  deploy_docker_stable:
+    # Create Docker images for stable branch
+    needs: update_stable
+    uses: ./.github/workflows/release_docker.yml
+    with:
+      tag: stable
+      storm_tag: stable
+    secrets: inherit
+
+  update_binder:
+    # Update stormpy version in Binder images
+    needs: [deploy_docker, deploy_docker_stable]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git clone
+        uses: actions/checkout@v5
+        with:
+          repository: moves-rwth/stormpy
+          ref: master
+      - name: Update Binder version
+        run: |
+          # Update STORM_MIN_VERSION
+          sed -i -E 's/FROM movesrwth\/stormpy:(.+)/FROM movesrwth\/stormpy:${{ github.event.release.tag_name }}/' binder/Dockerfile
+      - name: Commit update
+        run: |
+          git diff
+          git config user.name 'Stormchecker bot'
+          git config user.email 'dev@stormchecker.org'
+          git commit -am "Bump stormpy version for Binder image"
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: ci/update-binder
+          delete-branch: true
+          title: 'Bump stormpy version for Binder image'
+          body: |
+            Auto-generated pull request triggered by a new stormpy version.
+            - Manually close and reopen this PR to trigger the CI.
+
+  create_wheels:
+    # Create pypi package
+    needs: [env_storm_version, deploy_docker, deploy_docker_stable]
+    uses: ./.github/workflows/create_wheel.yml
+    with:
+      storm_version: ${{ needs.env_storm_version.outputs.storm_version }}
+    secrets: inherit
+
+  upload_pypi:
+    # Upload pypi package
+    # cannot be in reusable workflow
+    needs: [create_wheels]
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/stormpy
+      # When testing
+      #name: testpypi
+      #url: https://test.pypi.org/p/stormpy
+    permissions:
+      id-token: write
+    # Only upload if using original repo and triggered by either a release or a manual workflow dispatch
+    if: ${{ github.repository_owner == 'moves-rwth' && ((github.event_name == 'release' && github.event.action == 'published') || github.event_name == 'workflow_dispatch') }}
+    steps:
+      - uses: actions/download-artifact@v5
+        with:
+          # unpacks all stormpy artifacts into dist/
+          pattern: stormpy-*
+          path: dist
+          merge-multiple: true
+
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          # When testing
+          #repository-url: https://test.pypi.org/legacy/
+          verbose: true
+          skip-existing: true

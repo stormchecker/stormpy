@@ -1,13 +1,13 @@
 #include "common.h"
 
-#include "src/utility/kwekMehlhorn.h"
 #include "storm/adapters/RationalNumberAdapter.h"
 #include "utility/chrono.h"
 #include "utility/json.h"
+#include "utility/kwekMehlhorn.h"
 #include "utility/shortestPaths.h"
 #include "utility/smtsolver.h"
 
-PYBIND11_MODULE(utility, m) {
+PYBIND11_MODULE(_utility, m) {
   m.doc() = "Utilities for Storm";
 
 #ifdef STORMPY_DISABLE_SIGNATURE_DOC

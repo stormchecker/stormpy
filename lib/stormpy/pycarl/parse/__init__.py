@@ -1,10 +1,10 @@
-from . import _config
+from stormpy.pycarl import _config
 
 if not _config.CARL_WITH_PARSER:
     raise ImportError("Parser is not available in the configured carl library! Did you configure carl with '-DBUILD_ADDONS=ON -DBUILD_ADDON_PARSER=ON'?")
 
-from . import parse
-from .parse import *
+from . import _parse
+from ._parse import *
 
 
 class ParserError(Exception):
@@ -24,27 +24,27 @@ def deserialize(input, package):
     """
     error = None
     try:
-        res = package.parse.parse._deserialize(input)
+        res = package.parse._parse._deserialize(input)
     except RuntimeError as e:
         error = str(e)
     # ugly save and rethrow yields improved error messages in pytest.
     if error:
         raise ParserError(error + " when parsing '" + input + "'")
     res_type = res.get_type()
-    if res_type == parse._ParserReturnType.Rational:
+    if res_type == _parse._ParserReturnType.Rational:
         return res.as_rational()
-    elif res_type == parse._ParserReturnType.Variable:
+    elif res_type == _parse._ParserReturnType.Variable:
         return res.as_variable()
-    elif res_type == parse._ParserReturnType.Monomial:
+    elif res_type == _parse._ParserReturnType.Monomial:
         return res.as_monomial()
-    elif res_type == parse._ParserReturnType.Term:
+    elif res_type == _parse._ParserReturnType.Term:
         return res.as_term()
-    elif res_type == parse._ParserReturnType.Polynomial:
+    elif res_type == _parse._ParserReturnType.Polynomial:
         return res.as_polynomial()
-    elif res_type == parse._ParserReturnType.RationalFunction:
+    elif res_type == _parse._ParserReturnType.RationalFunction:
         return res.as_rational_function()
-    elif res_type == parse._ParserReturnType.Constraint:
+    elif res_type == _parse._ParserReturnType.Constraint:
         return res.as_constraint()
-    elif res_type == parse._ParserReturnType.Formula:
+    elif res_type == _parse._ParserReturnType.Formula:
         return res.as_formula()
     assert False, "Internal error."

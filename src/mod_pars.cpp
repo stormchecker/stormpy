@@ -4,7 +4,7 @@
 #include "pars/pla.h"
 #include "pars/model_instantiator.h"
 
-PYBIND11_MODULE(pars, m) {
+PYBIND11_MODULE(_pars, m) {
     m.doc() = "Functionality for parametric analysis";
 
 #ifdef STORMPY_DISABLE_SIGNATURE_DOC

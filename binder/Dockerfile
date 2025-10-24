@@ -1,5 +1,10 @@
-FROM movesrwth/stormpy:1.9.0
-MAINTAINER Matthias Volk <m.volk@tue.nl>
+# Binder image for stormpy
+# Build from root level with:
+#     docker build -t binder -f binder/Dockerfile .
+# Run with:
+#     docker run -it --rm -p 8888:8888 binder jupyter notebook --NotebookApp.default_url=/lab/ --ip=0.0.0.0 --port=8888
+FROM movesrwth/stormpy:1.11.3
+LABEL org.opencontainers.image.authors="dev@stormchecker.org"
 
 
 ##########
@@ -33,13 +38,11 @@ USER ${NB_USER}
 ##########
 
 # Jupyter notebook and Jupyterlab
-RUN pip install --no-cache-dir notebook==6.5.7
-RUN pip install --no-cache-dir jupyterlab==4.1.8
-# Use older version of jupyter-server to avoid issue with token
-# see https://github.com/jupyter/notebook/issues/6702#issuecomment-1412832225
-RUN pip install --no-cache-dir jupyter-server==1.24.0
+RUN pip install --no-cache-dir notebook==7.4.3
+RUN pip install --no-cache-dir jupyterlab==4.4.3
+RUN pip install --no-cache-dir jupyter-server==2.16.0
 # Dependencies for stormpy
-RUN pip install --no-cache-dir numpy==1.26.4
+RUN pip install --no-cache-dir numpy==2.2.6
 
 ##########
 # Prepare files for notebooks

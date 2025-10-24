@@ -1,2 +1,2 @@
 from stormpy.pycarl.formula import *
-from .formula import *
+from ._formula import *

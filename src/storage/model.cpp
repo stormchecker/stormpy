@@ -160,6 +160,9 @@ void define_model(py::module& m) {
         .def("_as_sparse_ppomdp", [](ModelBase &modelbase) {
             return modelbase.as<SparsePomdp<RationalFunction>>();
         }, "Get model as sparse pPOMDP")
+        .def("_as_sparse_ipomdp", [](ModelBase &modelbase) {
+            return modelbase.as<SparsePomdp<storm::Interval>>();
+        }, "Get model as sparse interval POMDP")
         .def("_as_sparse_ctmc", [](ModelBase &modelbase) {
                 return modelbase.as<SparseCtmc<double>>();
             }, "Get model as sparse CTMC")

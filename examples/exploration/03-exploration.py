@@ -22,5 +22,6 @@ def example_exploration_03():
     sorted = stormpy.topological_sort(model, forward=False)
     print(sorted)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     example_exploration_03()

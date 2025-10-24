@@ -1,29 +1,32 @@
 import pytest
 
-import stormpy._config as config
+import stormpy.info._config as config
 
 # Skip not supported functionality
-has_xml = config.storm_with_xerces
-has_dft = config.storm_with_dft
-has_gspn = config.storm_with_gspn
-has_pars = config.storm_with_pars
-has_spot = config.storm_with_spot
-has_pomdp = config.storm_with_pomdp
+has_spot = config.STORM_WITH_SPOT
+has_xml = config.STORM_WITH_XERCES
+has_dft = config.STORM_WITH_DFT
+has_gspn = config.STORM_WITH_GSPN
+has_pars = config.STORM_WITH_PARS
+has_pomdp = config.STORM_WITH_POMDP
 
 try:
     import numpy
+
     has_numpy = True
 except ImportError:
     has_numpy = False
 
 try:
     import matplotlib
+
     has_matplotlib = True
 except ImportError:
     has_matplotlib = False
 
 try:
     import scipy
+
     has_scipy = True
 except ImportError:
     has_scipy = False
@@ -40,8 +43,8 @@ plotting = pytest.mark.skipif(not has_matplotlib or not has_scipy, reason="Libra
 from stormpy import pycarl
 
 # Skip not supported functionality
-cln = pytest.mark.skipif(not pycarl.has_cln(), reason="No support for CLN")
-parser = pytest.mark.skipif(not pycarl.has_parser(), reason="No support for carlparser")
+pycarl_cln = pytest.mark.skipif(not pycarl.has_cln(), reason="No support for CLN")
+pycarl_parser = pytest.mark.skipif(not pycarl.has_parser(), reason="No support for carlparser")
 
 # Parametrize available number types
 from stormpy.pycarl import gmp

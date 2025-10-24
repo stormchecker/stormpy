@@ -18,12 +18,12 @@ def example_dfts_01():
     print("DFT has {} BEs and {} dynamic elements.".format(dft.nr_be(), dft.nr_dynamic()))
 
     # Analyze
-    formula_str = "T=? [ F \"failed\" ]"
+    formula_str = 'T=? [ F "failed" ]'
     formulas = stormpy.parse_properties(formula_str)
     results = stormpy.dft.analyze_dft(dft, [formulas[0].raw_formula])
     result = results[0]
     print(result)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     example_dfts_01()

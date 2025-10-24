@@ -11,7 +11,7 @@
 #include "typed_core/factorizedrationalfunction.h"
 #include "typed_core/interval.h"
 
-PYBIND11_MODULE(gmp, m) {
+PYBIND11_MODULE(_gmp, m) {
     m.attr("__name__") = "stormpy.pycarl.gmp";
     m.doc() = "pycarl core gmp-typed data and functions";
 

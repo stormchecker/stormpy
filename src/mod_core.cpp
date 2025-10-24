@@ -11,7 +11,7 @@
 #include "core/transformation.h"
 #include "core/simulator.h"
 
-PYBIND11_MODULE(core, m) {
+PYBIND11_MODULE(_core, m) {
     m.doc() = "core";
 
 #ifdef STORMPY_DISABLE_SIGNATURE_DOC

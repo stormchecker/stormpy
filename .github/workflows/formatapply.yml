@@ -1,0 +1,39 @@
+name: Apply code format
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+      - uses: psf/black@stable
+        with:
+          options: ""
+          src: "."
+          jupyter: true
+      - name: Commit Formatting
+        run: |
+          git config user.name 'Auto Format'
+          git config user.email 'dev@stormchecker.org'
+          if [ -z "$(git status --porcelain)" ]
+          then
+          echo "Code did not change"
+          else
+          git commit -am "Applied code formatting"
+          git rev-parse HEAD >> .git-blame-ignore-revs
+          git commit -am "Add code formatting commit to .git-blame-ignore-revs"
+          fi
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: ci/apply-code-format
+          delete-branch: true
+          title: 'Code formatting'
+          body: |
+            Auto-generated pull request triggered by the `apply-code-format` workflow.
+            - Manually close and reopen this PR to trigger the CI.
+            - Make sure to **merge** (and not rebase) this PR so that the added commit hash in `.git-blame-ignore-revs` remains valid.

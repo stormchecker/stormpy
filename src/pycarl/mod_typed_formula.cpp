@@ -4,7 +4,7 @@
 #include "typed_formula/constraint.h"
 #include "typed_formula/formula.h"
 
-PYBIND11_MODULE(formula, m) {
+PYBIND11_MODULE(_formula, m) {
     m.attr("__name__") = "stormpy.pycarl.formula";
 	m.doc() = "pycarl formula typed functions";
 

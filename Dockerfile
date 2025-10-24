@@ -1,5 +1,5 @@
-# Base Dockerfile for using stormpy
-###################################
+# Dockerfile for stormpy
+########################
 # The Docker image can be built by executing:
 # docker build -t yourusername/stormpy .
 # A different Storm base image can be set from the commandline with:
@@ -8,7 +8,7 @@
 # Set Storm base image
 ARG STORM_BASE=movesrwth/storm:stable
 FROM $STORM_BASE
-MAINTAINER Matthias Volk <m.volk@utwente.nl>
+LABEL org.opencontainers.image.authors="dev@stormchecker.org"
 
 
 # Configuration arguments
@@ -20,22 +20,20 @@ MAINTAINER Matthias Volk <m.volk@utwente.nl>
 ARG build_type=Release
 # Additional arguments for compiling stormpy
 ARG setup_args=""
-# Additional CMake arguments for carl
-ARG carl_cmake_args=""
+# Optional support to install for stormpy, such as '[test,doc]'
+ARG options=""
 # Number of threads to use for parallel compilation
 ARG no_threads=2
-# Carl-storm version
-ARG carl_version=master
 
 
 # Install dependencies
 ######################
-# Uncomment to update packages beforehand
 RUN apt-get update -qq
 RUN apt-get install -y --no-install-recommends \
     maven \
     uuid-dev \
     python3 \
+    python3-dev \
     python3-venv
 # Packages maven and uuid-dev are required for carl-parser
 
@@ -43,7 +41,7 @@ RUN apt-get install -y --no-install-recommends \
 ###################
 WORKDIR /opt/
 
-# Obtain carl-parser from public repository
+# Obtain carl-parser
 RUN git clone https://github.com/moves-rwth/carl-parser.git
 
 # Switch to build directory
@@ -51,7 +49,8 @@ RUN mkdir -p /opt/carl-parser/build
 WORKDIR /opt/carl-parser/build
 
 # Configure carl-parser
-RUN cmake .. -DCMAKE_BUILD_TYPE=$build_type
+# Set hint for carl directory to Storm directory
+RUN cmake .. -DCMAKE_BUILD_TYPE=$build_type -DPORTABLE=ON -Dcarl_DIR=/opt/storm/build/_deps/carl-build
 
 # Build carl-parser
 RUN make carl-parser -j $no_threads
@@ -63,7 +62,6 @@ ENV VIRTUAL_ENV=/opt/venv
 RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
-RUN pip install setuptools
 
 # Build stormpy
 ###############
@@ -74,7 +72,8 @@ WORKDIR /opt/stormpy
 COPY . .
 
 # Build stormpy
-RUN python setup.py build_ext $setup_args -j $no_threads develop
-
-# Uncomment to build optional dependencies
-#RUN pip install -e '.[doc,numpy]'"
+RUN pip install -v \
+    --config-settings=cmake.define.CMAKE_BUILD_PARALLEL_LEVEL=$no_threads \
+    --config-settings=cmake.build-type=$build_type \
+    --config-settings=cmake.define.CARLPARSER_DIR_HINT=/opt/carl-parser/build/ \
+    $setup_args .$options

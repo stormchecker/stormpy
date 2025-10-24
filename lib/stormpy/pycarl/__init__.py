@@ -1,19 +1,8 @@
-import sys
-
-if sys.version_info[0] == 2:
-    raise ImportError("Python 2.x is not supported for pycarl.")
-
-from . import pycarl_core
-from .pycarl_core import *
+from . import _pycarl_core
+from ._pycarl_core import *
 from . import infinity
 from stormpy.pycarl import _config
 
-__version__ = "unknown"
-try:
-    from ._version import __version__
-except ImportError:
-    # We're running in a tree that doesn't have a _version.py, so we don't know what our version is.
-    pass
 
 inf = infinity.Infinity()
 
@@ -24,6 +13,15 @@ def carl_version():
     :return: Version of Carl.
     """
     return _config.CARL_VERSION
+
+
+def carl_parser_directory() -> str | None:
+    """
+    Return the carl-parser directory which is used by stormpy, or None if carl parser is not available.
+
+    :return: Carl-parser directory.
+    """
+    return _config.CARL_PARSER_DIRECTORY
 
 
 def has_cln():
@@ -46,8 +44,6 @@ def print_info():
     """
     Print information about pycarl.
     """
-    print("Pycarl version {}".format(__version__))
-    print("Using carl in version {}".format(carl_version()))
     print("Support for CLN: {}".format(has_cln()))
     print("Support for parsing: {}".format(has_parser()))
 

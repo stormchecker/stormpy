@@ -29,7 +29,7 @@ class TestStormpyParse:
         assert description.is_jani_model
 
     def test_parse_jani_model_string(self):
-        with open(get_example_path("dtmc", "die.jani"), 'r') as file:
+        with open(get_example_path("dtmc", "die.jani"), "r") as file:
             json_string = file.read()
         jani_model, properties = stormpy.parse_jani_model_from_string(json_string)
         assert jani_model.name == "die.jani"
@@ -40,14 +40,13 @@ class TestStormpyParse:
         assert description.is_jani_model
 
     def test_parse_formula(self):
-        formula = "P=? [F \"one\"]"
+        formula = 'P=? [F "one"]'
         properties = stormpy.parse_properties(formula)
         assert len(properties) == 1
         assert str(properties[0].raw_formula) == formula
 
     def test_parse_explicit_dtmc(self):
-        model = stormpy.build_sparse_model_from_explicit(get_example_path("dtmc", "die.tra"),
-                                                         get_example_path("dtmc", "die.lab"))
+        model = stormpy.build_sparse_model_from_explicit(get_example_path("dtmc", "die.tra"), get_example_path("dtmc", "die.lab"))
         assert model.nr_states == 13
         assert model.nr_transitions == 20
         assert model.model_type == stormpy.ModelType.DTMC
@@ -55,8 +54,7 @@ class TestStormpyParse:
         assert type(model) is stormpy.SparseDtmc
 
     def test_parse_explicit_mdp(self):
-        model = stormpy.build_sparse_model_from_explicit(get_example_path("mdp", "two_dice.tra"),
-                                                         get_example_path("mdp", "two_dice.lab"))
+        model = stormpy.build_sparse_model_from_explicit(get_example_path("mdp", "two_dice.tra"), get_example_path("mdp", "two_dice.lab"))
         assert model.nr_states == 169
         assert model.nr_transitions == 436
         assert model.model_type == stormpy.ModelType.MDP

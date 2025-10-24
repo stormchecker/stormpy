@@ -1,0 +1,18 @@
+name: Check code format
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v5
+    - uses: psf/black@stable
+      with:
+        options: "--check --diff --color"
+        src: "."
+        jupyter: true

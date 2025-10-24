@@ -11,7 +11,7 @@
 #include "typed_core/factorizedrationalfunction.h"
 #include "typed_core/interval.h"
 
-PYBIND11_MODULE(cln, m) {
+PYBIND11_MODULE(_cln, m) {
     m.attr("__name__") = "stormpy.pycarl.cln";
 
     m.doc() = "pycarl core cln-typed data and functions";

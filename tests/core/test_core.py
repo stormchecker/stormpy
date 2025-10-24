@@ -4,6 +4,7 @@ class TestCore:
 
     def test_pycarl(self):
         import stormpy
+
         rational = stormpy.Rational(0.25)
         assert str(rational) == "1/4"
         pol1 = stormpy.FactorizedPolynomial(32)

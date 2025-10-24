@@ -3,9 +3,12 @@ import stormpy.simulator
 
 import stormpy.examples
 import stormpy.examples.files
+
 """
 Simulator for deterministic models
 """
+
+
 def example_simulator_01():
     path = stormpy.examples.files.prism_dtmc_die
     prism_program = stormpy.parse_prism_program(path)
@@ -39,10 +42,8 @@ def example_simulator_01():
         else:
             final_outcomes[observation] += 1
         simulator.restart()
-    print(", ".join([f"{str(k)}: {v}" for k,v in final_outcomes.items()]))
+    print(", ".join([f"{str(k)}: {v}" for k, v in final_outcomes.items()]))
 
 
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     example_simulator_01()

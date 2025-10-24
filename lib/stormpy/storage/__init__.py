@@ -1,6 +1,7 @@
 import stormpy.utility
-from . import storage
-from .storage import *
+from . import _storage
+from ._storage import *
+from deprecated.sphinx import deprecated
 
 
 def build_sparse_matrix(array, row_group_indices=[]):
@@ -12,7 +13,7 @@ def build_sparse_matrix(array, row_group_indices=[]):
     :param List[double] row_group_indices: List containing the starting row of each row group in ascending order.
     :return: Sparse matrix.
     """
-    return _build_sparse_matrix(storage.SparseMatrixBuilder, array, row_group_indices=row_group_indices)
+    return _build_sparse_matrix(_storage.SparseMatrixBuilder, array, row_group_indices=row_group_indices)
 
 
 def build_parametric_sparse_matrix(array, row_group_indices=[]):
@@ -24,7 +25,7 @@ def build_parametric_sparse_matrix(array, row_group_indices=[]):
     :param List[double] row_group_indices: List containing the starting row of each row group in ascending order.
     :return: Parametric sparse matrix.
     """
-    return _build_sparse_matrix(storage.ParametricSparseMatrixBuilder, array, row_group_indices=row_group_indices)
+    return _build_sparse_matrix(_storage.ParametricSparseMatrixBuilder, array, row_group_indices=row_group_indices)
 
 
 def _build_sparse_matrix(builder_class, array, row_group_indices=[]):
@@ -67,10 +68,134 @@ def get_maximal_end_components(model):
     :return: Maximal end components.
     """
     if model.supports_parameters:
-        return stormpy.jMaximalEndComponentDecomposition_ratfunc(model)
+        return stormpy.MaximalEndComponentDecomposition_ratfunc(model)
     elif model.is_exact:
         return stormpy.MaximalEndComponentDecomposition_exact(model)
     elif model.supports_uncertainty:
         return stormpy.MaximalEndComponentDecomposition_interval(model)
     else:
         return stormpy.MaximalEndComponentDecomposition_double(model)
+
+
+# Extend class StateValuation
+def _get_value(self, state, var):
+    """
+    Get the value of the given variable at the given state.
+    :param state: State.
+    :param var: Variable.
+    :return Value of var in state.
+    """
+    if var.has_boolean_type():
+        return self._get_boolean_value(state, var)
+    elif var.has_integer_type():
+        return self._get_integer_value(state, var)
+    elif var.has_rational_type():
+        return self._get_rational_value(state, var)
+    else:
+        raise ValueError(f"Variable {var} has unsupported type")
+
+
+def _get_values_states(self, var):
+    """
+    Get the value of the given variable of all states.
+    :param var: Variable.
+    :return Values of var. The i'th entry represents the value of state i.
+    """
+    if var.has_boolean_type():
+        return self._get_boolean_values_states(var)
+    elif var.has_integer_type():
+        return self._get_integer_values_states(var)
+    elif var.has_rational_type():
+        return self._get_rational_values_states(var)
+    else:
+        raise ValueError(f"Variable {var} has unsupported type")
+
+
+StateValuation.get_value = _get_value
+StateValuation.get_values_states = _get_values_states
+
+
+# Deprecated functions
+@deprecated("Use general method 'get_value' instead.", version="1.10.0")
+def _get_boolean_value(self, state, var):
+    return self._get_boolean_value(state, var)
+
+
+StateValuation.get_boolean_value = _get_boolean_value
+
+
+@deprecated("Use general method 'get_value' instead.", version="1.10.0")
+def _get_integer_value(self, state, var):
+    return self._get_integer_value(state, var)
+
+
+StateValuation.get_integer_value = _get_integer_value
+
+
+@deprecated("Use general method 'get_value' instead.", version="1.10.0")
+def _get_rational_value(self, state, var):
+    return self._get_rational_value(state, var)
+
+
+StateValuation.get_rational_value = _get_rational_value
+
+
+@deprecated("Use general method 'get_values_states' instead.", version="1.10.0")
+def _get_boolean_values_states(self, var):
+    return self._get_boolean_values_states(var)
+
+
+StateValuation.get_boolean_values_states = _get_boolean_values_states
+
+
+@deprecated("Use general method 'get_values_states' instead.", version="1.10.0")
+def _get_integer_values_states(self, var):
+    return self._get_integer_values_states(var)
+
+
+StateValuation.get_integer_values_states = _get_integer_values_states
+
+
+@deprecated("Use general method 'get_values_states' instead.", version="1.10.0")
+def _get_rational_values_states(self, var):
+    return self._get_rational_values_states(var)
+
+
+StateValuation.get_rational_values_states = _get_rational_values_states
+
+
+# Extend class SimpleValuation
+def _get_value(self, var):
+    """
+    Get the value of the given variable.
+    :param var: Variable.
+    :return Value of var.
+    """
+    if var.has_boolean_type():
+        return self._get_boolean_value(var)
+    elif var.has_integer_type():
+        return self._get_integer_value(var)
+    elif var.has_rational_type():
+        return self._get_rational_value(var)
+    else:
+        raise ValueError(f"Variable {var} has unsupported type")
+
+
+SimpleValuation.get_value = _get_value
+
+
+# Deprecated functions
+@deprecated("Use general method 'get_value' instead.", version="1.10.0")
+def _get_boolean_value(self, var):
+    return self._get_boolean_value(var)
+
+
+SimpleValuation.get_boolean_value = _get_boolean_value
+
+
+@deprecated("Use general method 'get_value' instead.", version="1.10.0")
+def _get_integer_value(self, var):
+    return self._get_integer_value(var)
+
+
+SimpleValuation.get_integer_value = _get_integer_value

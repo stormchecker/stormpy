@@ -1,7 +1,7 @@
 #include "common.h"
 #include "storm-version-info/storm-version.h"
 
-PYBIND11_MODULE(info, m) {
+PYBIND11_MODULE(_info, m) {
     m.doc() = "Storm information";
 
 #ifdef STORMPY_DISABLE_SIGNATURE_DOC
@@ -11,7 +11,7 @@ PYBIND11_MODULE(info, m) {
 
     py::class_<storm::StormVersion>(m, "Version", "Version information for Storm")
         // static properties are still called with self as argument (which we ignore), see
-        // https://pybind11.readthedocs.io/en/master/advanced/classes.html#static-properties
+        // https://pybind11.readthedocs.io/en/stable/advanced/classes.html#static-properties
         .def_property_readonly_static("major", [](py::object /* self */){ return storm::StormVersion::versionMajor; }, "Storm major version.")
         .def_property_readonly_static("minor", [](py::object /* self */){ return storm::StormVersion::versionMinor; }, "Storm minor version.")
         .def_property_readonly_static("patch", [](py::object /* self */){ return storm::StormVersion::versionPatch; }, "Storm patch version.")

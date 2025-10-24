@@ -1,29 +1,20 @@
 import stormpy
 import stormpy.info
-
+import stormpy.pars
+import stormpy.pomdp
 from stormpy import pycarl
+from stormpy.pycarl.formula import FormulaType, Relation
+
+if stormpy.info.storm_ratfunc_use_cln():
+    from stormpy.pycarl.cln import formula
+else:
+    from stormpy.pycarl.gmp import formula
 
 import stormpy.examples
 import stormpy.examples.files
 
-import stormpy.pomdp
 
-import stormpy._config as config
-
-
-def example_parametric_models_01():
-    # Check support for parameters
-    if not config.storm_with_pars:
-        print("Support parameters is missing. Try building storm-pars.")
-        return
-
-    import stormpy.pars
-    from stormpy.pycarl.formula import FormulaType, Relation
-    if stormpy.info.storm_ratfunc_use_cln():
-        from stormpy.pycarl.cln import formula
-    else:
-        from stormpy.pycarl.gmp import formula
-
+def example_pomdps_01():
     # Prevent curious side effects from earlier runs (for tests only)
     pycarl.clear_pools()
     # ###
@@ -53,7 +44,7 @@ def example_parametric_models_01():
     path = stormpy.examples.files.prism_par_pomdp_maze
     prism_program = stormpy.parse_prism_program(path)
 
-    formula_str = "P=? [!\"bad\" U \"goal\"]"
+    formula_str = 'P=? [!"bad" U "goal"]'
     properties = stormpy.parse_properties_for_prism_program(formula_str, prism_program)
     # construct the pPOMDP
     options = stormpy.BuilderOptions([p.raw_formula for p in properties])
@@ -74,11 +65,12 @@ def example_parametric_models_01():
     # apply the unknown FSC to obtain a pmc from the POMDP
     pmc = stormpy.pomdp.apply_unknown_fsc(pomdp, stormpy.pomdp.PomdpFscApplicationMode.simple_linear)
 
-    export_pmc = False # Set to True to export the pMC as drn.
+    export_pmc = False  # Set to True to export the pMC as drn.
     if export_pmc:
-        export_options = stormpy.core.DirectEncodingOptions()
+        export_options = stormpy.DirectEncodingOptions()
         export_options.allow_placeholders = False
         stormpy.export_to_drn(pmc, "test.out", export_options)
 
-if __name__ == '__main__':
-    example_parametric_models_01()
+
+if __name__ == "__main__":
+    example_pomdps_01()

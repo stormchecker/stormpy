@@ -1,22 +1,17 @@
 import stormpy
 import stormpy.info
+import stormpy.pomdp
 
 from stormpy import pycarl
 
 import stormpy.examples
 import stormpy.examples.files
 
-import stormpy.pomdp
-
-import stormpy._config as config
-
 
 def example_pomdp_highlevel_observations():
-    # Check support for parameters
-
     path = stormpy.examples.files.prism_pomdp_maze
     prism_program = stormpy.parse_prism_program(path)
-    formula_str = "P=? [!\"bad\" U \"goal\"]"
+    formula_str = 'P=? [!"bad" U "goal"]'
     properties = stormpy.parse_properties_for_prism_program(formula_str, prism_program)
     # construct the POMDP
     options = stormpy.BuilderOptions([p.raw_formula for p in properties])
@@ -29,5 +24,6 @@ def example_pomdp_highlevel_observations():
     assert pomdp.has_observation_valuations
     assert pomdp.observation_valuations.get_json(0)["o"] == 5
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     example_pomdp_highlevel_observations()

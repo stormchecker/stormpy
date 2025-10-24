@@ -61,7 +61,7 @@ class TestParametric:
         assert len(all_parameters) == 2
 
         program_reward = stormpy.parse_prism_program(get_example_path("pdtmc", "brp_rewards16_2.pm"))
-        formulas_reward = stormpy.parse_properties_for_prism_program("Rmin=? [ F \"target\" ]", program_reward)
+        formulas_reward = stormpy.parse_properties_for_prism_program('Rmin=? [ F "target" ]', program_reward)
         model = stormpy.build_parametric_model(program_reward, formulas_reward)
         model_parameters = model.collect_probability_parameters()
         reward_parameters = model.collect_reward_parameters()
@@ -78,6 +78,7 @@ class TestParametric:
 
     def test_constraints_collector(self):
         from stormpy.pycarl.formula import FormulaType, Relation
+
         if stormpy.info.storm_ratfunc_use_cln():
             from stormpy.pycarl.cln import formula
         else:
@@ -126,7 +127,7 @@ class TestParametric:
 
     def test_mdp_simplification(self):
         program = stormpy.parse_prism_program(get_example_path("pmdp", "two_dice.nm"))
-        formulas = stormpy.parse_properties_for_prism_program("Pmin=? [ F \"two\" ]", program)
+        formulas = stormpy.parse_properties_for_prism_program('Pmin=? [ F "two" ]', program)
         formula = formulas[0].raw_formula
         model = stormpy.build_parametric_model(program, formulas)
         assert model.nr_states == 169

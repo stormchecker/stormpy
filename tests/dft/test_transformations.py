@@ -26,4 +26,3 @@ class TestTransformations:
         assert str(elem) == "{C} BE(exp 5, 0.05)"
         elem = inst_dft.get_element_by_name("D")
         assert str(elem) == "{D} BE(exp 0.01, 0)"
-

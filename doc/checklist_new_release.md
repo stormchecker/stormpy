@@ -1,55 +1,41 @@
 The following steps should be performed when releasing a new stormpy version.
 
-1. Update `CHANGELOG.md`
-   * To get all the commits from an author since the last tag execute:
-   ```console
-   git log last_tag..HEAD --author "author_name"
-   ```
+1. Update the minimal required Storm version:
+   This should be automatically handled by a CI workflow triggered by new releases in Storm.
+   To manually update the Storm version:
+   * change `STORM_MIN_VERSION` in `CMakeLists.txt`
+   * change `STORM_GIT_TAG` in `pyproject.toml`
+   Note that the CI test use the Docker `storm:ci` images which are only updated once per day.
+   The CI fails if the new Storm version is not yet present in these CI Docker images.
+
+2. Check that the stormpy [CI](https://github.com/moves-rwth/stormpy/actions/) builds without errors and all tests are successful.
+
+3. Update `CHANGELOG.md`:
    * Set release month
+   * Set major changes.
+     Use the [automatically generated release notes](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes).
+     Alternatively, get all the commits since the `last_tag` by executing:
+     ```console
+     git log last_tag..HEAD
+     ```
 
-2. Update used tool versions:
-   * Update `storm_min_version` in `setup.py`
-   * Update `install_requires`/`setup_requires` version of pycarl in `setup.py`
+4. Set new stormpy version in `lib/stormpy/_version.py`
 
-3. Check that stormpy builds without errors and all tests are successful
-   * [Github Actions](https://github.com/moves-rwth/stormpy/actions) should run successfully
+5. Create a new pull request with the changes of steps 4 and 5.
+   When the CI checks are successful, stash and merge the pull request into the master branch.
 
-4. Set new stormpy version:
-   * Set new stormpy version in `lib/stormpy/_version.py`
-
-5. Set new tag in git
+6. (The tag can also automatically be set in the next step when creating the release on Github.)
+   Set the new tag in Git, use the flag `-s` to sign the tag.
    ```console
-   git tag -a new_version
-   git push github new_version
+   git tag -a X.Y.Z -m "Stormpy version X.Y.Z" -s
+   git push origin X.Y.Z
    ```
    The new tag should now be visible on [GitHub](https://github.com/moves-rwth/stormpy/tags).
 
-6. [Add new release](https://github.com/moves-rwth/stormpy/releases/new) in GitHub.
-
-7. Update `stable` branch:
-
-   ```console
-   git checkout stable
-   git rebase master
-   git push origin stable
-   ```
-   Note: Rebasing might fail if `stable` is ahead of `master` (e.g. because of merge commits). In this case we can do:
-    ```console
-   git checkout stable
-   git reset --hard master
-   git push --force origin stable
-   ```
-
-8. Create [Docker containers](https://hub.docker.com/r/movesrwth/stormpy) for new version using scripts.
-
-9. Update Docker version for Binder by changing `binder/Dockerfile`:
-    * Set new stormpy release as base
-    * Update version numbers of dependencies
-
-10. Create new python package for release on [Pypi](https://pypi.org/project/stormpy/):
-   ```console
-   python3 setup.py sdist
-   python3 -m pip install --user --upgrade twine
-   python3 -m twine upload dist/*
-   ```
-
+7. [Create a new release](https://github.com/moves-rwth/stormpy/releases/new) on GitHub.
+   Create a new tag or use the tag created in the previous step.
+   Finishing the release automatically triggers a CI workflow which also
+   * updates the `stable` branch
+   * creates new Docker containers for both the tag and `stable` branch
+   * creates a new stormpy Python package on [Pypi](https://pypi.org/project/stormpy/)
+   * triggers a PR in stormpy to update the Docker version for Binder

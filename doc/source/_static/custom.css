@@ -1,0 +1,19 @@
+/* Adaption to nefertiti theme */
+.nbinput .prompt,
+.nboutput .prompt {
+    display: none;
+}
+
+.container, .cell_output, .cell_input {
+    --nftt-gutter-x: 0rem;
+}
+
+div.nboutput.container div.output_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+}
+
+div.nbinput.container div.input_area > pre,
+div.nboutput.container div.output_area > pre {
+    padding: 1rem;
+}

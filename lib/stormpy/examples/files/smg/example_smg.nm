@@ -1,0 +1,34 @@
+// taken from Julia Eisentraut "Value iteration for simple stochastic games: Stopping criterion
+//                              and learning algorithm" - Fig. 1
+
+
+smg
+
+const double p = 2/3;
+
+player maxP
+  [q_action1], [q_action2], [loop]
+endplayer
+
+player minP
+  [p_action1]
+endplayer
+
+player sinkstates
+  state_space
+endplayer
+
+
+module state_space
+  s : [0..3];
+
+  [p_action1] s=0 -> (s'=1);
+
+  [q_action1] s=1 -> (s'=0);
+  [q_action2] s=1 -> (1-p) : (s'=1) + (p/2) : (s'=2) + (p/2) : (s'=3);
+
+  [loop] s=2 -> true;
+  [loop] s=3 -> true;
+endmodule
+
+label "goal" = s=2;

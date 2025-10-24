@@ -19,5 +19,5 @@ def example_highlevel_models():
             print(f"Variable {v.name} is Boolean")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     example_highlevel_models()

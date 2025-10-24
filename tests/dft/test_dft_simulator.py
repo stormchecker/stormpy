@@ -116,7 +116,7 @@ class TestSimulator:
 
         failable = state.failable()
         for f in failable:
-            assert False # no failable elements
+            assert False  # no failable elements
 
     def test_steps_dependency(self):
         dft = stormpy.dft.load_dft_galileo_file(get_example_path("dft", "fdep.dft"))

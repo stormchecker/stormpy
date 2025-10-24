@@ -9,7 +9,7 @@
 #include "dft/simulator.h"
 #include "dft/transformations.h"
 
-PYBIND11_MODULE(dft, m) {
+PYBIND11_MODULE(_dft, m) {
     m.doc() = "Functionality for DFT analysis";
 
 #ifdef STORMPY_DISABLE_SIGNATURE_DOC

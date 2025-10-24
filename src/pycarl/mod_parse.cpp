@@ -8,7 +8,7 @@
 /**
  * The actual module definition
  */
-PYBIND11_MODULE(parse, m) {
+PYBIND11_MODULE(_parse, m) {
     m.attr("__name__") = "stormpy.pycarl.parse";
     m.doc() = "pycarl parsing functions";
 

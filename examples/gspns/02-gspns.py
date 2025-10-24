@@ -48,6 +48,5 @@ def example_gspns_02():
     gspn.export_gspn_pnpro_file(export_path)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     example_gspns_02()
-

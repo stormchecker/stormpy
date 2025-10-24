@@ -11,6 +11,7 @@ from configurations import dft
 class TestDft:
     def test_parametric_dft(self):
         from stormpy import pycarl
+
         pycarl.clear_pools()
         dft = stormpy.dft.load_parametric_dft_galileo_file(get_example_path("dft", "symmetry_param.dft"))
         assert dft.nr_elements() == 7
@@ -44,6 +45,7 @@ class TestDftElement:
             d = dft.get_element_by_name("D")
         assert "InvalidArgumentException" in str(exception.value)
 
+
 @dft
 class TestDftSymmetries:
     def test_symmetries_none(self):
@@ -73,5 +75,5 @@ class TestDftSymmetries:
             for syms in group:
                 assert len(syms) == 2
                 for elem in syms:
-                    assert elem == i or elem == i+3
+                    assert elem == i or elem == i + 3
                 i += 1

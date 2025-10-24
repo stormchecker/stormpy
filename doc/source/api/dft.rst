@@ -5,3 +5,4 @@ Stormpy.dft
    :members:
    :undoc-members:
    :imported-members:
+   :exclude-members: deprecated

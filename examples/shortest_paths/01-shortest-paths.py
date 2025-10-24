@@ -1,9 +1,8 @@
 import stormpy
+from stormpy.utility import ShortestPathsGenerator
 
 import stormpy.examples
 import stormpy.examples.files
-
-from stormpy.utility import ShortestPathsGenerator
 
 
 def example_shortest_paths():
@@ -24,5 +23,5 @@ def example_shortest_paths():
         print("{}-shortest path to state #{}: {}, with distance {}".format(k, state_id, path, distance))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     example_shortest_paths()

@@ -1,5 +1,5 @@
 from stormpy import pycarl
-from configurations import PackageSelector, cln
+from configurations import PackageSelector, pycarl_cln
 
 
 class TestMonomialPool(PackageSelector):
@@ -17,7 +17,7 @@ class TestMonomialPool(PackageSelector):
         pol = package.Polynomial(var)
 
 
-@cln
+@pycarl_cln
 def test_clear_cln():
     pycarl.clear_pools()
     var = pycarl.Variable("i")

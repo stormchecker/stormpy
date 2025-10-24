@@ -20,5 +20,5 @@ def example_getting_started_03():
     print(result.at(initial_state))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     example_getting_started_03()

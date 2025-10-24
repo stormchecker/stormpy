@@ -1,6 +1,68 @@
 Changelog
 =============
 
+Version 1.11.x
+--------------
+
+### Version 1.11.3 (2025/10)
+Requires Storm version >= 1.11.0. Binaries for this release are linked with Storm 1.11.1.
+
+- Use latest Storm version in CI workflow for releases.
+
+### Version 1.11.2 (2025/10)
+Requires Storm version >= 1.11.0. Binaries for this release are linked with Storm 1.11.0.
+
+- Prebuilt binaries on mac require at least macOS version 14 (Apple Silicon) or version 15 (Intel) 
+- Documentation: Revised installation guide
+- Developer: Improved workflow for creating wheels and added support for Linux ARM
+- Developer: Use fixed versions for Python dependencies
+
+### Version 1.11.1 (2025/09)
+Requires Storm version >= 1.11.0. 
+
+- Fixed issue in CI workflow for releases
+
+### Version 1.11.0 (2025/09)
+Requires Storm version >= 1.11.0
+
+- Restructured build process:
+    * Migrated build process to scikit-build-core
+    * Adaptions to build process of Storm
+    * Developer: added information on used Storm library (e.g. installation location) to `stormpy.info`
+    * Developer: internal libraries are denoted by underscore prefix (e.g. `_storage`) now
+- Generalized functions `get_value` and `get_values_states` for valuations
+- Adaption to changes in Storm
+- Documentation: Use Sphinx theme Nefertiti and updated documentation
+- Developer: CI workflow for new releases including publishing to pypi
+
+
+Version 1.10.x
+--------------
+
+### Version 1.10.1 (2025/07)
+Requires Storm version > 1.10.0
+
+- First stand-alone (including Storm) release to [pypi](https://pypi.org/project/stormpy/).
+
+### Version 1.10.0 (2025/05)
+Requires Storm version >= 1.10.0
+
+- Integrated pycarl into stormpy. Pycarl is no longer available as a separate library.
+- Support for forcing exact mode in environment
+- Support for building Prism SMGs
+- Support for building interval POMDPs from DRN
+- Added convenience functions for state valuations
+- Multi-objective plotting
+- Check DFT for potential modeling issues
+- Added argument `use_groups` to submatrix
+- Bug fixes in interactive belief explorer, `prob01max_states`, parsing properties and `program.variables`
+- Improved documentation
+- Adaption to changes in Storm
+- Developer: support for automatic code formatting
+- Developer: support for multi-platform Docker images
+- Developer: use C++20
+
+
 Version 1.9.x
 -------------
 
@@ -204,8 +266,20 @@ Version 0.9.x
 ### Version 0.9 (2017/03)
 - Start of this changelog
 
-Appendix: Pycarl Changelog
+
+# Appendix: Pycarl Changelog
 =============
+
+Version 2.3.x
+-------------
+
+### Version 2.3.0 (2024/08)
+Requires carl-storm version >= 14.23
+
+- Added support for intervals with different number types
+- Automated code formatting
+- Developer: improved build and CMake support
+- Developer: improved CI
 
 
 Version 2.2.x

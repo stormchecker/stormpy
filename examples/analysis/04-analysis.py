@@ -14,14 +14,15 @@ def example_analysis_04():
     options = stormpy.BuilderOptions([p.raw_formula for p in properties])
     options.set_build_state_valuations()
     model = stormpy.build_sparse_model_with_options(prism_program, options)
-    
+
     result = stormpy.model_checking(model, properties[0])
 
     # Print the model checking result for all states
-    
+
     print("Model checking results:")
     for i in range(len(model.states)):
-        print("\tstate #{}\t {}:\t {}".format(i,model.state_valuations.get_string(i),result.at(i)))
-    
-if __name__ == '__main__':
+        print("\tstate #{}\t {}:\t {}".format(i, model.state_valuations.get_string(i), result.at(i)))
+
+
+if __name__ == "__main__":
     example_analysis_04()

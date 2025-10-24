@@ -19,7 +19,7 @@
 
 #include "storm/storage/dd/DdType.h"
 
-PYBIND11_MODULE(storage, m) {
+PYBIND11_MODULE(_storage, m) {
     m.doc() = "Data structures in Storm";
 
 #ifdef STORMPY_DISABLE_SIGNATURE_DOC

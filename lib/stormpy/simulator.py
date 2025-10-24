@@ -1,20 +1,24 @@
 from enum import Enum
 
-import stormpy.core
+import stormpy._core
+import stormpy.storage._storage
 
 
 class SimulatorObservationMode(Enum):
-    STATE_LEVEL = 0,
+    STATE_LEVEL = (0,)
     PROGRAM_LEVEL = 1
 
+
 class SimulatorActionMode(Enum):
-    INDEX_LEVEL = 0,
+    INDEX_LEVEL = (0,)
     GLOBAL_NAMES = 1
+
 
 class Simulator:
     """
     Abstract base class for simulators.
     """
+
     def __init__(self, seed=None):
         self._seed = seed
         self._observation_mode = SimulatorObservationMode.STATE_LEVEL
@@ -47,7 +51,7 @@ class Simulator:
         """
         raise NotImplementedError("Abstract superclass")
 
-    def restart(self, state = None):
+    def restart(self, state=None):
         """
         Reset the simulator to the initial state
         """
@@ -102,9 +106,9 @@ class SparseSimulator(Simulator):
         super().__init__(seed)
         self._model = model
         if self._model.is_exact:
-            self._engine = stormpy.core._DiscreteTimeSparseModelSimulatorExact(model)
+            self._engine = stormpy._core._DiscreteTimeSparseModelSimulatorExact(model)
         else:
-            self._engine = stormpy.core._DiscreteTimeSparseModelSimulatorDouble(model)
+            self._engine = stormpy._core._DiscreteTimeSparseModelSimulatorDouble(model)
         if seed is not None:
             self._engine.set_seed(seed)
         self._state_valuations = None
@@ -149,7 +153,7 @@ class SparseSimulator(Simulator):
         """
         :return:
         """
-        #TODO this should be ensured earlier
+        # TODO this should be ensured earlier
         assert self._model.model_type == stormpy.storage.ModelType.POMDP
         if self._observation_mode == SimulatorObservationMode.STATE_LEVEL:
             return self._model.get_observation(self._engine.get_current_state())
@@ -159,9 +163,9 @@ class SparseSimulator(Simulator):
 
     def _report_result(self):
         if self._full_observe:
-            return self._report_state(),  self._report_rewards(), self._report_labels()
+            return self._report_state(), self._report_rewards(), self._report_labels()
         else:
-            return self._report_observation(),  self._report_rewards(), self._report_labels()
+            return self._report_observation(), self._report_rewards(), self._report_labels()
 
     def _report_rewards(self):
         return self._engine.get_last_reward()
@@ -201,7 +205,7 @@ class SparseSimulator(Simulator):
             raise ValueError(f"Unrecognized type of action {action}")
         return self._report_result()
 
-    def restart(self, state = None):
+    def restart(self, state=None):
         if state is not None:
             raise RuntimeError("Not implemented")
         self._engine.reset_to_initial_state()
@@ -230,8 +234,8 @@ class PrismSimulator(Simulator):
     def __init__(self, program, seed=None, options=stormpy.BuilderOptions()):
         super().__init__(seed)
         self._program = program
-        #TODO support exact arithmetic here
-        self._engine = stormpy.core._DiscreteTimePrismProgramSimulatorDouble(program, options)
+        # TODO support exact arithmetic here
+        self._engine = stormpy._core._DiscreteTimePrismProgramSimulatorDouble(program, options)
         if seed is not None:
             self._engine.set_seed(seed)
         self.set_full_observability(self._program.model_type != stormpy.storage.PrismModelType.POMDP)
@@ -259,9 +263,9 @@ class PrismSimulator(Simulator):
 
     def _report_result(self):
         if self._full_observe:
-            return self._report_state(),  self._report_rewards(), self._report_labels()
+            return self._report_state(), self._report_rewards(), self._report_labels()
         else:
-            return self._report_observation(),  self._report_rewards(), self._report_labels()
+            return self._report_observation(), self._report_rewards(), self._report_labels()
 
     def _report_rewards(self):
         return self._engine.get_last_reward()
@@ -304,13 +308,13 @@ class PrismSimulator(Simulator):
             raise ValueError(f"Unrecognized type of action {action}")
         return self._report_result()
 
-    def restart(self, state = None):
+    def restart(self, state=None):
         if state is None:
             self._engine.reset_to_initial_state()
         else:
-            if isinstance(state,stormpy.BitVector):
+            if isinstance(state, stormpy.BitVector):
                 self._engine._reset_to_state_from_compressed_state(state)
-            elif isinstance(state,stormpy.SimpleValuation):
+            elif isinstance(state, stormpy.SimpleValuation):
                 self._engine._reset_to_state_from_valuation(state)
             else:
                 raise ValueError(f"States of type {type(state)} are not supported yet.")
@@ -327,7 +331,12 @@ class PrismSimulator(Simulator):
     def get_reward_names(self):
         return self._engine.get_reward_names()
 
-def create_simulator(model, seed = None, options=None, ):
+
+def create_simulator(
+    model,
+    seed=None,
+    options=None,
+):
     """
     Factory method for creating a simulator.
 
@@ -336,7 +345,7 @@ def create_simulator(model, seed = None, options=None, ):
     :param options: BuilderOptions that can be passed to the simulator (currently only for symbolic simulators)
     :return: A simulator that can simulate on top of this model
     """
-    if isinstance(model, stormpy.storage._ModelBase):
+    if isinstance(model, stormpy.storage._storage._ModelBase):
         if model.is_sparse_model:
             return SparseSimulator(model, seed)
     elif isinstance(model, stormpy.storage.PrismProgram):

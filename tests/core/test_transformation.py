@@ -38,7 +38,7 @@ class TestTransformation:
 
     def test_transform_continuous_to_discrete_time_model_ctmc(self):
         ctmc = stormpy.build_model_from_drn(get_example_path("ctmc", "dft.drn"))
-        formulas = stormpy.parse_properties("T=? [ F \"failed\" ]")
+        formulas = stormpy.parse_properties('T=? [ F "failed" ]')
         assert ctmc.nr_states == 16
         assert ctmc.nr_transitions == 33
         assert len(ctmc.initial_states) == 1
@@ -81,7 +81,7 @@ class TestTransformation:
 
     def test_eliminate_non_markovian_chains(self):
         program = stormpy.parse_prism_program(get_example_path("ma", "stream2.ma"), False, True)
-        formulas = stormpy.parse_properties_for_prism_program("Pmin=? [ F \"done\"];Tmin=? [ F \"done\" ]", program)
+        formulas = stormpy.parse_properties_for_prism_program('Pmin=? [ F "done"];Tmin=? [ F "done" ]', program)
         ma = stormpy.build_model(program, formulas)
         assert ma.nr_states == 12
         assert ma.nr_transitions == 14
@@ -129,10 +129,11 @@ class TestTransformation:
         result = stormpy.model_checking(ma_elim, ma_formulas_elim[0])
         assert math.isclose(result.at(initial_state), 1)
 
+
 class TestECElimination:
     def test_elimination_on_two_dice(self):
         program = stormpy.parse_prism_program(get_example_path("mdp", "two_dice.nm"))
-        formulas = stormpy.parse_properties_for_prism_program("P=? [ F \"two\" ]", program)
+        formulas = stormpy.parse_properties_for_prism_program('P=? [ F "two" ]', program)
         model = stormpy.build_model(program, formulas)
         subsystem = stormpy.BitVector(model.nr_states, True)
         possible_ec_rows = stormpy.BitVector(model.nr_choices, True)
@@ -144,10 +145,11 @@ class TestECElimination:
         assert ec_elimination_result.new_to_old_row_mapping[200] == 245
         assert ec_elimination_result.sink_rows.number_of_set_bits() == 36
 
+
 class TestSubsystemCreation:
     def test_for_ctmc(self):
         program = stormpy.parse_prism_program(get_example_path("ctmc", "polling2.sm"), True)
-        formulas = stormpy.parse_properties_for_prism_program("P=? [ F<=3 \"target\" ]", program)
+        formulas = stormpy.parse_properties_for_prism_program('P=? [ F<=3 "target" ]', program)
         model = stormpy.build_model(program, formulas)
         assert model.nr_states == 12
         selected_outgoing_transitions = stormpy.BitVector(model.nr_states, True)
@@ -161,4 +163,3 @@ class TestSubsystemCreation:
         assert submodel.nr_states == 8
         assert abort_label == "deadl"
         assert "deadl" in submodel.labeling.get_labels()
-

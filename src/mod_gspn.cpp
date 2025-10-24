@@ -3,7 +3,7 @@
 #include "gspn/gspn.h"
 #include "gspn/gspn_io.h"
 
-PYBIND11_MODULE(gspn, m) {
+PYBIND11_MODULE(_gspn, m) {
     m.doc() = "Support for GSPNs";
 
 #ifdef STORMPY_DISABLE_SIGNATURE_DOC

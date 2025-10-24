@@ -3,9 +3,12 @@ import stormpy.simulator
 
 import stormpy.examples
 import stormpy.examples.files
+
 """
 Simulator for programs
 """
+
+
 def example_simulator_03():
     path = stormpy.examples.files.prism_mdp_firewire
     prism_program = stormpy.parse_prism_program(path)
@@ -25,5 +28,5 @@ def example_simulator_03():
         simulator.restart()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     example_simulator_03()

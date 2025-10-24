@@ -33,8 +33,8 @@ def example_schedulers_02():
         choice = scheduler.get_choice(state)
         action_index = choice.get_deterministic_choice()
         action = state.actions[action_index]
-        print( "In state {} ({}) choose action {} ({})".format(state, ", ".join(state.labels), action, ", ".join(action.labels)))
+        print("In state {} ({}) choose action {} ({})".format(state, ", ".join(state.labels), action, ", ".join(action.labels)))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     example_schedulers_02()

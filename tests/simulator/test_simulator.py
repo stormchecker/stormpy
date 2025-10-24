@@ -21,6 +21,7 @@ class TestSparseSimulator:
             final_outcomes[observation] += 1
         simulator.restart()
 
+
 class TestPrismSimulator:
 
     def test_negative_values(self):
@@ -30,6 +31,5 @@ class TestPrismSimulator:
         simulator = stormpy.simulator.create_simulator(prism_program, seed=42)
         simulator.set_action_mode(stormpy.simulator.SimulatorActionMode.GLOBAL_NAMES)
         state, rew, labels = simulator.restart()
-        assert state["s"] ==  -1
+        assert state["s"] == -1
         assert int(state["s"]) == -1
-

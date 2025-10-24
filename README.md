@@ -1,11 +1,16 @@
 Stormpy - Python bindings for Storm
 ===================================
 
+[![Docs Badge](https://img.shields.io/badge/docs-latest-blue)](https://moves-rwth.github.io/stormpy/)
 [![Build Status](https://github.com/moves-rwth/stormpy/workflows/Build%20Test/badge.svg)](https://github.com/moves-rwth/stormpy/actions)
+[![PyPI - Version](https://img.shields.io/pypi/v/stormpy)](https://pypi.org/project/stormpy/)
 [![GitHub release](https://img.shields.io/github/release/moves-rwth/stormpy.svg)](https://github.com/moves-rwth/stormpy/releases/)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7763208.svg)](https://doi.org/10.5281/zenodo.7763208)
 
 Python bindings for [Storm](https://www.stormchecker.org/), created using [PyBind11](https://pybind11.readthedocs.io/).
+
+Stormpy includes Pycarl, the Python Bindings for [CArL](https://github.com/moves-rwth/carl-storm).
+
 
 ### Get started
 Get started with stormpy directly in the browser via JupyterLab:
@@ -15,30 +20,8 @@ Get started with stormpy directly in the browser via JupyterLab:
 For more information on stormpy, please check the [documentation](https://moves-rwth.github.io/stormpy/).
 
 
-### Dependencies
-
-Stormpy depends on [pycarl](https://github.com/moves-rwth/pycarl/).
-
 ### Authors
 
-- Sebastian Junges
-- Matthias Volk
-
-
-Pycarl - Python Bindings for CArL
-=================================
-
-[![Build Status](https://github.com/moves-rwth/pycarl/workflows/Build%20Test/badge.svg)](https://github.com/moves-rwth/pycarl/actions)
-[![GitHub release](https://img.shields.io/github/release/moves-rwth/pycarl.svg)](https://github.com/moves-rwth/pycarl/releases/)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7763164.svg)](https://doi.org/10.5281/zenodo.7763164)
-
-Python bindings for [CArL](https://github.com/moves-rwth/carl-storm), created using [PyBind11](http://pybind11.readthedocs.io/en/stable/intro.html).
-
-For more information, please check the [documentation](https://moves-rwth.github.io/pycarl/).
-
-### Authors:
-
-Main developers:
 - Sebastian Junges
 - Matthias Volk
 

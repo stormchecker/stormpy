@@ -8,12 +8,3 @@ Polynomial = pycarl.@PYCARL_RF_PACKAGE@.Polynomial
 FactorizedPolynomial = pycarl.@PYCARL_RF_PACKAGE@.FactorizedPolynomial
 RationalFunction = pycarl.@PYCARL_RF_PACKAGE@.RationalFunction
 FactorizedRationalFunction = pycarl.@PYCARL_RF_PACKAGE@.FactorizedRationalFunction
-
-storm_with_dft = @STORM_WITH_DFT_BOOL@
-storm_with_gspn = @STORM_WITH_GSPN_BOOL@
-storm_with_pars = @STORM_WITH_PARS_BOOL@
-storm_with_pomdp = @STORM_WITH_POMDP_BOOL@
-
-storm_with_spot = @STORM_WITH_SPOT_BOOL@
-storm_with_xerces = @STORM_WITH_XERCES_BOOL@
-

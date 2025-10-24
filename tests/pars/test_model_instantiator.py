@@ -27,7 +27,7 @@ class TestModelInstantiator:
 
     def test_sample_pdtmc(self):
         program = stormpy.parse_prism_program(get_example_path("pdtmc", "brp16_2.pm"))
-        formulas = stormpy.parse_properties_for_prism_program("P=? [F \"error\"]", program)
+        formulas = stormpy.parse_properties_for_prism_program('P=? [F "error"]', program)
         model = stormpy.build_parametric_model(program, formulas)
 
         parameters = model.collect_probability_parameters()
@@ -45,7 +45,7 @@ class TestModelInstantiator:
 
     def test_pdtmc_instantiation_checker(self):
         program = stormpy.parse_prism_program(get_example_path("pdtmc", "herman5.pm"))
-        formulas = stormpy.parse_properties_for_prism_program("R=? [F \"stable\"]", program)
+        formulas = stormpy.parse_properties_for_prism_program('R=? [F "stable"]', program)
         model = stormpy.build_parametric_model(program, formulas)
 
         parameters = model.collect_probability_parameters()
@@ -63,7 +63,7 @@ class TestModelInstantiator:
 
     def test_pdtmc_exact_instantiation_checker(self):
         program = stormpy.parse_prism_program(get_example_path("pdtmc", "herman5.pm"))
-        formulas = stormpy.parse_properties_for_prism_program("R=? [F \"stable\"]", program)
+        formulas = stormpy.parse_properties_for_prism_program('R=? [F "stable"]', program)
         model = stormpy.build_parametric_model(program, formulas)
 
         parameters = model.collect_probability_parameters()

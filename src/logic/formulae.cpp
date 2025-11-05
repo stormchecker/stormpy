@@ -32,13 +32,15 @@ void define_formulae(py::module& m) {
         .def_property_readonly("is_bounded_until_formula", &storm::logic::Formula::isBoundedUntilFormula)
         .def_property_readonly("is_until_formula", &storm::logic::Formula::isUntilFormula)
         .def_property_readonly("is_multi_objective_formula", &storm::logic::Formula::isMultiObjectiveFormula)
+        .def("_as_eventually_formula", [](storm::logic::Formula const& f) { return f.asEventuallyFormula(); }, "Get as eventually formula")
             ;
 
     // Path Formulae
     py::class_<storm::logic::PathFormula, std::shared_ptr<storm::logic::PathFormula>> pathFormula(m, "PathFormula", "Formula about the probability of a set of paths in an automaton", formula);
     py::class_<storm::logic::UnaryPathFormula, std::shared_ptr<storm::logic::UnaryPathFormula>> unaryPathFormula(m, "UnaryPathFormula", "Path formula with one operand", pathFormula);
     unaryPathFormula.def_property_readonly("subformula", &storm::logic::UnaryPathFormula::getSubformula, "the subformula");
-    py::class_<storm::logic::EventuallyFormula, std::shared_ptr<storm::logic::EventuallyFormula>>(m, "EventuallyFormula", "Formula for eventually", unaryPathFormula);
+    py::class_<storm::logic::EventuallyFormula, std::shared_ptr<storm::logic::EventuallyFormula>>(m, "EventuallyFormula", "Formula for eventually", unaryPathFormula)
+    .def_property_readonly("subformula", &storm::logic::EventuallyFormula::getSubformula, "the subformula");
     py::class_<storm::logic::GloballyFormula, std::shared_ptr<storm::logic::GloballyFormula>>(m, "GloballyFormula", "Formula for globally", unaryPathFormula);
     py::class_<storm::logic::BinaryPathFormula, std::shared_ptr<storm::logic::BinaryPathFormula>> binaryPathFormula(m, "BinaryPathFormula", "Path formula with two operands", pathFormula);
     binaryPathFormula.def_property_readonly("left_subformula", &storm::logic::BinaryPathFormula::getLeftSubformula);
@@ -49,7 +51,9 @@ void define_formulae(py::module& m) {
     .def_property_readonly("upper_bound_expression", [](storm::logic::BoundedUntilFormula const& form) { return form.getUpperBound(); } )
     .def_property_readonly("left_subformula", [](storm::logic::BoundedUntilFormula const& form) -> storm::logic::Formula const& { return form.getLeftSubformula(); }, py::return_value_policy::reference_internal)
     .def_property_readonly("right_subformula", [](storm::logic::BoundedUntilFormula const& form)-> storm::logic::Formula const& { return form.getRightSubformula(); }, py::return_value_policy::reference_internal);
-    py::class_<storm::logic::ConditionalFormula, std::shared_ptr<storm::logic::ConditionalFormula>>(m, "ConditionalFormula", "Formula with the right hand side being a condition.", formula);
+    py::class_<storm::logic::ConditionalFormula, std::shared_ptr<storm::logic::ConditionalFormula>>(m, "ConditionalFormula", "Formula with the right hand side being a condition.", formula)
+    .def_property_readonly("main_subformula", &storm::logic::ConditionalFormula::getSubformula, "the subformula")
+    .def_property_readonly("conditional_subformula", &storm::logic::ConditionalFormula::getConditionFormula, "the conditional subformula");
     py::class_<storm::logic::UntilFormula, std::shared_ptr<storm::logic::UntilFormula>>(m, "UntilFormula", "Path Formula for unbounded until", binaryPathFormula);
 
     // Reward Path Formulae

@@ -30,6 +30,13 @@ void define_scheduler(py::module& m, std::string vt_suffix) {
                     s.printJsonToStream(str, model, skipUniqueChoices, skipDontCareStates);
                     return str.str();
                 }, py::arg("model"), py::arg("skip_unique_choices") = false, py::arg("skip_dont_care_states") = false)
+            .def("to_str", [](Scheduler const& s, std::shared_ptr<storm::models::sparse::Model<ValueType>> model, bool skipUniqueChoices,
+                               bool skipDontCareStates) {
+                    std::stringstream str;
+                    s.printToStream(str, model, skipUniqueChoices, skipDontCareStates);
+                    return str.str();
+                }, py::arg("model") = nullptr, py::arg("skip_unique_choices") = false, py::arg("skip_dont_care_states") = false)
+            .def("get_memoryless_scheduler_for_memory_state", &Scheduler::getMemorylessSchedulerForMemoryState, py::arg("memory_state") = 0, "Get the memoryless scheduler corresponding to the given memory state")
     ;
 
     if constexpr (!std::is_same_v<ValueType, storm::Interval>) {

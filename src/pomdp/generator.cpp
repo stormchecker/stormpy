@@ -72,6 +72,9 @@ void define_verimon_generator(py::module &m, std::string const &vtSuffix) {
       &GenerateMonitorVerifierOptions<ValueType>::horizonLabel);
   gmvopts.def_readwrite("use_risk",
                         &GenerateMonitorVerifierOptions<ValueType>::useRisk);
+  gmvopts.def_readwrite(
+      "use_rejection_sampling",
+      &GenerateMonitorVerifierOptions<ValueType>::useRejectionSampling);
 }
 
 template void define_verimon_generator<double>(py::module &m,

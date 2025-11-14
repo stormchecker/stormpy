@@ -108,16 +108,12 @@ void define_modelchecking(py::module& m) {
         .def("set_produce_schedulers", &CheckTask<double>::setProduceSchedulers, "Set whether schedulers should be produced (if possible)", py::arg("produce_schedulers") = true)
         .def("set_hint", &CheckTask<double>::setHint, "Sets a hint that may speed up the solver")
         .def("set_robust_uncertainty", &CheckTask<double>::setRobustUncertainty, "Sets whether robust uncertainty should be considered")
-        .def("set_reach_conditional_states_result", &CheckTask<double>::setReachConditionalStatesResult, "Sets the result for conditional states in conditional properties")
-        .def("set_reach_target_states_result", &CheckTask<double>::setReachTargetStatesResult, "Sets the result for target states in conditional properties")
     ;
     // CheckTask
     py::class_<CheckTask<storm::RationalNumber>, std::shared_ptr<CheckTask<storm::RationalNumber>>>(m, "ExactCheckTask", "Task for model checking with exact numbers")
             //m.def("create_check_task", &storm::api::createTask, "Create task for verification", py::arg("formula"), py::arg("only_initial_states") = false);
             .def(py::init<storm::logic::Formula const&, bool>(), py::arg("formula"), py::arg("only_initial_states") = false)
             .def("set_produce_schedulers", &CheckTask<storm::RationalNumber>::setProduceSchedulers, "Set whether schedulers should be produced (if possible)", py::arg("produce_schedulers") = true)
-            .def("set_reach_conditional_states_result", &CheckTask<storm::RationalNumber>::setReachConditionalStatesResult, "Sets the result for conditional states in conditional properties")
-            .def("set_reach_target_states_result", &CheckTask<storm::RationalNumber>::setReachTargetStatesResult, "Sets the result for target states in conditional properties")
             ;
     py::class_<CheckTask<storm::RationalFunction>, std::shared_ptr<CheckTask<storm::RationalFunction>>>(m, "ParametricCheckTask", "Task for parametric model checking")
     //m.def("create_check_task", &storm::api::createTask, "Create task for verification", py::arg("formula"), py::arg("only_initial_states") = false);

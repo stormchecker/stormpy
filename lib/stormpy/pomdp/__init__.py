@@ -16,6 +16,8 @@ def make_canonic(model):
 
     if model.supports_parameters:
         return _pomdp._make_canonic_Rf(model)
+    elif model.is_exact:
+        return _pomdp._make_canonic_Exact(model)
     else:
         return _pomdp._make_canonic_Double(model)
 

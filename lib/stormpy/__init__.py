@@ -272,7 +272,7 @@ def perform_symbolic_bisimulation(model, properties, quotient_format=stormpy.Quo
         return _core._perform_symbolic_bisimulation(model, formulae, bisimulation_type, quotient_format)
 
 
-def model_checking(model, property, only_initial_states=False, extract_scheduler=False, force_fully_observable=False, environment=Environment(), reach_conditional_states_result=None, reach_target_states_result=None):
+def model_checking(model, property, only_initial_states=False, extract_scheduler=False, force_fully_observable=False, environment=Environment()):
     """
     Perform model checking on model for property.
     :param model: Model.
@@ -290,9 +290,7 @@ def model_checking(model, property, only_initial_states=False, extract_scheduler
             extract_scheduler=extract_scheduler,
             force_fully_observable=force_fully_observable,
             environment=environment,
-            reach_conditional_states_result=reach_conditional_states_result,
-            reach_target_states_result=reach_target_states_result
-        )
+        ) 
     else:
         assert model.is_symbolic_model
         if extract_scheduler:
@@ -300,7 +298,7 @@ def model_checking(model, property, only_initial_states=False, extract_scheduler
         return check_model_dd(model, property, only_initial_states=only_initial_states, environment=environment)
 
 
-def check_model_sparse(model, property, only_initial_states=False, extract_scheduler=False, force_fully_observable=False, hint=None, environment=Environment(), reach_conditional_states_result=None, reach_target_states_result=None):
+def check_model_sparse(model, property, only_initial_states=False, extract_scheduler=False, force_fully_observable=False, hint=None, environment=Environment()):
     """
     Perform model checking on model for property.
     :param model: Model.
@@ -351,10 +349,6 @@ def check_model_sparse(model, property, only_initial_states=False, extract_sched
                 return _core._multi_objective_model_checking_exact(model, formula, environment=environment)
             task = _core.ExactCheckTask(formula, only_initial_states)
             task.set_produce_schedulers(extract_scheduler)
-            if reach_conditional_states_result is not None:
-                task.set_reach_conditional_states_result(reach_conditional_states_result)
-            if reach_target_states_result is not None:
-                task.set_reach_target_states_result(reach_target_states_result)
             if hint:
                 task.set_hint(hint)
             return _core._exact_model_checking_sparse_engine(model, task, environment=environment)
@@ -363,10 +357,6 @@ def check_model_sparse(model, property, only_initial_states=False, extract_sched
                 return _core._multi_objective_model_checking_double(model, formula, environment=environment)
             task = _core.CheckTask(formula, only_initial_states)
             task.set_produce_schedulers(extract_scheduler)
-            if reach_conditional_states_result is not None:
-                task.set_reach_conditional_states_result(reach_conditional_states_result)
-            if reach_target_states_result is not None:
-                task.set_reach_target_states_result(reach_target_states_result)
             if hint:
                 task.set_hint(hint)
             return _core._model_checking_sparse_engine(model, task, environment=environment)

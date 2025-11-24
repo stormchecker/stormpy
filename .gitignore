@@ -12,6 +12,6 @@ _build/
 .idea/
 .vscode/
 cmake-build-debug/
-
+.cache/
 .DS_Store
 .cache/

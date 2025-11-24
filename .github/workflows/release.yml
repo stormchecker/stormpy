@@ -121,7 +121,7 @@ jobs:
     # Only upload if using original repo and triggered by either a release or a manual workflow dispatch
     if: ${{ github.repository_owner == 'moves-rwth' && ((github.event_name == 'release' && github.event.action == 'published') || github.event_name == 'workflow_dispatch') }}
     steps:
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           # unpacks all stormpy artifacts into dist/
           pattern: stormpy-*

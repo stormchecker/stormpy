@@ -69,6 +69,8 @@ void define_result(py::module& m) {
                 return result[state];
             }, py::arg("state"), "Get result for given state")
         .def("get_truth_values", &storm::modelchecker::ExplicitQualitativeCheckResult::getTruthValuesVector, "Get BitVector representing the truth values")
+        .def_property_readonly("scheduler", [](storm::modelchecker::ExplicitQualitativeCheckResult const& res) {return res.getScheduler();}, "get scheduler")
+
     ;
     py::class_<storm::modelchecker::SymbolicQualitativeCheckResult<storm::dd::DdType::Sylvan>, std::shared_ptr<storm::modelchecker::SymbolicQualitativeCheckResult<storm::dd::DdType::Sylvan>>>(m, "SymbolicQualitativeCheckResult", "Symbolic qualitative model checking result", qualitativeCheckResult)
             .def("get_truth_values", &storm::modelchecker::SymbolicQualitativeCheckResult<storm::dd::DdType::Sylvan>::getTruthValuesVector, "Get Dd representing the truth values")

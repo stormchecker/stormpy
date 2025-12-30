@@ -23,7 +23,6 @@ class TestSparseSimulator:
 
 
 class TestPrismSimulator:
-
     def test_negative_values(self):
         prism_program = stormpy.parse_prism_program(get_example_path("dtmc", "negativevals.pm"))
         prism_program = stormpy.preprocess_symbolic_input(prism_program, [], "")[0].as_prism_program()

@@ -4,7 +4,6 @@ import pytest
 
 
 class TestPrism:
-
     def test_prism_to_jani_states(self):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
         orig_properties = stormpy.parse_properties_for_prism_program("P=? [F s=7]", program)

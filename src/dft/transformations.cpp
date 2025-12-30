@@ -1,6 +1,7 @@
 #include "dft.h"
 #include "src/helpers.h"
 
+#include "storm/adapters/RationalFunctionAdapter.h"
 #include "storm-dft/transformations/DftInstantiator.h"
 
 using DFTInstantiator = storm::dft::transformations::DftInstantiator<storm::RationalFunction, double>;

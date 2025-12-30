@@ -1,5 +1,6 @@
 #include "modelchecking.h"
 #include "result.h"
+#include "storm/adapters/RationalFunctionAdapter.h"
 #include "storm/api/verification.h"
 #include "storm/environment/Environment.h"
 #include "storm/environment/solver/MinMaxSolverEnvironment.h"
@@ -7,7 +8,7 @@
 #include "storm/modelchecker/results/CheckResult.h"
 #include "storm/modelchecker/hints/ExplicitModelCheckerHint.h"
 #include "storm/modelchecker/csl/helper/SparseCtmcCslHelper.h"
-#include "storm/modelchecker/multiobjective/multiObjectiveModelChecking.h"
+#include "storm/modelchecker/multiobjective/MultiObjectiveModelChecking.h"
 #include "storm/environment/Environment.h"
 #include "storm/utility/graph.h"
 

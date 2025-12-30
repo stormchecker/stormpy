@@ -7,7 +7,6 @@ from configurations import dft
 
 @dft
 class TestAnalysis:
-
     def test_analyze_mttf(self):
         dft = stormpy.dft.load_dft_json_file(get_example_path("dft", "and.json"))
         formulas = stormpy.parse_properties('T=? [ F "failed" ]')

@@ -1,5 +1,7 @@
 #include "dft.h"
 #include "src/helpers.h"
+
+#include "storm/adapters/RationalFunctionAdapter.h"
 #include "storm/settings/SettingsManager.h"
 #include "storm-dft/settings/modules/FaultTreeSettings.h"
 #include "storm-dft/settings/modules/DftIOSettings.h"

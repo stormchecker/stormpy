@@ -1,5 +1,6 @@
 #include "dft_elements.h"
 #include "src/helpers.h"
+#include "storm/adapters/RationalFunctionAdapter.h"
 #include "storm-dft/storage/elements/DFTElements.h"
 
 

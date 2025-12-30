@@ -1,5 +1,6 @@
 #include "analysis.h"
 
+#include "storm/adapters/RationalFunctionAdapter.h"
 #include "storm-dft/parser/DFTJsonParser.h"
 #include "storm-dft/builder/ExplicitDFTModelBuilder.h"
 #include "storm-dft/storage/DftSymmetries.h"

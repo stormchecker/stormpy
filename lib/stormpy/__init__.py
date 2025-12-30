@@ -35,6 +35,8 @@ def _convert_sparse_model(model, parametric=False):
             return model._as_sparse_pctmc()
         elif model.model_type == ModelType.MA:
             return model._as_sparse_pma()
+        elif model.model_type == ModelType.SMG:
+            return model._as_sparse_psmg()
         else:
             raise stormpy.exceptions.StormError("Not supported parametric model constructed")
     else:

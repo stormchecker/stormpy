@@ -1,5 +1,6 @@
 #include "decomposition.h"
 
+#include "storm/adapters/IntervalAdapter.h"
 #include "storm/storage/MaximalEndComponent.h"
 #include "storm/storage/MaximalEndComponentDecomposition.h"
 

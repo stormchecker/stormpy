@@ -6,7 +6,6 @@ from configurations import spot
 
 
 class TestScheduler:
-
     def test_scheduler_mdp(self):
         program = stormpy.parse_prism_program(get_example_path("mdp", "coin2-2.nm"))
         formulas = stormpy.parse_properties_for_prism_program('Pmin=? [ F "finished" & "all_coins_equal_1"]', program)

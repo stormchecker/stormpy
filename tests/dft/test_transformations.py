@@ -8,7 +8,6 @@ from configurations import dft
 
 @dft
 class TestTransformations:
-
     def test_instantiate_dft(self):
         pycarl.clear_pools()
         dft = stormpy.dft.load_parametric_dft_galileo_file(get_example_path("dft", "symmetry_param.dft"))

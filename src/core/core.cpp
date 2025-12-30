@@ -1,6 +1,7 @@
 #include <pybind11/functional.h>
 
 #include "core.h"
+#include "storm/adapters/RationalFunctionAdapter.h"
 #include "storm/utility/initialize.h"
 #include "storm/utility/SignalHandler.h"
 #include "storm/io/file.h"

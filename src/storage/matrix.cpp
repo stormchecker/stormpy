@@ -1,4 +1,6 @@
 #include "matrix.h"
+
+#include "storm/adapters/IntervalAdapter.h"
 #include "storm/adapters/RationalFunctionAdapter.h"
 #include "storm/storage/SparseMatrix.h"
 #include "storm/storage/BitVector.h"

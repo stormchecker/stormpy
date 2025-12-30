@@ -26,7 +26,7 @@ void define_input(py::module& m) {
     // Parse Prism program
     m.def("parse_prism_program", &storm::api::parseProgram, "Parse Prism program", py::arg("path"), py::arg("prism_compat") = false, py::arg("simplify") = true);
     // Parse Jani model
-    m.def("parse_jani_model", [](std::string const& path){
+    m.def("parse_jani_model", [](std::string const& path) -> std::pair<storm::jani::Model, std::vector<storm::jani::Property>>{
             return storm::api::parseJaniModel(path);
         }, "Parse Jani model", py::arg("path"));
     m.def("parse_jani_model_from_string", [](std::string const& jsonstring){

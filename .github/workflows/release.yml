@@ -17,7 +17,7 @@ jobs:
       storm_version: ${{ steps.getVersion.outputs.storm_version }}
     steps:
       - name: Git clone
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.event.release.tag_name }}
       - name: Get Storm version
@@ -44,7 +44,7 @@ jobs:
       contents: write
     steps:
       - name: Git clone
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.event.release.tag_name }}
           fetch-depth: 0
@@ -72,7 +72,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Git clone
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: moves-rwth/stormpy
           ref: master
@@ -88,7 +88,7 @@ jobs:
           git commit -am "Bump stormpy version for Binder image"
       - name: Create Pull Request
         id: cpr
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           branch: ci/update-binder
           delete-branch: true
@@ -121,7 +121,7 @@ jobs:
     # Only upload if using original repo and triggered by either a release or a manual workflow dispatch
     if: ${{ github.repository_owner == 'moves-rwth' && ((github.event_name == 'release' && github.event.action == 'published') || github.event_name == 'workflow_dispatch') }}
     steps:
-      - uses: actions/download-artifact@v6
+      - uses: actions/download-artifact@v7
         with:
           # unpacks all stormpy artifacts into dist/
           pattern: stormpy-*

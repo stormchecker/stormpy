@@ -5,7 +5,6 @@ import math
 
 
 class TestTransformation:
-
     def test_transform_symbolic_dtmc_to_sparse(self):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "crowds5_5.pm"))
         symbolic_model = stormpy.build_symbolic_model(program)

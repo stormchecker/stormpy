@@ -2,6 +2,7 @@
 #include "expressions.h"
 #include "src/helpers.h"
 
+#include "storm/adapters/IntervalAdapter.h"
 #include "storm/storage/expressions/ExpressionManager.h"
 #include "storm/storage/expressions/Expression.h"
 #include "storm/storage/expressions/Valuation.h"

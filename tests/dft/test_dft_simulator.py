@@ -7,7 +7,6 @@ from configurations import dft
 
 @dft
 class TestSimulator:
-
     def test_random_steps(self):
         dft = stormpy.dft.load_dft_json_file(get_example_path("dft", "and.json"))
         dft.set_relevant_events(stormpy.dft.RelevantEvents(), False)

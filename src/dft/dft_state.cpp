@@ -1,5 +1,6 @@
 #include "dft_state.h"
 #include "src/helpers.h"
+#include "storm/adapters/RationalFunctionAdapter.h"
 #include "storm-dft/storage/DFTState.h"
 #include "storm-dft/storage/FailableElements.h"
 

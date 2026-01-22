@@ -58,6 +58,8 @@ void define_environment(py::module& m) {
         .value("restart", storm::ConditionalAlgorithmSetting::Restart)
         .value("bisection", storm::ConditionalAlgorithmSetting::Bisection)
         .value("bisection_advanced", storm::ConditionalAlgorithmSetting::BisectionAdvanced)
+        .value("bisection_policy_tracking", storm::ConditionalAlgorithmSetting::BisectionPolicyTracking)
+        .value("bisection_advanced_policy_tracking", storm::ConditionalAlgorithmSetting::BisectionAdvancedPolicyTracking)
         .value("policy_iteration", storm::ConditionalAlgorithmSetting::PolicyIteration)
     ;
 
@@ -100,6 +102,7 @@ void define_environment(py::module& m) {
     py::class_<storm::ModelCheckerEnvironment>(m, "ModelCheckerEnvironment", "Environment for the solver")
         .def_property("conditional_algorithm", &storm::ModelCheckerEnvironment::getConditionalAlgorithmSetting, &storm::ModelCheckerEnvironment::setConditionalAlgorithmSetting, "conditional algorithm used")
         .def_property("steady_state_distribution_algorithm", &storm::ModelCheckerEnvironment::getSteadyStateDistributionAlgorithm, &storm::ModelCheckerEnvironment::setSteadyStateDistributionAlgorithm, "steady state distribution algorithm used")
+        .def_property("optimization_for_bounded_properties", &storm::ModelCheckerEnvironment::isAllowOptimizationForBoundedPropertiesSet, &storm::ModelCheckerEnvironment::setAllowOptimizationForBoundedProperties, "enable optimization for bounded properties")
         .def_property("ltl2da_tool",
             [](storm::ModelCheckerEnvironment const& env)->py::object { if (env.isLtl2daToolSet()) return py::cast(env.getLtl2daTool()); return py::none(); },
             [](storm::ModelCheckerEnvironment& env, py::object obj){ if (obj.is_none()) env.unsetLtl2daTool(); else env.setLtl2daTool(obj.cast<std::string>()); },

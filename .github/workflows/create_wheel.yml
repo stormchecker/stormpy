@@ -9,6 +9,11 @@ on:
         required: true
         type: string
         default: 'x.y.z'
+      dev_version:
+        description: 'Whether to build a dev version i.e. stormpy version 1.1.0.dev1'
+        required: true
+        type: boolean
+        default: false
   # needed to trigger the workflow manually
   workflow_dispatch:
     inputs:
@@ -17,6 +22,11 @@ on:
         required: true
         type: string
         default: 'x.y.z'
+      dev_version:
+        description: 'Whether to build a dev version i.e. stormpy version 1.1.0.dev1'
+        required: true
+        type: boolean
+        default: false
 
 jobs:
   build_wheels:
@@ -52,8 +62,11 @@ jobs:
         if: ${{ matrix.xcode != '' }}
         with:
           xcode-version: ${{ matrix.xcode }}
+      - name: Prepare version
+        if: ${{ inputs.dev_version }}
+        run: perl -i -pe 's/__version__ = "(.+)"/__version__ = "\1.dev1"/' lib/stormpy/_version.py
       - name: Build wheels
-        uses: pypa/cibuildwheel@v3.3.0
+        uses: pypa/cibuildwheel@v3.3.1
         env:
           CIBW_PLATFORM: ${{ matrix.platform }}
           CIBW_ARCHS: ${{ matrix.archs }}
@@ -70,6 +83,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+      - name: Prepare version
+        if: ${{ inputs.dev_version }}
+        run: perl -i -pe 's/__version__ = "(.+)"/__version__ = "\1.dev1"/' lib/stormpy/_version.py
       - name: Build sdist
         run: pipx run build --sdist
       - uses: actions/upload-artifact@v6

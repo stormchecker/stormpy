@@ -1,0 +1,21 @@
+name: Scheduled build and test wheels
+# Scheduled build and test of wheels for stormpy
+# Calls the general workflow create_wheel.yml with the right arguments
+
+on:
+  schedule:
+    # run weekly
+    - cron: '0 18 * * SUN'
+  # needed to trigger the workflow manually
+  workflow_dispatch:
+
+
+jobs:
+  create_wheels:
+    # Create wheels for stormpy
+    uses: ./.github/workflows/create_wheel.yml
+    with:
+      storm_version: "master"
+      dev_version: true
+    secrets: inherit
+

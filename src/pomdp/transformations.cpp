@@ -65,6 +65,7 @@ void define_transformations(py::module& m, std::string const& vtSuffix) {
     unfolder.def("transform", &storm::pomdp::ObservationTraceUnfolder<ValueType>::transform, py::arg("trace"));
     unfolder.def("extend", &storm::pomdp::ObservationTraceUnfolder<ValueType>::extend, py::arg("new_observation"));
     unfolder.def("reset", &storm::pomdp::ObservationTraceUnfolder<ValueType>::reset, py::arg("new_observation"));
+    unfolder.def("is_rejection_sampling_set",  &storm::pomdp::ObservationTraceUnfolder<ValueType>::isRejectionSamplingSet);
 }
 
 template void define_transformations<double>(py::module& m, std::string const& vtSuffix);

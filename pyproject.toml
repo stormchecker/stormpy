@@ -1,7 +1,7 @@
 [build-system]
 requires = [
     "scikit-build-core==0.12.2",
-    "pybind11==3.0.2"  # Pybind11 version should be synced with find_package(pybind11 ...) in CMakeLists.txt
+    "pybind11==3.0.3"  # Pybind11 version should be synced with find_package(pybind11 ...) in CMakeLists.txt
 ]
 build-backend = "scikit_build_core.build"
 

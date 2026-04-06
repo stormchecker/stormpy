@@ -66,7 +66,7 @@ jobs:
         if: ${{ inputs.dev_version }}
         run: perl -i -pe 's/__version__ = "(.+)"/__version__ = "\1.dev1"/' lib/stormpy/_version.py
       - name: Build wheels
-        uses: pypa/cibuildwheel@v3.4.0
+        uses: pypa/cibuildwheel@v3.4.1
         env:
           CIBW_PLATFORM: ${{ matrix.platform }}
           CIBW_ARCHS: ${{ matrix.archs }}

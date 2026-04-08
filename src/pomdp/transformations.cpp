@@ -2,7 +2,7 @@
 
 #include "storm-pomdp/transformer/ApplyFiniteSchedulerToPomdp.h"
 #include "storm-pomdp/transformer/BinaryPomdpTransformer.h"
-#include "storm-pomdp/transformer/MakePOMDPCanonic.h"
+#include "storm/transformer/MakePOMDPCanonic.h"
 #include "storm-pomdp/transformer/ObservationTraceUnfolder.h"
 #include "storm-pomdp/transformer/PomdpMemoryUnfolder.h"
 #include "storm/adapters/RationalFunctionAdapter.h"

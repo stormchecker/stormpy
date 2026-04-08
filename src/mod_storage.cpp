@@ -39,7 +39,7 @@ PYBIND11_MODULE(_storage, m) {
     define_sparse_model<storm::RationalFunction>(m, "Parametric");
     define_sparse_model<storm::RationalInterval>(m, "RationalInterval");
     define_statevaluation(m);
-    // TODO: define_statevaluation_transformer(m);  // Disabled: StateValuationTransformer not yet in Storm
+    define_statevaluation_transformer(m);
     define_simplevaluation(m);
     define_sparse_matrix<double>(m, "");
     define_sparse_matrix<storm::RationalNumber>(m, "Exact");

@@ -83,17 +83,13 @@ void define_transformation_typed(py::module& m, std::string const& vtSuffix) {
             .def_readonly("deadlock_label", &storm::transformer::SubsystemBuilderReturnType<ValueType>::deadlockLabel,
                           "If set, deadlock states have been introduced and have been assigned this label");
     m.def(("_construct_subsystem_" + vtSuffix).c_str(), &constructSubsystem<ValueType>, "build a subsystem of a sparse model");
-
-    py::class_<storm::transformer::AddUncertainty<ValueType>>(m, ("AddUncertainty" + vtSuffix).c_str(), "Transform model into interval model with specified uncertainty")
-        .def(py::init<std::shared_ptr<storm::models::sparse::Model<ValueType>> const&>(), py::arg("model"))
-        .def("transform", &storm::transformer::AddUncertainty<ValueType>::transform, "transform the model", py::arg("additiveUncertainty"), py::arg("minimalValue") = 0.0001, py::arg("maxSuccessors") = (uint64_t)10000000);
 }
 
 template<typename ValueType>
 void define_transformation_typed_only_numbers(py::module& m, std::string const& vtSuffix) {
     py::class_<storm::transformer::AddUncertainty<ValueType>>(m, ("AddUncertainty" + vtSuffix).c_str(), "Transform model into interval model with specified uncertainty")
         .def(py::init<std::shared_ptr<storm::models::sparse::Model<ValueType>> const&>(), py::arg("model"))
-        .def("transform", &storm::transformer::AddUncertainty<ValueType>::transform, "transform the model", py::arg("additiveUncertainty"), py::arg("minimalValue") = 0.0001, py::arg("maxSuccessors") = (uint64_t)10000000);
+        .def("transform", &storm::transformer::AddUncertainty<ValueType>::transform, "transform the model", py::arg("additiveUncertainty"), py::arg("minimalValue") = storm::utility::convertNumber<ValueType>(0.0001), py::arg("maxSuccessors") = std::optional<uint64_t>{});
 }
 
 template void define_transformation_typed<double>(py::module& m, std::string const& vtSuffix);

@@ -1,5 +1,4 @@
-#ifndef PYTHON_STORAGE_STATE_H_
-#define PYTHON_STORAGE_STATE_H_
+#pragma once
 
 #include "common.h"
 
@@ -152,4 +151,3 @@ class SparseModelActions {
 template<typename ValueType>
 void define_state(py::module& m, std::string const& vtSuffix);
 
-#endif /* PYTHON_STORAGE_STATE_H_ */

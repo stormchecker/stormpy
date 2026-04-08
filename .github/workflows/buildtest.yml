@@ -126,6 +126,13 @@ jobs:
              optional_libs: "[test,plot]",
              test_opt: ""
           }
+          - {name: "Debian 13, Debug",
+             base_image: "movesrwth/storm-basesystem:debian-13",
+             build_type: "Debug",
+             setup_args: "--config-settings=cmake.define.ALLOW_STORM_SYSTEM=OFF --config-settings=cmake.define.STORM_GIT_TAG=master",
+             optional_libs: "[test,plot]",
+             test_opt: ""
+          }
           - {name: "Ubuntu 24.04, Debug",
              base_image: "movesrwth/storm-basesystem:ubuntu-24.04",
              build_type: "Debug",
@@ -171,29 +178,29 @@ jobs:
     strategy:
       matrix:
         config:
-          - {name: "XCode 15.4, ARM, Debug",
+          - {name: "MacOS 14, ARM, Debug",
              distro: "macos-14",
              xcode: "15.4",
              build_type: "Debug",
              setup_args: "--config-settings=cmake.define.ALLOW_STORM_SYSTEM=OFF --config-settings=cmake.define.STORM_GIT_TAG=master",
              optional_libs: "[test,plot]"
           }
-          - {name: "XCode Latest, ARM, Debug",
+          - {name: "MacOS 15, ARM, Debug",
              distro: "macos-15",
+             xcode: "16.4",
+             build_type: "Debug",
+             setup_args: "--config-settings=cmake.define.ALLOW_STORM_SYSTEM=OFF --config-settings=cmake.define.STORM_GIT_TAG=master",
+             optional_libs: "[test,plot]"
+          }
+          - {name: "MacOS 26, ARM, Debug",
+             distro: "macos-26",
              xcode: "latest-stable",
              build_type: "Debug",
              setup_args: "--config-settings=cmake.define.ALLOW_STORM_SYSTEM=OFF --config-settings=cmake.define.STORM_GIT_TAG=master",
              optional_libs: "[test,plot]"
           }
-          - {name: "XCode Latest, ARM, Release",
-             distro: "macos-15",
-             xcode: "latest-stable",
-             build_type: "Release",
-             setup_args: "--config-settings=cmake.define.ALLOW_STORM_SYSTEM=OFF --config-settings=cmake.define.STORM_GIT_TAG=master",
-             optional_libs: "[test,plot]"
-          }
-          - {name: "XCode Latest, Intel, Debug",
-             distro: "macos-15-intel",
+          - {name: "MacOS 26, Intel, Debug",
+             distro: "macos-26-intel",
              xcode: "latest-stable",
              build_type: "Debug",
              setup_args: "--config-settings=cmake.define.ALLOW_STORM_SYSTEM=OFF --config-settings=cmake.define.STORM_GIT_TAG=master",
@@ -210,7 +217,7 @@ jobs:
         # cmake and gmp and python3 are already installed
         run: |
           brew update
-          brew install automake boost cln ginac glpk hwloc xerces-c z3
+          brew install automake boost cln ginac glpk hwloc libarchive xerces-c z3
       - name: Build stormpy
         run: |
           pip install -v \
@@ -226,16 +233,16 @@ jobs:
     strategy:
       matrix:
         config:
-          - {name: "XCode 16.3, ARM, Debug",
-             distro: "macos-15",
-             xcode: "16.3",
+          - {name: "MacOS 26, ARM, Debug",
+             distro: "macos-26",
+             xcode: "latest-stable",
              build_type: "Debug",
              setup_args: "--config-settings=cmake.define.ALLOW_STORM_FETCH=OFF",
              optional_libs: "[test,plot]"
           }
-          - {name: "XCode 16.3, ARM, Release",
-             distro: "macos-15",
-             xcode: "16.3",
+          - {name: "MacOS 26, ARM, Release",
+             distro: "macos-26",
+             xcode: "latest-stable",
              build_type: "Release",
              setup_args: "--config-settings=cmake.define.ALLOW_STORM_FETCH=OFF",
              optional_libs: "[test,plot]"
@@ -251,7 +258,7 @@ jobs:
         # cmake and gmp and python3 are already installed
         run: |
           brew update
-          brew install automake boost cln ginac glpk hwloc xerces-c z3
+          brew install automake boost cln ginac glpk hwloc libarchive xerces-c z3
       - name: Checkout Storm
         uses: actions/checkout@v6
         with:
@@ -351,7 +358,7 @@ jobs:
     if: github.repository_owner == 'moves-rwth' && always()
     steps:
       - uses: technote-space/workflow-conclusion-action@v3
-      - uses: dawidd6/action-send-mail@v7
+      - uses: dawidd6/action-send-mail@v16
         with:
           server_address: ${{ secrets.STORM_CI_MAIL_SERVER }}
           server_port: 587

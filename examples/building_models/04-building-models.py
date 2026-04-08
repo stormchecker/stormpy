@@ -5,7 +5,6 @@ import stormpy
 import stormpy.examples
 import stormpy.examples.files
 
-
 """
 Building with a fixed (permissive) policy
 """

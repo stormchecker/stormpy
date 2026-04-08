@@ -49,7 +49,7 @@ def storm_origin_info() -> [str | None, str | None]:
 
     :return: A pair with the repo path and the repo tag.
     """
-    return (_config.STORM_ORIGIN_REPO, _config.STORM_ORIGIN_TAG)
+    return _config.STORM_ORIGIN_REPO, _config.STORM_ORIGIN_TAG
 
 
 def storm_directory() -> str | None:

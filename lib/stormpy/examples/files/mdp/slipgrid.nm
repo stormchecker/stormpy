@@ -24,6 +24,7 @@ rewards
 endrewards
 
 // target observation
+label "pickup" = x=1 & y=2;
 label "target" = x=3 & y=3;
 label "goal" = x=N & y=M;
 

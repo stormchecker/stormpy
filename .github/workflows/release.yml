@@ -1,5 +1,5 @@
 name: Release new version
-# Triggered by new a release on Github
+# Triggered by a new release on Github
 # - deploys Docker containers
 # - updates stable branch
 # - create new pypi package
@@ -24,7 +24,7 @@ jobs:
         id: getVersion
         run: |
           # Get Storm version from STORM_GIT_TAG in pyproject.toml
-          echo "STORM_VERSION=$(sed -n -E 's/STORM_GIT_TAG="(.+)"/\1/p' pyproject.toml)" >> "$GITHUB_OUTPUT"
+          echo "STORM_VERSION=$(sed -n -E 's/STORM_GIT_TAG="(.+)".*/\1/p' pyproject.toml)" >> "$GITHUB_OUTPUT"
 
   deploy_docker:
     # Create Docker images for tag
@@ -78,8 +78,7 @@ jobs:
           ref: master
       - name: Update Binder version
         run: |
-          # Update STORM_MIN_VERSION
-          sed -i -E 's/FROM movesrwth\/stormpy:(.+)/FROM movesrwth\/stormpy:${{ github.event.release.tag_name }}/' binder/Dockerfile
+          sed -i -E 's/stormpy==(.+)/stormpy==${{ github.event.release.tag_name }}/' binder/requirements.txt
       - name: Commit update
         run: |
           git diff
@@ -96,6 +95,7 @@ jobs:
           body: |
             Auto-generated pull request triggered by a new stormpy version.
             - Manually close and reopen this PR to trigger the CI.
+            Consider also updating the tag of the base image quay.io/jupyter/minimal-notebook
 
   create_wheels:
     # Create pypi package
@@ -103,6 +103,7 @@ jobs:
     uses: ./.github/workflows/create_wheel.yml
     with:
       storm_version: ${{ needs.env_storm_version.outputs.storm_version }}
+      dev_version: false
     secrets: inherit
 
   upload_pypi:
@@ -121,7 +122,7 @@ jobs:
     # Only upload if using original repo and triggered by either a release or a manual workflow dispatch
     if: ${{ github.repository_owner == 'moves-rwth' && ((github.event_name == 'release' && github.event.action == 'published') || github.event_name == 'workflow_dispatch') }}
     steps:
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           # unpacks all stormpy artifacts into dist/
           pattern: stormpy-*

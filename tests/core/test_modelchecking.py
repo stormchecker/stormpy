@@ -44,6 +44,27 @@ class TestModelChecking:
         result = stormpy.model_checking(model, formulas[0])
         assert math.isclose(result.at(initial_state), 49 / 128, rel_tol=1e-5)
 
+    def test_model_checking_interval_dtmc(self):
+        program = stormpy.parse_prism_program(get_example_path("idtmc", "die-intervals.pm"))
+        formulas = stormpy.parse_properties('P=? [ F "one"]')
+        model = stormpy.build_sparse_interval_model(program, formulas)
+        initial_state = model.initial_states[0]
+        assert initial_state == 0
+
+        env = stormpy.Environment()
+        env.solver_environment.minmax_solver_environment.method = stormpy.MinMaxMethod.value_iteration
+
+        task = stormpy.CheckTask(formulas[0].raw_formula, only_initial_states=True)
+        task.set_produce_schedulers()
+        # Compute maximal
+        task.set_uncertainty_resolution_mode(stormpy.UncertaintyResolutionMode.MAXIMIZE)
+        result = stormpy.check_interval_dtmc(model, task, env)
+        assert math.isclose(result.at(initial_state), 72.0 / 189.0, rel_tol=1e-4)
+        # Compute minimal
+        task.set_uncertainty_resolution_mode(stormpy.UncertaintyResolutionMode.MINIMIZE)
+        result = stormpy.check_interval_dtmc(model, task, env)
+        assert math.isclose(result.at(initial_state), 9.0 / 189.0, rel_tol=1e-4)
+
     def test_model_checking_interval_mdp(self):
         model = stormpy.build_interval_model_from_drn(get_example_path("imdp", "tiny-01.drn"))
         formulas = stormpy.parse_properties('Pmax=? [ F "target"];Pmin=? [ F "target"]')
@@ -56,22 +77,22 @@ class TestModelChecking:
         task = stormpy.CheckTask(formulas[0].raw_formula, only_initial_states=True)
         task.set_produce_schedulers()
         # Compute maximal robust
-        task.set_robust_uncertainty(True)
+        task.set_uncertainty_resolution_mode(stormpy.UncertaintyResolutionMode.ROBUST)
         result = stormpy.check_interval_mdp(model, task, env)
         assert math.isclose(result.at(initial_state), 0.4, rel_tol=1e-4)
-        # Compute maximal non-robust
-        task.set_robust_uncertainty(False)
+        # Compute maximal cooperative
+        task.set_uncertainty_resolution_mode(stormpy.UncertaintyResolutionMode.COOPERATIVE)
         result = stormpy.check_interval_mdp(model, task, env)
         assert math.isclose(result.at(initial_state), 0.5, rel_tol=1e-4)
 
         task = stormpy.CheckTask(formulas[1].raw_formula, only_initial_states=True)
         task.set_produce_schedulers()
         # Compute minimal robust
-        task.set_robust_uncertainty(True)
+        task.set_uncertainty_resolution_mode(stormpy.UncertaintyResolutionMode.ROBUST)
         result = stormpy.check_interval_mdp(model, task, env)
         assert math.isclose(result.at(initial_state), 0.5, rel_tol=1e-4)
-        # Compute minimal non-robust
-        task.set_robust_uncertainty(False)
+        # Compute minimal cooperative
+        task.set_uncertainty_resolution_mode(stormpy.UncertaintyResolutionMode.COOPERATIVE)
         result = stormpy.check_interval_mdp(model, task, env)
         assert math.isclose(result.at(initial_state), 0.4, rel_tol=1e-4)
 
@@ -138,7 +159,7 @@ class TestModelChecking:
         psiResult = stormpy.model_checking(model, formulaPsi)
         psiStates = psiResult.get_truth_values()
         assert psiStates.number_of_set_bits() == 1
-        (prob0, prob1) = stormpy.compute_prob01_states(model, phiStates, psiStates)
+        prob0, prob1 = stormpy.compute_prob01_states(model, phiStates, psiStates)
         assert prob0.number_of_set_bits() == 9
         assert prob1.number_of_set_bits() == 1
         labelprop = stormpy.Property("cora", formulaPsi.raw_formula)

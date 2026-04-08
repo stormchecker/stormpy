@@ -7,7 +7,6 @@ from helpers.helper import get_example_path
 import pytest
 import math
 
-
 # this is admittedly slightly overengineered
 
 

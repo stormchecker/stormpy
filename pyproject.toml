@@ -1,5 +1,8 @@
 [build-system]
-requires = ["scikit-build-core==0.11.6", "pybind11==3.0.1"]
+requires = [
+    "scikit-build-core==0.12.2",
+    "pybind11==3.0.3"  # Pybind11 version should be synced with find_package(pybind11 ...) in CMakeLists.txt
+]
 build-backend = "scikit_build_core.build"
 
 [project]
@@ -12,7 +15,7 @@ authors = [
     { name = "S. Junges", email = "sebastian.junges@ru.nl" },
     { name = "M. Volk", email = "m.volk@tue.nl" }
 ]
-requires-python = ">=3.10"
+requires-python = ">=3.10"  # Python version should be synced with find_package(Python ...) in CMakeLists.txt
 dependencies = [
     "Deprecated",
 ]
@@ -43,7 +46,8 @@ doc = [
     "nbsphinx",
     "ipython",
     "ipykernel",
-] # also requires pandoc to be installed
+    "myst-parser",
+]  # also requires pandoc to be installed
 dev = [
     # Formatting
     "black[jupyter]",
@@ -90,7 +94,8 @@ CARLPARSER_DIR_HINT=""
 COMPILE_WITH_CCACHE="ON"
 STORMPY_DISABLE_SIGNATURE_DOC="OFF"
 STORM_GIT_REPO="https://github.com/moves-rwth/storm.git"
-STORM_GIT_TAG="1.11.1"
+# Storm version should be synced with STORM_MIN_VERSION in CMakeLists.txt
+STORM_GIT_TAG="1.12.0"
 
 
 [tool.scikit-build.metadata.version]

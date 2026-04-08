@@ -1,3 +1,5 @@
+#pragma once
+
 #include "pycarl/definitions.h"
 
 #include <carl/core/Monomial.h>

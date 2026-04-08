@@ -199,3 +199,19 @@ def _get_integer_value(self, var):
 
 
 SimpleValuation.get_integer_value = _get_integer_value
+
+
+# Extend class MemoryStructure
+def product_model(self: MemoryStructure, model):
+    """
+    Compute the product of the memory structure with the model.
+    """
+    if model.supports_parameters:
+        return self._product_model_parametric(model)
+    elif model.is_exact:
+        return self._product_model_exact(model)
+    else:
+        return self._product_model_double(model)
+
+
+MemoryStructure.product_model = product_model

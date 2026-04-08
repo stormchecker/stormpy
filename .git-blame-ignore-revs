@@ -1,1 +1,6 @@
+# Lists commit hashs that can safely be ignored when checking the git history with git blame.
+# Use 'git blame --ignore-revs-file .git-blame-ignore-revs'.
+# The apply-code-format workflow automatically appends relevant hashs to this file.
+
 534f29c9e329007d67428da3ef7be84141140fe2
+111723001581254265076802b8b50f581fae43fd

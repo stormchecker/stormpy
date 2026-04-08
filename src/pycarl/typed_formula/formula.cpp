@@ -1,10 +1,3 @@
-/*
- * formula.cpp
- *
- *  Created on: 16 Apr 2016
- *      Author: harold
- */
-
 #include "formula.h"
 
 #include "common.h"

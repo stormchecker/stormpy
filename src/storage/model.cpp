@@ -112,7 +112,7 @@ void define_model(py::module& m) {
             }, "Get model as sparse exact DTMC")
         .def("_as_sparse_idtmc", [](ModelBase &modelbase) {
                 return modelbase.as<SparseDtmc<storm::Interval>>();
-            }, "Get model as sparse inteval DTMC")
+            }, "Get model as sparse interval DTMC")
         .def("_as_sparse_pdtmc", [](ModelBase &modelbase) {
                 return modelbase.as<SparseDtmc<storm::RationalFunction>>();
             }, "Get model as sparse parametric DTMC")
@@ -236,8 +236,8 @@ void define_sparse_model(py::module& m, std::string const& vtSuffix) {
                 return SparseModelStates<ValueType>(model);
             }, "Get states")
         .def_property_readonly("reward_models", [](SparseModel<ValueType>& model) {return model.getRewardModels(); }, "Reward models")
-        .def_property_readonly("transition_matrix", &getTransitionMatrix<ValueType>, py::return_value_policy::reference, py::keep_alive<1, 0>(), "Transition matrix")
-        .def_property_readonly("backward_transition_matrix", &SparseModel<ValueType>::getBackwardTransitions, py::return_value_policy::reference, py::keep_alive<1, 0>(), "Backward transition matrix")
+        .def_property_readonly("transition_matrix", py::cpp_function(&getTransitionMatrix<ValueType>, py::return_value_policy::reference, py::keep_alive<1, 0>()), "Transition matrix")
+        .def_property_readonly("backward_transition_matrix", py::cpp_function(&SparseModel<ValueType>::getBackwardTransitions, py::return_value_policy::reference, py::keep_alive<1, 0>()), "Backward transition matrix")
         .def("get_reward_model", [](SparseModel<ValueType>& model, std::string const& name) -> SparseRewardModel<ValueType>& {return model.getRewardModel(name);}, py::return_value_policy::reference, py::keep_alive<1, 0>(), "Reward model")
         .def("has_reward_model", [](SparseModel<ValueType> const& model, std::string const& name) {return model.hasRewardModel(name);}, py::arg("name"))
         .def("add_reward_model", [](SparseModel<ValueType>& model, std::string const& name, SparseRewardModel<ValueType> const& rewModel) { model.addRewardModel(name, rewModel);})
@@ -255,6 +255,9 @@ void define_sparse_model(py::module& m, std::string const& vtSuffix) {
             .def("collect_reward_parameters", [](SparseModel<ValueType> const& model) -> std::set<storm::RationalFunctionVariable> {
                 return storm::models::sparse::getRewardParameters(model);
 	     }, "Collect reward parameters")
+            .def("collect_rate_parameters", [](SparseModel<ValueType> const& model) -> std::set<storm::RationalFunctionVariable> {
+                return storm::models::sparse::getRateParameters(model);
+	     }, "Collect rate parameters")
             .def("collect_all_parameters", [](SparseModel<ValueType> const& model) -> std::set<storm::RationalFunctionVariable> {
                 return storm::models::sparse::getAllParameters(model);
 	     }, "Collect all parameters")
@@ -316,6 +319,9 @@ void define_sparse_model(py::module& m, std::string const& vtSuffix) {
         .def_property_readonly("nondeterministic_choice_indices", [](SparseMarkovAutomaton<ValueType> const& ma) { return ma.getNondeterministicChoiceIndices(); })
         .def("apply_scheduler", [](SparseMarkovAutomaton<ValueType> const& ma, storm::storage::Scheduler<ValueType> const& scheduler, bool dropUnreachableStates) { return ma.applyScheduler(scheduler, dropUnreachableStates); } , "apply scheduler", "scheduler"_a, "drop_unreachable_states"_a = true)
         .def("__str__", &getModelInfoPrinter)
+        .def_property_readonly("is_closed", &SparseMarkovAutomaton<ValueType>::isClosed, "Check whether the MA is closed.")
+        .def("close",  &SparseMarkovAutomaton<ValueType>::close, "Close the MA by applying maximal progress assumption")
+        .def_property_readonly("has_zeno_cycle", &SparseMarkovAutomaton<ValueType>::containsZenoCycle, "Check whether the MA has a Zeno cycle.")
         .def_property_readonly("convertible_to_ctmc", &SparseMarkovAutomaton<ValueType>::isConvertibleToCtmc, "Check whether the MA can be converted into a CTMC.")
         .def("convert_to_ctmc", &SparseMarkovAutomaton<ValueType>::convertToCtmc, "Convert the MA into a CTMC.")
     ;

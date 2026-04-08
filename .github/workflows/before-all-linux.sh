@@ -4,7 +4,7 @@
 
 set -e -u
 
-ginac_version=1.8.9
+ginac_version=1.8.10
 
 dnf install -y boost-devel cln-devel gmp-devel glpk-devel hwloc-devel z3-devel xerces-c-devel eigen3-devel # missing ginac
 

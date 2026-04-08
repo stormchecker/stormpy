@@ -24,7 +24,7 @@ def example_building_models_02():
     path = stormpy.examples.files.drn_pdtmc_die
     model = stormpy.build_parametric_model_from_drn(path)
 
-    parameters = model.collect_probability_parameters()
+    parameters = model.collect_all_parameters()
     bar_parameters = dict()
     for p in parameters:
         # Ensure that variables with that name are not recognized by pycarl.

@@ -27,9 +27,10 @@ void define_expressions(py::module& m) {
         .def("create_boolean_variable", &storm::expressions::ExpressionManager::declareBooleanVariable, "create Boolean variable", py::arg("name"), py::arg("auxiliary") = false)
         .def("create_integer_variable", &storm::expressions::ExpressionManager::declareIntegerVariable, "create Integer variable", py::arg("name"), py::arg("auxiliary") = false)
         .def("create_rational_variable", &storm::expressions::ExpressionManager::declareRationalVariable, "create Rational variable", py::arg("name"), py::arg("auxiliary") = false)
+        .def("has_variable", &storm::expressions::ExpressionManager::hasVariable, "checks whether a variable with a name is already taken", py::arg("name"))
         .def("get_variable", &storm::expressions::ExpressionManager::getVariable, "get variably by name", py::arg("name"))
         .def("get_variables", &storm::expressions::ExpressionManager::getVariables, "Retrieves the set of all variables known to this manager.")
-            ;
+        .def("__eq__", &storm::expressions::ExpressionManager::operator==);
 
     // Variable
     py::class_<storm::expressions::Variable, std::shared_ptr<storm::expressions::Variable>>(m, "Variable", "Represents a variable")

@@ -1,12 +1,4 @@
-/*
- * helpers.h
- *
- *  Created on: 16 Apr 2016
- *      Author: harold
- */
-
-#ifndef PYTHON_HELPERS_H_
-#define PYTHON_HELPERS_H_
+#pragma once
 
 #include <sstream>
 #include <string>
@@ -37,4 +29,3 @@ std::string containerToString(T& t) {
 // as to Python the shared_ptr (Arg) IS the Monomial
 //  //PYBIND11_DECLARE_HOLDER_TYPE(T, std::shared_ptr<T>);
 
-#endif /* PYTHON_HELPERS_H_ */

@@ -44,7 +44,12 @@ if (NOT USE_PARSER AND CARLPARSER_DIR_HINT)
 	message(WARNING "Stormpy - Carl-parser directory hint was given but USE_PARSER=OFF.")
 endif()
 
-find_package(pybind11 CONFIG REQUIRED)
+# Find python first, as recommended here:
+# https://pybind11.readthedocs.io/en/latest/compiling.html#findpython-mode
+# Python version should be synced with pyproject.toml
+find_package(Python 3.10 COMPONENTS Interpreter Development.Module REQUIRED)
+# Pybind11 version should be synced with pyproject.toml
+find_package(pybind11 3.0.3 EXACT CONFIG REQUIRED)
 message(STATUS "Stormpy - Using pybind11 version ${pybind11_VERSION}")
 
 # Helper function to print path where library was found and check whether hint was used
@@ -68,7 +73,8 @@ function(check_hint NAME DIR_FOUND HINT_DIR FOUND_VERSION)
 endfunction(check_hint)
 
 if(ALLOW_STORM_SYSTEM)
-    set(STORM_MIN_VERSION "1.11.0")
+    # Version should be synced with STORM_GIT_TAG in pyproject.toml
+    set(STORM_MIN_VERSION "1.12.0")
     if (ALLOW_STORM_FETCH)
         find_package(storm HINTS ${STORM_DIR_HINT}) # NOT REQUIRED, can be fetched.
     else()

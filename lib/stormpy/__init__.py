@@ -7,6 +7,8 @@ from .storage import *
 from .logic import *
 from . import exceptions
 
+from enum import Enum
+
 try:
     from ._version import __version__
 except ImportError:
@@ -16,45 +18,93 @@ except ImportError:
 _core._set_up("")
 
 
-def _convert_sparse_model(model, parametric=False):
+class _ValueType(Enum):
+    """
+    Value type for models.
+    """
+
+    DOUBLE = 1
+    EXACT = 2
+    PARAMETRIC = 3
+    INTERVAL = 4
+
+
+def _convert_sparse_model(model, value_type=_ValueType.DOUBLE):
     """
     Convert (parametric) model in sparse representation into model corresponding to exact model type.
     :param model: Sparse model.
     :param parametric: Flag indicating if the model is parametric.
     :return: Model corresponding to exact model type.
     """
-    if parametric:
-        assert model.supports_parameters
-        if model.model_type == ModelType.DTMC:
-            return model._as_sparse_pdtmc()
-        elif model.model_type == ModelType.MDP:
-            return model._as_sparse_pmdp()
-        elif model.model_type == ModelType.POMDP:
-            return model._as_sparse_ppomdp()
-        elif model.model_type == ModelType.CTMC:
-            return model._as_sparse_pctmc()
-        elif model.model_type == ModelType.MA:
-            return model._as_sparse_pma()
-        elif model.model_type == ModelType.SMG:
-            return model._as_sparse_psmg()
-        else:
-            raise stormpy.exceptions.StormError("Not supported parametric model constructed")
-    else:
-        assert not model.supports_parameters
-        if model.model_type == ModelType.DTMC:
-            return model._as_sparse_dtmc()
-        elif model.model_type == ModelType.MDP:
-            return model._as_sparse_mdp()
-        elif model.model_type == ModelType.POMDP:
-            return model._as_sparse_pomdp()
-        elif model.model_type == ModelType.CTMC:
-            return model._as_sparse_ctmc()
-        elif model.model_type == ModelType.MA:
-            return model._as_sparse_ma()
-        elif model.model_type == ModelType.SMG:
-            return model._as_sparse_smg()
-        else:
-            raise stormpy.exceptions.StormError("Not supported non-parametric model constructed")
+    match value_type:
+        case _ValueType.DOUBLE:
+            assert not model.supports_parameters
+            assert not model.supports_uncertainty
+            if model.model_type == ModelType.DTMC:
+                return model._as_sparse_dtmc()
+            elif model.model_type == ModelType.MDP:
+                return model._as_sparse_mdp()
+            elif model.model_type == ModelType.POMDP:
+                return model._as_sparse_pomdp()
+            elif model.model_type == ModelType.CTMC:
+                return model._as_sparse_ctmc()
+            elif model.model_type == ModelType.MA:
+                return model._as_sparse_ma()
+            elif model.model_type == ModelType.SMG:
+                return model._as_sparse_smg()
+            else:
+                raise stormpy.exceptions.StormError("Not supported non-parametric model constructed")
+        case _ValueType.EXACT:
+            assert not model.supports_parameters
+            assert not model.supports_uncertainty
+            if model.model_type == ModelType.DTMC:
+                return model._as_sparse_exact_dtmc()
+            elif model.model_type == ModelType.MDP:
+                return model._as_sparse_exact_mdp()
+            elif model.model_type == ModelType.POMDP:
+                return model._as_sparse_exact_pomdp()
+            elif model.model_type == ModelType.CTMC:
+                return model._as_sparse_exact_ctmc()
+            elif model.model_type == ModelType.MA:
+                return model._as_sparse_exact_ma()
+            elif model.model_type == ModelType.SMG:
+                return model._as_sparse_exact_smg()
+            else:
+                raise stormpy.exceptions.StormError("Not supported non-parametric model constructed")
+        case _ValueType.PARAMETRIC:
+            assert model.supports_parameters
+            if model.model_type == ModelType.DTMC:
+                return model._as_sparse_pdtmc()
+            elif model.model_type == ModelType.MDP:
+                return model._as_sparse_pmdp()
+            elif model.model_type == ModelType.POMDP:
+                return model._as_sparse_ppomdp()
+            elif model.model_type == ModelType.CTMC:
+                return model._as_sparse_pctmc()
+            elif model.model_type == ModelType.MA:
+                return model._as_sparse_pma()
+            elif model.model_type == ModelType.SMG:
+                return model._as_sparse_psmg()
+            else:
+                raise stormpy.exceptions.StormError("Not supported parametric model constructed")
+        case _ValueType.INTERVAL:
+            assert model.supports_uncertainty
+            if model.model_type == ModelType.DTMC:
+                return model._as_sparse_idtmc()
+            elif model.model_type == ModelType.MDP:
+                return model._as_sparse_imdp()
+            elif model.model_type == ModelType.POMDP:
+                return model._as_sparse_ipomdp()
+            elif model.model_type == ModelType.CTMC:
+                return model._as_sparse_ictmc()
+            elif model.model_type == ModelType.MA:
+                return model._as_sparse_ima()
+            elif model.model_type == ModelType.SMG:
+                return model._as_sparse_ismg()
+            else:
+                raise stormpy.exceptions.StormError("Not supported interval model constructed")
+        case _:
+            raise stormpy.exceptions.StormError("Not supported model type constructed")
 
 
 def _convert_symbolic_model(model, parametric=False):
@@ -128,7 +178,26 @@ def build_sparse_model(symbolic_description, properties=None):
         intermediate = _core._build_sparse_model_from_symbolic_description(symbolic_description, formulae)
     else:
         intermediate = _core._build_sparse_model_from_symbolic_description(symbolic_description)
-    return _convert_sparse_model(intermediate, parametric=False)
+    return _convert_sparse_model(intermediate, value_type=_ValueType.DOUBLE)
+
+
+def build_sparse_exact_model(symbolic_description, properties=None):
+    """
+    Build a model in sparse exact representation from a symbolic description.
+
+    :param symbolic_description: Symbolic model description to translate into a model.
+    :param List[Property] properties: List of properties that should be preserved during the translation. If None, then all properties are preserved.
+    :return: Model in sparse exact representation.
+    """
+    if not symbolic_description.undefined_constants_are_graph_preserving:
+        raise stormpy.exceptions.StormError("Program still contains undefined constants")
+
+    if properties:
+        formulae = [(prop.raw_formula if isinstance(prop, Property) else prop) for prop in properties]
+        intermediate = _core._build_sparse_exact_model_from_symbolic_description(symbolic_description, formulae)
+    else:
+        intermediate = _core._build_sparse_exact_model_from_symbolic_description(symbolic_description)
+    return _convert_sparse_model(intermediate, value_type=_ValueType.EXACT)
 
 
 def build_sparse_parametric_model(symbolic_description, properties=None):
@@ -147,7 +216,26 @@ def build_sparse_parametric_model(symbolic_description, properties=None):
         intermediate = _core._build_sparse_parametric_model_from_symbolic_description(symbolic_description, formulae)
     else:
         intermediate = _core._build_sparse_parametric_model_from_symbolic_description(symbolic_description)
-    return _convert_sparse_model(intermediate, parametric=True)
+    return _convert_sparse_model(intermediate, value_type=_ValueType.PARAMETRIC)
+
+
+def build_sparse_interval_model(symbolic_description, properties=None):
+    """
+    Build an interval model in sparse representation from a symbolic description.
+
+    :param symbolic_description: Symbolic model description to translate into a model.
+    :param List[Property] properties: List of properties that should be preserved during the translation. If None, then all properties are preserved.
+    :return: Interval model in sparse representation.
+    """
+    if not symbolic_description.undefined_constants_are_graph_preserving:
+        raise stormpy.exceptions.StormError("Program still contains undefined constants")
+
+    if properties:
+        formulae = [(prop.raw_formula if isinstance(prop, Property) else prop) for prop in properties]
+        intermediate = _core._build_sparse_interval_model_from_symbolic_description(symbolic_description, formulae)
+    else:
+        intermediate = _core._build_sparse_interval_model_from_symbolic_description(symbolic_description)
+    return _convert_sparse_model(intermediate, value_type=_ValueType.INTERVAL)
 
 
 def build_symbolic_model(symbolic_description, properties=None):
@@ -197,7 +285,7 @@ def build_model_from_drn(file, options=DirectEncodingParserOptions()):
     :return: Model in sparse representation.
     """
     intermediate = _core._build_sparse_model_from_drn(file, options)
-    return _convert_sparse_model(intermediate, parametric=False)
+    return _convert_sparse_model(intermediate, value_type=_ValueType.DOUBLE)
 
 
 def build_parametric_model_from_drn(file, options=DirectEncodingParserOptions()):
@@ -209,7 +297,7 @@ def build_parametric_model_from_drn(file, options=DirectEncodingParserOptions())
     :return: Parametric model in sparse representation.
     """
     intermediate = _core._build_sparse_parametric_model_from_drn(file, options)
-    return _convert_sparse_model(intermediate, parametric=True)
+    return _convert_sparse_model(intermediate, value_type=_ValueType.PARAMETRIC)
 
 
 def build_interval_model_from_drn(file, options=DirectEncodingParserOptions()):
@@ -221,13 +309,7 @@ def build_interval_model_from_drn(file, options=DirectEncodingParserOptions()):
     :return: Interval model in sparse representation.
     """
     intermediate = _core._build_sparse_interval_model_from_drn(file, options)
-    assert intermediate.supports_uncertainty
-    if intermediate.model_type == ModelType.MDP:
-        return intermediate._as_sparse_imdp()
-    elif intermediate.model_type == ModelType.POMDP:
-        return intermediate._as_sparse_ipomdp()
-    else:
-        raise stormpy.exceptions.StormError("Not supported interval model constructed")
+    return _convert_sparse_model(intermediate, value_type=_ValueType.INTERVAL)
 
 
 def perform_bisimulation(model, properties, bisimulation_type, graph_preserving=True):
@@ -406,6 +488,25 @@ def check_model_hybrid(model, property, only_initial_states=False, environment=E
     else:
         task = _core.CheckTask(formula, only_initial_states)
         return _core._model_checking_hybrid_engine(model, task, environment=environment)
+
+
+def set_state_valuations(model, new_state_valuations):
+    """
+    Creates a copy of the model with the new state valuations.
+    """
+    if model.model_type not in [stormpy.ModelType.MDP, stormpy.ModelType.DTMC]:
+        raise RuntimeError(f"Only MDPs/DTMCs are currently supported, got {model.model_type}")
+
+    components = stormpy.SparseModelComponents(
+        transition_matrix=model.transition_matrix, state_labeling=model.labeling, reward_models=model.reward_models, rate_transitions=False
+    )
+    components.state_valuations = new_state_valuations
+    if model.has_choice_labeling():
+        components.choice_labeling = model.choice_labeling
+    if model.has_choice_origins():
+        components.choice_origins = model.choice_origins
+
+    return type(model)(components)
 
 
 def transform_to_sparse_model(model):
@@ -630,12 +731,12 @@ def parse_properties(properties, context=None, filters=None):
         raise stormpy.exceptions.StormError("Unclear context. Please pass a symbolic model description")
 
 
-def export_to_drn(model, file, options=DirectEncodingOptions()):
+def export_to_drn(model, file, options=DirectEncodingExporterOptions()):
     """
     Export a model to DRN format
     :param model: The model
     :param file: A path
-    :param options: DirectEncodingOptions
+    :param options: DirectEncodingExporterOptions
     :return:
     """
     if model.supports_parameters:

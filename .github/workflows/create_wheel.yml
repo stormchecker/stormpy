@@ -9,6 +9,11 @@ on:
         required: true
         type: string
         default: 'x.y.z'
+      dev_version:
+        description: 'Whether to build a dev version i.e. stormpy version 1.1.0.dev1'
+        required: true
+        type: boolean
+        default: false
   # needed to trigger the workflow manually
   workflow_dispatch:
     inputs:
@@ -17,6 +22,11 @@ on:
         required: true
         type: string
         default: 'x.y.z'
+      dev_version:
+        description: 'Whether to build a dev version i.e. stormpy version 1.1.0.dev1'
+        required: true
+        type: boolean
+        default: false
 
 jobs:
   build_wheels:
@@ -52,14 +62,17 @@ jobs:
         if: ${{ matrix.xcode != '' }}
         with:
           xcode-version: ${{ matrix.xcode }}
+      - name: Prepare version
+        if: ${{ inputs.dev_version }}
+        run: perl -i -pe 's/__version__ = "(.+)"/__version__ = "\1.dev1"/' lib/stormpy/_version.py
       - name: Build wheels
-        uses: pypa/cibuildwheel@v3.3.0
+        uses: pypa/cibuildwheel@v3.4.1
         env:
           CIBW_PLATFORM: ${{ matrix.platform }}
           CIBW_ARCHS: ${{ matrix.archs }}
           MACOSX_DEPLOYMENT_TARGET: ${{ matrix.deploy_target }}
           CIBW_ENVIRONMENT: STORM_VERSION=${{ inputs.storm_version }} NR_JOBS=4
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: stormpy-wheels-${{ matrix.os }}
           path: ./wheelhouse/*.whl
@@ -70,9 +83,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+      - name: Prepare version
+        if: ${{ inputs.dev_version }}
+        run: perl -i -pe 's/__version__ = "(.+)"/__version__ = "\1.dev1"/' lib/stormpy/_version.py
       - name: Build sdist
         run: pipx run build --sdist
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: stormpy-sdist
           path: dist/*.tar.gz
@@ -103,7 +119,7 @@ jobs:
             distro: archlinux:latest
 
     steps:
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           pattern: stormpy-wheels-${{ matrix.arch.name }}
           path: dist
@@ -182,7 +198,7 @@ jobs:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: ${{ matrix.distro.xcode }}
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           pattern: stormpy-wheels-${{ matrix.distro.os }}
           path: dist

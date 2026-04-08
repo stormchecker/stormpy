@@ -10,6 +10,7 @@
 #include "storm/storage/dd/DdType.h"
 #include "storm/storage/jani/Property.h"
 #include "storm/solver/OptimizationDirection.h"
+#include "storm/solver/UncertaintyResolutionMode.h"
 #include "storm/models/symbolic/StandardRewardModel.h"
 #include "storm/generator/NextStateGenerator.h"
 #include "storm-parsers/api/storm-parsers.h"
@@ -122,9 +123,11 @@ void define_build(py::module& m) {
     m.def("_build_sparse_model_from_symbolic_description", &buildSparseModel<double>, "Build the model in sparse representation", py::arg("model_description"), py::arg("formulas") = std::vector<std::shared_ptr<storm::logic::Formula const>>());
     m.def("_build_sparse_exact_model_from_symbolic_description", &buildSparseModel<storm::RationalNumber>, "Build the model in sparse representation with exact number representation", py::arg("model_description"), py::arg("formulas") = std::vector<std::shared_ptr<storm::logic::Formula const>>());
     m.def("_build_sparse_parametric_model_from_symbolic_description", &buildSparseModel<storm::RationalFunction>, "Build the parametric model in sparse representation", py::arg("model_description"), py::arg("formulas") = std::vector<std::shared_ptr<storm::logic::Formula const>>());
+    m.def("_build_sparse_interval_model_from_symbolic_description", &buildSparseModel<storm::Interval>, "Build the interval model in sparse representation", py::arg("model_description"), py::arg("formulas") = std::vector<std::shared_ptr<storm::logic::Formula const>>());
     m.def("build_sparse_model_with_options", &buildSparseModelWithOptions<double>, "Build the model in sparse representation", py::arg("model_description"), py::arg("options"));
     m.def("build_sparse_exact_model_with_options", &buildSparseModelWithOptions<storm::RationalNumber>, "Build the model in sparse representation with exact number representation", py::arg("model_description"), py::arg("options"));
     m.def("build_sparse_parametric_model_with_options", &buildSparseModelWithOptions<storm::RationalFunction>, "Build the model in sparse representation", py::arg("model_description"), py::arg("options"));
+    m.def("build_sparse_interval_model_with_options", &buildSparseModelWithOptions<storm::Interval>, "Build the interval model in sparse representation", py::arg("model_description"), py::arg("options"));
     m.def("_build_symbolic_model_from_symbolic_description", &buildSymbolicModel<storm::dd::DdType::Sylvan, double>, "Build the model in symbolic representation", py::arg("model_description"), py::arg("formulas") = std::vector<std::shared_ptr<storm::logic::Formula const>>());
     m.def("_build_symbolic_parametric_model_from_symbolic_description", &buildSymbolicModel<storm::dd::DdType::Sylvan, storm::RationalFunction>, "Build the parametric model in symbolic representation", py::arg("model_description"), py::arg("formulas") = std::vector<std::shared_ptr<storm::logic::Formula const>>());
     m.def("_build_sparse_model_from_drn", &storm::api::buildExplicitDRNModel<double>, "Build the model from DRN", py::arg("file"), py::arg("options") = storm::parser::DirectEncodingParserOptions());
@@ -177,25 +180,33 @@ void define_optimality_type(py::module& m) {
         .value("Minimize", storm::solver::OptimizationDirection::Minimize)
         .value("Maximize", storm::solver::OptimizationDirection::Maximize)
     ;
+
+    py::enum_<storm::solver::UncertaintyResolutionMode>(m, "UncertaintyResolutionMode")
+        .value("MINIMIZE", storm::solver::UncertaintyResolutionMode::Minimize)
+        .value("MAXIMIZE", storm::solver::UncertaintyResolutionMode::Maximize)
+        .value("ROBUST", storm::solver::UncertaintyResolutionMode::Robust)
+        .value("COOPERATIVE", storm::solver::UncertaintyResolutionMode::Cooperative)
+        .value("UNSET", storm::solver::UncertaintyResolutionMode::Unset)
+    ;
 }
 
 // Thin wrapper for exporting model
 template<typename ValueType>
-void exportDRN(std::shared_ptr<storm::models::sparse::Model<ValueType>> model, std::string const& file, storm::io::DirectEncodingOptions options) {
-    std::ofstream stream;
-    storm::io::openFile(file, stream);
-    storm::io::explicitExportSparseModel(stream, model, {}, options);
-    storm::io::closeFile(stream);
+void exportDRN(std::shared_ptr<storm::models::sparse::Model<ValueType>> model, std::string const& file, storm::io::DirectEncodingExporterOptions options) {
+    storm::api::exportSparseModelAsDrn<ValueType>(model, file, options);
 }
 
 void define_export(py::module& m) {
 
-    py::class_<storm::io::DirectEncodingOptions> opts(m, "DirectEncodingOptions");
-    opts.def(py::init<>());
-    opts.def_readwrite("allow_placeholders", &storm::io::DirectEncodingOptions::allowPlaceholders);
+    py::class_<storm::io::DirectEncodingExporterOptions>(m, "DirectEncodingExporterOptions")
+        .def(py::init<>())
+        .def_readwrite("allow_placeholders", &storm::io::DirectEncodingExporterOptions::allowPlaceholders)
+        .def_readwrite("outputPrecision", &storm::io::DirectEncodingExporterOptions::outputPrecision)
+    ;
+
     // Export
-    m.def("_export_to_drn", &exportDRN<double>, "Export model in DRN format", py::arg("model"), py::arg("file"), py::arg("options")=storm::io::DirectEncodingOptions());
-    m.def("_export_to_drn_interval", &exportDRN<storm::Interval>, "Export model in DRN format", py::arg("model"), py::arg("file"), py::arg("options")=storm::io::DirectEncodingOptions());
-    m.def("_export_exact_to_drn", &exportDRN<storm::RationalNumber>, "Export model in DRN format", py::arg("model"), py::arg("file"), py::arg("options")=storm::io::DirectEncodingOptions());
-    m.def("_export_parametric_to_drn", &exportDRN<storm::RationalFunction>, "Export parametric model in DRN format", py::arg("model"), py::arg("file"), py::arg("options")=storm::io::DirectEncodingOptions());
+    m.def("_export_to_drn", &exportDRN<double>, "Export model in DRN format", py::arg("model"), py::arg("file"), py::arg("options")=storm::io::DirectEncodingExporterOptions());
+    m.def("_export_to_drn_interval", &exportDRN<storm::Interval>, "Export model in DRN format", py::arg("model"), py::arg("file"), py::arg("options")=storm::io::DirectEncodingExporterOptions());
+    m.def("_export_exact_to_drn", &exportDRN<storm::RationalNumber>, "Export model in DRN format", py::arg("model"), py::arg("file"), py::arg("options")=storm::io::DirectEncodingExporterOptions());
+    m.def("_export_parametric_to_drn", &exportDRN<storm::RationalFunction>, "Export parametric model in DRN format", py::arg("model"), py::arg("file"), py::arg("options")=storm::io::DirectEncodingExporterOptions());
 }

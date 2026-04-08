@@ -5,6 +5,15 @@ class TestExpressions:
     def test_expression_manager(self):
         manager = stormpy.ExpressionManager()
 
+    def test_create_variable(self):
+        manager = stormpy.ExpressionManager()
+        v1 = manager.create_boolean_variable("b1")
+        assert v1.has_boolean_type()
+        v2 = manager.create_integer_variable("v1")
+        assert v2.has_integer_type()
+        assert manager.has_variable("b1")
+        assert not manager.has_variable("b2")
+
     def test_boolean_expression(self):
         manager = stormpy.ExpressionManager()
         expression = manager.create_boolean(True)

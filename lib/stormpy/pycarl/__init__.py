@@ -3,7 +3,6 @@ from ._pycarl_core import *
 from . import infinity
 from stormpy.pycarl import _config
 
-
 inf = infinity.Infinity()
 
 

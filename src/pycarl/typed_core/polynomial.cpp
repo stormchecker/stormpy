@@ -1,10 +1,3 @@
-/*
- * polynomial.cpp
- *
- *  Created on: 16 Apr 2016
- *      Author: harold
- */
-
 #include "polynomial.h"
 
 #include "src/pycarl/types.h"

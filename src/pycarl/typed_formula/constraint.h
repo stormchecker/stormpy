@@ -1,10 +1,3 @@
-/*
- * constraint.h
- *
- *  Created on: 16 Apr 2016
- *      Author: harold
- */
-
 #pragma once
 
 #include "src/pycarl/common.h"

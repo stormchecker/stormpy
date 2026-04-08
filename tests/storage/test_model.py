@@ -141,6 +141,38 @@ class TestSparseModel:
         assert model.model_type == stormpy.ModelType.MA
         assert not model.supports_parameters
         assert type(model) is stormpy.SparseMA
+        assert model.is_closed
+        assert not model.has_zeno_cycle
+
+        # Test MA with hybrid states
+        program = stormpy.parse_prism_program(get_example_path("ma", "hybrid_states.ma"), False, True)
+        model = stormpy.build_model(program)
+        assert model.nr_states == 5
+        assert model.nr_transitions == 13
+        assert model.model_type == stormpy.ModelType.MA
+        assert not model.supports_parameters
+        assert type(model) is stormpy.SparseMA
+        assert not model.is_closed
+        assert not model.has_zeno_cycle
+        model.close()
+        assert model.nr_states == 5
+        assert model.nr_transitions == 9
+        assert model.model_type == stormpy.ModelType.MA
+        assert not model.supports_parameters
+        assert type(model) is stormpy.SparseMA
+        assert model.is_closed
+        assert model.has_zeno_cycle
+        # Building MA with hybrid states and formula already applies close
+        program = stormpy.parse_prism_program(get_example_path("ma", "hybrid_states.ma"), False, True)
+        formulas = stormpy.parse_properties_for_prism_program("Pmax=? [ F<=2 s=4 ]", program)
+        model = stormpy.build_model(program, formulas)
+        assert model.nr_states == 5
+        assert model.nr_transitions == 9
+        assert model.model_type == stormpy.ModelType.MA
+        assert not model.supports_parameters
+        assert type(model) is stormpy.SparseMA
+        assert model.is_closed
+        assert model.has_zeno_cycle
 
     def test_build_smg(self):
         program = stormpy.parse_prism_program(get_example_path("smg", "example_smg.nm"))

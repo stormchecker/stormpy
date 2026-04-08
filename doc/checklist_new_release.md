@@ -38,4 +38,4 @@ The following steps should be performed when releasing a new stormpy version.
    * updates the `stable` branch
    * creates new Docker containers for both the tag and `stable` branch
    * creates a new stormpy Python package on [Pypi](https://pypi.org/project/stormpy/)
-   * triggers a PR in stormpy to update the Docker version for Binder
+   * triggers a PR in stormpy to update the Docker version for Binder. Consider also updating the base image for the Binder Dockerfile.

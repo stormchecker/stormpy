@@ -7,6 +7,7 @@
 #include "storm/storage/expressions/SimpleValuation.h"
 #include "storm/storage/expressions/Variable.h"
 #include "storm/storage/sparse/StateValuations.h"
+#include "storm/storage/sparse/StateValuationTransformer.h"
 
 // Thin wrappers
 storm::json<storm::RationalNumber> toJson(storm::storage::sparse::StateValuations const& valuations, storm::storage::sparse::state_type const& stateIndex, boost::optional<std::set<storm::expressions::Variable>> const& selectedVariables) {
@@ -30,7 +31,8 @@ void define_statevaluation(py::module& m) {
         .def("_get_rational_values_states", &storm::storage::sparse::StateValuations::getRationalValues, py::arg("variable"), "Get the value of the rational variable of all states. The i'th entry represents the value of state i.")
         .def("get_string", &storm::storage::sparse::StateValuations::toString, py::arg("state"), py::arg("pretty")=true, py::arg("selected_variables")=boost::none)
         .def("get_json", &toJson, py::arg("state"), py::arg("selected_variables")=boost::none)
-        .def("get_nr_of_states", &storm::storage::sparse::StateValuations::getNumberOfStates);
+        .def("get_nr_of_states", &storm::storage::sparse::StateValuations::getNumberOfStates)
+        .def_property_readonly("manager", &storm::storage::sparse::StateValuations::getManager);
     ;
 
 
@@ -40,7 +42,14 @@ void define_statevaluation(py::module& m) {
             .def("add_state", &add_state, py::arg("state"), py::arg("boolean_values") = std::vector<bool>(), py::arg("integer_values") = std::vector<int64_t>(), py::arg("rational_values") = std::vector<storm::RationalNumber>(), "Adds a new state, no more variables should be added afterwards")
             .def("build", &storm::storage::sparse::StateValuationsBuilder::build, "Creates the finalized state valuations object")
             ;
+}
 
+void define_statevaluation_transformer(py::module& m) {
+    py::class_<storm::storage::sparse::StateValuationTransformer> svt(m, "StateValuationTransformer", "Transforms the given state valuations to a new state valuations over a new variable set. The values of the new variables are determined by evaluating the provided expressions w.r.t. the old variable valuation. The freshly introduced variables may either replace or extend the existing variable set.");
+    svt.def(py::init<storm::storage::sparse::StateValuations const&>(), py::arg("old_state_valuations"), py::keep_alive<1, 2>())
+       .def("add_boolean_expression", &storm::storage::sparse::StateValuationTransformer::addBooleanExpression, py::arg("expression_variable"), py::arg("defining_expression"))
+       .def("add_integer_expression", &storm::storage::sparse::StateValuationTransformer::addIntegerExpression, py::arg("expression_variable"), py::arg("defining_expression"))
+       .def("build", &storm::storage::sparse::StateValuationTransformer::build, py::arg("extend"));
 }
 
 void define_simplevaluation(py::module& m) {

@@ -14,7 +14,6 @@ lib/**/_config.py
 **/__pycache__/
 **/_build/
 **/.pytest_cache/
-**/.idea/
 **/cmake-build-debug/
 
 **/.DS_Store

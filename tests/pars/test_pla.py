@@ -24,7 +24,7 @@ class TestPLA:
         assert model.has_parameters
         env = stormpy.Environment()
         checker = stormpy.pars.create_region_checker(env, model, formulas[0].raw_formula)
-        parameters = model.collect_probability_parameters()
+        parameters = model.collect_all_parameters()
         assert len(parameters) == 2
         region = stormpy.pars.ParameterRegion.create_from_string("0.7<=pL<=0.9,0.75<=pK<=0.95", parameters)
         result = checker.check_region(env, region)
@@ -47,7 +47,7 @@ class TestPLA:
         assert model.has_parameters
         env = stormpy.Environment()
         checker = stormpy.pars.create_region_checker(env, model, formulas[0].raw_formula)
-        parameters = model.collect_probability_parameters()
+        parameters = model.collect_all_parameters()
         assert len(parameters) == 2
         for par in parameters:
             if par.name == "pL":
@@ -80,7 +80,7 @@ class TestPLA:
         assert model.has_parameters
         env = stormpy.Environment()
         checker = stormpy.pars.create_region_checker(env, model, formulas[0].raw_formula)
-        parameters = model.collect_probability_parameters()
+        parameters = model.collect_all_parameters()
         assert len(parameters) == 2
         region = stormpy.pars.ParameterRegion.create_from_string("0.7<=pL<=0.9,0.75<=pK<=0.95", parameters)
         result = checker.get_bound(env, region, True)
@@ -98,7 +98,7 @@ class TestPLA:
         env = stormpy.Environment()
         checker = stormpy.pars.DtmcParameterLiftingModelChecker()
         checker.specify(env, model, formulas[0].raw_formula)
-        parameters = model.collect_probability_parameters()
+        parameters = model.collect_all_parameters()
         assert len(parameters) == 2
         region = stormpy.pars.ParameterRegion.create_from_string("0.7<=pL<=0.9,0.75<=pK<=0.95", parameters)
         result = checker.get_bound(env, region, True)
@@ -113,7 +113,7 @@ class TestPLA:
         env = stormpy.Environment()
         checker = stormpy.pars.DtmcParameterLiftingModelChecker()
         checker.specify(env, model, formulas[0].raw_formula, allow_model_simplification=False)
-        parameters = model.collect_probability_parameters()
+        parameters = model.collect_all_parameters()
         assert len(parameters) == 2
         region = stormpy.pars.ParameterRegion.create_from_string("0.7<=pL<=0.9,0.75<=pK<=0.95", parameters)
         result = checker.get_bound(env, region, True)
@@ -128,7 +128,7 @@ class TestPLA:
         env = stormpy.Environment()
         checker = stormpy.pars.DtmcParameterLiftingModelChecker()
         checker.specify(env, model, formulas[0].raw_formula, allow_model_simplification=False)
-        parameters = model.collect_probability_parameters()
+        parameters = model.collect_all_parameters()
         assert len(parameters) == 2
         region = stormpy.pars.ParameterRegion.create_from_string("0.7<=pL<=0.9,0.75<=pK<=0.95", parameters)
         result_vec = checker.get_bound_all_states(env, region, True)
@@ -142,7 +142,7 @@ class TestPLA:
         model = stormpy.build_parametric_model(program, formulas)
         assert model.has_parameters
         env = stormpy.Environment()
-        parameters = model.collect_probability_parameters()
+        parameters = model.collect_all_parameters()
         assert len(parameters) == 2
         region = stormpy.pars.ParameterRegion.create_from_string("0.7<=pL<=0.9,0.75<=pK<=0.95", parameters)
 

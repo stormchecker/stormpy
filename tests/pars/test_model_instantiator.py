@@ -11,7 +11,7 @@ class TestModelInstantiator:
         program = stormpy.parse_prism_program(get_example_path("pdtmc", "brp16_2.pm"))
         formulas = stormpy.parse_properties_for_prism_program("P=? [ F s=5 ]", program)
         model = stormpy.build_parametric_model(program, formulas)
-        parameters = model.collect_probability_parameters()
+        parameters = model.collect_all_parameters()
         assert len(parameters) == 2
         instantiator = stormpy.pars.ModelInstantiator(model)
 
@@ -30,7 +30,7 @@ class TestModelInstantiator:
         formulas = stormpy.parse_properties_for_prism_program('P=? [F "error"]', program)
         model = stormpy.build_parametric_model(program, formulas)
 
-        parameters = model.collect_probability_parameters()
+        parameters = model.collect_all_parameters()
         instantiator = stormpy.pars.PDtmcInstantiator(model)
 
         point = {p: stormpy.RationalRF("0.4") for p in parameters}
@@ -48,7 +48,7 @@ class TestModelInstantiator:
         formulas = stormpy.parse_properties_for_prism_program('R=? [F "stable"]', program)
         model = stormpy.build_parametric_model(program, formulas)
 
-        parameters = model.collect_probability_parameters()
+        parameters = model.collect_all_parameters()
         inst_checker = stormpy.pars.PDtmcInstantiationChecker(model)
         inst_checker.specify_formula(stormpy.ParametricCheckTask(formulas[0].raw_formula, True))
         inst_checker.set_graph_preserving(True)
@@ -66,7 +66,7 @@ class TestModelInstantiator:
         formulas = stormpy.parse_properties_for_prism_program('R=? [F "stable"]', program)
         model = stormpy.build_parametric_model(program, formulas)
 
-        parameters = model.collect_probability_parameters()
+        parameters = model.collect_all_parameters()
         inst_checker = stormpy.pars.PDtmcExactInstantiationChecker(model)
         inst_checker.specify_formula(stormpy.ParametricCheckTask(formulas[0].raw_formula, True))
         inst_checker.set_graph_preserving(True)

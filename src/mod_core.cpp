@@ -28,6 +28,12 @@ PYBIND11_MODULE(_core, m) {
     define_optimality_type(m);
     define_export(m);
     define_result(m);
+    define_typed_result<double>(m, "");
+    define_typed_result<storm::RationalNumber>(m, "Exact");
+    define_typed_result<storm::RationalFunction>(m, "Parametric");
+    define_check_task<double>(m, "CheckTask");
+    define_check_task<storm::RationalNumber>(m, "ExactCheckTask");
+    define_check_task<storm::RationalFunction>(m, "ParametricCheckTask");
     define_modelchecking(m);
     define_counterexamples(m);
     define_bisimulation(m);

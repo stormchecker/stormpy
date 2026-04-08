@@ -1,3 +1,5 @@
+#pragma once
+
 #include <boost/optional.hpp>
 
 // `boost::optional` as an example -- can be any `std::optional`-like container

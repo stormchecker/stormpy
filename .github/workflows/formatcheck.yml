@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  check_python:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,3 +16,14 @@ jobs:
         options: "--check --diff --color"
         src: "."
         jupyter: true
+
+  check_cpp:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v6
+    - uses: DoozyX/clang-format-lint-action@v0.20
+      with:
+        source: './src'
+        clangFormatVersion: 20
+        style: file

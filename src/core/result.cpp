@@ -28,7 +28,7 @@ std::shared_ptr<storm::modelchecker::QualitativeCheckResult> createFilterSymboli
 void define_result(py::module& m) {
 
     // CheckResult
-    py::class_<storm::modelchecker::CheckResult, std::shared_ptr<storm::modelchecker::CheckResult>>(m, "_CheckResult", "Base class for all modelchecking results")
+    auto checkResult = py::class_<storm::modelchecker::CheckResult, std::shared_ptr<storm::modelchecker::CheckResult>>(m, "_CheckResult", "Base class for all modelchecking results")
         .def_property_readonly("_symbolic", &storm::modelchecker::CheckResult::isSymbolic, "Flag if result is symbolic")
         .def_property_readonly("_hybrid", &storm::modelchecker::CheckResult::isHybrid, "Flag if result is hybrid")
         .def_property_readonly("_quantitative", &storm::modelchecker::CheckResult::isQuantitative, "Flag if result is quantitative")
@@ -90,10 +90,6 @@ void define_result(py::module& m) {
     ;
     py::class_<storm::modelchecker::SymbolicQualitativeCheckResult<storm::dd::DdType::Sylvan>, std::shared_ptr<storm::modelchecker::SymbolicQualitativeCheckResult<storm::dd::DdType::Sylvan>>>(m, "SymbolicQualitativeCheckResult", "Symbolic qualitative model checking result", qualitativeCheckResult)
             .def("get_truth_values", &storm::modelchecker::SymbolicQualitativeCheckResult<storm::dd::DdType::Sylvan>::getTruthValuesVector, "Get Dd representing the truth values")
-    ;
-
-    py::class_<storm::modelchecker::SymbolicQualitativeCheckResult<storm::dd::DdType::Sylvan>, std::shared_ptr<storm::modelchecker::SymbolicQualitativeCheckResult<storm::dd::DdType::Sylvan>>, storm::modelchecker::QualitativeCheckResult>(m, "SymbolicQualitativeCheckResult", "Symbolic qualitative model checking result")
-        .def("get_truth_values", &storm::modelchecker::SymbolicQualitativeCheckResult<storm::dd::DdType::Sylvan>::getTruthValuesVector, "Get Dd representing the truth values")
     ;
 }
 

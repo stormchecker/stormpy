@@ -86,14 +86,14 @@ void define_transformation_typed(py::module& m, std::string const& vtSuffix) {
 
     py::class_<storm::transformer::AddUncertainty<ValueType>>(m, ("AddUncertainty" + vtSuffix).c_str(), "Transform model into interval model with specified uncertainty")
         .def(py::init<std::shared_ptr<storm::models::sparse::Model<ValueType>> const&>(), py::arg("model"))
-        .def("transform", &storm::transformer::AddUncertainty<ValueType>::transform, "transform the model", py::arg("additiveUncertainty"), py::arg("minimalTransitionProbability"));
+        .def("transform", &storm::transformer::AddUncertainty<ValueType>::transform, "transform the model", py::arg("additiveUncertainty"), py::arg("minimalValue") = 0.0001, py::arg("maxSuccessors") = (uint64_t)10000000);
 }
 
 template<typename ValueType>
-void define_transformation_typed_only_numbers(py::module& m, std::string const& vtSuffix) {   
+void define_transformation_typed_only_numbers(py::module& m, std::string const& vtSuffix) {
     py::class_<storm::transformer::AddUncertainty<ValueType>>(m, ("AddUncertainty" + vtSuffix).c_str(), "Transform model into interval model with specified uncertainty")
         .def(py::init<std::shared_ptr<storm::models::sparse::Model<ValueType>> const&>(), py::arg("model"))
-        .def("transform", &storm::transformer::AddUncertainty<ValueType>::transform, "transform the model", py::arg("additiveUncertainty"), py::arg("minimalTransitionProbability"));
+        .def("transform", &storm::transformer::AddUncertainty<ValueType>::transform, "transform the model", py::arg("additiveUncertainty"), py::arg("minimalValue") = 0.0001, py::arg("maxSuccessors") = (uint64_t)10000000);
 }
 
 template void define_transformation_typed<double>(py::module& m, std::string const& vtSuffix);

@@ -206,9 +206,9 @@ void define_export(py::module& m) {
     ;
 
     // Export
-    m.def("_export_to_drn", &exportDRN<double>, "Export model in DRN format", py::arg("model"), py::arg("file"), py::arg("options")=storm::io::DirectEncodingOptions());
-    m.def("_export_to_drn_interval", &exportDRN<storm::Interval>, "Export model in DRN format", py::arg("model"), py::arg("file"), py::arg("options")=storm::io::DirectEncodingOptions());
-    m.def("_export_exact_to_drn_interval", &exportDRN<storm::RationalInterval>, "Export model in DRN format", py::arg("model"), py::arg("file"), py::arg("options")=storm::io::DirectEncodingOptions());
-    m.def("_export_exact_to_drn", &exportDRN<storm::RationalNumber>, "Export model in DRN format", py::arg("model"), py::arg("file"), py::arg("options")=storm::io::DirectEncodingOptions());
-    m.def("_export_parametric_to_drn", &exportDRN<storm::RationalFunction>, "Export parametric model in DRN format", py::arg("model"), py::arg("file"), py::arg("options")=storm::io::DirectEncodingOptions());
+    m.def("_export_to_drn", &exportDRN<double>, "Export model in DRN format", py::arg("model"), py::arg("file"), py::arg("options")=storm::io::DirectEncodingExporterOptions());
+    m.def("_export_to_drn_interval", &exportDRN<storm::Interval>, "Export model in DRN format", py::arg("model"), py::arg("file"), py::arg("options")=storm::io::DirectEncodingExporterOptions());
+    m.def("_export_exact_to_drn_interval", &exportDRN<storm::RationalInterval>, "Export model in DRN format", py::arg("model"), py::arg("file"), py::arg("options")=storm::io::DirectEncodingExporterOptions());
+    m.def("_export_exact_to_drn", &exportDRN<storm::RationalNumber>, "Export model in DRN format", py::arg("model"), py::arg("file"), py::arg("options")=storm::io::DirectEncodingExporterOptions());
+    m.def("_export_parametric_to_drn", &exportDRN<storm::RationalFunction>, "Export parametric model in DRN format", py::arg("model"), py::arg("file"), py::arg("options")=storm::io::DirectEncodingExporterOptions());
 }

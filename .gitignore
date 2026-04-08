@@ -14,3 +14,4 @@ _build/
 cmake-build-debug/
 .cache/
 .DS_Store
+.venv/

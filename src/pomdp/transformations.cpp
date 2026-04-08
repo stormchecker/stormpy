@@ -7,7 +7,6 @@
 #include "storm-pomdp/transformer/PomdpMemoryUnfolder.h"
 #include "storm/adapters/RationalFunctionAdapter.h"
 #include "storm/storage/expressions/ExpressionManager.h"
-#include "storm/transformer/MakePOMDPCanonic.h"
 
 template<typename ValueType>
 std::shared_ptr<storm::models::sparse::Pomdp<ValueType>> make_canonic(storm::models::sparse::Pomdp<ValueType> const &pomdp) {

@@ -3,6 +3,7 @@
 
 #include <storm/adapters/RationalFunctionAdapter.h>
 #include <storm/adapters/RationalNumberAdapter.h>
+#include <storm/adapters/IntervalAdapter.h>
 #include "pomdp/generator.h"
 #include "pomdp/memory.h"
 #include "pomdp/qualitative_analysis.h"
@@ -14,8 +15,6 @@ PYBIND11_MODULE(_pomdp, m) {
     m.doc() = "Functionality for POMDP analysis";
 
 #ifdef STORMPY_DISABLE_SIGNATURE_DOC
-    py::options options;
-    options.disable_function_signatures();
     py::options options;
     options.disable_function_signatures();
 #endif

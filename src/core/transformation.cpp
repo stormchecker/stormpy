@@ -83,6 +83,10 @@ void define_transformation_typed(py::module& m, std::string const& vtSuffix) {
             .def_readonly("deadlock_label", &storm::transformer::SubsystemBuilderReturnType<ValueType>::deadlockLabel,
                           "If set, deadlock states have been introduced and have been assigned this label");
     m.def(("_construct_subsystem_" + vtSuffix).c_str(), &constructSubsystem<ValueType>, "build a subsystem of a sparse model");
+
+    py::class_<storm::transformer::AddUncertainty<ValueType>>(m, ("AddUncertainty" + vtSuffix).c_str(), "Transform model into interval model with specified uncertainty")
+        .def(py::init<std::shared_ptr<storm::models::sparse::Model<ValueType>> const&>(), py::arg("model"))
+        .def("transform", &storm::transformer::AddUncertainty<ValueType>::transform, "transform the model", py::arg("additiveUncertainty"), py::arg("minimalTransitionProbability"));
 }
 
 template<typename ValueType>

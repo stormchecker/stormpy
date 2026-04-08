@@ -134,5 +134,6 @@ void define_sparse_matrix(py::module& m, std::string const& vtSuffix) {
 template void define_sparse_matrix<double>(py::module& m, std::string const& vtSuffix);
 template void define_sparse_matrix<storm::RationalNumber>(py::module& m, std::string const& vtSuffix);
 template void define_sparse_matrix<storm::Interval>(py::module& m, std::string const& vtSuffix);
+template void define_sparse_matrix<storm::RationalInterval>(py::module& m, std::string const& vtSuffix);
 template void define_sparse_matrix<storm::RationalFunction>(py::module& m, std::string const& vtSuffix);
 

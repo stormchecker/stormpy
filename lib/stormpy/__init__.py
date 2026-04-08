@@ -312,6 +312,26 @@ def build_interval_model_from_drn(file, options=DirectEncodingParserOptions()):
     return _convert_sparse_model(intermediate, value_type=_ValueType.INTERVAL)
 
 
+def build_exact_interval_model_from_drn(file, options=DirectEncodingParserOptions()):
+    """
+    Build an exact interval model in sparse representation from the explicit DRN representation.
+
+    :param String file: DRN file containing the model.
+    :param DirectEncodingParserOptions: Options for the parser.
+    :return: Exact Interval model in sparse representation.
+    """
+    intermediate = _core._build_sparse_exact_interval_model_from_drn(file, options)
+    assert intermediate.supports_uncertainty and intermediate.is_exact
+    if intermediate.model_type == ModelType.DTMC:
+        return intermediate._as_sparse_exact_idtmc()
+    elif intermediate.model_type == ModelType.MDP:
+        return intermediate._as_sparse_exact_imdp()
+    elif intermediate.model_type == ModelType.POMDP:
+        return intermediate._as_sparse_exact_ipomdp()
+    else:
+        raise StormError("Not supported exact interval model constructed")
+
+
 def perform_bisimulation(model, properties, bisimulation_type, graph_preserving=True):
     """
     Perform bisimulation on model.
@@ -741,6 +761,8 @@ def export_to_drn(model, file, options=DirectEncodingExporterOptions()):
     """
     if model.supports_parameters:
         return _core._export_parametric_to_drn(model, file, options)
+    if model.supports_uncertainty and model.is_exact:
+        return _core._export_exact_to_drn_interval(model, file, options)
     if model.supports_uncertainty:
         return _core._export_to_drn_interval(model, file, options)
     if model.is_exact:

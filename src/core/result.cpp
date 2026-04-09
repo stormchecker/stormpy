@@ -70,24 +70,7 @@ void define_result(py::module& m) {
 
     // QualitativeCheckResult
     py::class_<storm::modelchecker::QualitativeCheckResult, std::shared_ptr<storm::modelchecker::QualitativeCheckResult>> qualitativeCheckResult(m, "_QualitativeCheckResult", "Abstract class for qualitative model checking results", checkResult);
-    // For doubles
-    py::class_<storm::modelchecker::ExplicitQualitativeCheckResult<double>, std::shared_ptr<storm::modelchecker::ExplicitQualitativeCheckResult<double>>>(m, "ExplicitQualitativeCheckResult", "Explicit qualitative model checking result", qualitativeCheckResult)
-        .def("at", [](storm::modelchecker::ExplicitQualitativeCheckResult<double> const& result, storm::storage::sparse::state_type state) {
-                return result[state];
-            }, py::arg("state"), "Get result for given state")
-        .def("get_truth_values", &storm::modelchecker::ExplicitQualitativeCheckResult<double>::getTruthValuesVector, "Get BitVector representing the truth values")
-        .def_property_readonly("scheduler", [](storm::modelchecker::ExplicitQualitativeCheckResult<double> const& res) {return res.getScheduler();}, "get scheduler")
 
-    ;
-    // For rationals
-    py::class_<storm::modelchecker::ExplicitQualitativeCheckResult<storm::RationalNumber>, std::shared_ptr<storm::modelchecker::ExplicitQualitativeCheckResult<storm::RationalNumber>>>(m, "ExactExplicitQualitativeCheckResult", "Explicit qualitative model checking result", qualitativeCheckResult)
-        .def("at", [](storm::modelchecker::ExplicitQualitativeCheckResult<storm::RationalNumber> const& result, storm::storage::sparse::state_type state) {
-                return result[state];
-            }, py::arg("state"), "Get result for given state")
-        .def("get_truth_values", &storm::modelchecker::ExplicitQualitativeCheckResult<storm::RationalNumber>::getTruthValuesVector, "Get BitVector representing the truth values")
-        .def_property_readonly("scheduler", [](storm::modelchecker::ExplicitQualitativeCheckResult<storm::RationalNumber> const& res) {return res.getScheduler();}, "get scheduler")
-
-    ;
     py::class_<storm::modelchecker::SymbolicQualitativeCheckResult<storm::dd::DdType::Sylvan>, std::shared_ptr<storm::modelchecker::SymbolicQualitativeCheckResult<storm::dd::DdType::Sylvan>>>(m, "SymbolicQualitativeCheckResult", "Symbolic qualitative model checking result", qualitativeCheckResult)
             .def("get_truth_values", &storm::modelchecker::SymbolicQualitativeCheckResult<storm::dd::DdType::Sylvan>::getTruthValuesVector, "Get Dd representing the truth values")
     ;

@@ -55,9 +55,6 @@ void define_transformations_nt(py::module &m) {
         .value("simple_log", storm::transformer::PomdpFscApplicationMode::SIMPLE_LOG)
         .value("full", storm::transformer::PomdpFscApplicationMode::FULL);
 
-    py::class_<storm::pomdp::ObservationTraceUnfolderOptions> unfolderOptions(m, "ObservationTraceUnfolderOptions", "Options for the ObservationTraceUnfolder");
-    unfolderOptions.def(py::init<>());
-    unfolderOptions.def_readwrite("rejection_sampling", &storm::pomdp::ObservationTraceUnfolderOptions::rejectionSampling);
     py::class_<storm::pomdp::ObservationTraceUnfolderOptions> options(m, "ObservationTraceUnfolderOptions", "Options for unfolding observation traces");
     options.def(py::init<>());
     options.def_readwrite("rejection_sampling", &storm::pomdp::ObservationTraceUnfolderOptions::rejectionSampling,

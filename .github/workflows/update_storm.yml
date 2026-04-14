@@ -15,7 +15,7 @@ on:
         required: true
 
 jobs:
-  update_stormpy:
+  update_storm:
     runs-on: ubuntu-latest
     steps:
       - name: Git clone

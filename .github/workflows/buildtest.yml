@@ -288,6 +288,9 @@ jobs:
   deploy:
     name: Test and Deploy on latest (${{ matrix.build_type.name }})
     runs-on: ubuntu-latest
+    permissions:
+      # Needed for documentation deployment
+      contents: write
     strategy:
       matrix:
         build_type:

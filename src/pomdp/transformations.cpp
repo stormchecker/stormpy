@@ -2,11 +2,11 @@
 
 #include "storm-pomdp/transformer/ApplyFiniteSchedulerToPomdp.h"
 #include "storm-pomdp/transformer/BinaryPomdpTransformer.h"
-#include "storm/transformer/MakePOMDPCanonic.h"
 #include "storm-pomdp/transformer/ObservationTraceUnfolder.h"
 #include "storm-pomdp/transformer/PomdpMemoryUnfolder.h"
 #include "storm/adapters/RationalFunctionAdapter.h"
 #include "storm/storage/expressions/ExpressionManager.h"
+#include "storm/transformer/MakePOMDPCanonic.h"
 
 template<typename ValueType>
 std::shared_ptr<storm::models::sparse::Pomdp<ValueType>> make_canonic(storm::models::sparse::Pomdp<ValueType> const &pomdp) {
@@ -39,9 +39,9 @@ template<typename ValueType>
 std::shared_ptr<storm::models::sparse::Mdp<ValueType>> unfold_trace(storm::models::sparse::Pomdp<ValueType> const &pomdp,
                                                                     std::shared_ptr<storm::expressions::ExpressionManager> &exprManager,
                                                                     std::vector<uint32_t> const &observationTrace, std::vector<ValueType> const &riskDef,
-                                                                    bool rejectionSampling = true) {
+                                                                    bool restartSemantics = true) {
     storm::pomdp::ObservationTraceUnfolderOptions options = storm::pomdp::ObservationTraceUnfolderOptions();
-    options.rejectionSampling = rejectionSampling;
+    options.useRestartSemantics = restartSemantics;
     storm::pomdp::ObservationTraceUnfolder<ValueType> transformer(pomdp, riskDef, exprManager, options);
     return transformer.transform(observationTrace);
 }
@@ -57,8 +57,8 @@ void define_transformations_nt(py::module &m) {
 
     py::class_<storm::pomdp::ObservationTraceUnfolderOptions> options(m, "ObservationTraceUnfolderOptions", "Options for unfolding observation traces");
     options.def(py::init<>());
-    options.def_readwrite("rejection_sampling", &storm::pomdp::ObservationTraceUnfolderOptions::rejectionSampling,
-                          "Use rejection sampling instead of restarts");
+    options.def_readwrite("restart_semantics", &storm::pomdp::ObservationTraceUnfolderOptions::useRestartSemantics,
+                          "Use restart semantics instead of a sink state");
 }
 
 template<typename ValueType>
@@ -78,7 +78,7 @@ void define_transformations_int(py::module &m, std::string const &vtSuffix) {
     unfolder.def(py::init<storm::models::sparse::Pomdp<ValueType>, std::vector<ValueType> const &, std::shared_ptr<storm::expressions::ExpressionManager> &,
                           storm::pomdp::ObservationTraceUnfolderOptions const &>(),
                  py::arg("model"), py::arg("risk"), py::arg("expression_manager"), py::arg("options"), py::keep_alive<2, 1>());
-    unfolder.def("is_rejection_sampling_set", &storm::pomdp::ObservationTraceUnfolder<ValueType>::isRejectionSamplingSet);
+    unfolder.def("is_restart_semantics_set", &storm::pomdp::ObservationTraceUnfolder<ValueType>::isRestartSemanticsSet);
     unfolder.def("transform", &storm::pomdp::ObservationTraceUnfolder<ValueType>::transform, py::arg("trace"));
     unfolder.def("reset", &storm::pomdp::ObservationTraceUnfolder<ValueType>::reset, py::arg("new_observation"));
     unfolder.def("extend", &storm::pomdp::ObservationTraceUnfolder<ValueType>::extend, py::arg("new_observation"));

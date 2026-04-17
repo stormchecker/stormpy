@@ -6,7 +6,7 @@
 # --build-arg STORM_BASE=<new_base_image>
 
 # Set Storm base image
-ARG STORM_BASE=lukovdm/storm:premise
+ARG STORM_BASE=movesrwth/storm:stable
 FROM $STORM_BASE
 LABEL org.opencontainers.image.authors="dev@stormchecker.org"
 
@@ -23,7 +23,7 @@ ARG setup_args=""
 # Optional support to install for stormpy, such as '[test,doc]'
 ARG options=""
 # Number of threads to use for parallel compilation
-ARG no_threads=24
+ARG no_threads=2
 
 
 # Install dependencies
@@ -76,5 +76,4 @@ RUN pip install -v \
     --config-settings=cmake.define.CMAKE_BUILD_PARALLEL_LEVEL=$no_threads \
     --config-settings=cmake.build-type=$build_type \
     --config-settings=cmake.define.CARLPARSER_DIR_HINT=/opt/carl-parser/build/ \
-    --config-settings=cmake.define.STORM_DIR_HINT=/opt/storm/build/ \
     $setup_args .$options

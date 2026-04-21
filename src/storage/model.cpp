@@ -116,6 +116,12 @@ void define_model(py::module& m) {
         .def("_as_sparse_pdtmc", [](ModelBase &modelbase) {
                 return modelbase.as<SparseDtmc<storm::RationalFunction>>();
             }, "Get model as sparse parametric DTMC")
+        .def("_as_sparse_idtmc", [](ModelBase &modelbase) {
+                return modelbase.as<SparseDtmc<storm::Interval>>();
+            }, "Get model as sparse interval DTMC")
+        .def("_as_sparse_exact_idtmc", [](ModelBase &modelbase) {
+                return modelbase.as<SparseDtmc<storm::RationalInterval>>();
+            }, "Get model as sparse exact interval DTMC")
         .def("_as_sparse_mdp", [](ModelBase &modelbase) {
                 return modelbase.as<SparseMdp<double>>();
             }, "Get model as sparse MDP")
@@ -125,18 +131,24 @@ void define_model(py::module& m) {
         .def("_as_sparse_imdp", [](ModelBase &modelbase) {
                 return modelbase.as<SparseMdp<storm::Interval>>();
             }, "Get model as sparse interval MDP")
+        .def("_as_sparse_exact_imdp", [](ModelBase &modelbase) {
+                return modelbase.as<SparseMdp<storm::RationalInterval>>();
+            }, "Get model as sparse exact interval MDP")
         .def("_as_sparse_pmdp", [](ModelBase &modelbase) {
                 return modelbase.as<SparseMdp<storm::RationalFunction>>();
             }, "Get model as sparse parametric MDP")
         .def("_as_sparse_pomdp", [](ModelBase &modelbase) {
                 return modelbase.as<SparsePomdp<double>>();
             }, "Get model as sparse POMDP")
+        .def("_as_sparse_ipomdp", [](ModelBase &modelbase) {
+                return modelbase.as<SparsePomdp<storm::Interval>>();
+            }, "Get model as sparse interval POMDP")
+        .def("_as_sparse_exact_ipomdp", [](ModelBase &modelbase) {
+                return modelbase.as<SparsePomdp<storm::RationalInterval>>();
+            }, "Get model as sparse interval exact POMDP")
         .def("_as_sparse_exact_pomdp", [](ModelBase &modelbase) {
                 return modelbase.as<SparsePomdp<storm::RationalNumber>>();
             }, "Get model as sparse exact POMDP")
-        .def("_as_sparse_ipomdp", [](ModelBase &modelbase) {
-            return modelbase.as<SparsePomdp<storm::Interval>>();
-            }, "Get model as sparse interval POMDP")
         .def("_as_sparse_ppomdp", [](ModelBase &modelbase) {
             return modelbase.as<SparsePomdp<storm::RationalFunction>>();
             }, "Get model as sparse parametric POMDP")
@@ -393,6 +405,7 @@ void define_symbolic_model(py::module& m, std::string vt_suffix) {
 template void define_sparse_model<double>(py::module& m, std::string const& vt_suffix);
 template void define_sparse_model<storm::RationalNumber>(py::module& m, std::string const& vt_suffix);
 template void define_sparse_model<storm::Interval>(py::module& m, std::string const& vt_suffix);
+template void define_sparse_model<storm::RationalInterval>(py::module& m, std::string const& vt_suffix);
 template void define_sparse_model<storm::RationalFunction>(py::module& m, std::string const& vt_suffix);
 
 template void define_symbolic_model<storm::dd::DdType::Sylvan, double>(py::module& m, std::string vt_suffix);

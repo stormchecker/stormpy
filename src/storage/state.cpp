@@ -40,5 +40,6 @@ void define_state(py::module& m, std::string const& vtSuffix) {
 template void define_state<double>(py::module& m, std::string const& vtSuffix);
 template void define_state<storm::RationalNumber>(py::module& m, std::string const& vtSuffix);
 template void define_state<storm::Interval>(py::module& m, std::string const& vtSuffix);
+template void define_state<storm::RationalInterval>(py::module& m, std::string const& vtSuffix);
 template void define_state<storm::RationalFunction>(py::module& m, std::string const& vtSuffix);
 

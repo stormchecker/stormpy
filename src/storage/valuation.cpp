@@ -32,7 +32,7 @@ void define_statevaluation(py::module& m) {
         .def("get_string", &storm::storage::sparse::StateValuations::toString, py::arg("state"), py::arg("pretty")=true, py::arg("selected_variables")=boost::none)
         .def("get_json", &toJson, py::arg("state"), py::arg("selected_variables")=boost::none)
         .def("get_nr_of_states", &storm::storage::sparse::StateValuations::getNumberOfStates)
-        .def_property_readonly("manager", &storm::storage::sparse::StateValuations::getManager);
+        .def_property_readonly("manager", &storm::storage::sparse::StateValuations::getManager)
     ;
 
 

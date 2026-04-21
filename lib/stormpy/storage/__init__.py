@@ -69,6 +69,8 @@ def get_maximal_end_components(model):
     """
     if model.supports_parameters:
         return stormpy.MaximalEndComponentDecomposition_ratfunc(model)
+    elif model.supports_uncertainty and model.is_exact:
+        return stormpy.MaximalEndComponentDecomposition_ratinterval(model)
     elif model.is_exact:
         return stormpy.MaximalEndComponentDecomposition_exact(model)
     elif model.supports_uncertainty:

@@ -38,4 +38,5 @@ void define_maximal_end_component_decomposition(py::module& m, std::string const
 template void define_maximal_end_component_decomposition<double>(py::module& m, std::string const& vt_suffix);
 template void define_maximal_end_component_decomposition<storm::RationalNumber>(py::module& m, std::string const& vt_suffix);
 template void define_maximal_end_component_decomposition<storm::Interval>(py::module& m, std::string const& vt_suffix);
+template void define_maximal_end_component_decomposition<storm::RationalInterval>(py::module& m, std::string const& vt_suffix);
 template void define_maximal_end_component_decomposition<storm::RationalFunction>(py::module& m, std::string const& vt_suffix);

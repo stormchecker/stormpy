@@ -5,6 +5,7 @@
 #include "storm/models/symbolic/StandardRewardModel.h"
 #include "storm/transformer/SubsystemBuilder.h"
 #include "storm/transformer/EndComponentEliminator.h"
+#include "storm/transformer/AddUncertainty.h"
 
 // Thin wrappers.
 template<typename VT>
@@ -84,6 +85,16 @@ void define_transformation_typed(py::module& m, std::string const& vtSuffix) {
     m.def(("_construct_subsystem_" + vtSuffix).c_str(), &constructSubsystem<ValueType>, "build a subsystem of a sparse model");
 }
 
+template<typename ValueType>
+void define_transformation_typed_only_numbers(py::module& m, std::string const& vtSuffix) {
+    py::class_<storm::transformer::AddUncertainty<ValueType>>(m, ("AddUncertainty" + vtSuffix).c_str(), "Transform model into interval model with specified uncertainty")
+        .def(py::init<std::shared_ptr<storm::models::sparse::Model<ValueType>> const&>(), py::arg("model"))
+        .def("transform", &storm::transformer::AddUncertainty<ValueType>::transform, "transform the model", py::arg("additiveUncertainty"), py::arg("minimalValue") = storm::utility::convertNumber<ValueType>(0.0001), py::arg("maxSuccessors") = std::optional<uint64_t>{});
+}
+
 template void define_transformation_typed<double>(py::module& m, std::string const& vtSuffix);
 template void define_transformation_typed<storm::RationalNumber>(py::module& m, std::string const& vtSuffix);
 template void define_transformation_typed<storm::RationalFunction>(py::module& m, std::string const& vtSuffix);
+
+template void define_transformation_typed_only_numbers<double>(py::module& m, std::string const& vtSuffix);
+template void define_transformation_typed_only_numbers<storm::RationalNumber>(py::module& m, std::string const& vtSuffix);

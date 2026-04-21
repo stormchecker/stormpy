@@ -16,6 +16,8 @@ def make_canonic(model):
 
     if model.supports_parameters:
         return _pomdp._make_canonic_Rf(model)
+    elif model.is_exact:
+        return _pomdp._make_canonic_Exact(model)
     else:
         return _pomdp._make_canonic_Double(model)
 
@@ -73,15 +75,19 @@ def create_nondeterminstic_belief_tracker(model, reduction_timeout, track_timeou
         return _pomdp.NondeterministicBeliefTrackerDoubleSparse(model, opts)
 
 
-def create_observation_trace_unfolder(model, risk_assessment, expr_manager):
+def create_observation_trace_unfolder(model, risk_assessment, expr_manager, options=None):
     """
 
     :param model:
     :param risk_assessment:
     :param expr_manager:
+    :param options:
     :return:
     """
+    if options is None:
+        options = ObservationTraceUnfolderOptions()
+
     if model.is_exact:
-        return _pomdp.ObservationTraceUnfolderExact(model, risk_assessment, expr_manager)
+        return _pomdp.ObservationTraceUnfolderExact(model, risk_assessment, expr_manager, options)
     else:
-        return _pomdp.ObservationTraceUnfolderDouble(model, risk_assessment, expr_manager)
+        return _pomdp.ObservationTraceUnfolderDouble(model, risk_assessment, expr_manager, options)

@@ -394,7 +394,7 @@ def model_checking(model, property, only_initial_states=False, extract_scheduler
             extract_scheduler=extract_scheduler,
             force_fully_observable=force_fully_observable,
             environment=environment,
-        )
+        ) 
     else:
         assert model.is_symbolic_model
         if extract_scheduler:

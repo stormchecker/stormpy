@@ -24,11 +24,6 @@ void define_tracker(py::module& m, std::string const& vtSuffix) {
     sbel.def_property_readonly("risk", &storm::generator::SparseBeliefState<ValueType>::getRisk);
     sbel.def("__str__", &storm::generator::SparseBeliefState<ValueType>::toString);
     sbel.def_property_readonly("is_valid", &storm::generator::SparseBeliefState<ValueType>::isValid);
-//
-//    py::class_<storm::generator::ObservationDenseBeliefState<double>> dbel(m, "DenseBeliefStateDouble", "Belief state in dense format");
-//    dbel.def("get", &storm::generator::ObservationDenseBeliefState<double>::get, py::arg("state"));
-//    dbel.def_property_readonly("risk", &storm::generator::ObservationDenseBeliefState<double>::getRisk);
-//    dbel.def("__str__", &storm::generator::ObservationDenseBeliefState<double>::toString);
 
     py::class_<typename NDPomdpTrackerSparse<ValueType>::Options> opts(m, ("NondeterministicBeliefTracker" + vtSuffix + "SparseOptions").c_str(), "Options for the corresponding tracker");
     opts.def(py::init<>());

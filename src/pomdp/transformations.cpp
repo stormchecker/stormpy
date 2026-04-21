@@ -49,12 +49,12 @@ std::shared_ptr<storm::models::sparse::Mdp<ValueType>> unfold_trace(storm::model
 // STANDARD, SIMPLE_LINEAR, SIMPLE_LINEAR_INVERSE, SIMPLE_LOG, FULL
 void define_transformations_nt(py::module &m) {
     py::enum_<storm::transformer::PomdpFscApplicationMode>(m, "PomdpFscApplicationMode")
-        .value("standard", storm::transformer::PomdpFscApplicationMode::STANDARD)
-        .value("simple_linear", storm::transformer::PomdpFscApplicationMode::SIMPLE_LINEAR)
-        .value("simple_linear_inverse", storm::transformer::PomdpFscApplicationMode::SIMPLE_LINEAR_INVERSE)
-        .value("simple_log", storm::transformer::PomdpFscApplicationMode::SIMPLE_LOG)
-        .value("full", storm::transformer::PomdpFscApplicationMode::FULL);
-
+            .value("standard", storm::transformer::PomdpFscApplicationMode::STANDARD)
+            .value("simple_linear", storm::transformer::PomdpFscApplicationMode::SIMPLE_LINEAR)
+            .value("simple_linear_inverse", storm::transformer::PomdpFscApplicationMode::SIMPLE_LINEAR_INVERSE)
+            .value("simple_log", storm::transformer::PomdpFscApplicationMode::SIMPLE_LOG)
+            .value("full", storm::transformer::PomdpFscApplicationMode::FULL)
+            ;
     py::class_<storm::pomdp::ObservationTraceUnfolderOptions> options(m, "ObservationTraceUnfolderOptions", "Options for unfolding observation traces");
     options.def(py::init<>());
     options.def_readwrite("restart_semantics", &storm::pomdp::ObservationTraceUnfolderOptions::useRestartSemantics,
@@ -64,11 +64,10 @@ void define_transformations_nt(py::module &m) {
 template<typename ValueType>
 void define_transformations(py::module &m, std::string const &vtSuffix) {
     m.def(("_make_canonic_" + vtSuffix).c_str(), &make_canonic<ValueType>, "Return a canonicly-ordered POMDP", py::arg("pomdp"));
-    m.def(("_unfold_memory_" + vtSuffix).c_str(), &unfold_memory<ValueType>, "Unfold memory into a POMDP", py::arg("pomdp"), py::arg("memorystructure"),
-          py::arg("memorylabels") = false, py::arg("keep_state_valuations") = false);
-    m.def(("_make_simple_" + vtSuffix).c_str(), &make_simple<ValueType>, "Make POMDP simple", py::arg("pomdp"), py::arg("keep_state_valuations") = false);
-    m.def(("_apply_unknown_fsc_" + vtSuffix).c_str(), &apply_unknown_fsc<ValueType>, "Apply unknown FSC", py::arg("pomdp"),
-          py::arg("application_mode") = storm::transformer::PomdpFscApplicationMode::SIMPLE_LINEAR);
+    m.def(("_unfold_memory_" + vtSuffix).c_str(), &unfold_memory<ValueType>, "Unfold memory into a POMDP", py::arg("pomdp"), py::arg("memorystructure"), py::arg("memorylabels") = false, py::arg("keep_state_valuations")=false);
+    m.def(("_make_simple_"+ vtSuffix).c_str(), &make_simple<ValueType>, "Make POMDP simple", py::arg("pomdp"), py::arg("keep_state_valuations")=false);
+    m.def(("_apply_unknown_fsc_" + vtSuffix).c_str(), &apply_unknown_fsc<ValueType>, "Apply unknown FSC",py::arg("pomdp"), py::arg("application_mode")=storm::transformer::PomdpFscApplicationMode::SIMPLE_LINEAR);
+
 }
 
 template<typename ValueType>

@@ -3,9 +3,10 @@
 #include "storm/environment/Environment.h"
 #include "storm/environment/solver/SolverEnvironment.h"
 #include "storm/environment/solver/AllSolverEnvironments.h"
+#include "storm/environment/modelchecker/ConditionalModelCheckerEnvironment.h"
 #include "storm/environment/modelchecker/ModelCheckerEnvironment.h"
 #include "storm/environment/modelchecker/MultiObjectiveModelCheckerEnvironment.h"
-#include "storm/storage/SchedulerClass.h"  // added for SchedulerClass binding
+#include "storm/storage/SchedulerClass.h"
 
 void define_environment(py::module& m) {
     py::enum_<storm::solver::EquationSolverType>(m, "EquationSolverType", "Solver type for equation systems")
@@ -99,15 +100,17 @@ void define_environment(py::module& m) {
         .def_property_readonly("model_checker_environment", [](storm::Environment& env) -> auto& {return env.modelchecker();}, "model checker part of environment")
     ;
 
-    py::class_<storm::ModelCheckerEnvironment>(m, "ModelCheckerEnvironment", "Environment for the solver")
-        .def_property("conditional_algorithm", &storm::ModelCheckerEnvironment::getConditionalAlgorithmSetting, &storm::ModelCheckerEnvironment::setConditionalAlgorithmSetting, "conditional algorithm used")
-        .def_property("conditional_tolerance", &storm::ModelCheckerEnvironment::getConditionalTolerance, &storm::ModelCheckerEnvironment::setConditionalTolerance, "conditional tolerance used")
+    py::class_<storm::ConditionalModelCheckerEnvironment>(m, "ConditionalModelCheckerEnvironment", "Environment for conditional model checking")
+        .def_property("algorithm", &storm::ConditionalModelCheckerEnvironment::getAlgorithm, &storm::ConditionalModelCheckerEnvironment::setAlgorithm, "algorithm for conditional model checking")
+    ;
+
+    py::class_<storm::ModelCheckerEnvironment>(m, "ModelCheckerEnvironment", "Environment for the model checker")
         .def_property("steady_state_distribution_algorithm", &storm::ModelCheckerEnvironment::getSteadyStateDistributionAlgorithm, &storm::ModelCheckerEnvironment::setSteadyStateDistributionAlgorithm, "steady state distribution algorithm used")
-        .def_property("optimization_for_bounded_properties", &storm::ModelCheckerEnvironment::isAllowOptimizationForBoundedPropertiesSet, &storm::ModelCheckerEnvironment::setAllowOptimizationForBoundedProperties, "enable optimization for bounded properties")
         .def_property("ltl2da_tool",
             [](storm::ModelCheckerEnvironment const& env)->py::object { if (env.isLtl2daToolSet()) return py::cast(env.getLtl2daTool()); return py::none(); },
             [](storm::ModelCheckerEnvironment& env, py::object obj){ if (obj.is_none()) env.unsetLtl2daTool(); else env.setLtl2daTool(obj.cast<std::string>()); },
             "Path to external ltl2da tool (None to unset)")
+        .def_property_readonly("conditional", [](storm::ModelCheckerEnvironment& env)->storm::ConditionalModelCheckerEnvironment& { return env.conditional(); }, py::return_value_policy::reference, "Access conditional model checking sub-environment")
         .def_property_readonly("multi", [](storm::ModelCheckerEnvironment& env)->storm::MultiObjectiveModelCheckerEnvironment& { return env.multi(); }, py::return_value_policy::reference, "Access multi-objective sub-environment")
     ;
 

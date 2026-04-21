@@ -28,4 +28,3 @@ std::string containerToString(T& t) {
 // Be warned: Enabling something like this will break everything about Monomial,
 // as to Python the shared_ptr (Arg) IS the Monomial
 //  //PYBIND11_DECLARE_HOLDER_TYPE(T, std::shared_ptr<T>);
-

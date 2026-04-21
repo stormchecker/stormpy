@@ -102,6 +102,7 @@ void define_environment(py::module& m) {
 
     py::class_<storm::ConditionalModelCheckerEnvironment>(m, "ConditionalModelCheckerEnvironment", "Environment for conditional model checking")
         .def_property("algorithm", &storm::ConditionalModelCheckerEnvironment::getAlgorithm, &storm::ConditionalModelCheckerEnvironment::setAlgorithm, "algorithm for conditional model checking")
+        .def_property("tolerance", &storm::ConditionalModelCheckerEnvironment::getTolerance, &storm::ConditionalModelCheckerEnvironment::setTolerance, "tolerance for conditional model checking")
     ;
 
     py::class_<storm::ModelCheckerEnvironment>(m, "ModelCheckerEnvironment", "Environment for the model checker")

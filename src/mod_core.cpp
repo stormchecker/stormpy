@@ -1,15 +1,15 @@
 #include "common.h"
 
-#include "core/core.h"
-#include "core/result.h"
-#include "core/modelchecking.h"
-#include "core/bisimulation.h"
-#include "core/input.h"
 #include "core/analysis.h"
+#include "core/bisimulation.h"
+#include "core/core.h"
 #include "core/counterexample.h"
 #include "core/environment.h"
-#include "core/transformation.h"
+#include "core/input.h"
+#include "core/modelchecking.h"
+#include "core/result.h"
 #include "core/simulator.h"
+#include "core/transformation.h"
 
 PYBIND11_MODULE(_core, m) {
     m.doc() = "core";

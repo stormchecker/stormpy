@@ -1,4 +1,7 @@
 #include "environment.h"
+#include <pybind11/pytypes.h>
+#include <storm/settings/SettingsManager.h>
+#include <storm/utility/constants.h>
 #include "src/helpers.h"
 #include "storm/environment/Environment.h"
 #include "storm/environment/solver/SolverEnvironment.h"
@@ -102,7 +105,8 @@ void define_environment(py::module& m) {
 
     py::class_<storm::ConditionalModelCheckerEnvironment>(m, "ConditionalModelCheckerEnvironment", "Environment for conditional model checking")
         .def_property("algorithm", &storm::ConditionalModelCheckerEnvironment::getAlgorithm, &storm::ConditionalModelCheckerEnvironment::setAlgorithm, "algorithm for conditional model checking")
-        .def_property("tolerance", &storm::ConditionalModelCheckerEnvironment::getTolerance, &storm::ConditionalModelCheckerEnvironment::setTolerance, "tolerance for conditional model checking")
+        .def_property("precision", &storm::ConditionalModelCheckerEnvironment::getPrecision, [](storm::ConditionalModelCheckerEnvironment& env, storm::RationalNumber value){ env.setPrecision(value, false); }, "precision for conditional model checking")
+        .def_property("relative", &storm::ConditionalModelCheckerEnvironment::isRelativePrecision, &storm::ConditionalModelCheckerEnvironment::setRelativePrecision, "whether the precision is relative")
     ;
 
     py::class_<storm::ModelCheckerEnvironment>(m, "ModelCheckerEnvironment", "Environment for the model checker")

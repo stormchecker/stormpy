@@ -254,6 +254,24 @@ def build_sparse_interval_model(symbolic_description, properties=None):
         intermediate = _core._build_sparse_interval_model_from_symbolic_description(symbolic_description)
     return _convert_sparse_model(intermediate, value_type=_ValueType.INTERVAL)
 
+def build_sparse_exact_interval_model(symbolic_description, properties=None):
+    """
+    Build an exact interval model in sparse representation from a symbolic description.
+
+    :param symbolic_description: Symbolic model description to translate into a model.
+    :param List[Property] properties: List of properties that should be preserved during the translation. If None, then all properties are preserved.
+    :return: Exact interval model in sparse representation.
+    """
+    if not symbolic_description.undefined_constants_are_graph_preserving:
+        raise stormpy.exceptions.StormError("Program still contains undefined constants")
+
+    if properties:
+        formulae = [(prop.raw_formula if isinstance(prop, Property) else prop) for prop in properties]
+        intermediate = _core._build_sparse_exact_interval_model_from_symbolic_description(symbolic_description, formulae)
+    else:
+        intermediate = _core._build_sparse_exact_interval_model_from_symbolic_description(symbolic_description)
+    return _convert_sparse_model(intermediate, value_type=_ValueType.EXACT_INTERVAL)
+
 
 def build_symbolic_model(symbolic_description, properties=None):
     """

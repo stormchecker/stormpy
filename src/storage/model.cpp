@@ -161,6 +161,9 @@ void define_model(py::module& m) {
         .def("_as_sparse_ictmc", [](ModelBase &modelbase) {
                 return modelbase.as<SparseCtmc<storm::Interval>>();
             }, "Get model as sparse interval CTMC")
+        .def("_as_sparse_exact_ictmc", [](ModelBase &modelbase) {
+                return modelbase.as<SparseCtmc<storm::RationalInterval>>();
+            }, "Get model as sparse exact interval CTMC")
         .def("_as_sparse_pctmc", [](ModelBase &modelbase) {
                 return modelbase.as<SparseCtmc<storm::RationalFunction>>();
             }, "Get model as sparse parametric CTMC")
@@ -173,6 +176,9 @@ void define_model(py::module& m) {
         .def("_as_sparse_ima", [](ModelBase &modelbase) {
                 return modelbase.as<SparseMarkovAutomaton<storm::Interval>>();
             }, "Get model as sparse interval MA")
+        .def("_as_sparse_exact_ima", [](ModelBase &modelbase) {
+                return modelbase.as<SparseMarkovAutomaton<storm::RationalInterval>>();
+            }, "Get model as sparse exact interval MA")
         .def("_as_sparse_pma", [](ModelBase &modelbase) {
                 return modelbase.as<SparseMarkovAutomaton<storm::RationalFunction>>();
             }, "Get model as sparse parametric MA")
@@ -185,6 +191,9 @@ void define_model(py::module& m) {
         .def("_as_sparse_ismg", [](ModelBase &modelbase) {
                 return modelbase.as<SparseSmg<storm::Interval>>();
             }, "Get model as sparse interval SMG")
+        .def("_as_sparse_exact_ismg", [](ModelBase &modelbase) {
+                return modelbase.as<SparseSmg<storm::RationalInterval>>();
+            }, "Get model as sparse exact interval SMG")
         .def("_as_sparse_psmg", [](ModelBase &modelbase) {
                 return modelbase.as<SparseSmg<storm::RationalFunction>>();
             }, "Get model as sparse parametric SMG")

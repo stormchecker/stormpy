@@ -325,7 +325,6 @@ class TestSymbolicSylvanModel:
         assert model.model_type == stormpy.ModelType.POMDP
         assert type(model) is stormpy.SparseIntervalPomdp
 
-
     def test_build_exact_ipomdp(self):
         model = stormpy.build_exact_interval_model_from_drn(get_example_path("ipomdp", "tiny-01.drn"))
         assert model.nr_states == 4

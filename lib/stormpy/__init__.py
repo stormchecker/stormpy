@@ -27,6 +27,7 @@ class _ValueType(Enum):
     EXACT = 2
     PARAMETRIC = 3
     INTERVAL = 4
+    EXACT_INTERVAL = 5
 
 
 def _convert_sparse_model(model, value_type=_ValueType.DOUBLE):
@@ -103,6 +104,22 @@ def _convert_sparse_model(model, value_type=_ValueType.DOUBLE):
                 return model._as_sparse_ismg()
             else:
                 raise stormpy.exceptions.StormError("Not supported interval model constructed")
+        case _ValueType.EXACT_INTERVAL:
+            assert model.supports_uncertainty and model.is_exact
+            if model.model_type == ModelType.DTMC:
+                return model._as_sparse_exact_idtmc()
+            elif model.model_type == ModelType.MDP:
+                return model._as_sparse_exact_imdp()
+            elif model.model_type == ModelType.POMDP:
+                return model._as_sparse_exact_ipomdp()
+            elif model.model_type == ModelType.CTMC:
+                return model._as_sparse_exact_ictmc()
+            elif model.model_type == ModelType.MA:
+                return model._as_sparse_exact_ima()
+            elif model.model_type == ModelType.SMG:
+                return model._as_sparse_exact_ismg()
+            else:
+                raise stormpy.exceptions.StormError("Not supported exact interval model constructed")
         case _:
             raise stormpy.exceptions.StormError("Not supported model type constructed")
 
@@ -321,15 +338,7 @@ def build_exact_interval_model_from_drn(file, options=DirectEncodingParserOption
     :return: Exact Interval model in sparse representation.
     """
     intermediate = _core._build_sparse_exact_interval_model_from_drn(file, options)
-    assert intermediate.supports_uncertainty and intermediate.is_exact
-    if intermediate.model_type == ModelType.DTMC:
-        return intermediate._as_sparse_exact_idtmc()
-    elif intermediate.model_type == ModelType.MDP:
-        return intermediate._as_sparse_exact_imdp()
-    elif intermediate.model_type == ModelType.POMDP:
-        return intermediate._as_sparse_exact_ipomdp()
-    else:
-        raise StormError("Not supported exact interval model constructed")
+    return _convert_sparse_model(intermediate, value_type=_ValueType.EXACT_INTERVAL)
 
 
 def perform_bisimulation(model, properties, bisimulation_type, graph_preserving=True):

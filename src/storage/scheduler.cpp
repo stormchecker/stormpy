@@ -40,7 +40,7 @@ void define_scheduler(py::module& m, std::string vt_suffix) {
             .def("get_memoryless_scheduler_for_memory_state", &Scheduler::getMemorylessSchedulerForMemoryState, py::arg("memory_state") = 0, "Get the memoryless scheduler corresponding to the given memory state")
     ;
 
-    if constexpr (!std::is_same_v<ValueType, storm::Interval> && !std::is_same_v<ValueType, storm::RationalInterval>) {
+    if constexpr (!storm::IsIntervalType<ValueType>) {
         // Conversion from Interval not implemented
         scheduler
             .def("cast_to_double_datatype", &Scheduler::template toValueType<double>, "Construct the scheduler with `double` value type")

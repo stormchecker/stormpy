@@ -49,7 +49,7 @@ endif()
 # Python version should be synced with pyproject.toml
 find_package(Python 3.10 COMPONENTS Interpreter Development.Module REQUIRED)
 # Pybind11 version should be synced with pyproject.toml
-find_package(pybind11 3.0.3 EXACT CONFIG REQUIRED)
+find_package(pybind11 3.0.4 EXACT CONFIG REQUIRED)
 message(STATUS "Stormpy - Using pybind11 version ${pybind11_VERSION}")
 
 # Helper function to print path where library was found and check whether hint was used

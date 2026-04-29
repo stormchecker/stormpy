@@ -32,7 +32,7 @@ void define_verimon_generator(py::module &m, std::string const &vtSuffix) {
                      GenerateMonitorVerifierOptions<ValueType> const &>(),
             py::arg("mc"), py::arg("monitor"), py::arg("expr_manager"), py::arg("options"));
     gmv.def("create_product", &storm::generator::GenerateMonitorVerifier<ValueType>::createProduct, py::return_value_policy::copy,
-            "Created the verification POMDP");
+            "Create the verification POMDP");
     gmv.def("set_risk", &storm::generator::GenerateMonitorVerifier<ValueType>::setRisk, py::arg("risk"));
 
     py::class_<GenerateMonitorVerifierOptions<ValueType>> gmvopts(m, ("GenerateMonitorVerifier" + vtSuffix + "Options").c_str(),

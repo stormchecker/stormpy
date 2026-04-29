@@ -89,7 +89,7 @@ template<typename ValueType>
 void define_transformation_typed_only_numbers(py::module& m, std::string const& vtSuffix) {
     py::class_<storm::transformer::AddUncertainty<ValueType>>(m, ("AddUncertainty" + vtSuffix).c_str(), "Transform model into interval model with specified uncertainty")
         .def(py::init<std::shared_ptr<storm::models::sparse::Model<ValueType>> const&>(), py::arg("model"))
-        .def("transform", &storm::transformer::AddUncertainty<ValueType>::transform, "transform the model", py::arg("additiveUncertainty"), py::arg("minimalValue") = storm::utility::convertNumber<ValueType>(0.0001), py::arg("maxSuccessors") = std::optional<uint64_t>{});
+        .def("transform", &storm::transformer::AddUncertainty<ValueType>::transform, "Transform the model", py::arg("additive_uncertainty"), py::arg("minimal_value") = storm::utility::convertNumber<ValueType>(0.0001), py::arg("max_successors") = std::optional<uint64_t>{});
 }
 
 template void define_transformation_typed<double>(py::module& m, std::string const& vtSuffix);

@@ -31,7 +31,7 @@ PYBIND11_MODULE(_pomdp, m) {
 
     define_transformations_int<double>(m, "Double");
     define_transformations_int<storm::RationalNumber>(m, "Exact");
-    define_transformations_int<storm::RationalFunction>(m, "Rf");
+    define_transformations_int<storm::RationalFunction>(m, "Parametric");
     define_transformations_int<storm::Interval>(m, "Interval");
     define_transformations_int<storm::RationalInterval>(m, "RationalInterval");
 

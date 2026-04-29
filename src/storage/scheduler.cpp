@@ -50,7 +50,7 @@ void define_scheduler(py::module& m, std::string vt_suffix) {
         if constexpr (!std::is_same_v<ValueType, storm::RationalFunction>) {
             // Conversion from RationalFunction to Interval not implemented
             scheduler.def("cast_to_interval_datatype", &Scheduler::template toValueType<storm::Interval>, "Construct the scheduler with `interval` value type");
-            scheduler.def("cast_to_exact_interval_datatype", &Scheduler::template toValueType<storm::RationalInterval>, "Construct the scheduler with `interval` value type");
+            scheduler.def("cast_to_exact_interval_datatype", &Scheduler::template toValueType<storm::RationalInterval>, "Construct the scheduler with `exact interval` value type");
         }
     }
 

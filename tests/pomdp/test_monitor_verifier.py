@@ -1,5 +1,4 @@
 import stormpy
-import stormpy.pomdp
 import stormpy.storage
 from configurations import pomdp
 

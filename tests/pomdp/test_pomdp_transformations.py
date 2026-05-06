@@ -32,6 +32,7 @@ class TestPomdpTransformations:
         expr_manager = stormpy.ExpressionManager()
         options = stormpy.pomdp.ObservationTraceUnfolderOptions()
         unfolder = stormpy.pomdp.create_observation_trace_unfolder(model, risk, expr_manager, options)
+        unfolder.transform([6])
         assert unfolder.is_restart_semantics_set()
 
     def test_create_observation_trace_unfolder_no_restart(self):
@@ -42,4 +43,5 @@ class TestPomdpTransformations:
         options = stormpy.pomdp.ObservationTraceUnfolderOptions()
         options.restart_semantics = False
         unfolder = stormpy.pomdp.create_observation_trace_unfolder(model, risk, expr_manager, options)
+        unfolder.transform([6])
         assert not unfolder.is_restart_semantics_set()

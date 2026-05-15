@@ -44,7 +44,7 @@ WORKDIR /opt/
 RUN git clone https://github.com/stormchecker/carl-parser.git \
     && mkdir -p /opt/carl-parser/build \
     && cd /opt/carl-parser/build \
-    && cmake .. -DCMAKE_BUILD_TYPE=$build_type -DPORTABLE=ON -Dcarl_DIR=/usr/local/lib/cmake/storm \
+    && cmake .. -DCMAKE_BUILD_TYPE=$build_type -DPORTABLE=ON -Dcarl_DIR=usr/local/lib/cmake/storm/resources/carl/ \
     && make carl-parser -j $no_threads
 
 

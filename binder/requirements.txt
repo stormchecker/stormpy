@@ -1,5 +1,5 @@
 # Storm libraries
-stormpy==1.12.0
+stormpy==1.13.0
 numpy==2.2.6
 # Jupyter extensions
 jupyterlab-spellchecker

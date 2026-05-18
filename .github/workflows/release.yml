@@ -70,6 +70,9 @@ jobs:
     # Update stormpy version in Binder images
     needs: [deploy_docker, deploy_docker_stable]
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - name: Git clone
         uses: actions/checkout@v6

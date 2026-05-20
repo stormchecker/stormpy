@@ -54,7 +54,7 @@ class TestWeightedObjectiveModelChecking:
         options.set_build_state_valuations()
         env = stormpy.Environment()
         model = stormpy.build_sparse_model_with_options(prism_program, options)
-        weighted_model_checker, inverter = stormpy._core._make_weighted_objective_mdp_model_checker_Double(
+        weighted_model_checker, inverter = stormpy.make_weighted_objective_mdp_model_checker(
             env, model, properties[0].raw_formula, compute_scheduler=True
         )
         weighted_model_checker.set_weighted_precision(0.0001)

@@ -745,8 +745,8 @@ def make_weighted_objective_mdp_model_checker(environment, model, formula, compu
     if model.supports_parameters or model.supports_uncertainty:
         raise ValueError("Parameters and intervals are not supported.")
     if model.is_exact:
-        return _make_weighted_objective_mdp_model_checker_Exact(environment, model, formula, compute_scheduler)
-    return _make_weighted_objective_mdp_model_checker_Double(environment, model, formula, compute_scheduler)
+        return _core._make_weighted_objective_mdp_model_checker_Exact(environment, model, formula, compute_scheduler)
+    return _core._make_weighted_objective_mdp_model_checker_Double(environment, model, formula, compute_scheduler)
 
 
 def eliminate_ECs(matrix, subsystem, possible_ecs, add_sink_row_states, add_self_loop_at_sink_states=False):

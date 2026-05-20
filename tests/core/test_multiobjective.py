@@ -41,19 +41,22 @@ class TestMultiObjectiveModelChecking:
         ax.set_ylabel(formula.subformulas[1])
         # plt.show()
 
+
 class TestWeightedObjectiveModelChecking:
     def test_maze_double(self):
         path = stormpy.examples.files.prism_mdp_maze_multigoal
         prism_program = stormpy.parse_prism_program(path)
 
-        formula_str = "multi(Rmin=?  [F \"goalalt1\"], Pmax=?  [F \"goalalt2\"])"
+        formula_str = 'multi(Rmin=?  [F "goalalt1"], Pmax=?  [F "goalalt2"])'
         properties = stormpy.parse_properties(formula_str, prism_program)
 
         options = stormpy.BuilderOptions([p.raw_formula for p in properties])
         options.set_build_state_valuations()
         env = stormpy.Environment()
         model = stormpy.build_sparse_model_with_options(prism_program, options)
-        weighted_model_checker, inverter = stormpy._core._make_weighted_objective_mdp_model_checker_Double(env, model, properties[0].raw_formula, compute_scheduler=True)
+        weighted_model_checker, inverter = stormpy._core._make_weighted_objective_mdp_model_checker_Double(
+            env, model, properties[0].raw_formula, compute_scheduler=True
+        )
         weighted_model_checker.set_weighted_precision(0.0001)
         weighted_model_checker.check(env, [0.5, 0.5])
         point = weighted_model_checker.get_achievable_point()
@@ -64,5 +67,3 @@ class TestWeightedObjectiveModelChecking:
         assert math.isclose(value, -1.7)
         scheduler = inverter._reverse_scheduler_double(weighted_model_checker.compute_scheduler())
         assert scheduler.memory_size == 4
-
-

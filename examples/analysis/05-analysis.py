@@ -9,7 +9,7 @@ def example_analysis_05():
     path = stormpy.examples.files.prism_mdp_maze_multigoal
     prism_program = stormpy.parse_prism_program(path)
 
-    formula_str = "multi(Pmax=?  [F \"goalalt1\"], Pmax=?  [F \"goalalt2\"])"
+    formula_str = 'multi(Pmax=?  [F "goalalt1"], Pmax=?  [F "goalalt2"])'
     properties = stormpy.parse_properties(formula_str, prism_program)
 
     options = stormpy.BuilderOptions([p.raw_formula for p in properties])
@@ -27,5 +27,6 @@ def example_analysis_05():
     print(lower_bound)
     print(upper_bound)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     example_analysis_05()

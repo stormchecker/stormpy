@@ -733,6 +733,21 @@ def construct_submodel(model, states, actions, keep_unreachable_states=True, opt
         return _core._construct_subsystem_Exact(model, states, actions, keep_unreachable_states, options)
     return _core._construct_subsystem_Double(model, states, actions, keep_unreachable_states, options)
 
+def make_weighted_objective_mdp_model_checker(environment, model, formula, compute_scheduler):
+    """
+
+    :param environment: The environment to configure the model checker
+    :param model: The model that will be evaluated. Can be exact or double.
+    :param formula: The (multiobjective) formula
+    :param compute_scheduler: Whether to produce a scheduler
+    :return: A tuple of a model checker and a mapping that allows mapping the scheduler back to the model as passed into the system as a postprocessing step.
+    """
+    if model.supports_parameters or model.supports_uncertainty:
+        raise ValueError("Parameters and intervals are not supported.")
+    if model.is_exact:
+        return _make_weighted_objective_mdp_model_checker_Exact(environment, model, formula, compute_scheduler)
+    return _make_weighted_objective_mdp_model_checker_Double(environment, model, formula, compute_scheduler)
+
 
 def eliminate_ECs(matrix, subsystem, possible_ecs, add_sink_row_states, add_self_loop_at_sink_states=False):
     """

@@ -208,3 +208,16 @@ def product_model(self: MemoryStructure, model):
 
 
 MemoryStructure.product_model = product_model
+
+
+# Extend class SparseModelMemoryProductReverseData
+def _reverse_scheduler(self, product_scheduler):
+    if isinstance(product_scheduler, _storage.SchedulerParametric):
+        return self._reverse_scheduler_parametric(product_scheduler)
+    elif isinstance(product_scheduler, _storage.SchedulerExact):
+        return self._reverse_scheduler_exact(product_scheduler)
+    else:
+        return self._reverse_scheduler_double(product_scheduler)
+
+
+SparseModelMemoryProductReverseData.reverse_scheduler = _reverse_scheduler

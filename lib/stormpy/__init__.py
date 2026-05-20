@@ -733,6 +733,7 @@ def construct_submodel(model, states, actions, keep_unreachable_states=True, opt
         return _core._construct_subsystem_Exact(model, states, actions, keep_unreachable_states, options)
     return _core._construct_subsystem_Double(model, states, actions, keep_unreachable_states, options)
 
+
 def make_weighted_objective_mdp_model_checker(environment, model, formula, compute_scheduler):
     """
 

@@ -17,7 +17,7 @@ PYBIND11_MODULE(_dft, m) {
     options.disable_function_signatures();
 #endif
 
-    define_symmetries(m); // Must be before define_analysis_typed
+    define_symmetries(m);  // Must be before define_analysis_typed
     define_analysis(m);
     define_analysis_typed<double>(m, "_double");
     define_analysis_typed<storm::RationalFunction>(m, "_ratfunc");

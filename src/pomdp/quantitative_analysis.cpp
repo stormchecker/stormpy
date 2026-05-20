@@ -1,25 +1,43 @@
 #include "quantitative_analysis.h"
 
-#include "storm/adapters/RationalFunctionAdapter.h"
-#include "storm/models/sparse/Pomdp.h"
+#include "storm/models/sparse/Pomdp.h"  // Must be included before verification.h
+
 #include "storm-pomdp/api/verification.h"
+#include "storm/adapters/RationalFunctionAdapter.h"
 
-template<typename ValueType> using Pomdp = storm::models::sparse::Pomdp<ValueType, typename storm::models::sparse::StandardRewardModel<ValueType>>;
-template<typename ValueType> using BeliefExplorationPomdpModelChecker = typename storm::pomdp::modelchecker::BeliefExplorationPomdpModelChecker<Pomdp<ValueType>, ValueType, ValueType>;
-template<typename ValueType> using BeliefExplorationPomdpModelCheckerResult = typename storm::pomdp::modelchecker::BeliefExplorationPomdpModelChecker<ValueType>::Result;
-template<typename ValueType> using Options = storm::pomdp::modelchecker::BeliefExplorationPomdpModelCheckerOptions<ValueType>;
-template<typename ValueType> using additionalCutoffValueType = std::vector<std::vector<std::unordered_map<uint64_t, ValueType>>>;
-
+template<typename ValueType>
+using Pomdp = storm::models::sparse::Pomdp<ValueType, typename storm::models::sparse::StandardRewardModel<ValueType>>;
+template<typename ValueType>
+using BeliefExplorationPomdpModelChecker = typename storm::pomdp::modelchecker::BeliefExplorationPomdpModelChecker<Pomdp<ValueType>, ValueType, ValueType>;
+template<typename ValueType>
+using BeliefExplorationPomdpModelCheckerResult = typename storm::pomdp::modelchecker::BeliefExplorationPomdpModelChecker<ValueType>::Result;
+template<typename ValueType>
+using Options = storm::pomdp::modelchecker::BeliefExplorationPomdpModelCheckerOptions<ValueType>;
+template<typename ValueType>
+using additionalCutoffValueType = std::vector<std::vector<std::unordered_map<uint64_t, ValueType>>>;
 
 template<typename ValueType>
 void define_belief_exploration(py::module& m, std::string const& vtSuffix) {
     py::class_<BeliefExplorationPomdpModelChecker<ValueType>> belmc(m, ("BeliefExplorationModelChecker" + vtSuffix).c_str());
     belmc.def(py::init<std::shared_ptr<Pomdp<ValueType>>, Options<ValueType>>(), py::arg("model"), py::arg("options"));
 
-    belmc.def("check", py::overload_cast<storm::logic::Formula const&,additionalCutoffValueType<ValueType> const&>(&BeliefExplorationPomdpModelChecker<ValueType>::check), py::arg("formula"), py::arg("cutoff_values"));
-    belmc.def("check_with_preprocessing_environment", py::overload_cast<storm::logic::Formula const&, storm::Environment const&, additionalCutoffValueType<ValueType> const&>(&BeliefExplorationPomdpModelChecker<ValueType>::check), py::arg("formula"), py::arg("pre_processing_environment"), py::arg("cutoff_values"));
-    belmc.def("check_with_environment", py::overload_cast<storm::Environment const&, storm::logic::Formula const&, additionalCutoffValueType<ValueType> const&>(&BeliefExplorationPomdpModelChecker<ValueType>::check), py::arg("environment"), py::arg("formula"), py::arg("cutoff_values"));
-    belmc.def("check_with_environment_and_pre_processing_environment", py::overload_cast<storm::Environment const&, storm::logic::Formula const&, storm::Environment const&, additionalCutoffValueType<ValueType> const&>(&BeliefExplorationPomdpModelChecker<ValueType>::check), py::arg("environment"), py::arg("formula"), py::arg("pre_processing_environment"), py::arg("cutoff_values"));
+    belmc.def(
+        "check",
+        py::overload_cast<storm::logic::Formula const&, additionalCutoffValueType<ValueType> const&>(&BeliefExplorationPomdpModelChecker<ValueType>::check),
+        py::arg("formula"), py::arg("cutoff_values"));
+    belmc.def("check_with_preprocessing_environment",
+              py::overload_cast<storm::logic::Formula const&, storm::Environment const&, additionalCutoffValueType<ValueType> const&>(
+                  &BeliefExplorationPomdpModelChecker<ValueType>::check),
+              py::arg("formula"), py::arg("pre_processing_environment"), py::arg("cutoff_values"));
+    belmc.def("check_with_environment",
+              py::overload_cast<storm::Environment const&, storm::logic::Formula const&, additionalCutoffValueType<ValueType> const&>(
+                  &BeliefExplorationPomdpModelChecker<ValueType>::check),
+              py::arg("environment"), py::arg("formula"), py::arg("cutoff_values"));
+    belmc.def(
+        "check_with_environment_and_pre_processing_environment",
+        py::overload_cast<storm::Environment const&, storm::logic::Formula const&, storm::Environment const&, additionalCutoffValueType<ValueType> const&>(
+            &BeliefExplorationPomdpModelChecker<ValueType>::check),
+        py::arg("environment"), py::arg("formula"), py::arg("pre_processing_environment"), py::arg("cutoff_values"));
 
     belmc.def("pause_unfolding", &BeliefExplorationPomdpModelChecker<ValueType>::pauseUnfolding);
     belmc.def("continue_unfolding", &BeliefExplorationPomdpModelChecker<ValueType>::continueUnfolding);
@@ -58,7 +76,8 @@ void define_belief_exploration(py::module& m, std::string const& vtSuffix) {
     belexplres.def_readonly("lower_bound", &BeliefExplorationPomdpModelChecker<ValueType>::Result::lowerBound);
     belexplres.def_readonly("upper_bound", &BeliefExplorationPomdpModelChecker<ValueType>::Result::upperBound);
 
-    m.def("create_interactive_mc", &storm::pomdp::api::createInteractiveUnfoldingModelChecker<ValueType>, py::arg("env"), py::arg("pomdp"), py::arg("use_clipping"));
+    m.def("create_interactive_mc", &storm::pomdp::api::createInteractiveUnfoldingModelChecker<ValueType>, py::arg("env"), py::arg("pomdp"),
+          py::arg("use_clipping"));
 }
 
 template void define_belief_exploration<double>(py::module& m, std::string const& vtSuffix);

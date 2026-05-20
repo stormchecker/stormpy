@@ -145,6 +145,36 @@ class TestECElimination:
         assert ec_elimination_result.sink_rows.number_of_set_bits() == 36
 
 
+class TestAddUncertainty:
+    def test_add_uncertainty_dtmc(self):
+        program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
+        model = stormpy.build_model(program)
+        assert type(model) is stormpy.SparseDtmc
+        assert model.nr_states == 13
+        transformer = stormpy.AddUncertaintyDouble(model)
+        interval_model = transformer.transform(0.1)
+        assert type(interval_model) is stormpy.SparseIntervalDtmc
+        assert interval_model.nr_states == 13
+        assert interval_model.nr_transitions == model.nr_transitions
+        for row in range(interval_model.nr_states):
+            for transition in interval_model.transition_matrix.row_iter(row, row):
+                assert transition.value().lower() <= transition.value().upper()
+                assert transition.value().lower() >= 0.0
+
+    def test_add_uncertainty_exact_dtmc(self):
+        program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
+        model = stormpy.build_sparse_exact_model(program)
+        assert type(model) is stormpy.SparseExactDtmc
+        transformer = stormpy.AddUncertaintyExact(model)
+        interval_model = transformer.transform(stormpy.Rational("1/10"))
+        assert type(interval_model) is stormpy.SparseRationalIntervalDtmc
+        assert interval_model.nr_states == model.nr_states
+        assert interval_model.nr_transitions == model.nr_transitions
+        for row in range(interval_model.nr_states):
+            for transition in interval_model.transition_matrix.row_iter(row, row):
+                assert transition.value().lower() <= transition.value().upper()
+
+
 class TestSubsystemCreation:
     def test_for_ctmc(self):
         program = stormpy.parse_prism_program(get_example_path("ctmc", "polling2.sm"), True)

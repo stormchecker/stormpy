@@ -2,5 +2,5 @@
 
 #include "types.h"
 
-//toString
+// toString
 #include "src/pycarl/helpers.h"

@@ -9,8 +9,8 @@
 #include "core/analysis.h"
 #include "core/counterexample.h"
 #include "core/environment.h"
-#include "core/transformation.h"
 #include "core/simulator.h"
+#include "core/transformation.h"
 
 PYBIND11_MODULE(_core, m) {
     m.doc() = "core";
@@ -29,6 +29,9 @@ PYBIND11_MODULE(_core, m) {
     define_optimality_type(m);
     define_export(m);
     define_result(m);
+    define_typed_result<double>(m, "");
+    define_typed_result<storm::RationalNumber>(m, "Exact");
+    define_typed_result<storm::RationalFunction>(m, "Parametric");
     define_check_task<double>(m, "CheckTask");
     define_check_task<storm::RationalNumber>(m, "ExactCheckTask");
     define_check_task<storm::RationalFunction>(m, "ParametricCheckTask");
@@ -43,8 +46,9 @@ PYBIND11_MODULE(_core, m) {
     define_transformation_typed<double>(m, "Double");
     define_transformation_typed<storm::RationalNumber>(m, "Exact");
     define_transformation_typed<storm::RationalFunction>(m, "RatFunc");
+    define_transformation_typed_only_numbers<double>(m, "Double");
+    define_transformation_typed_only_numbers<storm::RationalNumber>(m, "Exact");
     define_sparse_model_simulator<double>(m, "Double");
     define_sparse_model_simulator<storm::RationalNumber>(m, "Exact");
     define_prism_program_simulator<double>(m, "Double");
-
 }

@@ -9,6 +9,8 @@ dist/
 __pycache__/
 _build/
 .pytest_cache/
+.vscode/
 cmake-build-debug/
-
+.cache/
 .DS_Store
+.venv/

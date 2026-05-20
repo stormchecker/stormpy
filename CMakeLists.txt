@@ -49,7 +49,7 @@ endif()
 # Python version should be synced with pyproject.toml
 find_package(Python 3.10 COMPONENTS Interpreter Development.Module REQUIRED)
 # Pybind11 version should be synced with pyproject.toml
-find_package(pybind11 3.0.2 EXACT CONFIG REQUIRED)
+find_package(pybind11 3.0.4 EXACT CONFIG REQUIRED)
 message(STATUS "Stormpy - Using pybind11 version ${pybind11_VERSION}")
 
 # Helper function to print path where library was found and check whether hint was used
@@ -74,7 +74,7 @@ endfunction(check_hint)
 
 if(ALLOW_STORM_SYSTEM)
     # Version should be synced with STORM_GIT_TAG in pyproject.toml
-    set(STORM_MIN_VERSION "1.12.0")
+    set(STORM_MIN_VERSION "1.13.0")
     if (ALLOW_STORM_FETCH)
         find_package(storm HINTS ${STORM_DIR_HINT}) # NOT REQUIRED, can be fetched.
     else()
@@ -84,7 +84,7 @@ if(ALLOW_STORM_SYSTEM)
         check_hint("Storm" ${storm_DIR} "${STORM_DIR_HINT}" ${storm_VERSION})
         # Check Storm version
         if (${storm_VERSION} VERSION_LESS ${STORM_MIN_VERSION})
-            MESSAGE(FATAL_ERROR "Stormpy - Storm version ${storm_VERSION} from ${storm_DIR} is not supported anymore!\nStormpy requires at least Storm version >= ${STORM_MIN_VERSION}.\nFor more information, see https://moves-rwth.github.io/stormpy/installation.html#compatibility-of-stormpy-and-storm")
+            MESSAGE(FATAL_ERROR "Stormpy - Storm version ${storm_VERSION} from ${storm_DIR} is not supported anymore!\nStormpy requires at least Storm version >= ${STORM_MIN_VERSION}.\nFor more information, see https://stormchecker.github.io/stormpy/installation.html#compatibility-of-stormpy-and-storm")
         endif()
         if (STORM_VERSION_DEV)
             message(WARNING "Stormpy - Using a development version of Storm. This may lead to issues and we recommend using a release of Storm instead.")
@@ -190,7 +190,7 @@ if(APPLE)
 else()
     set(RELPOS_STRING "$ORIGIN")
 endif()
-SET(CMAKE_INSTALL_RPATH "${RELPOS_STRING}/../../../lib/storm;${RELPOS_STRING}/../../../lib/storm/resources;${RELPOS_STRING}/../../lib/storm;${RELPOS_STRING}/../../lib/storm/resources;${RELPOS_STRING}/../lib/storm;${RELPOS_STRING}/../lib/storm/resources;${RELPOS_STRING}/lib/storm;${RELPOS_STRING}/lib/storm/resources;${RELPOS_STRING};${RELPOS_STRING}/resources")
+SET(CMAKE_INSTALL_RPATH "${RELPOS_STRING}/../../../lib/storm;${RELPOS_STRING}/../../../lib/storm/resources;${RELPOS_STRING}/../../lib/storm;${RELPOS_STRING}/../../lib/storm/resources;${RELPOS_STRING}/../lib/storm;${RELPOS_STRING}/../lib/storm/resources;${RELPOS_STRING}/lib/storm;${RELPOS_STRING}/lib/storm/resources;${RELPOS_STRING};${RELPOS_STRING}/resources;${RELPOS_STRING}/../lib;${RELPOS_STRING}/lib")
 # add the automatically determined parts of the RPATH
 # which point to directories outside the build tree to the install RPATH
 SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)

@@ -27,6 +27,7 @@ class _ValueType(Enum):
     EXACT = 2
     PARAMETRIC = 3
     INTERVAL = 4
+    EXACT_INTERVAL = 5
 
 
 def _convert_sparse_model(model, value_type=_ValueType.DOUBLE):
@@ -103,6 +104,22 @@ def _convert_sparse_model(model, value_type=_ValueType.DOUBLE):
                 return model._as_sparse_ismg()
             else:
                 raise stormpy.exceptions.StormError("Not supported interval model constructed")
+        case _ValueType.EXACT_INTERVAL:
+            assert model.supports_uncertainty and model.is_exact
+            if model.model_type == ModelType.DTMC:
+                return model._as_sparse_exact_idtmc()
+            elif model.model_type == ModelType.MDP:
+                return model._as_sparse_exact_imdp()
+            elif model.model_type == ModelType.POMDP:
+                return model._as_sparse_exact_ipomdp()
+            elif model.model_type == ModelType.CTMC:
+                return model._as_sparse_exact_ictmc()
+            elif model.model_type == ModelType.MA:
+                return model._as_sparse_exact_ima()
+            elif model.model_type == ModelType.SMG:
+                return model._as_sparse_exact_ismg()
+            else:
+                raise stormpy.exceptions.StormError("Not supported exact interval model constructed")
         case _:
             raise stormpy.exceptions.StormError("Not supported model type constructed")
 
@@ -238,6 +255,25 @@ def build_sparse_interval_model(symbolic_description, properties=None):
     return _convert_sparse_model(intermediate, value_type=_ValueType.INTERVAL)
 
 
+def build_sparse_exact_interval_model(symbolic_description, properties=None):
+    """
+    Build an exact interval model in sparse representation from a symbolic description.
+
+    :param symbolic_description: Symbolic model description to translate into a model.
+    :param List[Property] properties: List of properties that should be preserved during the translation. If None, then all properties are preserved.
+    :return: Exact interval model in sparse representation.
+    """
+    if not symbolic_description.undefined_constants_are_graph_preserving:
+        raise stormpy.exceptions.StormError("Program still contains undefined constants")
+
+    if properties:
+        formulae = [(prop.raw_formula if isinstance(prop, Property) else prop) for prop in properties]
+        intermediate = _core._build_sparse_exact_interval_model_from_symbolic_description(symbolic_description, formulae)
+    else:
+        intermediate = _core._build_sparse_exact_interval_model_from_symbolic_description(symbolic_description)
+    return _convert_sparse_model(intermediate, value_type=_ValueType.EXACT_INTERVAL)
+
+
 def build_symbolic_model(symbolic_description, properties=None):
     """
     Build a model in symbolic representation from a symbolic description.
@@ -310,6 +346,18 @@ def build_interval_model_from_drn(file, options=DirectEncodingParserOptions()):
     """
     intermediate = _core._build_sparse_interval_model_from_drn(file, options)
     return _convert_sparse_model(intermediate, value_type=_ValueType.INTERVAL)
+
+
+def build_exact_interval_model_from_drn(file, options=DirectEncodingParserOptions()):
+    """
+    Build an exact interval model in sparse representation from the explicit DRN representation.
+
+    :param String file: DRN file containing the model.
+    :param DirectEncodingParserOptions: Options for the parser.
+    :return: Exact Interval model in sparse representation.
+    """
+    intermediate = _core._build_sparse_exact_interval_model_from_drn(file, options)
+    return _convert_sparse_model(intermediate, value_type=_ValueType.EXACT_INTERVAL)
 
 
 def perform_bisimulation(model, properties, bisimulation_type, graph_preserving=True):
@@ -741,6 +789,8 @@ def export_to_drn(model, file, options=DirectEncodingExporterOptions()):
     """
     if model.supports_parameters:
         return _core._export_parametric_to_drn(model, file, options)
+    if model.supports_uncertainty and model.is_exact:
+        return _core._export_exact_to_drn_interval(model, file, options)
     if model.supports_uncertainty:
         return _core._export_to_drn_interval(model, file, options)
     if model.is_exact:

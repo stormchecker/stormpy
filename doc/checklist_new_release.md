@@ -8,7 +8,7 @@ The following steps should be performed when releasing a new stormpy version.
    Note that the CI test use the Docker `storm:ci` images which are only updated once per day.
    The CI fails if the new Storm version is not yet present in these CI Docker images.
 
-2. Check that the stormpy [CI](https://github.com/moves-rwth/stormpy/actions/) builds without errors and all tests are successful.
+2. Check that the stormpy [CI](https://github.com/stormchecker/stormpy/actions/) builds without errors and all tests are successful.
 
 3. Update `CHANGELOG.md`:
    * Set release month
@@ -30,12 +30,12 @@ The following steps should be performed when releasing a new stormpy version.
    git tag -a X.Y.Z -m "Stormpy version X.Y.Z" -s
    git push origin X.Y.Z
    ```
-   The new tag should now be visible on [GitHub](https://github.com/moves-rwth/stormpy/tags).
+   The new tag should now be visible on [GitHub](https://github.com/stormchecker/stormpy/tags).
 
-7. [Create a new release](https://github.com/moves-rwth/stormpy/releases/new) on GitHub.
+7. [Create a new release](https://github.com/stormchecker/stormpy/releases/new) on GitHub.
    Create a new tag or use the tag created in the previous step.
    Finishing the release automatically triggers a CI workflow which also
    * updates the `stable` branch
    * creates new Docker containers for both the tag and `stable` branch
    * creates a new stormpy Python package on [Pypi](https://pypi.org/project/stormpy/)
-   * triggers a PR in stormpy to update the Docker version for Binder
+   * triggers a PR in stormpy to update the Docker version for Binder. Consider also updating the base image for the Binder Dockerfile.

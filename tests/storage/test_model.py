@@ -1,3 +1,5 @@
+from numbers import Rational
+
 import stormpy
 from helpers.helper import get_example_path
 import pytest
@@ -322,3 +324,21 @@ class TestSymbolicSylvanModel:
 
         assert model.model_type == stormpy.ModelType.POMDP
         assert type(model) is stormpy.SparseIntervalPomdp
+
+    def test_build_exact_ipomdp(self):
+        model = stormpy.build_exact_interval_model_from_drn(get_example_path("ipomdp", "tiny-01.drn"))
+        assert model.nr_states == 4
+        assert model.nr_choices == 5
+        assert model.nr_transitions == 8
+        assert model.nr_observations == 3
+
+        for transition in model.transition_matrix.row_iter(0, 0):
+            if transition.column == 1:
+                assert transition.value().lower() == stormpy.Rational("1/5")
+                assert transition.value().upper() == stormpy.Rational("7/10")
+            elif transition.column == 2:
+                assert transition.value().lower() == stormpy.Rational("3/10")
+                assert transition.value().upper() == stormpy.Rational("4/5")
+
+        assert model.model_type == stormpy.ModelType.POMDP
+        assert type(model) is stormpy.SparseRationalIntervalPomdp

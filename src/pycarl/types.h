@@ -2,12 +2,12 @@
 
 #include "pycarl/definitions.h"
 
+#include <carl/core/FactorizedPolynomial.h>
 #include <carl/core/Monomial.h>
-#include <carl/core/Term.h>
 #include <carl/core/MultivariatePolynomial.h>
 #include <carl/core/PolynomialFactorizationPair.h>
-#include <carl/core/FactorizedPolynomial.h>
 #include <carl/core/RationalFunction.h>
+#include <carl/core/Term.h>
 #include <carl/interval/Interval.h>
 
 #ifdef PYCARL_USE_CLN

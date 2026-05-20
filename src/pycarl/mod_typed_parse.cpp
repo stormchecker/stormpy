@@ -22,10 +22,8 @@ PYBIND11_MODULE(_parse, m) {
         .def("as_polynomial", &ParserResultWrapper<Polynomial>::asPolynomial)
         .def("as_rational_function", &ParserResultWrapper<Polynomial>::asRationalFunction)
         .def("as_constraint", &ParserResultWrapper<Polynomial>::asConstraint)
-        .def("as_formula", &ParserResultWrapper<Polynomial>::asFormula)
-    ;
+        .def("as_formula", &ParserResultWrapper<Polynomial>::asFormula);
 
     m.def("_deserialize", &from_string);
     m.def("_check_parsed_type", &carlparser::check_type<Polynomial>);
-
 }

@@ -18,7 +18,7 @@ In this example we will use `gmp` numbers and therefore import the corresponding
 ```
 
 ### Simple arithmetic operations
-:::{seealso} [01-getting-started.py](https://github.com/moves-rwth/stormpy/blob/master/examples/pycarl/01-pycarl-getting-started.py)
+:::{seealso} [01-getting-started.py](https://github.com/stormchecker/stormpy/blob/master/examples/pycarl/01-pycarl-getting-started.py)
 :::
 
 We start by doing some simple arithmetic operations.

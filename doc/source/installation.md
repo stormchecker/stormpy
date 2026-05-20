@@ -30,8 +30,8 @@ Stormpy version `x.y.z` is compatible with Storm version `x.y.z'`.
 
 You have two choices for stormpy depending on the version of Storm you are using:
 1. **Release version**:
-   You use the latest [release of Storm](https://github.com/moves-rwth/storm/releases) or the `stable` branch.
-   In these cases, you need to use the latest [release of stormpy](https://github.com/moves-rwth/stormpy/releases).
+   You use the latest [release of Storm](https://github.com/stormchecker/storm/releases) or the `stable` branch.
+   In these cases, you need to use the latest [release of stormpy](https://github.com/stormchecker/stormpy/releases).
 2. **Master branch**:
    You use the `master` branch of Storm.
    In this case, you need to use the `master` branch of stormpy as well.
@@ -63,12 +63,12 @@ Whenever using the environment, the console prompt is prefixed with `(env)`.
 **Clone** the [compatible stormpy version](compatibility-stormpy-storm) into any suitable location.
 For the `master` of stormpy use:
 ```bash
-git clone https://github.com/moves-rwth/stormpy.git
+git clone https://github.com/stormchecker/stormpy.git
 cd stormpy
 ```
 or for the latest release use the `stable` branch:
 ```bash
-git clone https://github.com/moves-rwth/stormpy.git -b stable
+git clone https://github.com/stormchecker/stormpy.git -b stable
 cd stormpy
 ```
 
@@ -97,7 +97,7 @@ Fetching a Storm version can be configured with the following flags:
 - `--config-settings=cmake.define.STORM_GIT_TAG=<tag>` changes the Git tag used for fetching Storm.
 
 ##### Using carl-parser
-The [carl-parser](https://github.com/moves-rwth/carl-parser) library supports parsing of carl-storm data structures.
+The [carl-parser](https://github.com/stormchecker/carl-parser) library supports parsing of carl-storm data structures.
 Usage of carl-parser can be configured with the following flags:
 - `--config-settings=cmake.define.USE_PARSER=OFF` disables support for the carl-parser.
 - `--config-settings=cmake.define.CARLPARSER_DIR_HINT=<dir>` sets the hint for the carl-parser directory.

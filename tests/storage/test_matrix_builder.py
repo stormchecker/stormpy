@@ -247,7 +247,6 @@ class TestMatrixBuilder:
     def test_parametric_matrix_from_numpy(self):
         import numpy as np
 
-        zero = stormpy.RationalRF(0)
         one_pol = stormpy.RationalRF(1)
         one_pol = stormpy.FactorizedPolynomial(one_pol)
         first_val = stormpy.FactorizedRationalFunction(one_pol, one_pol)
@@ -256,7 +255,7 @@ class TestMatrixBuilder:
         sec_val = stormpy.FactorizedRationalFunction(two_pol, two_pol)
         third_val = stormpy.FactorizedRationalFunction(one_pol, two_pol)
 
-        array = np.array([[sec_val, first_val], [first_val, zero], [0, sec_val], [third_val, third_val]])
+        array = np.array([[sec_val, first_val], [first_val, 0], [0, sec_val], [third_val, third_val]])
 
         matrix = stormpy.build_parametric_sparse_matrix(array)
 

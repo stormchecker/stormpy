@@ -11,6 +11,5 @@ void define_relation(py::module& m) {
         .value("LEQ", carl::Relation::LEQ)
         .value("GREATER", carl::Relation::GREATER)
         .value("GEQ", carl::Relation::GEQ)
-        .def("__str__", &streamToString<carl::Relation>, py::prepend() /* use custom method instead of default enum overload */)
-    ;
+        .def("__str__", &streamToString<carl::Relation>, py::prepend() /* use custom method instead of default enum overload */);
 }

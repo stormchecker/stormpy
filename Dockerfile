@@ -42,7 +42,7 @@ RUN apt-get install -y --no-install-recommends \
 WORKDIR /opt/
 
 # Obtain carl-parser
-RUN git clone https://github.com/moves-rwth/carl-parser.git
+RUN git clone https://github.com/stormchecker/carl-parser.git
 
 # Switch to build directory
 RUN mkdir -p /opt/carl-parser/build

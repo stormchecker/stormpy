@@ -58,7 +58,7 @@ html_theme_options = {
     "logo_alt": "Storm logo",
     ## Repos
     "repository_name": "stormpy",
-    "repository_url": "https://github.com/moves-rwth/stormpy",
+    "repository_url": "https://github.com/stormchecker/stormpy",
     ## Header options
     "header_links_in_2nd_row": False,
     "header_links": [
@@ -97,7 +97,7 @@ html_theme_options = {
     "footer_links": [
         {
             "text": "Documentation",
-            "link": "https://moves-rwth.github.io/stormpy/",
+            "link": "https://stormchecker.github.io/stormpy/",
         },
         {
             "text": "Package",
@@ -105,11 +105,11 @@ html_theme_options = {
         },
         {
             "text": "Repository",
-            "link": "https://github.com/moves-rwth/stormpy/",
+            "link": "https://github.com/stormchecker/stormpy/",
         },
         {
             "text": "Issues",
-            "link": "https://github.com/moves-rwth/stormpy/issues",
+            "link": "https://github.com/stormchecker/stormpy/issues",
         },
     ],
     "show_powered_by": True,
@@ -130,7 +130,7 @@ nbsphinx_prolog = """
 .. raw:: html
 
     <div class="admonition note">
-      Try online: <span><a href="https://mybinder.org/v2/gh/moves-rwth/stormpy/master?filepath=notebooks/{{ docname }}"><img alt="Binder badge" src="https://mybinder.org/badge_logo.svg" style="margin-bottom: 0rem"></a></span>
+      Try online: <span><a href="https://mybinder.org/v2/gh/stormchecker/stormpy/master?filepath=notebooks/{{ docname }}"><img alt="Binder badge" src="https://mybinder.org/badge_logo.svg" style="margin-bottom: 0rem"></a></span>
     </div>
 """
 

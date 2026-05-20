@@ -24,7 +24,7 @@ jobs:
         id: getVersion
         run: |
           # Get Storm version from STORM_GIT_TAG in pyproject.toml
-          echo "STORM_VERSION=$(sed -n -E 's/STORM_GIT_TAG="(.+)"/\1/p' pyproject.toml)" >> "$GITHUB_OUTPUT"
+          echo "STORM_VERSION=$(sed -n -E 's/STORM_GIT_TAG="(.+)".*/\1/p' pyproject.toml)" >> "$GITHUB_OUTPUT"
 
   deploy_docker:
     # Create Docker images for tag
@@ -70,16 +70,18 @@ jobs:
     # Update stormpy version in Binder images
     needs: [deploy_docker, deploy_docker_stable]
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - name: Git clone
         uses: actions/checkout@v6
         with:
-          repository: moves-rwth/stormpy
+          repository: stormchecker/stormpy
           ref: master
       - name: Update Binder version
         run: |
-          # Update STORM_MIN_VERSION
-          sed -i -E 's/FROM movesrwth\/stormpy:(.+)/FROM movesrwth\/stormpy:${{ github.event.release.tag_name }}/' binder/Dockerfile
+          sed -i -E 's/stormpy==(.+)/stormpy==${{ github.event.release.tag_name }}/' binder/requirements.txt
       - name: Commit update
         run: |
           git diff
@@ -96,6 +98,7 @@ jobs:
           body: |
             Auto-generated pull request triggered by a new stormpy version.
             - Manually close and reopen this PR to trigger the CI.
+            Consider also updating the tag of the base image quay.io/jupyter/minimal-notebook
 
   create_wheels:
     # Create pypi package
@@ -103,6 +106,7 @@ jobs:
     uses: ./.github/workflows/create_wheel.yml
     with:
       storm_version: ${{ needs.env_storm_version.outputs.storm_version }}
+      version: ${{ github.event.release.tag_name }}
       dev_version: false
     secrets: inherit
 
@@ -120,7 +124,7 @@ jobs:
     permissions:
       id-token: write
     # Only upload if using original repo and triggered by either a release or a manual workflow dispatch
-    if: ${{ github.repository_owner == 'moves-rwth' && ((github.event_name == 'release' && github.event.action == 'published') || github.event_name == 'workflow_dispatch') }}
+    if: ${{ github.repository_owner == 'stormchecker' && ((github.event_name == 'release' && github.event.action == 'published') || github.event_name == 'workflow_dispatch') }}
     steps:
       - uses: actions/download-artifact@v8
         with:

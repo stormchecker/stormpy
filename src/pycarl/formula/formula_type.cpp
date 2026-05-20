@@ -19,6 +19,5 @@ void define_formula_type(py::module& m) {
         .value("IFF", carl::FormulaType::IFF)
         .value("CONSTRAINT", carl::FormulaType::CONSTRAINT)
         .value("BITVECTOR", carl::FormulaType::BITVECTOR)
-        .value("UEQ", carl::FormulaType::UEQ)
-    ;
+        .value("UEQ", carl::FormulaType::UEQ);
 }

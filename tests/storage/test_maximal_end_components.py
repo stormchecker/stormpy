@@ -51,3 +51,15 @@ class TestMaximalEndComponents:
                         for transition in action.transitions:
                             assert transition.value() == 1
                             assert 1 <= transition.column <= 13
+
+    def test_create_exact_interval_decomposition(self):
+        model = stormpy.build_exact_interval_model_from_drn(get_example_path("imdp", "tiny-01.drn"))
+        assert type(model) is stormpy.SparseRationalIntervalMdp
+        assert model.nr_states == 3
+
+        decomposition = stormpy.get_maximal_end_components(model)
+        assert decomposition.size == 2
+        for mec in decomposition:
+            assert mec.size == 1
+            for state_id, choices in mec:
+                assert state_id in [1, 2]

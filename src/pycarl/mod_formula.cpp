@@ -6,13 +6,11 @@
 
 PYBIND11_MODULE(_formula, m) {
     m.attr("__name__") = "stormpy.pycarl.formula";
-	m.doc() = "pycarl formula untyped functions";
+    m.doc() = "pycarl formula untyped functions";
 
+    // Constraint relies on Rational
+    m.import("stormpy.pycarl");
 
-	// Constraint relies on Rational
-	m.import("stormpy.pycarl");
-
-	define_relation(m);
-	define_formula_type(m);
-
+    define_relation(m);
+    define_formula_type(m);
 }

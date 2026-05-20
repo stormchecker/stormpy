@@ -1,10 +1,10 @@
 #pragma once
 
+#include <carl-parser/Parser.h>
+#include <carl/core/MultivariatePolynomial.h>
+#include <string>
 #include "src/pycarl/common.h"
 #include "src/pycarl/types.h"
-#include <string>
-#include <carl/core/MultivariatePolynomial.h>
-#include <carl-parser/Parser.h>
 
 template<typename Pol>
 struct ParserResultWrapper {

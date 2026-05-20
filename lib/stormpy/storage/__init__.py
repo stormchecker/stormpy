@@ -42,22 +42,13 @@ def _build_sparse_matrix(builder_class, array, row_group_indices=[]):
     num_col = array.shape[1]
 
     len_group_indices = len(row_group_indices)
+    nz_rows, nz_cols = array.nonzero()
+    nz_vals = array[nz_rows, nz_cols]
     if len_group_indices > 0:
-        builder = builder_class(rows=num_row, columns=num_col, has_custom_row_grouping=True, row_groups=len_group_indices)
+        builder = builder_class(rows=num_row, columns=num_col, entries=len(nz_rows), has_custom_row_grouping=True, row_groups=len_group_indices)
     else:
-        builder = builder_class(rows=num_row, columns=num_col)
-
-    row_group_index = 0
-    for r in range(num_row):
-        # check whether to start a custom row group
-        if row_group_index < len_group_indices and r == row_group_indices[row_group_index]:
-            builder.new_row_group(r)
-            row_group_index += 1
-        # insert values of the current row
-        for c in range(num_col):
-            if array[r, c] != 0:
-                builder.add_next_value(r, c, array[r, c])
-
+        builder = builder_class(rows=num_row, columns=num_col, entries=len(nz_rows))
+    builder.add_next_values(nz_rows.tolist(), nz_cols.tolist(), nz_vals.tolist(), row_group_indices)
     return builder.build()
 
 
@@ -69,6 +60,8 @@ def get_maximal_end_components(model):
     """
     if model.supports_parameters:
         return stormpy.MaximalEndComponentDecomposition_ratfunc(model)
+    elif model.supports_uncertainty and model.is_exact:
+        return stormpy.MaximalEndComponentDecomposition_ratinterval(model)
     elif model.is_exact:
         return stormpy.MaximalEndComponentDecomposition_exact(model)
     elif model.supports_uncertainty:

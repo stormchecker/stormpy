@@ -1,7 +1,7 @@
 [build-system]
 requires = [
     "scikit-build-core==0.12.2",
-    "pybind11==3.0.2"  # Pybind11 version should be synced with find_package(pybind11 ...) in CMakeLists.txt
+    "pybind11==3.0.4"  # Pybind11 version should be synced with find_package(pybind11 ...) in CMakeLists.txt
 ]
 build-backend = "scikit_build_core.build"
 
@@ -26,9 +26,9 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/moves-rwth/stormpy"
-Documentation = "https://moves-rwth.github.io/stormpy"
-"Bug Tracker" = "https://github.com/moves-rwth/stormpy/issues"
+Homepage = "https://github.com/stormchecker/stormpy"
+Documentation = "https://stormchecker.github.io/stormpy"
+"Bug Tracker" = "https://github.com/stormchecker/stormpy/issues"
 
 [project.optional-dependencies]
 numpy = [
@@ -93,8 +93,9 @@ USE_PARSER="ON"
 CARLPARSER_DIR_HINT=""
 COMPILE_WITH_CCACHE="ON"
 STORMPY_DISABLE_SIGNATURE_DOC="OFF"
-STORM_GIT_REPO="https://github.com/moves-rwth/storm.git"
-STORM_GIT_TAG="1.12.0"  # Storm version should be synced with STORM_MIN_VERSION in CMakeLists.txt
+STORM_GIT_REPO="https://github.com/stormchecker/storm.git"
+# Storm version should be synced with STORM_MIN_VERSION in CMakeLists.txt
+STORM_GIT_TAG="1.13.0"
 
 
 [tool.scikit-build.metadata.version]

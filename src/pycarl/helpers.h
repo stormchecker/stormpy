@@ -8,7 +8,7 @@
  * Used for __str__ functions.
  */
 template<typename T>
-std::string streamToString(T const & t) {
+std::string streamToString(T const& t) {
     std::stringstream ss;
     ss << t;
     return ss.str();

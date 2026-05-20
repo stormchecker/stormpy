@@ -1,10 +1,11 @@
 #include "common.h"
 
-#include "utility/shortestPaths.h"
-#include "utility/smtsolver.h"
+#include "storm/adapters/RationalNumberAdapter.h"
 #include "utility/chrono.h"
 #include "utility/json.h"
-#include "storm/adapters/RationalNumberAdapter.h"
+#include "utility/kwekMehlhorn.h"
+#include "utility/shortestPaths.h"
+#include "utility/smtsolver.h"
 
 PYBIND11_MODULE(_utility, m) {
     m.doc() = "Utilities for Storm";
@@ -19,4 +20,5 @@ PYBIND11_MODULE(_utility, m) {
     define_chrono(m);
     define_json<double>(m, "Double");
     define_json<storm::RationalNumber>(m, "Rational");
+    define_kwek_mehlhorn<storm::RationalNumber>(m, "");
 }

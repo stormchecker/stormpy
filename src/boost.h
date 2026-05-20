@@ -6,11 +6,11 @@
 namespace pybind11 {
 namespace detail {
 
-template <typename T>
+template<typename T>
 struct type_caster<boost::optional<T>> : optional_caster<boost::optional<T>> {};
 
-template<> struct type_caster<boost::none_t>
-    : public void_caster<boost::none_t> {};
+template<>
+struct type_caster<boost::none_t> : public void_caster<boost::none_t> {};
 
-}
-}
+}  // namespace detail
+}  // namespace pybind11

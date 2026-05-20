@@ -126,6 +126,13 @@ jobs:
              optional_libs: "[test,plot]",
              test_opt: ""
           }
+          - {name: "Debian 13, Debug",
+             base_image: "movesrwth/storm-basesystem:debian-13",
+             build_type: "Debug",
+             setup_args: "--config-settings=cmake.define.ALLOW_STORM_SYSTEM=OFF --config-settings=cmake.define.STORM_GIT_TAG=master",
+             optional_libs: "[test,plot]",
+             test_opt: ""
+          }
           - {name: "Ubuntu 24.04, Debug",
              base_image: "movesrwth/storm-basesystem:ubuntu-24.04",
              build_type: "Debug",
@@ -171,29 +178,29 @@ jobs:
     strategy:
       matrix:
         config:
-          - {name: "XCode 15.4, ARM, Debug",
+          - {name: "MacOS 14, ARM, Debug",
              distro: "macos-14",
              xcode: "15.4",
              build_type: "Debug",
              setup_args: "--config-settings=cmake.define.ALLOW_STORM_SYSTEM=OFF --config-settings=cmake.define.STORM_GIT_TAG=master",
              optional_libs: "[test,plot]"
           }
-          - {name: "XCode Latest, ARM, Debug",
+          - {name: "MacOS 15, ARM, Debug",
              distro: "macos-15",
+             xcode: "16.4",
+             build_type: "Debug",
+             setup_args: "--config-settings=cmake.define.ALLOW_STORM_SYSTEM=OFF --config-settings=cmake.define.STORM_GIT_TAG=master",
+             optional_libs: "[test,plot]"
+          }
+          - {name: "MacOS 26, ARM, Debug",
+             distro: "macos-26",
              xcode: "latest-stable",
              build_type: "Debug",
              setup_args: "--config-settings=cmake.define.ALLOW_STORM_SYSTEM=OFF --config-settings=cmake.define.STORM_GIT_TAG=master",
              optional_libs: "[test,plot]"
           }
-          - {name: "XCode Latest, ARM, Release",
-             distro: "macos-15",
-             xcode: "latest-stable",
-             build_type: "Release",
-             setup_args: "--config-settings=cmake.define.ALLOW_STORM_SYSTEM=OFF --config-settings=cmake.define.STORM_GIT_TAG=master",
-             optional_libs: "[test,plot]"
-          }
-          - {name: "XCode Latest, Intel, Debug",
-             distro: "macos-15-intel",
+          - {name: "MacOS 26, Intel, Debug",
+             distro: "macos-26-intel",
              xcode: "latest-stable",
              build_type: "Debug",
              setup_args: "--config-settings=cmake.define.ALLOW_STORM_SYSTEM=OFF --config-settings=cmake.define.STORM_GIT_TAG=master",
@@ -210,7 +217,7 @@ jobs:
         # cmake and gmp and python3 are already installed
         run: |
           brew update
-          brew install automake boost cln ginac glpk hwloc xerces-c z3
+          brew install automake boost cln ginac glpk hwloc libarchive xerces-c z3
       - name: Build stormpy
         run: |
           pip install -v \
@@ -226,16 +233,16 @@ jobs:
     strategy:
       matrix:
         config:
-          - {name: "XCode 16.3, ARM, Debug",
-             distro: "macos-15",
-             xcode: "16.3",
+          - {name: "MacOS 26, ARM, Debug",
+             distro: "macos-26",
+             xcode: "latest-stable",
              build_type: "Debug",
              setup_args: "--config-settings=cmake.define.ALLOW_STORM_FETCH=OFF",
              optional_libs: "[test,plot]"
           }
-          - {name: "XCode 16.3, ARM, Release",
-             distro: "macos-15",
-             xcode: "16.3",
+          - {name: "MacOS 26, ARM, Release",
+             distro: "macos-26",
+             xcode: "latest-stable",
              build_type: "Release",
              setup_args: "--config-settings=cmake.define.ALLOW_STORM_FETCH=OFF",
              optional_libs: "[test,plot]"
@@ -251,11 +258,11 @@ jobs:
         # cmake and gmp and python3 are already installed
         run: |
           brew update
-          brew install automake boost cln ginac glpk hwloc xerces-c z3
+          brew install automake boost cln ginac glpk hwloc libarchive xerces-c z3
       - name: Checkout Storm
         uses: actions/checkout@v6
         with:
-          repository: moves-rwth/storm
+          repository: stormchecker/storm
           ref: master
           path: storm
       - name: Build and install Storm
@@ -281,6 +288,9 @@ jobs:
   deploy:
     name: Test and Deploy on latest (${{ matrix.build_type.name }})
     runs-on: ubuntu-latest
+    permissions:
+      # Needed for documentation deployment
+      contents: write
     strategy:
       matrix:
         build_type:
@@ -316,11 +326,14 @@ jobs:
 
       - name: Login into docker
         # Only login if using master on original repo (and not for pull requests or forks)
-        if: github.repository_owner == 'moves-rwth' && github.ref == 'refs/heads/master'
-        run: echo "${{ secrets.STORM_CI_DOCKER_PASSWORD }}" | docker login -u "${{ secrets.STORM_CI_DOCKER_USERNAME }}" --password-stdin
+        if: github.repository_owner == 'stormchecker' && github.ref == 'refs/heads/master'
+        uses: docker/login-action@v4
+        with:
+          username: ${{ secrets.STORM_CI_DOCKER_USERNAME }}
+          password: ${{ secrets.STORM_CI_DOCKER_TOKEN }}
       - name: Deploy stormpy
         # Only deploy if using master on original repo (and not for pull requests or forks)
-        if: github.repository_owner == 'moves-rwth' && github.ref == 'refs/heads/master'
+        if: github.repository_owner == 'stormchecker' && github.ref == 'refs/heads/master'
         run: |
           docker commit ci movesrwth/stormpy:${{ matrix.build_type.docker_tag }}
           docker push movesrwth/stormpy:${{ matrix.build_type.docker_tag }}
@@ -337,7 +350,7 @@ jobs:
           docker cp ci:/opt/stormpy/doc/build/html .
       - name: Deploy documentation
         # Only deploy for release version and using master on original repo (and not for pull requests or forks)
-        if: matrix.build_type.name == 'Release' && github.repository_owner == 'moves-rwth' && github.ref == 'refs/heads/master'
+        if: matrix.build_type.name == 'Release' && github.repository_owner == 'stormchecker' && github.ref == 'refs/heads/master'
         uses: peaceiris/actions-gh-pages@v4
         with:
           personal_token: ${{ secrets.GITHUB_TOKEN }}
@@ -348,10 +361,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: [indepthTests, stableTests, linuxTests, macFetchTests, macInstallTests, deploy]
     # Only run in main repo and even if previous step failed
-    if: github.repository_owner == 'moves-rwth' && always()
+    if: github.repository_owner == 'stormchecker' && always()
     steps:
       - uses: technote-space/workflow-conclusion-action@v3
-      - uses: dawidd6/action-send-mail@v11
+      - uses: dawidd6/action-send-mail@v17
         with:
           server_address: ${{ secrets.STORM_CI_MAIL_SERVER }}
           server_port: 587

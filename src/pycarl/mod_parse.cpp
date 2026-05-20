@@ -1,7 +1,6 @@
 
 #include "common.h"
 
-
 #include <carl-parser/Parser.h>
 #include <carl/formula/Formula.h>
 
@@ -15,7 +14,6 @@ PYBIND11_MODULE(_parse, m) {
     // Constraint relies on Rational
     m.import("stormpy.pycarl");
 
-
     py::enum_<carlparser::ParserReturnType>(m, "_ParserReturnType")
         .value("Rational", carlparser::ParserReturnType::Rational)
         .value("Variable", carlparser::ParserReturnType::Variable)
@@ -24,7 +22,5 @@ PYBIND11_MODULE(_parse, m) {
         .value("Polynomial", carlparser::ParserReturnType::Polynomial)
         .value("RationalFunction", carlparser::ParserReturnType::RationalFunction)
         .value("Constraint", carlparser::ParserReturnType::Constraint)
-        .value("Formula", carlparser::ParserReturnType::Formula)
-    ;
-
+        .value("Formula", carlparser::ParserReturnType::Formula);
 }

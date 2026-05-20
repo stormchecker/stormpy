@@ -9,8 +9,13 @@ on:
         required: true
         type: string
         default: 'x.y.z'
+      version:
+        description: 'Version to use for stormpy (e.g. 1.1.0 or 1.1.0.dev1)'
+        required: true
+        type: string
+        default: 'x.y.z'
       dev_version:
-        description: 'Whether to build a dev version i.e. stormpy version 1.1.0.dev1'
+        description: 'Whether to build a development version for only selected Python versions'
         required: true
         type: boolean
         default: false
@@ -22,8 +27,13 @@ on:
         required: true
         type: string
         default: 'x.y.z'
+      version:
+        description: 'Version to use for stormpy (e.g. 1.1.0 or 1.1.0.dev1)'
+        required: true
+        type: string
+        default: 'x.y.z'
       dev_version:
-        description: 'Whether to build a dev version i.e. stormpy version 1.1.0.dev1'
+        description: 'Whether to build a development version for only selected Python versions'
         required: true
         type: boolean
         default: false
@@ -57,16 +67,29 @@ jobs:
             deploy_target: 14.0
       fail-fast: false
     steps:
-      - uses: actions/checkout@v6
+      - name: Git clone
+        uses: actions/checkout@v6
+        with:
+          repository: stormchecker/stormpy
       - uses: maxim-lobanov/setup-xcode@v1
         if: ${{ matrix.xcode != '' }}
         with:
           xcode-version: ${{ matrix.xcode }}
       - name: Prepare version
+        run: perl -i -pe 's/__version__ = "[^"]+"/__version__ = "'"${{ inputs.version }}"'"/' lib/stormpy/_version.py
+      - name: Build wheels (development)
         if: ${{ inputs.dev_version }}
-        run: perl -i -pe 's/__version__ = "(.+)"/__version__ = "\1.dev1"/' lib/stormpy/_version.py
-      - name: Build wheels
-        uses: pypa/cibuildwheel@v3.4.0
+        uses: pypa/cibuildwheel@v3.4.1
+        env:
+          CIBW_PLATFORM: ${{ matrix.platform }}
+          CIBW_ARCHS: ${{ matrix.archs }}
+          MACOSX_DEPLOYMENT_TARGET: ${{ matrix.deploy_target }}
+          # Build development version only on latest Python versions
+          CIBW_BUILD: "cp313-* cp314-*"
+          CIBW_ENVIRONMENT: STORM_VERSION=${{ inputs.storm_version }} NR_JOBS=4
+      - name: Build wheels (stable)
+        if: ${{ !inputs.dev_version }}
+        uses: pypa/cibuildwheel@v3.4.1
         env:
           CIBW_PLATFORM: ${{ matrix.platform }}
           CIBW_ARCHS: ${{ matrix.archs }}
@@ -82,10 +105,12 @@ jobs:
     name: Build source distribution
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - name: Git clone
+        uses: actions/checkout@v6
+        with:
+          repository: stormchecker/stormpy
       - name: Prepare version
-        if: ${{ inputs.dev_version }}
-        run: perl -i -pe 's/__version__ = "(.+)"/__version__ = "\1.dev1"/' lib/stormpy/_version.py
+        run: perl -i -pe 's/__version__ = "[^"]+"/__version__ = "'"${{ inputs.version }}"'"/' lib/stormpy/_version.py
       - name: Build sdist
         run: pipx run build --sdist
       - uses: actions/upload-artifact@v7
@@ -98,6 +123,8 @@ jobs:
     name: Test wheel on ${{ matrix.distro }} and ${{ matrix.arch.name }}
     needs: [build_wheels]
     runs-on: ${{ matrix.arch.runner }}
+    # Allow failure for development version because not all runners have the latest Python versions
+    continue-on-error: ${{ inputs.dev_version }}
     strategy:
       fail-fast: false
       matrix:
@@ -127,6 +154,7 @@ jobs:
       - name: Checkout test files
         uses: actions/checkout@v6
         with:
+          repository: stormchecker/stormpy
           path: dist/test_files
           sparse-checkout: |
             tests
@@ -164,7 +192,7 @@ jobs:
           source venv/bin/activate
           python3 -m pip install "$WHEEL"
 
-          # Run a basic import test (replace with pytest if needed)
+          # Run tests
           python3 -c "import stormpy; print('Import successful')"
           pip install pytest nbval numpy
           pytest test_files/tests
@@ -175,6 +203,8 @@ jobs:
     name: Test wheel on ${{ matrix.distro.name }}
     needs: [build_wheels]
     runs-on: ${{ matrix.distro.distro }}
+    # Allow failure for development version because not all runners have the latest Python version
+    continue-on-error: ${{ inputs.dev_version }}
     strategy:
       fail-fast: false
       matrix:
@@ -203,7 +233,7 @@ jobs:
           pattern: stormpy-wheels-${{ matrix.distro.os }}
           path: dist
           merge-multiple: true
-      - name: Install from wheel and test
+      - name: Install from wheel
         working-directory: dist
         run: |
           # Get major+minor version (e.g. "311" for Python 3.11)
@@ -223,6 +253,7 @@ jobs:
       - name: Checkout test files
         uses: actions/checkout@v6
         with:
+          repository: stormchecker/stormpy
           path: dist/test_files
           sparse-checkout: |
             tests

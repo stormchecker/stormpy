@@ -113,6 +113,40 @@ class TestScheduler:
         induced = mdp.apply_scheduler(scheduler)
         assert induced.nr_states == induced.nr_choices
 
+    def test_scheduler_to_str(self):
+        program = stormpy.parse_prism_program(get_example_path("mdp", "coin2-2.nm"))
+        formulas = stormpy.parse_properties_for_prism_program('Pmin=? [ F "finished" & "all_coins_equal_1"]', program)
+        model = stormpy.build_model(program, formulas)
+        result = stormpy.model_checking(model, formulas[0], extract_scheduler=True)
+        scheduler = result.scheduler
+        s = scheduler.to_str(model)
+        assert isinstance(s, str)
+        assert len(s) > 0
+
+    def test_scheduler_get_memoryless_for_memory_state(self):
+        program = stormpy.parse_prism_program(get_example_path("mdp", "coin2-2.nm"))
+        formulas = stormpy.parse_properties_for_prism_program('Pmin=? [ F "finished" & "all_coins_equal_1"]', program)
+        model = stormpy.build_model(program, formulas)
+        result = stormpy.model_checking(model, formulas[0], extract_scheduler=True)
+        scheduler = result.scheduler
+        assert scheduler.memoryless
+        assert scheduler.memory_size == 1
+        memoryless = scheduler.get_memoryless_scheduler_for_memory_state(0)
+        assert memoryless.memoryless
+        assert memoryless.memory_size == 1
+        assert memoryless.deterministic
+
+    def test_scheduler_cast_to_exact_interval_datatype(self):
+        program = stormpy.parse_prism_program(get_example_path("mdp", "coin2-2.nm"))
+        formulas = stormpy.parse_properties_for_prism_program('Pmin=? [ F "finished" & "all_coins_equal_1"]', program)
+        model = stormpy.build_model(program, formulas)
+        result = stormpy.model_checking(model, formulas[0], extract_scheduler=True)
+        scheduler = result.scheduler
+        assert scheduler.deterministic
+        exact_interval_scheduler = scheduler.cast_to_exact_interval_datatype()
+        assert exact_interval_scheduler.deterministic
+        assert exact_interval_scheduler.memoryless
+
     def test_apply_scheduler_ma(self):
         program = stormpy.parse_prism_program(get_example_path("ma", "simple.ma"), False, True)
         formulas = stormpy.parse_properties_for_prism_program("Tmin=? [ F s=4 ]", program)

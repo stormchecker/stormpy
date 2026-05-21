@@ -201,6 +201,8 @@ def product_model(self: MemoryStructure, model):
     """
     if model.supports_parameters:
         return self._product_model_parametric(model)
+    elif model.supports_uncertainty:
+        raise NotImplementedError(f"product_model is not supported for interval models")
     elif model.is_exact:
         return self._product_model_exact(model)
     else:
@@ -216,8 +218,10 @@ def _reverse_scheduler(self, product_scheduler):
         return self._reverse_scheduler_parametric(product_scheduler)
     elif isinstance(product_scheduler, _storage.SchedulerExact):
         return self._reverse_scheduler_exact(product_scheduler)
-    else:
+    elif isinstance(product_scheduler, _storage.Scheduler):
         return self._reverse_scheduler_double(product_scheduler)
+    else:
+        raise ValueError(f"Unsupported scheduler type: {type(product_scheduler)}")
 
 
 SparseModelMemoryProductReverseData.reverse_scheduler = _reverse_scheduler

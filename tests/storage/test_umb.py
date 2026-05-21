@@ -157,6 +157,8 @@ class TestUmbRoundTrip:
         umb = stormpy.sparse_model_to_umb(mdp)
         stormpy.umb_to_archive(umb, tmp_umb)
         umb2 = stormpy.import_umb(tmp_umb)
+        valid, errors = umb2.validate()
+        assert valid, errors
         model2 = stormpy.sparse_model_from_umb(umb2)
         self._assert_same_structure(mdp, model2)
 

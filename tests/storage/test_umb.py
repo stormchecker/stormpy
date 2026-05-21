@@ -170,4 +170,4 @@ class TestUmbRoundTrip:
         umb2 = stormpy.import_umb(tmp_umb, import_opts)
         model2 = stormpy.sparse_model_from_umb(umb2, import_opts)
         self._assert_same_structure(dtmc, model2)
-        assert not model2.has_state_valuations
+        assert not model2.has_state_valuations()

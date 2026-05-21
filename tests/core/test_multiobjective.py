@@ -61,7 +61,7 @@ class TestWeightedObjectiveModelChecking:
     def test_maze_double(self):
         path = stormpy.examples.files.prism_mdp_maze_multigoal
         prism_program = stormpy.parse_prism_program(path)
-        formula_str = 'multi(Rmin=?  [F "goalalt1"], Pmax=?  [F "goalalt2"])'
+        formula_str = 'multi(Rmin=? [F "goalalt1"], Pmax=? [F "goalalt2"])'
         properties = stormpy.parse_properties(formula_str, prism_program)
         options = stormpy.BuilderOptions([p.raw_formula for p in properties])
         options.set_build_state_valuations()

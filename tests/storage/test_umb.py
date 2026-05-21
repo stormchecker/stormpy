@@ -122,6 +122,7 @@ class TestUmbConvenienceFunctions:
         model2 = stormpy.build_from_umb(tmp_umb)
         assert type(dtmc) == type(model2)
         assert dtmc.nr_states == model2.nr_states
+        assert dtmc.nr_transitions == model2.nr_transitions
 
 
 class TestUmbRoundTrip:

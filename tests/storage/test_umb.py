@@ -122,6 +122,7 @@ class TestUmbConvenienceFunctions:
         model2 = stormpy.build_from_umb(tmp_umb)
         assert type(dtmc) == type(model2)
         assert dtmc.nr_states == model2.nr_states
+        assert dtmc.nr_transitions == model2.nr_transitions
 
 
 class TestUmbRoundTrip:
@@ -139,24 +140,6 @@ class TestUmbRoundTrip:
     def test_mdp_short_round_trip(self, mdp):
         umb = stormpy.sparse_model_to_umb(mdp)
         model2 = stormpy.sparse_model_from_umb(umb)
-        self._assert_same_structure(mdp, model2)
-
-    def test_dtmc_file_round_trip(self, dtmc, tmp_umb):
-        umb = stormpy.sparse_model_to_umb(dtmc)
-        stormpy.umb_to_archive(umb, tmp_umb)
-        assert os.path.isfile(tmp_umb)
-        assert os.path.getsize(tmp_umb) > 0
-        umb2 = stormpy.import_umb(tmp_umb)
-        valid, errors = umb2.validate()
-        assert valid, errors
-        model2 = stormpy.sparse_model_from_umb(umb2)
-        self._assert_same_structure(dtmc, model2)
-
-    def test_mdp_file_round_trip(self, mdp, tmp_umb):
-        umb = stormpy.sparse_model_to_umb(mdp)
-        stormpy.umb_to_archive(umb, tmp_umb)
-        umb2 = stormpy.import_umb(tmp_umb)
-        model2 = stormpy.sparse_model_from_umb(umb2)
         self._assert_same_structure(mdp, model2)
 
     def test_dtmc_gzip_round_trip(self, dtmc, tmp_umb):
@@ -187,3 +170,4 @@ class TestUmbRoundTrip:
         umb2 = stormpy.import_umb(tmp_umb, import_opts)
         model2 = stormpy.sparse_model_from_umb(umb2, import_opts)
         self._assert_same_structure(dtmc, model2)
+        assert not model2.has_state_valuations

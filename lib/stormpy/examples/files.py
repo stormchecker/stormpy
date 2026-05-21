@@ -36,7 +36,7 @@ prism_mdp_firewire = _path("mdp", "firewire.nm")
 prism_mdp_maze = _path("mdp", "maze_2.nm")
 """Prism example for the maze MDPs"""
 prism_mdp_maze_multigoal = _path("mdp", "maze_2_multigoal.nm")
-"""Prism example for the maze MDP  with multiple goal"""
+"""Prism example for the maze MDP with multiple goal"""
 prism_mdp_slipgrid = _path("mdp", "slipgrid.nm")
 """Prism version of maze MDP towards sketching"""
 prism_mdp_slipgrid_sketch = _path("mdp", "slipgrid_sketch.nm")

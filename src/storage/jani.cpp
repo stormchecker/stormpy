@@ -1,4 +1,5 @@
 #include "jani.h"
+
 #include <storm/logic/RewardAccumulationEliminationVisitor.h>
 #include <storm/storage/expressions/ExpressionManager.h>
 #include <storm/storage/jani/JaniLocationExpander.h>

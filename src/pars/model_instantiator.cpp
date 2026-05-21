@@ -1,23 +1,21 @@
 #include "model_instantiator.h"
-#include "storm-pars/modelchecker/instantiation/SparseCtmcInstantiationModelChecker.h"
-#include "storm-pars/modelchecker/instantiation/SparseDtmcInstantiationModelChecker.h"
-#include "storm/models/sparse/Model.h"
-#include "storm/models/sparse/StandardRewardModel.h"
 
-#include "storm-pars/transformer/SparseParametricDtmcSimplifier.h"
-
-#include "storm/adapters/RationalFunctionAdapter.h"
-#include "storm/modelchecker/prctl/helper/BaierUpperRewardBoundsComputer.h"
-#include "storm/modelchecker/prctl/helper/DsMpiUpperRewardBoundsComputer.h"
-#include "storm/modelchecker/propositional/SparsePropositionalModelChecker.h"
-#include "storm/modelchecker/results/ExplicitQualitativeCheckResult.h"
-#include "storm/modelchecker/results/ExplicitQuantitativeCheckResult.h"
-#include "storm/models/sparse/Dtmc.h"
-#include "storm/models/sparse/StandardRewardModel.h"
-#include "storm/solver/MinMaxLinearEquationSolver.h"
-#include "storm/utility/NumberTraits.h"
-#include "storm/utility/graph.h"
-#include "storm/utility/vector.h"
+#include <storm-pars/modelchecker/instantiation/SparseCtmcInstantiationModelChecker.h>
+#include <storm-pars/modelchecker/instantiation/SparseDtmcInstantiationModelChecker.h>
+#include <storm-pars/transformer/SparseParametricDtmcSimplifier.h>
+#include <storm/adapters/RationalFunctionAdapter.h>
+#include <storm/modelchecker/prctl/helper/BaierUpperRewardBoundsComputer.h>
+#include <storm/modelchecker/prctl/helper/DsMpiUpperRewardBoundsComputer.h>
+#include <storm/modelchecker/propositional/SparsePropositionalModelChecker.h>
+#include <storm/modelchecker/results/ExplicitQualitativeCheckResult.h>
+#include <storm/modelchecker/results/ExplicitQuantitativeCheckResult.h>
+#include <storm/models/sparse/Dtmc.h>
+#include <storm/models/sparse/Model.h>
+#include <storm/models/sparse/StandardRewardModel.h>
+#include <storm/solver/MinMaxLinearEquationSolver.h>
+#include <storm/utility/NumberTraits.h>
+#include <storm/utility/graph.h>
+#include <storm/utility/vector.h>
 
 template<typename ValueType>
 using Model = storm::models::sparse::Model<ValueType>;

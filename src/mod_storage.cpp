@@ -1,5 +1,7 @@
 #include "common.h"
 
+#include <storm/adapters/IntervalAdapter.h>
+#include <storm/storage/dd/DdType.h>
 #include "storage/bitvector.h"
 #include "storage/choiceorigins.h"
 #include "storage/dd.h"
@@ -17,9 +19,6 @@
 #include "storage/scheduler.h"
 #include "storage/state.h"
 #include "storage/valuation.h"
-
-#include "storm/adapters/IntervalAdapter.h"
-#include "storm/storage/dd/DdType.h"
 
 PYBIND11_MODULE(_storage, m) {
     m.doc() = "Data structures in Storm";

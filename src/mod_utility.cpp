@@ -1,6 +1,6 @@
 #include "common.h"
 
-#include "storm/adapters/RationalNumberAdapter.h"
+#include <storm/adapters/RationalNumberAdapter.h>
 #include "utility/chrono.h"
 #include "utility/json.h"
 #include "utility/kwekMehlhorn.h"

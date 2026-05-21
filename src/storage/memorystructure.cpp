@@ -1,4 +1,5 @@
 #include "memorystructure.h"
+
 #include <storm/adapters/IntervalAdapter.h>
 #include <storm/adapters/RationalFunctionAdapter.h>
 #include <storm/storage/memorystructure/MemoryStructure.h>

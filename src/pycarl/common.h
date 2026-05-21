@@ -3,10 +3,9 @@
 #include <pybind11/operators.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
+#include <boost/variant.hpp>
 #include <exception>
 #include <tuple>
-
-#include <boost/variant.hpp>
 
 namespace py = pybind11;
 

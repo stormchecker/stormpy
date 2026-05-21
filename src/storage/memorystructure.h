@@ -1,4 +1,5 @@
 #pragma once
+
 #include "common.h"
 
 void define_memorystructure_untyped(py::module& m);

@@ -1,9 +1,9 @@
 #include "tracker.h"
-#include "src/helpers.h"
 
 #include <storm-pomdp/generator/BeliefSupportTracker.h>
 #include <storm-pomdp/generator/NondeterministicBeliefTracker.h>
 #include <storm/adapters/RationalFunctionAdapter.h>
+#include "src/helpers.h"
 
 template<typename ValueType>
 using SparsePomdp = storm::models::sparse::Pomdp<ValueType>;

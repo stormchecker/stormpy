@@ -1,14 +1,14 @@
 #include "dft.h"
-#include "src/helpers.h"
 
-#include "storm-dft/settings/modules/DftIOSettings.h"
-#include "storm-dft/settings/modules/FaultTreeSettings.h"
-#include "storm-dft/storage/DFT.h"
-#include "storm-dft/storage/DftSymmetries.h"
-#include "storm-dft/utility/DftModularizer.h"
-#include "storm-dft/utility/SymmetryFinder.h"
-#include "storm/adapters/RationalFunctionAdapter.h"
-#include "storm/settings/SettingsManager.h"
+#include <storm-dft/settings/modules/DftIOSettings.h>
+#include <storm-dft/settings/modules/FaultTreeSettings.h>
+#include <storm-dft/storage/DFT.h>
+#include <storm-dft/storage/DftSymmetries.h>
+#include <storm-dft/utility/DftModularizer.h>
+#include <storm-dft/utility/SymmetryFinder.h>
+#include <storm/adapters/RationalFunctionAdapter.h>
+#include <storm/settings/SettingsManager.h>
+#include "src/helpers.h"
 
 template<typename ValueType>
 using DFT = storm::dft::storage::DFT<ValueType>;

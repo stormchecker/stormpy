@@ -1,4 +1,5 @@
 #include "json.h"
+
 #include <storm/adapters/JsonAdapter.h>
 #include "src/helpers.h"
 

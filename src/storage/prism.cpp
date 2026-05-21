@@ -1,8 +1,14 @@
 #include "prism.h"
+
 #include <boost/algorithm/string/join.hpp>
 #include <boost/variant.hpp>
 #include <optional>
 #include <random>
+#include <storm/exceptions/InvalidAccessException.h>
+#include <storm/exceptions/InvalidStateException.h>
+#include <storm/exceptions/InvalidTypeException.h>
+#include <storm/exceptions/NotImplementedException.h>
+#include <storm/exceptions/NotSupportedException.h>
 #include <storm/generator/Choice.h>
 #include <storm/generator/NextStateGenerator.h>
 #include <storm/generator/PrismNextStateGenerator.h>
@@ -17,11 +23,6 @@
 #include <storm/storage/prism/Program.h>
 #include <storm/utility/solver.h>
 #include "src/helpers.h"
-#include "storm/exceptions/InvalidAccessException.h"
-#include "storm/exceptions/InvalidStateException.h"
-#include "storm/exceptions/InvalidTypeException.h"
-#include "storm/exceptions/NotImplementedException.h"
-#include "storm/exceptions/NotSupportedException.h"
 
 using namespace storm::prism;
 

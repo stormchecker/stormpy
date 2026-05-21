@@ -1,20 +1,20 @@
-#include <pybind11/functional.h>
-
 #include "core.h"
-#include "storm-counterexamples/settings/modules/CounterexampleGeneratorSettings.h"
-#include "storm-parsers/api/storm-parsers.h"
-#include "storm/adapters/RationalFunctionAdapter.h"
-#include "storm/generator/NextStateGenerator.h"
-#include "storm/io/DirectEncodingExporter.h"
-#include "storm/io/file.h"
-#include "storm/models/symbolic/StandardRewardModel.h"
-#include "storm/solver/OptimizationDirection.h"
-#include "storm/solver/UncertaintyResolutionMode.h"
-#include "storm/storage/ModelFormulasPair.h"
-#include "storm/storage/dd/DdType.h"
-#include "storm/storage/jani/Property.h"
-#include "storm/utility/SignalHandler.h"
-#include "storm/utility/initialize.h"
+
+#include <pybind11/functional.h>
+#include <storm-counterexamples/settings/modules/CounterexampleGeneratorSettings.h>
+#include <storm-parsers/api/storm-parsers.h>
+#include <storm/adapters/RationalFunctionAdapter.h>
+#include <storm/generator/NextStateGenerator.h>
+#include <storm/io/DirectEncodingExporter.h>
+#include <storm/io/file.h>
+#include <storm/models/symbolic/StandardRewardModel.h>
+#include <storm/solver/OptimizationDirection.h>
+#include <storm/solver/UncertaintyResolutionMode.h>
+#include <storm/storage/ModelFormulasPair.h>
+#include <storm/storage/dd/DdType.h>
+#include <storm/storage/jani/Property.h>
+#include <storm/utility/SignalHandler.h>
+#include <storm/utility/initialize.h>
 
 void define_core(py::module& m) {
     // Init

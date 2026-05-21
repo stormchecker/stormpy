@@ -1,10 +1,11 @@
-#include "rational.h"
+#include "integer.h"
 
 #include "src/pycarl/helpers.h"
 #include "src/pycarl/types.h"
 
-#include "carl/numbers/conversion/cln_gmp.h"
-#include "carl/numbers/numbers.h"
+// Must be included last
+#include <carl/numbers/conversion/cln_gmp.h>
+#include <carl/numbers/numbers.h>
 
 void define_cln_integer(py::module& m) {
 #ifdef PYCARL_USE_CLN

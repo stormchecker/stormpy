@@ -1,7 +1,8 @@
 #include "gspn_io.h"
+
+#include <storm-gspn/parser/GspnParser.h>
+#include <storm-gspn/storage/gspn/GSPN.h>
 #include "src/helpers.h"
-#include "storm-gspn/parser/GspnParser.h"
-#include "storm-gspn/storage/gspn/GSPN.h"
 
 using GSPN = storm::gspn::GSPN;
 using GSPNParser = storm::parser::GspnParser;

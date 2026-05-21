@@ -1,6 +1,6 @@
 #include "state.h"
 
-#include "storm/adapters/IntervalAdapter.h"
+#include <storm/adapters/IntervalAdapter.h>
 
 template<typename ValueType>
 void define_state(py::module& m, std::string const& vtSuffix) {

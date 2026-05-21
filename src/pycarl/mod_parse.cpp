@@ -1,4 +1,3 @@
-
 #include "common.h"
 
 #include <carl-parser/Parser.h>

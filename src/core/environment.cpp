@@ -1,15 +1,16 @@
 #include "environment.h"
+
 #include <pybind11/pytypes.h>
+#include <storm/environment/Environment.h>
+#include <storm/environment/modelchecker/ConditionalModelCheckerEnvironment.h>
+#include <storm/environment/modelchecker/ModelCheckerEnvironment.h>
+#include <storm/environment/modelchecker/MultiObjectiveModelCheckerEnvironment.h>
+#include <storm/environment/solver/AllSolverEnvironments.h>
+#include <storm/environment/solver/SolverEnvironment.h>
 #include <storm/settings/SettingsManager.h>
+#include <storm/storage/SchedulerClass.h>
 #include <storm/utility/constants.h>
 #include "src/helpers.h"
-#include "storm/environment/Environment.h"
-#include "storm/environment/modelchecker/ConditionalModelCheckerEnvironment.h"
-#include "storm/environment/modelchecker/ModelCheckerEnvironment.h"
-#include "storm/environment/modelchecker/MultiObjectiveModelCheckerEnvironment.h"
-#include "storm/environment/solver/AllSolverEnvironments.h"
-#include "storm/environment/solver/SolverEnvironment.h"
-#include "storm/storage/SchedulerClass.h"
 
 void define_environment(py::module& m) {
     py::enum_<storm::solver::EquationSolverType>(m, "EquationSolverType", "Solver type for equation systems")

@@ -12,7 +12,6 @@ PYBIND11_MODULE(_pycarl_core, m) {
     define_variable(m);
     define_monomial(m);
     define_boundtype(m);
-
     define_interval<double>(m);
 
     py::register_exception<NoPickling>(m, "NoPicklingSupport");

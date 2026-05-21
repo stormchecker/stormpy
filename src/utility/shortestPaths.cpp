@@ -1,11 +1,12 @@
 #include "shortestPaths.h"
+
+#include <storm/utility/shortestPaths.h>
 #include "src/helpers.h"
-#include "storm/utility/shortestPaths.h"
 
 // only forward declaring Model leads to pybind compilation error
 // this may be avoidable. but including certainly works.
-#include "storm/models/sparse/Model.h"
-#include "storm/models/sparse/StandardRewardModel.h"
+#include <storm/models/sparse/Model.h>
+#include <storm/models/sparse/StandardRewardModel.h>
 
 void define_ksp(py::module& m) {
     // long types shortened for readability

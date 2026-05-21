@@ -1,11 +1,11 @@
 #include "matrix.h"
 
+#include <storm/adapters/IntervalAdapter.h>
+#include <storm/adapters/RationalFunctionAdapter.h>
+#include <storm/storage/BitVector.h>
+#include <storm/storage/SparseMatrix.h>
+#include <storm/utility/graph.h>
 #include "src/helpers.h"
-#include "storm/adapters/IntervalAdapter.h"
-#include "storm/adapters/RationalFunctionAdapter.h"
-#include "storm/storage/BitVector.h"
-#include "storm/storage/SparseMatrix.h"
-#include "storm/utility/graph.h"
 
 template<typename ValueType>
 using SparseMatrix = storm::storage::SparseMatrix<ValueType>;

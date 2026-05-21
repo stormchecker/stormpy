@@ -1,5 +1,5 @@
 #include "kwekMehlhorn.h"
-#include <pybind11/pybind11.h>
+
 #include <storm/adapters/RationalNumberAdapter.h>
 #include <storm/utility/KwekMehlhorn.h>
 #include "src/common.h"

@@ -1,3 +1,5 @@
+#include "qualitative_analysis.h"
+
 #include <storm-pomdp/analysis/IterativePolicySearch.h>
 #include <storm-pomdp/analysis/QualitativeAnalysisOnGraphs.h>
 #include <storm-pomdp/analysis/WinningRegionQueryInterface.h>

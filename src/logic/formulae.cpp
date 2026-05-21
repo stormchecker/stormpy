@@ -1,9 +1,10 @@
 #include "formulae.h"
-#include "storm/adapters/RationalNumberAdapter.h"
-#include "storm/logic/CloneVisitor.h"
-#include "storm/logic/Formulas.h"
-#include "storm/logic/LabelSubstitutionVisitor.h"
-#include "storm/storage/expressions/Variable.h"
+
+#include <storm/adapters/RationalNumberAdapter.h>
+#include <storm/logic/CloneVisitor.h>
+#include <storm/logic/Formulas.h>
+#include <storm/logic/LabelSubstitutionVisitor.h>
+#include <storm/storage/expressions/Variable.h>
 
 void define_formulae(py::module& m) {
     py::enum_<storm::logic::ComparisonType>(m, "ComparisonType")

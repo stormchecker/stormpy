@@ -16,8 +16,8 @@
 #include "storage/prism.h"
 #include "storage/scheduler.h"
 #include "storage/state.h"
-#include "storage/valuation.h"
 #include "storage/umb.h"
+#include "storage/valuation.h"
 
 #include "storm/adapters/IntervalAdapter.h"
 #include "storm/storage/dd/DdType.h"

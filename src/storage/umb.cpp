@@ -52,11 +52,14 @@ void define_umb(py::module& m) {
     py::class_<storm::umb::UmbModel>(m, "UmbModel", "Model in the UMB format")
         .def("get_short_model_information", &storm::umb::UmbModel::getShortModelInformation, "Short description of the model")
         .def("get_model_information", &storm::umb::UmbModel::getModelInformation, "Detailed description of the model")
-        .def("validate", [](storm::umb::UmbModel const& model) {
-            std::ostringstream errors;
-            bool valid = model.validate(errors);
-            return std::make_pair(valid, errors.str());
-        }, "Validate the UMB model; returns (is_valid, error_string)")
+        .def(
+            "validate",
+            [](storm::umb::UmbModel const& model) {
+                std::ostringstream errors;
+                bool valid = model.validate(errors);
+                return std::make_pair(valid, errors.str());
+            },
+            "Validate the UMB model; returns (is_valid, error_string)")
         .def("validate_or_throw", &storm::umb::UmbModel::validateOrThrow, "Validate the UMB model or throw on error")
         .def("__str__", &storm::umb::UmbModel::getShortModelInformation);
 
@@ -74,11 +77,8 @@ void define_umb(py::module& m) {
 
     m.def(
         "sparse_model_from_umb",
-        [](storm::umb::UmbModel const& umbModel, storm::umb::ImportOptions const& options) {
-            return storm::umb::sparseModelFromUmb(umbModel, options);
-        },
-        py::arg("umb_model"), py::arg("options") = storm::umb::ImportOptions{},
-        "Build a sparse model from the given UMB model");
+        [](storm::umb::UmbModel const& umbModel, storm::umb::ImportOptions const& options) { return storm::umb::sparseModelFromUmb(umbModel, options); },
+        py::arg("umb_model"), py::arg("options") = storm::umb::ImportOptions{}, "Build a sparse model from the given UMB model");
 
     m.def(
         "sparse_model_to_umb",
@@ -87,10 +87,14 @@ void define_umb(py::module& m) {
             using MExact = storm::models::sparse::Model<storm::RationalNumber>;
             using MInterval = storm::models::sparse::Model<storm::Interval>;
             using MRatInterval = storm::models::sparse::Model<storm::RationalInterval>;
-            if (auto m = std::dynamic_pointer_cast<MExact>(model)) return storm::umb::sparseModelToUmb(*m, options);
-            if (auto m = std::dynamic_pointer_cast<MInterval>(model)) return storm::umb::sparseModelToUmb(*m, options);
-            if (auto m = std::dynamic_pointer_cast<MRatInterval>(model)) return storm::umb::sparseModelToUmb(*m, options);
-            if (auto m = std::dynamic_pointer_cast<M>(model)) return storm::umb::sparseModelToUmb(*m, options);
+            if (auto m = std::dynamic_pointer_cast<MExact>(model))
+                return storm::umb::sparseModelToUmb(*m, options);
+            if (auto m = std::dynamic_pointer_cast<MInterval>(model))
+                return storm::umb::sparseModelToUmb(*m, options);
+            if (auto m = std::dynamic_pointer_cast<MRatInterval>(model))
+                return storm::umb::sparseModelToUmb(*m, options);
+            if (auto m = std::dynamic_pointer_cast<M>(model))
+                return storm::umb::sparseModelToUmb(*m, options);
             throw std::invalid_argument("Unsupported model type for UMB export");
         },
         py::arg("model"), py::arg("options") = storm::umb::ExportOptions{}, "Convert a sparse model to UMB format");

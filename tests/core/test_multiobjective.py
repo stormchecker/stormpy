@@ -71,7 +71,7 @@ class TestWeightedObjectiveModelChecking:
     def test_maze_exact(self):
         path = stormpy.examples.files.prism_mdp_maze_multigoal
         prism_program = stormpy.parse_prism_program(path)
-        formula_str = 'multi(Rmin=?  [F "goalalt1"], Pmax=?  [F "goalalt2"])'
+        formula_str = 'multi(Rmin=? [F "goalalt1"], Pmax=? [F "goalalt2"])'
         properties = stormpy.parse_properties(formula_str, prism_program)
         model = stormpy.build_sparse_exact_model(prism_program, properties)
         assert model.is_exact

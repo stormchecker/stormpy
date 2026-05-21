@@ -126,7 +126,7 @@ jobs:
           # Build development version only on latest Python versions
           CIBW_BUILD: "cp313-* cp314-*"
           CIBW_ENVIRONMENT: >-
-            STORM_VERSION=${{ inputs.storm_version }}
+            STORMPY_STORM_VERSION=${{ inputs.storm_version }}
             NR_JOBS=${{ env.NR_JOBS }}
             CMAKE_BUILD_PARALLEL_LEVEL=${{ env.NR_JOBS }}
             SKBUILD_CMAKE_BUILD_TYPE=${{ inputs.build_type }}
@@ -139,7 +139,7 @@ jobs:
           CIBW_ARCHS: ${{ matrix.archs }}
           MACOSX_DEPLOYMENT_TARGET: ${{ matrix.deploy_target }}
           CIBW_ENVIRONMENT: >-
-            STORM_VERSION=${{ inputs.storm_version }}
+            STORMPY_STORM_VERSION=${{ inputs.storm_version }}
             NR_JOBS=${{ env.NR_JOBS }}
             CMAKE_BUILD_PARALLEL_LEVEL=${{ env.NR_JOBS }}
             SKBUILD_CMAKE_BUILD_TYPE=${{ inputs.build_type }}

@@ -8,13 +8,13 @@ function(set_variable_string NAME CONDITION)
 endfunction(set_variable_string)
 
 # Check whether Storm library is available
-# Sets variable HAVE_STORM_XYZ
+# Sets variable STORMPY_HAVE_STORM_XYZ
 function(storm_with_lib NAME)
     string(TOLOWER ${NAME} NAME_LOWER)
     if(TARGET storm-${NAME_LOWER})
-        set(HAVE_STORM_${NAME} TRUE PARENT_SCOPE)
+        set(STORMPY_HAVE_STORM_${NAME} TRUE PARENT_SCOPE)
     else()
-        set(HAVE_STORM_${NAME} FALSE PARENT_SCOPE)
+        set(STORMPY_HAVE_STORM_${NAME} FALSE PARENT_SCOPE)
     endif()
 endfunction(storm_with_lib)
 
@@ -22,23 +22,23 @@ endfunction(storm_with_lib)
 # Using 'macro' instead of 'function' is also not viable because arguments are then not handled as variables any more.
 
 # Set variable for Storm dependencies
-# which can be checked with STORM_HAVE_XYZ
-# Sets variable STORM_WITH_XYZ_BOOL
+# which can be checked with STORMPY_STORM_HAVE_XYZ
+# Sets variable STORMPY_STORM_WITH_XYZ_BOOL
 function(set_dependency_var NAME)
     if (STORM_HAVE_${NAME})
-        set(STORM_WITH_${NAME}_BOOL "True" PARENT_SCOPE)
+        set(STORMPY_STORM_WITH_${NAME}_BOOL "True" PARENT_SCOPE)
     else()
-        set(STORM_WITH_${NAME}_BOOL "False" PARENT_SCOPE)
+        set(STORMPY_STORM_WITH_${NAME}_BOOL "False" PARENT_SCOPE)
     endif()
 endfunction(set_dependency_var)
 
 # Set variable for optional Storm libraries (if used)
-# which can be checked with HAVE_STORM_XYZ and option USE_STORM_XYZ
-# Sets variable STORM_WITH_XYZ_BOOL
+# which can be checked with STORMPY_HAVE_STORM_XYZ and option STORMPY_USE_STORM_XYZ
+# Sets variable STORMPY_STORM_WITH_XYZ_BOOL
 function(set_optional_lib_var NAME)
-    if ((USE_STORM_${NAME}) AND (HAVE_STORM_${NAME}))
-        set(STORM_WITH_${NAME}_BOOL "True" PARENT_SCOPE)
+    if ((STORMPY_USE_STORM_${NAME}) AND (STORMPY_HAVE_STORM_${NAME}))
+        set(STORMPY_STORM_WITH_${NAME}_BOOL "True" PARENT_SCOPE)
     else()
-        set(STORM_WITH_${NAME}_BOOL "False" PARENT_SCOPE)
+        set(STORMPY_STORM_WITH_${NAME}_BOOL "False" PARENT_SCOPE)
     endif()
 endfunction(set_optional_lib_var)

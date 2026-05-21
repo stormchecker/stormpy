@@ -82,19 +82,19 @@ sdist.include = [
 
 [tool.scikit-build.cmake.define]
 # See CMakeLists.txt for descriptions of these options
-STORM_DIR_HINT=""
-ALLOW_STORM_SYSTEM="ON"
-ALLOW_STORM_FETCH="ON"
-STORM_GIT_REPO="https://github.com/stormchecker/storm.git"
-# Storm version should be synced with STORM_MIN_VERSION in CMakeLists.txt
-STORM_GIT_TAG="1.13.0"
-USE_STORM_DFT="ON"
-USE_STORM_GSPN="ON"
-USE_STORM_PARS="ON"
-USE_STORM_POMDP="ON"
-USE_CLN_NUMBERS="ON"
+STORMPY_STORM_DIR_HINT=""
+STORMPY_ALLOW_STORM_SYSTEM="ON"
+STORMPY_ALLOW_STORM_FETCH="ON"
+STORMPY_STORM_GIT_REPO="https://github.com/stormchecker/storm.git"
+# Storm version should be synced with STORMPY_STORM_MIN_VERSION in CMakeLists.txt
+STORMPY_STORM_GIT_TAG="1.13.0"
+STORMPY_USE_STORM_DFT="ON"
+STORMPY_USE_STORM_GSPN="ON"
+STORMPY_USE_STORM_PARS="ON"
+STORMPY_USE_STORM_POMDP="ON"
+STORMPY_USE_CLN_NUMBERS="ON"
 STORMPY_DISABLE_SIGNATURE_DOC="OFF"
-COMPILE_WITH_CCACHE="ON"
+STORMPY_COMPILE_WITH_CCACHE="ON"
 # Override some flags in stormpy.info. Used for building release wheels via cibuildwheel
 STORMPY_INFO_PRETEND_FETCH="OFF"
 
@@ -118,7 +118,7 @@ repair-wheel-command = "delocate-listdeps -vv --depending --all {wheel} && DYLD_
 [tool.cibuildwheel.config-settings]
 # These override [tool.scikit-build.cmake.define] defaults when building via cibuildwheel.
 # Need to be in quotation marks.
-"cmake.define.ALLOW_STORM_FETCH" = "OFF"
+"cmake.define.STORMPY_ALLOW_STORM_FETCH" = "OFF"
 "cmake.define.STORMPY_INFO_PRETEND_FETCH" = "ON"
 
 [tool.black]

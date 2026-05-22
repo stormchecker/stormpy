@@ -4,6 +4,7 @@
 #include <storm-gspn/storage/gspn/GspnBuilder.h>
 #include <storm/io/file.h>
 #include <storm/settings/SettingsManager.h>
+
 #include "src/helpers.h"
 
 using GSPN = storm::gspn::GSPN;

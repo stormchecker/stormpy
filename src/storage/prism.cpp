@@ -22,6 +22,7 @@
 #include <storm/storage/prism/OverlappingGuardAnalyser.h>
 #include <storm/storage/prism/Program.h>
 #include <storm/utility/solver.h>
+
 #include "src/helpers.h"
 
 using namespace storm::prism;

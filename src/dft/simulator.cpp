@@ -3,6 +3,7 @@
 #include <storm-dft/api/storm-dft.h>
 #include <storm-dft/generator/DftNextStateGenerator.h>
 #include <storm-dft/simulator/DFTTraceSimulator.h>
+
 #include "src/helpers.h"
 
 template<typename ValueType>

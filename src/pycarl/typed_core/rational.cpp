@@ -1,6 +1,7 @@
 #include "rational.h"
 
 #include <stdexcept>
+
 #include "src/pycarl/helpers.h"
 #include "src/pycarl/types.h"
 

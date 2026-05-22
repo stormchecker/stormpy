@@ -1,7 +1,7 @@
 #include "generator.h"
 
-#include <storm-pomdp/generator/GenerateMonitorVerifier.h>
 #include <cstdint>
+#include <storm-pomdp/generator/GenerateMonitorVerifier.h>
 #include <storm/adapters/RationalNumberAdapter.h>
 #include <storm/storage/expressions/ExpressionManager.h>
 #include <string>

@@ -4,8 +4,9 @@
 #include <storm-pomdp/analysis/QualitativeAnalysisOnGraphs.h>
 #include <storm-pomdp/analysis/WinningRegionQueryInterface.h>
 #include <storm/logic/Formula.h>
+
 #include "src/helpers.h"
-#include "tracker.h"
+#include "src/pomdp/tracker.h"
 
 template<typename ValueType>
 using SparsePomdp = storm::models::sparse::Pomdp<ValueType>;

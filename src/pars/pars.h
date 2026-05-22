@@ -1,5 +1,5 @@
 #pragma once
 
-#include "common.h"
+#include "src/pars/common.h"
 
 void define_pars(py::module& m);

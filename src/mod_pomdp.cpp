@@ -1,15 +1,15 @@
 
-#include "common.h"
-
 #include <storm/adapters/IntervalAdapter.h>
 #include <storm/adapters/RationalFunctionAdapter.h>
 #include <storm/adapters/RationalNumberAdapter.h>
-#include "pomdp/generator.h"
-#include "pomdp/memory.h"
-#include "pomdp/qualitative_analysis.h"
-#include "pomdp/quantitative_analysis.h"
-#include "pomdp/tracker.h"
-#include "pomdp/transformations.h"
+
+#include "src/common.h"
+#include "src/pomdp/generator.h"
+#include "src/pomdp/memory.h"
+#include "src/pomdp/qualitative_analysis.h"
+#include "src/pomdp/quantitative_analysis.h"
+#include "src/pomdp/tracker.h"
+#include "src/pomdp/transformations.h"
 
 PYBIND11_MODULE(_pomdp, m) {
     m.doc() = "Functionality for POMDP analysis";

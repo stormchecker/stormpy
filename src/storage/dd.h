@@ -1,7 +1,8 @@
 #pragma once
 
 #include <storm/storage/dd/DdType.h>
-#include "common.h"
+
+#include "src/common.h"
 
 template<storm::dd::DdType DdType>
 void define_dd(py::module& m, std::string const& libname);

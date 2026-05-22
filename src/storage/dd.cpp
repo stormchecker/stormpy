@@ -5,6 +5,7 @@
 #include <storm/storage/dd/Dd.h>
 #include <storm/storage/dd/DdManager.h>
 #include <storm/storage/dd/DdMetaVariable.h>
+
 #include "src/helpers.h"
 
 template<storm::dd::DdType DdType>

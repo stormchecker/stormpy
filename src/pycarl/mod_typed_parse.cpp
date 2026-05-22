@@ -1,8 +1,8 @@
 #include <carl-parser/Parser.h>
-#include "common.h"
-#include "types.h"
 
-#include "typed_parse/parser.h"
+#include "src/common.h"
+#include "src/pycarl/typed_parse/parser.h"
+#include "src/pycarl/types.h"
 
 /**
  * The actual module definition

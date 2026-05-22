@@ -1,6 +1,8 @@
 #include "quantitative_analysis.h"
 
+// clang-format off
 #include <storm/models/sparse/Pomdp.h>  // Must be included before verification.h
+// clang-format on
 
 #include <storm-pomdp/api/verification.h>
 #include <storm/adapters/RationalFunctionAdapter.h>

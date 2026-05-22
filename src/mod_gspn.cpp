@@ -1,7 +1,6 @@
-#include "common.h"
-
-#include "gspn/gspn.h"
-#include "gspn/gspn_io.h"
+#include "src/common.h"
+#include "src/gspn/gspn.h"
+#include "src/gspn/gspn_io.h"
 
 PYBIND11_MODULE(_gspn, m) {
     m.doc() = "Support for GSPNs";

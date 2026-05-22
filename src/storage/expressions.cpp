@@ -8,6 +8,7 @@
 #include <storm/storage/expressions/ToDiceStringVisitor.h>
 #include <storm/storage/expressions/Valuation.h>
 #include <vector>
+
 #include "src/helpers.h"
 
 // Define python bindings

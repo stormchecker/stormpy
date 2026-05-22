@@ -1,8 +1,7 @@
-#include "common.h"
-
-#include "pars/model_instantiator.h"
-#include "pars/pars.h"
-#include "pars/pla.h"
+#include "src/common.h"
+#include "src/pars/model_instantiator.h"
+#include "src/pars/pars.h"
+#include "src/pars/pla.h"
 
 PYBIND11_MODULE(_pars, m) {
     m.doc() = "Functionality for parametric analysis";

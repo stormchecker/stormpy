@@ -2,7 +2,8 @@
 
 #include <storm/models/sparse/Model.h>
 #include <storm/storage/SparseMatrix.h>
-#include "common.h"
+
+#include "src/common.h"
 
 // Forward declaration
 template<typename ValueType>

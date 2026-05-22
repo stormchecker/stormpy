@@ -2,6 +2,7 @@
 
 #include <storm/adapters/RationalNumberAdapter.h>
 #include <storm/utility/KwekMehlhorn.h>
+
 #include "src/common.h"
 
 template<typename RationalValueType>

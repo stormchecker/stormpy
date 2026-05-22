@@ -3,6 +3,7 @@
 #include <storm/adapters/IntervalAdapter.h>
 #include <storm/adapters/RationalNumberAdapter.h>
 #include <storm/storage/Distribution.h>
+
 #include "src/helpers.h"
 
 template<typename ValueType>

@@ -2,6 +2,7 @@
 
 #include <storm-dft/storage/elements/DFTElements.h>
 #include <storm/adapters/RationalFunctionAdapter.h>
+
 #include "src/helpers.h"
 
 template<typename ValueType>

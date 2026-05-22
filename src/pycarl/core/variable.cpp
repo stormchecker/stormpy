@@ -3,6 +3,7 @@
 #include <carl/core/Variable.h>
 #include <carl/core/VariablePool.h>
 #include <string>
+
 #include "src/pycarl/helpers.h"
 #include "src/pycarl/types.h"
 

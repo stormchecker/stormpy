@@ -1,16 +1,15 @@
-#include "common.h"
-
-#include "core/analysis.h"
-#include "core/bisimulation.h"
-#include "core/core.h"
-#include "core/counterexample.h"
-#include "core/environment.h"
-#include "core/input.h"
-#include "core/modelchecking.h"
-#include "core/multiobjective.h"
-#include "core/result.h"
-#include "core/simulator.h"
-#include "core/transformation.h"
+#include "src/common.h"
+#include "src/core/analysis.h"
+#include "src/core/bisimulation.h"
+#include "src/core/core.h"
+#include "src/core/counterexample.h"
+#include "src/core/environment.h"
+#include "src/core/input.h"
+#include "src/core/modelchecking.h"
+#include "src/core/multiobjective.h"
+#include "src/core/result.h"
+#include "src/core/simulator.h"
+#include "src/core/transformation.h"
 
 PYBIND11_MODULE(_core, m) {
     m.doc() = "core";

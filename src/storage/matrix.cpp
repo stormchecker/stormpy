@@ -5,6 +5,7 @@
 #include <storm/storage/BitVector.h>
 #include <storm/storage/SparseMatrix.h>
 #include <storm/utility/graph.h>
+
 #include "src/helpers.h"
 
 template<typename ValueType>

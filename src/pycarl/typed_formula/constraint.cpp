@@ -1,6 +1,6 @@
 #include "constraint.h"
 
-#include "common.h"
+#include "src/pycarl/typed_formula/common.h"
 
 //
 void define_constraint(py::module& m) {

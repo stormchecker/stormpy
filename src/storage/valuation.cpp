@@ -7,6 +7,7 @@
 #include <storm/storage/expressions/Variable.h>
 #include <storm/storage/sparse/StateValuationTransformer.h>
 #include <storm/storage/sparse/StateValuations.h>
+
 #include "src/helpers.h"
 
 // Thin wrappers

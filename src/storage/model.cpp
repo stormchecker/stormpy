@@ -1,5 +1,7 @@
 #include "model.h"
 
+#include <functional>
+#include <sstream>
 #include <storm/adapters/IntervalAdapter.h>
 #include <storm/adapters/RationalFunctionAdapter.h>
 #include <storm/models/ModelBase.h>
@@ -20,11 +22,9 @@
 #include <storm/storage/Scheduler.h>
 #include <storm/storage/dd/DdManager.h>
 #include <storm/utility/dd.h>
-#include "state.h"
-
-#include <functional>
-#include <sstream>
 #include <string>
+
+#include "src/storage/state.h"
 
 // Typedefs
 using ModelBase = storm::models::ModelBase;

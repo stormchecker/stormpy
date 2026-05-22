@@ -3,6 +3,7 @@
 #include <storm-dft/storage/DFTState.h>
 #include <storm-dft/storage/FailableElements.h>
 #include <storm/adapters/RationalFunctionAdapter.h>
+
 #include "src/helpers.h"
 
 template<typename ValueType>

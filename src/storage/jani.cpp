@@ -8,6 +8,7 @@
 #include <storm/storage/jani/traverser/InformationCollector.h>
 #include <storm/storage/jani/types/AllJaniTypes.h>
 #include <storm/storage/jani/visitor/JSONExporter.h>
+
 #include "src/helpers.h"
 
 using namespace storm::jani;

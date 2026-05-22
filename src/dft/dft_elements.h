@@ -1,6 +1,6 @@
 #pragma once
 
-#include "common.h"
+#include "src/dft/common.h"
 
 void define_dft_elements(py::module& m);
 

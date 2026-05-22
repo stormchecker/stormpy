@@ -3,6 +3,7 @@
 #include <storm-parsers/api/storm-parsers.h>
 #include <storm/storage/jani/Property.h>
 #include <storm/utility/cli.h>
+
 #include "src/helpers.h"
 
 void define_property(py::module& m) {

@@ -10,7 +10,8 @@
 #include <storm/modelchecker/results/CheckResult.h>
 #include <storm/models/symbolic/StandardRewardModel.h>
 #include <storm/utility/graph.h>
-#include "result.h"
+
+#include "src/core/result.h"
 
 template<typename ValueType>
 using CheckTask = storm::modelchecker::CheckTask<storm::logic::Formula, ValueType>;

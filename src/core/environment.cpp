@@ -10,6 +10,7 @@
 #include <storm/settings/SettingsManager.h>
 #include <storm/storage/SchedulerClass.h>
 #include <storm/utility/constants.h>
+
 #include "src/helpers.h"
 
 void define_environment(py::module& m) {

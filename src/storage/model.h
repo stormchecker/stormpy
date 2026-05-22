@@ -1,7 +1,8 @@
 #pragma once
 
 #include <storm/storage/dd/DdType.h>
-#include "common.h"
+
+#include "src/common.h"
 
 void define_model(py::module& m);
 template<typename ValueType>

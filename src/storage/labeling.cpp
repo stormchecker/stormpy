@@ -3,6 +3,7 @@
 #include <storm/models/sparse/ChoiceLabeling.h>
 #include <storm/models/sparse/ItemLabeling.h>
 #include <storm/models/sparse/StateLabeling.h>
+
 #include "src/helpers.h"
 
 // Define python bindings

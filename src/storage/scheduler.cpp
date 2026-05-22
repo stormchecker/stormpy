@@ -3,6 +3,7 @@
 #include <storm/adapters/IntervalAdapter.h>
 #include <storm/adapters/RationalFunctionAdapter.h>
 #include <storm/storage/Scheduler.h>
+
 #include "src/helpers.h"
 
 template<typename ValueType>

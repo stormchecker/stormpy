@@ -1,5 +1,5 @@
 #pragma once
 
-#include "common.h"
+#include "src/pomdp/common.h"
 
 void define_memory(py::module& m);

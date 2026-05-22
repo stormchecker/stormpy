@@ -2,6 +2,7 @@
 
 #include <storm-gspn/parser/GspnParser.h>
 #include <storm-gspn/storage/gspn/GSPN.h>
+
 #include "src/helpers.h"
 
 using GSPN = storm::gspn::GSPN;

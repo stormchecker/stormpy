@@ -1,6 +1,7 @@
 #include "bitvector.h"
 
 #include <storm/storage/BitVector.h>
+
 #include "src/helpers.h"
 
 void define_bitvector(py::module& m) {

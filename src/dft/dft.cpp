@@ -8,6 +8,7 @@
 #include <storm-dft/utility/SymmetryFinder.h>
 #include <storm/adapters/RationalFunctionAdapter.h>
 #include <storm/settings/SettingsManager.h>
+
 #include "src/helpers.h"
 
 template<typename ValueType>

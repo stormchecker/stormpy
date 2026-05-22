@@ -18,6 +18,7 @@
 #include "src/storage/prism.h"
 #include "src/storage/scheduler.h"
 #include "src/storage/state.h"
+#include "src/storage/umb.h"
 #include "src/storage/valuation.h"
 
 PYBIND11_MODULE(_storage, m) {
@@ -88,4 +89,5 @@ PYBIND11_MODULE(_storage, m) {
     define_maximal_end_component_decomposition<storm::Interval>(m, "_interval");
     define_maximal_end_component_decomposition<storm::RationalInterval>(m, "_ratinterval");
     define_maximal_end_component_decomposition<storm::RationalFunction>(m, "_ratfunc");
+    define_umb(m);
 }

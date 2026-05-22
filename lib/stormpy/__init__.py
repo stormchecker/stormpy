@@ -812,3 +812,34 @@ def export_to_drn(model, file, options=DirectEncodingExporterOptions()):
     if model.is_exact:
         return _core._export_exact_to_drn(model, file, options)
     return _core._export_to_drn(model, file, options)
+
+
+def export_to_umb(model, path, options=UmbExportOptions()):
+    """
+    Export a model to a UMB archive.
+
+    :param model: Sparse model to export.
+    :param path: Path to the output UMB archive.
+    :param options: UmbExportOptions controlling value type, compression, etc.
+    """
+    umb = sparse_model_to_umb(model, options)
+    umb_to_archive(umb, path, options)
+
+
+def build_from_umb(path, options=UmbImportOptions()):
+    """
+    Build a sparse model from a UMB archive.
+
+    :param path: Path to the UMB archive.
+    :param options: UmbImportOptions controlling value type and what to build.
+    :return: Sparse model in the concrete typed representation.
+    """
+    umb = import_umb(path, options)
+    intermediate = sparse_model_from_umb(umb, options)
+    if intermediate.is_exact and intermediate.supports_uncertainty:
+        return _convert_sparse_model(intermediate, value_type=_ValueType.EXACT_INTERVAL)
+    if intermediate.is_exact:
+        return _convert_sparse_model(intermediate, value_type=_ValueType.EXACT)
+    if intermediate.supports_uncertainty:
+        return _convert_sparse_model(intermediate, value_type=_ValueType.INTERVAL)
+    return _convert_sparse_model(intermediate, value_type=_ValueType.DOUBLE)

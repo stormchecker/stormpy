@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-#include "src/pycarl/helpers.h"
+#include "src/helpers.h"
 #include "src/pycarl/types.h"
 
 // Must be included last
@@ -44,31 +44,31 @@ void define_cln_rational(py::module& m) {
         .def("__rmul__", [](const cln::cl_RA& rhs, carl::sint lhs) -> cln::cl_RA { return carl::rationalize<cln::cl_RA>(lhs) * rhs; })
         .def("__rmul__", [](const cln::cl_RA& rhs, carl::Variable::Arg lhs) -> Term { return rhs * lhs; })
 
-        .def(PY_DIV,
+        .def("__truediv__",
              [](const cln::cl_RA& lhs, const cln::cl_RA& rhs) -> cln::cl_RA {
                  if (carl::isZero(rhs))
                      throw std::runtime_error("Div by zero");
                  return lhs / rhs;
              })
-        .def(PY_DIV,
+        .def("__truediv__",
              [](const cln::cl_RA& lhs, carl::sint rhs) -> cln::cl_RA {
                  if (rhs == 0.0)
                      throw std::runtime_error("Div by zero");
                  return lhs / carl::rationalize<cln::cl_RA>(rhs);
              })
-        .def(PY_RDIV,
+        .def("__rtruediv__",
              [](const cln::cl_RA& rhs, carl::sint lhs) -> cln::cl_RA {
                  if (carl::isZero(rhs))
                      throw std::runtime_error("Div by zero");
                  return carl::rationalize<cln::cl_RA>(lhs) / rhs;
              })
 
-        .def(PY_DIV, [](const Rational& lhs, const RationalFunction& rhs) { return RationalFunction(lhs) / rhs; })
-        .def(PY_DIV, [](const Rational& lhs, const Polynomial& rhs) { return RationalFunction(lhs) / rhs; })
-        .def(PY_DIV, [](const Rational& lhs, const Term& rhs) { return RationalFunction(lhs) / rhs; })
-        .def(PY_DIV, [](const Rational& lhs, const Monomial::Arg& rhs) { return RationalFunction(lhs) / rhs; })
-        .def(PY_DIV, [](const Rational& lhs, carl::Variable::Arg rhs) { return RationalFunction(lhs) / rhs; })
-        .def(PY_RDIV, [](const Rational& rhs, carl::Variable::Arg lhs) { return RationalFunction(lhs) / rhs; })
+        .def("__truediv__", [](const Rational& lhs, const RationalFunction& rhs) { return RationalFunction(lhs) / rhs; })
+        .def("__truediv__", [](const Rational& lhs, const Polynomial& rhs) { return RationalFunction(lhs) / rhs; })
+        .def("__truediv__", [](const Rational& lhs, const Term& rhs) { return RationalFunction(lhs) / rhs; })
+        .def("__truediv__", [](const Rational& lhs, const Monomial::Arg& rhs) { return RationalFunction(lhs) / rhs; })
+        .def("__truediv__", [](const Rational& lhs, carl::Variable::Arg rhs) { return RationalFunction(lhs) / rhs; })
+        .def("__rtruediv__", [](const Rational& rhs, carl::Variable::Arg lhs) { return RationalFunction(lhs) / rhs; })
 
         .def("__pow__", static_cast<cln::cl_RA (*)(const cln::cl_RA&, std::size_t)>(&carl::pow))
         .def("__pos__", [](const cln::cl_RA& var) { return cln::cl_RA(var); })
@@ -156,31 +156,31 @@ void define_gmp_rational(py::module& m) {
         .def("__rmul__", [](const mpq_class& rhs, carl::sint lhs) -> mpq_class { return carl::rationalize<mpq_class>(lhs) * rhs; })
         .def("__rmul__", [](const mpq_class& rhs, carl::Variable::Arg lhs) -> Term { return rhs * lhs; })
 
-        .def(PY_DIV,
+        .def("__truediv__",
              [](const mpq_class& lhs, const mpq_class& rhs) -> mpq_class {
                  if (carl::isZero(rhs))
                      throw std::runtime_error("Div by zero");
                  return lhs / rhs;
              })
-        .def(PY_DIV,
+        .def("__truediv__",
              [](const mpq_class& lhs, carl::sint rhs) -> mpq_class {
                  if (rhs == 0.0)
                      throw std::runtime_error("Div by zero");
                  return lhs / carl::rationalize<mpq_class>(rhs);
              })
-        .def(PY_RDIV,
+        .def("__rtruediv__",
              [](const mpq_class& rhs, carl::sint lhs) -> mpq_class {
                  if (carl::isZero(rhs))
                      throw std::runtime_error("Div by zero");
                  return carl::rationalize<mpq_class>(lhs) / rhs;
              })
 
-        .def(PY_DIV, [](const Rational& lhs, const RationalFunction& rhs) { return RationalFunction(lhs) / rhs; })
-        .def(PY_DIV, [](const Rational& lhs, const Polynomial& rhs) { return RationalFunction(lhs) / rhs; })
-        .def(PY_DIV, [](const Rational& lhs, const Term& rhs) { return RationalFunction(lhs) / rhs; })
-        .def(PY_DIV, [](const Rational& lhs, const Monomial::Arg& rhs) { return RationalFunction(lhs) / rhs; })
-        .def(PY_DIV, [](const Rational& lhs, carl::Variable::Arg rhs) { return RationalFunction(lhs) / rhs; })
-        .def(PY_RDIV, [](const Rational& rhs, carl::Variable::Arg lhs) { return RationalFunction(lhs) / rhs; })
+        .def("__truediv__", [](const Rational& lhs, const RationalFunction& rhs) { return RationalFunction(lhs) / rhs; })
+        .def("__truediv__", [](const Rational& lhs, const Polynomial& rhs) { return RationalFunction(lhs) / rhs; })
+        .def("__truediv__", [](const Rational& lhs, const Term& rhs) { return RationalFunction(lhs) / rhs; })
+        .def("__truediv__", [](const Rational& lhs, const Monomial::Arg& rhs) { return RationalFunction(lhs) / rhs; })
+        .def("__truediv__", [](const Rational& lhs, carl::Variable::Arg rhs) { return RationalFunction(lhs) / rhs; })
+        .def("__rtruediv__", [](const Rational& rhs, carl::Variable::Arg lhs) { return RationalFunction(lhs) / rhs; })
 
         .def("__pow__", static_cast<mpq_class (*)(const mpq_class&, std::size_t)>(&carl::pow))
         .def("__pos__", [](const mpq_class& var) { return mpq_class(var); })

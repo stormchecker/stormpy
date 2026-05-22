@@ -1,7 +1,7 @@
 #include "src/common.h"
+#include "src/helpers.h"
 #include "src/pycarl/formula/formula_type.h"
 #include "src/pycarl/formula/relation.h"
-#include "src/pycarl/helpers.h"
 
 PYBIND11_MODULE(_formula, m) {
     m.attr("__name__") = "stormpy.pycarl.formula";

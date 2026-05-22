@@ -1,5 +1,5 @@
 #include "src/common.h"
-#include "src/pycarl/helpers.h"
+#include "src/helpers.h"
 #include "src/pycarl/typed_formula/constraint.h"
 #include "src/pycarl/typed_formula/formula.h"
 

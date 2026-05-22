@@ -1,6 +1,6 @@
 #include "polynomial.h"
 
-#include "src/pycarl/helpers.h"
+#include "src/helpers.h"
 #include "src/pycarl/types.h"
 
 void define_polynomial(py::module& m) {
@@ -40,13 +40,13 @@ void define_polynomial(py::module& m) {
         .def(py::self * Term())
         .def(py::self * py::self)
 
-        .def(PY_DIV, [](const Polynomial& lhs, const RationalFunction& rhs) { return RationalFunction(lhs) / rhs; })
-        .def(PY_DIV, [](const Polynomial& lhs, const Polynomial& rhs) { return RationalFunction(lhs, rhs); })
-        .def(PY_DIV, [](const Polynomial& lhs, const Term& rhs) { return RationalFunction(lhs) / rhs; })
-        .def(PY_DIV, [](const Polynomial& lhs, const Monomial::Arg& rhs) { return RationalFunction(lhs) / rhs; })
-        .def(PY_DIV, [](const Polynomial& lhs, carl::Variable::Arg rhs) { return RationalFunction(lhs) / rhs; })
+        .def("__truediv__", [](const Polynomial& lhs, const RationalFunction& rhs) { return RationalFunction(lhs) / rhs; })
+        .def("__truediv__", [](const Polynomial& lhs, const Polynomial& rhs) { return RationalFunction(lhs, rhs); })
+        .def("__truediv__", [](const Polynomial& lhs, const Term& rhs) { return RationalFunction(lhs) / rhs; })
+        .def("__truediv__", [](const Polynomial& lhs, const Monomial::Arg& rhs) { return RationalFunction(lhs) / rhs; })
+        .def("__truediv__", [](const Polynomial& lhs, carl::Variable::Arg rhs) { return RationalFunction(lhs) / rhs; })
         .def(py::self / Rational())
-        .def(PY_DIV, [](const Polynomial& lhs, const Integer& rhs) -> Polynomial { return lhs / Rational(rhs); })
+        .def("__truediv__", [](const Polynomial& lhs, const Integer& rhs) -> Polynomial { return lhs / Rational(rhs); })
 
         .def("__pow__", [](const Polynomial& var, carl::uint exp) { return var.pow(exp); })
 

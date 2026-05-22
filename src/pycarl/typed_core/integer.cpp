@@ -1,6 +1,6 @@
 #include "integer.h"
 
-#include "src/pycarl/helpers.h"
+#include "src/helpers.h"
 #include "src/pycarl/types.h"
 
 // Must be included last
@@ -43,7 +43,7 @@ void define_cln_integer(py::module& m) {
         .def("__rmul__", [](const cln::cl_I& rhs, carl::Variable::Arg lhs) -> Term { return cln::cl_RA(rhs) * lhs; })
         .def("__rmul__", [](const cln::cl_I& rhs, const Monomial::Arg& lhs) -> Term { return cln::cl_RA(rhs) * lhs; })
 
-        .def(PY_DIV,
+        .def("__truediv__",
              [](const cln::cl_I& lhs, const cln::cl_I& rhs) -> cln::cl_RA {
                  if (carl::isZero(rhs))
                      throw std::runtime_error("Div by zero");
@@ -122,7 +122,7 @@ void define_gmp_integer(py::module& m) {
         .def("__rmul__", [](const mpz_class& rhs, carl::Variable::Arg lhs) -> Term { return mpq_class(rhs) * lhs; })
         .def("__rmul__", [](const mpz_class& rhs, const Monomial::Arg& lhs) -> Term { return mpq_class(rhs) * lhs; })
 
-        .def(PY_DIV,
+        .def("__truediv__",
              [](const mpz_class& lhs, const mpz_class& rhs) -> mpq_class {
                  if (carl::isZero(rhs))
                      throw std::runtime_error("Div by zero");

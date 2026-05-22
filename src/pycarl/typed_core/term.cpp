@@ -1,6 +1,6 @@
 #include "term.h"
 
-#include "src/pycarl/helpers.h"
+#include "src/helpers.h"
 #include "src/pycarl/types.h"
 
 void define_term(py::module& m) {
@@ -27,11 +27,11 @@ void define_term(py::module& m) {
         .def("__mul__", static_cast<Term (*)(Term, carl::Variable)>(&carl::operator*))
         .def("__mul__", static_cast<Term (*)(Term, const Rational&)>(&carl::operator*))
 
-        .def(PY_DIV, [](const Term& lhs, const RationalFunction& rhs) { return RationalFunction(Polynomial(lhs)) / rhs; })
-        .def(PY_DIV, [](const Term& lhs, const Polynomial& rhs) { return RationalFunction(Polynomial(lhs)) / rhs; })
-        .def(PY_DIV, [](const Term& lhs, const Term& rhs) { return RationalFunction(Polynomial(lhs)) / rhs; })
-        .def(PY_DIV, [](const Term& lhs, const Monomial::Arg& rhs) { return RationalFunction(Polynomial(lhs)) / rhs; })
-        .def(PY_DIV, [](const Term& lhs, carl::Variable::Arg rhs) { return RationalFunction(Polynomial(lhs)) / rhs; })
+        .def("__truediv__", [](const Term& lhs, const RationalFunction& rhs) { return RationalFunction(Polynomial(lhs)) / rhs; })
+        .def("__truediv__", [](const Term& lhs, const Polynomial& rhs) { return RationalFunction(Polynomial(lhs)) / rhs; })
+        .def("__truediv__", [](const Term& lhs, const Term& rhs) { return RationalFunction(Polynomial(lhs)) / rhs; })
+        .def("__truediv__", [](const Term& lhs, const Monomial::Arg& rhs) { return RationalFunction(Polynomial(lhs)) / rhs; })
+        .def("__truediv__", [](const Term& lhs, carl::Variable::Arg rhs) { return RationalFunction(Polynomial(lhs)) / rhs; })
         .def(py::self / Rational())
 
         .def("__pow__", [](const Term& var, carl::uint exp) { return var.pow(exp); })

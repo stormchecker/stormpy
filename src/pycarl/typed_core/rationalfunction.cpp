@@ -36,11 +36,11 @@ void define_rationalfunction(py::module& m) {
         .def("__mul__", static_cast<RationalFunction (*)(const RationalFunction&, const Rational&)>(&carl::operator*))
         .def(py::self * py::self)
 
-        .def(PY_DIV, static_cast<RationalFunction (*)(const RationalFunction&, const Rational&)>(&carl::operator/))
-        .def(PY_DIV, static_cast<RationalFunction (*)(const RationalFunction&, const Polynomial&)>(&carl::operator/))
-        .def(PY_DIV, static_cast<RationalFunction (*)(const RationalFunction&, const Term&)>(&carl::operator/))
-        .def(PY_DIV, static_cast<RationalFunction (*)(const RationalFunction&, carl::Variable)>(&carl::operator/))
-        .def(PY_DIV, static_cast<RationalFunction (*)(const RationalFunction&, const Rational&)>(&carl::operator/))
+        .def("__truediv__", static_cast<RationalFunction (*)(const RationalFunction&, const Rational&)>(&carl::operator/))
+        .def("__truediv__", static_cast<RationalFunction (*)(const RationalFunction&, const Polynomial&)>(&carl::operator/))
+        .def("__truediv__", static_cast<RationalFunction (*)(const RationalFunction&, const Term&)>(&carl::operator/))
+        .def("__truediv__", static_cast<RationalFunction (*)(const RationalFunction&, carl::Variable)>(&carl::operator/))
+        .def("__truediv__", static_cast<RationalFunction (*)(const RationalFunction&, const Rational&)>(&carl::operator/))
         .def(py::self / py::self)
 
         .def("__pow__", [](const RationalFunction& var, carl::uint exp) { return carl::pow(var, exp); })

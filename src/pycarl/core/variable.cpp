@@ -2,7 +2,7 @@
 #include <carl/core/VariablePool.h>
 #include <string>
 
-#include "src/pycarl/helpers.h"
+#include "src/helpers.h"
 #include "src/pycarl/types.h"
 #include "variable.h"
 

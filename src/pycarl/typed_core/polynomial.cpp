@@ -1,6 +1,6 @@
 #include "polynomial.h"
 
-#include "src/pycarl/helpers.h"
+#include "src/helpers.h"
 #include "src/pycarl/types.h"
 
 void define_polynomial(py::module& m) {

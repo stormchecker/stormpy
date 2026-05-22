@@ -1,7 +1,7 @@
 #pragma once
 
+#include "src/helpers.h"
 #include "src/pycarl/common.h"
-#include "src/pycarl/helpers.h"
 #include "src/pycarl/types.h"
 
 template<typename Number>

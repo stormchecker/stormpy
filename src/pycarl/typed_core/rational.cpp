@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-#include "src/pycarl/helpers.h"
+#include "src/helpers.h"
 #include "src/pycarl/types.h"
 
 #include "carl/numbers/conversion/cln_gmp.h"

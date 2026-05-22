@@ -1,5 +1,5 @@
 #include "common.h"
-#include "helpers.h"
+#include "src/helpers.h"
 
 #include "typed_formula/constraint.h"
 #include "typed_formula/formula.h"

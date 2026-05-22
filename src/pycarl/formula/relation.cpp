@@ -1,5 +1,5 @@
 #include "relation.h"
-#include "src/pycarl/helpers.h"
+#include "src/helpers.h"
 
 #include <carl/core/Relation.h>
 

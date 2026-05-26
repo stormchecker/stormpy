@@ -176,6 +176,32 @@ class TestAddUncertainty:
 
 
 class TestSubsystemCreation:
+    def test_for_interval_mdp(self):
+        model = stormpy.build_interval_model_from_drn(get_example_path("imdp", "tiny-01.drn"))
+        assert type(model) is stormpy.SparseIntervalMdp
+        assert model.nr_states == 3
+        states = stormpy.BitVector(model.nr_states, True)
+        states.set(2, False)
+        options = stormpy.SubsystemBuilderOptions()
+        options.fix_deadlocks = True
+        result = stormpy.construct_submodel(model, states, stormpy.BitVector(model.nr_choices, True), True, options)
+        assert type(result.model) is stormpy.SparseIntervalMdp
+        assert result.model.nr_states == 2
+        assert result.model.nr_transitions == 2
+
+    def test_for_exact_interval_mdp(self):
+        model = stormpy.build_exact_interval_model_from_drn(get_example_path("imdp", "tiny-01.drn"))
+        assert type(model) is stormpy.SparseRationalIntervalMdp
+        assert model.nr_states == 3
+        states = stormpy.BitVector(model.nr_states, True)
+        states.set(2, False)
+        options = stormpy.SubsystemBuilderOptions()
+        options.fix_deadlocks = True
+        result = stormpy.construct_submodel(model, states, stormpy.BitVector(model.nr_choices, True), True, options)
+        assert type(result.model) is stormpy.SparseRationalIntervalMdp
+        assert result.model.nr_states == 2
+        assert result.model.nr_transitions == 2
+
     def test_for_ctmc(self):
         program = stormpy.parse_prism_program(get_example_path("ctmc", "polling2.sm"), True)
         formulas = stormpy.parse_properties_for_prism_program('P=? [ F<=3 "target" ]', program)

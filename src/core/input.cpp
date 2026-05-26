@@ -1,8 +1,10 @@
 #include "input.h"
+
+#include <storm-parsers/api/storm-parsers.h>
+#include <storm/storage/jani/Property.h>
 #include <storm/utility/cli.h>
+
 #include "src/helpers.h"
-#include "storm-parsers/api/storm-parsers.h"
-#include "storm/storage/jani/Property.h"
 
 void define_property(py::module& m) {
     py::class_<storm::jani::Property>(m, "Property", "Property")

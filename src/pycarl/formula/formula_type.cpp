@@ -1,4 +1,5 @@
 #include "formula_type.h"
+
 #include <carl/formula/Formula.h>
 
 void define_formula_type(py::module& m) {

@@ -1,9 +1,10 @@
 #include "distribution.h"
-#include "src/helpers.h"
 
-#include "storm/adapters/IntervalAdapter.h"
-#include "storm/adapters/RationalNumberAdapter.h"
-#include "storm/storage/Distribution.h"
+#include <storm/adapters/IntervalAdapter.h>
+#include <storm/adapters/RationalNumberAdapter.h>
+#include <storm/storage/Distribution.h>
+
+#include "src/helpers.h"
 
 template<typename ValueType>
 void define_distribution(py::module& m, std::string vt_suffix) {

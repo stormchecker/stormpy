@@ -1,10 +1,12 @@
 #include "dd.h"
+
+#include <storm/storage/dd/Add.h>
+#include <storm/storage/dd/Bdd.h>
+#include <storm/storage/dd/Dd.h>
+#include <storm/storage/dd/DdManager.h>
+#include <storm/storage/dd/DdMetaVariable.h>
+
 #include "src/helpers.h"
-#include "storm/storage/dd/Add.h"
-#include "storm/storage/dd/Bdd.h"
-#include "storm/storage/dd/Dd.h"
-#include "storm/storage/dd/DdManager.h"
-#include "storm/storage/dd/DdMetaVariable.h"
 
 template<storm::dd::DdType DdType>
 void define_dd(py::module& m, std::string const& libstring) {

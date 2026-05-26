@@ -1,6 +1,6 @@
 #include "analysis.h"
 
-#include "storm/analysis/GraphConditions.h"
+#include <storm/analysis/GraphConditions.h>
 
 // Define python bindings
 void define_graph_constraints(py::module& m) {

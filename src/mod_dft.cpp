@@ -1,13 +1,12 @@
-#include "common.h"
-
-#include "dft/analysis.h"
-#include "dft/dft.h"
-#include "dft/dft_elements.h"
-#include "dft/dft_state.h"
-#include "dft/io.h"
-#include "dft/module.h"
-#include "dft/simulator.h"
-#include "dft/transformations.h"
+#include "src/common.h"
+#include "src/dft/analysis.h"
+#include "src/dft/dft.h"
+#include "src/dft/dft_elements.h"
+#include "src/dft/dft_state.h"
+#include "src/dft/io.h"
+#include "src/dft/module.h"
+#include "src/dft/simulator.h"
+#include "src/dft/transformations.h"
 
 PYBIND11_MODULE(_dft, m) {
     m.doc() = "Functionality for DFT analysis";

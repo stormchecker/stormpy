@@ -69,22 +69,26 @@ ForEachMacros:
   - foreach
   - Q_FOREACH
   - BOOST_FOREACH
-IncludeBlocks:   Preserve
+IncludeBlocks: Regroup
+# Detect the "main" header (no src/ prefix)
+IncludeIsMainRegex: '^"[^/]+\.h"$'
 IncludeCategories:
-  - Regex:           '^<storm/.*\.h>'
-    Priority:        2
-    SortPriority:    0
-  - Regex:           '^<.*\.h>'
+  # 1. Main header (no path)
+  - Regex:           '^"[^/]+\.h"$'
     Priority:        1
     SortPriority:    0
-  - Regex:           '^<.*'
+  # 2. System headers
+  - Regex:           '^<.*>'
     Priority:        2
     SortPriority:    0
-  - Regex:           '.*'
+  # 3. Internal headers (always under src/)
+  - Regex:           '^"src/.*"'
     Priority:        3
     SortPriority:    0
-IncludeIsMainRegex: '([-_](test|unittest))?$'
-IncludeIsMainSourceRegex: ''
+  # 4. Fallback
+  - Regex:           '.*'
+    Priority:        4
+    SortPriority:    0
 IndentCaseLabels: true
 IndentCaseBlocks: false
 IndentGotoLabels: true

@@ -1,22 +1,9 @@
 #pragma once
 
-#include <pybind11/operators.h>
-#include <pybind11/pybind11.h>
-#include <pybind11/stl.h>
-#include <exception>
-#include <tuple>
-
 #include <boost/variant.hpp>
+#include <exception>
 
-namespace py = pybind11;
-
-#if PY_MAJOR_VERSION >= 3
-#define PY_DIV "__truediv__"
-#define PY_RDIV "__rtruediv__"
-#else
-#define PY_DIV "__div__"
-#define PY_RDIV "__rdiv__"
-#endif
+#include "src/common.h"
 
 struct NoPickling : public std::exception {
     virtual const char* what() const throw() {

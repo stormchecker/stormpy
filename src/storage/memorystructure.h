@@ -1,5 +1,6 @@
 #pragma once
-#include "common.h"
+
+#include "src/common.h"
 
 void define_memorystructure_untyped(py::module& m);
 template<typename ValueType>

@@ -1,15 +1,17 @@
 #include "modelchecking.h"
-#include "result.h"
-#include "storm/adapters/RationalFunctionAdapter.h"
-#include "storm/api/verification.h"
-#include "storm/environment/Environment.h"
-#include "storm/environment/solver/MinMaxSolverEnvironment.h"
-#include "storm/modelchecker/csl/helper/SparseCtmcCslHelper.h"
-#include "storm/modelchecker/hints/ExplicitModelCheckerHint.h"
-#include "storm/modelchecker/multiobjective/MultiObjectiveModelChecking.h"
-#include "storm/modelchecker/results/CheckResult.h"
-#include "storm/models/symbolic/StandardRewardModel.h"
-#include "storm/utility/graph.h"
+
+#include <storm/adapters/RationalFunctionAdapter.h>
+#include <storm/api/verification.h>
+#include <storm/environment/Environment.h>
+#include <storm/environment/solver/MinMaxSolverEnvironment.h>
+#include <storm/modelchecker/csl/helper/SparseCtmcCslHelper.h>
+#include <storm/modelchecker/hints/ExplicitModelCheckerHint.h>
+#include <storm/modelchecker/multiobjective/MultiObjectiveModelChecking.h>
+#include <storm/modelchecker/results/CheckResult.h>
+#include <storm/models/symbolic/StandardRewardModel.h>
+#include <storm/utility/graph.h>
+
+#include "src/core/result.h"
 
 template<typename ValueType>
 using CheckTask = storm::modelchecker::CheckTask<storm::logic::Formula, ValueType>;

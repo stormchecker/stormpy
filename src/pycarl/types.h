@@ -1,7 +1,5 @@
 #pragma once
 
-#include "pycarl/definitions.h"
-
 #include <carl/core/FactorizedPolynomial.h>
 #include <carl/core/Monomial.h>
 #include <carl/core/MultivariatePolynomial.h>
@@ -10,10 +8,12 @@
 #include <carl/core/Term.h>
 #include <carl/interval/Interval.h>
 
+#include "pycarl/definitions.h"
+
 #ifdef PYCARL_USE_CLN
-#include "types/cln_types.h"
+#include "src/pycarl/types/cln_types.h"
 #else
-#include "types/gmp_types.h"
+#include "src/pycarl/types/gmp_types.h"
 #endif
 
 typedef carl::Monomial Monomial;

@@ -1,6 +1,6 @@
 #include "formula.h"
 
-#include "common.h"
+#include "src/pycarl/typed_formula/common.h"
 
 void define_formula(py::module& m) {
     py::class_<Formula>(m, "Formula")

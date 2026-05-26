@@ -1,7 +1,8 @@
 #include "relation.h"
-#include "src/pycarl/helpers.h"
 
 #include <carl/core/Relation.h>
+
+#include "src/helpers.h"
 
 void define_relation(py::module& m) {
     py::enum_<carl::Relation>(m, "Relation")

@@ -1,9 +1,10 @@
 #include "pars.h"
-#include "storm-pars/settings/modules/ParametricSettings.h"
-#include "storm-pars/settings/modules/RegionSettings.h"
-#include "storm-pars/transformer/SparseParametricDtmcSimplifier.h"
-#include "storm-pars/transformer/SparseParametricMdpSimplifier.h"
-#include "storm/settings/SettingsManager.h"
+
+#include <storm-pars/settings/modules/ParametricSettings.h>
+#include <storm-pars/settings/modules/RegionSettings.h>
+#include <storm-pars/transformer/SparseParametricDtmcSimplifier.h>
+#include <storm-pars/transformer/SparseParametricMdpSimplifier.h>
+#include <storm/settings/SettingsManager.h>
 
 typedef storm::models::sparse::Dtmc<storm::RationalFunction> Dtmc;
 typedef storm::models::sparse::Mdp<storm::RationalFunction> Mdp;

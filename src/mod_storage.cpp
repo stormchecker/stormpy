@@ -1,25 +1,25 @@
-#include "common.h"
+#include <storm/adapters/IntervalAdapter.h>
+#include <storm/storage/dd/DdType.h>
 
-#include "storage/bitvector.h"
-#include "storage/choiceorigins.h"
-#include "storage/dd.h"
-#include "storage/decomposition.h"
-#include "storage/distribution.h"
-#include "storage/expressions.h"
-#include "storage/geometry.h"
-#include "storage/jani.h"
-#include "storage/labeling.h"
-#include "storage/matrix.h"
-#include "storage/memorystructure.h"
-#include "storage/model.h"
-#include "storage/model_components.h"
-#include "storage/prism.h"
-#include "storage/scheduler.h"
-#include "storage/state.h"
-#include "storage/valuation.h"
-
-#include "storm/adapters/IntervalAdapter.h"
-#include "storm/storage/dd/DdType.h"
+#include "src/common.h"
+#include "src/storage/bitvector.h"
+#include "src/storage/choiceorigins.h"
+#include "src/storage/dd.h"
+#include "src/storage/decomposition.h"
+#include "src/storage/distribution.h"
+#include "src/storage/expressions.h"
+#include "src/storage/geometry.h"
+#include "src/storage/jani.h"
+#include "src/storage/labeling.h"
+#include "src/storage/matrix.h"
+#include "src/storage/memorystructure.h"
+#include "src/storage/model.h"
+#include "src/storage/model_components.h"
+#include "src/storage/prism.h"
+#include "src/storage/scheduler.h"
+#include "src/storage/state.h"
+#include "src/storage/umb.h"
+#include "src/storage/valuation.h"
 
 PYBIND11_MODULE(_storage, m) {
     m.doc() = "Data structures in Storm";
@@ -89,4 +89,5 @@ PYBIND11_MODULE(_storage, m) {
     define_maximal_end_component_decomposition<storm::Interval>(m, "_interval");
     define_maximal_end_component_decomposition<storm::RationalInterval>(m, "_ratinterval");
     define_maximal_end_component_decomposition<storm::RationalFunction>(m, "_ratfunc");
+    define_umb(m);
 }

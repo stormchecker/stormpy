@@ -1,6 +1,6 @@
 #pragma once
 
-#include "common.h"
+#include "src/pomdp/common.h"
 
 void define_transformations_nt(py::module &m);
 template<typename VT>

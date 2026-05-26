@@ -1,9 +1,11 @@
 #include "memorystructure.h"
+
 #include <storm/adapters/IntervalAdapter.h>
 #include <storm/adapters/RationalFunctionAdapter.h>
 #include <storm/storage/memorystructure/MemoryStructure.h>
 #include <storm/storage/memorystructure/MemoryStructureBuilder.h>
 #include <storm/storage/memorystructure/SparseModelMemoryProduct.h>
+#include <storm/storage/memorystructure/SparseModelMemoryProductReverseData.h>
 
 void define_memorystructure_untyped(py::module& m) {
     typedef storm::storage::MemoryStructure MemoryStructure;
@@ -17,6 +19,17 @@ void define_memorystructure_untyped(py::module& m) {
                         [](MemoryStructure& ms, storm::models::sparse::Model<storm::RationalFunction> const& sparseModel) { return ms.product(sparseModel); });
     memoryStructure.def_property_readonly("nr_states", &MemoryStructure::getNumberOfStates);
     memoryStructure.def_property_readonly("state_labeling", &MemoryStructure::getStateLabeling);
+
+    py::class_<storm::storage::SparseModelMemoryProductReverseData> memoryProductReverseData(m, "SparseModelMemoryProductReverseData");
+    memoryProductReverseData.def("_reverse_scheduler_double",
+                                 &storm::storage::SparseModelMemoryProductReverseData::createMemorySchedulerFromProductScheduler<double>,
+                                 py::arg("product_scheduler"));
+    memoryProductReverseData.def("_reverse_scheduler_exact",
+                                 &storm::storage::SparseModelMemoryProductReverseData::createMemorySchedulerFromProductScheduler<storm::RationalNumber>,
+                                 py::arg("product_scheduler"));
+    memoryProductReverseData.def("_reverse_scheduler_parametric",
+                                 &storm::storage::SparseModelMemoryProductReverseData::createMemorySchedulerFromProductScheduler<storm::RationalFunction>,
+                                 py::arg("product_scheduler"));
 }
 
 template<typename VT>

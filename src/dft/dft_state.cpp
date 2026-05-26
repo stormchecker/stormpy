@@ -1,8 +1,10 @@
 #include "dft_state.h"
+
+#include <storm-dft/storage/DFTState.h>
+#include <storm-dft/storage/FailableElements.h>
+#include <storm/adapters/RationalFunctionAdapter.h>
+
 #include "src/helpers.h"
-#include "storm-dft/storage/DFTState.h"
-#include "storm-dft/storage/FailableElements.h"
-#include "storm/adapters/RationalFunctionAdapter.h"
 
 template<typename ValueType>
 using DFTState = storm::dft::storage::DFTState<ValueType>;

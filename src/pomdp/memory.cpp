@@ -1,5 +1,7 @@
 #include "memory.h"
+
 #include <storm-pomdp/storage/PomdpMemory.h>
+
 #include "src/helpers.h"
 
 void define_memory(py::module& m) {

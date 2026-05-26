@@ -1,9 +1,11 @@
 #include "gspn.h"
+
+#include <storm-gspn/storage/gspn/GSPN.h>
+#include <storm-gspn/storage/gspn/GspnBuilder.h>
+#include <storm/io/file.h>
+#include <storm/settings/SettingsManager.h>
+
 #include "src/helpers.h"
-#include "storm-gspn/storage/gspn/GSPN.h"
-#include "storm-gspn/storage/gspn/GspnBuilder.h"
-#include "storm/io/file.h"
-#include "storm/settings/SettingsManager.h"
 
 using GSPN = storm::gspn::GSPN;
 using GSPNBuilder = storm::gspn::GspnBuilder;

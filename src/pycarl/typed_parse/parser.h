@@ -3,6 +3,7 @@
 #include <carl-parser/Parser.h>
 #include <carl/core/MultivariatePolynomial.h>
 #include <string>
+
 #include "src/pycarl/common.h"
 #include "src/pycarl/types.h"
 

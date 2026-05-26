@@ -1,7 +1,9 @@
 #include "dft_elements.h"
+
+#include <storm-dft/storage/elements/DFTElements.h>
+#include <storm/adapters/RationalFunctionAdapter.h>
+
 #include "src/helpers.h"
-#include "storm-dft/storage/elements/DFTElements.h"
-#include "storm/adapters/RationalFunctionAdapter.h"
 
 template<typename ValueType>
 using DFTElement = storm::dft::storage::elements::DFTElement<ValueType>;

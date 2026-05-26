@@ -34,7 +34,9 @@ prism_mdp_coin_2_2 = _path("mdp", "coin2-2.nm")
 prism_mdp_firewire = _path("mdp", "firewire.nm")
 """Prism version for Firewire protocol"""
 prism_mdp_maze = _path("mdp", "maze_2.nm")
-"""Prism version of maze MDP"""
+"""Prism example for the maze MDPs"""
+prism_mdp_maze_multigoal = _path("mdp", "maze_2_multigoal.nm")
+"""Prism example for the maze MDP with multiple goal"""
 prism_mdp_slipgrid = _path("mdp", "slipgrid.nm")
 """Prism version of maze MDP towards sketching"""
 prism_mdp_slipgrid_sketch = _path("mdp", "slipgrid_sketch.nm")

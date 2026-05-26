@@ -1,9 +1,9 @@
 #pragma once
 
-#include "common.h"
+#include <storm/models/sparse/Model.h>
+#include <storm/storage/SparseMatrix.h>
 
-#include "storm/models/sparse/Model.h"
-#include "storm/storage/SparseMatrix.h"
+#include "src/common.h"
 
 // Forward declaration
 template<typename ValueType>

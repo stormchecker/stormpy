@@ -1,6 +1,6 @@
 #pragma once
 
-#include "common.h"
+#include "src/common.h"
 
 void define_maximal_end_components(py::module& m);
 

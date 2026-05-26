@@ -1,8 +1,7 @@
-
-#include "common.h"
-
 #include <carl-parser/Parser.h>
 #include <carl/formula/Formula.h>
+
+#include "src/common.h"
 
 /**
  * The actual module definition

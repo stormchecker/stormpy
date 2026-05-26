@@ -1,6 +1,6 @@
 #include "bound_type.h"
 
-#include "src/pycarl/helpers.h"
+#include "src/helpers.h"
 #include "src/pycarl/types.h"
 
 void define_boundtype(py::module& m) {

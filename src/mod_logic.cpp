@@ -1,6 +1,5 @@
-#include "common.h"
-
-#include "logic/formulae.h"
+#include "src/common.h"
+#include "src/logic/formulae.h"
 
 PYBIND11_MODULE(_logic, m) {
     m.doc() = "Logic module for Storm";

@@ -1,8 +1,9 @@
 #include "smtsolver.h"
+
 #include <storm/solver/SmtSolver.h>
 #include <storm/solver/Z3SmtSolver.h>
+#include <storm/storage/expressions/ExpressionManager.h>
 #include <storm/utility/solver.h>
-#include "storm/storage/expressions/ExpressionManager.h"
 
 void define_smt(py::module& m) {
     using SmtSolver = storm::solver::SmtSolver;

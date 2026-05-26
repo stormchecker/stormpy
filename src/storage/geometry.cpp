@@ -1,5 +1,7 @@
 #include "geometry.h"
+
 #include <storm/storage/geometry/Polytope.h>
+
 #include "src/helpers.h"
 
 template<typename ValueType>

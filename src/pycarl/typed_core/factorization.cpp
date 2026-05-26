@@ -1,6 +1,6 @@
 #include "factorization.h"
 
-#include "src/pycarl/helpers.h"
+#include "src/helpers.h"
 #include "src/pycarl/types.h"
 
 void define_factorizationcache(py::module& m) {

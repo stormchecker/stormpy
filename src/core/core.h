@@ -1,6 +1,6 @@
 #pragma once
 
-#include "common.h"
+#include "src/core/common.h"
 
 void define_core(py::module& m);
 void define_parse(py::module& m);

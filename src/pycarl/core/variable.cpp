@@ -1,10 +1,11 @@
+#include "variable.h"
+
 #include <carl/core/Variable.h>
 #include <carl/core/VariablePool.h>
 #include <string>
 
-#include "src/pycarl/helpers.h"
+#include "src/helpers.h"
 #include "src/pycarl/types.h"
-#include "variable.h"
 
 carl::Variable getOrCreateVariable(std::string const& name, carl::VariableType type) {
     // Variables are constructed by the Pool. Note that for a given name,

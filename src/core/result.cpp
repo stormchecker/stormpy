@@ -1,13 +1,13 @@
 #include "result.h"
-#include "storm/analysis/GraphConditions.h"
-#include "storm/modelchecker/results/ExplicitParetoCurveCheckResult.h"
-#include "storm/modelchecker/results/ExplicitQualitativeCheckResult.h"
-#include "storm/modelchecker/results/ExplicitQuantitativeCheckResult.h"
-#include "storm/modelchecker/results/HybridQuantitativeCheckResult.h"
-#include "storm/modelchecker/results/SymbolicQualitativeCheckResult.h"
-#include "storm/modelchecker/results/SymbolicQuantitativeCheckResult.h"
 
-#include "storm/models/symbolic/StandardRewardModel.h"
+#include <storm/analysis/GraphConditions.h>
+#include <storm/modelchecker/results/ExplicitParetoCurveCheckResult.h>
+#include <storm/modelchecker/results/ExplicitQualitativeCheckResult.h>
+#include <storm/modelchecker/results/ExplicitQuantitativeCheckResult.h>
+#include <storm/modelchecker/results/HybridQuantitativeCheckResult.h>
+#include <storm/modelchecker/results/SymbolicQualitativeCheckResult.h>
+#include <storm/modelchecker/results/SymbolicQuantitativeCheckResult.h>
+#include <storm/models/symbolic/StandardRewardModel.h>
 
 template<typename ValueType>
 std::shared_ptr<storm::modelchecker::QualitativeCheckResult> createFilterInitialStatesSparse(std::shared_ptr<storm::models::sparse::Model<ValueType>> model) {

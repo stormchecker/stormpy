@@ -1,6 +1,8 @@
 #include "dft.h"
+
+#include <storm-dft/storage/DftModule.h>
+
 #include "src/helpers.h"
-#include "storm-dft/storage/DftModule.h"
 
 using DftIndependentModule = storm::dft::storage::DftIndependentModule;
 

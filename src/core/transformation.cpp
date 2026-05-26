@@ -1,11 +1,11 @@
 #include "transformation.h"
 
-#include "storm/adapters/RationalFunctionAdapter.h"
-#include "storm/api/transformation.h"
-#include "storm/models/symbolic/StandardRewardModel.h"
-#include "storm/transformer/AddUncertainty.h"
-#include "storm/transformer/EndComponentEliminator.h"
-#include "storm/transformer/SubsystemBuilder.h"
+#include <storm/adapters/RationalFunctionAdapter.h>
+#include <storm/api/transformation.h>
+#include <storm/models/symbolic/StandardRewardModel.h>
+#include <storm/transformer/AddUncertainty.h>
+#include <storm/transformer/EndComponentEliminator.h>
+#include <storm/transformer/SubsystemBuilder.h>
 
 // Thin wrappers.
 template<typename VT>

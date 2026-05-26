@@ -734,6 +734,22 @@ def construct_submodel(model, states, actions, keep_unreachable_states=True, opt
     return _core._construct_subsystem_Double(model, states, actions, keep_unreachable_states, options)
 
 
+def make_weighted_objective_mdp_model_checker(environment, model, formula, compute_scheduler):
+    """
+
+    :param environment: The environment to configure the model checker
+    :param model: The model that will be evaluated. Can be exact or double.
+    :param formula: The (multiobjective) formula
+    :param compute_scheduler: Whether to produce a scheduler
+    :return: A tuple of a model checker and a mapping that allows mapping the scheduler back to the model as passed into the system as a postprocessing step.
+    """
+    if model.supports_parameters or model.supports_uncertainty:
+        raise ValueError("Parameters and intervals are not supported.")
+    if model.is_exact:
+        return _core._make_weighted_objective_mdp_model_checker_Exact(environment, model, formula, compute_scheduler)
+    return _core._make_weighted_objective_mdp_model_checker_Double(environment, model, formula, compute_scheduler)
+
+
 def eliminate_ECs(matrix, subsystem, possible_ecs, add_sink_row_states, add_self_loop_at_sink_states=False):
     """
     For each such EC (that is not contained in another EC), we add a new state and redirect all incoming and outgoing
@@ -796,3 +812,34 @@ def export_to_drn(model, file, options=DirectEncodingExporterOptions()):
     if model.is_exact:
         return _core._export_exact_to_drn(model, file, options)
     return _core._export_to_drn(model, file, options)
+
+
+def export_to_umb(model, path, options=UmbExportOptions()):
+    """
+    Export a model to a UMB archive.
+
+    :param model: Sparse model to export.
+    :param path: Path to the output UMB archive.
+    :param options: UmbExportOptions controlling value type, compression, etc.
+    """
+    umb = sparse_model_to_umb(model, options)
+    umb_to_archive(umb, path, options)
+
+
+def build_from_umb(path, options=UmbImportOptions()):
+    """
+    Build a sparse model from a UMB archive.
+
+    :param path: Path to the UMB archive.
+    :param options: UmbImportOptions controlling value type and what to build.
+    :return: Sparse model in the concrete typed representation.
+    """
+    umb = import_umb(path, options)
+    intermediate = sparse_model_from_umb(umb, options)
+    if intermediate.is_exact and intermediate.supports_uncertainty:
+        return _convert_sparse_model(intermediate, value_type=_ValueType.EXACT_INTERVAL)
+    if intermediate.is_exact:
+        return _convert_sparse_model(intermediate, value_type=_ValueType.EXACT)
+    if intermediate.supports_uncertainty:
+        return _convert_sparse_model(intermediate, value_type=_ValueType.INTERVAL)
+    return _convert_sparse_model(intermediate, value_type=_ValueType.DOUBLE)

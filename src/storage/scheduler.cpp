@@ -1,9 +1,10 @@
 #include "scheduler.h"
-#include "src/helpers.h"
 
-#include "storm/adapters/IntervalAdapter.h"
-#include "storm/adapters/RationalFunctionAdapter.h"
-#include "storm/storage/Scheduler.h"
+#include <storm/adapters/IntervalAdapter.h>
+#include <storm/adapters/RationalFunctionAdapter.h>
+#include <storm/storage/Scheduler.h>
+
+#include "src/helpers.h"
 
 template<typename ValueType>
 void define_scheduler(py::module& m, std::string vt_suffix) {

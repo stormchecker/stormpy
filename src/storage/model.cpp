@@ -94,13 +94,14 @@ storm::models::sparse::StateLabeling& getLabeling(SparseModel<ValueType>& model)
 // Bindings for general models
 void define_model(py::module& m) {
     // ModelType
-    py::enum_<storm::models::ModelType>(m, "ModelType", "Type of the model")
+    py::native_enum<storm::models::ModelType>(m, "ModelType", "enum.Enum", "Type of the model")
         .value("DTMC", storm::models::ModelType::Dtmc)
         .value("MDP", storm::models::ModelType::Mdp)
         .value("POMDP", storm::models::ModelType::Pomdp)
         .value("CTMC", storm::models::ModelType::Ctmc)
         .value("MA", storm::models::ModelType::MarkovAutomaton)
-        .value("SMG", storm::models::ModelType::Smg);
+        .value("SMG", storm::models::ModelType::Smg)
+        .finalize();
 
     // ModelBase
     py::class_<ModelBase, std::shared_ptr<ModelBase>> modelBase(m, "_ModelBase", "Base class for all models");

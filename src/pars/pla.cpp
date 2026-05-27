@@ -94,7 +94,7 @@ std::set<storm::Polynomial> gatherDerivatives(storm::models::sparse::Model<storm
 // Define python bindings
 void define_pla(py::module& m) {
     // RegionResult
-    py::enum_<storm::modelchecker::RegionResult>(m, "RegionResult", "Types of region check results")
+    py::native_enum<storm::modelchecker::RegionResult>(m, "RegionResult", "enum.Enum", "Types of region check results")
         .value("EXISTSSAT", storm::modelchecker::RegionResult::ExistsSat)
         .value("EXISTSVIOLATED", storm::modelchecker::RegionResult::ExistsViolated)
         .value("EXISTSBOTH", storm::modelchecker::RegionResult::ExistsBoth)
@@ -103,14 +103,16 @@ void define_pla(py::module& m) {
         .value("ALLSAT", storm::modelchecker::RegionResult::AllSat)
         .value("ALLVIOLATED", storm::modelchecker::RegionResult::AllViolated)
         .value("UNKNOWN", storm::modelchecker::RegionResult::Unknown)
-        .def("__str__", &streamToString<storm::modelchecker::RegionResult>, py::prepend() /* use custom method instead of default enum overload */);
+        .def("friendly_name", &streamToString<storm::modelchecker::RegionResult>)
+        .finalize();
 
     // RegionResultHypothesis
-    py::enum_<storm::modelchecker::RegionResultHypothesis>(m, "RegionResultHypothesis", "Hypothesis for the result of a parameter region")
+    py::native_enum<storm::modelchecker::RegionResultHypothesis>(m, "RegionResultHypothesis", "enum.Enum", "Hypothesis for the result of a parameter region")
         .value("UNKNOWN", storm::modelchecker::RegionResultHypothesis::Unknown)
         .value("ALLSAT", storm::modelchecker::RegionResultHypothesis::AllSat)
         .value("ALLVIOLATED", storm::modelchecker::RegionResultHypothesis::AllViolated)
-        .def("__str__", &streamToString<storm::modelchecker::RegionResultHypothesis>, py::prepend() /* use custom method instead of default enum overload */);
+        .def("friendly_name", &streamToString<storm::modelchecker::RegionResultHypothesis>)
+        .finalize();
 
     // Region
     py::class_<Region, std::shared_ptr<Region>>(m, "ParameterRegion", "Parameter region")

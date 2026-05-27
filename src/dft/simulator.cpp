@@ -13,15 +13,17 @@ typedef boost::mt19937 RandomGenerator;
 
 void define_simulator(py::module& m) {
     // Simulation result
-    py::enum_<storm::dft::simulator::SimulationStepResult>(m, "SimulationStepResult")
+    py::native_enum<storm::dft::simulator::SimulationStepResult>(m, "SimulationStepResult", "enum.Enum")
         .value("SUCCESSFUL", storm::dft::simulator::SimulationStepResult::SUCCESSFUL)
         .value("UNSUCCESSFUL", storm::dft::simulator::SimulationStepResult::UNSUCCESSFUL)
-        .value("INVALID", storm::dft::simulator::SimulationStepResult::INVALID);
-    py::enum_<storm::dft::simulator::SimulationTraceResult>(m, "SimulationTraceResult")
+        .value("INVALID", storm::dft::simulator::SimulationStepResult::INVALID)
+        .finalize();
+    py::native_enum<storm::dft::simulator::SimulationTraceResult>(m, "SimulationTraceResult", "enum.Enum")
         .value("SUCCESSFUL", storm::dft::simulator::SimulationTraceResult::SUCCESSFUL)
         .value("UNSUCCESSFUL", storm::dft::simulator::SimulationTraceResult::UNSUCCESSFUL)
         .value("INVALID", storm::dft::simulator::SimulationTraceResult::INVALID)
-        .value("CONTINUE", storm::dft::simulator::SimulationTraceResult::CONTINUE);
+        .value("CONTINUE", storm::dft::simulator::SimulationTraceResult::CONTINUE)
+        .finalize();
     py::class_<DFTStateInfo, std::shared_ptr<DFTStateInfo>>(m, "DFTStateInfo", "State Generation Info for DFT");
 
     py::class_<RandomGenerator, std::shared_ptr<RandomGenerator>>(m, "RandomGenerator", "Random number generator")

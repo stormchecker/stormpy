@@ -13,7 +13,6 @@ import stormpy.examples.files
 
 
 def example_building_models_02():
-
     def make_factorized_rf(var, cache):
         num = pc.FactorizedPolynomial(pc.Polynomial(var), cache)
         denom = pc.FactorizedPolynomial(pc.Rational(1))

@@ -19,10 +19,11 @@ carl::Variable getOrCreateVariable(std::string const& name, carl::VariableType t
 }
 
 void define_variabletype(py::module& m) {
-    py::enum_<carl::VariableType>(m, "VariableType")
+    py::native_enum<carl::VariableType>(m, "VariableType", "enum.Enum")
         .value("BOOL", carl::VariableType::VT_BOOL)
         .value("INT", carl::VariableType::VT_INT)
-        .value("REAL", carl::VariableType::VT_REAL);
+        .value("REAL", carl::VariableType::VT_REAL)
+        .finalize();
 }
 
 void define_variable(py::module& m) {

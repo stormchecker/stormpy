@@ -5,7 +5,7 @@
 void define_formula_type(py::module& m) {
     // Mostly just the operators are useful for Python, but as other values may be returned,
     // all of them are included
-    py::enum_<carl::FormulaType>(m, "FormulaType")
+    py::native_enum<carl::FormulaType>(m, "FormulaType", "enum.Enum")
         .value("ITE", carl::FormulaType::ITE)
         .value("EXISTS", carl::FormulaType::EXISTS)
         .value("FORALL", carl::FormulaType::FORALL)
@@ -20,5 +20,6 @@ void define_formula_type(py::module& m) {
         .value("IFF", carl::FormulaType::IFF)
         .value("CONSTRAINT", carl::FormulaType::CONSTRAINT)
         .value("BITVECTOR", carl::FormulaType::BITVECTOR)
-        .value("UEQ", carl::FormulaType::UEQ);
+        .value("UEQ", carl::FormulaType::UEQ)
+        .finalize();
 }

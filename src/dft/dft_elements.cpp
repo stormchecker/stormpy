@@ -14,7 +14,7 @@ using Dependency = storm::dft::storage::elements::DFTDependency<ValueType>;
 
 void define_dft_elements(py::module& m) {
     // DFT element type
-    py::enum_<storm::dft::storage::elements::DFTElementType>(m, "DFTElementType")
+    py::native_enum<storm::dft::storage::elements::DFTElementType>(m, "DFTElementType", "enum.Enum")
         .value("BE", storm::dft::storage::elements::DFTElementType::BE)
         .value("AND", storm::dft::storage::elements::DFTElementType::AND)
         .value("OR", storm::dft::storage::elements::DFTElementType::OR)
@@ -25,9 +25,8 @@ void define_dft_elements(py::module& m) {
         .value("PDEP", storm::dft::storage::elements::DFTElementType::PDEP)
         .value("SEQ", storm::dft::storage::elements::DFTElementType::SEQ)
         .value("MUTEX", storm::dft::storage::elements::DFTElementType::MUTEX)
-        .def(
-            "__str__", [](storm::dft::storage::elements::DFTElementType type) { return storm::dft::storage::elements::toString(type); },
-            py::prepend() /* use custom method instead of default enum overload */);
+        .def("friendly_name", [](storm::dft::storage::elements::DFTElementType type) { return storm::dft::storage::elements::toString(type); })
+        .finalize();
 }
 
 template<typename ValueType>

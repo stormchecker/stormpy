@@ -7,15 +7,17 @@
 #include <storm/storage/expressions/Variable.h>
 
 void define_formulae(py::module& m) {
-    py::enum_<storm::logic::ComparisonType>(m, "ComparisonType")
+    py::native_enum<storm::logic::ComparisonType>(m, "ComparisonType", "enum.Enum")
         .value("LESS", storm::logic::ComparisonType::Less)
         .value("LEQ", storm::logic::ComparisonType::LessEqual)
         .value("GREATER", storm::logic::ComparisonType::Greater)
-        .value("GEQ", storm::logic::ComparisonType::GreaterEqual);
+        .value("GEQ", storm::logic::ComparisonType::GreaterEqual)
+        .finalize();
 
-    py::enum_<storm::logic::BinaryBooleanOperatorType>(m, "BinaryBooleanOperatorType")
+    py::native_enum<storm::logic::BinaryBooleanOperatorType>(m, "BinaryBooleanOperatorType", "enum.Enum")
         .value("AND", storm::logic::BinaryBooleanOperatorType::And)
-        .value("OR", storm::logic::BinaryBooleanOperatorType::Or);
+        .value("OR", storm::logic::BinaryBooleanOperatorType::Or)
+        .finalize();
 
     py::class_<storm::logic::Formula, std::shared_ptr<storm::logic::Formula>> formula(m, "Formula", "Generic Storm Formula");
     formula.def("__str__", &storm::logic::Formula::toString)

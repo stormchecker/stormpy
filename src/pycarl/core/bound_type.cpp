@@ -4,8 +4,9 @@
 #include "src/pycarl/types.h"
 
 void define_boundtype(py::module& m) {
-    py::enum_<carl::BoundType>(m, "BoundType")
+    py::native_enum<carl::BoundType>(m, "BoundType", "enum.Enum")
         .value("STRICT", carl::BoundType::STRICT)
         .value("WEAK", carl::BoundType::WEAK)
-        .value("INFTY", carl::BoundType::INFTY);
+        .value("INFTY", carl::BoundType::INFTY)
+        .finalize();
 }

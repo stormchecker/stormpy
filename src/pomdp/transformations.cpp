@@ -48,12 +48,13 @@ std::shared_ptr<storm::models::sparse::Mdp<ValueType>> unfold_trace(storm::model
 
 // STANDARD, SIMPLE_LINEAR, SIMPLE_LINEAR_INVERSE, SIMPLE_LOG, FULL
 void define_transformations_nt(py::module &m) {
-    py::enum_<storm::transformer::PomdpFscApplicationMode>(m, "PomdpFscApplicationMode")
+    py::native_enum<storm::transformer::PomdpFscApplicationMode>(m, "PomdpFscApplicationMode", "enum.Enum")
         .value("standard", storm::transformer::PomdpFscApplicationMode::STANDARD)
         .value("simple_linear", storm::transformer::PomdpFscApplicationMode::SIMPLE_LINEAR)
         .value("simple_linear_inverse", storm::transformer::PomdpFscApplicationMode::SIMPLE_LINEAR_INVERSE)
         .value("simple_log", storm::transformer::PomdpFscApplicationMode::SIMPLE_LOG)
-        .value("full", storm::transformer::PomdpFscApplicationMode::FULL);
+        .value("full", storm::transformer::PomdpFscApplicationMode::FULL)
+        .finalize();
     py::class_<storm::pomdp::ObservationTraceUnfolderOptions> options(m, "ObservationTraceUnfolderOptions", "Options for unfolding observation traces");
     options.def(py::init<>());
     options.def_readwrite("restart_semantics", &storm::pomdp::ObservationTraceUnfolderOptions::useRestartSemantics,

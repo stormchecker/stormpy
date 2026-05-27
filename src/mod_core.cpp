@@ -13,7 +13,6 @@
 #include "src/core/simulator.h"
 #include "src/core/transformation.h"
 
-
 PYBIND11_MODULE(_core, m) {
     m.doc() = "core";
 

@@ -34,15 +34,15 @@ struct type_caster<PyFraction> {
 
 #ifdef PYCARL_USE_CLN
 static cln::cl_I pyint_to_cl_I(py::int_ val) {
-    bool negative = val.attr("__lt__")(py::int_(0)).cast<bool>();
-    py::int_ absval = negative ? val.attr("__neg__")().cast<py::int_>() : val;
+    bool negative = PyObject_RichCompareBool(val.ptr(), py::int_(0).ptr(), Py_LT) == 1;
+    py::int_ absval = negative ? py::reinterpret_steal<py::int_>(PyNumber_Negative(val.ptr())) : val;
     int bit_len = absval.attr("bit_length")().cast<int>();
     if (bit_len == 0)
         return cln::cl_I(0);
     std::size_t byte_len = (static_cast<std::size_t>(bit_len) + 7) / 8;
-    std::string raw = absval.attr("to_bytes")(py::int_(byte_len), py::str("big")).cast<std::string>();
+    py::bytes raw = absval.attr("to_bytes")(py::int_(byte_len), py::str("big"));
+    const auto* data = reinterpret_cast<const unsigned char*>(PyBytes_AS_STRING(raw.ptr()));
 
-    const auto* data = reinterpret_cast<const unsigned char*>(raw.data());
     cln::cl_I result(0);
     std::size_t i = 0;
     for (; i + 4 <= byte_len; i += 4) {
@@ -56,15 +56,15 @@ static cln::cl_I pyint_to_cl_I(py::int_ val) {
 #endif
 
 [[maybe_unused]] static mpz_class pyint_to_mpz(py::int_ val) {
-    bool negative = val.attr("__lt__")(py::int_(0)).cast<bool>();
-    py::int_ absval = negative ? val.attr("__neg__")().cast<py::int_>() : val;
+    bool negative = PyObject_RichCompareBool(val.ptr(), py::int_(0).ptr(), Py_LT) == 1;
+    py::int_ absval = negative ? py::reinterpret_steal<py::int_>(PyNumber_Negative(val.ptr())) : val;
     int bit_len = absval.attr("bit_length")().cast<int>();
     if (bit_len == 0)
         return mpz_class(0);
     std::size_t byte_len = (static_cast<std::size_t>(bit_len) + 7) / 8;
-    std::string raw = absval.attr("to_bytes")(py::int_(byte_len), py::str("big")).cast<std::string>();
+    py::bytes raw = absval.attr("to_bytes")(py::int_(byte_len), py::str("big"));
     mpz_class result;
-    mpz_import(result.get_mpz_t(), raw.size(), 1, 1, 0, 0, raw.data());
+    mpz_import(result.get_mpz_t(), static_cast<std::size_t>(PyBytes_GET_SIZE(raw.ptr())), 1, 1, 0, 0, PyBytes_AS_STRING(raw.ptr()));
     if (negative)
         return -result;
     return result;
@@ -88,7 +88,7 @@ void define_cln_rational(py::module& m) {
         .def(py::init([](PyFraction frac) {
             cln::cl_I num = pyint_to_cl_I(frac.obj.attr("numerator").cast<py::int_>());
             cln::cl_I den = pyint_to_cl_I(frac.obj.attr("denominator").cast<py::int_>());
-            return cln::cl_RA(num) / cln::cl_RA(den);
+            return num / den;
         }))
 
         .def("__add__", [](const cln::cl_RA& lhs, const cln::cl_RA& rhs) -> cln::cl_RA { return lhs + rhs; })

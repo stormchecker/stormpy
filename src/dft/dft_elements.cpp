@@ -25,8 +25,8 @@ void define_dft_elements(py::module& m) {
         .value("PDEP", storm::dft::storage::elements::DFTElementType::PDEP)
         .value("SEQ", storm::dft::storage::elements::DFTElementType::SEQ)
         .value("MUTEX", storm::dft::storage::elements::DFTElementType::MUTEX)
-        .def("friendly_name", [](storm::dft::storage::elements::DFTElementType type) { return storm::dft::storage::elements::toString(type); })
-        .finalize();
+        .finalize()
+        .def("friendly_name", [](storm::dft::storage::elements::DFTElementType type) { return storm::dft::storage::elements::toString(type); });
 }
 
 template<typename ValueType>

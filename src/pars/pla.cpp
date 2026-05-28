@@ -103,16 +103,16 @@ void define_pla(py::module& m) {
         .value("ALLSAT", storm::modelchecker::RegionResult::AllSat)
         .value("ALLVIOLATED", storm::modelchecker::RegionResult::AllViolated)
         .value("UNKNOWN", storm::modelchecker::RegionResult::Unknown)
-        .def("friendly_name", &streamToString<storm::modelchecker::RegionResult>)
-        .finalize();
+        .finalize()
+        .def("friendly_name", &streamToString<storm::modelchecker::RegionResult>);
 
     // RegionResultHypothesis
     py::native_enum<storm::modelchecker::RegionResultHypothesis>(m, "RegionResultHypothesis", "enum.Enum", "Hypothesis for the result of a parameter region")
         .value("UNKNOWN", storm::modelchecker::RegionResultHypothesis::Unknown)
         .value("ALLSAT", storm::modelchecker::RegionResultHypothesis::AllSat)
         .value("ALLVIOLATED", storm::modelchecker::RegionResultHypothesis::AllViolated)
-        .def("friendly_name", &streamToString<storm::modelchecker::RegionResultHypothesis>)
-        .finalize();
+        .finalize()
+        .def("friendly_name", &streamToString<storm::modelchecker::RegionResultHypothesis>);
 
     // Region
     py::class_<Region, std::shared_ptr<Region>>(m, "ParameterRegion", "Parameter region")

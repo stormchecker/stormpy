@@ -66,7 +66,7 @@ static cln::cl_I pyint_to_cl_I(py::int_ val) {
     mpz_class result;
     mpz_import(result.get_mpz_t(), raw.size(), 1, 1, 0, 0, raw.data());
     if (negative)
-        mpz_neg(result.get_mpz_t(), result.get_mpz_t());
+        return -result;
     return result;
 }
 

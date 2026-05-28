@@ -98,7 +98,7 @@ class TestRational(PackageSelector):
         assert package.denominator(r) == package.Integer(str(d))
 
         # cross-check: round-trip via float for a simple fraction
-        assert abs(float(package.Rational(fractions.Fraction(1, 3))) - 1/3) < 1e-15
+        assert abs(float(package.Rational(fractions.Fraction(1, 3))) - 1 / 3) < 1e-15
 
     def test_comparison_infinity(self, package):
         r4 = package.Rational("1/2")

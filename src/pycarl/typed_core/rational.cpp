@@ -15,7 +15,7 @@ struct PyFraction {
 
 namespace pybind11 {
 namespace detail {
-template <>
+template<>
 struct type_caster<PyFraction> {
     PYBIND11_TYPE_CASTER(PyFraction, const_name("fractions.Fraction"));
     bool load(handle src, bool) {
@@ -37,7 +37,8 @@ static cln::cl_I pyint_to_cl_I(py::int_ val) {
     bool negative = val.attr("__lt__")(py::int_(0)).cast<bool>();
     py::int_ absval = negative ? val.attr("__neg__")().cast<py::int_>() : val;
     int bit_len = absval.attr("bit_length")().cast<int>();
-    if (bit_len == 0) return cln::cl_I(0);
+    if (bit_len == 0)
+        return cln::cl_I(0);
     std::size_t byte_len = (static_cast<std::size_t>(bit_len) + 7) / 8;
     std::string raw = absval.attr("to_bytes")(py::int_(byte_len), py::str("big")).cast<std::string>();
 
@@ -45,12 +46,10 @@ static cln::cl_I pyint_to_cl_I(py::int_ val) {
     cln::cl_I result(0);
     std::size_t i = 0;
     for (; i + 4 <= byte_len; i += 4) {
-        uint32_t chunk = ((uint32_t)data[i] << 24) | ((uint32_t)data[i + 1] << 16) | ((uint32_t)data[i + 2] << 8) |
-                         (uint32_t)data[i + 3];
+        uint32_t chunk = ((uint32_t)data[i] << 24) | ((uint32_t)data[i + 1] << 16) | ((uint32_t)data[i + 2] << 8) | (uint32_t)data[i + 3];
         result = cln::ash(result, 32) + cln::cl_I((unsigned int)chunk);
     }
-    for (; i < byte_len; i++)
-        result = cln::ash(result, 8) + cln::cl_I((unsigned int)data[i]);
+    for (; i < byte_len; i++) result = cln::ash(result, 8) + cln::cl_I((unsigned int)data[i]);
 
     return negative ? -result : result;
 }
@@ -60,12 +59,14 @@ static cln::cl_I pyint_to_cl_I(py::int_ val) {
     bool negative = val.attr("__lt__")(py::int_(0)).cast<bool>();
     py::int_ absval = negative ? val.attr("__neg__")().cast<py::int_>() : val;
     int bit_len = absval.attr("bit_length")().cast<int>();
-    if (bit_len == 0) return mpz_class(0);
+    if (bit_len == 0)
+        return mpz_class(0);
     std::size_t byte_len = (static_cast<std::size_t>(bit_len) + 7) / 8;
     std::string raw = absval.attr("to_bytes")(py::int_(byte_len), py::str("big")).cast<std::string>();
     mpz_class result;
     mpz_import(result.get_mpz_t(), raw.size(), 1, 1, 0, 0, raw.data());
-    if (negative) mpz_neg(result.get_mpz_t(), result.get_mpz_t());
+    if (negative)
+        mpz_neg(result.get_mpz_t(), result.get_mpz_t());
     return result;
 }
 

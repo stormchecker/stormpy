@@ -4,7 +4,6 @@ import pytest
 
 
 class TestMemoryStructure:
-
     def _build_memory_structure(self, model, goalstates):
         builder = stormpy.storage.MemoryStructureBuilder(2, model, False)
         builder.set_transition(0, 0, ~goalstates)

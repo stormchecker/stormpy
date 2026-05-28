@@ -1,3 +1,5 @@
+#include <storm/adapters/IntervalAdapter.h>
+
 #include "src/common.h"
 #include "src/core/analysis.h"
 #include "src/core/bisimulation.h"
@@ -45,6 +47,8 @@ PYBIND11_MODULE(_core, m) {
     define_transformation_typed<double>(m, "Double");
     define_transformation_typed<storm::RationalNumber>(m, "Exact");
     define_transformation_typed<storm::RationalFunction>(m, "RatFunc");
+    define_transformation_typed<storm::Interval>(m, "Interval");
+    define_transformation_typed<storm::RationalInterval>(m, "RationalInterval");
     define_transformation_typed_only_numbers<double>(m, "Double");
     define_transformation_typed_only_numbers<storm::RationalNumber>(m, "Exact");
     define_sparse_model_simulator<double>(m, "Double");

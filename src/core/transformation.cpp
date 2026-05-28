@@ -64,19 +64,6 @@ void define_transformation(py::module& m) {
           py::arg("ma"), py::arg("formulae"), py::arg("label_behavior"));
     m.def("_eliminate_non_markovian_chains_parametric", &storm::api::eliminateNonMarkovianChains<storm::RationalFunction>,
           "Eliminate chains of non-Markovian states in Markov automaton.", py::arg("ma"), py::arg("formulae"), py::arg("label_behavior"));
-
-    py::class_<storm::transformer::EndComponentEliminator<double>::EndComponentEliminatorReturnType>(m, "EndComponentEliminatorReturnTypeDouble",
-                                                                                                     "Container for result of endcomponent elimination")
-        .def_readonly("matrix", &storm::transformer::EndComponentEliminator<double>::EndComponentEliminatorReturnType::matrix, "The resulting matrix")
-        .def_readonly("new_to_old_row_mapping", &storm::transformer::EndComponentEliminator<double>::EndComponentEliminatorReturnType::newToOldRowMapping,
-                      "Index mapping that gives for each row fo the new matrix the corresponding row in the original matrix")
-        .def_readonly("old_to_new_state_mapping", &storm::transformer::EndComponentEliminator<double>::EndComponentEliminatorReturnType::oldToNewStateMapping,
-                      "For each state of the original matrix (and subsystem) the corresponding state in the result. Removed states are mapped to the EC.")
-        .def_readonly("sink_rows", &storm::transformer::EndComponentEliminator<double>::EndComponentEliminatorReturnType::sinkRows,
-                      "Rows that indicate staying in the EC forever");
-
-    m.def("_eliminate_end_components_double", &eliminateECs<double>, "Eliminate ECs in the subystem", py::arg("matrix"), py::arg("subsystem"),
-          py::arg("possible_ec_rows"), py::arg("addSinkRowStates"), py::arg("addSelfLoopAtSinkStates"));
 }
 
 template<typename ValueType>
@@ -93,6 +80,19 @@ void define_transformation_typed(py::module& m, std::string const& vtSuffix) {
         .def_readonly("deadlock_label", &storm::transformer::SubsystemBuilderReturnType<ValueType>::deadlockLabel,
                       "If set, deadlock states have been introduced and have been assigned this label");
     m.def(("_construct_subsystem_" + vtSuffix).c_str(), &constructSubsystem<ValueType>, "build a subsystem of a sparse model");
+
+    py::class_<typename storm::transformer::EndComponentEliminator<ValueType>::EndComponentEliminatorReturnType>(
+        m, ("EndComponentEliminatorReturnType" + vtSuffix).c_str(), "Container for result of endcomponent elimination")
+        .def_readonly("matrix", &storm::transformer::EndComponentEliminator<ValueType>::EndComponentEliminatorReturnType::matrix, "The resulting matrix")
+        .def_readonly("new_to_old_row_mapping", &storm::transformer::EndComponentEliminator<ValueType>::EndComponentEliminatorReturnType::newToOldRowMapping,
+                      "Index mapping that gives for each row of the new matrix the corresponding row in the original matrix")
+        .def_readonly("old_to_new_state_mapping",
+                      &storm::transformer::EndComponentEliminator<ValueType>::EndComponentEliminatorReturnType::oldToNewStateMapping,
+                      "For each state of the original matrix (and subsystem) the corresponding state in the result. Removed states are mapped to the EC.")
+        .def_readonly("sink_rows", &storm::transformer::EndComponentEliminator<ValueType>::EndComponentEliminatorReturnType::sinkRows,
+                      "Rows that indicate staying in the EC forever");
+    m.def(("_eliminate_end_components_" + vtSuffix).c_str(), &eliminateECs<ValueType>, "Eliminate ECs in the subsystem", py::arg("matrix"),
+          py::arg("subsystem"), py::arg("possible_ec_rows"), py::arg("addSinkRowStates"), py::arg("addSelfLoopAtSinkStates"));
 }
 
 template<typename ValueType>
@@ -107,6 +107,8 @@ void define_transformation_typed_only_numbers(py::module& m, std::string const& 
 template void define_transformation_typed<double>(py::module& m, std::string const& vtSuffix);
 template void define_transformation_typed<storm::RationalNumber>(py::module& m, std::string const& vtSuffix);
 template void define_transformation_typed<storm::RationalFunction>(py::module& m, std::string const& vtSuffix);
+template void define_transformation_typed<storm::Interval>(py::module& m, std::string const& vtSuffix);
+template void define_transformation_typed<storm::RationalInterval>(py::module& m, std::string const& vtSuffix);
 
 template void define_transformation_typed_only_numbers<double>(py::module& m, std::string const& vtSuffix);
 template void define_transformation_typed_only_numbers<storm::RationalNumber>(py::module& m, std::string const& vtSuffix);

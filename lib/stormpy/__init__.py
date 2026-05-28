@@ -729,6 +729,10 @@ def construct_submodel(model, states, actions, keep_unreachable_states=True, opt
     """
     if model.supports_parameters:
         return _core._construct_subsystem_RatFunc(model, states, actions, keep_unreachable_states, options)
+    if model.supports_uncertainty:
+        if model.is_exact:
+            return _core._construct_subsystem_RationalInterval(model, states, actions, keep_unreachable_states, options)
+        return _core._construct_subsystem_Interval(model, states, actions, keep_unreachable_states, options)
     if model.is_exact:
         return _core._construct_subsystem_Exact(model, states, actions, keep_unreachable_states, options)
     return _core._construct_subsystem_Double(model, states, actions, keep_unreachable_states, options)
@@ -769,7 +773,16 @@ def eliminate_ECs(matrix, subsystem, possible_ecs, add_sink_row_states, add_self
     assert matrix.nr_rows == possible_ecs.size(), "possible_ecs vector should have an entry for every row."
     assert matrix.nr_columns == add_sink_row_states.size(), "add_sink_row_states vector should have an entry for every state."
 
-    return _core._eliminate_end_components_double(matrix, subsystem, possible_ecs, add_sink_row_states, add_self_loop_at_sink_states)
+    if isinstance(matrix, storage.RationalIntervalSparseMatrix):
+        return _core._eliminate_end_components_RationalInterval(matrix, subsystem, possible_ecs, add_sink_row_states, add_self_loop_at_sink_states)
+    elif isinstance(matrix, storage.IntervalSparseMatrix):
+        return _core._eliminate_end_components_Interval(matrix, subsystem, possible_ecs, add_sink_row_states, add_self_loop_at_sink_states)
+    elif isinstance(matrix, storage.ExactSparseMatrix):
+        return _core._eliminate_end_components_Exact(matrix, subsystem, possible_ecs, add_sink_row_states, add_self_loop_at_sink_states)
+    elif isinstance(matrix, storage.SparseMatrix):
+        return _core._eliminate_end_components_Double(matrix, subsystem, possible_ecs, add_sink_row_states, add_self_loop_at_sink_states)
+    else:
+        raise TypeError(f"eliminate_ECs: unsupported matrix type {type(matrix)}")
 
 
 def parse_properties(properties, context=None, filters=None):

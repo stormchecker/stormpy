@@ -12,6 +12,7 @@ void define_relation(py::module& m) {
         .value("LEQ", carl::Relation::LEQ)
         .value("GREATER", carl::Relation::GREATER)
         .value("GEQ", carl::Relation::GEQ)
-        .finalize()
-        .def("friendly_name", &streamToString<carl::Relation>);
+        .finalize();
+    m.attr("Relation").attr("friendly_name") = py::cpp_function(
+        streamToString<carl::Relation>, py::name("friendly_name"), py::is_method(m.attr("Relation")));
 }

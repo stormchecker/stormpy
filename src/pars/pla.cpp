@@ -103,16 +103,22 @@ void define_pla(py::module& m) {
         .value("ALLSAT", storm::modelchecker::RegionResult::AllSat)
         .value("ALLVIOLATED", storm::modelchecker::RegionResult::AllViolated)
         .value("UNKNOWN", storm::modelchecker::RegionResult::Unknown)
-        .finalize()
-        .def("friendly_name", &streamToString<storm::modelchecker::RegionResult>);
+        .finalize();
+    m.attr("RegionResult").attr("friendly_name") = py::cpp_function(
+        &streamToString<storm::modelchecker::RegionResult>,
+        py::name("friendly_name"),
+        py::is_method(m.attr("RegionResult")));
 
     // RegionResultHypothesis
     py::native_enum<storm::modelchecker::RegionResultHypothesis>(m, "RegionResultHypothesis", "enum.Enum", "Hypothesis for the result of a parameter region")
         .value("UNKNOWN", storm::modelchecker::RegionResultHypothesis::Unknown)
         .value("ALLSAT", storm::modelchecker::RegionResultHypothesis::AllSat)
         .value("ALLVIOLATED", storm::modelchecker::RegionResultHypothesis::AllViolated)
-        .finalize()
-        .def("friendly_name", &streamToString<storm::modelchecker::RegionResultHypothesis>);
+        .finalize();
+    m.attr("RegionResultHypothesis").attr("friendly_name") = py::cpp_function(
+        &streamToString<storm::modelchecker::RegionResultHypothesis>,
+        py::name("friendly_name"),
+        py::is_method(m.attr("RegionResultHypothesis")));
 
     // Region
     py::class_<Region, std::shared_ptr<Region>>(m, "ParameterRegion", "Parameter region")

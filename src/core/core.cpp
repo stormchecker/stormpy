@@ -220,16 +220,18 @@ void define_build(py::module& m) {
 }
 
 void define_optimality_type(py::module& m) {
-    py::enum_<storm::solver::OptimizationDirection>(m, "OptimizationDirection")
+    py::native_enum<storm::solver::OptimizationDirection>(m, "OptimizationDirection", "enum.Enum")
         .value("Minimize", storm::solver::OptimizationDirection::Minimize)
-        .value("Maximize", storm::solver::OptimizationDirection::Maximize);
+        .value("Maximize", storm::solver::OptimizationDirection::Maximize)
+        .finalize();
 
-    py::enum_<storm::solver::UncertaintyResolutionMode>(m, "UncertaintyResolutionMode")
+    py::native_enum<storm::solver::UncertaintyResolutionMode>(m, "UncertaintyResolutionMode", "enum.Enum")
         .value("MINIMIZE", storm::solver::UncertaintyResolutionMode::Minimize)
         .value("MAXIMIZE", storm::solver::UncertaintyResolutionMode::Maximize)
         .value("ROBUST", storm::solver::UncertaintyResolutionMode::Robust)
         .value("COOPERATIVE", storm::solver::UncertaintyResolutionMode::Cooperative)
-        .value("UNSET", storm::solver::UncertaintyResolutionMode::Unset);
+        .value("UNSET", storm::solver::UncertaintyResolutionMode::Unset)
+        .finalize();
 }
 
 // Thin wrapper for exporting model

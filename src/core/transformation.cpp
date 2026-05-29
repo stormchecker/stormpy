@@ -53,10 +53,12 @@ void define_transformation(py::module& m) {
         .def_readwrite("fix_deadlocks", &storm::transformer::SubsystemBuilderOptions::fixDeadlocks);
 
     // Non-Markovian chain elimination
-    py::enum_<storm::transformer::EliminationLabelBehavior>(m, "EliminationLabelBehavior", "Behavior of labels while eliminating non-Markovian chains")
+    py::native_enum<storm::transformer::EliminationLabelBehavior>(m, "EliminationLabelBehavior", "enum.Enum",
+                                                                  "Behavior of labels while eliminating non-Markovian chains")
         .value("KEEP_LABELS", storm::transformer::EliminationLabelBehavior::KeepLabels)
         .value("MERGE_LABELS", storm::transformer::EliminationLabelBehavior::MergeLabels)
-        .value("DELETE_LABELS", storm::transformer::EliminationLabelBehavior::DeleteLabels);
+        .value("DELETE_LABELS", storm::transformer::EliminationLabelBehavior::DeleteLabels)
+        .finalize();
 
     m.def("_eliminate_non_markovian_chains", &storm::api::eliminateNonMarkovianChains<double>, "Eliminate chains of non-Markovian states in Markov automaton.",
           py::arg("ma"), py::arg("formulae"), py::arg("label_behavior"));

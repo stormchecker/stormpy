@@ -35,10 +35,11 @@ std::shared_ptr<storm::models::sparse::Model<ValueType>> buildModel(storm::dft::
 
 // Define python bindings
 void define_analysis(py::module& m) {
-    py::enum_<storm::dft::builder::ApproximationHeuristic>(m, "ApproximationHeuristic", "Heuristic for selecting states to explore next")
+    py::native_enum<storm::dft::builder::ApproximationHeuristic>(m, "ApproximationHeuristic", "enum.Enum", "Heuristic for selecting states to explore next")
         .value("DEPTH", storm::dft::builder::ApproximationHeuristic::DEPTH)
         .value("PROBABILITY", storm::dft::builder::ApproximationHeuristic::PROBABILITY)
-        .value("BOUNDDIFFERENCE", storm::dft::builder::ApproximationHeuristic::BOUNDDIFFERENCE);
+        .value("BOUNDDIFFERENCE", storm::dft::builder::ApproximationHeuristic::BOUNDDIFFERENCE)
+        .finalize();
 
     // RelevantEvents
     py::class_<storm::dft::utility::RelevantEvents, std::shared_ptr<storm::dft::utility::RelevantEvents>>(m, "RelevantEvents",

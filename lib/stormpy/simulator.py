@@ -179,7 +179,6 @@ class SparseSimulator(Simulator):
         return self._report_result()
 
     def step(self, action=None):
-
         if action is None:
             if self._model.is_nondeterministic_model and self.nr_available_actions() > 1:
                 raise RuntimeError("Must specify an action in nondeterministic models.")

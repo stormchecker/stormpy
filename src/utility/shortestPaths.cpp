@@ -39,7 +39,10 @@ void define_ksp(py::module& m) {
         .def_readwrite("predecessorK", &Path::predecessorK)
         .def_readwrite("distance", &Path::distance);
 
-    py::enum_<MatrixFormat>(m, "MatrixFormat").value("Straight", MatrixFormat::straight).value("I_Minus_P", MatrixFormat::iMinusP);
+    py::native_enum<MatrixFormat>(m, "MatrixFormat", "enum.Enum")
+        .value("Straight", MatrixFormat::straight)
+        .value("I_Minus_P", MatrixFormat::iMinusP)
+        .finalize();
 
     py::class_<ShortestPathsGenerator>(m, "ShortestPathsGenerator")
         .def(py::init<Model const&, BitVector>(), "model"_a, "target_bitvector"_a)

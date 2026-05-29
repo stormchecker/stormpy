@@ -22,7 +22,6 @@ def example_parametric_models_04():
         for action in state.actions:
             for transition in action.transitions:
                 if len(transition.value().gather_variables()) > 0:
-
                     new_var = pycarl.Variable("p{}".format(i))
                     i += 1
                     new_pol = stormpy.Polynomial(new_var)

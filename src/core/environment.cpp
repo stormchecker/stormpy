@@ -14,15 +14,16 @@
 #include "src/helpers.h"
 
 void define_environment(py::module& m) {
-    py::enum_<storm::solver::EquationSolverType>(m, "EquationSolverType", "Solver type for equation systems")
+    py::native_enum<storm::solver::EquationSolverType>(m, "EquationSolverType", "enum.Enum", "Solver type for equation systems")
         .value("native", storm::solver::EquationSolverType::Native)
         .value("eigen", storm::solver::EquationSolverType::Eigen)
         .value("elimination", storm::solver::EquationSolverType::Elimination)
         .value("gmmxx", storm::solver::EquationSolverType::Gmmxx)
-        .value("topological", storm::solver::EquationSolverType::Topological);
+        .value("topological", storm::solver::EquationSolverType::Topological)
+        .finalize();
 
-    py::enum_<storm::solver::NativeLinearEquationSolverMethod>(m, "NativeLinearEquationSolverMethod",
-                                                               "Method for linear equation systems with the native solver")
+    py::native_enum<storm::solver::NativeLinearEquationSolverMethod>(m, "NativeLinearEquationSolverMethod", "enum.Enum",
+                                                                     "Method for linear equation systems with the native solver")
         .value("power_iteration", storm::solver::NativeLinearEquationSolverMethod::Power)
         .value("sound_value_iteration", storm::solver::NativeLinearEquationSolverMethod::SoundValueIteration)
         .value("optimistic_value_iteration", storm::solver::NativeLinearEquationSolverMethod::OptimisticValueIteration)
@@ -31,9 +32,10 @@ void define_environment(py::module& m) {
         .value("jacobi", storm::solver::NativeLinearEquationSolverMethod::Jacobi)
         .value("SOR", storm::solver::NativeLinearEquationSolverMethod::SOR)
         .value("gauss_seidel", storm::solver::NativeLinearEquationSolverMethod::GaussSeidel)
-        .value("walker_chae", storm::solver::NativeLinearEquationSolverMethod::WalkerChae);
+        .value("walker_chae", storm::solver::NativeLinearEquationSolverMethod::WalkerChae)
+        .finalize();
 
-    py::enum_<storm::solver::MinMaxMethod>(m, "MinMaxMethod", "Method for min-max equation systems")
+    py::native_enum<storm::solver::MinMaxMethod>(m, "MinMaxMethod", "enum.Enum", "Method for min-max equation systems")
         .value("policy_iteration", storm::solver::MinMaxMethod::PolicyIteration)
         .value("value_iteration", storm::solver::MinMaxMethod::ValueIteration)
         .value("linear_programming", storm::solver::MinMaxMethod::LinearProgramming)
@@ -41,44 +43,53 @@ void define_environment(py::module& m) {
         .value("rational_search", storm::solver::MinMaxMethod::RationalSearch)
         .value("interval_iteration", storm::solver::MinMaxMethod::IntervalIteration)
         .value("sound_value_iteration", storm::solver::MinMaxMethod::SoundValueIteration)
-        .value("optimistic_value_iteration", storm::solver::MinMaxMethod::OptimisticValueIteration);
+        .value("optimistic_value_iteration", storm::solver::MinMaxMethod::OptimisticValueIteration)
+        .finalize();
 
     // Multi-objective related enums
-    py::enum_<storm::modelchecker::multiobjective::MultiObjectiveMethod>(m, "MultiObjectiveMethod", "Multi-objective model checking method")
+    py::native_enum<storm::modelchecker::multiobjective::MultiObjectiveMethod>(m, "MultiObjectiveMethod", "enum.Enum", "Multi-objective model checking method")
         .value("pcaa", storm::modelchecker::multiobjective::MultiObjectiveMethod::Pcaa)
-        .value("constraint_based", storm::modelchecker::multiobjective::MultiObjectiveMethod::ConstraintBased);
+        .value("constraint_based", storm::modelchecker::multiobjective::MultiObjectiveMethod::ConstraintBased)
+        .finalize();
 
     // Added enums for model checker environment
-    py::enum_<storm::SteadyStateDistributionAlgorithm>(m, "SteadyStateDistributionAlgorithm", "Algorithm for steady state distribution computation")
+    py::native_enum<storm::SteadyStateDistributionAlgorithm>(m, "SteadyStateDistributionAlgorithm", "enum.Enum",
+                                                             "Algorithm for steady state distribution computation")
         .value("automatic", storm::SteadyStateDistributionAlgorithm::Automatic)
         .value("equation_system", storm::SteadyStateDistributionAlgorithm::EquationSystem)
         .value("expected_visiting_times", storm::SteadyStateDistributionAlgorithm::ExpectedVisitingTimes)
-        .value("classic", storm::SteadyStateDistributionAlgorithm::Classic);
+        .value("classic", storm::SteadyStateDistributionAlgorithm::Classic)
+        .finalize();
 
-    py::enum_<storm::ConditionalAlgorithmSetting>(m, "ConditionalAlgorithmSetting", "Algorithm used for conditional model checking")
+    py::native_enum<storm::ConditionalAlgorithmSetting>(m, "ConditionalAlgorithmSetting", "enum.Enum", "Algorithm used for conditional model checking")
         .value("default", storm::ConditionalAlgorithmSetting::Default)
         .value("restart", storm::ConditionalAlgorithmSetting::Restart)
         .value("bisection", storm::ConditionalAlgorithmSetting::Bisection)
         .value("bisection_advanced", storm::ConditionalAlgorithmSetting::BisectionAdvanced)
         .value("bisection_pt", storm::ConditionalAlgorithmSetting::BisectionPolicyTracking)
         .value("bisection_advanced_pt", storm::ConditionalAlgorithmSetting::BisectionAdvancedPolicyTracking)
-        .value("policy_iteration", storm::ConditionalAlgorithmSetting::PolicyIteration);
+        .value("policy_iteration", storm::ConditionalAlgorithmSetting::PolicyIteration)
+        .finalize();
 
-    py::enum_<storm::MultiObjectiveModelCheckerEnvironment::PrecisionType>(m, "MultiObjectivePrecisionType",
-                                                                           "Type of precision for multi-objective model checking")
+    py::native_enum<storm::MultiObjectiveModelCheckerEnvironment::PrecisionType>(m, "MultiObjectivePrecisionType", "enum.Enum",
+                                                                                 "Type of precision for multi-objective model checking")
         .value("absolute", storm::MultiObjectiveModelCheckerEnvironment::PrecisionType::Absolute)
-        .value("relative_to_diff", storm::MultiObjectiveModelCheckerEnvironment::PrecisionType::RelativeToDiff);
+        .value("relative_to_diff", storm::MultiObjectiveModelCheckerEnvironment::PrecisionType::RelativeToDiff)
+        .finalize();
 
-    py::enum_<storm::MultiObjectiveModelCheckerEnvironment::EncodingType>(m, "MultiObjectiveEncodingType", "Encoding type for multi-objective model checking")
+    py::native_enum<storm::MultiObjectiveModelCheckerEnvironment::EncodingType>(m, "MultiObjectiveEncodingType", "enum.Enum",
+                                                                                "Encoding type for multi-objective model checking")
         .value("auto", storm::MultiObjectiveModelCheckerEnvironment::EncodingType::Auto)
         .value("classic", storm::MultiObjectiveModelCheckerEnvironment::EncodingType::Classic)
-        .value("flow", storm::MultiObjectiveModelCheckerEnvironment::EncodingType::Flow);
+        .value("flow", storm::MultiObjectiveModelCheckerEnvironment::EncodingType::Flow)
+        .finalize();
 
     // Scheduler class bindings (needed for scheduler restriction)
-    py::enum_<storm::storage::SchedulerClass::MemoryPattern>(m, "SchedulerMemoryPattern", "Memory pattern of a scheduler")
+    py::native_enum<storm::storage::SchedulerClass::MemoryPattern>(m, "SchedulerMemoryPattern", "enum.Enum", "Memory pattern of a scheduler")
         .value("arbitrary", storm::storage::SchedulerClass::MemoryPattern::Arbitrary)
         .value("goal_memory", storm::storage::SchedulerClass::MemoryPattern::GoalMemory)
-        .value("counter", storm::storage::SchedulerClass::MemoryPattern::Counter);
+        .value("counter", storm::storage::SchedulerClass::MemoryPattern::Counter)
+        .finalize();
 
     py::class_<storm::storage::SchedulerClass>(m, "SchedulerClass", "Scheduler class restriction")
         .def(py::init<>())

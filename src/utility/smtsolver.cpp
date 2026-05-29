@@ -10,10 +10,11 @@ void define_smt(py::module& m) {
     using Z3SmtSolver = storm::solver::Z3SmtSolver;
     using ModelReference = storm::solver::SmtSolver::ModelReference;
 
-    py::enum_<SmtSolver::CheckResult>(m, "SmtCheckResult", "Result type")
+    py::native_enum<SmtSolver::CheckResult>(m, "SmtCheckResult", "enum.Enum", "Result type")
         .value("Sat", SmtSolver::CheckResult::Sat)
         .value("Unsat", SmtSolver::CheckResult::Unsat)
-        .value("Unknown", SmtSolver::CheckResult::Unknown);
+        .value("Unknown", SmtSolver::CheckResult::Unknown)
+        .finalize();
 
     py::class_<ModelReference, std::shared_ptr<ModelReference>> modelref(m, "ModelReference", "Lightweight Wrapper around results");
     modelref.def("get_boolean_value", &ModelReference::getBooleanValue, "get a value for a boolean variable", py::arg("variable"))

@@ -142,14 +142,15 @@ void define_prism(py::module& m) {
     label.def_property_readonly("expression", &Label::getStatePredicateExpression);
 
     // PrismType
-    py::enum_<storm::prism::Program::ModelType>(m, "PrismModelType", "Type of the prism model")
+    py::native_enum<storm::prism::Program::ModelType>(m, "PrismModelType", "enum.Enum", "Type of the prism model")
         .value("DTMC", storm::prism::Program::ModelType::DTMC)
         .value("CTMC", storm::prism::Program::ModelType::CTMC)
         .value("MDP", storm::prism::Program::ModelType::MDP)
         .value("CTMDP", storm::prism::Program::ModelType::CTMDP)
         .value("MA", storm::prism::Program::ModelType::MA)
         .value("POMDP", storm::prism::Program::ModelType::POMDP)
-        .value("UNDEFINED", storm::prism::Program::ModelType::UNDEFINED);
+        .value("UNDEFINED", storm::prism::Program::ModelType::UNDEFINED)
+        .finalize();
 
     py::class_<Constant, std::shared_ptr<Constant>> constant(m, "PrismConstant", "A constant in a Prism program");
     constant.def_property_readonly("name", &Constant::getName, "Constant name")

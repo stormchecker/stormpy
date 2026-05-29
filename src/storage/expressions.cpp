@@ -52,7 +52,7 @@ void define_expressions(py::module& m) {
         .def("__eq__", &storm::expressions::Variable::operator==)
         .def("__hash__", &storm::expressions::Variable::getIndex);
 
-    py::enum_<storm::expressions::OperatorType>(m, "OperatorType", "Type of an operator (of any sort)")
+    py::native_enum<storm::expressions::OperatorType>(m, "OperatorType", "enum.Enum", "Type of an operator (of any sort)")
         .value("And", storm::expressions::OperatorType::And)
         .value("Or", storm::expressions::OperatorType::Or)
         .value("Xor", storm::expressions::OperatorType::Xor)
@@ -75,7 +75,8 @@ void define_expressions(py::module& m) {
         .value("Not", storm::expressions::OperatorType::Not)
         .value("Floor", storm::expressions::OperatorType::Floor)
         .value("Ceil", storm::expressions::OperatorType::Ceil)
-        .value("Ite", storm::expressions::OperatorType::Ite);
+        .value("Ite", storm::expressions::OperatorType::Ite)
+        .finalize();
 
     // Expression
     py::class_<storm::expressions::Expression, std::shared_ptr<storm::expressions::Expression>> expression(m, "Expression", "Holds an expression");

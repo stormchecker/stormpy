@@ -24,12 +24,14 @@ void define_bisimulation(py::module& m) {
           "Perform bisimulation on parametric model", py::arg("model"), py::arg("formulas"), py::arg("bisimulation_type"), py::arg("quotient_format"));
 
     // BisimulationType
-    py::enum_<storm::storage::BisimulationType>(m, "BisimulationType", "Types of bisimulation")
+    py::native_enum<storm::storage::BisimulationType>(m, "BisimulationType", "enum.Enum", "Types of bisimulation")
         .value("STRONG", storm::storage::BisimulationType::Strong)
-        .value("WEAK", storm::storage::BisimulationType::Weak);
+        .value("WEAK", storm::storage::BisimulationType::Weak)
+        .finalize();
 
     // QuotientFormat
-    py::enum_<storm::dd::bisimulation::QuotientFormat>(m, "QuotientFormat", "Return format of bisimulation quotient")
+    py::native_enum<storm::dd::bisimulation::QuotientFormat>(m, "QuotientFormat", "enum.Enum", "Return format of bisimulation quotient")
         .value("SPARSE", storm::dd::bisimulation::QuotientFormat::Sparse)
-        .value("DD", storm::dd::bisimulation::QuotientFormat::Dd);
+        .value("DD", storm::dd::bisimulation::QuotientFormat::Dd)
+        .finalize();
 }

@@ -8,10 +8,14 @@ from configurations import pars
 @pars
 class TestPLA:
     def test_to_string(self):
-        assert str(stormpy.pars.RegionResultHypothesis.UNKNOWN) == "Unknown"
-        assert str(stormpy.pars.RegionResultHypothesis.ALLSAT) == "AllSat?"
-        assert str(stormpy.pars.RegionResult.EXISTSVIOLATED) == "ExistsViolated"
-        assert str(stormpy.pars.RegionResult.ALLSAT) == "AllSat"
+        assert stormpy.pars.RegionResultHypothesis.UNKNOWN.friendly_name() == "Unknown"
+        assert stormpy.pars.RegionResultHypothesis.ALLSAT.friendly_name() == "AllSat?"
+        assert stormpy.pars.RegionResult.EXISTSVIOLATED.friendly_name() == "ExistsViolated"
+        assert stormpy.pars.RegionResult.ALLSAT.friendly_name() == "AllSat"
+
+    def test_name(self):
+        assert stormpy.pars.RegionResult.ALLSAT.name == "ALLSAT"
+        assert stormpy.pars.RegionResultHypothesis.ALLSAT.name == "ALLSAT"
 
     def test_pla(self):
         program = stormpy.parse_prism_program(get_example_path("pdtmc", "brp16_2.pm"))

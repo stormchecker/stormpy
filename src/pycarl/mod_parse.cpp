@@ -13,7 +13,7 @@ PYBIND11_MODULE(_parse, m) {
     // Constraint relies on Rational
     m.import("stormpy.pycarl");
 
-    py::enum_<carlparser::ParserReturnType>(m, "_ParserReturnType")
+    py::native_enum<carlparser::ParserReturnType>(m, "_ParserReturnType", "enum.Enum")
         .value("Rational", carlparser::ParserReturnType::Rational)
         .value("Variable", carlparser::ParserReturnType::Variable)
         .value("Monomial", carlparser::ParserReturnType::Monomial)
@@ -21,5 +21,6 @@ PYBIND11_MODULE(_parse, m) {
         .value("Polynomial", carlparser::ParserReturnType::Polynomial)
         .value("RationalFunction", carlparser::ParserReturnType::RationalFunction)
         .value("Constraint", carlparser::ParserReturnType::Constraint)
-        .value("Formula", carlparser::ParserReturnType::Formula);
+        .value("Formula", carlparser::ParserReturnType::Formula)
+        .finalize();
 }

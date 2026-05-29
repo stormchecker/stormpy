@@ -57,7 +57,7 @@ void define_input(py::module& m) {
         "Preprocess symoblic input", py::arg("symbolic_model_description"), py::arg("properties"), py::arg("constant_definition_string"));
 
     // JaniType
-    py::enum_<storm::jani::ModelType>(m, "JaniModelType", "Type of the Jani model")
+    py::native_enum<storm::jani::ModelType>(m, "JaniModelType", "enum.Enum", "Type of the Jani model")
         .value("DTMC", storm::jani::ModelType::DTMC)
         .value("CTMC", storm::jani::ModelType::CTMC)
         .value("MDP", storm::jani::ModelType::MDP)
@@ -70,7 +70,8 @@ void define_input(py::module& m) {
         .value("HA", storm::jani::ModelType::HA)
         .value("PHA", storm::jani::ModelType::PHA)
         .value("SHA", storm::jani::ModelType::SHA)
-        .value("UNDEFINED", storm::jani::ModelType::UNDEFINED);
+        .value("UNDEFINED", storm::jani::ModelType::UNDEFINED)
+        .finalize();
 
     // SymbolicModelDescription
     py::class_<storm::storage::SymbolicModelDescription>(m, "SymbolicModelDescription", "Symbolic description of model")

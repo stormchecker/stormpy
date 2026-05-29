@@ -4,6 +4,17 @@ Changelog
 Version 1.13.x
 --------------
 
+### Version 1.13.1 (2026/05)
+Requires Storm version >= 1.13.0.
+
+- Support for weighted objective model checking and reversing the obtained scheduler to a scheduler on the original model
+- Added bindings for importing and exporting the [UMB](https://pmc-tools.github.io/umb/spec) format
+- Support transformations for subsystems and ECs with exact/interval transitions
+- Support for creating Storm rational numbers from `fractions.Fraction`
+- Developer: formatted C++ code via clang-format
+- Developer: migrated from `py::enum_` to `py::native_enum`, the string representation is provided via `friendly_name()`
+- Developer: made includes consistent
+
 ### Version 1.13.0 (2026/05)
 Requires Storm version >= 1.13.0.
 

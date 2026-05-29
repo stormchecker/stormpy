@@ -66,40 +66,6 @@ jobs:
       storm_tag: stable
     secrets: inherit
 
-  update_binder:
-    # Update stormpy version in Binder images
-    needs: [deploy_docker, deploy_docker_stable]
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-    steps:
-      - name: Git clone
-        uses: actions/checkout@v6
-        with:
-          repository: stormchecker/stormpy
-          ref: master
-      - name: Update Binder version
-        run: |
-          sed -i -E 's/stormpy==(.+)/stormpy==${{ github.event.release.tag_name }}/' binder/requirements.txt
-      - name: Commit update
-        run: |
-          git diff
-          git config user.name 'Stormchecker bot'
-          git config user.email 'dev@stormchecker.org'
-          git commit -am "Bump stormpy version for Binder image"
-      - name: Create Pull Request
-        id: cpr
-        uses: peter-evans/create-pull-request@v8
-        with:
-          branch: ci/update-binder
-          delete-branch: true
-          title: 'Bump stormpy version for Binder image'
-          body: |
-            Auto-generated pull request triggered by a new stormpy version.
-            - Manually close and reopen this PR to trigger the CI.
-            Consider also updating the tag of the base image quay.io/jupyter/minimal-notebook
-
   create_wheels:
     # Create pypi package
     needs: [env_storm_version, deploy_docker, deploy_docker_stable]

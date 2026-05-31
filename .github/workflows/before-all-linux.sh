@@ -6,7 +6,7 @@ set -e -u
 
 ginac_version=1.8.10
 
-dnf install -y boost-devel cln-devel gmp-devel glpk-devel hwloc-devel z3-devel xerces-c-devel eigen3-devel # missing ginac
+dnf install -y boost-devel cln-devel glpk-devel gmp-devel hwloc-devel libarchive-devel xerces-c-devel z3-devel eigen3-devel # missing ginac-devel
 
 cd /tmp
 

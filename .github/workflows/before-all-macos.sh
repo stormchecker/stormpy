@@ -4,7 +4,7 @@
 
 set -e -u
 
-brew install ccache automake boost cln ginac glpk hwloc z3 xerces-c
+brew install ccache automake boost cln ginac glpk gmp hwloc libarchive xerces-c z3
 
 # Install Storm
 git clone https://github.com/stormchecker/storm.git -b ${STORM_VERSION}

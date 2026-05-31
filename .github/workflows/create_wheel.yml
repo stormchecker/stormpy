@@ -19,6 +19,17 @@ on:
         required: true
         type: boolean
         default: false
+      repo:
+        description: 'Repository to build from (owner/name)'
+        required: false
+        type: string
+        default: ''
+      ref:
+        description: 'Git ref (branch/tag/commit)'
+        required: false
+        type: string
+        default: ''
+
   # needed to trigger the workflow manually
   workflow_dispatch:
     inputs:
@@ -37,6 +48,16 @@ on:
         required: true
         type: boolean
         default: false
+      repo:
+        description: 'Repository to build from (owner/name)'
+        required: false
+        type: string
+        default: ''
+      ref:
+        description: 'Git ref (branch/tag/commit)'
+        required: false
+        type: string
+        default: ''
 
 jobs:
   build_wheels:
@@ -67,10 +88,15 @@ jobs:
             deploy_target: 14.0
       fail-fast: false
     steps:
-      - name: Git clone
+      - name: Git clone (default current repo)
+        if: ${{ inputs.repo == '' }}
+        uses: actions/checkout@v6
+      - name: Git clone (custom repo)
+        if: ${{ inputs.repo != '' }}
         uses: actions/checkout@v6
         with:
-          repository: stormchecker/stormpy
+          repository: ${{ inputs.repo }}
+          ref: ${{ inputs.ref }}
       - uses: maxim-lobanov/setup-xcode@v1
         if: ${{ matrix.xcode != '' }}
         with:
@@ -105,10 +131,15 @@ jobs:
     name: Build source distribution
     runs-on: ubuntu-latest
     steps:
-      - name: Git clone
+      - name: Git clone (default current repo)
+        if: ${{ inputs.repo == '' }}
+        uses: actions/checkout@v6
+      - name: Git clone (custom repo)
+        if: ${{ inputs.repo != '' }}
         uses: actions/checkout@v6
         with:
-          repository: stormchecker/stormpy
+          repository: ${{ inputs.repo }}
+          ref: ${{ inputs.ref }}
       - name: Prepare version
         run: perl -i -pe 's/__version__ = "[^"]+"/__version__ = "'"${{ inputs.version }}"'"/' lib/stormpy/_version.py
       - name: Build sdist
@@ -151,10 +182,19 @@ jobs:
           pattern: stormpy-wheels-${{ matrix.arch.name }}
           path: dist
           merge-multiple: true
-      - name: Checkout test files
+      - name: Checkout test files (default current repo)
+        if: ${{ inputs.repo == '' }}
         uses: actions/checkout@v6
         with:
-          repository: stormchecker/stormpy
+          path: dist/test_files
+          sparse-checkout: |
+            tests
+      - name: Checkout test files (custom repo)
+        if: ${{ inputs.repo != '' }}
+        uses: actions/checkout@v6
+        with:
+          repository: ${{ inputs.repo }}
+          ref: ${{ inputs.ref }}
           path: dist/test_files
           sparse-checkout: |
             tests
@@ -250,10 +290,19 @@ jobs:
           python3 -m venv venv
           source venv/bin/activate
           python3 -m pip install "$WHEEL"
-      - name: Checkout test files
+      - name: Checkout test files (default current repo)
+        if: ${{ inputs.repo == '' }}
         uses: actions/checkout@v6
         with:
-          repository: stormchecker/stormpy
+          path: dist/test_files
+          sparse-checkout: |
+            tests
+      - name: Checkout test files (custom repo)
+        if: ${{ inputs.repo != '' }}
+        uses: actions/checkout@v6
+        with:
+          repository: ${{ inputs.repo }}
+          ref: ${{ inputs.ref }}
           path: dist/test_files
           sparse-checkout: |
             tests

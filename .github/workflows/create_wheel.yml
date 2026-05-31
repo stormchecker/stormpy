@@ -154,8 +154,6 @@ jobs:
     name: Test wheel on ${{ matrix.distro }} and ${{ matrix.arch.name }}
     needs: [build_wheels]
     runs-on: ${{ matrix.arch.runner }}
-    # Allow failure for development version because not all runners have the latest Python versions
-    continue-on-error: ${{ inputs.dev_version }}
     strategy:
       fail-fast: false
       matrix:
@@ -243,8 +241,6 @@ jobs:
     name: Test wheel on ${{ matrix.distro.name }}
     needs: [build_wheels]
     runs-on: ${{ matrix.distro.distro }}
-    # Allow failure for development version because not all runners have the latest Python version
-    continue-on-error: ${{ inputs.dev_version }}
     strategy:
       fail-fast: false
       matrix:

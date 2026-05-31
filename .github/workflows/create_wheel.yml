@@ -63,7 +63,7 @@ jobs:
             deploy_target: 15.0
           - os: macos-arm
             runs-on: macos-14 # macos-14+ (including latest) are ARM64 runners
-            xcode: latest-stable
+            xcode: 15.4
             deploy_target: 14.0
       fail-fast: false
     steps:

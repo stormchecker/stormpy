@@ -4,6 +4,11 @@ Changelog
 Version 1.13.x
 --------------
 
+### Version 1.13.2 (2026/06)
+Requires Storm version >= 1.13.0.
+
+- Developer: Fixes in CI builds of Python wheels
+
 ### Version 1.13.1 (2026/05)
 Requires Storm version >= 1.13.0.
 

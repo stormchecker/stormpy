@@ -32,6 +32,16 @@ def storm_development_version() -> bool:
     return _config.STORM_DEVELOPER_VERSION
 
 
+def storm_build_type() -> str:
+    """
+    Get the build type of stormpy (e.g. Release, Debug).
+
+    :return: Build type string
+    :rtype: str
+    """
+    return _config.STORM_BUILD_TYPE
+
+
 def storm_origin_info() -> [str | None, str | None]:
     """
     Information about the source of Storm: the repo path, the repo tag and commit hash.

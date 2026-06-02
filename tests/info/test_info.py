@@ -11,6 +11,10 @@ class TestInfo:
         assert stormpy.info.storm_version() in stormpy.info.Version.short
         assert (stormpy.info.Version.development and stormpy.info.Version.short.endswith(" (dev)")) or not stormpy.info.Version.development
 
+    def test_build_type(self):
+        bt = stormpy.info.storm_build_type()
+        assert bt in ("Debug", "Release")
+
     def test_origin_info(self):
         repo, tag, h = stormpy.info.storm_origin_info()
         assert repo is None or isinstance(repo, str)

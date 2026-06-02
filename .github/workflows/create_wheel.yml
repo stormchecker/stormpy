@@ -14,8 +14,8 @@ on:
         required: true
         type: string
         default: 'x.y.z'
-      dev_version:
-        description: 'Whether to build a development version for only selected Python versions'
+      full_build:
+        description: 'Build for all Python versions (if false, 3.13 and 3.14 only)'
         required: true
         type: boolean
         default: false
@@ -48,8 +48,8 @@ on:
         required: true
         type: string
         default: 'x.y.z'
-      dev_version:
-        description: 'Whether to build a development version for only selected Python versions'
+      full_build:
+        description: 'Build for all Python versions (if false, 3.13 and 3.14 only)'
         required: true
         type: boolean
         default: false
@@ -114,7 +114,7 @@ jobs:
       - name: Prepare version
         run: perl -i -pe 's/__version__ = "[^"]+"/__version__ = "'"${{ inputs.version }}"'"/' lib/stormpy/_version.py
       - name: Build wheels (development)
-        if: ${{ inputs.dev_version }}
+        if: ${{ !inputs.full_build }}
         uses: pypa/cibuildwheel@v3.4.1
         env:
           CIBW_PLATFORM: ${{ matrix.platform }}
@@ -128,7 +128,7 @@ jobs:
             NR_JOBS=4
             CMAKE_BUILD_TYPE=${{ inputs.build_type }}
       - name: Build wheels (stable)
-        if: ${{ !inputs.dev_version }}
+        if: ${{ inputs.full_build }}
         uses: pypa/cibuildwheel@v3.4.1
         env:
           CIBW_PLATFORM: ${{ matrix.platform }}

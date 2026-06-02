@@ -73,7 +73,7 @@ jobs:
     with:
       storm_version: ${{ needs.env_storm_version.outputs.storm_version }}
       version: ${{ github.event.release.tag_name }}
-      dev_version: false
+      full_build: true
       build_type: Release
     secrets: inherit
 

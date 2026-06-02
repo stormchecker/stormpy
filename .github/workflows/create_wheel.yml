@@ -141,7 +141,7 @@ jobs:
             CMAKE_BUILD_TYPE=${{ inputs.build_type }}
       - uses: actions/upload-artifact@v7
         with:
-          name: stormpy-wheels-${{ matrix.os }}
+          name: stormpy-wheels-${{ matrix.os }}-${{ inputs.build_type }}
           path: ./wheelhouse/*.whl
 
 
@@ -195,7 +195,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v8
         with:
-          pattern: stormpy-wheels-${{ matrix.arch.name }}
+          pattern: stormpy-wheels-${{ matrix.arch.name }}-${{ inputs.build_type }}
           path: dist
           merge-multiple: true
       - name: Checkout test files (default current repo)
@@ -284,7 +284,7 @@ jobs:
           xcode-version: ${{ matrix.distro.xcode }}
       - uses: actions/download-artifact@v8
         with:
-          pattern: stormpy-wheels-${{ matrix.distro.os }}
+          pattern: stormpy-wheels-${{ matrix.distro.os }}-${{ inputs.build_type }}
           path: dist
           merge-multiple: true
       - name: Install from wheel

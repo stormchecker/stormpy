@@ -24,7 +24,7 @@ git clone https://github.com/stormchecker/storm.git -b ${STORM_VERSION}
 cd storm
 mkdir build
 cd build
-cmake .. -DSTORM_BUILD_TESTS=OFF -DSTORM_BUILD_EXECUTABLES=OFF -DSTORM_PORTABLE=ON
+cmake .. -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE:-Release} -DSTORM_BUILD_TESTS=OFF -DSTORM_BUILD_EXECUTABLES=OFF -DSTORM_PORTABLE=ON
 make -j ${NR_JOBS}
 make install
 cd ..

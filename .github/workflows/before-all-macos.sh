@@ -11,7 +11,7 @@ git clone https://github.com/stormchecker/storm.git -b ${STORM_VERSION}
 cd storm
 mkdir build
 cd build
-cmake .. -DSTORM_BUILD_TESTS=OFF -DSTORM_BUILD_EXECUTABLES=OFF -DSTORM_PORTABLE=ON
+cmake .. -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE:-Release} -DSTORM_BUILD_TESTS=OFF -DSTORM_BUILD_EXECUTABLES=OFF -DSTORM_PORTABLE=ON
 make -j ${NR_JOBS}
 sudo chown runner:admin /usr/local/ # Permission differ in macOS 14, see https://github.com/actions/runner-images/issues/9272
 make install

@@ -9,13 +9,13 @@ from configurations import pars
 class TestPLA:
     def test_to_string(self):
         assert stormpy.pars.RegionResultHypothesis.UNKNOWN.friendly_name() == "Unknown"
-        assert stormpy.pars.RegionResultHypothesis.ALLSAT.friendly_name() == "AllSat?"
-        assert stormpy.pars.RegionResult.EXISTSVIOLATED.friendly_name() == "ExistsViolated"
-        assert stormpy.pars.RegionResult.ALLSAT.friendly_name() == "AllSat"
+        assert stormpy.pars.RegionResultHypothesis.ALL_SAT.friendly_name() == "AllSat?"
+        assert stormpy.pars.RegionResult.EXISTS_VIOLATED.friendly_name() == "ExistsViolated"
+        assert stormpy.pars.RegionResult.ALL_SAT.friendly_name() == "AllSat"
 
     def test_name(self):
-        assert stormpy.pars.RegionResult.ALLSAT.name == "ALLSAT"
-        assert stormpy.pars.RegionResultHypothesis.ALLSAT.name == "ALLSAT"
+        assert stormpy.pars.RegionResult.ALL_SAT.name == "ALL_SAT"
+        assert stormpy.pars.RegionResultHypothesis.ALL_SAT.name == "ALL_SAT"
 
     def test_pla(self):
         program = stormpy.parse_prism_program(get_example_path("pdtmc", "brp16_2.pm"))
@@ -32,13 +32,13 @@ class TestPLA:
         assert len(parameters) == 2
         region = stormpy.pars.ParameterRegion.create_from_string("0.7<=pL<=0.9,0.75<=pK<=0.95", parameters)
         result = checker.check_region(env, region)
-        assert result == stormpy.pars.RegionResult.ALLSAT
+        assert result == stormpy.pars.RegionResult.ALL_SAT
         region = stormpy.pars.ParameterRegion.create_from_string("0.4<=pL<=0.65,0.75<=pK<=0.95", parameters)
         result = checker.check_region(env, region, stormpy.pars.RegionResultHypothesis.UNKNOWN, True)
-        assert result == stormpy.pars.RegionResult.EXISTSBOTH
+        assert result == stormpy.pars.RegionResult.EXISTS_BOTH
         region = stormpy.pars.ParameterRegion.create_from_string("0.1<=pL<=0.73,0.2<=pK<=0.715", parameters)
         result = checker.check_region(env, region)
-        assert result == stormpy.pars.RegionResult.ALLVIOLATED
+        assert result == stormpy.pars.RegionResult.ALL_VIOLATED
 
     def test_pla_region_valuation(self):
         program = stormpy.parse_prism_program(get_example_path("pdtmc", "brp16_2.pm"))
@@ -65,16 +65,16 @@ class TestPLA:
         region_valuation[pK] = (stormpy.RationalRF(0.75), stormpy.RationalRF(0.95))
         region = stormpy.pars.ParameterRegion(region_valuation)
         result = checker.check_region(env, region)
-        assert result == stormpy.pars.RegionResult.ALLSAT
+        assert result == stormpy.pars.RegionResult.ALL_SAT
         region_valuation[pL] = (stormpy.RationalRF(0.4), stormpy.RationalRF(0.65))
         region = stormpy.pars.ParameterRegion(region_valuation)
         result = checker.check_region(env, region, stormpy.pars.RegionResultHypothesis.UNKNOWN, True)
-        assert result == stormpy.pars.RegionResult.EXISTSBOTH
+        assert result == stormpy.pars.RegionResult.EXISTS_BOTH
         region_valuation[pK] = (stormpy.RationalRF(0.2), stormpy.RationalRF(0.715))
         region_valuation[pL] = (stormpy.RationalRF(0.1), stormpy.RationalRF(0.73))
         region = stormpy.pars.ParameterRegion(region_valuation)
         result = checker.check_region(env, region)
-        assert result == stormpy.pars.RegionResult.ALLVIOLATED
+        assert result == stormpy.pars.RegionResult.ALL_VIOLATED
 
     def test_pla_bounds(self):
         program = stormpy.parse_prism_program(get_example_path("pdtmc", "brp16_2.pm"))
@@ -152,7 +152,7 @@ class TestPLA:
 
         refinement_checker = stormpy.pars.create_region_refinement_checker(env, model, formulas[0].raw_formula)
         precision = stormpy.RationalRF(1e-6)
-        value, point = refinement_checker.compute_extremum(env, region, stormpy.OptimizationDirection.Maximize, precision, False)
+        value, point = refinement_checker.compute_extremum(env, region, stormpy.OptimizationDirection.MAXIMIZE, precision, False)
         assert isinstance(value, stormpy.RationalRF)
         assert isinstance(point, dict)
         assert len(point) == 2

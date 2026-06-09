@@ -33,11 +33,11 @@ def example_pomdps_01():
     # # construct the memory for the FSC
     # # in this case, a selective counter with two states
     # memory_builder = stormpy.pomdp.PomdpMemoryBuilder()
-    # memory = memory_builder.build(stormpy.pomdp.PomdpMemoryPattern.selective_counter, 2)
+    # memory = memory_builder.build(stormpy.pomdp.PomdpMemoryPattern.SELECTIVE_COUNTER, 2)
     # # apply the memory onto the POMDP to get the cartesian product
     # pomdp = stormpy.pomdp.unfold_memory(pomdp, memory)
     # # apply the memory onto the POMDP to get the cartesian product
-    # pmc = stormpy.pomdp.apply_unknown_fsc(pomdp, stormpy.pomdp.PomdpFscApplicationMode.simple_linear)
+    # pmc = stormpy.pomdp.apply_unknown_fsc(pomdp, stormpy.pomdp.PomdpFscApplicationMode.SIMPLE_LINEAR)
 
     ####
     # How to apply an unknown FSC to obtain a pMC from a pPOMDP
@@ -57,13 +57,13 @@ def example_pomdps_01():
     # construct the memory for the FSC
     # in this case, a selective counter with two states
     memory_builder = stormpy.pomdp.PomdpMemoryBuilder()
-    memory = memory_builder.build(stormpy.pomdp.PomdpMemoryPattern.selective_counter, 3)
+    memory = memory_builder.build(stormpy.pomdp.PomdpMemoryPattern.SELECTIVE_COUNTER, 3)
     # apply the memory onto the POMDP to get the cartesian product
     pomdp = stormpy.pomdp.unfold_memory(pomdp, memory, add_memory_labels=True, keep_state_valuations=True)
     # make the POMDP simple. This step is optional but often beneficial
     pomdp = stormpy.pomdp.make_simple(pomdp, keep_state_valuations=True)
     # apply the unknown FSC to obtain a pmc from the POMDP
-    pmc = stormpy.pomdp.apply_unknown_fsc(pomdp, stormpy.pomdp.PomdpFscApplicationMode.simple_linear)
+    pmc = stormpy.pomdp.apply_unknown_fsc(pomdp, stormpy.pomdp.PomdpFscApplicationMode.SIMPLE_LINEAR)
 
     export_pmc = False  # Set to True to export the pMC as drn.
     if export_pmc:

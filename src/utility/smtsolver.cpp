@@ -11,9 +11,9 @@ void define_smt(py::module& m) {
     using ModelReference = storm::solver::SmtSolver::ModelReference;
 
     py::native_enum<SmtSolver::CheckResult>(m, "SmtCheckResult", "enum.Enum", "Result type")
-        .value("Sat", SmtSolver::CheckResult::Sat)
-        .value("Unsat", SmtSolver::CheckResult::Unsat)
-        .value("Unknown", SmtSolver::CheckResult::Unknown)
+        .value("SAT", SmtSolver::CheckResult::Sat)
+        .value("UNSAT", SmtSolver::CheckResult::Unsat)
+        .value("UNKNOWN", SmtSolver::CheckResult::Unknown)
         .finalize();
 
     py::classh<ModelReference> modelref(m, "ModelReference", "Lightweight Wrapper around results");

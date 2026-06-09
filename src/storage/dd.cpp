@@ -46,9 +46,9 @@ void define_dd_typed(py::module& m, std::string const& libstring, std::string co
 
 void define_dd_nt(py::module& m) {
     py::native_enum<storm::dd::MetaVariableType>(m, "DdMetaVariableType", "enum.Enum")
-        .value("Int", storm::dd::MetaVariableType::Int)
-        .value("Bool", storm::dd::MetaVariableType::Bool)
-        .value("Bitvector", storm::dd::MetaVariableType::BitVector)
+        .value("INT", storm::dd::MetaVariableType::Int)
+        .value("BOOL", storm::dd::MetaVariableType::Bool)
+        .value("BITVECTOR", storm::dd::MetaVariableType::BitVector)
         .finalize();
 }
 

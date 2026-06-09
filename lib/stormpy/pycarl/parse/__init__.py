@@ -1,50 +1,28 @@
-from stormpy.pycarl import _config
+import os
+from lark import Lark, UnexpectedInput
+
+from stormpy.pycarl.parse.transformer import CarlParserTransformer
 
 if not _config.CARL_WITH_PARSER:
     raise ImportError("Parser is not available in the configured carl library! Did you configure carl with '-DBUILD_ADDONS=ON -DBUILD_ADDON_PARSER=ON'?")
 
-from . import _parse
-from ._parse import *
+
+_grammar_path = os.path.join(os.path.dirname(__file__), "lark_grammar.lark")
+_parser = Lark.open(_grammar_path, parser="earley", lexer="dynamic", transformer=None)
 
 
 class ParserError(Exception):
-    """
-    Error which is meant to be raised when the parser throws an error.
-    """
-
     def __init__(self, message):
         self.message = message
 
 
 def deserialize(input, package):
-    """
-
-    :param input:
-    :return:
-    """
-    error = None
     try:
-        res = package.parse._parse._deserialize(input)
-    except RuntimeError as e:
-        error = str(e)
-    # ugly save and rethrow yields improved error messages in pytest.
-    if error:
-        raise ParserError(error + " when parsing '" + input + "'")
-    res_type = res.get_type()
-    if res_type == _parse._ParserReturnType.Rational:
-        return res.as_rational()
-    elif res_type == _parse._ParserReturnType.Variable:
-        return res.as_variable()
-    elif res_type == _parse._ParserReturnType.Monomial:
-        return res.as_monomial()
-    elif res_type == _parse._ParserReturnType.Term:
-        return res.as_term()
-    elif res_type == _parse._ParserReturnType.Polynomial:
-        return res.as_polynomial()
-    elif res_type == _parse._ParserReturnType.RationalFunction:
-        return res.as_rational_function()
-    elif res_type == _parse._ParserReturnType.Constraint:
-        return res.as_constraint()
-    elif res_type == _parse._ParserReturnType.Formula:
-        return res.as_formula()
-    assert False, "Internal error."
+        tree = _parser.parse(input)
+        transformer = CarlParserTransformer(package)
+        return transformer.transform(tree)
+    except UnexpectedInput as e:
+        raise ParserError(str(e) + " when parsing '" + input + "'")
+    except Exception as e:
+        msg = str(e) if str(e) else type(e).__name__
+        raise ParserError(msg + " when parsing '" + input + "'")

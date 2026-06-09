@@ -1,0 +1,40 @@
+// Lark grammar for the carl-storm serialization format.
+// Based on Serialization.g4 from carl-parser
+start: carl_expr
+
+carl_expr: formula_nary | formula_unary | constraint
+          | arith_nary | arith_unary | bool_value | number | real_variable
+
+form_expr: formula_nary | formula_unary | constraint | bool_value | bool_variable
+
+formula_nary: "(" FORMULA_NARY_OP form_expr+ ")"
+FORMULA_NARY_OP: "and" | "or" | "=" | "xor" | "=>" | "ite"
+
+formula_unary: "(" FORMULA_UNARY_OP form_expr ")"
+FORMULA_UNARY_OP: "not"
+
+constraint: "(" CONSTRAINT_OP arith_expr arith_expr ")"
+CONSTRAINT_OP: "=" | "<" | "<=" | ">" | ">=" | "!="
+
+?arith_expr: arith_nary | arith_unary | number | real_variable
+
+arith_nary: "(" ARITH_NARY_OP arith_expr arith_expr+ ")"
+ARITH_NARY_OP: "+" | "-" | "*" | "/"
+
+arith_unary: "(" ARITH_UNARY_OP arith_expr ")"
+ARITH_UNARY_OP: "+" | "-"
+
+bool_value: BOOL_VALUE
+BOOL_VALUE: "true" | "false"
+number: NUMERAL | DECIMAL | HEXADECIMAL | BINARY
+real_variable: SYMBOL
+bool_variable: SYMBOL
+
+NUMERAL: "0" | /-?[1-9][0-9]*/
+DECIMAL: NUMERAL "." /[0-9]+/
+HEXADECIMAL: /#x[0-9A-Fa-f]+/
+BINARY: /#b[01]+/
+
+SYMBOL: /[a-zA-Z~!@$%^&*_\-+=<>.?\/][a-zA-Z0-9~!@$%^&*_\-+=<>.?\/]*/
+
+%ignore /\s+/

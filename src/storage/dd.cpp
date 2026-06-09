@@ -9,7 +9,7 @@
 #include "src/helpers.h"
 
 template<storm::dd::DdType DdType>
-void define_dd(py::module& m, std::string const& libstring) {
+py::class_<storm::dd::Dd<DdType>> define_dd(py::module& m, std::string const& libstring) {
     py::class_<storm::dd::DdMetaVariable<DdType>> ddMetaVariable(m, (std::string("DdMetaVariable_") + libstring).c_str());
     ddMetaVariable.def("compute_indices", &storm::dd::DdMetaVariable<DdType>::getIndices, py::arg("sorted") = true);
     ddMetaVariable.def_property_readonly("name", &storm::dd::DdMetaVariable<DdType>::getName);
@@ -30,13 +30,19 @@ void define_dd(py::module& m, std::string const& libstring) {
     py::class_<storm::dd::Bdd<DdType>> bdd(m, (std::string("Bdd_") + libstring).c_str(), "Bdd", dd);
     bdd.def("to_expression", &storm::dd::Bdd<DdType>::toExpression, py::arg("expression_manager"));
 
-    py::class_<storm::dd::Add<DdType, double>> add(m, (std::string("Add_") + libstring + "_Double").c_str(), "Add", dd);
+    return dd;
+}
+
+template<storm::dd::DdType DdType, typename ValueType>
+void define_dd_typed(py::module& m, std::string const& libstring, std::string const& valueSuffix,
+                     py::class_<storm::dd::Dd<DdType>> const& dd) {
+    py::class_<storm::dd::Add<DdType, ValueType>> add(m, (std::string("Add_") + libstring + valueSuffix).c_str(), "Add", dd);
     add.def(
-        "__iter__", [](const storm::dd::Add<DdType, double>& s) { return py::make_iterator(s.begin(), s.end()); },
+        "__iter__", [](const storm::dd::Add<DdType, ValueType>& s) { return py::make_iterator(s.begin(), s.end()); },
         py::keep_alive<0, 1>() /* Essential: keep object alive while iterator exists */);
 
-    py::class_<storm::dd::AddIterator<DdType, double>> addIterator(m, (std::string("AddIterator_") + libstring + "_Double").c_str(), "AddIterator");
-    addIterator.def("get", [](const storm::dd::AddIterator<DdType, double>& it) { return *it; });
+    py::class_<storm::dd::AddIterator<DdType, ValueType>> addIterator(m, (std::string("AddIterator_") + libstring + valueSuffix).c_str(), "AddIterator");
+    addIterator.def("get", [](const storm::dd::AddIterator<DdType, ValueType>& it) { return *it; });
 }
 
 void define_dd_nt(py::module& m) {
@@ -47,4 +53,6 @@ void define_dd_nt(py::module& m) {
         .finalize();
 }
 
-template void define_dd<storm::dd::DdType::Sylvan>(py::module& m, std::string const& libstring);
+template py::class_<storm::dd::Dd<storm::dd::DdType::Sylvan>> define_dd<storm::dd::DdType::Sylvan>(py::module& m, std::string const& libstring);
+template void define_dd_typed<storm::dd::DdType::Sylvan, double>(py::module&, std::string const&, std::string const&,
+                                                                   py::class_<storm::dd::Dd<storm::dd::DdType::Sylvan>> const&);

@@ -45,13 +45,11 @@ jobs:
         image:
           - {tag: "${{ inputs.tag }}-debug",
              baseImg: "movesrwth/storm:${{ inputs.storm_tag }}-debug",
-             file: ".github/workflows/Dockerfile.release",
              buildType: "Debug",
              setupArgs: "--debug"
             }
           - {tag: "${{ inputs.tag }}",
              baseImg: "movesrwth/storm:${{ inputs.storm_tag }}",
-             file: ".github/workflows/Dockerfile.release",
              buildType: "Release",
              setupArgs: ""
             }
@@ -88,8 +86,6 @@ jobs:
         id: build
         uses: docker/build-push-action@v7
         with:
-          file: ${{ matrix.image.file }}
-          # Set build arguments
           build-args: |
             STORM_BASE=${{ matrix.image.baseImg }}
             build_type=${{ matrix.image.buildType }}

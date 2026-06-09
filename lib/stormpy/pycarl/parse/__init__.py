@@ -3,10 +3,6 @@ from lark import Lark, UnexpectedInput
 
 from stormpy.pycarl.parse.transformer import CarlParserTransformer
 
-if not _config.CARL_WITH_PARSER:
-    raise ImportError("Parser is not available in the configured carl library! Did you configure carl with '-DBUILD_ADDONS=ON -DBUILD_ADDON_PARSER=ON'?")
-
-
 _grammar_path = os.path.join(os.path.dirname(__file__), "lark_grammar.lark")
 _parser = Lark.open(_grammar_path, parser="earley", lexer="dynamic", transformer=None)
 

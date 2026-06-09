@@ -39,7 +39,7 @@ jobs:
              test_opt: ""
           }
           - {name: "no libraries",
-             setup_args: "--config-settings=cmake.define.ALLOW_STORM_FETCH=OFF --config-settings=cmake.define=USE_STORM_DFT=OFF --config-settings=cmake.define.USE_STORM_GSPN=OFF --config-settings=cmake.define.USE_STORM_PARS=OFF --config-settings=cmake.define.USE_STORM_POMDP=OFF --config-settings=cmake.define.USE_PARSER=OFF",
+             setup_args: "--config-settings=cmake.define.ALLOW_STORM_FETCH=OFF --config-settings=cmake.define=USE_STORM_DFT=OFF --config-settings=cmake.define.USE_STORM_GSPN=OFF --config-settings=cmake.define.USE_STORM_PARS=OFF --config-settings=cmake.define.USE_STORM_POMDP=OFF",
              optional_libs: "[test]",
              test_opt: "tests"
           }
@@ -97,7 +97,7 @@ jobs:
         id: build_stormpy
         shell: bash {0} // Deactivate fast-fail to handle exit code for incompatibility
         run: |
-          docker exec ci bash -c "cd /opt/stormpy; pip install -v --config-settings=cmake.define.CMAKE_BUILD_PARALLEL_LEVEL=${NR_JOBS} --config-settings=cmake.build-type=${{ matrix.build_type.build_type }} --config-settings=cmake.define.CARLPARSER_DIR_HINT=/opt/carl-parser/build/ ${{ matrix.build_type.setup_args }} .${{ matrix.build_type.optional_libs }}"
+          docker exec ci bash -c "cd /opt/stormpy; pip install -v --config-settings=cmake.define.CMAKE_BUILD_PARALLEL_LEVEL=${NR_JOBS} --config-settings=cmake.build-type=${{ matrix.build_type.build_type }} ${{ matrix.build_type.setup_args }} .${{ matrix.build_type.optional_libs }}"
           status=$?
           if [ $status -eq 1 ]; then
             # Warn about possible incompatibility but do not handle as failure
@@ -143,7 +143,7 @@ jobs:
           - {name: "Ubuntu 24.04, Debug, only Storm core",
              base_image: "movesrwth/storm-basesystem:ubuntu-24.04",
              build_type: "Debug",
-             setup_args: "--config-settings=cmake.define.ALLOW_STORM_SYSTEM=OFF --config-settings=cmake.define.STORM_GIT_TAG=master --config-settings=cmake.define.USE_STORM_DFT=OFF --config-settings=cmake.define.USE_STORM_GSPN=OFF --config-settings=cmake.define.USE_STORM_PARS=OFF --config-settings=cmake.define.USE_STORM_POMDP=OFF --config-settings=cmake.define.USE_PARSER=OFF",
+             setup_args: "--config-settings=cmake.define.ALLOW_STORM_SYSTEM=OFF --config-settings=cmake.define.STORM_GIT_TAG=master --config-settings=cmake.define.USE_STORM_DFT=OFF --config-settings=cmake.define.USE_STORM_GSPN=OFF --config-settings=cmake.define.USE_STORM_PARS=OFF --config-settings=cmake.define.USE_STORM_POMDP=OFF",
              optional_libs: "[test]",
              test_opt: "tests"
           }
@@ -157,12 +157,10 @@ jobs:
     steps:
       - name: Git clone
         uses: actions/checkout@v6
-      - name: Replace Dockerfile
-        run: cp .github/workflows/Dockerfile.fetch Dockerfile
       - name: Build stormpy
         run: |
           docker build -t movesrwth/stormpy:ci . \
-            --build-arg BASE_IMAGE=${{ matrix.config.base_image }} \
+            --build-arg STORM_BASE=${{ matrix.config.base_image }} \
             --build-arg build_type=${{ matrix.config.build_type }} \
             --build-arg setup_args="${{ matrix.config.setup_args }}" \
             --build-arg options=${{ matrix.config.optional_libs }} \

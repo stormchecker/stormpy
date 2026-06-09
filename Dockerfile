@@ -28,32 +28,10 @@ ARG no_threads=2
 
 # Install dependencies
 ######################
-RUN apt-get update -qq
-RUN apt-get install -y --no-install-recommends \
-    maven \
-    uuid-dev \
+RUN apt-get update -qq && apt-get install -y --no-install-recommends \
     python3 \
     python3-dev \
     python3-venv
-# Packages maven and uuid-dev are required for carl-parser
-
-# Build carl-parser
-###################
-WORKDIR /opt/
-
-# Obtain carl-parser
-RUN git clone https://github.com/stormchecker/carl-parser.git
-
-# Switch to build directory
-RUN mkdir -p /opt/carl-parser/build
-WORKDIR /opt/carl-parser/build
-
-# Configure carl-parser
-# Set hint for carl directory to Storm directory
-RUN cmake .. -DCMAKE_BUILD_TYPE=$build_type -DPORTABLE=ON -Dcarl_DIR=/opt/storm/build/_deps/carl-build
-
-# Build carl-parser
-RUN make carl-parser -j $no_threads
 
 
 # Set-up virtual environment
@@ -75,5 +53,4 @@ COPY . .
 RUN pip install -v \
     --config-settings=cmake.define.CMAKE_BUILD_PARALLEL_LEVEL=$no_threads \
     --config-settings=cmake.build-type=$build_type \
-    --config-settings=cmake.define.CARLPARSER_DIR_HINT=/opt/carl-parser/build/ \
     $setup_args .$options

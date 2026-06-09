@@ -96,13 +96,6 @@ Fetching a Storm version can be configured with the following flags:
 - `--config-settings=cmake.define.STORM_GIT_REPO=<url>` changes the Git repository used for fetching Storm.
 - `--config-settings=cmake.define.STORM_GIT_TAG=<tag>` changes the Git tag used for fetching Storm.
 
-##### Using carl-parser
-The [carl-parser](https://github.com/stormchecker/carl-parser) library supports parsing of carl-storm data structures.
-Usage of carl-parser can be configured with the following flags:
-- `--config-settings=cmake.define.USE_PARSER=OFF` disables support for the carl-parser.
-- `--config-settings=cmake.define.CARLPARSER_DIR_HINT=<dir>` sets the hint for the carl-parser directory.
-  In case of a manually built carl-parser, the path should point to the build directory.
-
 ##### Disabling functionality
 If you want to disable certain functionality in stormpy from being built you can add the following flags:
 - `--config-settings=cmake.define.USE_STORM_DFT=OFF` to disable support for dynamic fault trees (DFTs).

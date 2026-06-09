@@ -30,156 +30,92 @@ using MarkovAutomaton = storm::models::sparse::MarkovAutomaton<ValueType>;
 
 using namespace storm::modelchecker;
 
-// Model instantiator
+// Helper: define typed ModelInstantiator class
+template<typename ParametricModel, typename InstantiatedModel>
+void define_typed_instantiator(py::module& m, const char* pyName, const char* pyDesc) {
+    py::class_<storm::utility::ModelInstantiator<ParametricModel, InstantiatedModel>>(m, pyName, pyDesc)
+        .def(py::init<ParametricModel>(), "parametric model"_a)
+        .def("instantiate", &storm::utility::ModelInstantiator<ParametricModel, InstantiatedModel>::instantiate,
+             "Instantiate model with given parameter values");
+}
+
+template<typename ValueType>
 void define_model_instantiator(py::module& m) {
-    py::class_<storm::utility::ModelInstantiator<Dtmc<storm::RationalFunction>, Dtmc<double>>>(m, "PDtmcInstantiator", "Instantiate PDTMCs to DTMCs")
-        .def(py::init<Dtmc<storm::RationalFunction>>(), "parametric model"_a)
-        .def("instantiate", &storm::utility::ModelInstantiator<Dtmc<storm::RationalFunction>, Dtmc<double>>::instantiate,
-             "Instantiate model with given parameter values");
+    std::string prefix;
+    if constexpr (std::is_same_v<ValueType, double>) { prefix = ""; }
+    else if constexpr (std::is_same_v<ValueType, storm::RationalFunction>) { prefix = "Partial"; }
 
-    py::class_<storm::utility::ModelInstantiator<Mdp<storm::RationalFunction>, Mdp<double>>>(m, "PMdpInstantiator", "Instantiate PMDPs to MDPs")
-        .def(py::init<Mdp<storm::RationalFunction>>(), "parametric model"_a)
-        .def("instantiate", &storm::utility::ModelInstantiator<Mdp<storm::RationalFunction>, Mdp<double>>::instantiate,
-             "Instantiate model with given parameter values");
-
-    py::class_<storm::utility::ModelInstantiator<Ctmc<storm::RationalFunction>, Ctmc<double>>>(m, "PCtmcInstantiator", "Instantiate PCTMCs to CTMCs")
-        .def(py::init<Ctmc<storm::RationalFunction>>(), "parametric model"_a)
-        .def("instantiate", &storm::utility::ModelInstantiator<Ctmc<storm::RationalFunction>, Ctmc<double>>::instantiate,
-             "Instantiate model with given parameter values");
-
-    py::class_<storm::utility::ModelInstantiator<MarkovAutomaton<storm::RationalFunction>, MarkovAutomaton<double>>>(m, "PMaInstantiator",
-                                                                                                                     "Instantiate PMAs to MAs")
-        .def(py::init<MarkovAutomaton<storm::RationalFunction>>(), "parametric model"_a)
-        .def("instantiate", &storm::utility::ModelInstantiator<MarkovAutomaton<storm::RationalFunction>, MarkovAutomaton<double>>::instantiate,
-             "Instantiate model with given parameter values");
-
-    py::class_<storm::utility::ModelInstantiator<Dtmc<storm::RationalFunction>, Dtmc<storm::RationalFunction>>>(m, "PartialPDtmcInstantiator",
-                                                                                                                "Instantiate PDTMCs to DTMCs")
-        .def(py::init<Dtmc<storm::RationalFunction>>(), "parametric model"_a)
-        .def("instantiate", &storm::utility::ModelInstantiator<Dtmc<storm::RationalFunction>, Dtmc<storm::RationalFunction>>::instantiate,
-             "Instantiate model with given parameter values");
-
-    py::class_<storm::utility::ModelInstantiator<Mdp<storm::RationalFunction>, Mdp<storm::RationalFunction>>>(m, "PartialPMdpInstantiator",
-                                                                                                              "Instantiate PMDPs to MDPs")
-        .def(py::init<Mdp<storm::RationalFunction>>(), "parametric model"_a)
-        .def("instantiate", &storm::utility::ModelInstantiator<Mdp<storm::RationalFunction>, Mdp<storm::RationalFunction>>::instantiate,
-             "Instantiate model with given parameter values");
-
-    py::class_<storm::utility::ModelInstantiator<Ctmc<storm::RationalFunction>, Ctmc<storm::RationalFunction>>>(m, "PartialPCtmcInstantiator",
-                                                                                                                "Instantiate PCTMCs to CTMCs")
-        .def(py::init<Ctmc<storm::RationalFunction>>(), "parametric model"_a)
-        .def("instantiate", &storm::utility::ModelInstantiator<Ctmc<storm::RationalFunction>, Ctmc<storm::RationalFunction>>::instantiate,
-             "Instantiate model with given parameter values");
-
-    py::class_<storm::utility::ModelInstantiator<MarkovAutomaton<storm::RationalFunction>, MarkovAutomaton<storm::RationalFunction>>>(
-        m, "PartialPMaInstantiator", "Instantiate PMAs to MAs")
-        .def(py::init<MarkovAutomaton<storm::RationalFunction>>(), "parametric model"_a)
-        .def("instantiate", &storm::utility::ModelInstantiator<MarkovAutomaton<storm::RationalFunction>, MarkovAutomaton<storm::RationalFunction>>::instantiate,
-             "Instantiate model with given parameter values");
+    define_typed_instantiator<Dtmc<storm::RationalFunction>, Dtmc<ValueType>>(m, (prefix + "PDtmcInstantiator").c_str(), "Instantiate PDTMCs to DTMCs");
+    define_typed_instantiator<Mdp<storm::RationalFunction>, Mdp<ValueType>>(m, (prefix + "PMdpInstantiator").c_str(), "Instantiate PMDPs to MDPs");
+    define_typed_instantiator<Ctmc<storm::RationalFunction>, Ctmc<ValueType>>(m, (prefix + "PCtmcInstantiator").c_str(), "Instantiate PCTMCs to CTMCs");
+    define_typed_instantiator<MarkovAutomaton<storm::RationalFunction>, MarkovAutomaton<ValueType>>(m, (prefix + "PMaInstantiator").c_str(), "Instantiate PMAs to MAs");
 }
 
+// Trait: maps (ModelType, ResultType) to the specific checker class
+template<typename, typename> struct instantiation_checker;
+
+template<typename ResultType>
+struct instantiation_checker<Dtmc<storm::RationalFunction>, ResultType> {
+    using type = SparseDtmcInstantiationModelChecker<Dtmc<storm::RationalFunction>, ResultType>;
+};
+
+template<typename ResultType>
+struct instantiation_checker<Mdp<storm::RationalFunction>, ResultType> {
+    using type = SparseMdpInstantiationModelChecker<Mdp<storm::RationalFunction>, ResultType>;
+};
+
+template<typename ResultType>
+struct instantiation_checker<Ctmc<storm::RationalFunction>, ResultType> {
+    using type = SparseCtmcInstantiationModelChecker<Ctmc<storm::RationalFunction>, ResultType>;
+};
+
+// Helper: define typed base + derived instantiation checker pair
+template<typename ModelType, typename ResultType>
+void define_typed_checker(py::module& m, const char* baseName, const char* baseDesc, const char* derivedName, const char* derivedDesc) {
+    using CheckerType = typename instantiation_checker<ModelType, ResultType>::type;
+    using BaseChecker = SparseInstantiationModelChecker<ModelType, ResultType>;
+    auto base =
+        py::class_<BaseChecker, std::shared_ptr<BaseChecker>>(m, baseName, baseDesc);
+    base.def("specify_formula", &BaseChecker::specifyFormula, "check_task"_a);
+
+    py::class_<CheckerType, std::shared_ptr<CheckerType>>(m, derivedName, derivedDesc, base)
+        .def(py::init<ModelType>(), "parametric model"_a)
+        .def("check",
+             [](CheckerType& c, storm::Environment const& env,
+                storm::utility::parametric::Valuation<storm::RationalFunction> const& val) -> std::shared_ptr<CheckResult> { return c.check(env, val); },
+             "env"_a, "instantiation"_a)
+        .def("set_graph_preserving", &CheckerType::setInstantiationsAreGraphPreserving, "value"_a);
+}
+
+template<typename ValueType>
 void define_model_instantiation_checker(py::module& m) {
-    py::class_<SparseInstantiationModelChecker<Dtmc<storm::RationalFunction>, double>,
-               std::shared_ptr<SparseInstantiationModelChecker<Dtmc<storm::RationalFunction>, double>>>
-        bpdtmcinstchecker(m, "_PDtmcInstantiationCheckerBase", "Instantiate pDTMCs to DTMCs and immediately check (base)");
-    bpdtmcinstchecker.def("specify_formula", &SparseInstantiationModelChecker<Dtmc<storm::RationalFunction>, double>::specifyFormula, "check_task"_a);
+    std::string exactStr, exactDesc;
+    if constexpr (std::is_same_v<ValueType, double>) { exactStr = ""; exactDesc = ""; }
+    else if constexpr (std::is_same_v<ValueType, storm::RationalNumber>) { exactStr = "Exact"; exactDesc = "exact "; }
 
-    py::class_<SparseDtmcInstantiationModelChecker<Dtmc<storm::RationalFunction>, double>,
-               std::shared_ptr<SparseDtmcInstantiationModelChecker<Dtmc<storm::RationalFunction>, double>>>(
-        m, "PDtmcInstantiationChecker", "Instantiate pDTMCs to DTMCs and immediately check", bpdtmcinstchecker)
-        .def(py::init<Dtmc<storm::RationalFunction>>(), "parametric model"_a)
-        .def(
-            "check",
-            [](SparseDtmcInstantiationModelChecker<Dtmc<storm::RationalFunction>, double>& sdimc, storm::Environment const& env,
-               storm::utility::parametric::Valuation<storm::RationalFunction> const& val) -> std::shared_ptr<CheckResult> { return sdimc.check(env, val); },
-            "env"_a, "instantiation"_a)
-        .def("set_graph_preserving", &SparseDtmcInstantiationModelChecker<Dtmc<storm::RationalFunction>, double>::setInstantiationsAreGraphPreserving,
-             "value"_a);
+    // Dtmc
+    define_typed_checker<Dtmc<storm::RationalFunction>, ValueType>(
+        m, ("_PDtmc" + exactStr + "InstantiationCheckerBase").c_str(),
+        ("Instantiate pDTMCs to " + exactDesc + "DTMCs and immediately check (base)").c_str(),
+        ("PDtmc" + exactStr + "InstantiationChecker").c_str(),
+        ("Instantiate pDTMCs to " + exactDesc + "DTMCs and immediately check").c_str());
 
-    py::class_<SparseInstantiationModelChecker<Dtmc<storm::RationalFunction>, storm::RationalNumber>,
-               std::shared_ptr<SparseInstantiationModelChecker<Dtmc<storm::RationalFunction>, storm::RationalNumber>>>
-        bpdtmcexactinstchecker(m, "_PDtmcExactInstantiationCheckerBase", "Instantiate pDTMCs to exact DTMCs and immediately check (base)");
-    bpdtmcexactinstchecker.def("specify_formula", &SparseInstantiationModelChecker<Dtmc<storm::RationalFunction>, storm::RationalNumber>::specifyFormula,
-                               "check_task"_a);
+    // Mdp
+    define_typed_checker<Mdp<storm::RationalFunction>, ValueType>(
+        m, ("_PMdp" + exactStr + "InstantiationCheckerBase").c_str(),
+        ("Instantiate pMDPs to " + exactDesc + "MDPs and immediately check (base)").c_str(),
+        ("PMdp" + exactStr + "InstantiationChecker").c_str(),
+        ("Instantiate PMDP to " + exactDesc + "MDPs and immediately check").c_str());
 
-    py::class_<SparseDtmcInstantiationModelChecker<Dtmc<storm::RationalFunction>, storm::RationalNumber>,
-               std::shared_ptr<SparseDtmcInstantiationModelChecker<Dtmc<storm::RationalFunction>, storm::RationalNumber>>>(
-        m, "PDtmcExactInstantiationChecker", "Instantiate pDTMCs to exact DTMCs and immediately check", bpdtmcexactinstchecker)
-        .def(py::init<Dtmc<storm::RationalFunction>>(), "parametric model"_a)
-        .def(
-            "check",
-            [](SparseDtmcInstantiationModelChecker<Dtmc<storm::RationalFunction>, storm::RationalNumber>& sdimc, storm::Environment const& env,
-               storm::utility::parametric::Valuation<storm::RationalFunction> const& val) -> std::shared_ptr<CheckResult> { return sdimc.check(env, val); },
-            "env"_a, "instantiation"_a)
-        .def("set_graph_preserving",
-             &SparseDtmcInstantiationModelChecker<Dtmc<storm::RationalFunction>, storm::RationalNumber>::setInstantiationsAreGraphPreserving, "value"_a);
-
-    py::class_<SparseInstantiationModelChecker<Mdp<storm::RationalFunction>, double>,
-               std::shared_ptr<SparseInstantiationModelChecker<Mdp<storm::RationalFunction>, double>>>
-        bpmdpinstchecker(m, "_PMdpInstantiationCheckerBase", "Instantiate pMDPs to MDPs and immediately check (base)");
-    bpmdpinstchecker.def("specify_formula", &SparseInstantiationModelChecker<Mdp<storm::RationalFunction>, double>::specifyFormula, "check_task"_a);
-
-    py::class_<SparseMdpInstantiationModelChecker<Mdp<storm::RationalFunction>, double>,
-               std::shared_ptr<SparseMdpInstantiationModelChecker<Mdp<storm::RationalFunction>, double>>>(
-        m, "PMdpInstantiationChecker", "Instantiate PMDP to MDPs and immediately check", bpmdpinstchecker)
-        .def(py::init<Mdp<storm::RationalFunction>>(), "parametric model"_a)
-        .def(
-            "check",
-            [](SparseMdpInstantiationModelChecker<Mdp<storm::RationalFunction>, double>& sdimc, storm::Environment const& env,
-               storm::utility::parametric::Valuation<storm::RationalFunction> const& val) -> std::shared_ptr<CheckResult> { return sdimc.check(env, val); },
-            "env"_a, "instantiation"_a)
-        .def("set_graph_preserving", &SparseMdpInstantiationModelChecker<Mdp<storm::RationalFunction>, double>::setInstantiationsAreGraphPreserving, "value"_a);
-
-    py::class_<SparseInstantiationModelChecker<Mdp<storm::RationalFunction>, storm::RationalNumber>,
-               std::shared_ptr<SparseInstantiationModelChecker<Mdp<storm::RationalFunction>, storm::RationalNumber>>>
-        bpmdpexactinstchecker(m, "_PMdpExactInstantiationCheckerBase", "Instantiate pMDPs to exact MDPs and immediately check (base)");
-    bpmdpexactinstchecker.def("specify_formula", &SparseInstantiationModelChecker<Mdp<storm::RationalFunction>, storm::RationalNumber>::specifyFormula,
-                              "check_task"_a);
-
-    py::class_<SparseMdpInstantiationModelChecker<Mdp<storm::RationalFunction>, storm::RationalNumber>,
-               std::shared_ptr<SparseMdpInstantiationModelChecker<Mdp<storm::RationalFunction>, storm::RationalNumber>>>(
-        m, "PMdpExactInstantiationChecker", "Instantiate PMDP to exact MDPs and immediately check", bpmdpexactinstchecker)
-        .def(py::init<Mdp<storm::RationalFunction>>(), "parametric model"_a)
-        .def(
-            "check",
-            [](SparseMdpInstantiationModelChecker<Mdp<storm::RationalFunction>, storm::RationalNumber>& sdimc, storm::Environment const& env,
-               storm::utility::parametric::Valuation<storm::RationalFunction> const& val) -> std::shared_ptr<CheckResult> { return sdimc.check(env, val); },
-            "env"_a, "instantiation"_a)
-        .def("set_graph_preserving",
-             &SparseMdpInstantiationModelChecker<Mdp<storm::RationalFunction>, storm::RationalNumber>::setInstantiationsAreGraphPreserving, "value"_a);
-
-    py::class_<SparseInstantiationModelChecker<Ctmc<storm::RationalFunction>, double>,
-               std::shared_ptr<SparseInstantiationModelChecker<Ctmc<storm::RationalFunction>, double>>>
-        bpctmcinstchecker(m, "_PCtmcInstantiationCheckerBase", "Instantiate pCTMCs to CTMCs and immediately check (base)");
-    bpctmcinstchecker.def("specify_formula", &SparseInstantiationModelChecker<Ctmc<storm::RationalFunction>, double>::specifyFormula, "check_task"_a);
-
-    py::class_<SparseCtmcInstantiationModelChecker<Ctmc<storm::RationalFunction>, double>,
-               std::shared_ptr<SparseCtmcInstantiationModelChecker<Ctmc<storm::RationalFunction>, double>>>(
-        m, "PCtmcInstantiationChecker", "Instantiate pCTMCs to CTMCs and immediately check", bpctmcinstchecker)
-        .def(py::init<Ctmc<storm::RationalFunction>>(), "parametric model"_a)
-        .def(
-            "check",
-            [](SparseCtmcInstantiationModelChecker<Ctmc<storm::RationalFunction>, double>& scimc, storm::Environment const& env,
-               storm::utility::parametric::Valuation<storm::RationalFunction> const& val) -> std::shared_ptr<CheckResult> { return scimc.check(env, val); },
-            "env"_a, "instantiation"_a)
-        .def("set_graph_preserving", &SparseCtmcInstantiationModelChecker<Ctmc<storm::RationalFunction>, double>::setInstantiationsAreGraphPreserving,
-             "value"_a);
-
-    py::class_<SparseInstantiationModelChecker<Ctmc<storm::RationalFunction>, storm::RationalNumber>,
-               std::shared_ptr<SparseInstantiationModelChecker<Ctmc<storm::RationalFunction>, storm::RationalNumber>>>
-        bpctmcexactinstchecker(m, "_PCtmcExactInstantiationCheckerBase", "Instantiate pCTMCs to exact CTMCs and immediately check (base)");
-    bpctmcexactinstchecker.def("specify_formula", &SparseInstantiationModelChecker<Ctmc<storm::RationalFunction>, storm::RationalNumber>::specifyFormula,
-                               "check_task"_a);
-
-    py::class_<SparseCtmcInstantiationModelChecker<Ctmc<storm::RationalFunction>, storm::RationalNumber>,
-               std::shared_ptr<SparseCtmcInstantiationModelChecker<Ctmc<storm::RationalFunction>, storm::RationalNumber>>>(
-        m, "PCtmcExactInstantiationChecker", "Instantiate pCTMCs to exact CTMCs and immediately check", bpctmcexactinstchecker)
-        .def(py::init<Ctmc<storm::RationalFunction>>(), "parametric model"_a)
-        .def(
-            "check",
-            [](SparseCtmcInstantiationModelChecker<Ctmc<storm::RationalFunction>, storm::RationalNumber>& scimc, storm::Environment const& env,
-               storm::utility::parametric::Valuation<storm::RationalFunction> const& val) -> std::shared_ptr<CheckResult> { return scimc.check(env, val); },
-            "env"_a, "instantiation"_a)
-        .def("set_graph_preserving",
-             &SparseCtmcInstantiationModelChecker<Ctmc<storm::RationalFunction>, storm::RationalNumber>::setInstantiationsAreGraphPreserving, "value"_a);
+    // Ctmc
+    define_typed_checker<Ctmc<storm::RationalFunction>, ValueType>(
+        m, ("_PCtmc" + exactStr + "InstantiationCheckerBase").c_str(),
+        ("Instantiate pCTMCs to " + exactDesc + "CTMCs and immediately check (base)").c_str(),
+        ("PCtmc" + exactStr + "InstantiationChecker").c_str(),
+        ("Instantiate pCTMCs to " + exactDesc + "CTMCs and immediately check").c_str());
 }
+
+template void define_model_instantiator<double>(py::module&);
+template void define_model_instantiator<storm::RationalFunction>(py::module&);
+template void define_model_instantiation_checker<double>(py::module&);
+template void define_model_instantiation_checker<storm::RationalNumber>(py::module&);

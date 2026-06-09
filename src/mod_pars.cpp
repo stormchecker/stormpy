@@ -13,6 +13,8 @@ PYBIND11_MODULE(_pars, m) {
 
     define_pars(m);
     define_pla(m);
-    define_model_instantiator(m);
-    define_model_instantiation_checker(m);
+    define_model_instantiator<double>(m);
+    define_model_instantiator<storm::RationalFunction>(m);
+    define_model_instantiation_checker<double>(m);
+    define_model_instantiation_checker<storm::RationalNumber>(m);
 }

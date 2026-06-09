@@ -7,29 +7,27 @@
 #include <storm/storage/memorystructure/SparseModelMemoryProduct.h>
 #include <storm/storage/memorystructure/SparseModelMemoryProductReverseData.h>
 
+template<typename ValueType>
+void define_memorystructure_product_each(py::class_<storm::storage::MemoryStructure, std::shared_ptr<storm::storage::MemoryStructure>>& memoryStructure,
+                                         py::class_<storm::storage::SparseModelMemoryProductReverseData>& reverseData, std::string const& vtSuffix) {
+    memoryStructure.def(("_product_model" + vtSuffix).c_str(),
+                        [](storm::storage::MemoryStructure& ms, storm::models::sparse::Model<ValueType> const& sparseModel) { return ms.product(sparseModel); });
+    reverseData.def(("_reverse_scheduler" + vtSuffix).c_str(),
+                    &storm::storage::SparseModelMemoryProductReverseData::createMemorySchedulerFromProductScheduler<ValueType>,
+                    py::arg("product_scheduler"));
+}
+
 void define_memorystructure_untyped(py::module& m) {
     typedef storm::storage::MemoryStructure MemoryStructure;
     py::class_<MemoryStructure, std::shared_ptr<MemoryStructure>> memoryStructure(m, "MemoryStructure");
     memoryStructure.def("product", [](MemoryStructure& ms, MemoryStructure const& memModel) { return ms.product(memModel); });
-    memoryStructure.def("_product_model_double",
-                        [](MemoryStructure& ms, storm::models::sparse::Model<double> const& sparseModel) { return ms.product(sparseModel); });
-    memoryStructure.def("_product_model_exact",
-                        [](MemoryStructure& ms, storm::models::sparse::Model<storm::RationalNumber> const& sparseModel) { return ms.product(sparseModel); });
-    memoryStructure.def("_product_model_parametric",
-                        [](MemoryStructure& ms, storm::models::sparse::Model<storm::RationalFunction> const& sparseModel) { return ms.product(sparseModel); });
     memoryStructure.def_property_readonly("nr_states", &MemoryStructure::getNumberOfStates);
     memoryStructure.def_property_readonly("state_labeling", &MemoryStructure::getStateLabeling);
 
     py::class_<storm::storage::SparseModelMemoryProductReverseData> memoryProductReverseData(m, "SparseModelMemoryProductReverseData");
-    memoryProductReverseData.def("_reverse_scheduler_double",
-                                 &storm::storage::SparseModelMemoryProductReverseData::createMemorySchedulerFromProductScheduler<double>,
-                                 py::arg("product_scheduler"));
-    memoryProductReverseData.def("_reverse_scheduler_exact",
-                                 &storm::storage::SparseModelMemoryProductReverseData::createMemorySchedulerFromProductScheduler<storm::RationalNumber>,
-                                 py::arg("product_scheduler"));
-    memoryProductReverseData.def("_reverse_scheduler_parametric",
-                                 &storm::storage::SparseModelMemoryProductReverseData::createMemorySchedulerFromProductScheduler<storm::RationalFunction>,
-                                 py::arg("product_scheduler"));
+    define_memorystructure_product_each<double>(memoryStructure, memoryProductReverseData, "_double");
+    define_memorystructure_product_each<storm::RationalNumber>(memoryStructure, memoryProductReverseData, "_exact");
+    define_memorystructure_product_each<storm::RationalFunction>(memoryStructure, memoryProductReverseData, "_parametric");
 }
 
 template<typename VT>

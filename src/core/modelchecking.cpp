@@ -154,6 +154,57 @@ void define_check_task(py::module& m, std::string const& name) {
              "Sets the mode which decides how the uncertainty will be resolved.");
 }
 
+template<typename ValueType>
+void define_modelchecking_mdefs(py::module& m) {
+    if constexpr (std::is_same_v<ValueType, double>) {
+        m.def("_get_reachable_states_double", &getReachableStates<double>, py::arg("model"), py::arg("initial_states"), py::arg("constraint_states"),
+              py::arg("target_states"), py::arg("maximal_steps") = boost::none, py::arg("choice_filter") = boost::none);
+        m.def("_compute_expected_number_of_visits_double", &getExpectedNumberOfVisits<double>, py::arg("env"), py::arg("model"));
+        m.def("_compute_steady_state_distribution_double", &getSteadyStateDistribution<double>, py::arg("env"), py::arg("model"));
+        m.def("_model_checking_fully_observable", &modelCheckingFullyObservableSparseEngine<double>, py::arg("model"), py::arg("task"),
+              py::arg("environment") = storm::Environment());
+        m.def("_model_checking_sparse_engine", &modelCheckingSparseEngine<double>, "Perform model checking using the sparse engine", py::arg("model"),
+              py::arg("task"), py::arg("environment") = storm::Environment());
+        m.def("_model_checking_dd_engine", &modelCheckingDdEngine<storm::dd::DdType::Sylvan, double>, "Perform model checking using the dd engine",
+              py::arg("model"), py::arg("task"), py::arg("environment") = storm::Environment());
+        m.def("_model_checking_hybrid_engine", &modelCheckingHybridEngine<storm::dd::DdType::Sylvan, double>, "Perform model checking using the hybrid engine",
+              py::arg("model"), py::arg("task"), py::arg("environment") = storm::Environment());
+        m.def("_compute_prob01states_double", &computeProb01<double>, "Compute prob-0-1 states", py::arg("model"), py::arg("phi_states"), py::arg("psi_states"));
+        m.def("_compute_prob01states_min_double", &computeProb01min<double>, "Compute prob-0-1 states (min)", py::arg("model"), py::arg("phi_states"),
+              py::arg("psi_states"));
+        m.def("_compute_prob01states_max_double", &computeProb01max<double>, "Compute prob-0-1 states (max)", py::arg("model"), py::arg("phi_states"),
+              py::arg("psi_states"));
+        m.def("_multi_objective_model_checking_double", &multiObjectiveModelChecking<double>, "Run multi-objective model checking", py::arg("model"),
+              py::arg("formula"), py::arg("environment") = storm::Environment());
+    } else if constexpr (std::is_same_v<ValueType, storm::RationalNumber>) {
+        m.def("_get_reachable_states_exact", &getReachableStates<storm::RationalNumber>, py::arg("model"), py::arg("initial_states"),
+              py::arg("constraint_states"), py::arg("target_states"), py::arg("maximal_steps") = boost::none, py::arg("choice_filter") = boost::none);
+        m.def("_compute_expected_number_of_visits_exact", &getExpectedNumberOfVisits<storm::RationalNumber>, py::arg("env"), py::arg("model"));
+        m.def("_compute_steady_state_distribution_exact", &getSteadyStateDistribution<storm::RationalNumber>, py::arg("env"), py::arg("model"));
+        m.def("_exact_model_checking_fully_observable", &modelCheckingFullyObservableSparseEngine<storm::RationalNumber>, py::arg("model"), py::arg("task"),
+              py::arg("environment") = storm::Environment());
+        m.def("_exact_model_checking_sparse_engine", &modelCheckingSparseEngine<storm::RationalNumber>, "Perform model checking using the sparse engine",
+              py::arg("model"), py::arg("task"), py::arg("environment") = storm::Environment());
+        m.def("_multi_objective_model_checking_exact", &multiObjectiveModelChecking<storm::RationalNumber>, "Run multi-objective model checking", py::arg("model"),
+              py::arg("formula"), py::arg("environment") = storm::Environment());
+    } else if constexpr (std::is_same_v<ValueType, storm::RationalFunction>) {
+        m.def("_get_reachable_states_rf", &getReachableStates<storm::RationalFunction>, py::arg("model"), py::arg("initial_states"),
+              py::arg("constraint_states"), py::arg("target_states"), py::arg("maximal_steps") = boost::none, py::arg("choice_filter") = boost::none);
+        m.def("_parametric_model_checking_sparse_engine", &modelCheckingSparseEngine<storm::RationalFunction>,
+              "Perform parametric model checking using the sparse engine", py::arg("model"), py::arg("task"), py::arg("environment") = storm::Environment());
+        m.def("_parametric_model_checking_dd_engine", &modelCheckingDdEngine<storm::dd::DdType::Sylvan, storm::RationalFunction>,
+              "Perform parametric model checking using the dd engine", py::arg("model"), py::arg("task"), py::arg("environment") = storm::Environment());
+        m.def("_parametric_model_checking_hybrid_engine", &modelCheckingHybridEngine<storm::dd::DdType::Sylvan, storm::RationalFunction>,
+              "Perform parametric model checking using the hybrid engine", py::arg("model"), py::arg("task"), py::arg("environment") = storm::Environment());
+        m.def("_compute_prob01states_rationalfunc", &computeProb01<storm::RationalFunction>, "Compute prob-0-1 states", py::arg("model"), py::arg("phi_states"),
+              py::arg("psi_states"));
+        m.def("_compute_prob01states_min_rationalfunc", &computeProb01min<storm::RationalFunction>, "Compute prob-0-1 states (min)", py::arg("model"),
+              py::arg("phi_states"), py::arg("psi_states"));
+        m.def("_compute_prob01states_max_rationalfunc", &computeProb01max<storm::RationalFunction>, "Compute prob-0-1 states (max)", py::arg("model"),
+              py::arg("phi_states"), py::arg("psi_states"));
+    }
+}
+
 void define_modelchecking(py::module& m) {
     py::class_<storm::modelchecker::ModelCheckerHint, std::shared_ptr<storm::modelchecker::ModelCheckerHint>> mchint(
         m, "ModelCheckerHint", "Information that may accelerate the model checking process");
@@ -171,59 +222,16 @@ void define_modelchecking(py::module& m) {
              py::overload_cast<boost::optional<std::vector<double>> const&>(&storm::modelchecker::ExplicitModelCheckerHint<double>::setResultHint),
              "result_hint"_a);
 
-    m.def("_get_reachable_states_double", &getReachableStates<double>, py::arg("model"), py::arg("initial_states"), py::arg("constraint_states"),
-          py::arg("target_states"), py::arg("maximal_steps") = boost::none, py::arg("choice_filter") = boost::none);
-    m.def("_get_reachable_states_exact", &getReachableStates<storm::RationalNumber>, py::arg("model"), py::arg("initial_states"), py::arg("constraint_states"),
-          py::arg("target_states"), py::arg("maximal_steps") = boost::none, py::arg("choice_filter") = boost::none);
-    m.def("_get_reachable_states_rf", &getReachableStates<storm::RationalFunction>, py::arg("model"), py::arg("initial_states"), py::arg("constraint_states"),
-          py::arg("target_states"), py::arg("maximal_steps") = boost::none, py::arg("choice_filter") = boost::none);
+    define_modelchecking_mdefs<double>(m);
+    define_modelchecking_mdefs<storm::RationalNumber>(m);
+    define_modelchecking_mdefs<storm::RationalFunction>(m);
 
-    m.def("_compute_expected_number_of_visits_double", &getExpectedNumberOfVisits<double>, py::arg("env"), py::arg("model"));
-    m.def("_compute_expected_number_of_visits_exact", &getExpectedNumberOfVisits<storm::RationalNumber>, py::arg("env"), py::arg("model"));
-
-    m.def("_compute_steady_state_distribution_double", &getSteadyStateDistribution<double>, py::arg("env"), py::arg("model"));
-    m.def("_compute_steady_state_distribution_exact", &getSteadyStateDistribution<storm::RationalNumber>, py::arg("env"), py::arg("model"));
-
-    // Model checking
-    m.def("_model_checking_fully_observable", &modelCheckingFullyObservableSparseEngine<double>, py::arg("model"), py::arg("task"),
-          py::arg("environment") = storm::Environment());
-    m.def("_exact_model_checking_fully_observable", &modelCheckingFullyObservableSparseEngine<storm::RationalNumber>, py::arg("model"), py::arg("task"),
-          py::arg("environment") = storm::Environment());
-    m.def("_model_checking_sparse_engine", &modelCheckingSparseEngine<double>, "Perform model checking using the sparse engine", py::arg("model"),
-          py::arg("task"), py::arg("environment") = storm::Environment());
-    m.def("_exact_model_checking_sparse_engine", &modelCheckingSparseEngine<storm::RationalNumber>, "Perform model checking using the sparse engine",
-          py::arg("model"), py::arg("task"), py::arg("environment") = storm::Environment());
-    m.def("_parametric_model_checking_sparse_engine", &modelCheckingSparseEngine<storm::RationalFunction>,
-          "Perform parametric model checking using the sparse engine", py::arg("model"), py::arg("task"), py::arg("environment") = storm::Environment());
-    m.def("_model_checking_dd_engine", &modelCheckingDdEngine<storm::dd::DdType::Sylvan, double>, "Perform model checking using the dd engine",
-          py::arg("model"), py::arg("task"), py::arg("environment") = storm::Environment());
-    m.def("_parametric_model_checking_dd_engine", &modelCheckingDdEngine<storm::dd::DdType::Sylvan, storm::RationalFunction>,
-          "Perform parametric model checking using the dd engine", py::arg("model"), py::arg("task"), py::arg("environment") = storm::Environment());
-    m.def("_model_checking_hybrid_engine", &modelCheckingHybridEngine<storm::dd::DdType::Sylvan, double>, "Perform model checking using the hybrid engine",
-          py::arg("model"), py::arg("task"), py::arg("environment") = storm::Environment());
-    m.def("_parametric_model_checking_hybrid_engine", &modelCheckingHybridEngine<storm::dd::DdType::Sylvan, storm::RationalFunction>,
-          "Perform parametric model checking using the hybrid engine", py::arg("model"), py::arg("task"), py::arg("environment") = storm::Environment());
     m.def("check_interval_dtmc", &checkIntervalDtmc, "Check interval DTMC");
     m.def("check_exact_interval_dtmc", &checkRationalIntervalDtmc, "Check exact interval DTMC");
     m.def("check_interval_mdp", &checkIntervalMdp, "Check interval MDP");
     m.def("check_exact_interval_mdp", &checkRationalIntervalMdp, "Check exact interval MDP");
     m.def("compute_all_until_probabilities", &computeAllUntilProbabilities, "Compute forward until probabilities");
     m.def("compute_transient_probabilities", &computeTransientProbabilities, "Compute transient probabilities");
-    m.def("_compute_prob01states_double", &computeProb01<double>, "Compute prob-0-1 states", py::arg("model"), py::arg("phi_states"), py::arg("psi_states"));
-    m.def("_compute_prob01states_rationalfunc", &computeProb01<storm::RationalFunction>, "Compute prob-0-1 states", py::arg("model"), py::arg("phi_states"),
-          py::arg("psi_states"));
-    m.def("_compute_prob01states_min_double", &computeProb01min<double>, "Compute prob-0-1 states (min)", py::arg("model"), py::arg("phi_states"),
-          py::arg("psi_states"));
-    m.def("_compute_prob01states_max_double", &computeProb01max<double>, "Compute prob-0-1 states (max)", py::arg("model"), py::arg("phi_states"),
-          py::arg("psi_states"));
-    m.def("_compute_prob01states_min_rationalfunc", &computeProb01min<storm::RationalFunction>, "Compute prob-0-1 states (min)", py::arg("model"),
-          py::arg("phi_states"), py::arg("psi_states"));
-    m.def("_compute_prob01states_max_rationalfunc", &computeProb01max<storm::RationalFunction>, "Compute prob-0-1 states (max)", py::arg("model"),
-          py::arg("phi_states"), py::arg("psi_states"));
-    m.def("_multi_objective_model_checking_double", &multiObjectiveModelChecking<double>, "Run multi-objective model checking", py::arg("model"),
-          py::arg("formula"), py::arg("environment") = storm::Environment());
-    m.def("_multi_objective_model_checking_exact", &multiObjectiveModelChecking<storm::RationalNumber>, "Run multi-objective model checking", py::arg("model"),
-          py::arg("formula"), py::arg("environment") = storm::Environment());
 }
 
 template void define_check_task<double>(py::module&, std::string const&);

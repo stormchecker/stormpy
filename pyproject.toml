@@ -34,10 +34,17 @@ Documentation = "https://stormchecker.github.io/stormpy"
 numpy = [
     "numpy"
 ]
+parser = [
+    "lark"
+]
 plot = [
     "matplotlib",
     "numpy",
     "scipy",
+]
+dev = [
+    # Formatting
+    "black[jupyter]",
 ]
 doc = [
     "Sphinx>=8.2.2",
@@ -48,10 +55,6 @@ doc = [
     "ipykernel",
     "myst-parser",
 ]  # also requires pandoc to be installed
-dev = [
-    # Formatting
-    "black[jupyter]",
-]
 test = [
     "pytest",
     "nbval",

@@ -94,34 +94,45 @@ storm::models::sparse::StateLabeling& getLabeling(SparseModel<ValueType>& model)
 template<typename ValueType>
 void define_model_as_sparse(py::class_<ModelBase, std::shared_ptr<ModelBase>>& modelBase) {
     std::string prefix;
-    if constexpr (std::is_same_v<ValueType, double>) prefix = "";
-    else if constexpr (std::is_same_v<ValueType, storm::RationalNumber>) prefix = "exact_";
-    else if constexpr (std::is_same_v<ValueType, storm::Interval>) prefix = "i";
-    else if constexpr (std::is_same_v<ValueType, storm::RationalInterval>) prefix = "exact_i";
-    else if constexpr (std::is_same_v<ValueType, storm::RationalFunction>) prefix = "p";
+    if constexpr (std::is_same_v<ValueType, double>)
+        prefix = "";
+    else if constexpr (std::is_same_v<ValueType, storm::RationalNumber>)
+        prefix = "exact_";
+    else if constexpr (std::is_same_v<ValueType, storm::Interval>)
+        prefix = "i";
+    else if constexpr (std::is_same_v<ValueType, storm::RationalInterval>)
+        prefix = "exact_i";
+    else if constexpr (std::is_same_v<ValueType, storm::RationalFunction>)
+        prefix = "p";
 
     modelBase.def(("_as_sparse_" + prefix + "dtmc").c_str(), [](ModelBase& m) { return m.template as<SparseDtmc<ValueType>>(); }, "Get model as sparse DTMC");
     modelBase.def(("_as_sparse_" + prefix + "mdp").c_str(), [](ModelBase& m) { return m.template as<SparseMdp<ValueType>>(); }, "Get model as sparse MDP");
-    modelBase.def(("_as_sparse_" + prefix + "pomdp").c_str(), [](ModelBase& m) { return m.template as<SparsePomdp<ValueType>>(); }, "Get model as sparse POMDP");
+    modelBase.def(("_as_sparse_" + prefix + "pomdp").c_str(), [](ModelBase& m) { return m.template as<SparsePomdp<ValueType>>(); },
+                  "Get model as sparse POMDP");
     modelBase.def(("_as_sparse_" + prefix + "ctmc").c_str(), [](ModelBase& m) { return m.template as<SparseCtmc<ValueType>>(); }, "Get model as sparse CTMC");
-    modelBase.def(("_as_sparse_" + prefix + "ma").c_str(), [](ModelBase& m) { return m.template as<SparseMarkovAutomaton<ValueType>>(); }, "Get model as sparse MA");
+    modelBase.def(("_as_sparse_" + prefix + "ma").c_str(), [](ModelBase& m) { return m.template as<SparseMarkovAutomaton<ValueType>>(); },
+                  "Get model as sparse MA");
     modelBase.def(("_as_sparse_" + prefix + "smg").c_str(), [](ModelBase& m) { return m.template as<SparseSmg<ValueType>>(); }, "Get model as sparse SMG");
 }
 
 template<typename ValueType>
 void define_model_as_symbolic(py::class_<ModelBase, std::shared_ptr<ModelBase>>& modelBase) {
     std::string prefix;
-    if constexpr (std::is_same_v<ValueType, double>) prefix = "";
-    else if constexpr (std::is_same_v<ValueType, storm::RationalNumber>) prefix = "exact_";
-    else if constexpr (std::is_same_v<ValueType, storm::RationalFunction>) prefix = "p";
-    else return;
+    if constexpr (std::is_same_v<ValueType, double>)
+        prefix = "";
+    else if constexpr (std::is_same_v<ValueType, storm::RationalNumber>)
+        prefix = "exact_";
+    else if constexpr (std::is_same_v<ValueType, storm::RationalFunction>)
+        prefix = "p";
+    else
+        return;
 
-    modelBase.def(("_as_symbolic_" + prefix + "dtmc").c_str(),
-                  [](ModelBase& m) { return m.template as<SymbolicDtmc<storm::dd::DdType::Sylvan, ValueType>>(); }, "Get model as symbolic DTMC");
-    modelBase.def(("_as_symbolic_" + prefix + "mdp").c_str(),
-                  [](ModelBase& m) { return m.template as<SymbolicMdp<storm::dd::DdType::Sylvan, ValueType>>(); }, "Get model as symbolic MDP");
-    modelBase.def(("_as_symbolic_" + prefix + "ctmc").c_str(),
-                  [](ModelBase& m) { return m.template as<SymbolicCtmc<storm::dd::DdType::Sylvan, ValueType>>(); }, "Get model as symbolic CTMC");
+    modelBase.def(("_as_symbolic_" + prefix + "dtmc").c_str(), [](ModelBase& m) { return m.template as<SymbolicDtmc<storm::dd::DdType::Sylvan, ValueType>>(); },
+                  "Get model as symbolic DTMC");
+    modelBase.def(("_as_symbolic_" + prefix + "mdp").c_str(), [](ModelBase& m) { return m.template as<SymbolicMdp<storm::dd::DdType::Sylvan, ValueType>>(); },
+                  "Get model as symbolic MDP");
+    modelBase.def(("_as_symbolic_" + prefix + "ctmc").c_str(), [](ModelBase& m) { return m.template as<SymbolicCtmc<storm::dd::DdType::Sylvan, ValueType>>(); },
+                  "Get model as symbolic CTMC");
     modelBase.def(("_as_symbolic_" + prefix + "ma").c_str(),
                   [](ModelBase& m) { return m.template as<SymbolicMarkovAutomaton<storm::dd::DdType::Sylvan, ValueType>>(); }, "Get model as symbolic MA");
 }

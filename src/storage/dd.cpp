@@ -34,8 +34,7 @@ py::class_<storm::dd::Dd<DdType>> define_dd(py::module& m, std::string const& li
 }
 
 template<storm::dd::DdType DdType, typename ValueType>
-void define_dd_typed(py::module& m, std::string const& libstring, std::string const& valueSuffix,
-                     py::class_<storm::dd::Dd<DdType>> const& dd) {
+void define_dd_typed(py::module& m, std::string const& libstring, std::string const& valueSuffix, py::class_<storm::dd::Dd<DdType>> const& dd) {
     py::class_<storm::dd::Add<DdType, ValueType>> add(m, (std::string("Add_") + libstring + valueSuffix).c_str(), "Add", dd);
     add.def(
         "__iter__", [](const storm::dd::Add<DdType, ValueType>& s) { return py::make_iterator(s.begin(), s.end()); },
@@ -55,4 +54,4 @@ void define_dd_nt(py::module& m) {
 
 template py::class_<storm::dd::Dd<storm::dd::DdType::Sylvan>> define_dd<storm::dd::DdType::Sylvan>(py::module& m, std::string const& libstring);
 template void define_dd_typed<storm::dd::DdType::Sylvan, double>(py::module&, std::string const&, std::string const&,
-                                                                   py::class_<storm::dd::Dd<storm::dd::DdType::Sylvan>> const&);
+                                                                 py::class_<storm::dd::Dd<storm::dd::DdType::Sylvan>> const&);

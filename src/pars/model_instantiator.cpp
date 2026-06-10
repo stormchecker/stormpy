@@ -42,17 +42,22 @@ void define_typed_instantiator(py::module& m, const char* pyName, const char* py
 template<typename ValueType>
 void define_model_instantiator(py::module& m) {
     std::string prefix;
-    if constexpr (std::is_same_v<ValueType, double>) { prefix = ""; }
-    else if constexpr (std::is_same_v<ValueType, storm::RationalFunction>) { prefix = "Partial"; }
+    if constexpr (std::is_same_v<ValueType, double>) {
+        prefix = "";
+    } else if constexpr (std::is_same_v<ValueType, storm::RationalFunction>) {
+        prefix = "Partial";
+    }
 
     define_typed_instantiator<Dtmc<storm::RationalFunction>, Dtmc<ValueType>>(m, (prefix + "PDtmcInstantiator").c_str(), "Instantiate PDTMCs to DTMCs");
     define_typed_instantiator<Mdp<storm::RationalFunction>, Mdp<ValueType>>(m, (prefix + "PMdpInstantiator").c_str(), "Instantiate PMDPs to MDPs");
     define_typed_instantiator<Ctmc<storm::RationalFunction>, Ctmc<ValueType>>(m, (prefix + "PCtmcInstantiator").c_str(), "Instantiate PCTMCs to CTMCs");
-    define_typed_instantiator<MarkovAutomaton<storm::RationalFunction>, MarkovAutomaton<ValueType>>(m, (prefix + "PMaInstantiator").c_str(), "Instantiate PMAs to MAs");
+    define_typed_instantiator<MarkovAutomaton<storm::RationalFunction>, MarkovAutomaton<ValueType>>(m, (prefix + "PMaInstantiator").c_str(),
+                                                                                                    "Instantiate PMAs to MAs");
 }
 
 // Trait: maps (ModelType, ResultType) to the specific checker class
-template<typename, typename> struct instantiation_checker;
+template<typename, typename>
+struct instantiation_checker;
 
 template<typename ResultType>
 struct instantiation_checker<Dtmc<storm::RationalFunction>, ResultType> {
@@ -74,45 +79,44 @@ template<typename ModelType, typename ResultType>
 void define_typed_checker(py::module& m, const char* baseName, const char* baseDesc, const char* derivedName, const char* derivedDesc) {
     using CheckerType = typename instantiation_checker<ModelType, ResultType>::type;
     using BaseChecker = SparseInstantiationModelChecker<ModelType, ResultType>;
-    auto base =
-        py::class_<BaseChecker, std::shared_ptr<BaseChecker>>(m, baseName, baseDesc);
+    auto base = py::class_<BaseChecker, std::shared_ptr<BaseChecker>>(m, baseName, baseDesc);
     base.def("specify_formula", &BaseChecker::specifyFormula, "check_task"_a);
 
     py::class_<CheckerType, std::shared_ptr<CheckerType>>(m, derivedName, derivedDesc, base)
         .def(py::init<ModelType>(), "parametric model"_a)
-        .def("check",
-             [](CheckerType& c, storm::Environment const& env,
-                storm::utility::parametric::Valuation<storm::RationalFunction> const& val) -> std::shared_ptr<CheckResult> { return c.check(env, val); },
-             "env"_a, "instantiation"_a)
+        .def(
+            "check",
+            [](CheckerType& c, storm::Environment const& env,
+               storm::utility::parametric::Valuation<storm::RationalFunction> const& val) -> std::shared_ptr<CheckResult> { return c.check(env, val); },
+            "env"_a, "instantiation"_a)
         .def("set_graph_preserving", &CheckerType::setInstantiationsAreGraphPreserving, "value"_a);
 }
 
 template<typename ValueType>
 void define_model_instantiation_checker(py::module& m) {
     std::string exactStr, exactDesc;
-    if constexpr (std::is_same_v<ValueType, double>) { exactStr = ""; exactDesc = ""; }
-    else if constexpr (std::is_same_v<ValueType, storm::RationalNumber>) { exactStr = "Exact"; exactDesc = "exact "; }
+    if constexpr (std::is_same_v<ValueType, double>) {
+        exactStr = "";
+        exactDesc = "";
+    } else if constexpr (std::is_same_v<ValueType, storm::RationalNumber>) {
+        exactStr = "Exact";
+        exactDesc = "exact ";
+    }
 
     // Dtmc
     define_typed_checker<Dtmc<storm::RationalFunction>, ValueType>(
-        m, ("_PDtmc" + exactStr + "InstantiationCheckerBase").c_str(),
-        ("Instantiate pDTMCs to " + exactDesc + "DTMCs and immediately check (base)").c_str(),
-        ("PDtmc" + exactStr + "InstantiationChecker").c_str(),
-        ("Instantiate pDTMCs to " + exactDesc + "DTMCs and immediately check").c_str());
+        m, ("_PDtmc" + exactStr + "InstantiationCheckerBase").c_str(), ("Instantiate pDTMCs to " + exactDesc + "DTMCs and immediately check (base)").c_str(),
+        ("PDtmc" + exactStr + "InstantiationChecker").c_str(), ("Instantiate pDTMCs to " + exactDesc + "DTMCs and immediately check").c_str());
 
     // Mdp
     define_typed_checker<Mdp<storm::RationalFunction>, ValueType>(
-        m, ("_PMdp" + exactStr + "InstantiationCheckerBase").c_str(),
-        ("Instantiate pMDPs to " + exactDesc + "MDPs and immediately check (base)").c_str(),
-        ("PMdp" + exactStr + "InstantiationChecker").c_str(),
-        ("Instantiate PMDP to " + exactDesc + "MDPs and immediately check").c_str());
+        m, ("_PMdp" + exactStr + "InstantiationCheckerBase").c_str(), ("Instantiate pMDPs to " + exactDesc + "MDPs and immediately check (base)").c_str(),
+        ("PMdp" + exactStr + "InstantiationChecker").c_str(), ("Instantiate PMDP to " + exactDesc + "MDPs and immediately check").c_str());
 
     // Ctmc
     define_typed_checker<Ctmc<storm::RationalFunction>, ValueType>(
-        m, ("_PCtmc" + exactStr + "InstantiationCheckerBase").c_str(),
-        ("Instantiate pCTMCs to " + exactDesc + "CTMCs and immediately check (base)").c_str(),
-        ("PCtmc" + exactStr + "InstantiationChecker").c_str(),
-        ("Instantiate pCTMCs to " + exactDesc + "CTMCs and immediately check").c_str());
+        m, ("_PCtmc" + exactStr + "InstantiationCheckerBase").c_str(), ("Instantiate pCTMCs to " + exactDesc + "CTMCs and immediately check (base)").c_str(),
+        ("PCtmc" + exactStr + "InstantiationChecker").c_str(), ("Instantiate pCTMCs to " + exactDesc + "CTMCs and immediately check").c_str());
 }
 
 template void define_model_instantiator<double>(py::module&);

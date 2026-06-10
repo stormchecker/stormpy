@@ -41,7 +41,7 @@ void define_result_as_explicit(py::class_<storm::modelchecker::CheckResult, std:
 void define_result(py::module& m) {
     // CheckResult
     py::class_<storm::modelchecker::CheckResult, std::shared_ptr<storm::modelchecker::CheckResult>> checkResult(m, "_CheckResult",
-                                                                                                                 "Base class for all modelchecking results");
+                                                                                                                "Base class for all modelchecking results");
     checkResult.def_property_readonly("_symbolic", &storm::modelchecker::CheckResult::isSymbolic, "Flag if result is symbolic")
         .def_property_readonly("_hybrid", &storm::modelchecker::CheckResult::isHybrid, "Flag if result is hybrid")
         .def_property_readonly("_quantitative", &storm::modelchecker::CheckResult::isQuantitative, "Flag if result is quantitative")
@@ -58,8 +58,7 @@ void define_result(py::module& m) {
                                "Flag if result is hybrid quantitative")
         .def_property_readonly("_pareto_curve", &storm::modelchecker::CheckResult::isParetoCurveCheckResult, "Flag if result is a pareto curve")
         .def_property_readonly("result_for_all_states", &storm::modelchecker::CheckResult::isResultForAllStates, "Flag if result is for all states")
-        .def_property_readonly("has_scheduler", &storm::modelchecker::CheckResult::hasScheduler, "Flag if a scheduler is present")
-        ;
+        .def_property_readonly("has_scheduler", &storm::modelchecker::CheckResult::hasScheduler, "Flag if a scheduler is present");
     define_result_as_explicit<double>(checkResult, "");
     define_result_as_explicit<storm::RationalNumber>(checkResult, "_exact");
     define_result_as_explicit<storm::RationalFunction>(checkResult, "_parametric");

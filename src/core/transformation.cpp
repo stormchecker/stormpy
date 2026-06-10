@@ -33,22 +33,22 @@ typename storm::transformer::EndComponentEliminator<ValueType>::EndComponentElim
 template<typename ValueType>
 void define_transformation_mdef(py::module& m) {
     std::string type, desc;
-    if constexpr (std::is_same_v<ValueType, double>) { type = ""; desc = ""; }
-    else if constexpr (std::is_same_v<ValueType, storm::RationalFunction>) { type = "_parametric"; desc = "parametric "; }
+    if constexpr (std::is_same_v<ValueType, double>) {
+        type = "";
+        desc = "";
+    } else if constexpr (std::is_same_v<ValueType, storm::RationalFunction>) {
+        type = "_parametric";
+        desc = "parametric ";
+    }
 
-    m.def(("_transform_to_sparse" + type + "_model").c_str(),
-          &storm::api::transformSymbolicToSparseModel<storm::dd::DdType::Sylvan, ValueType>,
-          ("Transform symbolic " + desc + "model into sparse " + desc + "model").c_str(),
-          py::arg("model"), py::arg("formulae") = std::vector<std::shared_ptr<storm::logic::Formula const>>());
-    m.def(("_transform_to_discrete_time" + type + "_model").c_str(),
-          &transformContinuousToDiscreteTimeSparseModel<ValueType>,
-          ("Transform " + desc + "continuous time model to " + desc + "discrete time model").c_str(),
-          py::arg("model"),
+    m.def(("_transform_to_sparse" + type + "_model").c_str(), &storm::api::transformSymbolicToSparseModel<storm::dd::DdType::Sylvan, ValueType>,
+          ("Transform symbolic " + desc + "model into sparse " + desc + "model").c_str(), py::arg("model"),
           py::arg("formulae") = std::vector<std::shared_ptr<storm::logic::Formula const>>());
-    m.def(("_eliminate_non_markovian_chains" + type).c_str(),
-          &storm::api::eliminateNonMarkovianChains<ValueType>,
-          "Eliminate chains of non-Markovian states in Markov automaton.",
-          py::arg("ma"), py::arg("formulae"), py::arg("label_behavior"));
+    m.def(("_transform_to_discrete_time" + type + "_model").c_str(), &transformContinuousToDiscreteTimeSparseModel<ValueType>,
+          ("Transform " + desc + "continuous time model to " + desc + "discrete time model").c_str(), py::arg("model"),
+          py::arg("formulae") = std::vector<std::shared_ptr<storm::logic::Formula const>>());
+    m.def(("_eliminate_non_markovian_chains" + type).c_str(), &storm::api::eliminateNonMarkovianChains<ValueType>,
+          "Eliminate chains of non-Markovian states in Markov automaton.", py::arg("ma"), py::arg("formulae"), py::arg("label_behavior"));
 }
 
 void define_transformation(py::module& m) {

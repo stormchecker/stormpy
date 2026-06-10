@@ -119,27 +119,36 @@ template<typename ValueType>
 void define_build_sparse_model_defs(py::module& m) {
     std::string type;
     std::string desc;
-    if constexpr (std::is_same_v<ValueType, double>) { type = ""; desc = ""; }
-    else if constexpr (std::is_same_v<ValueType, storm::RationalNumber>) { type = "exact_"; desc = ""; }
-    else if constexpr (std::is_same_v<ValueType, storm::RationalFunction>) { type = "parametric_"; desc = "parametric "; }
-    else if constexpr (std::is_same_v<ValueType, storm::Interval>) { type = "interval_"; desc = "interval "; }
-    else if constexpr (std::is_same_v<ValueType, storm::RationalInterval>) { type = "exact_interval_"; desc = "exact interval "; }
+    if constexpr (std::is_same_v<ValueType, double>) {
+        type = "";
+        desc = "";
+    } else if constexpr (std::is_same_v<ValueType, storm::RationalNumber>) {
+        type = "exact_";
+        desc = "";
+    } else if constexpr (std::is_same_v<ValueType, storm::RationalFunction>) {
+        type = "parametric_";
+        desc = "parametric ";
+    } else if constexpr (std::is_same_v<ValueType, storm::Interval>) {
+        type = "interval_";
+        desc = "interval ";
+    } else if constexpr (std::is_same_v<ValueType, storm::RationalInterval>) {
+        type = "exact_interval_";
+        desc = "exact interval ";
+    }
 
-    m.def(("_build_sparse_" + type + "model_from_symbolic_description").c_str(), &buildSparseModel<ValueType>,
-          ("Build the " + desc + "model in sparse representation" +
-           (std::is_same_v<ValueType, storm::RationalNumber> ? " with exact number representation" : ""))
-              .c_str(),
-          py::arg("model_description"), py::arg("formulas") = std::vector<std::shared_ptr<storm::logic::Formula const>>());
-    m.def(("build_sparse_" + type + "model_with_options").c_str(), &buildSparseModelWithOptions<ValueType>,
-          ("Build the " + desc + "model in sparse representation" +
-           (std::is_same_v<ValueType, storm::RationalNumber> ? " with exact number representation" : ""))
-              .c_str(),
-          py::arg("model_description"), py::arg("options"));
+    m.def(
+        ("_build_sparse_" + type + "model_from_symbolic_description").c_str(), &buildSparseModel<ValueType>,
+        ("Build the " + desc + "model in sparse representation" + (std::is_same_v<ValueType, storm::RationalNumber> ? " with exact number representation" : ""))
+            .c_str(),
+        py::arg("model_description"), py::arg("formulas") = std::vector<std::shared_ptr<storm::logic::Formula const>>());
+    m.def(
+        ("build_sparse_" + type + "model_with_options").c_str(), &buildSparseModelWithOptions<ValueType>,
+        ("Build the " + desc + "model in sparse representation" + (std::is_same_v<ValueType, storm::RationalNumber> ? " with exact number representation" : ""))
+            .c_str(),
+        py::arg("model_description"), py::arg("options"));
     m.def(("_build_sparse_" + type + "model_from_drn").c_str(), &storm::api::buildExplicitDRNModel<ValueType>,
-          ("Build the " + desc + "model from DRN" +
-           (std::is_same_v<ValueType, storm::RationalFunction> ? " (parametric)" : ""))
-              .c_str(),
-          py::arg("file"), py::arg("options") = storm::parser::DirectEncodingParserOptions());
+          ("Build the " + desc + "model from DRN" + (std::is_same_v<ValueType, storm::RationalFunction> ? " (parametric)" : "")).c_str(), py::arg("file"),
+          py::arg("options") = storm::parser::DirectEncodingParserOptions());
 
     if constexpr (std::is_same_v<ValueType, double>) {
         m.def("_build_symbolic_model_from_symbolic_description", &buildSymbolicModel<storm::dd::DdType::Sylvan, double>,
@@ -154,14 +163,13 @@ void define_build_sparse_model_defs(py::module& m) {
             .def("build", &storm::builder::ExplicitModelBuilder<double>::build, "Build the model", py::call_guard<py::gil_scoped_release>())
             .def("export_lookup", &storm::builder::ExplicitModelBuilder<double>::exportExplicitStateLookup, "Export a lookup model");
     } else if constexpr (std::is_same_v<ValueType, storm::RationalFunction>) {
-        m.def("_build_symbolic_parametric_model_from_symbolic_description",
-              &buildSymbolicModel<storm::dd::DdType::Sylvan, storm::RationalFunction>, "Build the parametric model in symbolic representation",
-              py::arg("model_description"), py::arg("formulas") = std::vector<std::shared_ptr<storm::logic::Formula const>>());
+        m.def("_build_symbolic_parametric_model_from_symbolic_description", &buildSymbolicModel<storm::dd::DdType::Sylvan, storm::RationalFunction>,
+              "Build the parametric model in symbolic representation", py::arg("model_description"),
+              py::arg("formulas") = std::vector<std::shared_ptr<storm::logic::Formula const>>());
         m.def("make_sparse_model_builder_parametric", &storm::api::makeExplicitModelBuilder<storm::RationalFunction>, "Construct a builder instance",
               py::arg("model_description"), py::arg("options"), py::arg("action_mask") = nullptr);
         py::class_<storm::builder::ExplicitModelBuilder<storm::RationalFunction>>(m, "ExplicitParametricModelBuilder", "Model builder for sparse models")
-            .def("build", &storm::builder::ExplicitModelBuilder<storm::RationalFunction>::build, "Build the model",
-                 py::call_guard<py::gil_scoped_release>())
+            .def("build", &storm::builder::ExplicitModelBuilder<storm::RationalFunction>::build, "Build the model", py::call_guard<py::gil_scoped_release>())
             .def("export_lookup", &storm::builder::ExplicitModelBuilder<storm::RationalFunction>::exportExplicitStateLookup, "Export a lookup model");
     } else if constexpr (std::is_same_v<ValueType, storm::RationalNumber>) {
         m.def("make_sparse_model_builder_exact", &storm::api::makeExplicitModelBuilder<storm::RationalNumber>, "Construct a builder instance",
@@ -247,11 +255,22 @@ template<typename ValueType>
 void define_export_drn(py::module& m) {
     std::string prefix;
     std::string suffix;
-    if constexpr (std::is_same_v<ValueType, double>) { prefix = ""; suffix = ""; }
-    else if constexpr (std::is_same_v<ValueType, storm::RationalNumber>) { prefix = "_exact"; suffix = ""; }
-    else if constexpr (std::is_same_v<ValueType, storm::RationalFunction>) { prefix = "_parametric"; suffix = ""; }
-    else if constexpr (std::is_same_v<ValueType, storm::Interval>) { prefix = ""; suffix = "_interval"; }
-    else if constexpr (std::is_same_v<ValueType, storm::RationalInterval>) { prefix = "_exact"; suffix = "_interval"; }
+    if constexpr (std::is_same_v<ValueType, double>) {
+        prefix = "";
+        suffix = "";
+    } else if constexpr (std::is_same_v<ValueType, storm::RationalNumber>) {
+        prefix = "_exact";
+        suffix = "";
+    } else if constexpr (std::is_same_v<ValueType, storm::RationalFunction>) {
+        prefix = "_parametric";
+        suffix = "";
+    } else if constexpr (std::is_same_v<ValueType, storm::Interval>) {
+        prefix = "";
+        suffix = "_interval";
+    } else if constexpr (std::is_same_v<ValueType, storm::RationalInterval>) {
+        prefix = "_exact";
+        suffix = "_interval";
+    }
 
     m.def(("_export" + prefix + "_to_drn" + suffix).c_str(), &exportDRN<ValueType>,
           ("Export " + (std::is_same_v<ValueType, storm::RationalFunction> ? std::string("parametric ") : std::string()) + "model in DRN format").c_str(),

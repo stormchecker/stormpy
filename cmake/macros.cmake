@@ -33,7 +33,7 @@ function(set_dependency_var NAME)
 endfunction(set_dependency_var)
 
 # Set variable for optional Storm libraries (if used)
-# which can be checked with HAVE_STORM_XYZ and optiona USE_STORM_XYZ
+# which can be checked with HAVE_STORM_XYZ and option USE_STORM_XYZ
 # Sets variable STORM_WITH_XYZ_BOOL
 function(set_optional_lib_var NAME)
     if ((USE_STORM_${NAME}) AND (HAVE_STORM_${NAME}))

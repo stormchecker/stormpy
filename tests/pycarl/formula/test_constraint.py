@@ -15,10 +15,13 @@ class TestConstraint(PackageSelector):
         bound = package.Rational(3)
         constraint = package.formula.Constraint(var, Relation.GREATER, bound)
         assert constraint.relation == Relation.LESS
+        assert constraint.lhs == bound - var
 
     def test_init_pol(self, package):
         pycarl.clear_pools()
         var = pycarl.Variable("x")
         pol = var * var + package.Integer(2)
         constraint = package.formula.Constraint(pol, Relation.LEQ)
+        # 0<0 because constraint x^2+2 <= 0 is False
         assert constraint.relation == Relation.LESS
+        assert constraint.lhs == 0

@@ -30,7 +30,6 @@ class TestPycarlCore:
     def test_config(self):
         from stormpy import pycarl
 
-        assert pycarl.has_parser() == True or pycarl.has_parser() == False
         assert pycarl.has_cln() == True or pycarl.has_cln() == False
 
     def test_pickle(self):

@@ -62,11 +62,11 @@ class TestPolynomial(PackageSelector):
         assert pol.constant_part() == 4
         pol = package.Polynomial(package.Rational(-8 / 3))
         assert pol.is_constant()
-        print(type(pol))
+        assert isinstance(pol, package.Polynomial)
         assert pol.constant_part() == package.Rational(-8 / 3)
         pol = package.Polynomial(1)
         assert pol.is_constant()
-        print(type(pol))
+        assert isinstance(pol, package.Polynomial)
         assert pol.constant_part() == 1
 
     def test_eq(self, package):

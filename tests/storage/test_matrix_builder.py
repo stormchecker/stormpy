@@ -56,8 +56,6 @@ class TestMatrixBuilder:
         builder_5x5.add_next_value(4, 3, stormpy.Rational("1/6"))
 
         matrix_5x5 = builder_5x5.build()
-        print(matrix_5x5)
-
         assert matrix_5x5.nr_columns == 5
         assert matrix_5x5.nr_rows == 5
         assert matrix_5x5.nr_entries == 7

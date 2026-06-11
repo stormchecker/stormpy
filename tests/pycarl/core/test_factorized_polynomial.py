@@ -70,9 +70,9 @@ class TestFactorizedPolynomial(PackageSelector):
         assert pol.constant_part() == 4
         pol = package.FactorizedPolynomial(package.Rational(-8 / 3))
         assert pol.is_constant()
-        print(type(pol))
+        assert isinstance(pol, package.FactorizedPolynomial)
         assert pol.constant_part() == package.Rational(-8 / 3)
         pol = package.FactorizedPolynomial(1)
         assert pol.is_constant()
-        print(type(pol))
+        assert isinstance(pol, package.FactorizedPolynomial)
         assert pol.constant_part() == 1

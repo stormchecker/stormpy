@@ -13,6 +13,8 @@ def has_package(pkg_name):
     return importlib.util.find_spec(pkg_name) is not None
 
 
+has_pycarl_parser = has_package("lark")
+
 # Skip not supported functionality
 dft = pytest.mark.skipif(not has_dft, reason="No support for DFTs")
 gspn = pytest.mark.skipif(not has_gspn, reason="No support for GSPNs")
@@ -22,7 +24,7 @@ spot = pytest.mark.skipif(not config.STORM_WITH_SPOT, reason="No support for LTL
 xml = pytest.mark.skipif(not config.STORM_WITH_XERCES, reason="No support for XML via xerces")
 numpy_avail = pytest.mark.skipif(not has_package("numpy"), reason="Numpy not available")
 plotting = pytest.mark.skipif(not has_package("matplotlib") or not has_package("scipy"), reason="Libraries for plotting not available")
-pycarl_parser = pytest.mark.skipif(not has_package("lark"), reason="No support for parsing")
+pycarl_parser = pytest.mark.skipif(not has_pycarl_parser, reason="No support for parsing")
 
 from stormpy import pycarl
 

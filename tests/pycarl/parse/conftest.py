@@ -1,6 +1,9 @@
-from stormpy import pycarl
-from stormpy.pycarl import parse
-from stormpy.pycarl.gmp import formula
+from configurations import has_pycarl_parser
 
-if pycarl.has_cln():
-    from stormpy.pycarl.cln import formula
+if has_pycarl_parser:
+    from stormpy import pycarl
+    from stormpy.pycarl import parse
+    from stormpy.pycarl.gmp import formula
+
+    if pycarl.has_cln():
+        from stormpy.pycarl.cln import formula

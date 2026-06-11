@@ -35,6 +35,6 @@ DECIMAL: NUMERAL "." /[0-9]+/
 HEXADECIMAL: /#x[0-9A-Fa-f]+/
 BINARY: /#b[01]+/
 
-SYMBOL: /[a-zA-Z~!@$%^&*_\-+=<>.?\/][a-zA-Z0-9~!@$%^&*_\-+=<>.?\/]*/
+SYMBOL: /[a-zA-Z~!@$%^&*_\-+=<>?\/][a-zA-Z0-9~!@$%^&*_\-+=<>?\/]*/
 
 %ignore /\s+/

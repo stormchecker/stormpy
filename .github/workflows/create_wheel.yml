@@ -115,7 +115,7 @@ jobs:
         run: perl -i -pe 's/__version__ = "[^"]+"/__version__ = "'"${{ inputs.version }}"'"/' lib/stormpy/_version.py
       - name: Build wheels (development)
         if: ${{ !inputs.full_build }}
-        uses: pypa/cibuildwheel@v3.4.1
+        uses: pypa/cibuildwheel@v4.1.0
         env:
           CIBW_PLATFORM: ${{ matrix.platform }}
           CIBW_ARCHS: ${{ matrix.archs }}
@@ -129,7 +129,7 @@ jobs:
             CMAKE_BUILD_TYPE=${{ inputs.build_type }}
       - name: Build wheels (stable)
         if: ${{ inputs.full_build }}
-        uses: pypa/cibuildwheel@v3.4.1
+        uses: pypa/cibuildwheel@v4.1.0
         env:
           CIBW_PLATFORM: ${{ matrix.platform }}
           CIBW_ARCHS: ${{ matrix.archs }}

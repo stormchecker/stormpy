@@ -100,10 +100,10 @@ jobs:
     steps:
       - name: Git clone (default current repo)
         if: ${{ inputs.repo == '' }}
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Git clone (custom repo)
         if: ${{ inputs.repo != '' }}
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: ${{ inputs.repo }}
           ref: ${{ inputs.ref }}
@@ -151,10 +151,10 @@ jobs:
     steps:
       - name: Git clone (default current repo)
         if: ${{ inputs.repo == '' }}
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Git clone (custom repo)
         if: ${{ inputs.repo != '' }}
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: ${{ inputs.repo }}
           ref: ${{ inputs.ref }}
@@ -200,14 +200,14 @@ jobs:
           merge-multiple: true
       - name: Checkout test files (default current repo)
         if: ${{ inputs.repo == '' }}
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           path: dist/test_files
           sparse-checkout: |
             tests
       - name: Checkout test files (custom repo)
         if: ${{ inputs.repo != '' }}
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: ${{ inputs.repo }}
           ref: ${{ inputs.ref }}
@@ -306,14 +306,14 @@ jobs:
           python3 -m pip install "$WHEEL"
       - name: Checkout test files (default current repo)
         if: ${{ inputs.repo == '' }}
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           path: dist/test_files
           sparse-checkout: |
             tests
       - name: Checkout test files (custom repo)
         if: ${{ inputs.repo != '' }}
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: ${{ inputs.repo }}
           ref: ${{ inputs.ref }}

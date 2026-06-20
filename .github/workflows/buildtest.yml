@@ -45,7 +45,7 @@ jobs:
           }
     steps:
       - name: Git clone
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Build stormpy from Dockerfile
         run: |
           docker build -t movesrwth/stormpy:ci . \
@@ -81,7 +81,7 @@ jobs:
     # Allow failures of stable versions as new features might have been added
     steps:
       - name: Git clone
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Replace Dockerfile
         run: cp .github/workflows/Dockerfile.stable Dockerfile
       - name: Build dependencies
@@ -156,7 +156,7 @@ jobs:
           }
     steps:
       - name: Git clone
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Build stormpy
         run: |
           docker build -t movesrwth/stormpy:ci . \
@@ -210,7 +210,7 @@ jobs:
         with:
           xcode-version: ${{ matrix.config.xcode }}
       - name: Git clone
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Install dependencies
         # cmake and gmp and python3 are already installed
         run: |
@@ -251,14 +251,14 @@ jobs:
         with:
           xcode-version: ${{ matrix.config.xcode }}
       - name: Git clone
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Install dependencies
         # cmake and gmp and python3 are already installed
         run: |
           brew update
           brew install automake boost cln ginac glpk hwloc libarchive xerces-c z3
       - name: Checkout Storm
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: stormchecker/storm
           ref: master
@@ -308,7 +308,7 @@ jobs:
           }
     steps:
       - name: Git clone
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Build stormpy from Dockerfile
         run: |
           docker build -t movesrwth/stormpy:${{ matrix.build_type.docker_tag }} . \

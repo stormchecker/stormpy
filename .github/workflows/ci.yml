@@ -161,7 +161,7 @@ jobs:
     with:
       storm_version: master
       # Only build for the latest Python versions
-      full_build: false
+      dev_build: true
       build_type: Release
 
   notify:

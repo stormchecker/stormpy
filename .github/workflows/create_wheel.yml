@@ -17,11 +17,10 @@ on:
         required: false
         type: string
         default: ''
-      full_build:
-        description: 'Build for all Python versions (if false, 3.14 and 3.15 only)'
+      dev_build:
+        description: 'Development build: use caching, only latest Python versions (3.14, 3.15)'
         required: true
         type: boolean
-        default: false
       build_type:
         description: 'Build configuration (Release/Debug)'
         required: false
@@ -51,11 +50,11 @@ on:
         required: true
         type: string
         default: 'x.y.z'
-      full_build:
-        description: 'Build for all Python versions (if false, 3.14 and 3.15 only)'
+      dev_build:
+        description: 'Development build: use caching, only latest Python versions (3.14, 3.15)'
         required: true
         type: boolean
-        default: false
+        default: true
       build_type:
         description: 'Build configuration (Release/Debug)'
         required: false
@@ -88,17 +87,21 @@ jobs:
           - os: linux-intel
             runs-on: ubuntu-latest
             archs: x86_64
+            ccache-prefix: /host
           - os: linux-arm
             runs-on: ubuntu-24.04-arm
             archs: aarch64
+            ccache-prefix: /host
           - os: macos-intel
             runs-on: macos-15-intel # x86_64 runner
             xcode: latest-stable
             deploy_target: 15.0
+            ccache-prefix: ""
           - os: macos-arm
             runs-on: macos-15 # ARM64 runners
             xcode: latest-stable
             deploy_target: 15.0
+            ccache-prefix: ""
       fail-fast: false
     steps:
       - name: Git clone (default current repo)
@@ -117,8 +120,17 @@ jobs:
       - name: Prepare version
         if: ${{ inputs.version != '' }}
         run: perl -i -pe 's/__version__ = "[^"]+"/__version__ = "'"${{ inputs.version }}"'"/' lib/stormpy/_version.py
+      - name: Restore ccache
+        if: ${{ inputs.dev_build }}
+        uses: actions/cache@v6
+        with:
+          path: ${{ runner.temp }}/ccache
+          key: ccache-${{ matrix.os }}-${{ inputs.build_type }}-${{ inputs.storm_version }}-${{ github.sha }}
+          restore-keys: |
+            ccache-${{ matrix.os }}-${{ inputs.build_type }}-${{ inputs.storm_version }}-
+            ccache-${{ matrix.os }}-${{ inputs.build_type }}-
       - name: Build wheels (development)
-        if: ${{ !inputs.full_build }}
+        if: ${{ inputs.dev_build }}
         uses: pypa/cibuildwheel@v4.2.1
         env:
           CIBW_PLATFORM: ${{ matrix.platform }}
@@ -132,8 +144,14 @@ jobs:
             CMAKE_BUILD_PARALLEL_LEVEL=${{ env.NR_JOBS }}
             SKBUILD_CMAKE_BUILD_TYPE=${{ inputs.build_type }}
             CMAKE_BUILD_TYPE=${{ inputs.build_type }}
+            CCACHE_DIR=${{ matrix.ccache-prefix }}${{ runner.temp }}/ccache
+            CCACHE_MAXSIZE=4G
+            CCACHE_UMASK=0
+            CCACHE_BASEDIR=${{ runner.workspace }}
+            CCACHE_NOHASHDIR=true
+            CCACHE_SLOPPINESS=file_macro
       - name: Build wheels (stable)
-        if: ${{ inputs.full_build }}
+        if: ${{ !inputs.dev_build }}
         uses: pypa/cibuildwheel@v4.2.1
         env:
           CIBW_PLATFORM: ${{ matrix.platform }}
@@ -145,6 +163,11 @@ jobs:
             CMAKE_BUILD_PARALLEL_LEVEL=${{ env.NR_JOBS }}
             SKBUILD_CMAKE_BUILD_TYPE=${{ inputs.build_type }}
             CMAKE_BUILD_TYPE=${{ inputs.build_type }}
+      - name: ccache stats
+        if: ${{ inputs.dev_build }}
+        env:
+          CCACHE_DIR: ${{ runner.temp }}/ccache
+        run: ccache -s || true
       - uses: actions/upload-artifact@v7
         with:
           name: stormpy-wheels-${{ matrix.os }}-${{ inputs.build_type }}
@@ -199,7 +222,7 @@ jobs:
           - arch: {name: linux-arm, runner: ubuntu-24.04-arm}
             distro: archlinux:latest
           # Debian 13 ships Python 3.13 which is not covered by the development build
-          - distro: ${{ inputs.full_build && 'none' || 'debian:latest' }}
+          - distro: ${{ !inputs.dev_build && 'none' || 'debian:latest' }}
 
     steps:
       - uses: actions/download-artifact@v8

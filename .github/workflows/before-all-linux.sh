@@ -6,7 +6,10 @@ set -e -u
 
 ginac_version=1.8.10
 
-dnf install -y boost-devel cln-devel glpk-devel gmp-devel hwloc-devel libarchive-devel xerces-c-devel z3-devel eigen3-devel # missing ginac-devel
+dnf install -y ccache ninja-build boost-devel cln-devel glpk-devel gmp-devel hwloc-devel libarchive-devel xerces-c-devel z3-devel eigen3-devel # missing ginac-devel
+if [ -z "${CCACHE_DIR:-}" ] && [ -n "${RUNNER_TEMP:-}" ]; then
+    export CCACHE_DIR="/host$RUNNER_TEMP/ccache"
+fi
 
 cd /tmp
 
@@ -24,8 +27,7 @@ git clone https://github.com/stormchecker/storm.git -b ${STORM_VERSION}
 cd storm
 mkdir build
 cd build
-cmake .. -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE:-Release} -DSTORM_BUILD_TESTS=OFF -DSTORM_BUILD_EXECUTABLES=OFF -DSTORM_PORTABLE=ON
+cmake .. -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE:-Release} -DSTORM_BUILD_TESTS=OFF -DSTORM_BUILD_EXECUTABLES=OFF -DSTORM_PORTABLE=ON -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
 make -j ${NR_JOBS}
 make install
 cd ..
-rm -rf build

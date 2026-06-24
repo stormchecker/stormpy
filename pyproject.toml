@@ -115,7 +115,10 @@ before-all = ".github/workflows/before-all-macos.sh"
 repair-wheel-command = "delocate-listdeps -vv --depending --all {wheel} && DYLD_LIBRARY_PATH=$REPAIR_LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}"
 
 [tool.cibuildwheel.config-settings]
-"cmake.args" = ["-DSTORM_PORTABLE=ON", "-DALLOW_STORM_SYSTEM='ON'", "-DALLOW_STORM_FETCH='OFF'", "-DSTORMPY_INFO_PRETEND_FETCH='ON'"]
+# These override [tool.scikit-build.cmake.define] defaults when building via cibuildwheel.
+# Need to be in quotation marks.
+"cmake.define.ALLOW_STORM_FETCH" = "OFF"
+"cmake.define.STORMPY_INFO_PRETEND_FETCH" = "ON"
 
 [tool.black]
 line-length = 160

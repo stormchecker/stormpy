@@ -125,11 +125,11 @@ jobs:
           MACOSX_DEPLOYMENT_TARGET: ${{ matrix.deploy_target }}
           # Build development version only on latest Python versions
           CIBW_BUILD: "cp313-* cp314-*"
-          CIBW_CONFIG_SETTINGS: cmake.build-type=${{ inputs.build_type }}
           CIBW_ENVIRONMENT: >-
             STORM_VERSION=${{ inputs.storm_version }}
             NR_JOBS=${{ env.NR_JOBS }}
             CMAKE_BUILD_PARALLEL_LEVEL=${{ env.NR_JOBS }}
+            SKBUILD_CMAKE_BUILD_TYPE=${{ inputs.build_type }}
             CMAKE_BUILD_TYPE=${{ inputs.build_type }}
       - name: Build wheels (stable)
         if: ${{ inputs.full_build }}
@@ -138,11 +138,11 @@ jobs:
           CIBW_PLATFORM: ${{ matrix.platform }}
           CIBW_ARCHS: ${{ matrix.archs }}
           MACOSX_DEPLOYMENT_TARGET: ${{ matrix.deploy_target }}
-          CIBW_CONFIG_SETTINGS: cmake.build-type=${{ inputs.build_type }}
           CIBW_ENVIRONMENT: >-
             STORM_VERSION=${{ inputs.storm_version }}
             NR_JOBS=${{ env.NR_JOBS }}
             CMAKE_BUILD_PARALLEL_LEVEL=${{ env.NR_JOBS }}
+            SKBUILD_CMAKE_BUILD_TYPE=${{ inputs.build_type }}
             CMAKE_BUILD_TYPE=${{ inputs.build_type }}
       - uses: actions/upload-artifact@v7
         with:

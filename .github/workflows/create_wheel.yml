@@ -129,6 +129,21 @@ jobs:
           restore-keys: |
             ccache-${{ matrix.os }}-${{ inputs.build_type }}-${{ inputs.storm_version }}-
             ccache-${{ matrix.os }}-${{ inputs.build_type }}-
+      - name: Get stormpy build dependencies
+        if: ${{ inputs.dev_build }}
+        id: build-deps
+        # Parse requires from pyproject.toml to get dependencies
+        run: |
+          PYTHON_DEPS=$(python3 -c "
+          import re
+          with open('pyproject.toml') as f:
+              text = f.read()
+          m = re.search(r'requires\s*=\s*\[(.*?)\]', text, re.DOTALL)
+          if m:
+              deps = re.findall(r'\"([^\"]+)\"', m.group(1))
+              print(' '.join(deps))
+          ")
+          echo "deps=$PYTHON_DEPS" >> "$GITHUB_OUTPUT"
       - name: Build wheels (development)
         if: ${{ inputs.dev_build }}
         uses: pypa/cibuildwheel@v4.2.1
@@ -138,6 +153,9 @@ jobs:
           MACOSX_DEPLOYMENT_TARGET: ${{ matrix.deploy_target }}
           # Build development version only on latest Python versions
           CIBW_BUILD: "cp314-* cp315-*"
+          # Build without build isolation for better caching. Requires to install build dependencies beforehand.
+          CIBW_BEFORE_BUILD: "pip install ${{ steps.build-deps.outputs.deps }}"
+          CIBW_BUILD_FRONTEND: "build; args:--no-isolation"
           CIBW_ENVIRONMENT: >-
             STORM_VERSION=${{ inputs.storm_version }}
             NR_JOBS=${{ env.NR_JOBS }}

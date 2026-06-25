@@ -84,16 +84,17 @@ sdist.include = [
 STORM_DIR_HINT=""
 ALLOW_STORM_SYSTEM="ON"
 ALLOW_STORM_FETCH="ON"
+STORM_GIT_REPO="https://github.com/stormchecker/storm.git"
+# Storm version should be synced with STORM_MIN_VERSION in CMakeLists.txt
+STORM_GIT_TAG="1.13.0"
 USE_STORM_DFT="ON"
 USE_STORM_GSPN="ON"
 USE_STORM_PARS="ON"
 USE_STORM_POMDP="ON"
 USE_CLN_NUMBERS="ON"
-COMPILE_WITH_CCACHE="ON"
 STORMPY_DISABLE_SIGNATURE_DOC="OFF"
-STORM_GIT_REPO="https://github.com/stormchecker/storm.git"
-# Storm version should be synced with STORM_MIN_VERSION in CMakeLists.txt
-STORM_GIT_TAG="1.13.0"
+COMPILE_WITH_CCACHE="ON"
+STORMPY_INFO_PRETEND_FETCH="OFF"
 
 
 [tool.scikit-build.metadata.version]

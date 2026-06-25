@@ -1,5 +1,8 @@
 name: Build and test wheels
 
+env:
+  NR_JOBS: "4"
+
 on:
   # needed to reuse the workflow from another one
   workflow_call:
@@ -125,7 +128,8 @@ jobs:
           CIBW_CONFIG_SETTINGS: cmake.build-type=${{ inputs.build_type }}
           CIBW_ENVIRONMENT: >-
             STORM_VERSION=${{ inputs.storm_version }}
-            NR_JOBS=4
+            NR_JOBS=${{ env.NR_JOBS }}
+            CMAKE_BUILD_PARALLEL_LEVEL=${{ env.NR_JOBS }}
             CMAKE_BUILD_TYPE=${{ inputs.build_type }}
       - name: Build wheels (stable)
         if: ${{ inputs.full_build }}
@@ -137,7 +141,8 @@ jobs:
           CIBW_CONFIG_SETTINGS: cmake.build-type=${{ inputs.build_type }}
           CIBW_ENVIRONMENT: >-
             STORM_VERSION=${{ inputs.storm_version }}
-            NR_JOBS=4
+            NR_JOBS=${{ env.NR_JOBS }}
+            CMAKE_BUILD_PARALLEL_LEVEL=${{ env.NR_JOBS }}
             CMAKE_BUILD_TYPE=${{ inputs.build_type }}
       - uses: actions/upload-artifact@v7
         with:

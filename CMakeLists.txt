@@ -150,6 +150,8 @@ if (NOT storm_FOUND)
     endif()
 endif()
 
+message(STATUS "Stormpy - Building ${CMAKE_BUILD_TYPE} version.")
+
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/lib/stormpy")
 
 # This sets interprocedural optimization off as this leads to some problems on some systems

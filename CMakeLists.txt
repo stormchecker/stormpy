@@ -185,7 +185,7 @@ find_package(Boost 1.70 QUIET REQUIRED CONFIG)
 if (Boost_FOUND)
     if (${Boost_VERSION} VERSION_GREATER_EQUAL "1.81.0")
         message(STATUS "Stormpy - Using workaround for Boost >= 1.81")
-        set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBOOST_PHOENIX_STL_TUPLE_H_")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBOOST_PHOENIX_STL_TUPLE_H_")
     endif()
 endif()
 

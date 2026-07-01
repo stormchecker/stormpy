@@ -81,6 +81,7 @@ sdist.include = [
 ]
 
 [tool.scikit-build.cmake.define]
+# See CMakeLists.txt for descriptions of these options
 STORM_DIR_HINT=""
 ALLOW_STORM_SYSTEM="ON"
 ALLOW_STORM_FETCH="ON"
@@ -94,8 +95,8 @@ USE_STORM_POMDP="ON"
 USE_CLN_NUMBERS="ON"
 STORMPY_DISABLE_SIGNATURE_DOC="OFF"
 COMPILE_WITH_CCACHE="ON"
+# Override some flags in stormpy.info. Used for building release wheels via cibuildwheel
 STORMPY_INFO_PRETEND_FETCH="OFF"
-
 
 [tool.scikit-build.metadata.version]
 provider = "scikit_build_core.metadata.regex"

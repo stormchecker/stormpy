@@ -85,23 +85,23 @@ We refer to the section `[tool.scikit-build.cmake.define]` in `pyproject.toml` f
 ##### Using system version of Storm
 By default, stormpy is first searching for a local installation of Storm.
 Usage of the system version of Storm can be configured with the following flags:
-- `--config-settings=cmake.define.ALLOW_STORM_SYSTEM=OFF` disables searching for a system version of Storm.
+- `--config-settings=cmake.define.STORMPY_ALLOW_STORM_SYSTEM=OFF` disables searching for a system version of Storm.
 - `--config-settings=cmake.define.STORM_DIR_HINT=<dir>` sets the hint for the Storm directory.
   In case of a manually built Storm, the path should point to the build directory.
 
 ##### Using fetched version of Storm
 If no system version of Storm could be found, Storm is automatically fetched and installed.
 Fetching a Storm version can be configured with the following flags:
-- `--config-settings=cmake.define.ALLOW_STORM_FETCH=OFF` disables fetching of Storm.
+- `--config-settings=cmake.define.STORMPY_ALLOW_STORM_FETCH=OFF` disables fetching of Storm.
 - `--config-settings=cmake.define.STORM_GIT_REPO=<url>` changes the Git repository used for fetching Storm.
 - `--config-settings=cmake.define.STORM_GIT_TAG=<tag>` changes the Git tag used for fetching Storm.
 
 ##### Disabling functionality
 If you want to disable certain functionality in stormpy from being built you can add the following flags:
-- `--config-settings=cmake.define.USE_STORM_DFT=OFF` to disable support for dynamic fault trees (DFTs).
-- `--config-settings=cmake.define.USE_STORM_GSPN=OFF` to disable support for generalized stochastic Petri nets (GSPNs).
-- `--config-settings=cmake.define.USE_STORM_PARS=OFF` to disable support for parametric models.
-- `--config-settings=cmake.define.USE_STORM_POMDP=OFF` to disable support for POMDPs.
+- `--config-settings=cmake.define.STORMPY_USE_STORM_DFT=OFF` to disable support for dynamic fault trees (DFTs).
+- `--config-settings=cmake.define.STORMPY_USE_STORM_GSPN=OFF` to disable support for generalized stochastic Petri nets (GSPNs).
+- `--config-settings=cmake.define.STORMPY_USE_STORM_PARS=OFF` to disable support for parametric models.
+- `--config-settings=cmake.define.STORMPY_USE_STORM_POMDP=OFF` to disable support for POMDPs.
 
 ##### Building stormpy in debug mode
 If you want to build stormpy in debug mode you can add the flag `--config-settings=cmake.build-type='Debug'`.

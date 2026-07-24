@@ -82,12 +82,12 @@ sdist.include = [
 
 [tool.scikit-build.cmake.define]
 # See CMakeLists.txt for descriptions of these options
-STORMPY_STORM_DIR_HINT=""
+STORM_DIR_HINT=""
 STORMPY_ALLOW_STORM_SYSTEM="ON"
 STORMPY_ALLOW_STORM_FETCH="ON"
-STORMPY_STORM_GIT_REPO="https://github.com/stormchecker/storm.git"
-# Storm version should be synced with STORMPY_STORM_MIN_VERSION in CMakeLists.txt
-STORMPY_STORM_GIT_TAG="1.13.0"
+STORM_GIT_REPO="https://github.com/stormchecker/storm.git"
+# Storm version should be synced with STORM_MIN_VERSION in CMakeLists.txt
+STORM_GIT_TAG="1.13.0"
 STORMPY_USE_STORM_DFT="ON"
 STORMPY_USE_STORM_GSPN="ON"
 STORMPY_USE_STORM_PARS="ON"

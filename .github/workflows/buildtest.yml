@@ -122,35 +122,35 @@ jobs:
           - {name: "Debian 12, Debug",
              base_image: "movesrwth/storm-basesystem:debian-12",
              build_type: "Debug",
-             setup_args: "--config-settings=cmake.define.STORMPY_ALLOW_STORM_SYSTEM=OFF --config-settings=cmake.define.STORMPY_STORM_GIT_TAG=master",
+             setup_args: "--config-settings=cmake.define.STORMPY_ALLOW_STORM_SYSTEM=OFF --config-settings=cmake.define.STORM_GIT_TAG=master",
              optional_libs: "[test,parser,plot]",
              test_opt: ""
           }
           - {name: "Debian 13, Debug",
              base_image: "movesrwth/storm-basesystem:debian-13",
              build_type: "Debug",
-             setup_args: "--config-settings=cmake.define.STORMPY_ALLOW_STORM_SYSTEM=OFF --config-settings=cmake.define.STORMPY_STORM_GIT_TAG=master",
+             setup_args: "--config-settings=cmake.define.STORMPY_ALLOW_STORM_SYSTEM=OFF --config-settings=cmake.define.STORM_GIT_TAG=master",
              optional_libs: "[test,parser,plot]",
              test_opt: ""
           }
           - {name: "Ubuntu 24.04, Debug",
              base_image: "movesrwth/storm-basesystem:ubuntu-24.04",
              build_type: "Debug",
-             setup_args: "--config-settings=cmake.define.STORMPY_ALLOW_STORM_SYSTEM=OFF --config-settings=cmake.define.STORMPY_STORM_GIT_TAG=master",
+             setup_args: "--config-settings=cmake.define.STORMPY_ALLOW_STORM_SYSTEM=OFF --config-settings=cmake.define.STORM_GIT_TAG=master",
              optional_libs: "[test,parser,plot]",
              test_opt: ""
           }
           - {name: "Ubuntu 24.04, Debug, only Storm core",
              base_image: "movesrwth/storm-basesystem:ubuntu-24.04",
              build_type: "Debug",
-             setup_args: "--config-settings=cmake.define.STORMPY_ALLOW_STORM_SYSTEM=OFF --config-settings=cmake.define.STORMPY_STORM_GIT_TAG=master --config-settings=cmake.define.STORMPY_USE_STORM_DFT=OFF --config-settings=cmake.define.STORMPY_USE_STORM_GSPN=OFF --config-settings=cmake.define.STORMPY_USE_STORM_PARS=OFF --config-settings=cmake.define.STORMPY_USE_STORM_POMDP=OFF",
+             setup_args: "--config-settings=cmake.define.STORMPY_ALLOW_STORM_SYSTEM=OFF --config-settings=cmake.define.STORM_GIT_TAG=master --config-settings=cmake.define.STORMPY_USE_STORM_DFT=OFF --config-settings=cmake.define.STORMPY_USE_STORM_GSPN=OFF --config-settings=cmake.define.STORMPY_USE_STORM_PARS=OFF --config-settings=cmake.define.STORMPY_USE_STORM_POMDP=OFF",
              optional_libs: "[test]",
              test_opt: "tests"
           }
           - {name: "Ubuntu 24.04, Release",
              base_image: "movesrwth/storm-basesystem:ubuntu-24.04",
              build_type: "Release",
-             setup_args: "--config-settings=cmake.define.STORMPY_ALLOW_STORM_SYSTEM=OFF --config-settings=cmake.define.STORMPY_STORM_GIT_TAG=master",
+             setup_args: "--config-settings=cmake.define.STORMPY_ALLOW_STORM_SYSTEM=OFF --config-settings=cmake.define.STORM_GIT_TAG=master",
              optional_libs: "[test,parser,plot]",
              test_opt: ""
           }
@@ -180,28 +180,28 @@ jobs:
              distro: "macos-14",
              xcode: "15.4",
              build_type: "Debug",
-             setup_args: "--config-settings=cmake.define.STORMPY_ALLOW_STORM_SYSTEM=OFF --config-settings=cmake.define.STORMPY_STORM_GIT_TAG=master",
+             setup_args: "--config-settings=cmake.define.STORMPY_ALLOW_STORM_SYSTEM=OFF --config-settings=cmake.define.STORM_GIT_TAG=master",
              optional_libs: "[test,parser,plot]"
           }
           - {name: "MacOS 15, ARM, Debug",
              distro: "macos-15",
              xcode: "16.4",
              build_type: "Debug",
-             setup_args: "--config-settings=cmake.define.STORMPY_ALLOW_STORM_SYSTEM=OFF --config-settings=cmake.define.STORMPY_STORM_GIT_TAG=master",
+             setup_args: "--config-settings=cmake.define.STORMPY_ALLOW_STORM_SYSTEM=OFF --config-settings=cmake.define.STORM_GIT_TAG=master",
              optional_libs: "[test,parser,plot]"
           }
           - {name: "MacOS 26, ARM, Debug",
              distro: "macos-26",
              xcode: "latest-stable",
              build_type: "Debug",
-             setup_args: "--config-settings=cmake.define.STORMPY_ALLOW_STORM_SYSTEM=OFF --config-settings=cmake.define.STORMPY_STORM_GIT_TAG=master",
+             setup_args: "--config-settings=cmake.define.STORMPY_ALLOW_STORM_SYSTEM=OFF --config-settings=cmake.define.STORM_GIT_TAG=master",
              optional_libs: "[test,parser,plot]"
           }
           - {name: "MacOS 26, Intel, Debug",
              distro: "macos-26-intel",
              xcode: "latest-stable",
              build_type: "Debug",
-             setup_args: "--config-settings=cmake.define.STORMPY_ALLOW_STORM_SYSTEM=OFF --config-settings=cmake.define.STORMPY_STORM_GIT_TAG=master",
+             setup_args: "--config-settings=cmake.define.STORMPY_ALLOW_STORM_SYSTEM=OFF --config-settings=cmake.define.STORM_GIT_TAG=master",
              optional_libs: "[test,parser,plot]"
           }
     runs-on: ${{ matrix.config.distro }}

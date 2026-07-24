@@ -20,7 +20,7 @@ make install
 cd ..
 
 # Install Storm
-git clone https://github.com/stormchecker/storm.git -b ${STORMPY_STORM_VERSION}
+git clone https://github.com/stormchecker/storm.git -b ${STORM_VERSION}
 cd storm
 mkdir build
 cd build

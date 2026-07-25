@@ -24,12 +24,12 @@ formula yd = d ? (y-1) : y;
 formula xl = l ? (x-1) : x;
 
 // corresponding observables
-observable "u" = clk=1 & u;
-observable "r" = clk=1 & r;
-observable "d" = clk=1 & d;
-observable "l" = clk=1 & l;
-observable "goal" = goal;
-observable "bad" = bad;
+observable "can_u" = clk=1 & u;
+observable "can_r" = clk=1 & r;
+observable "can_d" = clk=1 & d;
+observable "can_l" = clk=1 & l;
+observable "obs_goal" = goal;
+observable "obs_bad" = bad;
 
 
 // modules

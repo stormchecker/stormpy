@@ -68,17 +68,17 @@ class TestSparseModelComponents:
         manager = stormpy.ExpressionManager()
         var_s = manager.create_integer_variable(name="s")
         var_d = manager.create_integer_variable(name="d")
-        v_builder = stormpy.StateValuationsBuilder()
-
-        v_builder.add_variable(var_s)
-        v_builder.add_variable(var_d)
-
+        desc_builder = stormpy.ValuationDescriptionBuilder(manager)
+        desc_builder.add_integer_variable(var_s, 0, 7)
+        desc_builder.add_integer_variable(var_d, 0, 6)
+        desc = desc_builder.build_class_description()
+        state_valuations = stormpy.Valuations(desc, manager, 13)
         for s in range(7):
-            v_builder.add_state(state=s, integer_values=[s, 0])
+            state_valuations.write_int64_value(s, var_s, s)
+            state_valuations.write_int64_value(s, var_d, 0)
         for s in range(7, 13):
-            v_builder.add_state(state=s, integer_values=[7, s - 6])
-
-        state_valuations = v_builder.build()
+            state_valuations.write_int64_value(s, var_s, 7)
+            state_valuations.write_int64_value(s, var_d, s - 6)
 
         # choice origins
         prism_program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
@@ -217,15 +217,17 @@ class TestSparseModelComponents:
         manager = stormpy.ExpressionManager()
         var_s = manager.create_integer_variable(name="s")
         var_d = manager.create_integer_variable(name="d")
-        v_builder = stormpy.StateValuationsBuilder()
-        v_builder.add_variable(var_s)
-        v_builder.add_variable(var_d)
+        desc_builder = stormpy.ValuationDescriptionBuilder(manager)
+        desc_builder.add_integer_variable(var_s, 0, 7)
+        desc_builder.add_integer_variable(var_d, 0, 6)
+        desc = desc_builder.build_class_description()
+        state_valuations = stormpy.Valuations(desc, manager, 13)
         for s in range(7):
-            # values: vector [value for s, value for d]
-            v_builder.add_state(state=s, boolean_values=[], integer_values=[s, 0], rational_values=[])
+            state_valuations.write_int64_value(s, var_s, s)
+            state_valuations.write_int64_value(s, var_d, 0)
         for s in range(7, 13):
-            v_builder.add_state(state=s, boolean_values=[], integer_values=[7, s - 6], rational_values=[])
-        state_valuations = v_builder.build()
+            state_valuations.write_int64_value(s, var_s, 7)
+            state_valuations.write_int64_value(s, var_d, s - 6)
 
         # choice origins
         prism_program = stormpy.parse_prism_program(get_example_path("mdp", "die_c1.nm"))
@@ -362,26 +364,21 @@ class TestSparseModelComponents:
         var_a = manager.create_integer_variable(name="a")
         var_s1 = manager.create_integer_variable(name="s1")
         var_s2 = manager.create_integer_variable(name="s2")
-        v_builder = stormpy.StateValuationsBuilder()
-        v_builder.add_variable(var_s)
-        v_builder.add_variable(var_a)
-        v_builder.add_variable(var_s1)
-        v_builder.add_variable(var_s2)
-
-        v_builder.add_state(state=0, boolean_values=[], integer_values=[1, 0, 0, 0], rational_values=[])
-        v_builder.add_state(state=1, boolean_values=[], integer_values=[1, 0, 1, 0], rational_values=[])
-        v_builder.add_state(state=2, boolean_values=[], integer_values=[1, 0, 0, 1], rational_values=[])
-        v_builder.add_state(state=3, boolean_values=[], integer_values=[2, 0, 0, 0], rational_values=[])
-        v_builder.add_state(state=4, boolean_values=[], integer_values=[1, 0, 1, 1], rational_values=[])
-        v_builder.add_state(state=5, boolean_values=[], integer_values=[1, 1, 1, 0], rational_values=[])
-        v_builder.add_state(state=6, boolean_values=[], integer_values=[2, 0, 0, 1], rational_values=[])
-        v_builder.add_state(state=7, boolean_values=[], integer_values=[2, 0, 1, 0], rational_values=[])
-        v_builder.add_state(state=8, boolean_values=[], integer_values=[1, 1, 1, 1], rational_values=[])
-        v_builder.add_state(state=9, boolean_values=[], integer_values=[2, 0, 1, 1], rational_values=[])
-        v_builder.add_state(state=10, boolean_values=[], integer_values=[2, 1, 0, 1], rational_values=[])
-        v_builder.add_state(state=11, boolean_values=[], integer_values=[2, 1, 1, 1], rational_values=[])
-
-        state_valuations = v_builder.build()
+        desc_builder = stormpy.ValuationDescriptionBuilder(manager)
+        desc_builder.add_integer_variable(var_s, 1, 2)
+        desc_builder.add_integer_variable(var_a, 0, 1)
+        desc_builder.add_integer_variable(var_s1, 0, 1)
+        desc_builder.add_integer_variable(var_s2, 0, 1)
+        desc = desc_builder.build_class_description()
+        state_vals = [[1, 0, 0, 0], [1, 0, 1, 0], [1, 0, 0, 1], [2, 0, 0, 0], [1, 0, 1, 1],
+                      [1, 1, 1, 0], [2, 0, 0, 1], [2, 0, 1, 0], [1, 1, 1, 1], [2, 0, 1, 1],
+                      [2, 1, 0, 1], [2, 1, 1, 1]]
+        state_valuations = stormpy.Valuations(desc, manager, 12)
+        for state, (sv, sa, ss1, ss2) in enumerate(state_vals):
+            state_valuations.write_int64_value(state, var_s, sv)
+            state_valuations.write_int64_value(state, var_a, sa)
+            state_valuations.write_int64_value(state, var_s1, ss1)
+            state_valuations.write_int64_value(state, var_s2, ss2)
 
         # set rate_transitions to True: the transition values are interpreted as rates
         components = stormpy.SparseModelComponents(
@@ -504,16 +501,12 @@ class TestSparseModelComponents:
         # state valuations
         manager = stormpy.ExpressionManager()
         var_s = manager.create_integer_variable(name="s")
-        v_builder = stormpy.StateValuationsBuilder()
-        v_builder.add_variable(var_s)
-
-        v_builder.add_state(state=0, boolean_values=[], integer_values=[0], rational_values=[])
-        v_builder.add_state(state=1, boolean_values=[], integer_values=[2], rational_values=[])
-        v_builder.add_state(state=2, boolean_values=[], integer_values=[1], rational_values=[])
-        v_builder.add_state(state=3, boolean_values=[], integer_values=[4], rational_values=[])
-        v_builder.add_state(state=4, boolean_values=[], integer_values=[3], rational_values=[])
-
-        state_valuations = v_builder.build()
+        desc_builder = stormpy.ValuationDescriptionBuilder(manager)
+        desc_builder.add_integer_variable(var_s, 0, 4)
+        desc = desc_builder.build_class_description()
+        state_valuations = stormpy.Valuations(desc, manager, 5)
+        for state, val in enumerate([0, 2, 1, 4, 3]):
+            state_valuations.write_int64_value(state, var_s, val)
 
         # choice origins:
         prism_program = stormpy.parse_prism_program(get_example_path("ma", "hybrid_states.ma"))
@@ -716,24 +709,18 @@ class TestSparseModelComponents:
         var_x = manager.create_integer_variable(name="x")
         var_y = manager.create_integer_variable(name="y")
         var_o = manager.create_integer_variable(name="o")
-        v_builder = stormpy.StateValuationsBuilder()
-
-        v_builder.add_variable(var_x)
-        v_builder.add_variable(var_y)
-        v_builder.add_variable(var_o)
-
-        v_builder.add_state(state=0, boolean_values=[], integer_values=[0, 0, 0], rational_values=[])
-        v_builder.add_state(state=1, boolean_values=[], integer_values=[0, 0, 1], rational_values=[])
-        v_builder.add_state(state=2, boolean_values=[], integer_values=[0, 1, 1], rational_values=[])
-        v_builder.add_state(state=3, boolean_values=[], integer_values=[0, 2, 1], rational_values=[])
-        v_builder.add_state(state=4, boolean_values=[], integer_values=[1, 0, 1], rational_values=[])
-        v_builder.add_state(state=5, boolean_values=[], integer_values=[1, 1, 1], rational_values=[])
-        v_builder.add_state(state=6, boolean_values=[], integer_values=[1, 2, 1], rational_values=[])
-        v_builder.add_state(state=7, boolean_values=[], integer_values=[2, 1, 1], rational_values=[])
-        v_builder.add_state(state=8, boolean_values=[], integer_values=[2, 2, 1], rational_values=[])
-        v_builder.add_state(state=9, boolean_values=[], integer_values=[2, 0, 2], rational_values=[])
-
-        state_valuations = v_builder.build()
+        desc_builder = stormpy.ValuationDescriptionBuilder(manager)
+        desc_builder.add_integer_variable(var_x, 0, 2)
+        desc_builder.add_integer_variable(var_y, 0, 2)
+        desc_builder.add_integer_variable(var_o, 0, 2)
+        desc = desc_builder.build_class_description()
+        state_vals = [[0, 0, 0], [0, 0, 1], [0, 1, 1], [0, 2, 1], [1, 0, 1],
+                      [1, 1, 1], [1, 2, 1], [2, 1, 1], [2, 2, 1], [2, 0, 2]]
+        state_valuations = stormpy.Valuations(desc, manager, 10)
+        for state, (vx, vy, vo) in enumerate(state_vals):
+            state_valuations.write_int64_value(state, var_x, vx)
+            state_valuations.write_int64_value(state, var_y, vy)
+            state_valuations.write_int64_value(state, var_o, vo)
 
         observations = [1, 0, 0, 0, 0, 0, 0, 0, 0, 2]
 

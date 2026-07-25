@@ -32,6 +32,8 @@ void define_expressions(py::module& m) {
              py::arg("auxiliary") = false)
         .def("create_rational_variable", &storm::expressions::ExpressionManager::declareRationalVariable, "create Rational variable", py::arg("name"),
              py::arg("auxiliary") = false)
+        .def("create_string_variable", &storm::expressions::ExpressionManager::declareStringVariable, "create String variable", py::arg("name"),
+             py::arg("auxiliary") = false)
         .def("has_variable", &storm::expressions::ExpressionManager::hasVariable, "checks whether a variable with a name is already taken", py::arg("name"))
         .def("get_variable", &storm::expressions::ExpressionManager::getVariable, "get variably by name", py::arg("name"))
         .def("get_variables", &storm::expressions::ExpressionManager::getVariables, "Retrieves the set of all variables known to this manager.")
@@ -48,6 +50,7 @@ void define_expressions(py::module& m) {
         .def("has_rational_type", &storm::expressions::Variable::hasRationalType, "Check if the variable is of rational type")
         .def("has_numerical_type", &storm::expressions::Variable::hasNumericalType, "Check if the variable is of numerical type")
         .def("has_bitvector_type", &storm::expressions::Variable::hasBitVectorType, "Check if the variable is of bitvector type")
+        .def("has_string_type", &storm::expressions::Variable::hasStringType, "Check if the variable is of string type")
         .def("get_expression", &storm::expressions::Variable::getExpression, "Get expression from variable")
         .def("__eq__", &storm::expressions::Variable::operator==)
         .def("__hash__", &storm::expressions::Variable::getIndex);
@@ -144,6 +147,7 @@ void define_expressions(py::module& m) {
         .def_property_readonly("is_boolean", &storm::expressions::Type::isBooleanType)
         .def_property_readonly("is_integer", &storm::expressions::Type::isIntegerType)
         .def_property_readonly("is_rational", &storm::expressions::Type::isRationalType)
+        .def_property_readonly("is_string", &storm::expressions::Type::isStringType)
         .def("__str__", &storm::expressions::Type::getStringRepresentation);
 
     py::class_<storm::expressions::ToDiceStringVisitor>(m, "DiceStringVisitor", "Translate expressions to dice")

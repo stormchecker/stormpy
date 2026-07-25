@@ -75,9 +75,9 @@ template<typename ValueType>
 void define_transformations_int(py::module &m, std::string const &vtSuffix) {
     py::class_<storm::pomdp::ObservationTraceUnfolder<ValueType>> unfolder(m, ("ObservationTraceUnfolder" + vtSuffix).c_str(),
                                                                            "Unfolds observation traces in models");
-    unfolder.def(py::init<storm::models::sparse::Pomdp<ValueType>, std::vector<ValueType> const &, std::shared_ptr<storm::expressions::ExpressionManager> &,
+    unfolder.def(py::init<storm::models::sparse::Pomdp<ValueType>, std::vector<ValueType> const &, std::shared_ptr<storm::expressions::ExpressionManager>,
                           storm::pomdp::ObservationTraceUnfolderOptions const &>(),
-                 py::arg("model"), py::arg("risk"), py::arg("expression_manager"), py::arg("options"), py::keep_alive<2, 1>());
+                 py::arg("model"), py::arg("risk"), py::arg("expression_manager"), py::arg("options"));
     unfolder.def("is_restart_semantics_set", &storm::pomdp::ObservationTraceUnfolder<ValueType>::isRestartSemanticsSet);
     unfolder.def("transform", &storm::pomdp::ObservationTraceUnfolder<ValueType>::transform, py::arg("trace"));
     unfolder.def("reset", &storm::pomdp::ObservationTraceUnfolder<ValueType>::reset, py::arg("new_observation"));

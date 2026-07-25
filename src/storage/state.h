@@ -29,7 +29,7 @@ class SparseModelState {
         if (!this->model.hasStateValuations()) {
             throw std::invalid_argument("No state valuations available");
         }
-        return this->model.getStateValuations().getStateInfo(this->stateIndex);
+        return this->model.getStateValuations().toString(this->stateIndex);
     }
 
     SparseModelActions<ValueType> getActions() const {

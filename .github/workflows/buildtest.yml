@@ -353,6 +353,8 @@ jobs:
         with:
           personal_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./html
+          publish_branch: gh-pages
+          force_orphan: true
 
   notify:
     name: Email notification

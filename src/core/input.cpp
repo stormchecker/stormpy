@@ -2,7 +2,6 @@
 
 #include <storm-parsers/api/storm-parsers.h>
 #include <storm/storage/jani/Property.h>
-#include <storm/utility/cli.h>
 
 #include "src/helpers.h"
 
@@ -20,7 +19,7 @@ void define_property(py::module& m) {
 
 std::map<storm::expressions::Variable, storm::expressions::Expression> parse_constants_string(storm::expressions::ExpressionManager const& m,
                                                                                               std::string const& input) {
-    return storm::utility::cli::parseConstantDefinitionString(m, input);
+    return storm::storage::parseConstantDefinitionString(m, input);
 }
 
 // Define python bindings

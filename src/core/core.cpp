@@ -10,7 +10,6 @@
 #include <storm/models/symbolic/StandardRewardModel.h>
 #include <storm/solver/OptimizationDirection.h>
 #include <storm/solver/UncertaintyResolutionMode.h>
-#include <storm/storage/ModelFormulasPair.h>
 #include <storm/storage/dd/DdType.h>
 #include <storm/storage/jani/Property.h>
 #include <storm/utility/SignalHandler.h>
@@ -68,12 +67,6 @@ void define_parse(py::module& m) {
 
     m.def("parse_properties_for_jani_model", &storm::api::parsePropertiesForJaniModel, py::arg("formula_string"), py::arg("jani_model"),
           py::arg("property_filter") = boost::none);
-
-    // Pair <Model,Formulas>
-    py::class_<storm::storage::ModelFormulasPair>(m, "ModelFormulasPair", "Pair of model and formulas")
-        .def_property_readonly(
-            "model", [](storm::storage::ModelFormulasPair const& pair) { return pair.model; }, "The model")
-        .def_property_readonly("formulas", [](storm::storage::ModelFormulasPair const& pair) { return pair.formulas; }, "The formulas");
 }
 
 // Thin wrapper for model building using sparse representation

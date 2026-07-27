@@ -239,9 +239,7 @@ void define_environment(py::module& m) {
                     env.setSchedulerRestriction(obj.cast<storm::storage::SchedulerClass>());
             })
         .def_property("print_results", &storm::MultiObjectiveModelCheckerEnvironment::isPrintResultsSet,
-                      &storm::MultiObjectiveModelCheckerEnvironment::setPrintResults)
-        .def_property("lexicographic_model_checking", &storm::MultiObjectiveModelCheckerEnvironment::isLexicographicModelCheckingSet,
-                      &storm::MultiObjectiveModelCheckerEnvironment::setLexicographicModelChecking);
+                      &storm::MultiObjectiveModelCheckerEnvironment::setPrintResults);
 
     py::class_<storm::SolverEnvironment>(m, "SolverEnvironment", "Environment for solvers")
         .def("set_force_sound", &storm::SolverEnvironment::setForceSoundness, "force soundness", py::arg("new_value") = true)

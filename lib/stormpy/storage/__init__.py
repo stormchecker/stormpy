@@ -273,7 +273,7 @@ def _get_rational_values_states(self, var):
 Valuations.get_rational_values_states = _get_rational_values_states
 
 
-@deprecated("Use get_nr_of_entities instead.", version="1.10.0")
+@deprecated("Use get_nr_of_entities instead.", version="1.13.2")
 def _get_nr_of_states(self):
     return self.get_nr_of_entities()
 

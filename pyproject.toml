@@ -98,8 +98,9 @@ COMPILE_WITH_CCACHE="ON"
 # Override some flags in stormpy.info. Used for building release wheels via cibuildwheel
 STORMPY_INFO_PRETEND_FETCH="OFF"
 
-[tool.scikit-build.metadata.version]
+[[tool.dynamic-metadata]]
 provider = "scikit_build_core.metadata.regex"
+field = "version"
 input = "lib/stormpy/_version.py"
 
 [tool.cibuildwheel]

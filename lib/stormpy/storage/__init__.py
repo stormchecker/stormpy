@@ -284,7 +284,7 @@ Valuations.get_nr_of_states = _get_nr_of_states
 StateValuation = Valuations
 
 
-@deprecated("Use ValuationDescriptionBuilder and Valuations instead.", version="1.10.0")
+@deprecated("Use ValuationDescriptionBuilder and Valuations instead.", version="1.13.2")
 class StateValuationsBuilder:
     """
     Deprecated shim for the old state-valuations builder API.

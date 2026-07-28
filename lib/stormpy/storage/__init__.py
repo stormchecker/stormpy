@@ -368,7 +368,7 @@ class StateValuationTransformer(ValuationTransformer):
     Deprecated shim for the old state-valuation transformer API.
     """
 
-    @deprecated("Use general method 'add_expression' instead.", version="1.10.0")
+    @deprecated("Use general method 'add_expression' instead.", version="1.13.2")
     def add_boolean_expression(self, expression_variable, defining_expression):
         self.add_expression(expression_variable, defining_expression)
 

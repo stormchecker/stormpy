@@ -39,7 +39,7 @@ jobs:
              test_opt: ""
           }
           - {name: "no libraries",
-             setup_args: "--config-settings=cmake.define.STORMPY_ALLOW_STORM_FETCH=OFF --config-settings=cmake.define=STORMPY_USE_STORM_DFT=OFF --config-settings=cmake.define.STORMPY_USE_STORM_GSPN=OFF --config-settings=cmake.define.STORMPY_USE_STORM_PARS=OFF --config-settings=cmake.define.STORMPY_USE_STORM_POMDP=OFF",
+             setup_args: "--config-settings=cmake.define.STORMPY_ALLOW_STORM_FETCH=OFF --config-settings=cmake.define.STORMPY_USE_STORM_DFT=OFF --config-settings=cmake.define.STORMPY_USE_STORM_GSPN=OFF --config-settings=cmake.define.STORMPY_USE_STORM_PARS=OFF --config-settings=cmake.define.STORMPY_USE_STORM_POMDP=OFF",
              optional_libs: "[test]",
              test_opt: "tests"
           }

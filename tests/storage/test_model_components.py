@@ -370,9 +370,20 @@ class TestSparseModelComponents:
         desc_builder.add_integer_variable(var_s1, 0, 1)
         desc_builder.add_integer_variable(var_s2, 0, 1)
         desc = desc_builder.build_class_description()
-        state_vals = [[1, 0, 0, 0], [1, 0, 1, 0], [1, 0, 0, 1], [2, 0, 0, 0], [1, 0, 1, 1],
-                      [1, 1, 1, 0], [2, 0, 0, 1], [2, 0, 1, 0], [1, 1, 1, 1], [2, 0, 1, 1],
-                      [2, 1, 0, 1], [2, 1, 1, 1]]
+        state_vals = [
+            [1, 0, 0, 0],
+            [1, 0, 1, 0],
+            [1, 0, 0, 1],
+            [2, 0, 0, 0],
+            [1, 0, 1, 1],
+            [1, 1, 1, 0],
+            [2, 0, 0, 1],
+            [2, 0, 1, 0],
+            [1, 1, 1, 1],
+            [2, 0, 1, 1],
+            [2, 1, 0, 1],
+            [2, 1, 1, 1],
+        ]
         state_valuations = stormpy.Valuations(desc, manager, 12)
         for state, (sv, sa, ss1, ss2) in enumerate(state_vals):
             state_valuations.write_int64_value(state, var_s, sv)
@@ -714,8 +725,7 @@ class TestSparseModelComponents:
         desc_builder.add_integer_variable(var_y, 0, 2)
         desc_builder.add_integer_variable(var_o, 0, 2)
         desc = desc_builder.build_class_description()
-        state_vals = [[0, 0, 0], [0, 0, 1], [0, 1, 1], [0, 2, 1], [1, 0, 1],
-                      [1, 1, 1], [1, 2, 1], [2, 1, 1], [2, 2, 1], [2, 0, 2]]
+        state_vals = [[0, 0, 0], [0, 0, 1], [0, 1, 1], [0, 2, 1], [1, 0, 1], [1, 1, 1], [1, 2, 1], [2, 1, 1], [2, 2, 1], [2, 0, 2]]
         state_valuations = stormpy.Valuations(desc, manager, 10)
         for state, (vx, vy, vo) in enumerate(state_vals):
             state_valuations.write_int64_value(state, var_x, vx)

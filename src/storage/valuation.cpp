@@ -1,7 +1,6 @@
 #include "valuation.h"
 
 #include <stdexcept>
-
 #include <storm/adapters/JsonAdapter.h>
 #include <storm/adapters/RationalNumberAdapter.h>
 #include <storm/storage/BitVector.h>
@@ -130,8 +129,7 @@ void define_valuation(py::module& m) {
             "variables declared with arbitrary-precision bounds whose value does not fit in an int64; get_value "
             "already handles the common case.")
         .def(
-            "_get_boolean_values_states",
-            [](Valuations const& v, storm::expressions::Variable const& var) { return booleanValuesAsVector(v, var); },
+            "_get_boolean_values_states", [](Valuations const& v, storm::expressions::Variable const& var) { return booleanValuesAsVector(v, var); },
             py::arg("variable"), "Get the Boolean variable value for all entities. The i-th entry is the value of entity i.")
         .def(
             "get_boolean_values_states_as_bitvector",

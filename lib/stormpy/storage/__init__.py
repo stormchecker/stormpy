@@ -372,7 +372,7 @@ class StateValuationTransformer(ValuationTransformer):
     def add_boolean_expression(self, expression_variable, defining_expression):
         self.add_expression(expression_variable, defining_expression)
 
-    @deprecated("Use general method 'add_expression' instead.", version="1.10.0")
+    @deprecated("Use general method 'add_expression' instead.", version="1.13.2")
     def add_integer_expression(self, expression_variable, defining_expression):
         self.add_expression(expression_variable, defining_expression)
 

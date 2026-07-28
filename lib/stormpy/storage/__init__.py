@@ -362,7 +362,7 @@ class StateValuationsBuilder:
         return valuations
 
 
-@deprecated("Use ValuationTransformer instead.", version="1.10.0")
+@deprecated("Use ValuationTransformer instead.", version="1.13.2")
 class StateValuationTransformer(ValuationTransformer):
     """
     Deprecated shim for the old state-valuation transformer API.

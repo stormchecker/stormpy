@@ -1,5 +1,7 @@
 #include "valuation.h"
 
+#include <stdexcept>
+
 #include <storm/adapters/JsonAdapter.h>
 #include <storm/adapters/RationalNumberAdapter.h>
 #include <storm/storage/BitVector.h>
@@ -17,6 +19,18 @@
 using Valuations = storm::storage::sparse::Valuations;
 using ValuationDescriptionBuilder = storm::storage::sparse::ValuationDescriptionBuilder;
 using ValuationClassDescription = storm::storage::sparse::ValuationClassDescription;
+
+// BitVector's own iterator yields the indices of its true entries, not a per-entity true/false
+// sequence, so we convert explicitly to keep a per-entity list consistent with the int64/rational/
+// string accessors.
+std::vector<bool> booleanValuesAsVector(Valuations const& v, storm::expressions::Variable const& var) {
+    storm::storage::BitVector const bv = v.getBooleanValues(var);
+    std::vector<bool> result(bv.size(), false);
+    for (uint64_t index : bv) {
+        result[index] = true;
+    }
+    return result;
+}
 
 void define_valuation(py::module& m) {
     // Opaque description type — constructed via ValuationDescriptionBuilder, passed to Valuations constructor
@@ -48,53 +62,114 @@ void define_valuation(py::module& m) {
              }),
              py::arg("class_description"), py::arg("manager"), py::arg("num_entities") = uint64_t(0),
              "Construct Valuations from a class description, allocating storage for num_entities entities")
+        .def(
+            "get_value",
+            [](Valuations const& v, uint64_t entity, storm::expressions::Variable const& var) -> py::object {
+                if (var.hasBooleanType()) {
+                    return py::cast(v.getBooleanValue(entity, var));
+                } else if (var.hasIntegerType()) {
+                    return py::cast(v.getInt64Value(entity, var));
+                } else if (var.hasRationalType()) {
+                    return py::cast(v.getRationalValue(entity, var));
+                } else if (var.hasStringType()) {
+                    return py::cast(v.getStringValue(entity, var));
+                }
+                throw std::invalid_argument("Variable has unsupported type");
+            },
+            py::arg("entity"), py::arg("variable"), "Get the value of the given variable at the given state/entity.")
+        .def(
+            "get_values_states",
+            [](Valuations const& v, storm::expressions::Variable const& var) -> py::object {
+                if (var.hasBooleanType()) {
+                    return py::cast(booleanValuesAsVector(v, var));
+                } else if (var.hasIntegerType()) {
+                    return py::cast(v.getInt64Values(var));
+                } else if (var.hasRationalType()) {
+                    return py::cast(v.getRationalValues(var));
+                } else if (var.hasStringType()) {
+                    return py::cast(v.getStringValues(var));
+                }
+                throw std::invalid_argument("Variable has unsupported type");
+            },
+            py::arg("variable"),
+            "Get the value of the given variable for all entities. The i-th entry is the value of entity i. For "
+            "Boolean variables, get_boolean_values_states_as_bitvector is a more efficient BitVector-based "
+            "alternative for large models.")
+        .def(
+            "write_value",
+            [](Valuations& v, uint64_t entity, storm::expressions::Variable const& var, py::object const& value) {
+                if (entity >= v.getNumberOfEntities()) {
+                    throw py::index_error();
+                }
+                if (var.hasBooleanType()) {
+                    v.getStorage().writeValue<bool>(entity, var, value.cast<bool>());
+                } else if (var.hasIntegerType()) {
+                    v.getStorage().writeValue<int64_t>(entity, var, value.cast<int64_t>());
+                } else if (var.hasRationalType()) {
+                    v.getStorage().writeValue<storm::RationalNumber>(entity, var, value.cast<storm::RationalNumber>());
+                } else if (var.hasStringType()) {
+                    v.getStorage().writeValue<std::string>(entity, var, value.cast<std::string>());
+                } else {
+                    throw std::invalid_argument("Variable has unsupported type");
+                }
+            },
+            py::arg("entity"), py::arg("variable"), py::arg("value"), "Write the value of the given variable at the given entity.")
         .def("_get_boolean_value", &Valuations::getBooleanValue, py::arg("entity"), py::arg("variable"))
         .def("_get_int64_value", &Valuations::getInt64Value, py::arg("entity"), py::arg("variable"))
         .def("_get_rational_value", &Valuations::getRationalValue, py::arg("entity"), py::arg("variable"))
-        .def("_get_double_value", &Valuations::getDoubleValue, py::arg("entity"), py::arg("variable"))
-        .def("_get_string_value", &Valuations::getStringValue, py::arg("entity"), py::arg("variable"))
         .def(
-            "_get_integer_bigint_value",
+            "get_integer_bigint_value",
             [](Valuations const& v, uint64_t entity, storm::expressions::Variable const& var) {
+                if (!var.hasIntegerType()) {
+                    throw std::invalid_argument("Variable is not an integer variable");
+                }
                 return v.getStorage().readValue<storm::storage::sparse::ValuationsStorage::Integer>(entity, var);
             },
             py::arg("entity"), py::arg("variable"),
             "Get the value of an integer variable as an arbitrary-precision integer. Only needed for integer "
-            "variables declared with arbitrary-precision bounds whose value does not fit in an int64.")
+            "variables declared with arbitrary-precision bounds whose value does not fit in an int64; get_value "
+            "already handles the common case.")
         .def(
             "_get_boolean_values_states",
-            [](Valuations const& v, storm::expressions::Variable const& var) -> std::vector<bool> {
-                // Valuations::getBooleanValues returns a BitVector, not a std::vector<bool>, so it
-                // doesn't get pybind11's automatic std::vector<T> -> list conversion (unlike the
-                // int64/rational siblings below). We can't return the BitVector as-is either: unlike a
-                // dense per-entity list, iterating a BitVector yields the *indices* of its true entries
-                // (see storm::storage::BitVector's documented iterator semantics), which would silently
-                // change the meaning of get_values_states() for booleans compared to the other two types.
-                // This copy is therefore O(entities) on every call: cheap for typical models, but avoid
-                // calling this in a hot loop over many boolean variables for models with millions of
-                // states/entities -- cache the result instead, or use
-                // _get_boolean_values_states_as_bitvector if a BitVector is acceptable.
-                storm::storage::BitVector bv = v.getBooleanValues(var);
-                std::vector<bool> result(bv.size(), false);
-                for (uint64_t index : bv) {
-                    result[index] = true;
-                }
-                return result;
-            },
+            [](Valuations const& v, storm::expressions::Variable const& var) { return booleanValuesAsVector(v, var); },
             py::arg("variable"), "Get the Boolean variable value for all entities. The i-th entry is the value of entity i.")
-        .def("_get_boolean_values_states_as_bitvector", &Valuations::getBooleanValues, py::arg("variable"),
-             "Get the Boolean variable value for all entities as a BitVector, with no per-entity list conversion. "
-             "More efficient than get_values_states for large models, but note that iterating the result yields "
-             "the indices of the entities where the value is true, not a per-entity true/false sequence.")
+        .def(
+            "get_boolean_values_states_as_bitvector",
+            [](Valuations const& v, storm::expressions::Variable const& var) {
+                if (!var.hasBooleanType()) {
+                    throw std::invalid_argument("Variable is not a Boolean variable");
+                }
+                return v.getBooleanValues(var);
+            },
+            py::arg("variable"),
+            "Get the Boolean variable value for all entities as a BitVector, with no per-entity list conversion. "
+            "More efficient than get_values_states for large models, but note that iterating the result yields "
+            "the indices of the entities where the value is true, not a per-entity true/false sequence.")
         .def("_get_int64_values_states", &Valuations::getInt64Values, py::arg("variable"),
              "Get the integer variable value for all entities. The i-th entry is the value of entity i.")
         .def("_get_rational_values_states", &Valuations::getRationalValues, py::arg("variable"),
              "Get the rational variable value for all entities. The i-th entry is the value of entity i.")
-        .def("_get_double_values_states", &Valuations::getDoubleValues, py::arg("variable"),
-             "Get the value for all entities of a rational variable that was declared with the double (64-bit "
-             "IEEE754) storage encoding via add_double_variable. The i-th entry is the value of entity i.")
-        .def("_get_string_values_states", &Valuations::getStringValues, py::arg("variable"),
-             "Get the string variable value for all entities. The i-th entry is the value of entity i.")
+        .def(
+            "get_double_value",
+            [](Valuations const& v, uint64_t entity, storm::expressions::Variable const& var) {
+                if (!var.hasRationalType()) {
+                    throw std::invalid_argument("Variable is not a rational variable");
+                }
+                return v.getDoubleValue(entity, var);
+            },
+            py::arg("entity"), py::arg("variable"),
+            "Get the value of a rational variable that was declared with the double (64-bit IEEE754) storage "
+            "encoding via add_double_variable, as a Python float. get_value/get_rational_value assume the exact "
+            "encoding and cannot read a double-encoded variable.")
+        .def(
+            "get_double_values_states",
+            [](Valuations const& v, storm::expressions::Variable const& var) {
+                if (!var.hasRationalType()) {
+                    throw std::invalid_argument("Variable is not a rational variable");
+                }
+                return v.getDoubleValues(var);
+            },
+            py::arg("variable"), "Get the value for all entities of a rational variable declared via add_double_variable.")
         .def("get_string", &Valuations::toString, py::arg("entity"), py::arg("pretty") = true,
              py::arg("selected_variables") = std::optional<std::set<storm::expressions::Variable>>{})
         .def(
@@ -133,10 +208,14 @@ void define_valuation(py::module& m) {
             },
             py::arg("entity"), py::arg("variable"), py::arg("value"), "Write a rational value for the given entity and variable")
         .def(
-            "_write_double_value",
+            "write_double_value",
             [](Valuations& v, uint64_t entity, storm::expressions::Variable const& var, double value) {
-                if (entity >= v.getNumberOfEntities())
+                if (!var.hasRationalType()) {
+                    throw std::invalid_argument("Variable is not a rational variable");
+                }
+                if (entity >= v.getNumberOfEntities()) {
                     throw py::index_error();
+                }
                 v.getStorage().writeValue<double>(entity, var, value);
             },
             py::arg("entity"), py::arg("variable"), py::arg("value"),
@@ -151,10 +230,14 @@ void define_valuation(py::module& m) {
             },
             py::arg("entity"), py::arg("variable"), py::arg("value"), "Write a string value for the given entity and variable")
         .def(
-            "_write_integer_bigint_value",
+            "write_integer_bigint_value",
             [](Valuations& v, uint64_t entity, storm::expressions::Variable const& var, storm::storage::sparse::ValuationsStorage::Integer const& value) {
-                if (entity >= v.getNumberOfEntities())
+                if (!var.hasIntegerType()) {
+                    throw std::invalid_argument("Variable is not an integer variable");
+                }
+                if (entity >= v.getNumberOfEntities()) {
                     throw py::index_error();
+                }
                 v.getStorage().writeValue<storm::storage::sparse::ValuationsStorage::Integer>(entity, var, value);
             },
             py::arg("entity"), py::arg("variable"), py::arg("value"),

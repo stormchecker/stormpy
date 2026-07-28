@@ -51,7 +51,6 @@ class TestValuationsExtendedTypes:
         var_big = manager.create_integer_variable(name="big")
         assert var_big.has_integer_type()
 
-        # bounds far beyond int64 range, requiring the arbitrary-precision overload
         lower = stormpy.pycarl.gmp.Integer(str(-(10**30)))
         upper = stormpy.pycarl.gmp.Integer(str(10**30))
         builder = stormpy.ValuationDescriptionBuilder(manager)
@@ -81,10 +80,6 @@ class TestValuationsExtendedTypes:
             vals.write_integer_bigint_value(0, var_b, stormpy.pycarl.gmp.Integer(1))
 
     def test_double_encoding_of_rational_variable(self):
-        # "double" is not a distinct variable type: it is an alternative, approximate 64-bit
-        # storage encoding for a rational-typed variable (see storm's own
-        # ValuationsTest.cpp, which declares such variables via declareRationalVariable and
-        # only chooses addDoubleVariable vs. addRationalVariable on the builder).
         manager = stormpy.ExpressionManager()
         var_r = manager.create_rational_variable(name="r")
         assert var_r.has_rational_type()
@@ -114,11 +109,7 @@ class TestValuationsExtendedTypes:
         with pytest.raises(ValueError):
             vals.write_double_value(0, var_b, 1.0)
 
-    def test_double_encoded_variable_rejects_mismatched_read(self):
-        # Regression test: reading a double-encoded rational variable through the normal
-        # get_value/getRationalValue path used to crash the whole process with SIGABRT
-        # (storm's ValuationsStorage::read() asserted instead of throwing on this type
-        # mismatch). It must now raise a catchable exception instead.
+    def test_get_value_raises_on_double_encoded_variable(self):
         manager = stormpy.ExpressionManager()
         var_r = manager.create_rational_variable(name="r")
         builder = stormpy.ValuationDescriptionBuilder(manager)

@@ -19,7 +19,7 @@ def example_highlevel_models():
 
     emgr = prism_program.expression_manager
     Vvar = prism_program.get_constant("V")
-    Vvalues = {2, 4, 6, 8, 10, 12}
+    Vvalues = {2, 4, 6, 8, 10}
     all_in_one_program = prism_program.replace_constant_by_variable(Vvar, emgr.create_integer(min(Vvalues)), emgr.create_integer(max(Vvalues)))
     options = [stormpy.Expression.Eq(Vvar.expression_variable.get_expression(), emgr.create_integer(val)) for val in Vvalues]
     all_in_one_program.update_initial_states_expression(

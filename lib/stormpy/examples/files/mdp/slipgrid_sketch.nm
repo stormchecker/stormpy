@@ -3,6 +3,7 @@ mdp
 const double p = 0.4;
 const int N = 10;
 const int M = 10;
+// V must be at most N.
 const int V;
 
 module grid

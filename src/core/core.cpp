@@ -1,13 +1,13 @@
 #include "core.h"
 
 #include <pybind11/functional.h>
-#include <storm-counterexamples/settings/modules/CounterexampleGeneratorSettings.h>
 #include <storm-parsers/api/storm-parsers.h>
 #include <storm/adapters/RationalFunctionAdapter.h>
 #include <storm/generator/NextStateGenerator.h>
 #include <storm/io/DirectEncodingExporter.h>
 #include <storm/io/file.h>
 #include <storm/models/symbolic/StandardRewardModel.h>
+#include <storm/settings/modules/CounterexampleGeneratorSettings.h>
 #include <storm/solver/OptimizationDirection.h>
 #include <storm/solver/UncertaintyResolutionMode.h>
 #include <storm/storage/dd/DdType.h>

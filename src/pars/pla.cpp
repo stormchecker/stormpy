@@ -1,7 +1,10 @@
 #include "pla.h"
 
 #include <storm-pars/api/region.h>
-#include <storm/api/storm.h>
+#include <storm-pars/modelchecker/instantiation/SparseDtmcInstantiationModelChecker.h>
+#include <storm-pars/modelchecker/region/SparseDtmcParameterLiftingModelChecker.h>
+#include <storm-pars/modelchecker/region/SparseMdpParameterLiftingModelChecker.h>
+#include <storm/api/verification.h>
 
 #include "src/helpers.h"
 

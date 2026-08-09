@@ -360,48 +360,51 @@ def build_exact_interval_model_from_drn(file, options=DirectEncodingParserOption
     return _convert_sparse_model(intermediate, value_type=_ValueType.EXACT_INTERVAL)
 
 
-def perform_bisimulation(model, properties, bisimulation_type, graph_preserving=True):
+def perform_bisimulation(model, properties, bisimulation_type, graph_preserving=True, tolerance=None):
     """
     Perform bisimulation on model.
     :param model: Model.
     :param properties: Properties to preserve during bisimulation.
     :param bisimulation_type: Type of bisimulation (weak or strong).
     :param graph_preserving: Whether the graph structure should be preserved.
+    :param tolerance: Tolerance used in bisimulation. Used when distributions do not sum up to one.
     :return: Model after bisimulation.
     """
-    return perform_sparse_bisimulation(model, properties, bisimulation_type, graph_preserving)
+    return perform_sparse_bisimulation(model, properties, bisimulation_type, graph_preserving, tolerance)
 
 
-def perform_sparse_bisimulation(model, properties, bisimulation_type, graph_preserving=True):
+def perform_sparse_bisimulation(model, properties, bisimulation_type, graph_preserving=True, tolerance=None):
     """
     Perform bisimulation on model in sparse representation.
     :param model: Model.
     :param properties: Properties to preserve during bisimulation.
     :param bisimulation_type: Type of bisimulation (weak or strong).
     :param graph_preserving: Whether the graph structure should be preserved.
+    :param tolerance: Tolerance used in bisimulation. Used when distributions do not sum up to one.
     :return: Model after bisimulation.
     """
     formulae = [(prop.raw_formula if isinstance(prop, Property) else prop) for prop in properties]
     if model.supports_parameters:
-        return _core._perform_parametric_bisimulation(model, formulae, bisimulation_type, graph_preserving)
+        return _core._perform_parametric_bisimulation(model, formulae, bisimulation_type, graph_preserving, tolerance)
     else:
-        return _core._perform_bisimulation(model, formulae, bisimulation_type, graph_preserving)
+        return _core._perform_bisimulation(model, formulae, bisimulation_type, graph_preserving, tolerance)
 
 
-def perform_symbolic_bisimulation(model, properties, quotient_format=stormpy.QuotientFormat.DD):
+def perform_symbolic_bisimulation(model, properties, quotient_format=stormpy.QuotientFormat.DD, bisimulation_options=stormpy.BisimulationOptionsDd()):
     """
     Perform bisimulation on model in symbolic representation.
     :param model: Model.
     :param properties: Properties to preserve during bisimulation.
     :param quotient_format: Return format of quotient.
+    :param bisimulation_options: Additional options for symbolic bisimulation.
     :return: Model after bisimulation.
     """
     formulae = [(prop.raw_formula if isinstance(prop, Property) else prop) for prop in properties]
     bisimulation_type = BisimulationType.STRONG
     if model.supports_parameters:
-        return _core._perform_symbolic_parametric_bisimulation(model, formulae, bisimulation_type, quotient_format)
+        return _core._perform_symbolic_parametric_bisimulation(model, formulae, bisimulation_type, quotient_format, bisimulation_options)
     else:
-        return _core._perform_symbolic_bisimulation(model, formulae, bisimulation_type, quotient_format)
+        return _core._perform_symbolic_bisimulation(model, formulae, bisimulation_type, quotient_format, bisimulation_options)
 
 
 def model_checking(model, property, only_initial_states=False, extract_scheduler=False, force_fully_observable=False, environment=Environment()):

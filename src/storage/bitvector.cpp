@@ -33,9 +33,10 @@ void define_bitvector(py::module& m) {
         .def("number_of_set_bits_before_index", &BitVector::getNumberOfSetBitsBeforeIndex, py::arg("index"),
              "Get the number of bits that are set to true before the given index")
         .def("has_unique_set_bit", &BitVector::hasUniqueSetBit, "Check if the bitvector has a unique set bit")
-        .def("get_next_set_index", &BitVector::getNextSetIndex, py::arg("starting_index"), "Get the index of the next set bit after the given starting index")
+        .def("get_next_set_index", &BitVector::getNextSetIndex, py::arg("starting_index"),
+             "Get the index of the next set bit after the given starting index. If there is none, it returns the number of bits this vector holds in total.")
         .def("get_next_unset_index", &BitVector::getNextUnsetIndex, py::arg("starting_index"),
-             "Get the index of the next unset bit after the given starting index")
+             "Get the index of the next unset bit after the given starting index. If there is none, it returns the number of bits this vector holds in total.")
 
         .def("__len__", [](BitVector const& b) { return b.size(); })
         .def("__getitem__",

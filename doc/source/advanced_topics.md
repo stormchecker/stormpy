@@ -21,4 +21,5 @@ doc/shortest_paths
 doc/parametric_models
 doc/dfts
 doc/gspns
+doc/info
 :::

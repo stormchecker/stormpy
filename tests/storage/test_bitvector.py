@@ -113,12 +113,16 @@ class TestBitvector:
 
     def test_clear(self):
         bit = stormpy.BitVector(5, True)
+        assert bit.full() is True
+        assert bit.number_of_set_bits() == 5
         bit.clear()
         assert bit.empty() is True
         assert bit.number_of_set_bits() == 0
 
     def test_fill(self):
         bit = stormpy.BitVector(5)
+        assert bit.empty() is True
+        assert bit.number_of_set_bits() == 0
         bit.fill()
         assert bit.full() is True
         assert bit.number_of_set_bits() == 5

@@ -159,7 +159,7 @@ void define_build_sparse_model_defs(py::module& m) {
               py::arg("formulas") = std::vector<std::shared_ptr<storm::logic::Formula const>>());
         m.def("build_sparse_model_from_explicit", &storm::api::buildExplicitModel<double>, "Build the model model from explicit input",
               py::arg("transition_file"), py::arg("labeling_file"), py::arg("state_reward_file") = "", py::arg("transition_reward_file") = "",
-              py::arg("choice_labeling_file") = "");
+              py::arg("choice_labeling_file") = "", py::arg("options") = storm::parser::ExplicitModelParserOptions());
         m.def("make_sparse_model_builder", &storm::api::makeExplicitModelBuilder<double>, "Construct a builder instance", py::arg("model_description"),
               py::arg("options"), py::arg("action_mask") = nullptr,
               py::arg("exploration_options") = typename storm::builder::ExplicitModelBuilder<ValueType>::Options());
@@ -192,6 +192,12 @@ void define_build(py::module& m) {
         .value("DFS", storm::builder::ExplorationOrder::Dfs)
         .value("BFS", storm::builder::ExplorationOrder::Bfs)
         .finalize();
+
+    py::class_<typename storm::parser::ExplicitModelParserOptions>(m, "ExplicitModelParserOptions", "Options for the explicit model parser")
+        .def(py::init<>(), "Create")
+        .def_readwrite("fix_deadlocks", &storm::parser::ExplicitModelParserOptions::fixDeadlocks,
+                       "If set, deadlocks states will be fixed by adding a self-loop with probability 1.")
+        .def_readwrite("build_choice_labels", &storm::parser::ExplicitModelParserOptions::buildChoiceLabels, "Whether to build choice labels.");
 
     // Build model
     define_build_sparse_model_defs<double>(m);

@@ -67,7 +67,7 @@ def storm_directory() -> str | None:
     """
     Return the Storm directory which is used by stormpy.
 
-    If a prexisting installation of Storm was used, then the path to this directory is returned.
+    If a preexisting installation of Storm was used, then the path to this directory is returned.
     If Storm was installed during the installation process, value ``None`` is returned.
 
     :return: Storm directory.

@@ -98,6 +98,7 @@ class TestSparseModelComponents:
         dtmc = stormpy.storage.SparseDtmc(components)
 
         assert type(dtmc) is stormpy.SparseDtmc
+        assert dtmc.model_type == stormpy.ModelType.DTMC
         assert not dtmc.supports_parameters
 
         # Test transition matrix
@@ -112,9 +113,21 @@ class TestSparseModelComponents:
 
         # Test state labeling
         assert dtmc.labeling.get_labels() == {"init", "deadlock", "done", "one", "two", "three", "four", "five", "six"}
+        assert dtmc.labeling.get_states("done").number_of_set_bits() == 6
+        assert dtmc.labeling.get_states("six").number_of_set_bits() == 1
+
+        # Test initial states
+        initial_states = dtmc.initial_states
+        assert len(initial_states) == 1
+        assert initial_states[0] == 0
+        initial_states = dtmc.labeling.get_states("init")
+        assert initial_states.number_of_set_bits() == 1
+        assert initial_states.size() == nr_states
+        assert initial_states.get(0)
 
         # Test reward_models
         assert len(dtmc.reward_models) == 1
+        assert "coin_flips" in dtmc.reward_models
         assert not dtmc.reward_models["coin_flips"].has_state_rewards
         assert dtmc.reward_models["coin_flips"].has_state_action_rewards
         for reward in dtmc.reward_models["coin_flips"].state_action_rewards:
@@ -252,6 +265,7 @@ class TestSparseModelComponents:
         mdp = stormpy.storage.SparseMdp(components)
 
         assert type(mdp) is stormpy.SparseMdp
+        assert mdp.model_type == stormpy.ModelType.MDP
         assert not mdp.supports_parameters
 
         # Test transition matrix
@@ -269,6 +283,7 @@ class TestSparseModelComponents:
 
         # Test reward models
         assert len(mdp.reward_models) == 1
+        assert "coin_flips" in mdp.reward_models
         assert not mdp.reward_models["coin_flips"].has_state_rewards
         assert mdp.reward_models["coin_flips"].has_state_action_rewards
         for reward in mdp.reward_models["coin_flips"].state_action_rewards:
@@ -402,6 +417,7 @@ class TestSparseModelComponents:
         # Build CTMC
         ctmc = stormpy.storage.SparseCtmc(components)
         assert type(ctmc) is stormpy.SparseCtmc
+        assert ctmc.model_type == stormpy.ModelType.CTMC
         assert not ctmc.supports_parameters
 
         # Test transition matrix

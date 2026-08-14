@@ -1,3 +1,5 @@
+import math
+
 import stormpy
 from helpers.helper import get_example_path
 
@@ -185,3 +187,44 @@ class TestState:
                 j += 1
                 for transition in action.transitions:
                     assert transition.value().denominator == one
+
+    def test_states_mdp_maze(self):
+        program = stormpy.parse_prism_program(get_example_path("mdp", "maze_2.nm"))
+        properties = stormpy.parse_properties_for_prism_program('R=? [F "goal"]', program, None)
+        model = stormpy.build_model(program, properties)
+        assert model.nr_states == 15
+        assert model.nr_transitions == 66
+        assert len(model.initial_states) == 1
+        assert list(model.initial_states) == [0]
+
+        expected = {  # built state -> targets per action [east, west, north, south]
+            1: [2, 1, 1, 6],
+            2: [3, 1, 2, 2],
+            3: [4, 2, 3, 7],
+            4: [5, 3, 4, 4],
+            5: [5, 4, 5, 8],
+            6: [6, 6, 1, 9],
+            7: [7, 7, 3, 10],
+            8: [8, 8, 5, 11],
+            9: [9, 9, 6, 12],
+            10: [10, 10, 7, 14],
+            11: [11, 11, 8, 13],
+            12: [12, 12, 9, 12],
+            13: [13, 13, 11, 13],
+            14: [14],
+        }
+        for state in model.states:
+            if state.id == 0:
+                assert len(state.actions) == 1
+            else:
+                assert len(state.actions) == len(expected[state.id])
+            for action in state.actions:
+                if state.id == 0:
+                    assert len(action.transitions) == 13
+                    for transition in action.transitions:
+                        assert math.isclose(transition.value(), 1 / 13)
+                else:
+                    assert len(action.transitions) == 1
+                    for transition in action.transitions:
+                        assert transition.value() == 1
+                        assert transition.column == expected[state.id][action.id]

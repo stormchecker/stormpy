@@ -143,3 +143,18 @@ class TestShortestPaths:
     def test_spg_state_list(self, model, target_label, index, expected_path):
         spg = ShortestPathsGenerator(model, target_label)
         assert spg.get_path_as_list(index) == expected_path(index)
+
+
+def test_shortest_paths_die():
+    program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
+    model = stormpy.build_model(program)
+    spg = ShortestPathsGenerator(model, 8)
+
+    expected = {
+        1: ([8, 4, 1, 0], 0.125),
+        2: ([8, 4, 1, 3, 1, 0], 0.03125),
+        3: ([8, 4, 1, 3, 1, 3, 1, 0], 0.0078125),
+    }
+    for k, (path, distance) in expected.items():
+        assert spg.get_path_as_list(k) == path
+        assert math.isclose(spg.get_distance(k), distance)

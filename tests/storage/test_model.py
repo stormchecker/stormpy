@@ -14,8 +14,9 @@ class TestSparseModel:
         assert model.model_type == stormpy.ModelType.DTMC
         assert not model.supports_parameters
         assert type(model) is stormpy.SparseDtmc
+        assert model.labeling.get_labels() == {"one", "two", "three", "four", "five", "six", "done", "init", "deadlock"}
 
-    def test_build_dtmc_from_prism_program_formulas(self):
+    def test_build_dtmc_from_prism_program_formulas_label(self):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
         prop = 'P=? [F "one"]'
         properties = stormpy.parse_properties_for_prism_program(prop, program, None)
@@ -26,6 +27,20 @@ class TestSparseModel:
         assert len(model.reward_models) == 0
         assert not model.supports_parameters
         assert type(model) is stormpy.SparseDtmc
+        assert set(model.labeling.get_labels()) == {"init", "deadlock", "one"}
+
+    def test_build_dtmc_from_prism_program_formulas_ap(self):
+        program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
+        prop = "P=? [F s=2]"
+        properties = stormpy.parse_properties_for_prism_program(prop, program, None)
+        model = stormpy.build_model(program, properties)
+        assert model.nr_states == 8
+        assert model.nr_transitions == 12
+        assert model.model_type == stormpy.ModelType.DTMC
+        assert len(model.reward_models) == 0
+        assert not model.supports_parameters
+        assert type(model) is stormpy.SparseDtmc
+        assert set(model.labeling.get_labels()) == {"init", "deadlock", "(s = 2)"}
 
     def test_build_dtmc_from_prism_program_reward_formulas(self):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
@@ -36,8 +51,11 @@ class TestSparseModel:
         assert model.nr_transitions == 20
         assert model.model_type == stormpy.ModelType.DTMC
         assert len(model.reward_models) == 1
+        assert "coin_flips" in model.reward_models
         assert not model.reward_models["coin_flips"].has_state_rewards
         assert model.reward_models["coin_flips"].has_state_action_rewards
+        assert len(model.reward_models["coin_flips"].state_action_rewards) == 13
+        assert sum(model.reward_models["coin_flips"].state_action_rewards) == 7.0
         for reward in model.reward_models["coin_flips"].state_action_rewards:
             assert reward == 1.0 or reward == 0.0
         assert not model.reward_models["coin_flips"].has_transition_rewards

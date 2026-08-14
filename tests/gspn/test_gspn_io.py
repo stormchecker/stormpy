@@ -9,6 +9,14 @@ from configurations import gspn, xml
 
 @gspn
 class TestGSPNJani:
+    def test_simple_pnml(self):
+        gspn_parser = stormpy.gspn.GSPNParser()
+        gspn = gspn_parser.parse(get_example_path("gspn", "gspn_simple.pnml"))
+        assert gspn.get_name() == "simple_gspn"
+        assert gspn.get_number_of_places() == 4
+        assert gspn.get_number_of_immediate_transitions() == 3
+        assert gspn.get_number_of_timed_transitions() == 2
+
     @xml
     def test_custom_property(self):
         gspn_parser = stormpy.gspn.GSPNParser()

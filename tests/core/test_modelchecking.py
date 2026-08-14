@@ -7,7 +7,7 @@ import math
 
 
 class TestModelChecking:
-    def test_model_checking_prism_dtmc(self):
+    def test_model_checking_prism_dtmc_label(self):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
         formulas = stormpy.parse_properties_for_prism_program('P=? [ F "one" ]', program)
         model = stormpy.build_model(program, formulas)
@@ -18,6 +18,30 @@ class TestModelChecking:
         assert initial_state == 0
         result = stormpy.model_checking(model, formulas[0])
         assert math.isclose(result.at(initial_state), 1 / 6)
+
+    def test_model_checking_prism_dtmc_p(self):
+        program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
+        formulas = stormpy.parse_properties_for_prism_program("P=? [ F s=2 ]", program)
+        model = stormpy.build_model(program, formulas)
+        assert model.nr_states == 8
+        assert model.nr_transitions == 12
+        assert len(model.initial_states) == 1
+        initial_state = model.initial_states[0]
+        assert initial_state == 0
+        result = stormpy.model_checking(model, formulas[0])
+        assert math.isclose(result.at(initial_state), 1 / 2)
+
+    def test_model_checking_prism_dtmc_reward(self):
+        program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
+        formulas = stormpy.parse_properties('R=? [F "done"]', program)
+        model = stormpy.build_model(program, formulas)
+        assert model.nr_states == 13
+        assert model.nr_transitions == 20
+        assert len(model.initial_states) == 1
+        initial_state = model.initial_states[0]
+        assert initial_state == 0
+        result = stormpy.model_checking(model, formulas[0])
+        assert math.isclose(result.at(initial_state), 11 / 3)
 
     @spot
     def test_model_checking_prism_dtmc_ltl(self):
@@ -259,10 +283,13 @@ class TestModelChecking:
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
         formulas = stormpy.parse_properties_for_prism_program('P=? [ F "one" ]', program)
         model = stormpy.build_symbolic_model(program, formulas)
+        assert isinstance(model, stormpy.SymbolicSylvanDtmc)
         assert model.nr_states == 13
         assert model.nr_transitions == 20
         result = stormpy.check_model_dd(model, formulas[0])
         assert type(result) is stormpy.SymbolicQuantitativeCheckResult
+        assert result.min == 0.0
+        assert result.max == 1.0
         filter = stormpy.create_filter_initial_states_symbolic(model)
         result.filter(filter)
         assert result.min == result.max
@@ -272,6 +299,7 @@ class TestModelChecking:
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
         formulas = stormpy.parse_properties_for_prism_program('P=? [ F "one" ]', program)
         model = stormpy.build_symbolic_model(program, formulas)
+        assert isinstance(model, stormpy.SymbolicSylvanDtmc)
         assert model.nr_states == 13
         assert model.nr_transitions == 20
         result = stormpy.check_model_hybrid(model, formulas[0])
@@ -279,6 +307,10 @@ class TestModelChecking:
         values = result.get_values()
         assert len(values) == 3
         assert math.isclose(values[0], 1 / 6)
+        filter = stormpy.create_filter_initial_states_symbolic(model)
+        result.filter(filter)
+        assert result.min == result.max
+        assert math.isclose(result.min, 1 / 6, rel_tol=1e-6)
 
     def test_compute_expected_number_of_visits(self):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))

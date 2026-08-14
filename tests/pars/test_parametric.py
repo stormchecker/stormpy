@@ -23,6 +23,39 @@ class TestParametric:
         one = stormpy.FactorizedPolynomial(stormpy.RationalRF(1))
         assert func.denominator == one
 
+    def test_parametric_model_checking_sparse_die(self):
+        program = stormpy.parse_prism_program(get_example_path("pdtmc", "parametric_die.pm"))
+        prop = "P=? [F s=7 & d=2]"
+        formulas = stormpy.parse_properties_for_prism_program(prop, program)
+        model = stormpy.build_parametric_model(program, formulas)
+        assert model.nr_states == 13
+        assert model.nr_transitions == 20
+        assert model.model_type == stormpy.ModelType.DTMC
+        assert model.has_parameters
+        initial_state = model.initial_states[0]
+        assert initial_state == 0
+        result = stormpy.model_checking(model, formulas[0])
+        func = result.at(initial_state)
+
+        # Create rational function for comparison
+        if stormpy.info.storm_ratfunc_use_cln():
+            from stormpy.pycarl import cln as pc
+        else:
+            from stormpy.pycarl import gmp as pc
+        parameters = model.collect_all_parameters()
+        for par in parameters:
+            if par.name == "p":
+                p = pc.create_factorized_polynomial(pc.Polynomial(par))
+            else:
+                assert par.name == "q"
+                q = pc.create_factorized_polynomial(pc.Polynomial(par))
+
+        one = stormpy.FactorizedPolynomial(stormpy.RationalRF(1))
+        num = p * p * (q - one)
+        denom = p * q - one
+        assert func.numerator == num
+        assert func.denominator == denom
+
     def test_parametric_model_checking_dd(self):
         program = stormpy.parse_prism_program(get_example_path("pdtmc", "parametric_die.pm"))
         prop = "P=? [F s=5]"
@@ -108,11 +141,13 @@ class TestParametric:
         model = stormpy.build_parametric_model(program, formulas)
         collector = stormpy.ConstraintCollector(model)
         constraints_well_formed = collector.wellformed_constraints
+        assert len(constraints_well_formed) == 4
         for formula in constraints_well_formed:
             assert formula.type == FormulaType.CONSTRAINT
             constraint = formula.get_constraint()
             assert constraint.relation == Relation.LEQ
         constraints_graph_preserving = collector.graph_preserving_constraints
+        assert len(constraints_graph_preserving) == 4
         for formula in constraints_graph_preserving:
             assert formula.type == FormulaType.CONSTRAINT
             constraint = formula.get_constraint()

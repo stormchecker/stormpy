@@ -7,12 +7,20 @@ from configurations import dft
 
 @dft
 class TestAnalysis:
-    def test_analyze_mttf(self):
+    def test_analyze_and_mttf(self):
         dft = stormpy.dft.load_dft_json_file(get_example_path("dft", "and.json"))
         formulas = stormpy.parse_properties('T=? [ F "failed" ]')
         assert dft.nr_elements() == 3
         results = stormpy.dft.analyze_dft(dft, [formulas[0].raw_formula])
         assert math.isclose(results[0], 3)
+
+    def test_analyze_hecs_mttf(self):
+        dft = stormpy.dft.load_dft_galileo_file(get_example_path("dft", "hecs.dft"))
+        formula_str = 'T=? [ F "failed" ]'
+        formulas = stormpy.parse_properties(formula_str)
+        results = stormpy.dft.analyze_dft(dft, [formulas[0].raw_formula])
+        result = results[0]
+        assert math.isclose(result, 363.8947965815, rel_tol=1e-6)
 
     def test_build_model(self):
         dft = stormpy.dft.load_dft_json_file(get_example_path("dft", "and.json"))

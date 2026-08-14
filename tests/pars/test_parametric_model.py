@@ -17,6 +17,7 @@ class TestSparseParametricModel:
         assert model.supports_parameters
         assert model.has_parameters
         assert type(model) is stormpy.SparseParametricDtmc
+        assert {x.name for x in model.collect_all_parameters()} == {"pL", "pK"}
 
     def test_build_parametric_dtmc_preprocess(self):
         program = stormpy.parse_prism_program(get_example_path("pdtmc", "herman5.pm"))
@@ -30,6 +31,7 @@ class TestSparseParametricModel:
         assert model.supports_parameters
         assert model.has_parameters
         assert type(model) is stormpy.SparseParametricDtmc
+        assert {x.name for x in model.collect_all_parameters()} == {"p"}
 
     def test_build_dtmc_supporting_parameters(self):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
@@ -41,6 +43,7 @@ class TestSparseParametricModel:
         assert model.supports_parameters
         assert not model.has_parameters
         assert type(model) is stormpy.SparseParametricDtmc
+        assert len(model.collect_all_parameters()) == 0
 
     def test_build_parametric_mdp(self):
         program = stormpy.parse_prism_program(get_example_path("pmdp", "two_dice.nm"))
@@ -51,6 +54,7 @@ class TestSparseParametricModel:
         assert model.model_type == stormpy.ModelType.MDP
         assert model.supports_parameters
         assert type(model) is stormpy.SparseParametricMdp
+        assert {x.name for x in model.collect_all_parameters()} == {"p1", "p2"}
 
 
 @pars

@@ -16,6 +16,7 @@ class TestScheduler:
         model = stormpy.build_sparse_model_with_options(program, options)
         assert model.nr_states == 272
         assert model.nr_transitions == 492
+        assert model.nr_choices == 400
         assert len(model.initial_states) == 1
         initial_state = model.initial_states[0]
         assert initial_state == 0

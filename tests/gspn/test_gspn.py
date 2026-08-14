@@ -187,6 +187,7 @@ class TestGSPNBuilder:
 
         # export gspn to pnml
         gspn.export_gspn_pnpro_file(export_file)
+        assert os.path.exists(export_file)
 
         # import gspn
         gspn_parser = stormpy.gspn.GSPNParser()
@@ -229,6 +230,7 @@ class TestGSPNBuilder:
 
         # export gspn to pnml
         gspn.export_gspn_pnml_file(export_file)
+        assert os.path.exists(export_file)
 
         # import gspn
         gspn_parser = stormpy.gspn.GSPNParser()

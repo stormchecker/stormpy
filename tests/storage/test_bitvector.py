@@ -13,6 +13,7 @@ class TestBitvector:
         assert bit.number_of_set_bits() == 0
         bit = stormpy.BitVector(5, True)
         assert bit.size() == 5
+        assert len(bit) == 5
         assert bit.number_of_set_bits() == 5
 
     def test_init_vector(self):

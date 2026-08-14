@@ -89,3 +89,14 @@ class TestPolynomial(PackageSelector):
         z = pycarl.Variable("z")
         sub2 = {z: package.Polynomial(3)}
         assert pol1.substitute(sub2) == pol1
+
+    def test_to_string(self, package):
+        pycarl.clear_pools()
+        x = pycarl.Variable("x")
+        y = pycarl.Variable("y")
+        pol1 = x * x + package.Integer(2)
+        pol2 = y + package.Integer(1)
+        result = pol1 * pol2
+        assert str(pol1) == "x^2+2"
+        assert str(pol2) == "y+1"
+        assert str(result) == "x^2*y+2*y+x^2+2"

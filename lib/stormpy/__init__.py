@@ -274,41 +274,41 @@ def build_sparse_exact_interval_model(symbolic_description, properties=None):
     return _convert_sparse_model(intermediate, value_type=_ValueType.EXACT_INTERVAL)
 
 
-def build_symbolic_model(symbolic_description, properties=None):
+def build_symbolic_model(symbolic_description, properties=None, environment=Environment()):
     """
     Build a model in symbolic representation from a symbolic description.
 
     :param symbolic_description: Symbolic model description to translate into a model.
     :param List[Property] properties: List of properties that should be preserved during the translation. If None, then all properties are preserved.
+    :param environment: Environment configuring Dd libraries.
     :return: Model in symbolic representation.
     """
     if not symbolic_description.undefined_constants_are_graph_preserving:
         raise stormpy.exceptions.StormError("Program still contains undefined constants")
 
+    formulae = []
     if properties:
         formulae = [(prop.raw_formula if isinstance(prop, Property) else prop) for prop in properties]
-        intermediate = _core._build_symbolic_model_from_symbolic_description(symbolic_description, formulae)
-    else:
-        intermediate = _core._build_symbolic_model_from_symbolic_description(symbolic_description)
+    intermediate = _core._build_symbolic_model_from_symbolic_description(symbolic_description, formulae, environment)
     return _convert_symbolic_model(intermediate, parametric=False)
 
 
-def build_symbolic_parametric_model(symbolic_description, properties=None):
+def build_symbolic_parametric_model(symbolic_description, properties=None, environment=Environment()):
     """
     Build a parametric model in symbolic representation from a symbolic description.
 
     :param symbolic_description: Symbolic model description to translate into a model.
     :param List[Property] properties: List of properties that should be preserved during the translation. If None, then all properties are preserved.
+    :param environment: Environment configuring Dd libraries.
     :return: Parametric model in symbolic representation.
     """
     if not symbolic_description.undefined_constants_are_graph_preserving:
         raise stormpy.exceptions.StormError("Program still contains undefined constants")
 
+    formulae = []
     if properties:
         formulae = [(prop.raw_formula if isinstance(prop, Property) else prop) for prop in properties]
-        intermediate = _core._build_symbolic_parametric_model_from_symbolic_description(symbolic_description, formulae)
-    else:
-        intermediate = _core._build_symbolic_parametric_model_from_symbolic_description(symbolic_description)
+    intermediate = _core._build_symbolic_parametric_model_from_symbolic_description(symbolic_description, formulae, environment)
     return _convert_symbolic_model(intermediate, parametric=True)
 
 

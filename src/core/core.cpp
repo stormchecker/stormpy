@@ -91,14 +91,15 @@ std::shared_ptr<storm::models::ModelBase> buildSparseModelWithOptions(storm::sto
 
 // Thin wrapper for model building using symbolic representation
 template<storm::dd::DdType DdType, typename ValueType>
-std::shared_ptr<storm::models::symbolic::Model<DdType, ValueType>> buildSymbolicModel(
-    storm::storage::SymbolicModelDescription const& modelDescription, std::vector<std::shared_ptr<storm::logic::Formula const>> const& formulas) {
+std::shared_ptr<storm::models::symbolic::Model<DdType, ValueType>> buildSymbolicModel(storm::storage::SymbolicModelDescription const& modelDescription,
+                                                                                      std::vector<std::shared_ptr<storm::logic::Formula const>> const& formulas,
+                                                                                      storm::Environment const& env) {
     if (formulas.empty()) {
         // Build full model
-        return storm::api::buildSymbolicModel<DdType, ValueType>(modelDescription, formulas, true);
+        return storm::api::buildSymbolicModel<DdType, ValueType>(env, modelDescription, formulas, true);
     } else {
         // Only build labels necessary for formulas
-        return storm::api::buildSymbolicModel<DdType, ValueType>(modelDescription, formulas, false);
+        return storm::api::buildSymbolicModel<DdType, ValueType>(env, modelDescription, formulas, false);
     }
 }
 
@@ -156,7 +157,7 @@ void define_build_sparse_model_defs(py::module& m) {
     if constexpr (std::is_same_v<ValueType, double>) {
         m.def("_build_symbolic_model_from_symbolic_description", &buildSymbolicModel<storm::dd::DdType::Sylvan, double>,
               "Build the model in symbolic representation", py::arg("model_description"),
-              py::arg("formulas") = std::vector<std::shared_ptr<storm::logic::Formula const>>());
+              py::arg("formulas") = std::vector<std::shared_ptr<storm::logic::Formula const>>(), py::arg("environment") = storm::Environment());
         m.def("build_sparse_model_from_explicit", &storm::api::buildExplicitModel<double>, "Build the model model from explicit input",
               py::arg("transition_file"), py::arg("labeling_file"), py::arg("state_reward_file") = "", py::arg("transition_reward_file") = "",
               py::arg("choice_labeling_file") = "", py::arg("options") = storm::parser::ExplicitModelParserOptions());
@@ -169,7 +170,7 @@ void define_build_sparse_model_defs(py::module& m) {
     } else if constexpr (std::is_same_v<ValueType, storm::RationalFunction>) {
         m.def("_build_symbolic_parametric_model_from_symbolic_description", &buildSymbolicModel<storm::dd::DdType::Sylvan, storm::RationalFunction>,
               "Build the parametric model in symbolic representation", py::arg("model_description"),
-              py::arg("formulas") = std::vector<std::shared_ptr<storm::logic::Formula const>>());
+              py::arg("formulas") = std::vector<std::shared_ptr<storm::logic::Formula const>>(), py::arg("environment") = storm::Environment());
         m.def("make_sparse_model_builder_parametric", &storm::api::makeExplicitModelBuilder<storm::RationalFunction>, "Construct a builder instance",
               py::arg("model_description"), py::arg("options"), py::arg("action_mask") = nullptr,
               py::arg("exploration_options") = typename storm::builder::ExplicitModelBuilder<ValueType>::Options());

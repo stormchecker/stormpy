@@ -2,13 +2,12 @@
 
 #include <pybind11/pytypes.h>
 #include <storm/environment/Environment.h>
-#include <storm/environment/modelchecker/ConditionalModelCheckerEnvironment.h>
-#include <storm/environment/modelchecker/ModelCheckerEnvironment.h>
-#include <storm/environment/modelchecker/MultiObjectiveModelCheckerEnvironment.h>
+#include <storm/environment/dd/AllDdEnvironments.h>
+#include <storm/environment/modelchecker/AllModelCheckerEnvironments.h>
 #include <storm/environment/solver/AllSolverEnvironments.h>
-#include <storm/environment/solver/SolverEnvironment.h>
 #include <storm/settings/SettingsManager.h>
 #include <storm/storage/SchedulerClass.h>
+#include <storm/storage/dd/cudd/CuddReorderingTechnique.h>
 #include <storm/utility/constants.h>
 
 #include "src/helpers.h"
@@ -84,6 +83,27 @@ void define_environment(py::module& m) {
         .value("flow", storm::MultiObjectiveModelCheckerEnvironment::EncodingType::Flow)
         .finalize();
 
+    py::native_enum<storm::dd::CuddReorderingTechnique>(m, "CuddReorderingTechnique", "enum.Enum", "Reordering technique used in CUDD library")
+        .value("NONE", storm::dd::CuddReorderingTechnique::None)
+        .value("RANDOM", storm::dd::CuddReorderingTechnique::Random)
+        .value("RANDOM_PIVOT", storm::dd::CuddReorderingTechnique::RandomPivot)
+        .value("SIFT", storm::dd::CuddReorderingTechnique::Sift)
+        .value("SIFT_CONV", storm::dd::CuddReorderingTechnique::SiftConv)
+        .value("SYMMETRIC_SIFT", storm::dd::CuddReorderingTechnique::SymmetricSift)
+        .value("SYMMETRIC_SIFT_CONV", storm::dd::CuddReorderingTechnique::SymmetricSiftConv)
+        .value("GROUP_SIFT", storm::dd::CuddReorderingTechnique::GroupSift)
+        .value("GROUP_SIFT_CONV", storm::dd::CuddReorderingTechnique::GroupSiftConv)
+        .value("WIN2", storm::dd::CuddReorderingTechnique::Win2)
+        .value("WIN2_CONV", storm::dd::CuddReorderingTechnique::Win2Conv)
+        .value("WIN3", storm::dd::CuddReorderingTechnique::Win3)
+        .value("WIN3_CONV", storm::dd::CuddReorderingTechnique::Win3Conv)
+        .value("WIN4", storm::dd::CuddReorderingTechnique::Win4)
+        .value("WIN4_CONV", storm::dd::CuddReorderingTechnique::Win4Conv)
+        .value("ANNEALING", storm::dd::CuddReorderingTechnique::Annealing)
+        .value("GENETIC", storm::dd::CuddReorderingTechnique::Genetic)
+        .value("EXACT", storm::dd::CuddReorderingTechnique::Exact)
+        .finalize();
+
     // Scheduler class bindings (needed for scheduler restriction)
     py::native_enum<storm::storage::SchedulerClass::MemoryPattern>(m, "SchedulerMemoryPattern", "enum.Enum", "Memory pattern of a scheduler")
         .value("arbitrary", storm::storage::SchedulerClass::MemoryPattern::Arbitrary)
@@ -118,7 +138,8 @@ void define_environment(py::module& m) {
         .def_property_readonly(
             "solver_environment", [](storm::Environment& env) -> auto& { return env.solver(); }, "solver part of environment")
         .def_property_readonly(
-            "model_checker_environment", [](storm::Environment& env) -> auto& { return env.modelchecker(); }, "model checker part of environment");
+            "model_checker_environment", [](storm::Environment& env) -> auto& { return env.modelchecker(); }, "model checker part of environment")
+        .def_property_readonly("dd_environment", [](storm::Environment& env) -> auto& { return env.dd(); }, "dd part of environment");
 
     py::class_<storm::ConditionalModelCheckerEnvironment>(m, "ConditionalModelCheckerEnvironment", "Environment for conditional model checking")
         .def_property("algorithm", &storm::ConditionalModelCheckerEnvironment::getAlgorithm, &storm::ConditionalModelCheckerEnvironment::setAlgorithm,
@@ -260,4 +281,19 @@ void define_environment(py::module& m) {
         .def_property("method", &storm::MinMaxSolverEnvironment::getMethod,
                       [](storm::MinMaxSolverEnvironment& mmenv, storm::solver::MinMaxMethod const& m) { mmenv.setMethod(m, false); })
         .def_property("precision", &storm::MinMaxSolverEnvironment::getPrecision, &storm::MinMaxSolverEnvironment::setPrecision);
+
+    py::class_<storm::DdEnvironment>(m, "DdEnvironment", "Environment for DD libraries")
+        .def_property_readonly("sylvan", [](storm::DdEnvironment& senv) -> auto& { return senv.sylvan(); })
+        .def_property_readonly("cudd", [](storm::DdEnvironment& senv) -> auto& { return senv.cudd(); });
+
+    py::class_<storm::SylvanDdManagerEnvironment>(m, "SylvanDdManagerEnvironment", "Environment for Sylvan Dd manager")
+        .def_property("maximal_memory", &storm::SylvanDdManagerEnvironment::getMaximalMemory, &storm::SylvanDdManagerEnvironment::setMaximalMemory)
+        .def_property("number_threads", &storm::SylvanDdManagerEnvironment::getNumberOfThreads, &storm::SylvanDdManagerEnvironment::setNumberOfThreads);
+
+    py::class_<storm::CuddDdManagerEnvironment>(m, "CuddDdManagerEnvironment", "Environment for CUDD Dd manager")
+        .def_property("maximal_memory", &storm::CuddDdManagerEnvironment::getMaximalMemory, &storm::CuddDdManagerEnvironment::setMaximalMemory)
+        .def_property("constant_precision", &storm::CuddDdManagerEnvironment::getConstantPrecision, &storm::CuddDdManagerEnvironment::setConstantPrecision)
+        .def_property("reordering_enabled", &storm::CuddDdManagerEnvironment::isReorderingEnabled, &storm::CuddDdManagerEnvironment::setReorderingEnabled)
+        .def_property("reordering_technique", &storm::CuddDdManagerEnvironment::getReorderingTechnique,
+                      &storm::CuddDdManagerEnvironment::setReorderingTechnique);
 }

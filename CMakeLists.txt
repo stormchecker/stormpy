@@ -69,7 +69,7 @@ endfunction(check_hint)
 
 if(STORMPY_ALLOW_STORM_SYSTEM)
     # Version should be synced with STORM_GIT_TAG in pyproject.toml
-    set(STORM_MIN_VERSION "1.13.0")
+    set(STORM_MIN_VERSION "1.14.0")
     if (STORMPY_ALLOW_STORM_FETCH)
         find_package(storm HINTS ${STORM_DIR_HINT}) # NOT REQUIRED, can be fetched.
     else()

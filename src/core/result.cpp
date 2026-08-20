@@ -27,8 +27,7 @@ std::shared_ptr<storm::modelchecker::QualitativeCheckResult> createFilterSymboli
 }
 
 template<typename ValueType>
-void define_result_as_explicit(py::class_<storm::modelchecker::CheckResult, std::shared_ptr<storm::modelchecker::CheckResult>>& checkResult,
-                               std::string const& vtSuffix) {
+void define_result_as_explicit(py::classh<storm::modelchecker::CheckResult>& checkResult, std::string const& vtSuffix) {
     checkResult.def(("as_explicit" + vtSuffix + "_qualitative").c_str(),
                     [](storm::modelchecker::CheckResult const& result) { return result.template asExplicitQualitativeCheckResult<ValueType>(); },
                     "Convert into explicit qualitative result");
@@ -40,8 +39,7 @@ void define_result_as_explicit(py::class_<storm::modelchecker::CheckResult, std:
 // Define python bindings
 void define_result(py::module& m) {
     // CheckResult
-    py::class_<storm::modelchecker::CheckResult, std::shared_ptr<storm::modelchecker::CheckResult>> checkResult(m, "_CheckResult",
-                                                                                                                "Base class for all modelchecking results");
+    py::classh<storm::modelchecker::CheckResult> checkResult(m, "_CheckResult", "Base class for all modelchecking results");
     checkResult.def_property_readonly("_symbolic", &storm::modelchecker::CheckResult::isSymbolic, "Flag if result is symbolic")
         .def_property_readonly("_hybrid", &storm::modelchecker::CheckResult::isHybrid, "Flag if result is hybrid")
         .def_property_readonly("_quantitative", &storm::modelchecker::CheckResult::isQuantitative, "Flag if result is quantitative")
@@ -70,11 +68,10 @@ void define_result(py::module& m) {
         });
 
     // QualitativeCheckResult
-    py::class_<storm::modelchecker::QualitativeCheckResult, std::shared_ptr<storm::modelchecker::QualitativeCheckResult>> qualitativeCheckResult(
-        m, "_QualitativeCheckResult", "Abstract class for qualitative model checking results", checkResult);
+    py::classh<storm::modelchecker::QualitativeCheckResult> qualitativeCheckResult(m, "_QualitativeCheckResult",
+                                                                                   "Abstract class for qualitative model checking results", checkResult);
 
-    py::class_<storm::modelchecker::SymbolicQualitativeCheckResult<storm::dd::DdType::Sylvan>,
-               std::shared_ptr<storm::modelchecker::SymbolicQualitativeCheckResult<storm::dd::DdType::Sylvan>>>(
+    py::classh<storm::modelchecker::SymbolicQualitativeCheckResult<storm::dd::DdType::Sylvan>>(
         m, "SymbolicQualitativeCheckResult", "Symbolic qualitative model checking result", qualitativeCheckResult)
         .def("get_truth_values", &storm::modelchecker::SymbolicQualitativeCheckResult<storm::dd::DdType::Sylvan>::getTruthValuesVector,
              "Get Dd representing the truth values");
@@ -82,9 +79,8 @@ void define_result(py::module& m) {
 
 template<typename ValueType>
 void define_typed_result(py::module& m, std::string const& vtSuffix) {
-    py::class_<storm::modelchecker::ExplicitQualitativeCheckResult<ValueType>, std::shared_ptr<storm::modelchecker::ExplicitQualitativeCheckResult<ValueType>>,
-               storm::modelchecker::QualitativeCheckResult>(m, ("Explicit" + vtSuffix + "QualitativeCheckResult").c_str(),
-                                                            "Explicit qualitative model checking result")
+    py::classh<storm::modelchecker::ExplicitQualitativeCheckResult<ValueType>, storm::modelchecker::QualitativeCheckResult>(
+        m, ("Explicit" + vtSuffix + "QualitativeCheckResult").c_str(), "Explicit qualitative model checking result")
         .def(
             "at",
             [](storm::modelchecker::ExplicitQualitativeCheckResult<ValueType> const& result, storm::storage::sparse::state_type state) {
@@ -96,15 +92,13 @@ void define_typed_result(py::module& m, std::string const& vtSuffix) {
         .def_property_readonly(
             "scheduler", [](storm::modelchecker::ExplicitQualitativeCheckResult<ValueType> const& res) { return res.getScheduler(); }, "Get scheduler");
 
-    py::class_<storm::modelchecker::QuantitativeCheckResult<ValueType>, std::shared_ptr<storm::modelchecker::QuantitativeCheckResult<ValueType>>,
-               storm::modelchecker::CheckResult>
-        quantitativeCheckResult(m, ("_" + vtSuffix + "QuantitativeCheckResult").c_str(), "Abstract class for quantitative model checking results");
+    py::classh<storm::modelchecker::QuantitativeCheckResult<ValueType>, storm::modelchecker::CheckResult> quantitativeCheckResult(
+        m, ("_" + vtSuffix + "QuantitativeCheckResult").c_str(), "Abstract class for quantitative model checking results");
     quantitativeCheckResult.def_property_readonly("min", &storm::modelchecker::QuantitativeCheckResult<ValueType>::getMin, "Minimal value")
         .def_property_readonly("max", &storm::modelchecker::QuantitativeCheckResult<ValueType>::getMax, "Maximal value");
 
-    py::class_<storm::modelchecker::ExplicitQuantitativeCheckResult<ValueType>,
-               std::shared_ptr<storm::modelchecker::ExplicitQuantitativeCheckResult<ValueType>>>(
-        m, ("Explicit" + vtSuffix + "QuantitativeCheckResult").c_str(), "Explicit quantitative model checking result", quantitativeCheckResult)
+    py::classh<storm::modelchecker::ExplicitQuantitativeCheckResult<ValueType>>(m, ("Explicit" + vtSuffix + "QuantitativeCheckResult").c_str(),
+                                                                                "Explicit quantitative model checking result", quantitativeCheckResult)
         .def(py::init<std::vector<ValueType>>(), py::arg("values"))
         .def(
             "at",
@@ -118,8 +112,7 @@ void define_typed_result(py::module& m, std::string const& vtSuffix) {
         .def_property_readonly(
             "scheduler", [](storm::modelchecker::ExplicitQuantitativeCheckResult<ValueType> const& res) { return res.getScheduler(); }, "get scheduler");
 
-    py::class_<storm::modelchecker::SymbolicQuantitativeCheckResult<storm::dd::DdType::Sylvan, ValueType>,
-               std::shared_ptr<storm::modelchecker::SymbolicQuantitativeCheckResult<storm::dd::DdType::Sylvan, ValueType>>>(
+    py::classh<storm::modelchecker::SymbolicQuantitativeCheckResult<storm::dd::DdType::Sylvan, ValueType>>(
         m, ("Symbolic" + vtSuffix + "QuantitativeCheckResult").c_str(), "Symbolic quantitative model checking result", quantitativeCheckResult)
         .def("clone",
              [](storm::modelchecker::SymbolicQuantitativeCheckResult<storm::dd::DdType::Sylvan, ValueType> const& dd) {
@@ -127,22 +120,19 @@ void define_typed_result(py::module& m, std::string const& vtSuffix) {
              })
         .def("get_values", &storm::modelchecker::SymbolicQuantitativeCheckResult<storm::dd::DdType::Sylvan, ValueType>::getValueVector);
 
-    py::class_<storm::modelchecker::HybridQuantitativeCheckResult<storm::dd::DdType::Sylvan, ValueType>,
-               std::shared_ptr<storm::modelchecker::HybridQuantitativeCheckResult<storm::dd::DdType::Sylvan, ValueType>>>(
+    py::classh<storm::modelchecker::HybridQuantitativeCheckResult<storm::dd::DdType::Sylvan, ValueType>>(
         m, ("Hybrid" + vtSuffix + "QuantitativeCheckResult").c_str(), "Hybrid quantitative model checking result", quantitativeCheckResult)
         .def("get_values", &storm::modelchecker::HybridQuantitativeCheckResult<storm::dd::DdType::Sylvan, ValueType>::getExplicitValueVector,
              "Get model checking result values for all states");
 
     if constexpr (std::is_same_v<ValueType, double> || std::is_same_v<ValueType, storm::RationalNumber>) {
-        py::class_<storm::modelchecker::ParetoCurveCheckResult<ValueType>, std::shared_ptr<storm::modelchecker::ParetoCurveCheckResult<ValueType>>,
-                   storm::modelchecker::CheckResult>
-            pccheckresult(m, (vtSuffix + "ParetoCurveCheckResult").c_str(), "Result for multiobjective model checking");
+        py::classh<storm::modelchecker::ParetoCurveCheckResult<ValueType>, storm::modelchecker::CheckResult> pccheckresult(
+            m, (vtSuffix + "ParetoCurveCheckResult").c_str(), "Result for multiobjective model checking");
         pccheckresult.def("get_underapproximation", &storm::modelchecker::ParetoCurveCheckResult<ValueType>::getUnderApproximation)
             .def("get_overapproximation", &storm::modelchecker::ParetoCurveCheckResult<ValueType>::getOverApproximation);
 
-        py::class_<storm::modelchecker::ExplicitParetoCurveCheckResult<ValueType>,
-                   std::shared_ptr<storm::modelchecker::ExplicitParetoCurveCheckResult<ValueType>>>
-            epccheckresult(m, ("Explicit" + vtSuffix + "ParetoCurveCheckResult").c_str(), "Result for explicit multiobjective model checking", pccheckresult);
+        py::classh<storm::modelchecker::ExplicitParetoCurveCheckResult<ValueType>> epccheckresult(
+            m, ("Explicit" + vtSuffix + "ParetoCurveCheckResult").c_str(), "Result for explicit multiobjective model checking", pccheckresult);
 
         m.def(("create_filter_symbolic" + vtSuffix).c_str(), &createFilterSymbolic<storm::dd::DdType::Sylvan, ValueType>,
               "Creates a filter for the given states and a symbolic model", py::arg("model"), py::arg("states"));

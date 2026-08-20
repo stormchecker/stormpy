@@ -6,7 +6,7 @@
 #include "src/helpers.h"
 
 void define_property(py::module& m) {
-    py::class_<storm::jani::Property>(m, "Property", "Property")
+    py::classh<storm::jani::Property>(m, "Property", "Property")
         .def(py::init<std::string const&, std::shared_ptr<storm::logic::Formula const> const&, std::set<storm::expressions::Variable> const&,
                       std::string const&>(),
              "Construct property from formula", py::arg("name"), py::arg("formula"), py::arg("undefined_constants") = std::set<storm::expressions::Variable>(),
@@ -73,7 +73,7 @@ void define_input(py::module& m) {
         .finalize();
 
     // SymbolicModelDescription
-    py::class_<storm::storage::SymbolicModelDescription>(m, "SymbolicModelDescription", "Symbolic description of model")
+    py::classh<storm::storage::SymbolicModelDescription>(m, "SymbolicModelDescription", "Symbolic description of model")
         .def(py::init<storm::prism::Program const&>(), "Construct from Prism program", py::arg("prism_program"))
         .def(py::init<storm::jani::Model const&>(), "Construct from Jani model", py::arg("jani_model"))
         .def_property_readonly("is_prism_program", &storm::storage::SymbolicModelDescription::isPrismProgram, "Flag if program is in Prism format")

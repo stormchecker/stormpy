@@ -145,7 +145,7 @@ storm::storage::BitVector getReachableStates(storm::models::sparse::Model<ValueT
 template<typename ValueType>
 void define_check_task(py::module& m, std::string const& name) {
     // CheckTask
-    py::class_<CheckTask<ValueType>, std::shared_ptr<CheckTask<ValueType>>>(m, name.c_str(), "Task for model checking")
+    py::classh<CheckTask<ValueType>>(m, name.c_str(), "Task for model checking")
         .def(py::init<storm::logic::Formula const&, bool>(), py::arg("formula"), py::arg("only_initial_states") = false)
         .def("set_produce_schedulers", &CheckTask<ValueType>::setProduceSchedulers, "Set whether schedulers should be produced (if possible)",
              py::arg("produce_schedulers") = true)
@@ -207,9 +207,8 @@ void define_modelchecking_mdefs(py::module& m) {
 }
 
 void define_modelchecking(py::module& m) {
-    py::class_<storm::modelchecker::ModelCheckerHint, std::shared_ptr<storm::modelchecker::ModelCheckerHint>> mchint(
-        m, "ModelCheckerHint", "Information that may accelerate the model checking process");
-    py::class_<storm::modelchecker::ExplicitModelCheckerHint<double>>(m, "ExplicitModelCheckerHintDouble",
+    py::classh<storm::modelchecker::ModelCheckerHint> mchint(m, "ModelCheckerHint", "Information that may accelerate the model checking process");
+    py::classh<storm::modelchecker::ExplicitModelCheckerHint<double>>(m, "ExplicitModelCheckerHintDouble",
                                                                       "Information that may accelerate an explicit state model checker", mchint)
         .def(py::init<>())
         .def("set_scheduler_hint",

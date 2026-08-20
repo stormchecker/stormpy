@@ -20,7 +20,7 @@ std::string janiToString(Model const& m) {
 }
 
 void define_jani(py::module& m) {
-    py::class_<Model, std::shared_ptr<Model>> md(m, "JaniModel", "A Jani Model");
+    py::classh<Model> md(m, "JaniModel", "A Jani Model");
     md.def(py::init<Model>(), "other_model"_a)
         .def_property_readonly("name", &Model::getName, "model name")
         .def_property_readonly("model_type", &storm::jani::Model::getModelType, "Model type")
@@ -65,7 +65,7 @@ void define_jani(py::module& m) {
             return ss.str();
         });
 
-    py::class_<Automaton, std::shared_ptr<Automaton>> automaton(m, "JaniAutomaton", "A Jani Automation");
+    py::classh<Automaton> automaton(m, "JaniAutomaton", "A Jani Automation");
     automaton.def(py::init<std::string, storm::expressions::Variable>())
         .def_property_readonly(
             "edges", [](const Automaton& a) -> auto& { return a.getEdges(); }, "get edges")
@@ -84,7 +84,7 @@ void define_jani(py::module& m) {
         .def("add_edge", &Automaton::addEdge, "edge"_a)
         .def("get_location_index", &Automaton::getLocationIndex, "name"_a);
 
-    py::class_<Edge, std::shared_ptr<Edge>> edge(m, "JaniEdge", "A Jani Edge");
+    py::classh<Edge> edge(m, "JaniEdge", "A Jani Edge");
     edge.def(py::init<uint64_t, uint64_t, boost::optional<storm::expressions::Expression>, std::shared_ptr<TemplateEdge>,
                       std::vector<std::pair<uint64_t, storm::expressions::Expression>>>(),
              "source_location_index"_a, "action_index"_a, "rate"_a, "template_edge"_a, "destinations_with_probabilities"_a)
@@ -100,24 +100,24 @@ void define_jani(py::module& m) {
         .def("substitute", &Edge::substitute, py::arg("mapping"), py::arg("substitute_transcendental_numbers"))
         .def("has_silent_action", &Edge::hasSilentAction, "Is the edge labelled with the silent action");
 
-    py::class_<TemplateEdge, std::shared_ptr<TemplateEdge>> templateEdge(m, "JaniTemplateEdge", "Template edge, internal data structure for edges");
+    py::classh<TemplateEdge> templateEdge(m, "JaniTemplateEdge", "Template edge, internal data structure for edges");
     templateEdge.def(py::init<storm::expressions::Expression>())
         .def_property_readonly("assignments", [](TemplateEdge& te) -> auto& { return te.getAssignments(); })
         .def_property("guard", &TemplateEdge::getGuard, &TemplateEdge::setGuard)
         .def_property_readonly("destinations", [](TemplateEdge& te) -> auto& { return te.getDestinations(); })
         .def("add_destination", &TemplateEdge::addDestination);
 
-    py::class_<EdgeDestination, std::shared_ptr<EdgeDestination>> edgeDestination(m, "JaniEdgeDestination", "Destination in Jani");
+    py::classh<EdgeDestination> edgeDestination(m, "JaniEdgeDestination", "Destination in Jani");
     edgeDestination.def_property_readonly("target_location_index", &EdgeDestination::getLocationIndex)
         .def_property_readonly("probability", &EdgeDestination::getProbability)
         .def_property_readonly("assignments", &EdgeDestination::getOrderedAssignments);
 
-    py::class_<TemplateEdgeDestination, std::shared_ptr<TemplateEdgeDestination>> templateEdgeDestination(
-        m, "JaniTemplateEdgeDestination", "Template edge destination, internal data structure for edge destinations");
+    py::classh<TemplateEdgeDestination> templateEdgeDestination(m, "JaniTemplateEdgeDestination",
+                                                                "Template edge destination, internal data structure for edge destinations");
     templateEdgeDestination.def(py::init<OrderedAssignments>(), "ordered_assignments"_a)
         .def_property_readonly("assignments", [](TemplateEdgeDestination& ted) -> auto& { return ted.getOrderedAssignments(); });
 
-    py::class_<OrderedAssignments, std::shared_ptr<OrderedAssignments>> orderedAssignments(m, "JaniOrderedAssignments", "Set of assignments");
+    py::classh<OrderedAssignments> orderedAssignments(m, "JaniOrderedAssignments", "Set of assignments");
     orderedAssignments
         .def(
             "__iter__", [](OrderedAssignments& v) { return py::make_iterator(v.begin(), v.end()); },
@@ -131,18 +131,18 @@ void define_jani(py::module& m) {
             "add", [](OrderedAssignments& oa, Assignment const& newAssignment, bool addToExisting) { return oa.add(newAssignment, addToExisting); },
             "new_assignment"_a, "add_to_existing"_a = false);
 
-    py::class_<Assignment, std::shared_ptr<Assignment>> assignment(m, "JaniAssignment", "Jani Assignment");
+    py::classh<Assignment> assignment(m, "JaniAssignment", "Jani Assignment");
     assignment.def(py::init<Variable const&, storm::expressions::Expression const&, int64_t>(), "lhs"_a, "rhs"_a, "lvl"_a = 0)
         .def("__str__", &streamToString<Assignment>)
         .def_property("expression", &Assignment::getAssignedExpression, &Assignment::setAssignedExpression)
         .def_property_readonly("variable", &Assignment::getVariable, "variable that is assigned to, if any");
 
-    py::class_<Location, std::shared_ptr<Location>> location(m, "JaniLocation", "A Location in JANI");
+    py::classh<Location> location(m, "JaniLocation", "A Location in JANI");
     location.def(py::init<std::string const&, OrderedAssignments const&>(), "name"_a, "assignments"_a)
         .def_property_readonly("name", &Location::getName, "name of the location")
         .def_property_readonly("assignments", [](Location& loc) { loc.getAssignments(); }, "location assignments");
 
-    py::class_<VariableSet, std::shared_ptr<VariableSet>> variableSet(m, "JaniVariableSet", "Jani Set of Variables");
+    py::classh<VariableSet> variableSet(m, "JaniVariableSet", "Jani Set of Variables");
     variableSet.def(py::init<>())
         .def(
             "__iter__", [](VariableSet& v) { return py::make_iterator(v.begin(), v.end()); }, py::keep_alive<0, 1>())
@@ -155,27 +155,27 @@ void define_jani(py::module& m) {
             py::return_value_policy::reference)
         .def("erase_variable", &VariableSet::eraseVariable, "variable");
 
-    py::class_<JaniType, std::shared_ptr<JaniType>> janiType(m, "JaniType", "A Variable Type in JANI");
+    py::classh<JaniType> janiType(m, "JaniType", "A Variable Type in JANI");
     janiType.def_property_readonly("is_array_type", &JaniType::isArrayType)
         .def_property_readonly("is_bounded_type", &JaniType::isBoundedType)
         .def_property_readonly("is_clock_type", &JaniType::isClockType)
         .def_property_readonly("is_basic_type", &JaniType::isBasicType)
         .def_property_readonly("is_continuous_type", &JaniType::isContinuousType)
         .def("__str__", &JaniType::getStringRepresentation);
-    py::class_<BasicType, std::shared_ptr<BasicType>> basicType(m, "BasicType", "A basic type in JANI", janiType);
+    py::classh<BasicType> basicType(m, "BasicType", "A basic type in JANI", janiType);
     basicType.def_property_readonly("inner_type", &BasicType::get, "the inner type");
-    py::class_<BoundedType, std::shared_ptr<BoundedType>> boundedType(m, "BoundedType", "A bounded type in JANI", janiType);
+    py::classh<BoundedType> boundedType(m, "BoundedType", "A bounded type in JANI", janiType);
     boundedType.def_property_readonly("base_type", &BoundedType::getBaseType, "the base type")
         .def_property_readonly(
             "lower_bound", [](const BoundedType& tp) -> storm::expressions::Expression const& { return tp.getLowerBound(); }, "the lower bound")
         .def_property_readonly(
             "upper_bound", [](const BoundedType& tp) -> storm::expressions::Expression const& { return tp.getUpperBound(); }, "the upper bound");
-    py::class_<ClockType, std::shared_ptr<ClockType>> clockType(m, "ClockType", "A clock type in JANI", janiType);
-    py::class_<ArrayType, std::shared_ptr<ArrayType>> arrayType(m, "ArrayType", "An array type in JANI", janiType);
+    py::classh<ClockType> clockType(m, "ClockType", "A clock type in JANI", janiType);
+    py::classh<ArrayType> arrayType(m, "ArrayType", "An array type in JANI", janiType);
     arrayType.def_property_readonly("base_type", [](const ArrayType& tp) -> JaniType const& { return tp.getBaseType(); }, "the base type");
-    py::class_<ContinuousType, std::shared_ptr<ContinuousType>> continuousType(m, "ContinuousType", "A continuous type in JANI", janiType);
+    py::classh<ContinuousType> continuousType(m, "ContinuousType", "A continuous type in JANI", janiType);
 
-    py::class_<Variable, std::shared_ptr<Variable>> variable(m, "JaniVariable", "A Variable in JANI");
+    py::classh<Variable> variable(m, "JaniVariable", "A Variable in JANI");
     variable.def_property_readonly("name", &Variable::getName, "name of constant")
         .def_property_readonly(
             "type", [](Variable& v) -> JaniType const& { return v.getType(); }, "type of the variable")
@@ -183,7 +183,7 @@ void define_jani(py::module& m) {
         .def_property_readonly("init_expression", &Variable::getInitExpression)
         .def_property_readonly("is_transient", &Variable::isTransient);
 
-    py::class_<Constant, std::shared_ptr<Constant>> constant(m, "JaniConstant", "A Constant in JANI");
+    py::classh<Constant> constant(m, "JaniConstant", "A Constant in JANI");
     constant.def(py::init<std::string, storm::expressions::Variable>())
         .def_property_readonly("defined", &Constant::isDefined, "is constant defined by some expression")
         .def_property_readonly("name", &Constant::getName, "name of constant")
@@ -199,7 +199,7 @@ void define_jani(py::module& m) {
         },
         "Eliminate reward accumulations", py::arg("model"), py::arg("properties"));
 
-    py::class_<InformationObject> informationObject(m, "JaniInformationObject", "An object holding information about a JANI model");
+    py::classh<InformationObject> informationObject(m, "JaniInformationObject", "An object holding information about a JANI model");
     informationObject.def_readwrite("model_type", &InformationObject::modelType)
         .def_readwrite("nr_automata", &InformationObject::nrAutomata)
         .def_readwrite("nr_edges", &InformationObject::nrEdges)
@@ -219,11 +219,11 @@ void define_jani(py::module& m) {
 }
 
 void define_jani_transformers(py::module& m) {
-    py::class_<JaniLocationExpander>(m, "JaniLocationExpander", "A transformer for Jani expanding variables into locations")
+    py::classh<JaniLocationExpander>(m, "JaniLocationExpander", "A transformer for Jani expanding variables into locations")
         .def(py::init<Model const&>(), py::arg("model"))
         .def("transform", &JaniLocationExpander::transform, py::arg("automaton_name"), py::arg("variable_name"));
 
-    py::class_<JaniScopeChanger>(m, "JaniScopeChanger", "A transformer for Jani changing variables from local to global and vice versa")
+    py::classh<JaniScopeChanger>(m, "JaniScopeChanger", "A transformer for Jani changing variables from local to global and vice versa")
         .def(py::init<>())
         .def(
             "make_variables_local",

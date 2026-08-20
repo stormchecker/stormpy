@@ -4,7 +4,7 @@
 #include "src/pycarl/types.h"
 
 void define_factorizedrationalfunction(py::module& m) {
-    py::class_<FactorizedRationalFunction>(m, "FactorizedRationalFunction",
+    py::classh<FactorizedRationalFunction>(m, "FactorizedRationalFunction",
                                            "Represent a rational function, that is the fraction of two factorized polynomials ")
         .def(py::init<FactorizedPolynomial>())
         .def(py::init<FactorizedPolynomial, FactorizedPolynomial>())

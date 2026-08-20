@@ -12,7 +12,7 @@ void define_scheduler(py::module& m, std::string vt_suffix) {
     using SchedulerChoice = storm::storage::SchedulerChoice<ValueType>;
 
     std::string schedulerClassName = std::string("Scheduler") + vt_suffix;
-    py::class_<Scheduler, std::shared_ptr<storm::storage::Scheduler<ValueType>>> scheduler(m, schedulerClassName.c_str(), "A Finite Memory Scheduler");
+    py::classh<Scheduler> scheduler(m, schedulerClassName.c_str(), "A Finite Memory Scheduler");
     scheduler
         .def("__str__",
              [](Scheduler const& s) {
@@ -61,7 +61,7 @@ void define_scheduler(py::module& m, std::string vt_suffix) {
     }
 
     std::string schedulerChoiceClassName = std::string("SchedulerChoice") + vt_suffix;
-    py::class_<SchedulerChoice> schedulerChoice(m, schedulerChoiceClassName.c_str(), "A choice of a finite memory scheduler");
+    py::classh<SchedulerChoice> schedulerChoice(m, schedulerChoiceClassName.c_str(), "A choice of a finite memory scheduler");
     schedulerChoice.def(py::init<uint64_t>(), "choice"_a)
         .def_property_readonly("defined", &SchedulerChoice::isDefined, "Is the choice defined by the scheduler?")
         .def_property_readonly("deterministic", &SchedulerChoice::isDeterministic, "Is the choice deterministic (given by a Dirac distribution)?")

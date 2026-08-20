@@ -21,8 +21,7 @@ using SparseModelComponents = storm::storage::sparse::ModelComponents<ValueType>
 
 template<typename ValueType>
 void define_sparse_model_components(py::module& m, std::string const& vtSuffix) {
-    py::class_<SparseModelComponents<ValueType>, std::shared_ptr<SparseModelComponents<ValueType>>>(m, ("Sparse" + vtSuffix + "ModelComponents").c_str(),
-                                                                                                    "Components required for building a sparse model")
+    py::classh<SparseModelComponents<ValueType>>(m, ("Sparse" + vtSuffix + "ModelComponents").c_str(), "Components required for building a sparse model")
 
         .def(py::init<SparseMatrix<ValueType> const&, StateLabeling const&, std::unordered_map<std::string, SparseRewardModel<ValueType>> const&, bool,
                       boost::optional<BitVector> const&, boost::optional<SparseMatrix<storm::storage::sparse::state_type>> const&>(),

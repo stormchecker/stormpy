@@ -14,7 +14,7 @@ typedef storm::dft::storage::FailableElements::const_iterator FailableIter;
 template<typename ValueType>
 void define_dft_state(py::module& m, std::string const& vt_suffix) {
     // DFT state
-    py::class_<DFTState<ValueType>, std::shared_ptr<DFTState<ValueType>>>(m, ("DFTState" + vt_suffix).c_str(), "DFT state")
+    py::classh<DFTState<ValueType>>(m, ("DFTState" + vt_suffix).c_str(), "DFT state")
         .def("operational", &DFTState<ValueType>::isOperational, "Is element operational", py::arg("id"))
         .def(
             "failed", [](DFTState<ValueType> const& state, size_t id) { return state.hasFailed(id); }, "Is element failed", py::arg("id"))
@@ -52,15 +52,15 @@ void define_failable_elements(py::module& m) {
         FailableIter it;
     };
 
-    py::class_<Failable, std::shared_ptr<Failable>>(m, "FailableElements", "Failable elements in DFT state")
+    py::classh<Failable>(m, "FailableElements", "Failable elements in DFT state")
         .def("__iter__", [](py::object s) { return FailableIterator(s.cast<Failable const&>(), s); }, py::keep_alive<0, 1>());
 
-    py::class_<FailableIterator>(m, "FailableIterator")
+    py::classh<FailableIterator>(m, "FailableIterator")
         .def(
             "__iter__", [](FailableIterator& it) -> FailableIterator& { return it; }, py::keep_alive<0, 1>())
         .def("__next__", &FailableIterator::next, py::keep_alive<0, 1>());
 
-    py::class_<FailableIter, std::shared_ptr<FailableIter>>(m, "FailableElement", "Failable element")
+    py::classh<FailableIter>(m, "FailableElement", "Failable element")
         .def("is_due_dependency", &FailableIter::isFailureDueToDependency, "Is failure due to dependency")
         .def("as_be_double", &FailableIter::asBE<double>, py::arg("dft"), "Get BE which fails")
         .def("as_be_ratfunc", &FailableIter::asBE<storm::RationalFunction>, py::arg("dft"), "Get BE which fails")

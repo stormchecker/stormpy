@@ -19,8 +19,8 @@ using GenerateMonitorVerifierOptions = typename storm::generator::GenerateMonito
 
 template<typename ValueType>
 void define_verimon_generator(py::module &m, std::string const &vtSuffix) {
-    py::class_<storm::generator::MonitorVerifier<ValueType>, std::shared_ptr<storm::generator::MonitorVerifier<ValueType>>> mv(
-        m, ("MonitorVerifier" + vtSuffix).c_str(), "Container for monitor verifier POMDP with associated objects");
+    py::classh<storm::generator::MonitorVerifier<ValueType>> mv(m, ("MonitorVerifier" + vtSuffix).c_str(),
+                                                                "Container for monitor verifier POMDP with associated objects");
     mv.def(py::init<const SparsePomdp<ValueType> &, const std::map<std::pair<uint32_t, bool>, uint32_t> &, const std::map<uint32_t, std::string> &>(),
            py::arg("product"), py::arg("observation_map"), py::arg("default_action_map"));
     mv.def("get_product", &storm::generator::MonitorVerifier<ValueType>::getProduct, py::return_value_policy::reference_internal);
@@ -28,7 +28,7 @@ void define_verimon_generator(py::module &m, std::string const &vtSuffix) {
     mv.def_property_readonly("default_action_map", &storm::generator::MonitorVerifier<ValueType>::getObservationDefaultAction,
                              py::return_value_policy::reference_internal);
 
-    py::class_<storm::generator::GenerateMonitorVerifier<ValueType>> gmv(m, ("GenerateMonitorVerifier" + vtSuffix).c_str(),
+    py::classh<storm::generator::GenerateMonitorVerifier<ValueType>> gmv(m, ("GenerateMonitorVerifier" + vtSuffix).c_str(),
                                                                          "Generator of POMDP used in verifying monitors against markov chains");
     gmv.def(py::init<SparseDtmc<ValueType> const &, SparseMdp<ValueType> const &, std::shared_ptr<storm::expressions::ExpressionManager> &,
                      GenerateMonitorVerifierOptions<ValueType> const &>(),
@@ -36,7 +36,7 @@ void define_verimon_generator(py::module &m, std::string const &vtSuffix) {
     gmv.def("create_product", &storm::generator::GenerateMonitorVerifier<ValueType>::createProduct, "Create the verification POMDP");
     gmv.def("set_risk", &storm::generator::GenerateMonitorVerifier<ValueType>::setRisk, py::arg("risk"));
 
-    py::class_<GenerateMonitorVerifierOptions<ValueType>> gmvopts(m, ("GenerateMonitorVerifier" + vtSuffix + "Options").c_str(),
+    py::classh<GenerateMonitorVerifierOptions<ValueType>> gmvopts(m, ("GenerateMonitorVerifier" + vtSuffix + "Options").c_str(),
                                                                   "Options for corresponding generator");
     gmvopts.def(py::init<>());
     gmvopts.def_readwrite("accepting_label", &GenerateMonitorVerifierOptions<ValueType>::acceptingLabel);

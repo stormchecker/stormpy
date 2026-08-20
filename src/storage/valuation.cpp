@@ -33,9 +33,9 @@ std::vector<bool> booleanValuesAsVector(Valuations const& v, storm::expressions:
 
 void define_valuation(py::module& m) {
     // Opaque description type — constructed via ValuationDescriptionBuilder, passed to Valuations constructor
-    py::class_<ValuationClassDescription>(m, "ValuationClassDescription", "Schema describing the variables of a valuation class");
+    py::classh<ValuationClassDescription>(m, "ValuationClassDescription", "Schema describing the variables of a valuation class");
 
-    py::class_<ValuationDescriptionBuilder>(m, "ValuationDescriptionBuilder", "Incrementally builds a ValuationClassDescription")
+    py::classh<ValuationDescriptionBuilder>(m, "ValuationDescriptionBuilder", "Incrementally builds a ValuationClassDescription")
         .def(py::init([](storm::expressions::ExpressionManager& manager) { return ValuationDescriptionBuilder(manager.getSharedPointer()); }),
              py::arg("manager"), py::keep_alive<1, 2>())
         .def("add_boolean_variable", &ValuationDescriptionBuilder::addBooleanVariable, py::arg("variable"), py::arg("optional") = false,
@@ -55,7 +55,7 @@ void define_valuation(py::module& m) {
         .def("add_string_variable", &ValuationDescriptionBuilder::addStringVariable, py::arg("variable"), py::arg("optional") = false, "Add a string variable")
         .def("build_class_description", &ValuationDescriptionBuilder::buildClassDescription, "Finalise and return the class description");
 
-    py::class_<Valuations, std::shared_ptr<Valuations>>(m, "Valuations", "Valuations for explicit entities (states/observations)")
+    py::classh<Valuations>(m, "Valuations", "Valuations for explicit entities (states/observations)")
         .def(py::init([](ValuationClassDescription const& desc, storm::expressions::ExpressionManager& manager, uint64_t numEntities) {
                  return std::make_shared<Valuations>(desc, manager.getSharedPointer(), numEntities);
              }),
@@ -245,7 +245,7 @@ void define_valuation(py::module& m) {
 }
 
 void define_valuation_transformer(py::module& m) {
-    py::class_<storm::storage::sparse::ValuationTransformer>(
+    py::classh<storm::storage::sparse::ValuationTransformer>(
         m, "ValuationTransformer",
         "Transforms the given valuations to a new valuations over a new variable set. The values of the new variables are determined by evaluating "
         "the provided expressions w.r.t. the old variable valuation. The freshly introduced variables may either replace or extend the existing variable set.")
@@ -255,10 +255,10 @@ void define_valuation_transformer(py::module& m) {
 }
 
 void define_simplevaluation(py::module& m) {
-    py::class_<storm::expressions::Valuation> val(m, "Valuation");
+    py::classh<storm::expressions::Valuation> val(m, "Valuation");
     val.def_property_readonly("expression_manager", &storm::expressions::Valuation::getManager);
 
-    py::class_<storm::expressions::SimpleValuation>(m, "SimpleValuation", val)
+    py::classh<storm::expressions::SimpleValuation>(m, "SimpleValuation", val)
         .def("to_json", &storm::expressions::SimpleValuation::toJson, "Convert to JSON")
         .def("to_string", &storm::expressions::SimpleValuation::toString, py::arg("pretty") = true, "to string")
         .def("_get_boolean_value", &storm::expressions::SimpleValuation::getBooleanValue, py::arg("variable"), "Get Boolean value for expression variable")

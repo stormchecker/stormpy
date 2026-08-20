@@ -16,25 +16,25 @@ using NDPomdpTrackerSparse = storm::generator::NondeterministicBeliefTracker<Val
 
 template<typename ValueType>
 void define_tracker(py::module& m, std::string const& vtSuffix) {
-    py::class_<storm::generator::BeliefSupportTracker<ValueType>> tracker(m, ("BeliefSupportTracker" + vtSuffix).c_str(), "Tracker for BeliefSupports");
+    py::classh<storm::generator::BeliefSupportTracker<ValueType>> tracker(m, ("BeliefSupportTracker" + vtSuffix).c_str(), "Tracker for BeliefSupports");
     tracker.def(py::init<SparsePomdp<ValueType> const&>(), py::arg("pomdp"));
     tracker.def("get_current_belief_support", &SparsePomdpTracker<ValueType>::getCurrentBeliefSupport, "What is the support given the trace so far");
     tracker.def("track", &SparsePomdpTracker<ValueType>::track, py::arg("action"), py::arg("observation"));
 
-    py::class_<storm::generator::SparseBeliefState<ValueType>> sbel(m, ("SparseBeliefState" + vtSuffix).c_str(), "Belief state in sparse format");
+    py::classh<storm::generator::SparseBeliefState<ValueType>> sbel(m, ("SparseBeliefState" + vtSuffix).c_str(), "Belief state in sparse format");
     sbel.def("get", &storm::generator::SparseBeliefState<ValueType>::get, py::arg("state"));
     sbel.def_property_readonly("risk", &storm::generator::SparseBeliefState<ValueType>::getRisk);
     sbel.def("__str__", &storm::generator::SparseBeliefState<ValueType>::toString);
     sbel.def_property_readonly("is_valid", &storm::generator::SparseBeliefState<ValueType>::isValid);
 
-    py::class_<typename NDPomdpTrackerSparse<ValueType>::Options> opts(m, ("NondeterministicBeliefTracker" + vtSuffix + "SparseOptions").c_str(),
+    py::classh<typename NDPomdpTrackerSparse<ValueType>::Options> opts(m, ("NondeterministicBeliefTracker" + vtSuffix + "SparseOptions").c_str(),
                                                                        "Options for the corresponding tracker");
     opts.def(py::init<>());
     opts.def_readwrite("track_timeout", &NDPomdpTrackerSparse<ValueType>::Options::trackTimeOut);
     opts.def_readwrite("reduction_timeout", &NDPomdpTrackerSparse<ValueType>::Options::timeOut);
     opts.def_readwrite("reduction_wiggle", &NDPomdpTrackerSparse<ValueType>::Options::wiggle);
 
-    py::class_<NDPomdpTrackerSparse<ValueType>> ndetbelieftracker(m, ("NondeterministicBeliefTracker" + vtSuffix + "Sparse").c_str(),
+    py::classh<NDPomdpTrackerSparse<ValueType>> ndetbelieftracker(m, ("NondeterministicBeliefTracker" + vtSuffix + "Sparse").c_str(),
                                                                   "Tracker for belief states and uncontrollable actions");
     ndetbelieftracker.def(py::init<SparsePomdp<ValueType> const&, typename NDPomdpTrackerSparse<ValueType>::Options>(), py::arg("pomdp"), py::arg("options"));
     ndetbelieftracker.def("reset", &NDPomdpTrackerSparse<ValueType>::reset);

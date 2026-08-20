@@ -36,7 +36,7 @@ void define_dft(py::module& m) {
 template<typename ValueType>
 void define_dft_typed(py::module& m, std::string const& vt_suffix) {
     // DFT class
-    py::class_<DFT<ValueType>, std::shared_ptr<DFT<ValueType>>>(m, ("DFT" + vt_suffix).c_str(), "Dynamic Fault Tree")
+    py::classh<DFT<ValueType>>(m, ("DFT" + vt_suffix).c_str(), "Dynamic Fault Tree")
         .def("nr_elements", &DFT<ValueType>::nrElements, "Total number of elements")
         .def("nr_be", &DFT<ValueType>::nrBasicElements, "Number of basic elements")
         .def("nr_dynamic", &DFT<ValueType>::nrDynamicElements, "Number of dynamic elements")
@@ -64,7 +64,7 @@ void define_dft_typed(py::module& m, std::string const& vt_suffix) {
 }
 
 void define_symmetries(py::module& m) {
-    py::class_<storm::dft::storage::DftSymmetries, std::shared_ptr<storm::dft::storage::DftSymmetries>>(m, "DftSymmetries", "Symmetries in DFT")
+    py::classh<storm::dft::storage::DftSymmetries>(m, "DftSymmetries", "Symmetries in DFT")
         .def(py::init<>(), "Constructor for empty symmetry")
         .def("__len__", &storm::dft::storage::DftSymmetries::nrSymmetries)
         .def(

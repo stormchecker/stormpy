@@ -4,7 +4,7 @@
 #include "src/pycarl/types.h"
 
 void define_factorizedpolynomial(py::module& m) {
-    py::class_<FactorizedPolynomial>(m, "FactorizedPolynomial", "Represent a polynomial with its factorization")
+    py::classh<FactorizedPolynomial>(m, "FactorizedPolynomial", "Represent a polynomial with its factorization")
         .def(py::init<const Rational&>(), py::arg("number"), "Constructor")
         .def(py::init<const Polynomial&, const std::shared_ptr<carl::Cache<FactorizationPair>>&>(), py::arg("polynomial"), py::arg("cache"), "Constructor")
 

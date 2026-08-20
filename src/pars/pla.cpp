@@ -120,7 +120,7 @@ void define_pla(py::module& m) {
                                                                               py::name("friendly_name"), py::is_method(m.attr("RegionResultHypothesis")));
 
     // Region
-    py::class_<Region, std::shared_ptr<Region>>(m, "ParameterRegion", "Parameter region")
+    py::classh<Region>(m, "ParameterRegion", "Parameter region")
         .def(py::init([](std::map<Region::VariableType, std::pair<Region::CoefficientType, Region::CoefficientType>> valuation) {
                  Region::Valuation lowerValuation;
                  Region::Valuation upperValuation;
@@ -141,8 +141,7 @@ void define_pla(py::module& m) {
         .def("__str__", &streamToString<Region>);
 
     // RegionModelChecker
-    py::class_<RegionModelChecker, std::shared_ptr<RegionModelChecker>> regionModelChecker(m, "RegionModelChecker",
-                                                                                           "Region model checker via paramater lifting");
+    py::classh<RegionModelChecker> regionModelChecker(m, "RegionModelChecker", "Region model checker via paramater lifting");
     regionModelChecker
         .def("check_region", &checkRegion, "Check region", py::arg("environment"), py::arg("region"),
              py::arg("hypothesis") = storm::modelchecker::RegionResultHypothesis::Unknown, py::arg("sampleVertices") = false)
@@ -152,7 +151,7 @@ void define_pla(py::module& m) {
              py::arg("splitting_estimate") = std::nullopt, py::arg("allow_model_simplification") = true, py::arg("graph_preserving") = true);
 
     // RegionRefinementChecker
-    py::class_<RegionRefinementChecker, std::shared_ptr<RegionRefinementChecker>>(m, "RegionRefinementChecker", "Region refinement checker")
+    py::classh<RegionRefinementChecker>(m, "RegionRefinementChecker", "Region refinement checker")
         .def("specify", &specifyRefinementChecker, "specify arguments", py::arg("environment"), py::arg("model"), py::arg("formula"),
              py::arg("allow_model_simplification") = true, py::arg("graph_preserving") = true)
         .def(
@@ -165,12 +164,10 @@ void define_pla(py::module& m) {
             "Compute extremum value and point with precision", py::arg("environment"), py::arg("region"), py::arg("extremum_direction"), py::arg("precision"),
             py::arg("precision_absolute") = false);
 
-    py::class_<DtmcParameterLiftingModelChecker, std::shared_ptr<DtmcParameterLiftingModelChecker>>(m, "DtmcParameterLiftingModelChecker",
-                                                                                                    "Region model checker for DTMCs", regionModelChecker)
+    py::classh<DtmcParameterLiftingModelChecker>(m, "DtmcParameterLiftingModelChecker", "Region model checker for DTMCs", regionModelChecker)
         .def(py::init<>())
         .def("get_bound_all_states", &getBound_dtmc, "Get bound", py::arg("environment"), py::arg("region"), py::arg("maximise") = true);
-    py::class_<MdpParameterLiftingModelChecker, std::shared_ptr<MdpParameterLiftingModelChecker>>(m, "MdpParameterLiftingModelChecker",
-                                                                                                  "Region model checker for MPDs", regionModelChecker)
+    py::classh<MdpParameterLiftingModelChecker>(m, "MdpParameterLiftingModelChecker", "Region model checker for MPDs", regionModelChecker)
         .def(py::init<>())
         .def("get_bound_all_states", &getBound_mdp, "Get bound", py::arg("environment"), py::arg("region"), py::arg("maximise") = true);
 

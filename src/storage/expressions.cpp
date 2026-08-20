@@ -18,8 +18,7 @@ void define_expressions(py::module& m) {
     using Valuation = storm::expressions::Valuation;
 
     // ExpressionManager
-    py::class_<storm::expressions::ExpressionManager, std::shared_ptr<storm::expressions::ExpressionManager>>(m, "ExpressionManager",
-                                                                                                              "Manages variables for expressions")
+    py::classh<storm::expressions::ExpressionManager>(m, "ExpressionManager", "Manages variables for expressions")
         .def(py::init(), "Constructor")
         .def("create_boolean", &storm::expressions::ExpressionManager::boolean, py::arg("boolean"), "Create expression from boolean")
         .def("create_integer", &storm::expressions::ExpressionManager::integer, py::arg("integer"), "Create expression from integer number")
@@ -40,7 +39,7 @@ void define_expressions(py::module& m) {
         .def("__eq__", &storm::expressions::ExpressionManager::operator==);
 
     // Variable
-    py::class_<storm::expressions::Variable, std::shared_ptr<storm::expressions::Variable>>(m, "Variable", "Represents a variable")
+    py::classh<storm::expressions::Variable>(m, "Variable", "Represents a variable")
         .def_property_readonly("name", &storm::expressions::Variable::getName, "Variable name")
         .def_property_readonly("manager", &storm::expressions::Variable::getManager, "Variable manager")
         .def_property_readonly("index", &storm::expressions::Variable::getIndex, "Variable index")
@@ -82,7 +81,7 @@ void define_expressions(py::module& m) {
         .finalize();
 
     // Expression
-    py::class_<storm::expressions::Expression, std::shared_ptr<storm::expressions::Expression>> expression(m, "Expression", "Holds an expression");
+    py::classh<storm::expressions::Expression> expression(m, "Expression", "Holds an expression");
     expression.def(py::init<Expression>(), "other_expression"_a)
         .def("contains_variables", &storm::expressions::Expression::containsVariables, "Check if the expression contains variables.")
         .def("contains_variable", &storm::expressions::Expression::containsVariable, "Check if the expression contains any of the given variables.",
@@ -133,7 +132,7 @@ void define_expressions(py::module& m) {
         .def_static("Conjunction", [](std::vector<Expression> const& expr) { return storm::expressions::conjunction(expr); })
         .def_static("Disjunction", [](std::vector<Expression> const& expr) { return storm::expressions::disjunction(expr); });
 
-    py::class_<storm::parser::ExpressionParser>(m, "ExpressionParser", "Parser for storm-expressions")
+    py::classh<storm::parser::ExpressionParser>(m, "ExpressionParser", "Parser for storm-expressions")
         .def(py::init<storm::expressions::ExpressionManager const&>(), "Expression Manager to use", py::arg("expression_manager"))
         .def(
             "set_identifier_mapping",
@@ -143,14 +142,14 @@ void define_expressions(py::module& m) {
             "sets identifiers")
         .def("parse", &storm::parser::ExpressionParser::parseFromString, py::arg("string"), py::arg("ignore_error") = false, "parse");
 
-    py::class_<storm::expressions::Type>(m, "ExpressionType", "The type of an expression")
+    py::classh<storm::expressions::Type>(m, "ExpressionType", "The type of an expression")
         .def_property_readonly("is_boolean", &storm::expressions::Type::isBooleanType)
         .def_property_readonly("is_integer", &storm::expressions::Type::isIntegerType)
         .def_property_readonly("is_rational", &storm::expressions::Type::isRationalType)
         .def_property_readonly("is_string", &storm::expressions::Type::isStringType)
         .def("__str__", &storm::expressions::Type::getStringRepresentation);
 
-    py::class_<storm::expressions::ToDiceStringVisitor>(m, "DiceStringVisitor", "Translate expressions to dice")
+    py::classh<storm::expressions::ToDiceStringVisitor>(m, "DiceStringVisitor", "Translate expressions to dice")
         .def(py::init<uint64_t>(), py::arg("nr_bits"))
         .def("to_string", [](storm::expressions::ToDiceStringVisitor& visitor, storm::expressions::Expression const& expr) { return visitor.toString(expr); });
 }

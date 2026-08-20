@@ -34,16 +34,15 @@ void define_dft_elements(py::module& m) {
 template<typename ValueType>
 void define_dft_elements_typed(py::module& m, std::string const& vt_suffix) {
     // DFT elements
-    py::class_<DFTElement<ValueType>, std::shared_ptr<DFTElement<ValueType>>> element(m, ("DFTElement" + vt_suffix).c_str(), "DFT element");
+    py::classh<DFTElement<ValueType>> element(m, ("DFTElement" + vt_suffix).c_str(), "DFT element");
     element.def_property_readonly("id", &DFTElement<ValueType>::id, "Id")
         .def_property_readonly("name", &DFTElement<ValueType>::name, "Name")
         .def_property_readonly("type", &DFTElement<ValueType>::type, "Type")
         .def("__str__", &DFTElement<ValueType>::toString);
 
-    py::class_<BE<ValueType>, std::shared_ptr<BE<ValueType>>>(m, ("DFTBE" + vt_suffix).c_str(), "Basic Event", element)
-        .def("__str__", &BE<ValueType>::toString);
+    py::classh<BE<ValueType>>(m, ("DFTBE" + vt_suffix).c_str(), "Basic Event", element).def("__str__", &BE<ValueType>::toString);
 
-    py::class_<Dependency<ValueType>, std::shared_ptr<Dependency<ValueType>>>(m, ("DFTDependency" + vt_suffix).c_str(), "Dependency", element)
+    py::classh<Dependency<ValueType>>(m, ("DFTDependency" + vt_suffix).c_str(), "Dependency", element)
         .def_property_readonly("trigger", &Dependency<ValueType>::triggerEvent, "Trigger event")
         .def_property_readonly("dependent_events", &Dependency<ValueType>::dependentEvents, "Dependent events")
         .def("__str__", &Dependency<ValueType>::toString);

@@ -31,7 +31,7 @@ template<typename StateType, typename ValueType>
 void define_stateGeneration(py::module& m);
 
 void define_prism(py::module& m) {
-    py::class_<storm::prism::Program, std::shared_ptr<storm::prism::Program>> program(m, "PrismProgram", "A Prism Program");
+    py::classh<storm::prism::Program> program(m, "PrismProgram", "A Prism Program");
     program.def_property_readonly("constants", &Program::getConstants, "Get Program Constants")
         .def_property_readonly("global_boolean_variables", &Program::getGlobalBooleanVariables, "Retrieves the global boolean variables of the program")
         .def_property_readonly("global_integer_variables", &Program::getGlobalIntegerVariables, "Retrieves the global integer variables of the program")
@@ -97,7 +97,7 @@ void define_prism(py::module& m) {
             "Get the expression of the given label.", py::arg("label"))
         .def_property_readonly("labels", &Program::getLabels, "Get all labels in the program");
 
-    py::class_<Module> module(m, "PrismModule", "A module in a Prism program");
+    py::classh<Module> module(m, "PrismModule", "A module in a Prism program");
     module.def_property_readonly(
               "commands", [](Module const& module) { return module.getCommands(); }, "Commands in the module")
         .def_property_readonly("name", &Module::getName, "Name of the module")
@@ -108,7 +108,7 @@ void define_prism(py::module& m) {
         .def("get_command_indices_by_action_index", &Module::getCommandIndicesByActionIndex, py::arg("action_index"))
         .def("__str__", &streamToString<Module>);
 
-    py::class_<Command> command(m, "PrismCommand", "A command in a Prism program");
+    py::classh<Command> command(m, "PrismCommand", "A command in a Prism program");
     command.def_property_readonly("global_index", &Command::getGlobalIndex, "Get global index")
         .def_property_readonly("labeled", &Command::isLabeled, "Is the command labeled")
         .def_property_readonly("action_index", &Command::getActionIndex, "What is the action index of the command")
@@ -119,7 +119,7 @@ void define_prism(py::module& m) {
             "updates", [](Command const& command) { return command.getUpdates(); }, "Updates in the command")
         .def("__str__", &streamToString<Command>);
 
-    py::class_<Update> update(m, "PrismUpdate", "An update in a Prism command");
+    py::classh<Update> update(m, "PrismUpdate", "An update in a Prism command");
     update.def(py::init<uint_fast64_t, storm::expressions::Expression const&, std::vector<storm::prism::Assignment> const&>())
         .def_property_readonly(
             "assignments", [](Update const& update) { return update.getAssignments(); }, "Assignments in the update")
@@ -131,13 +131,13 @@ void define_prism(py::module& m) {
         .def("get_as_variable_to_expression_map", &Update::getAsVariableToExpressionMap, "Creates a mapping representation of this update")
         .def("__str__", &streamToString<Update>);
 
-    py::class_<Assignment> assignment(m, "PrismAssignment", "An assignment in prism");
+    py::classh<Assignment> assignment(m, "PrismAssignment", "An assignment in prism");
     assignment.def(py::init<storm::expressions::Variable const&, storm::expressions::Expression const&>())
         .def_property_readonly("variable", &Assignment::getVariable, "Variable that is updated")
         .def_property_readonly("expression", &Assignment::getExpression, "Expression for the update")
         .def("__str__", &streamToString<Assignment>);
 
-    py::class_<Label> label(m, "PrismLabel", "A label in prism");
+    py::classh<Label> label(m, "PrismLabel", "A label in prism");
     label.def_property_readonly("name", &Label::getName);
     label.def_property_readonly("expression", &Label::getStatePredicateExpression);
 
@@ -152,35 +152,33 @@ void define_prism(py::module& m) {
         .value("UNDEFINED", storm::prism::Program::ModelType::UNDEFINED)
         .finalize();
 
-    py::class_<Constant, std::shared_ptr<Constant>> constant(m, "PrismConstant", "A constant in a Prism program");
+    py::classh<Constant> constant(m, "PrismConstant", "A constant in a Prism program");
     constant.def_property_readonly("name", &Constant::getName, "Constant name")
         .def_property_readonly("defined", &Constant::isDefined, "Is the constant defined?")
         .def_property_readonly("type", &Constant::getType, "The type of the constant")
         .def_property_readonly("expression_variable", &Constant::getExpressionVariable, "Expression variable")
         .def_property_readonly("definition", &Constant::getExpression, "Defining expression");
 
-    py::class_<Variable, std::shared_ptr<Variable>> variable(m, "PrismVariable", "A program variable in a Prism program");
+    py::classh<Variable> variable(m, "PrismVariable", "A program variable in a Prism program");
     variable.def_property_readonly("name", &Variable::getName, "Variable name")
         .def_property_readonly("initial_value_expression", &Variable::getInitialValueExpression, "The expression represented the initial value of the variable")
         .def_property_readonly("expression_variable", &Variable::getExpressionVariable, "The expression variable corresponding to the variable");
 
-    py::class_<IntegerVariable, std::shared_ptr<IntegerVariable>> integer_variable(m, "PrismIntegerVariable", variable,
-                                                                                   "A program integer variable in a Prism program");
+    py::classh<IntegerVariable> integer_variable(m, "PrismIntegerVariable", variable, "A program integer variable in a Prism program");
     integer_variable
         .def_property_readonly("lower_bound_expression", &IntegerVariable::getLowerBoundExpression, "The the lower bound expression of this integer variable")
         .def_property_readonly("upper_bound_expression", &IntegerVariable::getUpperBoundExpression, "The the upper bound expression of this integer variable")
         .def("__str__", &streamToString<IntegerVariable>);
 
-    py::class_<BooleanVariable, std::shared_ptr<BooleanVariable>> boolean_variable(m, "PrismBooleanVariable", variable,
-                                                                                   "A program boolean variable in a Prism program");
+    py::classh<BooleanVariable> boolean_variable(m, "PrismBooleanVariable", variable, "A program boolean variable in a Prism program");
     boolean_variable.def("__str__", &streamToString<BooleanVariable>);
 
-    py::class_<RewardModel, std::shared_ptr<RewardModel>> rewardModel(m, "PrismRewardModel", "Reward declaration in prism");
+    py::classh<RewardModel> rewardModel(m, "PrismRewardModel", "Reward declaration in prism");
     rewardModel.def_property_readonly("name", &RewardModel::getName, "get name of the reward model");
 
     // define_stateGeneration<uint32_t, storm::RationalNumber>(m);
 
-    py::class_<OverlappingGuardAnalyser> oga(m, "OverlappingGuardAnalyser", "An SMT driven analysis for overlapping guards");
+    py::classh<OverlappingGuardAnalyser> oga(m, "OverlappingGuardAnalyser", "An SMT driven analysis for overlapping guards");
     oga.def(py::init<Program const&, std::shared_ptr<storm::utility::solver::SmtSolverFactory>&>(), py::arg("program"), py::arg("smt solver factory"));
     oga.def("has_module_with_inner_action_overlapping_guard", &OverlappingGuardAnalyser::hasModuleWithInnerActionOverlap);
 }

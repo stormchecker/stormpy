@@ -10,8 +10,7 @@ using JaniChoiceOrigins = storm::storage::sparse::JaniChoiceOrigins;
 using PrismChoiceOrigins = storm::storage::sparse::PrismChoiceOrigins;
 
 void define_origins(py::module& m) {
-    py::class_<ChoiceOrigins, std::shared_ptr<ChoiceOrigins>> co(m, "ChoiceOrigins",
-                                                                 "This class represents the origin of choices of a model in terms of the input model spec.");
+    py::classh<ChoiceOrigins> co(m, "ChoiceOrigins", "This class represents the origin of choices of a model in terms of the input model spec.");
     co.def("is_prism_choice_origins", &ChoiceOrigins::isPrismChoiceOrigins)
         .def("is_jani_choice_origins", &ChoiceOrigins::isJaniChoiceOrigins)
         .def("as_prism_choice_origins", [](ChoiceOrigins& co) -> PrismChoiceOrigins& { return co.asPrismChoiceOrigins(); })
@@ -20,8 +19,7 @@ void define_origins(py::module& m) {
         .def("get_choice_info", &ChoiceOrigins::getChoiceInfo, "identifier"_a, "human readable string")
         .def("get_number_of_identifiers", &ChoiceOrigins::getNumberOfIdentifiers, "the number of considered identifier");
 
-    py::class_<JaniChoiceOrigins, std::shared_ptr<JaniChoiceOrigins>>(m, "JaniChoiceOrigins",
-                                                                      "This class represents for each choice the origin in the jani spec.", co)
+    py::classh<JaniChoiceOrigins>(m, "JaniChoiceOrigins", "This class represents for each choice the origin in the jani spec.", co)
         .def(py::init<std::shared_ptr<storm::jani::Model const> const&, std::vector<uint_fast64_t> const&,
                       std::vector<JaniChoiceOrigins::EdgeIndexSet> const&>(),
              "jani_model"_a, "index_to_identifier_mapping"_a, "identifier_to_edge_index__set_mapping"_a)
@@ -30,8 +28,7 @@ void define_origins(py::module& m) {
             "get_edge_index_set", [](JaniChoiceOrigins const& co, uint64_t choice) -> auto& { return co.getEdgeIndexSet(choice); },
             "returns the set of edges that induced the choice", py::arg("choice_index"));
 
-    py::class_<PrismChoiceOrigins, std::shared_ptr<PrismChoiceOrigins>>(
-        m, "PrismChoiceOrigins", "This class represents for each choice the set of prism commands that induced the choice.", co)
+    py::classh<PrismChoiceOrigins>(m, "PrismChoiceOrigins", "This class represents for each choice the set of prism commands that induced the choice.", co)
         .def(py::init<std::shared_ptr<storm::prism::Program const> const&, std::vector<uint_fast64_t> const&,
                       std::vector<PrismChoiceOrigins::CommandSet> const&>(),
              "prism_program"_a, "index_to_identifier_mapping"_a, "identifier_to_command_set_mapping"_a)

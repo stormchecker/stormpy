@@ -34,7 +34,7 @@ using namespace storm::modelchecker;
 // Helper: define typed ModelInstantiator class
 template<typename ParametricModel, typename InstantiatedModel>
 void define_typed_instantiator(py::module& m, const char* pyName, const char* pyDesc) {
-    py::class_<storm::utility::ModelInstantiator<ParametricModel, InstantiatedModel>>(m, pyName, pyDesc)
+    py::classh<storm::utility::ModelInstantiator<ParametricModel, InstantiatedModel>>(m, pyName, pyDesc)
         .def(py::init<ParametricModel>(), "parametric model"_a)
         .def("instantiate", &storm::utility::ModelInstantiator<ParametricModel, InstantiatedModel>::instantiate,
              "Instantiate model with given parameter values");
@@ -80,10 +80,10 @@ template<typename ModelType, typename ResultType>
 void define_typed_checker(py::module& m, const char* baseName, const char* baseDesc, const char* derivedName, const char* derivedDesc) {
     using CheckerType = typename instantiation_checker<ModelType, ResultType>::type;
     using BaseChecker = SparseInstantiationModelChecker<ModelType, ResultType>;
-    auto base = py::class_<BaseChecker, std::shared_ptr<BaseChecker>>(m, baseName, baseDesc);
+    auto base = py::classh<BaseChecker>(m, baseName, baseDesc);
     base.def("specify_formula", &BaseChecker::specifyFormula, "check_task"_a);
 
-    py::class_<CheckerType, std::shared_ptr<CheckerType>>(m, derivedName, derivedDesc, base)
+    py::classh<CheckerType>(m, derivedName, derivedDesc, base)
         .def(py::init<ModelType>(), "parametric model"_a)
         .def(
             "check",

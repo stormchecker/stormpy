@@ -5,7 +5,7 @@
 #include "src/helpers.h"
 
 void define_memory(py::module& m) {
-    py::class_<storm::storage::PomdpMemory> memory(m, "PomdpMemory", "Memory for POMDP policies");
+    py::classh<storm::storage::PomdpMemory> memory(m, "PomdpMemory", "Memory for POMDP policies");
     memory.def_property_readonly("nr_states", &storm::storage::PomdpMemory::getNumberOfStates, "How many states does the memory structure have");
 
     // Trivial, FixedCounter, SelectiveCounter, FixedRing, SelectiveRing, SettableBits, Full
@@ -19,7 +19,7 @@ void define_memory(py::module& m) {
         .value("full", storm::storage::PomdpMemoryPattern::Full)
         .finalize();
 
-    py::class_<storm::storage::PomdpMemoryBuilder> memorybuilder(m, "PomdpMemoryBuilder", "MemoryBuilder for POMDP policies");
+    py::classh<storm::storage::PomdpMemoryBuilder> memorybuilder(m, "PomdpMemoryBuilder", "MemoryBuilder for POMDP policies");
     memorybuilder.def(py::init<>());
     memorybuilder.def("build", &storm::storage::PomdpMemoryBuilder::build, py::arg("pattern"), py::arg("nr_states"));
 }

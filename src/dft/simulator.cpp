@@ -24,9 +24,9 @@ void define_simulator(py::module& m) {
         .value("INVALID", storm::dft::simulator::SimulationTraceResult::INVALID)
         .value("CONTINUE", storm::dft::simulator::SimulationTraceResult::CONTINUE)
         .finalize();
-    py::class_<DFTStateInfo, std::shared_ptr<DFTStateInfo>>(m, "DFTStateInfo", "State Generation Info for DFT");
+    py::classh<DFTStateInfo>(m, "DFTStateInfo", "State Generation Info for DFT");
 
-    py::class_<RandomGenerator, std::shared_ptr<RandomGenerator>>(m, "RandomGenerator", "Random number generator")
+    py::classh<RandomGenerator>(m, "RandomGenerator", "Random number generator")
         .def_static(
             "create", [](unsigned int seed) -> RandomGenerator { return RandomGenerator(seed); }, py::arg("seed"), "Initialize random number generator");
 }
@@ -34,7 +34,7 @@ void define_simulator(py::module& m) {
 template<typename ValueType>
 void define_simulator_typed(py::module& m, std::string const& vt_suffix) {
     // Simulator for DFTs
-    py::class_<Simulator<ValueType>, std::shared_ptr<Simulator<ValueType>>>(m, ("DFTSimulator" + vt_suffix).c_str(), "Simulator for DFT traces")
+    py::classh<Simulator<ValueType>>(m, ("DFTSimulator" + vt_suffix).c_str(), "Simulator for DFT traces")
         .def(py::init<storm::dft::storage::DFT<ValueType> const&, DFTStateInfo const&, RandomGenerator&>(), py::keep_alive<1, 2>(), py::keep_alive<1, 3>(),
              py::keep_alive<1, 4>(), py::arg("dft"), py::arg("state_generation_info"), py::arg("generator"), "Create Simulator")
         .def("reset", &Simulator<ValueType>::resetToInitial, "Reset to initial state")

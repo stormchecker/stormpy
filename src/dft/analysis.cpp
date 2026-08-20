@@ -42,8 +42,7 @@ void define_analysis(py::module& m) {
         .finalize();
 
     // RelevantEvents
-    py::class_<storm::dft::utility::RelevantEvents, std::shared_ptr<storm::dft::utility::RelevantEvents>>(m, "RelevantEvents",
-                                                                                                          "Relevant events which should be observed")
+    py::classh<storm::dft::utility::RelevantEvents>(m, "RelevantEvents", "Relevant events which should be observed")
         .def(py::init<>(), "Create empty list of relevant events")
         .def("is_relevant", &storm::dft::utility::RelevantEvents::isRelevant, "Check whether the given name is a relevant event", py::arg("name"));
 
@@ -53,8 +52,7 @@ void define_analysis(py::module& m) {
 
 template<typename ValueType>
 void define_analysis_typed(py::module& m, std::string const& vt_suffix) {
-    py::class_<ExplicitDFTModelBuilder<ValueType>, std::shared_ptr<ExplicitDFTModelBuilder<ValueType>>>(m, ("ExplicitDFTModelBuilder" + vt_suffix).c_str(),
-                                                                                                        "Builder to generate explicit model from DFT")
+    py::classh<ExplicitDFTModelBuilder<ValueType>>(m, ("ExplicitDFTModelBuilder" + vt_suffix).c_str(), "Builder to generate explicit model from DFT")
         .def(py::init<storm::dft::storage::DFT<ValueType> const&, storm::dft::storage::DftSymmetries const&>(), "Constructor", py::arg("dft"),
              py::arg("symmetries") = storm::dft::storage::DftSymmetries())
         .def("build", &ExplicitDFTModelBuilder<ValueType>::buildModel, "Build state space of model", py::arg("iteration"),

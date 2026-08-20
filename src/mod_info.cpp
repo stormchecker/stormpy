@@ -10,7 +10,7 @@ PYBIND11_MODULE(_info, m) {
     options.disable_function_signatures();
 #endif
 
-    py::class_<storm::StormVersion>(m, "Version", "Version information for Storm")
+    py::classh<storm::StormVersion>(m, "Version", "Version information for Storm")
         // static properties are still called with self as argument (which we ignore), see
         // https://pybind11.readthedocs.io/en/stable/advanced/classes.html#static-properties
         .def_property_readonly_static(

@@ -4,7 +4,7 @@
 #include "src/pycarl/types.h"
 
 void define_term(py::module& m) {
-    py::class_<Term>(m, "Term")
+    py::classh<Term>(m, "Term")
         .def(py::init<Rational, const Monomial::Arg&>())
         .def(py::init<carl::Variable&>())
         .def(py::init<Rational const&>())

@@ -4,7 +4,7 @@
 #include "src/pycarl/types.h"
 
 void define_rationalfunction(py::module& m) {
-    py::class_<RationalFunction>(m, "RationalFunction", "Represent a rational function, that is the fraction of two multivariate polynomials ")
+    py::classh<RationalFunction>(m, "RationalFunction", "Represent a rational function, that is the fraction of two multivariate polynomials ")
         .def(py::init<carl::Variable>())
         .def(py::init<Polynomial>())
         .def(py::init<Polynomial, Polynomial>())

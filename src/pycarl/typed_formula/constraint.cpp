@@ -4,7 +4,7 @@
 
 //
 void define_constraint(py::module& m) {
-    py::class_<Constraint>(m, "Constraint")
+    py::classh<Constraint>(m, "Constraint")
         .def(py::init<bool>())
         .def(py::init<carl::Variable, carl::Relation, Rational>(), py::arg("var"), py::arg("rel"), py::arg("bound"))
         .def(py::init<Polynomial, carl::Relation>())
@@ -29,7 +29,7 @@ void define_constraint(py::module& m) {
 }
 //
 void define_simple_constraint(py::module& m) {
-    py::class_<SimpleConstraint>(m, "SimpleConstraint")
+    py::classh<SimpleConstraint>(m, "SimpleConstraint")
         .def(py::init<bool>())
         .def(py::init<Polynomial, carl::Relation>())
         .def("__str__", &streamToString<SimpleConstraint>)
@@ -39,7 +39,7 @@ void define_simple_constraint(py::module& m) {
         .def(py::pickle([](const SimpleConstraint& val) -> std::tuple<std::string> { throw NoPickling(); },
                         [](const std::tuple<std::string>& data) -> SimpleConstraint { throw NoPickling(); }));
 
-    py::class_<SimpleConstraintRatFunc>(m, "SimpleConstraintRatFunc")
+    py::classh<SimpleConstraintRatFunc>(m, "SimpleConstraintRatFunc")
         .def(py::init<bool>())
         .def(py::init<FactorizedRationalFunction, carl::Relation>())
         .def("__str__", &streamToString<SimpleConstraintRatFunc>)

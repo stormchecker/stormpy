@@ -20,8 +20,7 @@ void define_pars(py::module& m) {
         },
         "Initialize Storm-pars");
 
-    py::class_<SparseParametricDtmcSimplifier, std::shared_ptr<SparseParametricDtmcSimplifier>>(m, "_SparseParametricDtmcSimplifier",
-                                                                                                "Model simplifier for parametric DTMCs")
+    py::classh<SparseParametricDtmcSimplifier>(m, "_SparseParametricDtmcSimplifier", "Model simplifier for parametric DTMCs")
         .def(py::init<Dtmc const&>(), py::arg("dtmc"))
         .def(
             "simplify", [](SparseParametricDtmcSimplifier& simplifier, storm::logic::Formula const& formula) -> bool { return simplifier.simplify(formula); },
@@ -32,8 +31,7 @@ void define_pars(py::module& m) {
             "simplified_formula", [](SparseParametricDtmcSimplifier const& simplifier) { return simplifier.getSimplifiedFormula(); },
             "Return simplified formula");
 
-    py::class_<SparseParametricMdpSimplifier, std::shared_ptr<SparseParametricMdpSimplifier>>(m, "_SparseParametricMdpSimplifier",
-                                                                                              "Model simplifier for parametric MDPs")
+    py::classh<SparseParametricMdpSimplifier>(m, "_SparseParametricMdpSimplifier", "Model simplifier for parametric MDPs")
         .def(py::init<Mdp const&>(), py::arg("mdp"))
         .def(
             "simplify", [](SparseParametricMdpSimplifier& simplifier, storm::logic::Formula const& formula) -> bool { return simplifier.simplify(formula); },

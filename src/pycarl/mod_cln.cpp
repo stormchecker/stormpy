@@ -10,11 +10,9 @@
 #include "src/pycarl/typed_core/term.h"
 #include "src/pycarl/types.h"
 
-PYBIND11_MODULE(_cln, m) {
-    m.attr("__name__") = "stormpy.pycarl.cln";
+namespace {
 
-    m.doc() = "pycarl core cln-typed data and functions";
-
+void bindCln(py::module& m) {
     define_cln_integer(m);
     define_cln_rational(m);
     define_term(m);
@@ -26,4 +24,13 @@ PYBIND11_MODULE(_cln, m) {
     define_factorizedrationalfunction(m);
 
     define_interval<Rational>(m);
+}
+
+}  // namespace
+
+PYBIND11_MODULE(_cln, m) {
+    m.attr("__name__") = "stormpy.pycarl.cln";
+    m.doc() = "pycarl core cln-typed data and functions";
+
+    py::bindModule(m, bindCln);
 }

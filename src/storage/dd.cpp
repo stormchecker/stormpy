@@ -1,5 +1,7 @@
 #include "dd.h"
 
+#include <storm/adapters/RationalFunctionAdapter.h>
+#include <storm/adapters/RationalNumberAdapter.h>
 #include <storm/storage/dd/Add.h>
 #include <storm/storage/dd/Bdd.h>
 #include <storm/storage/dd/Dd.h>
@@ -55,3 +57,7 @@ void define_dd_nt(py::module& m) {
 template py::class_<storm::dd::Dd<storm::dd::DdType::Sylvan>> define_dd<storm::dd::DdType::Sylvan>(py::module& m, std::string const& libstring);
 template void define_dd_typed<storm::dd::DdType::Sylvan, double>(py::module&, std::string const&, std::string const&,
                                                                  py::class_<storm::dd::Dd<storm::dd::DdType::Sylvan>> const&);
+template void define_dd_typed<storm::dd::DdType::Sylvan, storm::RationalNumber>(py::module&, std::string const&, std::string const&,
+                                                                                py::class_<storm::dd::Dd<storm::dd::DdType::Sylvan>> const&);
+template void define_dd_typed<storm::dd::DdType::Sylvan, storm::RationalFunction>(py::module&, std::string const&, std::string const&,
+                                                                                  py::class_<storm::dd::Dd<storm::dd::DdType::Sylvan>> const&);

@@ -4,10 +4,11 @@
 #include <storm/models/symbolic/StandardRewardModel.h>
 
 template<storm::dd::DdType DdType, typename ValueType>
-std::shared_ptr<storm::models::Model<ValueType>> performBisimulationMinimization(
-    std::shared_ptr<storm::models::symbolic::Model<DdType, ValueType>> const& model, std::vector<std::shared_ptr<storm::logic::Formula const>> const& formulas,
-    storm::storage::BisimulationType const& bisimulationType, storm::dd::bisimulation::QuotientFormat const& quotientFormat,
-    storm::dd::bisimulation::BisimulationOptions const& bisimulationOptions) {
+std::shared_ptr<storm::models::ModelBase> performBisimulationMinimization(std::shared_ptr<storm::models::symbolic::Model<DdType, ValueType>> const& model,
+                                                                          std::vector<std::shared_ptr<storm::logic::Formula const>> const& formulas,
+                                                                          storm::storage::BisimulationType const& bisimulationType,
+                                                                          storm::dd::bisimulation::QuotientFormat const& quotientFormat,
+                                                                          storm::dd::bisimulation::BisimulationOptions const& bisimulationOptions) {
     return storm::api::performBisimulationMinimization<DdType, ValueType, ValueType>(
         model, formulas, bisimulationType, storm::dd::bisimulation::SignatureMode::Eager, quotientFormat, bisimulationOptions);
 }
@@ -35,6 +36,21 @@ void define_bisimulation(py::module& m) {
     py::native_enum<storm::dd::bisimulation::QuotientFormat>(m, "QuotientFormat", "enum.Enum", "Return format of bisimulation quotient")
         .value("SPARSE", storm::dd::bisimulation::QuotientFormat::Sparse)
         .value("DD", storm::dd::bisimulation::QuotientFormat::Dd)
+        .finalize();
+
+    py::native_enum<storm::dd::bisimulation::ReuseMode>(m, "BisimulationReuseMode", "enum.Enum")
+        .value("NONE", storm::dd::bisimulation::ReuseMode::None)
+        .value("BLOCK_NUMBERS", storm::dd::bisimulation::ReuseMode::BlockNumbers)
+        .finalize();
+
+    py::native_enum<storm::dd::bisimulation::RefinementMode>(m, "BisimulationRefinementMode", "enum.Enum")
+        .value("FULL", storm::dd::bisimulation::RefinementMode::Full)
+        .value("CHANGED_STATES", storm::dd::bisimulation::RefinementMode::ChangedStates)
+        .finalize();
+
+    py::native_enum<storm::dd::bisimulation::InitialPartitionMode>(m, "BisimulationInitialPartitionMode", "enum.Enum")
+        .value("REGULAR", storm::dd::bisimulation::InitialPartitionMode::Regular)
+        .value("FINER", storm::dd::bisimulation::InitialPartitionMode::Finer)
         .finalize();
 
     py::class_<storm::dd::bisimulation::BisimulationOptions>(m, "BisimulationOptionsDd", "Options for Dd bisimulation")

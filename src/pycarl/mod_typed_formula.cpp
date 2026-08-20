@@ -3,15 +3,27 @@
 #include "src/pycarl/typed_formula/constraint.h"
 #include "src/pycarl/typed_formula/formula.h"
 
+namespace {
+
+void bindTypedFormula(py::module& m) {
+    define_constraint(m);
+    define_simple_constraint(m);
+    define_formula(m);
+}
+
+}  // namespace
+
 PYBIND11_MODULE(_formula, m) {
-    m.attr("__name__") = "stormpy.pycarl.formula";
+#ifdef PYCARL_USE_CLN
+    m.attr("__name__") = "stormpy.pycarl.cln.formula";
+#else
+    m.attr("__name__") = "stormpy.pycarl.gmp.formula";
+#endif
     m.doc() = "pycarl formula typed functions";
 
     // Constraint relies on Rational
     m.import("stormpy.pycarl");
     m.import("stormpy.pycarl.formula");
 
-    define_constraint(m);
-    define_simple_constraint(m);
-    define_formula(m);
+    py::bindModule(m, bindTypedFormula);
 }

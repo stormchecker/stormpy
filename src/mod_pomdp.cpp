@@ -11,13 +11,9 @@
 #include "src/pomdp/tracker.h"
 #include "src/pomdp/transformations.h"
 
-PYBIND11_MODULE(_pomdp, m) {
-    m.doc() = "Functionality for POMDP analysis";
+namespace {
 
-#ifdef STORMPY_DISABLE_SIGNATURE_DOC
-    py::options options;
-    options.disable_function_signatures();
-#endif
+void bindPomdp(py::module& m) {
     define_tracker<double>(m, "Double");
     define_tracker<storm::RationalNumber>(m, "Exact");
     define_qualitative_policy_search<double>(m, "Double");
@@ -38,4 +34,17 @@ PYBIND11_MODULE(_pomdp, m) {
     define_belief_exploration<double>(m, "Double");
     define_verimon_generator<double>(m, "Double");
     define_verimon_generator<storm::RationalNumber>(m, "Exact");
+}
+
+}  // namespace
+
+PYBIND11_MODULE(_pomdp, m) {
+    m.doc() = "Functionality for POMDP analysis";
+
+#ifdef STORMPY_DISABLE_SIGNATURE_DOC
+    py::options options;
+    options.disable_function_signatures();
+#endif
+
+    py::bindModule(m, bindPomdp);
 }

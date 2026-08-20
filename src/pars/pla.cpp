@@ -2,6 +2,7 @@
 
 #include <storm-pars/api/region.h>
 #include <storm-pars/modelchecker/instantiation/SparseDtmcInstantiationModelChecker.h>
+#include <storm-pars/modelchecker/region/RegionSplitEstimateKind.h>
 #include <storm-pars/modelchecker/region/SparseDtmcParameterLiftingModelChecker.h>
 #include <storm-pars/modelchecker/region/SparseMdpParameterLiftingModelChecker.h>
 #include <storm/api/verification.h>
@@ -96,6 +97,13 @@ std::set<storm::Polynomial> gatherDerivatives(storm::models::sparse::Model<storm
 
 // Define python bindings
 void define_pla(py::module& m) {
+    py::native_enum<storm::modelchecker::RegionSplitEstimateKind>(m, "RegionSplitEstimateKind", "enum.Enum", "Methods for estimating region splits")
+        .value("DISTANCE", storm::modelchecker::RegionSplitEstimateKind::Distance)
+        .value("STATE_VALUE_DELTA", storm::modelchecker::RegionSplitEstimateKind::StateValueDelta)
+        .value("STATE_VALUE_DELTA_WEIGHTED", storm::modelchecker::RegionSplitEstimateKind::StateValueDeltaWeighted)
+        .value("DERIVATIVE", storm::modelchecker::RegionSplitEstimateKind::Derivative)
+        .finalize();
+
     // RegionResult
     py::native_enum<storm::modelchecker::RegionResult>(m, "RegionResult", "enum.Enum", "Types of region check results")
         .value("EXISTSSAT", storm::modelchecker::RegionResult::ExistsSat)

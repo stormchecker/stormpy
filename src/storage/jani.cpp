@@ -163,8 +163,17 @@ void define_jani(py::module& m) {
         .def_property_readonly("is_continuous_type", &JaniType::isContinuousType)
         .def("__str__", &JaniType::getStringRepresentation);
     py::class_<BasicType, std::shared_ptr<BasicType>> basicType(m, "BasicType", "A basic type in JANI", janiType);
+    py::native_enum<BasicType::Type>(basicType, "Type", "enum.Enum")
+        .value("BOOL", BasicType::Type::Bool)
+        .value("INT", BasicType::Type::Int)
+        .value("REAL", BasicType::Type::Real)
+        .finalize();
     basicType.def_property_readonly("inner_type", &BasicType::get, "the inner type");
     py::class_<BoundedType, std::shared_ptr<BoundedType>> boundedType(m, "BoundedType", "A bounded type in JANI", janiType);
+    py::native_enum<BoundedType::BaseType>(boundedType, "BaseType", "enum.Enum")
+        .value("INT", BoundedType::BaseType::Int)
+        .value("REAL", BoundedType::BaseType::Real)
+        .finalize();
     boundedType.def_property_readonly("base_type", &BoundedType::getBaseType, "the base type")
         .def_property_readonly(
             "lower_bound", [](const BoundedType& tp) -> storm::expressions::Expression const& { return tp.getLowerBound(); }, "the lower bound")
@@ -219,6 +228,15 @@ void define_jani(py::module& m) {
 }
 
 void define_jani_transformers(py::module& m) {
+    py::class_<JaniLocationExpander::NewIndices>(m, "JaniLocationExpansionNewIndices")
+        .def_readonly("location_variable_value_map", &JaniLocationExpander::NewIndices::locationVariableValueMap)
+        .def_readonly("variable_domain", &JaniLocationExpander::NewIndices::variableDomain)
+        .def_readonly("excluded_locations_to_new_indices", &JaniLocationExpander::NewIndices::excludedLocationsToNewIndices);
+
+    py::class_<JaniLocationExpander::ReturnType>(m, "JaniLocationExpansionResult")
+        .def_readonly("model", &JaniLocationExpander::ReturnType::newModel)
+        .def_readonly("new_indices", &JaniLocationExpander::ReturnType::newIndices);
+
     py::class_<JaniLocationExpander>(m, "JaniLocationExpander", "A transformer for Jani expanding variables into locations")
         .def(py::init<Model const&>(), py::arg("model"))
         .def("transform", &JaniLocationExpander::transform, py::arg("automaton_name"), py::arg("variable_name"));

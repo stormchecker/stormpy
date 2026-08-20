@@ -4,6 +4,7 @@
 #include <storm/adapters/RationalFunctionAdapter.h>
 #include <storm/storage/BitVector.h>
 #include <storm/storage/SparseMatrix.h>
+#include <storm/storage/sparse/StateType.h>
 #include <storm/utility/graph.h>
 
 #include "src/helpers.h"
@@ -184,3 +185,4 @@ template void define_sparse_matrix<storm::RationalNumber>(py::module& m, std::st
 template void define_sparse_matrix<storm::Interval>(py::module& m, std::string const& vtSuffix);
 template void define_sparse_matrix<storm::RationalInterval>(py::module& m, std::string const& vtSuffix);
 template void define_sparse_matrix<storm::RationalFunction>(py::module& m, std::string const& vtSuffix);
+template void define_sparse_matrix<storm::storage::sparse::state_type>(py::module& m, std::string const& vtSuffix);

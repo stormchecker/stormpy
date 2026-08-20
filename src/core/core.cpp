@@ -181,6 +181,9 @@ void define_build_sparse_model_defs(py::module& m) {
         m.def("make_sparse_model_builder_exact", &storm::api::makeExplicitModelBuilder<storm::RationalNumber>, "Construct a builder instance",
               py::arg("model_description"), py::arg("options"), py::arg("action_mask") = nullptr,
               py::arg("exploration_options") = typename storm::builder::ExplicitModelBuilder<ValueType>::Options());
+        py::class_<storm::builder::ExplicitModelBuilder<storm::RationalNumber>>(m, "ExplicitExactModelBuilder", "Model builder for exact sparse models")
+            .def("build", &storm::builder::ExplicitModelBuilder<storm::RationalNumber>::build, "Build the model", py::call_guard<py::gil_scoped_release>())
+            .def("export_lookup", &storm::builder::ExplicitModelBuilder<storm::RationalNumber>::exportExplicitStateLookup, "Export a lookup model");
     }
 }
 
@@ -243,6 +246,9 @@ void define_build(py::module& m) {
              py::arg("new_value") = true);
 
     py::class_<storm::generator::ActionMask<double>, std::shared_ptr<storm::generator::ActionMask<double>>> actionmask(m, "ActionMaskDouble");
+    py::class_<storm::generator::ActionMask<storm::RationalNumber>, std::shared_ptr<storm::generator::ActionMask<storm::RationalNumber>>>(m, "ActionMaskExact");
+    py::class_<storm::generator::ActionMask<storm::RationalFunction>, std::shared_ptr<storm::generator::ActionMask<storm::RationalFunction>>>(
+        m, "ActionMaskParametric");
     py::class_<storm::generator::StateValuationFunctionMask<double>, std::shared_ptr<storm::generator::StateValuationFunctionMask<double>>> actfuncmask(
         m, "StateValuationFunctionActionMaskDouble", actionmask);
     actfuncmask.def(py::init<std::function<bool(storm::expressions::SimpleValuation const&, uint64_t)>>(), py::arg("f"));

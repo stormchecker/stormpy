@@ -1,6 +1,5 @@
 #include <storm/adapters/IntervalAdapter.h>
 
-#include "src/common.h"
 #include "src/core/analysis.h"
 #include "src/core/bisimulation.h"
 #include "src/core/core.h"
@@ -12,15 +11,11 @@
 #include "src/core/result.h"
 #include "src/core/simulator.h"
 #include "src/core/transformation.h"
+#include "src/module_bindings.h"
 
-PYBIND11_MODULE(_core, m) {
-    m.doc() = "core";
+namespace stormpy::bindings {
 
-#ifdef STORMPY_DISABLE_SIGNATURE_DOC
-    py::options options;
-    options.disable_function_signatures();
-#endif
-
+void bindCore(py::module& m) {
     define_environment(m);
     define_core(m);
 
@@ -55,3 +50,5 @@ PYBIND11_MODULE(_core, m) {
     define_sparse_model_simulator<storm::RationalNumber>(m, "Exact");
     define_prism_program_simulator<double>(m, "Double");
 }
+
+}  // namespace stormpy::bindings

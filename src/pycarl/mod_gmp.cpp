@@ -10,10 +10,9 @@
 #include "src/pycarl/typed_core/term.h"
 #include "src/pycarl/types.h"
 
-PYBIND11_MODULE(_gmp, m) {
-    m.attr("__name__") = "stormpy.pycarl.gmp";
-    m.doc() = "pycarl core gmp-typed data and functions";
+namespace {
 
+void bindGmp(py::module& m) {
     define_gmp_integer(m);
     define_gmp_rational(m);
     define_term(m);
@@ -25,4 +24,13 @@ PYBIND11_MODULE(_gmp, m) {
     define_factorizedrationalfunction(m);
 
     define_interval<Rational>(m);
+}
+
+}  // namespace
+
+PYBIND11_MODULE(_gmp, m) {
+    m.attr("__name__") = "stormpy.pycarl.gmp";
+    m.doc() = "pycarl core gmp-typed data and functions";
+
+    py::bindModule(m, bindGmp);
 }

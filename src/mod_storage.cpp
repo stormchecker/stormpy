@@ -1,7 +1,7 @@
 #include <storm/adapters/IntervalAdapter.h>
 #include <storm/storage/dd/DdType.h>
 
-#include "src/common.h"
+#include "src/module_bindings.h"
 #include "src/storage/bitvector.h"
 #include "src/storage/choiceorigins.h"
 #include "src/storage/dd.h"
@@ -21,17 +21,14 @@
 #include "src/storage/umb.h"
 #include "src/storage/valuation.h"
 
-PYBIND11_MODULE(_storage, m) {
-    m.doc() = "Data structures in Storm";
+namespace stormpy::bindings {
 
-#ifdef STORMPY_DISABLE_SIGNATURE_DOC
-    py::options options;
-    options.disable_function_signatures();
-#endif
-
+void bindStorage(py::module& m) {
     define_bitvector(m);
     auto ddSylvan = define_dd<storm::dd::DdType::Sylvan>(m, "Sylvan");
     define_dd_typed<storm::dd::DdType::Sylvan, double>(m, "Sylvan", "_Double", ddSylvan);
+    define_dd_typed<storm::dd::DdType::Sylvan, storm::RationalNumber>(m, "Sylvan", "_Exact", ddSylvan);
+    define_dd_typed<storm::dd::DdType::Sylvan, storm::RationalFunction>(m, "Sylvan", "_Parametric", ddSylvan);
     define_dd_nt(m);
     define_model(m);
     define_sparse_model<double>(m, "");
@@ -47,6 +44,7 @@ PYBIND11_MODULE(_storage, m) {
     define_sparse_matrix<storm::Interval>(m, "Interval");
     define_sparse_matrix<storm::RationalInterval>(m, "RationalInterval");
     define_sparse_matrix<storm::RationalFunction>(m, "Parametric");
+    define_sparse_matrix<storm::storage::sparse::state_type>(m, "StateType");
     define_sparse_matrix_nt(m);
     define_symbolic_model<storm::dd::DdType::Sylvan, double>(m, "Sylvan");
     define_symbolic_model<storm::dd::DdType::Sylvan, storm::RationalNumber>(m, "SylvanExact");
@@ -76,6 +74,7 @@ PYBIND11_MODULE(_storage, m) {
     define_distribution<storm::RationalNumber>(m, "Exact");
     define_distribution<storm::Interval>(m, "Interval");
     define_distribution<storm::RationalInterval>(m, "RationalInterval");
+    define_distribution<storm::RationalFunction>(m, "Parametric");
     define_sparse_model_components<double>(m, "");
     define_sparse_model_components<storm::RationalNumber>(m, "Exact");
     define_sparse_model_components<storm::Interval>(m, "Interval");
@@ -92,3 +91,5 @@ PYBIND11_MODULE(_storage, m) {
     define_maximal_end_component_decomposition<storm::RationalFunction>(m, "_ratfunc");
     define_umb(m);
 }
+
+}  // namespace stormpy::bindings

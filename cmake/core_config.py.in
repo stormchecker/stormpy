@@ -8,3 +8,7 @@ Polynomial = pycarl.@PYCARL_RF_PACKAGE@.Polynomial
 FactorizedPolynomial = pycarl.@PYCARL_RF_PACKAGE@.FactorizedPolynomial
 RationalFunction = pycarl.@PYCARL_RF_PACKAGE@.RationalFunction
 FactorizedRationalFunction = pycarl.@PYCARL_RF_PACKAGE@.FactorizedRationalFunction
+
+# Register the formula type used by Storm's parametric graph analysis before
+# the native Storm APIs are bound.
+from stormpy.pycarl.@PYCARL_RF_PACKAGE@ import formula as _pycarl_formula

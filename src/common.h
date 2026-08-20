@@ -8,7 +8,12 @@
 #include <pybind11/stl.h>
 #include <tuple>
 
+#ifdef STORMPY_REGISTRATION_TWO_PASS
+#include "src/registration.h"
+namespace py = stormpy::registration;
+#else
 namespace py = pybind11;
+#endif
 using namespace pybind11::literals;
 
 PYBIND11_DECLARE_HOLDER_TYPE(T, std::shared_ptr<T>)

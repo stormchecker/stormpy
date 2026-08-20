@@ -294,6 +294,7 @@ function(stormpy_optional_module MOD_NAME DESCRIPTION)
                              "mod_${MOD_NAME}.cpp" "${MOD_NAME}/*.cpp"
                              "${storm-${MOD_NAME}_INCLUDE_DIR}"
                              "storm-${MOD_NAME}")
+        target_compile_definitions("stormpy_${MOD_NAME}" PRIVATE STORMPY_REGISTRATION_TWO_PASS)
         MESSAGE(STATUS "Stormpy - Support for ${DESCRIPTION} found and included.")
     else()
         MESSAGE(WARNING "Stormpy - No support for ${DESCRIPTION}!")
@@ -307,6 +308,7 @@ function(build_pycarl_module MOD_NAME OUT_DIR OUT_NAME MOD_FILE SOURCE_PATH ADDI
                  "${MOD_FILE}" "${SOURCE_PATH}"
                  "${carl_INCLUDE_DIR};${ADDITIONAL_INCLUDES}"
                  "lib_carl;${ADDITIONAL_LIBS}")
+    target_compile_definitions(${MOD_NAME} PRIVATE STORMPY_REGISTRATION_TWO_PASS)
 endfunction(build_pycarl_module)
 function(pycarl_module MOD_NAME ADDITIONAL_INCLUDES ADDITIONAL_LIBS)
     build_pycarl_module("pycarl_${MOD_NAME}"
@@ -332,14 +334,28 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/pycarl/definitions.h.in ${CMAKE_C
 
 # Build stormpy
 ######
-# Build stormpy modules
-stormpy_module(core "." "${storm-counterexamples_INCLUDE_DIR}" storm-counterexamples)
+# Build the mutually dependent core bindings in one extension. The extension
+# registers the public native modules in two passes: all Python types first,
+# followed by their methods and free functions.
+build_stormpy_module(stormpy_bindings
+                     "." "bindings"
+                     "mod_bindings.cpp" "core/*.cpp"
+                     "${storm-counterexamples_INCLUDE_DIR}"
+                     "storm-counterexamples")
+file(GLOB_RECURSE STORMPY_BINDINGS_EXTRA_SOURCES
+     "${CMAKE_CURRENT_SOURCE_DIR}/src/logic/*.cpp"
+     "${CMAKE_CURRENT_SOURCE_DIR}/src/storage/*.cpp"
+     "${CMAKE_CURRENT_SOURCE_DIR}/src/utility/*.cpp")
+target_sources(stormpy_bindings PRIVATE ${STORMPY_BINDINGS_EXTRA_SOURCES})
+target_sources(stormpy_bindings PRIVATE
+               "${CMAKE_CURRENT_SOURCE_DIR}/src/mod_core.cpp"
+               "${CMAKE_CURRENT_SOURCE_DIR}/src/mod_logic.cpp"
+               "${CMAKE_CURRENT_SOURCE_DIR}/src/mod_storage.cpp"
+               "${CMAKE_CURRENT_SOURCE_DIR}/src/mod_utility.cpp")
+target_compile_definitions(stormpy_bindings PRIVATE STORMPY_REGISTRATION_TWO_PASS)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/core_config.py.in ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/_config.py @ONLY)
 stormpy_module(info info "${storm-version-info_INCLUDE_DIR}" storm-version-info)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/info_config.py.in ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/info/_config.py @ONLY)
-stormpy_module(logic logic "" "")
-stormpy_module(storage storage "" "")
-stormpy_module(utility utility "" "")
 
 # Build optional stormpy modules
 stormpy_optional_module(dft "DFT")

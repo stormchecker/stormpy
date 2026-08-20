@@ -183,7 +183,9 @@ void define_cln_rational(py::module& m) {
             return h(v);
         });
 
-    py::implicitly_convertible<carl::uint, cln::cl_RA>();
+    if (m.phase() == py::Phase::Define) {
+        py::implicitly_convertible<carl::uint, cln::cl_RA>();
+    }
 #endif
 }
 
@@ -298,6 +300,8 @@ void define_gmp_rational(py::module& m) {
             return h(v);
         });
 
-    py::implicitly_convertible<carl::uint, mpq_class>();
+    if (m.phase() == py::Phase::Define) {
+        py::implicitly_convertible<carl::uint, mpq_class>();
+    }
 #endif
 }

@@ -1,13 +1,10 @@
-#include "src/common.h"
 #include "src/logic/formulae.h"
+#include "src/module_bindings.h"
 
-PYBIND11_MODULE(_logic, m) {
-    m.doc() = "Logic module for Storm";
+namespace stormpy::bindings {
 
-#ifdef STORMPY_DISABLE_SIGNATURE_DOC
-    py::options options;
-    options.disable_function_signatures();
-#endif
-
+void bindLogic(py::module& m) {
     define_formulae(m);
 }
+
+}  // namespace stormpy::bindings

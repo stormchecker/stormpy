@@ -3,6 +3,19 @@
 #include "src/pars/pars.h"
 #include "src/pars/pla.h"
 
+namespace {
+
+void bindPars(py::module& m) {
+    define_pars(m);
+    define_pla(m);
+    define_model_instantiator<double>(m);
+    define_model_instantiator<storm::RationalFunction>(m);
+    define_model_instantiation_checker<double>(m);
+    define_model_instantiation_checker<storm::RationalNumber>(m);
+}
+
+}  // namespace
+
 PYBIND11_MODULE(_pars, m) {
     m.doc() = "Functionality for parametric analysis";
 
@@ -11,10 +24,5 @@ PYBIND11_MODULE(_pars, m) {
     options.disable_function_signatures();
 #endif
 
-    define_pars(m);
-    define_pla(m);
-    define_model_instantiator<double>(m);
-    define_model_instantiator<storm::RationalFunction>(m);
-    define_model_instantiation_checker<double>(m);
-    define_model_instantiation_checker<storm::RationalNumber>(m);
+    py::bindModule(m, bindPars);
 }

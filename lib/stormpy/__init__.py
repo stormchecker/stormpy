@@ -1,6 +1,8 @@
 from ._config import *
 
-from . import _core
+from . import _bindings
+
+_core = _bindings._core
 from ._core import *
 from . import storage
 from .storage import *

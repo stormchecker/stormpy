@@ -1,6 +1,7 @@
 #include "distribution.h"
 
 #include <storm/adapters/IntervalAdapter.h>
+#include <storm/adapters/RationalFunctionAdapter.h>
 #include <storm/adapters/RationalNumberAdapter.h>
 #include <storm/storage/Distribution.h>
 
@@ -19,3 +20,4 @@ template void define_distribution<double>(py::module&, std::string vt_suffix);
 template void define_distribution<storm::RationalNumber>(py::module&, std::string vt_suffix);
 template void define_distribution<storm::Interval>(py::module&, std::string vt_suffix);
 template void define_distribution<storm::RationalInterval>(py::module&, std::string vt_suffix);
+template void define_distribution<storm::RationalFunction>(py::module&, std::string vt_suffix);

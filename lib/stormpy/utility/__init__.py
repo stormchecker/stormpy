@@ -1,4 +1,6 @@
-from . import _utility
+import stormpy
+
+_utility = stormpy._bindings._utility
 from ._utility import *
 
 # Extend JSON container for simplified access

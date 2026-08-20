@@ -2,6 +2,7 @@
 
 #include <storm-gspn/storage/gspn/GSPN.h>
 #include <storm-gspn/storage/gspn/GspnBuilder.h>
+#include <storm-gspn/storage/gspn/Marking.h>
 #include <storm/io/file.h>
 #include <storm/settings/SettingsManager.h>
 
@@ -10,6 +11,7 @@
 using GSPN = storm::gspn::GSPN;
 using GSPNBuilder = storm::gspn::GspnBuilder;
 using LayoutInfo = storm::gspn::LayoutInfo;
+using Marking = storm::gspn::Marking;
 using Place = storm::gspn::Place;
 using TimedTransition = storm::gspn::TimedTransition<GSPN::RateType>;
 using ImmediateTransition = storm::gspn::ImmediateTransition<GSPN::WeightType>;
@@ -29,6 +31,17 @@ void gspnToFile(GSPN const& gspn, std::string const& filepath, bool toPnpro) {
 }
 
 void define_gspn(py::module& m) {
+    py::class_<Marking>(m, "Marking", "Token distribution over the places of a GSPN")
+        .def(py::init<uint_fast64_t const&, std::map<uint_fast64_t, uint_fast64_t> const&, uint_fast64_t const&>(), py::arg("number_of_places"),
+             py::arg("number_of_bits"), py::arg("number_of_total_bits"))
+        .def(py::init<uint_fast64_t const&, std::map<uint_fast64_t, uint_fast64_t> const&, storm::storage::BitVector const&>(), py::arg("number_of_places"),
+             py::arg("number_of_bits"), py::arg("bitvector"))
+        .def_property_readonly("number_of_places", &Marking::getNumberOfPlaces)
+        .def("set_number_of_tokens", &Marking::setNumberOfTokensAt, py::arg("place"), py::arg("number_of_tokens"))
+        .def("get_number_of_tokens", &Marking::getNumberOfTokensAt, py::arg("place"))
+        .def_property_readonly("bitvector", &Marking::getBitVector)
+        .def(py::self == py::self);
+
     // GSPN_Builder class
     py::class_<GSPNBuilder, std::shared_ptr<GSPNBuilder>>(m, "GSPNBuilder", "Generalized Stochastic Petri Net Builder")
         .def(py::init(), "Constructor")

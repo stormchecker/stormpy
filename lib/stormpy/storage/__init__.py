@@ -1,5 +1,6 @@
 import stormpy.utility
-from . import _storage
+
+_storage = stormpy._bindings._storage
 from ._storage import *
 from deprecated.sphinx import deprecated
 

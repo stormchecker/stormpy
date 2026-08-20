@@ -8,14 +8,9 @@
 #include "src/dft/simulator.h"
 #include "src/dft/transformations.h"
 
-PYBIND11_MODULE(_dft, m) {
-    m.doc() = "Functionality for DFT analysis";
+namespace {
 
-#ifdef STORMPY_DISABLE_SIGNATURE_DOC
-    py::options options;
-    options.disable_function_signatures();
-#endif
-
+void bindDft(py::module& m) {
     define_symmetries(m);  // Must be before define_analysis_typed
     define_analysis(m);
     define_analysis_typed<double>(m, "_double");
@@ -36,4 +31,17 @@ PYBIND11_MODULE(_dft, m) {
     define_simulator_typed<double>(m, "_double");
     define_simulator_typed<storm::RationalFunction>(m, "_ratfunc");
     define_transformations(m);
+}
+
+}  // namespace
+
+PYBIND11_MODULE(_dft, m) {
+    m.doc() = "Functionality for DFT analysis";
+
+#ifdef STORMPY_DISABLE_SIGNATURE_DOC
+    py::options options;
+    options.disable_function_signatures();
+#endif
+
+    py::bindModule(m, bindDft);
 }

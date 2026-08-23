@@ -14,6 +14,10 @@ RUN pip install --no-cache-dir --requirement /tmp/requirements.txt && \
     fix-permissions "/home/${NB_USER}"
 
 # Copy files
-COPY doc/source/*.ipynb notebooks/
-COPY doc/source/doc/ notebooks/doc/
-COPY examples/ examples/
+COPY --chown=${NB_UID}:${NB_GID} doc/source/*.md notebooks/
+COPY --chown=${NB_UID}:${NB_GID} doc/source/doc/ notebooks/doc/
+COPY --chown=${NB_UID}:${NB_GID} examples/ examples/
+
+# Regenerate .ipynb notebooks from paired .md:myst sources
+# Similar command to Makefile
+RUN  jupytext --to notebook $(grep -rl '^jupytext:' notebooks --include='*.md')

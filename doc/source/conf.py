@@ -123,6 +123,11 @@ html_favicon = "_static/favicon.png"
 # Need to set newer require.js version to fix JavaScript issues with older version
 nbsphinx_requirejs_path = "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.7/require.min.js"
 
+# Regenerate .ipynb from paired .md:myst files via jupytext
+nbsphinx_custom_formats = {
+    ".md": "jupytext.reads",
+}
+
 # Add binder badge
 nbsphinx_prolog = """
 {% set docname = env.doc2path(env.docname, base=False) %}

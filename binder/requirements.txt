@@ -1,6 +1,7 @@
 # Storm libraries
 stormpy==1.14.0
 numpy==2.2.6
+# Notebook generation
+jupytext==1.19.5
 # Jupyter extensions
-jupyterlab-spellchecker
-
+jupyterlab-spellchecker==0.9.0

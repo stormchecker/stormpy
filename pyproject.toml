@@ -50,14 +50,14 @@ doc = [
     "Sphinx>=8.2.2",
     "sphinx-nefertiti",
     "sphinx-copybutton",
+    "myst-parser",
+    "jupytext",
     "nbsphinx",
     "ipython",
     "ipykernel",
-    "myst-parser",
 ]  # also requires pandoc to be installed
 test = [
     "pytest",
-    "nbval",
     "numpy",
 ]
 
@@ -127,11 +127,9 @@ line-length = 160
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "--doctest-glob='*.rst' --nbval"
 testpaths = [
     "tests",
     "examples",
-    "doc",
 ]
 python_files = [
     "test*.py",

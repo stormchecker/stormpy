@@ -18,14 +18,14 @@ Pycarl is shipped with the stormpy library and can be installed following the [g
 ## A Quick Tour through pycarl
 First we import pycarl:
 
-```{code-cell} ipython3
+```{code-cell} python3
 from stormpy import pycarl
 ```
 
 Pycarl can use two different number types: `gmp` and `cln`.
 In this example we will use `gmp` numbers and therefore import the corresponding module:
 
-```{code-cell} ipython3
+```{code-cell} python3
 from stormpy.pycarl import gmp
 ```
 
@@ -35,7 +35,7 @@ from stormpy.pycarl import gmp
 We start by doing some simple arithmetic operations.
 First we create two variables `x` and `y`:
 
-```{code-cell} ipython3
+```{code-cell} python3
 pycarl.clear_variable_pool()
 x = pycarl.Variable("x")
 y = pycarl.Variable("y")
@@ -43,7 +43,7 @@ y = pycarl.Variable("y")
 
 We perform some operations on polynomials by using the common arithmetic operations of Python:
 
-```{code-cell} ipython3
+```{code-cell} python3
 pol1 = x * x + pycarl.gmp.Integer(2)
 pol2 = y + pycarl.gmp.Integer(1)
 result = pol1 * pol2

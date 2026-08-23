@@ -25,8 +25,7 @@ extensions = [
     #'sphinx.ext.intersphinx',
     "sphinx.ext.githubpages",
     "sphinx_copybutton",
-    "nbsphinx",
-    "myst_parser",
+    "myst_nb",
 ]
 autosectionlabel_prefix_document = True
 

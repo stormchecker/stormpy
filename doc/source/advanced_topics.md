@@ -2,7 +2,7 @@
 
 This guide is a collection of examples meant to bridge the gap between the [Getting Started](getting_started) guide and the [API](api).
 
-:::{toctree}
+```{toctree}
 :maxdepth: 2
 :caption: Contents:
 
@@ -22,4 +22,4 @@ doc/parametric_models
 doc/dfts
 doc/gspns
 doc/info
-:::
+```

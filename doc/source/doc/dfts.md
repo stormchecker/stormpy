@@ -23,7 +23,7 @@ A file containing the DFT in the Galileo format can be loaded via `load_dft_gali
 The custom JSON format can be loaded from a file via `load_dft_json_file(path)` or directly from a string via `load_dft_json_string(path)`.
 We start by loading a simple DFT containing an AND gate from JSON:
 
-```{code-cell} ipython3
+```{code-cell} python3
 import stormpy
 import stormpy.dft
 import stormpy.examples
@@ -36,14 +36,14 @@ print(dft_small)
 
 Next we load a more complex DFT from the Galileo format:
 
-```{code-cell} ipython3
+```{code-cell} python3
 path_galileo = stormpy.examples.files.dft_galileo_hecs
 dft = stormpy.dft.load_dft_galileo_file(path_galileo)
 ```
 
 After loading the DFT, we can display some common statistics about the model:
 
-```{code-cell} ipython3
+```{code-cell} python3
 print("DFT with {} elements.".format(dft.nr_elements()))
 print("DFT has {} BEs and {} dynamic elements.".format(dft.nr_be(), dft.nr_dynamic()))
 ```
@@ -53,10 +53,10 @@ print("DFT has {} BEs and {} dynamic elements.".format(dft.nr_be(), dft.nr_dynam
 [01-dfts.py](https://github.com/stormchecker/stormpy/blob/master/examples/dfts/01-dfts.py)
 
 The next step is to analyze the DFT via `analyze_dft(dft, formula)`.
-Here we can use all standard properties as described in [Building properties](../getting_started.ipynb#building-properties).
+Here we can use all standard properties as described in [Building properties](../getting_started.md#building-properties).
 In our example we compute the Mean-time-to-failure (MTTF):
 
-```{code-cell} ipython3
+```{code-cell} python3
 formula_str = 'T=? [ F "failed" ]'
 formulas = stormpy.parse_properties(formula_str)
 results = stormpy.dft.analyze_dft(dft, [formulas[0].raw_formula])

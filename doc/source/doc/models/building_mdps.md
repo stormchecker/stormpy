@@ -16,14 +16,14 @@ kernelspec:
 
 ## Background
 
-In [Discrete-time Markov chains (DTMCs)](building_dtmcs.ipynb) we modelled Knuth-Yao’s model of a fair die by the means of a DTMC.
+In [Discrete-time Markov chains (DTMCs)](building_dtmcs.md) we modelled Knuth-Yao’s model of a fair die by the means of a DTMC.
 In the following we extend this model with nondeterministic choice by building a Markov decision process.
 
 [01-building-mdps.py](https://github.com/stormchecker/stormpy/blob/master/examples/building_mdps/01-building-mdps.py)
 
 First, we import Stormpy:
 
-```{code-cell} ipython3
+```{code-cell} python3
 import stormpy
 ```
 
@@ -31,7 +31,7 @@ import stormpy
 
 Since we want to build a nondeterminstic model, we create a transition matrix with a custom row group for each state:
 
-```{code-cell} ipython3
+```{code-cell} python3
 builder = stormpy.SparseMatrixBuilder(rows=0, columns=0, entries=0, force_dimensions=False, has_custom_row_grouping=True, row_groups=0)
 ```
 
@@ -39,7 +39,7 @@ We need more than one row for the transitions starting in state 0 because a nond
 Therefore, we start a new group that will contain the rows representing actions of state 0.
 Note that the row group needs to be added before any entries are added to the group:
 
-```{code-cell} ipython3
+```{code-cell} python3
 builder.new_row_group(0)
 builder.add_next_value(0, 1, 0.5)
 builder.add_next_value(0, 2, 0.5)
@@ -53,7 +53,7 @@ With choice 1 we got to state 1 with probability 0.2 and go to state 2 with prob
 
 For the remaining states, we need to specify the starting rows of each row group:
 
-```{code-cell} ipython3
+```{code-cell} python3
 builder.new_row_group(2)
 builder.add_next_value(2, 3, 0.5)
 builder.add_next_value(2, 4, 0.5)
@@ -80,15 +80,15 @@ for s in range(8, 14):
 
 Finally, we build the transition matrix:
 
-```{code-cell} ipython3
+```{code-cell} python3
 transition_matrix = builder.build()
 ```
 
 ## Labeling
 
-The state labeling is similar to the one in the previous example for [building a DTMC](building_dtmcs.ipynb).
+The state labeling is similar to the one in the previous example for [building a DTMC](building_dtmcs.md).
 
-```{code-cell} ipython3
+```{code-cell} python3
 state_labeling = stormpy.storage.StateLabeling(13)
 labels = {"init", "one", "two", "three", "four", "five", "six", "done", "deadlock"}
 for label in labels:
@@ -109,7 +109,7 @@ We focus on the labeling of choices.
 Since in state 0 a nondeterministic choice over two actions is available, the total number of choices is 14.
 To distinguish those we can define a choice labeling:
 
-```{code-cell} ipython3
+```{code-cell} python3
 choice_labeling = stormpy.storage.ChoiceLabeling(14)
 choice_labels = {"a", "b"}
 
@@ -120,7 +120,7 @@ for label in choice_labels:
 We assign the label ‘a’ to the first action of state 0 and ‘b’ to the second.
 Recall that those actions where defined in row one and two of the transition matrix respectively:
 
-```{code-cell} ipython3
+```{code-cell} python3
 choice_labeling.add_label_to_choice("a", 0)
 choice_labeling.add_label_to_choice("b", 1)
 print(choice_labeling)
@@ -130,7 +130,7 @@ print(choice_labeling)
 
 In this reward model the length of the action rewards coincides with the number of choices:
 
-```{code-cell} ipython3
+```{code-cell} python3
 reward_models = {}
 action_reward = [0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 reward_models["coin_flips"] = stormpy.SparseRewardModel(optional_state_action_reward_vector=action_reward)
@@ -140,7 +140,7 @@ reward_models["coin_flips"] = stormpy.SparseRewardModel(optional_state_action_re
 
 We collect the components:
 
-```{code-cell} ipython3
+```{code-cell} python3
 components = stormpy.SparseModelComponents(
     transition_matrix=transition_matrix, state_labeling=state_labeling, reward_models=reward_models, rate_transitions=False
 )
@@ -149,7 +149,7 @@ components.choice_labeling = choice_labeling
 
 We build the model:
 
-```{code-cell} ipython3
+```{code-cell} python3
 mdp = stormpy.storage.SparseMdp(components)
 print(mdp)
 ```

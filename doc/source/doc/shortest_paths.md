@@ -29,9 +29,9 @@ It is crucial to note that *any* path is eligible, including those that (repeate
 
 [01-shortest-paths.py](https://github.com/stormchecker/stormpy/blob/master/examples/shortest_paths/01-shortest-paths.py)
 
-As in [Getting Started](../getting_started.ipynb), we import some required modules and build a model from the example files:
+As in [Getting Started](../getting_started.md), we import some required modules and build a model from the example files:
 
-```{code-cell} ipython3
+```{code-cell} python3
 import stormpy.examples
 import stormpy.examples.files
 
@@ -42,13 +42,13 @@ model = stormpy.build_model(prism_program)
 
 We also import the `ShortestPathsGenerator`:
 
-```{code-cell} ipython3
+```{code-cell} python3
 from stormpy.utility import ShortestPathsGenerator
 ```
 
 and choose a target state (by its ID) to which we want to compute the shortest paths:
 
-```{code-cell} ipython3
+```{code-cell} python3
 state_id = 8
 ```
 
@@ -57,14 +57,14 @@ For simplicity, we will stick to using a single state for now.
 
 We initialize a `ShortestPathsGenerator` instance:
 
-```{code-cell} ipython3
+```{code-cell} python3
 spg = ShortestPathsGenerator(model, state_id)
 ```
 
 Now we can query the k-shortest path by index. Note that 1-based indices are used, so that the 3rd shortest path indeed corresponds to index `k=3`.
 Let us inspect the first three shortest paths:
 
-```{code-cell} ipython3
+```{code-cell} python3
 for k in range(1, 4):
     path = spg.get_path_as_list(k)
     distance = spg.get_distance(k)

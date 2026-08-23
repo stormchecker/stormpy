@@ -38,9 +38,9 @@ You have two choices for stormpy depending on the version of Storm you are using
    Note that due to ongoing development in Storm, after some commits, the stormpy `master` might not work with the Storm `master` anymore.
    We will fix such issues as fast as possible.
 
-:::{warning}
+```{warning}
 Unfortunately, Stormpy currently does not work in conjunction with a homebrew installation of Storm.
-:::
+```
 
 
 ### Virtual Environments

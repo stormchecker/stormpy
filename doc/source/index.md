@@ -3,7 +3,7 @@ Stormpy is a set of Python bindings for the probabilistic model checker [Storm](
 Pycarl is bundled with stormpy. It is a set of python bindings for the computer arithmetic and logic library [carl-storm](https://github.com/stormchecker/carl-storm).
 
 
-:::{toctree}
+```{toctree}
 :maxdepth: 2
 :caption: Contents:
 
@@ -14,7 +14,7 @@ using_pycarl
 development
 contributors
 api
-:::
+```
 
 
 ## Indices and tables

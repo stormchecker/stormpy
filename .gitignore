@@ -1,5 +1,6 @@
 *.so
 *.py[cod]
+.jupyter_cache/
 lib/**/_config.py
 .eggs/
 *.egg-info/

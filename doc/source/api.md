@@ -2,7 +2,7 @@
 
 Work in progress!
 
-:::{toctree}
+```{toctree}
 :maxdepth: 2
 :caption: Stormpy modules:
 
@@ -22,4 +22,4 @@ api/pycarl/core
 api/pycarl/convert
 api/pycarl/formula
 api/pycarl/parse
-:::
+```

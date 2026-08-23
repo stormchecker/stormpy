@@ -45,17 +45,16 @@ plot = [
 dev = [
     # Formatting
     "black[jupyter]",
+    # Documentation notebooks
+    "jupytext",
 ]
 doc = [
     "Sphinx>=8.2.2",
     "sphinx-nefertiti",
     "sphinx-copybutton",
-    "myst-parser",
-    "jupytext",
-    "nbsphinx",
-    "ipython",
+    "myst-nb",
     "ipykernel",
-]  # also requires pandoc to be installed
+]
 test = [
     "pytest",
     "numpy",

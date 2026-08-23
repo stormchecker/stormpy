@@ -21,7 +21,7 @@ kernelspec:
 Input formats such as prism allow to specify programs with open constants. We refer to these open constants as parameters.
 If the constants only influence the probabilities or rates, but not the topology of the underlying model, we can build these models as parametric models:
 
-```{code-cell} ipython3
+```{code-cell} python3
 import stormpy
 import stormpy.examples
 import stormpy.examples.files
@@ -38,7 +38,7 @@ for x in parameters:
 
 In order to obtain a standard DTMC, MDP or other Markov model, we need to instantiate these models by means of a model instantiator:
 
-```{code-cell} ipython3
+```{code-cell} python3
 import stormpy.pars
 
 instantiator = stormpy.pars.PDtmcInstantiator(model)
@@ -46,7 +46,7 @@ instantiator = stormpy.pars.PDtmcInstantiator(model)
 
 Before we obtain an instantiated model, we need to map parameters to values: We build such a dictionary as follows:
 
-```{code-cell} ipython3
+```{code-cell} python3
 point = dict()
 for x in parameters:
     print(x.name)
@@ -62,9 +62,9 @@ Initial states and labels are set as for the parameter-free case.
 
 [02-parametric-models.py](https://github.com/stormchecker/stormpy/blob/master/examples//parametric_models/02-parametric-models.py)
 
-It is also possible to check the parametric model directly, similar as before in [Checking properties](../getting_started.ipynb#checking-properties):
+It is also possible to check the parametric model directly, similar as before in [Checking properties](../getting_started.md#checking-properties):
 
-```{code-cell} ipython3
+```{code-cell} python3
 result = stormpy.model_checking(model, properties[0])
 initial_state = model.initial_states[0]
 func = result.at(initial_state)
@@ -73,7 +73,7 @@ print(func)
 
 We collect the constraints ensuring that underlying model is well-formed and the graph structure does not change:
 
-```{code-cell} ipython3
+```{code-cell} python3
 import stormpy.info
 
 if stormpy.info.storm_ratfunc_use_cln():

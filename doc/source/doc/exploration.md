@@ -24,9 +24,9 @@ an own algorithm. In this section, we discuss some of the functionality.
 
 [01-exploration.py](https://github.com/stormchecker/stormpy/blob/master/examples/exploration/01-exploration.py)
 
-In [Getting Started](../getting_started.ipynb), we briefly iterated over a DTMC. In this section, we explore an MDP:
+In [Getting Started](../getting_started.md), we briefly iterated over a DTMC. In this section, we explore an MDP:
 
-```{code-cell} ipython3
+```{code-cell} python3
 import doctest
 
 import stormpy
@@ -42,7 +42,7 @@ model = stormpy.build_model(program, properties)
 
 The iteration over the model is as before, but now, for every action, we can have several transitions:
 
-```{code-cell} ipython3
+```{code-cell} python3
 for state in model.states:
     if state.id in model.initial_states:
         print("State {} is initial".format(state.id))
@@ -54,7 +54,7 @@ for state in model.states:
 Internally, storm can hold hints to the origin of the actions, which may be helpful to give meaning and for debugging.
 As the availability and the encoding of this data depends on the input model, we discuss these features in highlevel_models.
 
-Storm currently supports deterministic rewards on states or actions. More information can be found in [Reward Models](reward_models.ipynb).
+Storm currently supports deterministic rewards on states or actions. More information can be found in [Reward Models](reward_models.md).
 
 ## Reading POMDPs
 
@@ -62,7 +62,7 @@ Storm currently supports deterministic rewards on states or actions. More inform
 
 Internally, POMDPs extend MDPs. Thus, iterating over the POMDP is done as before.
 
-```{code-cell} ipython3
+```{code-cell} python3
 import stormpy
 import stormpy.examples
 import stormpy.examples.files
@@ -76,13 +76,13 @@ model = stormpy.build_model(program, properties)
 Indeed, all that changed in the code above is the example we use.
 And, that the model type now is a POMDP:
 
-```{code-cell} ipython3
+```{code-cell} python3
 print(model.model_type)
 ```
 
 Additionally, POMDPs have a set of observations, which are internally just numbered by an integer from 0 to the number of observations -1
 
-```{code-cell} ipython3
+```{code-cell} python3
 print(model.nr_observations)
 for state in model.states:
     print("State {} has observation id {}".format(state.id, model.observations[state.id]))

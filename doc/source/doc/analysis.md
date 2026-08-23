@@ -20,7 +20,7 @@ Storm supports various model checking approaches that we consider in this sectio
 
 As always:
 
-```{code-cell} ipython3
+```{code-cell} python3
 import stormpy
 import stormpy.examples
 import stormpy.examples.files
@@ -39,14 +39,14 @@ properties = stormpy.parse_properties(formula_str, prism_program)
 
 Instead of using the sparse representation, models can also be built symbolically:
 
-```{code-cell} ipython3
+```{code-cell} python3
 model = stormpy.build_symbolic_model(prism_program, properties)
 result = stormpy.model_checking(model, properties[0])
 ```
 
 To access the result, the result has to be filtered:
 
-```{code-cell} ipython3
+```{code-cell} python3
 filter = stormpy.create_filter_initial_states_symbolic(model)
 result.filter(filter)
 assert result.min == result.max
@@ -63,14 +63,14 @@ Stormpy does support them, but we have not yet documented them.
 
 Reconsider the model checking example from the getting started guide:
 
-```{code-cell} ipython3
+```{code-cell} python3
 model = stormpy.build_model(prism_program, properties)
 result = stormpy.model_checking(model, properties[0])
 ```
 
 We can also vary the model checking algorithm:
 
-```{code-cell} ipython3
+```{code-cell} python3
 env = stormpy.Environment()
 env.solver_environment.set_linear_equation_solver_type(stormpy.EquationSolverType.native)
 env.solver_environment.native_solver_environment.method = stormpy.NativeLinearEquationSolverMethod.power_iteration
@@ -80,7 +80,7 @@ result = stormpy.model_checking(model, properties[0], environment=env)
 Finally, we allow to change some parameters of the algorithms. E.g., in iterative approaches,
 we allow to change the number of iterations:
 
-```{code-cell} ipython3
+```{code-cell} python3
 env.solver_environment.native_solver_environment.maximum_iterations = 3
 result = stormpy.model_checking(model, properties[0])
 ```

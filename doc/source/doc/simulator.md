@@ -21,7 +21,7 @@ All simulators implement the abstract class `stormpy.simulator.Simulator`.
 
 The simulators differ in the model representation they use in the background and in the representation of the states and actions exposed to the user. We will go through some options by example!
 
-```{code-cell} ipython3
+```{code-cell} python3
 import stormpy
 import stormpy.examples
 import stormpy.examples.files
@@ -38,7 +38,7 @@ We first discuss the interface for DTMCs, without any nondeterminism.
 #### Explicit state-representations
 After importing some parts of stormpy as above, we start with creating a model, in this case a DTMC:
 
-```{code-cell} ipython3
+```{code-cell} python3
 path = stormpy.examples.files.prism_dtmc_die
 prism_program = stormpy.parse_prism_program(path)
 model = stormpy.build_model(prism_program)
@@ -48,47 +48,47 @@ simulator = stormpy.simulator.create_simulator(model, seed=42)
 
 Let us simulate a path.
 
-```{code-cell} ipython3
+```{code-cell} python3
 simulator.restart()
 ```
 
-```{code-cell} ipython3
+```{code-cell} python3
 simulator.step()
 ```
 
-```{code-cell} ipython3
+```{code-cell} python3
 simulator.step()
 ```
 
-```{code-cell} ipython3
+```{code-cell} python3
 simulator.step()
 ```
 
 We start the simulator by restarting. We then do 3 steps. Every step returns a triple (state, reward, labels). In particular, the simulation above reflects a path s0, s2, s5, s11. Taking the transitions inbetween yields the reward as shown above. While states s2 and s5 are not labelled, state s0 is labelled with `init` and state s11 is labelled with `done` and `five`. Indeed we can check this information on the model that we used for the simulator:
 
-```{code-cell} ipython3
+```{code-cell} python3
 model.labeling.get_labels_of_state(11)
 ```
 
 We can continue sampling.
 
-```{code-cell} ipython3
+```{code-cell} python3
 simulator.step()
 ```
 
-```{code-cell} ipython3
+```{code-cell} python3
 simulator.step()
 ```
 
 Indeed, we are not leaving the state. In this case, we can never leave the state as state s11 is absorbing. The simulator detects and exposes this information via `simulator.is_done()`
 
-```{code-cell} ipython3
+```{code-cell} python3
 simulator.is_done()
 ```
 
 We can sample more paths, yielding (potentially) different final states:
 
-```{code-cell} ipython3
+```{code-cell} python3
 simulator.restart()
 final_outcomes = dict()
 for n in range(100):
@@ -106,7 +106,7 @@ final_outcomes
 
 We can run the same simulator but represent states symbolically, referring to the high-level description of the state rather than on its internal index. The advantage of this is that the process becomes independent of the underlying representation of the model. We first need to build the model with the required annotations.
 
-```{code-cell} ipython3
+```{code-cell} python3
 options = stormpy.BuilderOptions()
 options.set_build_state_valuations()
 model = stormpy.build_sparse_model_with_options(prism_program, options)
@@ -114,12 +114,12 @@ model = stormpy.build_sparse_model_with_options(prism_program, options)
 
 Then, we create simulator that uses program-level state observations.
 
-```{code-cell} ipython3
+```{code-cell} python3
 simulator = stormpy.simulator.create_simulator(model, seed=42)
 simulator.set_observation_mode(stormpy.simulator.SimulatorObservationMode.PROGRAM_LEVEL)
 ```
 
-```{code-cell} ipython3
+```{code-cell} python3
 state, reward, label = simulator.restart()
 str(state)
 ```
@@ -128,7 +128,7 @@ Indeed, the state is now an object that describes the state in terms of the vari
 
 We can use the simulator as before, e.g.,
 
-```{code-cell} ipython3
+```{code-cell} python3
 simulator.restart()
 final_outcomes = dict()
 print(simulator.get_reward_names())
@@ -149,7 +149,7 @@ print(", ".join([f"{str(k)}: {v}" for k, v in final_outcomes.items()]))
 
 As above, we can represent states both explicitly or symbolically. We only discuss the explicit representation here. With nondeterminism, we now must resolve this nondeterminism externally. That is, the step argument now takes an argument, which we may pick randomly or in a more intelligent manner.
 
-```{code-cell} ipython3
+```{code-cell} python3
 import random
 
 random.seed(23)
@@ -180,7 +180,7 @@ for path in paths:
 
 In the example above, the actions are internal numbers. Often, a program gives semantically meaningful names, such as moving `north`, `east`, `west` and `south` in a grid with program variables reflecting the `x` and `y` location.
 
-```{code-cell} ipython3
+```{code-cell} python3
 options = stormpy.BuilderOptions()
 options.set_build_choice_labels()
 options.set_build_state_valuations()
@@ -211,11 +211,11 @@ for path in paths:
 
 We can also use a program-level simulator, which does not require putting the model into memory.
 
-```{code-cell} ipython3
+```{code-cell} python3
 simulator = stormpy.simulator.create_simulator(prism_program, seed=42)
 ```
 
-```{code-cell} ipython3
+```{code-cell} python3
 # 3 paths of at most 20 steps.
 paths = []
 for m in range(3):

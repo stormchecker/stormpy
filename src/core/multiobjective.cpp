@@ -27,8 +27,7 @@ void define_multiobjective(py::module& m, std::string const& vtSuffix) {
           py::arg("model"), py::arg("formula"), py::arg("compute_scheduler") = false);
 
     using PcaaWeightVectorChecker = storm::modelchecker::multiobjective::PcaaWeightVectorChecker<storm::models::sparse::Mdp<ValueType>>;
-    py::class_<PcaaWeightVectorChecker, std::unique_ptr<PcaaWeightVectorChecker>> weightedObjectiveMdpModelChecker(
-        m, ("WeightedObjectiveMdpModelChecker" + vtSuffix).c_str());
+    py::classh<PcaaWeightVectorChecker> weightedObjectiveMdpModelChecker(m, ("WeightedObjectiveMdpModelChecker" + vtSuffix).c_str());
     weightedObjectiveMdpModelChecker.def("check", &PcaaWeightVectorChecker::check, py::arg("env"), py::arg("weight_vector"))
         .def("get_achievable_point", &PcaaWeightVectorChecker::getAchievablePoint)
         .def("get_optimal_weighted_sum", &PcaaWeightVectorChecker::getOptimalWeightedSum,

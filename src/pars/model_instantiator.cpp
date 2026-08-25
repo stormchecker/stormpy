@@ -62,12 +62,12 @@ void define_typed_checker(py::module& m) {
     using BaseChecker = SparseInstantiationModelChecker<ParametricModel, ResultType>;
     auto const index = stormpy::bindings::typeIndex<ModelKind, ResultType>();
 
-    auto base = stormpy::bindings::bindInternalClass<BaseChecker, std::shared_ptr<BaseChecker>>(
-        m, stormpy::bindings::templateClassName("ModelInstantiationCheckerBase", index), "Instantiation checker base");
+    auto base = stormpy::bindings::bindInternalClass<BaseChecker>(m, stormpy::bindings::templateClassName("ModelInstantiationCheckerBase", index),
+                                                                  "Instantiation checker base");
     base.def("specify_formula", &BaseChecker::specifyFormula, "check_task"_a);
 
-    auto implementation = stormpy::bindings::bindTemplateClass<CheckerType, std::shared_ptr<CheckerType>>(m, "ModelInstantiationChecker", index,
-                                                                                                          "Instantiate and check a parametric model", base);
+    auto implementation =
+        stormpy::bindings::bindTemplateClass<CheckerType>(m, "ModelInstantiationChecker", index, "Instantiate and check a parametric model", base);
     implementation.def(py::init<ParametricModel>(), "parametric model"_a)
         .def(
             "check",

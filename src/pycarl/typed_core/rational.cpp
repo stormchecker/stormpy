@@ -72,7 +72,7 @@ static cln::cl_I pyint_to_cl_I(py::int_ val) {
 
 void define_cln_rational(py::module& m) {
 #ifdef PYCARL_USE_CLN
-    py::class_<cln::cl_RA>(m, "Rational", "Class wrapping cln-rational numbers")
+    py::classh<cln::cl_RA>(m, "Rational", "Class wrapping cln-rational numbers")
         .def(py::init([](double val) { return carl::rationalize<cln::cl_RA>(val); }))
         .def(py::init([](carl::sint val) { return carl::rationalize<cln::cl_RA>(val); }))
         .def(py::init([](const cln::cl_I& numerator, const cln::cl_I& denominator) { return cln::cl_RA(numerator) / cln::cl_RA(denominator); }))
@@ -189,7 +189,7 @@ void define_cln_rational(py::module& m) {
 
 void define_gmp_rational(py::module& m) {
 #ifndef PYCARL_USE_CLN
-    py::class_<mpq_class>(m, "Rational", "Class wrapping gmp-rational numbers")
+    py::classh<mpq_class>(m, "Rational", "Class wrapping gmp-rational numbers")
         .def(py::init([](double val) { return carl::rationalize<mpq_class>(val); }))
         .def(py::init([](carl::sint val) { return carl::rationalize<mpq_class>(val); }))
         .def(py::init<const mpz_class&, const mpz_class&>())

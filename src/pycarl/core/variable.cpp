@@ -27,7 +27,7 @@ void define_variabletype(py::module& m) {
 }
 
 void define_variable(py::module& m) {
-    py::class_<carl::Variable>(m, "Variable")
+    py::classh<carl::Variable>(m, "Variable")
         .def(py::init<carl::Variable>(), py::arg("other"))
         .def(py::init([](std::string name, carl::VariableType type) { return freshVariable(name, type); }), py::arg("name"),
              py::arg("type") = carl::VariableType::VT_REAL)

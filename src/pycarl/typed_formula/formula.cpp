@@ -3,7 +3,7 @@
 #include "src/pycarl/typed_formula/common.h"
 
 void define_formula(py::module& m) {
-    py::class_<Formula>(m, "Formula")
+    py::classh<Formula>(m, "Formula")
         .def(py::init<carl::Variable>(), "Create Formula given Boolean variable")
         .def(py::init<Constraint>())
         .def(py::init<carl::FormulaType, Formula>())

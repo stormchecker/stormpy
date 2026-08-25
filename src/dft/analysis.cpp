@@ -44,8 +44,7 @@ void define_analysis(py::module& m) {
         .finalize();
 
     // RelevantEvents
-    py::class_<storm::dft::utility::RelevantEvents, std::shared_ptr<storm::dft::utility::RelevantEvents>>(m, "RelevantEvents",
-                                                                                                          "Relevant events which should be observed")
+    py::classh<storm::dft::utility::RelevantEvents>(m, "RelevantEvents", "Relevant events which should be observed")
         .def(py::init<>(), "Create empty list of relevant events")
         .def("is_relevant", &storm::dft::utility::RelevantEvents::isRelevant, "Check whether the given name is a relevant event", py::arg("name"));
 
@@ -55,7 +54,7 @@ void define_analysis(py::module& m) {
 
 template<typename ValueType>
 void define_analysis_typed(py::module& m) {
-    auto builder = stormpy::bindings::bindTemplateClass<ExplicitDFTModelBuilder<ValueType>, std::shared_ptr<ExplicitDFTModelBuilder<ValueType>>>(
+    auto builder = stormpy::bindings::bindTemplateClass<ExplicitDFTModelBuilder<ValueType>>(
         m, "ExplicitDFTModelBuilder", stormpy::bindings::typeIndex<ValueType>(), "Builder to generate explicit model from DFT");
     builder
         .def(py::init<storm::dft::storage::DFT<ValueType> const&, storm::dft::storage::DftSymmetries const&>(), "Constructor", py::arg("dft"),

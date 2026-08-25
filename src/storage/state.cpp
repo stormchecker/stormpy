@@ -5,12 +5,12 @@
 template<typename ValueType>
 void define_state(py::module& m, std::string const& vtSuffix) {
     // SparseModelStates
-    py::class_<SparseModelStates<ValueType>>(m, ("Sparse" + vtSuffix + "ModelStates").c_str(), "States in sparse model")
+    py::classh<SparseModelStates<ValueType>>(m, ("Sparse" + vtSuffix + "ModelStates").c_str(), "States in sparse model")
         .def("__getitem__", &SparseModelStates<ValueType>::getState)
         .def("__len__", &SparseModelStates<ValueType>::getSize);
 
     // SparseModelState
-    py::class_<SparseModelState<ValueType>>(m, ("Sparse" + vtSuffix + "ModelState").c_str(), "State in sparse model")
+    py::classh<SparseModelState<ValueType>>(m, ("Sparse" + vtSuffix + "ModelState").c_str(), "State in sparse model")
         .def("__str__", &SparseModelState<ValueType>::toString)
         .def_property_readonly("id", &SparseModelState<ValueType>::getIndex, "Id")
         .def_property_readonly("labels", &SparseModelState<ValueType>::getLabels, "Get state labels")
@@ -19,12 +19,12 @@ void define_state(py::module& m, std::string const& vtSuffix) {
         .def("__int__", &SparseModelState<ValueType>::getIndex);
 
     // SparseModelActions
-    py::class_<SparseModelActions<ValueType>>(m, ("Sparse" + vtSuffix + "ModelActions").c_str(), "Actions for state in sparse model")
+    py::classh<SparseModelActions<ValueType>>(m, ("Sparse" + vtSuffix + "ModelActions").c_str(), "Actions for state in sparse model")
         .def("__getitem__", &SparseModelActions<ValueType>::getAction)
         .def("__len__", &SparseModelActions<ValueType>::getSize);
 
     // SparseModelAction
-    py::class_<SparseModelAction<ValueType>>(m, ("Sparse" + vtSuffix + "ModelAction").c_str(), "Action for state in sparse model")
+    py::classh<SparseModelAction<ValueType>>(m, ("Sparse" + vtSuffix + "ModelAction").c_str(), "Action for state in sparse model")
         .def("__str__", &SparseModelAction<ValueType>::toString)
         .def_property_readonly("id", &SparseModelAction<ValueType>::getIndex, "Id")
         .def_property_readonly("transitions", &SparseModelAction<ValueType>::getTransitions, "Get transitions")

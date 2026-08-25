@@ -20,7 +20,7 @@ using additionalCutoffValueType = std::vector<std::vector<std::unordered_map<uin
 
 template<typename ValueType>
 void define_belief_exploration(py::module& m, std::string const& vtSuffix) {
-    py::class_<BeliefExplorationPomdpModelChecker<ValueType>> belmc(m, ("BeliefExplorationModelChecker" + vtSuffix).c_str());
+    py::classh<BeliefExplorationPomdpModelChecker<ValueType>> belmc(m, ("BeliefExplorationModelChecker" + vtSuffix).c_str());
     belmc.def(py::init<std::shared_ptr<Pomdp<ValueType>>, Options<ValueType>>(), py::arg("model"), py::arg("options"));
 
     belmc.def(
@@ -52,10 +52,10 @@ void define_belief_exploration(py::module& m, std::string const& vtSuffix) {
     belmc.def("has_converged", &BeliefExplorationPomdpModelChecker<ValueType>::hasConverged);
     belmc.def("set_fsc_values", &BeliefExplorationPomdpModelChecker<ValueType>::setFMSchedValueList, py::arg("value_list"));
 
-    py::class_<typename storm::builder::BeliefMdpExplorer<Pomdp<ValueType>, ValueType>> belmdpexpl(m, ("BeliefMdpExplorer" + vtSuffix).c_str());
+    py::classh<typename storm::builder::BeliefMdpExplorer<Pomdp<ValueType>, ValueType>> belmdpexpl(m, ("BeliefMdpExplorer" + vtSuffix).c_str());
     belmdpexpl.def("set_fsc_values", &storm::builder::BeliefMdpExplorer<Pomdp<ValueType>, ValueType>::setFMSchedValueList, py::arg("value_list"));
 
-    py::class_<Options<ValueType>> belexploptions(m, ("BeliefExplorationModelCheckerOptions" + vtSuffix).c_str());
+    py::classh<Options<ValueType>> belexploptions(m, ("BeliefExplorationModelCheckerOptions" + vtSuffix).c_str());
     belexploptions.def(py::init<bool, bool>(), py::arg("discretize"), py::arg("unfold"));
     belexploptions.def_readwrite("use_state_elimination_cutoff", &Options<ValueType>::useStateEliminationCutoff);
     belexploptions.def_readwrite("size_threshold_init", &Options<ValueType>::sizeThresholdInit);
@@ -72,7 +72,7 @@ void define_belief_exploration(py::module& m, std::string const& vtSuffix) {
     belexploptions.def_readwrite("interactive_unfolding", &Options<ValueType>::interactiveUnfolding);
     belexploptions.def_readwrite("cut_zero_gap", &Options<ValueType>::cutZeroGap);
 
-    py::class_<typename BeliefExplorationPomdpModelChecker<ValueType>::Result> belexplres(m, ("BeliefExplorationPomdpModelCheckerResult" + vtSuffix).c_str());
+    py::classh<typename BeliefExplorationPomdpModelChecker<ValueType>::Result> belexplres(m, ("BeliefExplorationPomdpModelCheckerResult" + vtSuffix).c_str());
     belexplres.def_readonly("induced_mc_from_scheduler", &BeliefExplorationPomdpModelChecker<ValueType>::Result::schedulerAsMarkovChain);
     belexplres.def_readonly("cutoff_schedulers", &BeliefExplorationPomdpModelChecker<ValueType>::Result::cutoffSchedulers);
     belexplres.def_readonly("lower_bound", &BeliefExplorationPomdpModelChecker<ValueType>::Result::lowerBound);

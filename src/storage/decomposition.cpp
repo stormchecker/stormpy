@@ -9,7 +9,7 @@ template<typename ValueType>
 using MECDecomposition = storm::storage::MaximalEndComponentDecomposition<ValueType>;
 
 void define_maximal_end_components(py::module& m) {
-    py::class_<MEC, std::shared_ptr<MEC>>(m, "MaximalEndComponent", "Maximal end component")
+    py::classh<MEC>(m, "MaximalEndComponent", "Maximal end component")
 
         .def_property_readonly("size", &MEC::size, "Number of states in MEC")
         .def(
@@ -19,8 +19,7 @@ void define_maximal_end_components(py::module& m) {
 
 template<typename ValueType>
 void define_maximal_end_component_decomposition(py::module& m, std::string const& vt_suffix) {
-    py::class_<MECDecomposition<ValueType>, std::shared_ptr<MECDecomposition<ValueType>>>(m, ("MaximalEndComponentDecomposition" + vt_suffix).c_str(),
-                                                                                          "Decomposition of maximal end components")
+    py::classh<MECDecomposition<ValueType>>(m, ("MaximalEndComponentDecomposition" + vt_suffix).c_str(), "Decomposition of maximal end components")
         .def(py::init<storm::models::sparse::NondeterministicModel<ValueType> const&>(), py::arg("model"), "Create MECs from model")
         .def_property_readonly("size", &MECDecomposition<ValueType>::size, "Number of MECs in the decomposition")
         .def(

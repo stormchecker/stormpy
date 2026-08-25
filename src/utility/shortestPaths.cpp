@@ -24,7 +24,7 @@ void define_ksp(py::module& m) {
     using Model = ShortestPathsGenerator::Model;
     using StateProbMap = ShortestPathsGenerator::StateProbMap;
 
-    py::class_<Path>(m, "Path")
+    py::classh<Path>(m, "Path")
         // overload constructor rather than dealing with boost::optional
         .def(py::init([](state_t preNode, unsigned long preK, double distance) { return Path{boost::optional<state_t>(preNode), preK, distance}; }),
              "predecessorNode"_a, "predecessorK"_a, "distance"_a)
@@ -44,7 +44,7 @@ void define_ksp(py::module& m) {
         .value("I_Minus_P", MatrixFormat::iMinusP)
         .finalize();
 
-    py::class_<ShortestPathsGenerator>(m, "ShortestPathsGenerator")
+    py::classh<ShortestPathsGenerator>(m, "ShortestPathsGenerator")
         .def(py::init<Model const&, BitVector>(), "model"_a, "target_bitvector"_a)
         .def(py::init<Model const&, state_t>(), "model"_a, "target_state"_a)
         .def(py::init<Model const&, std::vector<state_t> const&>(), "model"_a, "target_state_list"_a)

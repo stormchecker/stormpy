@@ -144,7 +144,7 @@ void define_build_sparse_model_defs(py::module& m) {
           ("Build the " + desc + "model from DRN" + (std::is_same_v<ValueType, storm::RationalFunction> ? " (parametric)" : "")).c_str(), py::arg("file"),
           py::arg("options") = storm::parser::DirectEncodingParserOptions());
 
-    py::class_<typename storm::builder::ExplicitModelBuilder<ValueType>::Options>(m, ("Explicit" + classType + "ModelBuilderOptions").c_str(),
+    py::classh<typename storm::builder::ExplicitModelBuilder<ValueType>::Options>(m, ("Explicit" + classType + "ModelBuilderOptions").c_str(),
                                                                                   "Options for the explicit model builder")
         .def(py::init<>(), "Create")
         .def_readwrite("exploration_order", &storm::builder::ExplicitModelBuilder<ValueType>::Options::explorationOrder,
@@ -164,7 +164,7 @@ void define_build_sparse_model_defs(py::module& m) {
         m.def("make_sparse_model_builder", &storm::api::makeExplicitModelBuilder<double>, "Construct a builder instance", py::arg("model_description"),
               py::arg("options"), py::arg("action_mask") = nullptr,
               py::arg("exploration_options") = typename storm::builder::ExplicitModelBuilder<ValueType>::Options());
-        py::class_<storm::builder::ExplicitModelBuilder<double>>(m, "ExplicitModelBuilder", "Model builder for sparse models")
+        py::classh<storm::builder::ExplicitModelBuilder<double>>(m, "ExplicitModelBuilder", "Model builder for sparse models")
             .def("build", &storm::builder::ExplicitModelBuilder<double>::build, "Build the model", py::call_guard<py::gil_scoped_release>())
             .def("export_lookup", &storm::builder::ExplicitModelBuilder<double>::exportExplicitStateLookup, "Export a lookup model");
     } else if constexpr (std::is_same_v<ValueType, storm::RationalFunction>) {
@@ -174,7 +174,7 @@ void define_build_sparse_model_defs(py::module& m) {
         m.def("make_sparse_model_builder_parametric", &storm::api::makeExplicitModelBuilder<storm::RationalFunction>, "Construct a builder instance",
               py::arg("model_description"), py::arg("options"), py::arg("action_mask") = nullptr,
               py::arg("exploration_options") = typename storm::builder::ExplicitModelBuilder<ValueType>::Options());
-        py::class_<storm::builder::ExplicitModelBuilder<storm::RationalFunction>>(m, "ExplicitParametricModelBuilder", "Model builder for sparse models")
+        py::classh<storm::builder::ExplicitModelBuilder<storm::RationalFunction>>(m, "ExplicitParametricModelBuilder", "Model builder for sparse models")
             .def("build", &storm::builder::ExplicitModelBuilder<storm::RationalFunction>::build, "Build the model", py::call_guard<py::gil_scoped_release>())
             .def("export_lookup", &storm::builder::ExplicitModelBuilder<storm::RationalFunction>::exportExplicitStateLookup, "Export a lookup model");
     } else if constexpr (std::is_same_v<ValueType, storm::RationalNumber>) {
@@ -185,7 +185,7 @@ void define_build_sparse_model_defs(py::module& m) {
 }
 
 void define_build(py::module& m) {
-    py::class_<storm::parser::DirectEncodingParserOptions>(m, "DirectEncodingParserOptions", "Options for the .drn parser")
+    py::classh<storm::parser::DirectEncodingParserOptions>(m, "DirectEncodingParserOptions", "Options for the .drn parser")
         .def(py::init<>(), "initialise")
         .def_readwrite("build_choice_labels", &storm::parser::DirectEncodingParserOptions::buildChoiceLabeling, "Build with choice labels");
 
@@ -194,7 +194,7 @@ void define_build(py::module& m) {
         .value("BFS", storm::builder::ExplorationOrder::Bfs)
         .finalize();
 
-    py::class_<typename storm::parser::ExplicitModelParserOptions>(m, "ExplicitModelParserOptions", "Options for the explicit model parser")
+    py::classh<typename storm::parser::ExplicitModelParserOptions>(m, "ExplicitModelParserOptions", "Options for the explicit model parser")
         .def(py::init<>(), "Create")
         .def_readwrite("fix_deadlocks", &storm::parser::ExplicitModelParserOptions::fixDeadlocks,
                        "If set, deadlocks states will be fixed by adding a self-loop with probability 1.")
@@ -207,7 +207,7 @@ void define_build(py::module& m) {
     define_build_sparse_model_defs<storm::Interval>(m);
     define_build_sparse_model_defs<storm::RationalInterval>(m);
 
-    py::class_<storm::builder::ExplicitStateLookup<uint32_t>>(m, "ExplicitStateLookup", "Lookup model for states")
+    py::classh<storm::builder::ExplicitStateLookup<uint32_t>>(m, "ExplicitStateLookup", "Lookup model for states")
         .def(
             "lookup",
             [](storm::builder::ExplicitStateLookup<uint32_t> const& lookup,
@@ -223,7 +223,7 @@ void define_build(py::module& m) {
 
         ;
 
-    py::class_<storm::builder::BuilderOptions>(m, "BuilderOptions", "Options for building process")
+    py::classh<storm::builder::BuilderOptions>(m, "BuilderOptions", "Options for building process")
         .def(py::init<std::vector<std::shared_ptr<storm::logic::Formula const>> const&>(), "Initialise with formulae to preserve", py::arg("formulae"))
         .def(py::init<bool, bool>(), "Initialise without formulae", py::arg("build_all_reward_models") = true, py::arg("build_all_labels") = true)
         .def_property_readonly("preserved_label_names", &storm::builder::BuilderOptions::getLabelNames, "Labels preserved")
@@ -242,9 +242,8 @@ void define_build(py::module& m) {
         .def("set_build_all_reward_models", &storm::builder::BuilderOptions::setBuildAllRewardModels, "Build with all reward models",
              py::arg("new_value") = true);
 
-    py::class_<storm::generator::ActionMask<double>, std::shared_ptr<storm::generator::ActionMask<double>>> actionmask(m, "ActionMaskDouble");
-    py::class_<storm::generator::StateValuationFunctionMask<double>, std::shared_ptr<storm::generator::StateValuationFunctionMask<double>>> actfuncmask(
-        m, "StateValuationFunctionActionMaskDouble", actionmask);
+    py::classh<storm::generator::ActionMask<double>> actionmask(m, "ActionMaskDouble");
+    py::classh<storm::generator::StateValuationFunctionMask<double>> actfuncmask(m, "StateValuationFunctionActionMaskDouble", actionmask);
     actfuncmask.def(py::init<std::function<bool(storm::expressions::SimpleValuation const&, uint64_t)>>(), py::arg("f"));
 }
 
@@ -296,7 +295,7 @@ void define_export_drn(py::module& m) {
 }
 
 void define_export(py::module& m) {
-    py::class_<storm::io::DirectEncodingExporterOptions>(m, "DirectEncodingExporterOptions")
+    py::classh<storm::io::DirectEncodingExporterOptions>(m, "DirectEncodingExporterOptions")
         .def(py::init<>())
         .def_readwrite("allow_placeholders", &storm::io::DirectEncodingExporterOptions::allowPlaceholders)
         .def_readwrite("outputPrecision", &storm::io::DirectEncodingExporterOptions::outputPrecision);

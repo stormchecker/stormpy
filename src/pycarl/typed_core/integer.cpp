@@ -9,7 +9,7 @@
 
 void define_cln_integer(py::module& m) {
 #ifdef PYCARL_USE_CLN
-    py::class_<cln::cl_I>(m, "Integer", "Class wrapping cln-integers")
+    py::classh<cln::cl_I>(m, "Integer", "Class wrapping cln-integers")
         .def(py::init<int>())
         .def(py::init([](std::string const& val) {
             cln::cl_I tmp;
@@ -83,7 +83,7 @@ void define_cln_integer(py::module& m) {
 
 void define_gmp_integer(py::module& m) {
 #ifndef PYCARL_USE_CLN
-    py::class_<mpz_class>(m, "Integer", "Class wrapping gmp-integers")
+    py::classh<mpz_class>(m, "Integer", "Class wrapping gmp-integers")
         .def(py::init<int>())
         .def(py::init([](std::string const& val) {
             mpz_class tmp;

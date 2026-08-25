@@ -55,7 +55,7 @@ void define_transformation(py::module& m) {
     define_transformation_mdef<double>(m);
     define_transformation_mdef<storm::RationalFunction>(m);
 
-    py::class_<storm::transformer::SubsystemBuilderOptions>(m, "SubsystemBuilderOptions", "Options for constructing the subsystem")
+    py::classh<storm::transformer::SubsystemBuilderOptions>(m, "SubsystemBuilderOptions", "Options for constructing the subsystem")
         .def(py::init<>())
         .def_readwrite("check_transitions_outside", &storm::transformer::SubsystemBuilderOptions::checkTransitionsOutside)
         .def_readwrite("build_state_mapping", &storm::transformer::SubsystemBuilderOptions::buildStateMapping)
@@ -74,7 +74,7 @@ void define_transformation(py::module& m) {
 
 template<typename ValueType>
 void define_transformation_typed(py::module& m, std::string const& vtSuffix) {
-    py::class_<storm::transformer::SubsystemBuilderReturnType<ValueType>>(m, ("SubsystemBuilderReturnType" + vtSuffix).c_str(),
+    py::classh<storm::transformer::SubsystemBuilderReturnType<ValueType>>(m, ("SubsystemBuilderReturnType" + vtSuffix).c_str(),
                                                                           "Result of the construction of a subsystem")
         .def_readonly("model", &storm::transformer::SubsystemBuilderReturnType<ValueType>::model, "the submodel")
         .def_readonly("new_to_old_state_mapping", &storm::transformer::SubsystemBuilderReturnType<ValueType>::newToOldStateIndexMapping,
@@ -87,7 +87,7 @@ void define_transformation_typed(py::module& m, std::string const& vtSuffix) {
                       "If set, deadlock states have been introduced and have been assigned this label");
     m.def(("_construct_subsystem_" + vtSuffix).c_str(), &constructSubsystem<ValueType>, "build a subsystem of a sparse model");
 
-    py::class_<typename storm::transformer::EndComponentEliminator<ValueType>::EndComponentEliminatorReturnType>(
+    py::classh<typename storm::transformer::EndComponentEliminator<ValueType>::EndComponentEliminatorReturnType>(
         m, ("EndComponentEliminatorReturnType" + vtSuffix).c_str(), "Container for result of endcomponent elimination")
         .def_readonly("matrix", &storm::transformer::EndComponentEliminator<ValueType>::EndComponentEliminatorReturnType::matrix, "The resulting matrix")
         .def_readonly("new_to_old_row_mapping", &storm::transformer::EndComponentEliminator<ValueType>::EndComponentEliminatorReturnType::newToOldRowMapping,
@@ -103,7 +103,7 @@ void define_transformation_typed(py::module& m, std::string const& vtSuffix) {
 
 template<typename ValueType>
 void define_transformation_typed_only_numbers(py::module& m, std::string const& vtSuffix) {
-    py::class_<storm::transformer::AddUncertainty<ValueType>>(m, ("AddUncertainty" + vtSuffix).c_str(),
+    py::classh<storm::transformer::AddUncertainty<ValueType>>(m, ("AddUncertainty" + vtSuffix).c_str(),
                                                               "Transform model into interval model with specified uncertainty")
         .def(py::init<std::shared_ptr<storm::models::sparse::Model<ValueType>> const&>(), py::arg("model"))
         .def("transform", &storm::transformer::AddUncertainty<ValueType>::transform, "Transform the model", py::arg("additive_uncertainty"),

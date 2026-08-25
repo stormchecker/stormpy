@@ -4,15 +4,14 @@
 #include "src/pycarl/types.h"
 
 void define_factorizationcache(py::module& m) {
-    py::class_<carl::Cache<FactorizationPair>, std::shared_ptr<carl::Cache<FactorizationPair>>>(m, "_FactorizationCache",
-                                                                                                "Cache storing all factorized polynomials")
+    py::classh<carl::Cache<FactorizationPair>>(m, "_FactorizationCache", "Cache storing all factorized polynomials")
         .def(py::init(), "Constructor")
         .def(py::pickle([](const carl::Cache<FactorizationPair>& val) -> std::tuple<std::string> { throw NoPickling(); },
                         [](const std::tuple<std::string>& data) -> std::shared_ptr<carl::Cache<FactorizationPair>> { throw NoPickling(); }));
 }
 
 void define_factorization(py::module& m) {
-    py::class_<Factorization, std::shared_ptr<Factorization>>(m, "Factorization", "Factorization")
+    py::classh<Factorization>(m, "Factorization", "Factorization")
         .def("__str__", &streamToString<Factorization>)
         .def(py::self == py::self)
 

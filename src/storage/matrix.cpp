@@ -33,7 +33,7 @@ void define_sparse_matrix_nt(py::module& m) {
 template<typename ValueType>
 void define_sparse_matrix(py::module& m, std::string const& vtSuffix) {
     // MatrixEntry
-    py::class_<MatrixEntry<ValueType>>(m, (vtSuffix + "SparseMatrixEntry").c_str(), "Entry of sparse matrix")
+    py::classh<MatrixEntry<ValueType>>(m, (vtSuffix + "SparseMatrixEntry").c_str(), "Entry of sparse matrix")
         .def("__str__", &streamToString<MatrixEntry<ValueType>>)
         // def_property threw "pointer being freed not allocated" after exiting
         .def("value", &MatrixEntry<ValueType>::getValue, "Value")
@@ -41,7 +41,7 @@ void define_sparse_matrix(py::module& m, std::string const& vtSuffix) {
         .def_property_readonly("column", &MatrixEntry<ValueType>::getColumn, "Column");
 
     // SparseMatrixBuilder
-    py::class_<SparseMatrixBuilder<ValueType>>(m, (vtSuffix + "SparseMatrixBuilder").c_str(), "Builder of sparse matrix")
+    py::classh<SparseMatrixBuilder<ValueType>>(m, (vtSuffix + "SparseMatrixBuilder").c_str(), "Builder of sparse matrix")
         .def(py::init<double, double, double, bool, bool, double>(), "rows"_a = 0, "columns"_a = 0, "entries"_a = 0, "force_dimensions"_a = true,
              "has_custom_row_grouping"_a = false, "row_groups"_a = 0)
 
@@ -104,7 +104,7 @@ void define_sparse_matrix(py::module& m, std::string const& vtSuffix) {
              py::arg("replacements"), py::arg("offset"));
 
     // SparseMatrix
-    py::class_<SparseMatrix<ValueType>>(m, (vtSuffix + "SparseMatrix").c_str(), "Sparse matrix")
+    py::classh<SparseMatrix<ValueType>>(m, (vtSuffix + "SparseMatrix").c_str(), "Sparse matrix")
         .def(
             "__iter__", [](SparseMatrix<ValueType>& matrix) { return py::make_iterator(matrix.begin(), matrix.end()); },
             py::keep_alive<0, 1>() /* Essential: keep object alive while iterator exists */)
@@ -172,7 +172,7 @@ void define_sparse_matrix(py::module& m, std::string const& vtSuffix) {
             py::return_value_policy::reference, py::keep_alive<1, 0>());
 
     // Rows
-    py::class_<typename SparseMatrix<ValueType>::rows>(m, (vtSuffix + "SparseMatrixRows").c_str(), "Set of rows in a sparse matrix")
+    py::classh<typename SparseMatrix<ValueType>::rows>(m, (vtSuffix + "SparseMatrixRows").c_str(), "Set of rows in a sparse matrix")
         .def(
             "__iter__", [](typename SparseMatrix<ValueType>::rows& rows) { return py::make_iterator(rows.begin(), rows.end()); }, py::keep_alive<0, 1>())
         .def("__str__", &containerToString<typename SparseMatrix<ValueType>::rows>)

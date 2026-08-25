@@ -1,6 +1,27 @@
 Changelog
 =============
 
+Version 1.14.x
+--------------
+
+### Version 1.14.0 (2026/08)
+Requires Storm version >= 1.14.0.
+
+- Replaced carl-parser with Lark parser. Support can be enabled with `pip install stormpy[parser]` or directly installing the `lark` package.
+- Extended bindings of `BitVector`
+- Adaption to changes in Storm:
+    * State valuations
+    * Lexicographic settings
+    * Parsing of constant strings
+    * Added options for bisimulation
+    * Added options for parsing and building explicit models
+    * Support Dd environments
+- Added documentation on `stormpy.info`
+- Developer: all CMake options start with prefix `STORMPY_X`
+- Developer: revised CI workflow for building wheels
+- Developer: use template for `ValueType` in more places
+
+
 Version 1.13.x
 --------------
 

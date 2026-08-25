@@ -41,14 +41,14 @@ void define_qualitative_policy_search(py::module& m, std::string const& vtSuffix
           py::arg("formula"), py::arg("options"));
     m.def(("prepare_pomdp_for_qualitative_search_" + vtSuffix).c_str(), &preparePOMDPForQualitativeSearch<ValueType>, "Preprocess POMDP", py::arg("pomdp"),
           py::arg("formula"));
-    py::class_<storm::pomdp::IterativePolicySearch<ValueType>, std::shared_ptr<storm::pomdp::IterativePolicySearch<ValueType>>> mssq(
-        m, ("IterativeQualitativeSearchSolver" + vtSuffix).c_str(), "Solver for POMDPs that solves qualitative queries");
+    py::classh<storm::pomdp::IterativePolicySearch<ValueType>> mssq(m, ("IterativeQualitativeSearchSolver" + vtSuffix).c_str(),
+                                                                    "Solver for POMDPs that solves qualitative queries");
     mssq.def("compute_winning_region", &storm::pomdp::IterativePolicySearch<ValueType>::computeWinningRegion, py::arg("lookahead"));
     mssq.def("compute_winning_policy_for_initial_states", &storm::pomdp::IterativePolicySearch<ValueType>::analyzeForInitialStates, py::arg("lookahead"));
     mssq.def_property_readonly("last_winning_region", &storm::pomdp::IterativePolicySearch<ValueType>::getLastWinningRegion,
                                "get the last computed winning region");
 
-    py::class_<storm::pomdp::WinningRegionQueryInterface<ValueType>> wrqi(m, ("BeliefSupportWinningRegionQueryInterface" + vtSuffix).c_str());
+    py::classh<storm::pomdp::WinningRegionQueryInterface<ValueType>> wrqi(m, ("BeliefSupportWinningRegionQueryInterface" + vtSuffix).c_str());
     wrqi.def(py::init<SparsePomdp<ValueType> const&, storm::pomdp::WinningRegion const&>(), py::arg("pomdp"), py::arg("BeliefSupportWinningRegion"));
     wrqi.def("query_current_belief", &storm::pomdp::WinningRegionQueryInterface<ValueType>::isInWinningRegion, py::arg("current_belief"));
     wrqi.def("query_action", &storm::pomdp::WinningRegionQueryInterface<ValueType>::staysInWinningRegion, py::arg("current_belief"), py::arg("action"));
@@ -57,10 +57,10 @@ void define_qualitative_policy_search(py::module& m, std::string const& vtSuffix
 template void define_qualitative_policy_search<double>(py::module& m, std::string const& vtSuffix);
 
 void define_qualitative_policy_search_nt(py::module& m) {
-    py::class_<storm::pomdp::MemlessSearchOptions> mssqopts(m, "IterativeQualitativeSearchOptions", "Options for the IterativeQualitativeSearch");
+    py::classh<storm::pomdp::MemlessSearchOptions> mssqopts(m, "IterativeQualitativeSearchOptions", "Options for the IterativeQualitativeSearch");
     mssqopts.def(py::init<>());
 
-    py::class_<storm::pomdp::WinningRegion> winningRegion(m, "BeliefSupportWinningRegion");
+    py::classh<storm::pomdp::WinningRegion> winningRegion(m, "BeliefSupportWinningRegion");
     winningRegion.def_static("load_from_file", &storm::pomdp::WinningRegion::loadFromFile, py::arg("filepath"));
     winningRegion.def("store_to_file", &storm::pomdp::WinningRegion::storeToFile, py::arg("filepath"), py::arg("preamble"), py::arg("append") = false);
 }

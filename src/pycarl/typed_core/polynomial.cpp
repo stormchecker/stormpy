@@ -4,7 +4,7 @@
 #include "src/pycarl/types.h"
 
 void define_polynomial(py::module& m) {
-    py::class_<Polynomial>(m, "Polynomial", "Represent a multivariate polynomial")
+    py::classh<Polynomial>(m, "Polynomial", "Represent a multivariate polynomial")
         .def(py::init<const Term&>())
         .def(py::init<const Monomial::Arg&>())
         .def(py::init<carl::Variable::Arg>())

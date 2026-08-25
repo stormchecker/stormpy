@@ -37,7 +37,7 @@ void define_bisimulation(py::module& m) {
         .value("DD", storm::dd::bisimulation::QuotientFormat::Dd)
         .finalize();
 
-    py::class_<storm::dd::bisimulation::BisimulationOptions>(m, "BisimulationOptionsDd", "Options for Dd bisimulation")
+    py::classh<storm::dd::bisimulation::BisimulationOptions>(m, "BisimulationOptionsDd", "Options for Dd bisimulation")
         .def(py::init<>(), "Create")
         .def_readwrite("reuse_mode", &storm::dd::bisimulation::BisimulationOptions::reuseMode, "Reuse mode")
         .def_readwrite("refinement_mode", &storm::dd::bisimulation::BisimulationOptions::refinementMode, "Refinement mode")

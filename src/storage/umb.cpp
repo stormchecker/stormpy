@@ -28,7 +28,7 @@ void define_umb(py::module& m) {
         .value("Double", storm::umb::ImportOptions::ValueType::Double)
         .finalize();
 
-    py::class_<storm::umb::ImportOptions>(m, "UmbImportOptions", "Options for importing UMB models")
+    py::classh<storm::umb::ImportOptions>(m, "UmbImportOptions", "Options for importing UMB models")
         .def(py::init<>())
         .def_readwrite("value_type", &storm::umb::ImportOptions::valueType, "Value type used for all model values")
         .def_readwrite("build_choice_labeling", &storm::umb::ImportOptions::buildChoiceLabeling, "Whether to build choice labelings")
@@ -42,7 +42,7 @@ void define_umb(py::module& m) {
         .value("RationalInterval", storm::umb::ExportOptions::ValueType::RationalInterval)
         .finalize();
 
-    py::class_<storm::umb::ExportOptions>(m, "UmbExportOptions", "Options for exporting UMB models")
+    py::classh<storm::umb::ExportOptions>(m, "UmbExportOptions", "Options for exporting UMB models")
         .def(py::init<>())
         .def_readwrite("value_type", &storm::umb::ExportOptions::valueType, "Value type used for all model values")
         .def_readwrite("allow_choice_origins_as_actions", &storm::umb::ExportOptions::allowChoiceOriginsAsActions,
@@ -52,7 +52,7 @@ void define_umb(py::module& m) {
         .def_readwrite("compression", &storm::umb::ExportOptions::compression, "Compression mode for the UMB archive")
         .def_readwrite("canonicize_pomdp", &storm::umb::ExportOptions::canonicizePomdp, "Whether to canonicize POMDPs before export");
 
-    py::class_<storm::umb::UmbModel>(m, "UmbModel", "Model in the UMB format")
+    py::classh<storm::umb::UmbModel>(m, "UmbModel", "Model in the UMB format")
         .def("get_short_model_information", &storm::umb::UmbModel::getShortModelInformation, "Short description of the model")
         .def("get_model_information", &storm::umb::UmbModel::getModelInformation, "Detailed description of the model")
         .def(

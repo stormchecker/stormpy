@@ -36,17 +36,16 @@ template<typename ValueType>
 void define_dft_elements_typed(py::module& m) {
     // DFT elements
     auto const index = stormpy::bindings::typeIndex<ValueType>();
-    auto element = stormpy::bindings::bindTemplateClass<DFTElement<ValueType>, std::shared_ptr<DFTElement<ValueType>>>(m, "DFTElement", index, "DFT element");
+    auto element = stormpy::bindings::bindTemplateClass<DFTElement<ValueType>>(m, "DFTElement", index, "DFT element");
     element.def_property_readonly("id", &DFTElement<ValueType>::id, "Id")
         .def_property_readonly("name", &DFTElement<ValueType>::name, "Name")
         .def_property_readonly("type", &DFTElement<ValueType>::type, "Type")
         .def("__str__", &DFTElement<ValueType>::toString);
 
-    auto be = stormpy::bindings::bindTemplateClass<BE<ValueType>, std::shared_ptr<BE<ValueType>>>(m, "DFTBE", index, "Basic Event", element);
+    auto be = stormpy::bindings::bindTemplateClass<BE<ValueType>>(m, "DFTBE", index, "Basic Event", element);
     be.def("__str__", &BE<ValueType>::toString);
 
-    auto dependency =
-        stormpy::bindings::bindTemplateClass<Dependency<ValueType>, std::shared_ptr<Dependency<ValueType>>>(m, "DFTDependency", index, "Dependency", element);
+    auto dependency = stormpy::bindings::bindTemplateClass<Dependency<ValueType>>(m, "DFTDependency", index, "Dependency", element);
     dependency.def_property_readonly("trigger", &Dependency<ValueType>::triggerEvent, "Trigger event")
         .def_property_readonly("dependent_events", &Dependency<ValueType>::dependentEvents, "Dependent events")
         .def("__str__", &Dependency<ValueType>::toString);

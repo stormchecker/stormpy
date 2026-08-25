@@ -7,7 +7,7 @@
 using DftIndependentModule = storm::dft::storage::DftIndependentModule;
 
 void define_module(py::module& m) {
-    py::class_<DftIndependentModule, std::shared_ptr<DftIndependentModule>>(m, "DftIndependentModule", "Independent module in DFT")
+    py::classh<DftIndependentModule>(m, "DftIndependentModule", "Independent module in DFT")
         .def("static", &DftIndependentModule::isStatic, "Whether the module contains only static elements (except in submodules)")
         .def("fully_static", &DftIndependentModule::isFullyStatic, "Whether the module contains only static elements (also in submodules)")
         .def("single_be", &DftIndependentModule::isSingleBE, "Whether the module consists of a single BE (trivial module)")

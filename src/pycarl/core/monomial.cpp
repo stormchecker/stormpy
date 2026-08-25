@@ -4,7 +4,7 @@
 #include "src/pycarl/types.h"
 
 void define_monomial(py::module& m) {
-    py::class_<Monomial, std::shared_ptr<Monomial>>(m, "Monomial")
+    py::classh<Monomial>(m, "Monomial")
 
         .def("__pow__", [](const Monomial::Arg& var, carl::uint exp) { return var->pow(exp); })
         .def("__mul__", static_cast<Monomial::Arg (*)(const Monomial::Arg&, const Monomial::Arg&)>(&carl::operator*))

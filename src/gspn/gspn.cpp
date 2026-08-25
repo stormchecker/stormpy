@@ -30,7 +30,7 @@ void gspnToFile(GSPN const& gspn, std::string const& filepath, bool toPnpro) {
 
 void define_gspn(py::module& m) {
     // GSPN_Builder class
-    py::class_<GSPNBuilder, std::shared_ptr<GSPNBuilder>>(m, "GSPNBuilder", "Generalized Stochastic Petri Net Builder")
+    py::classh<GSPNBuilder>(m, "GSPNBuilder", "Generalized Stochastic Petri Net Builder")
         .def(py::init(), "Constructor")
         .def("set_name", &GSPNBuilder::setGspnName, "Set name of GSPN", "name"_a)
 
@@ -106,7 +106,7 @@ void define_gspn(py::module& m) {
              "constants_substitution"_a = std::map<storm::expressions::Variable, storm::expressions::Expression>());
 
     // GSPN class
-    py::class_<GSPN, std::shared_ptr<GSPN>>(m, "GSPN", "Generalized Stochastic Petri Net")
+    py::classh<GSPN>(m, "GSPN", "Generalized Stochastic Petri Net")
         // Constructor
         .def(py::init<std::string const&, std::vector<Place> const&, std::vector<ImmediateTransition> const&, std::vector<TimedTransition> const&,
                       std::vector<TransitionPartition> const&, std::shared_ptr<storm::expressions::ExpressionManager> const&,
@@ -174,7 +174,7 @@ void define_gspn(py::module& m) {
         .def_static("transition_id_to_immediate_transition_id", &GSPN::transitionIdToImmediateTransitionId);
 
     // LayoutInfo class
-    py::class_<LayoutInfo>(m, "LayoutInfo")
+    py::classh<LayoutInfo>(m, "LayoutInfo")
         .def(py::init<>())
         .def(py::init<double, double, double>(), "x"_a, "y"_a, "rotation"_a = 0.0)
         .def_readwrite("x", &LayoutInfo::x)
@@ -182,7 +182,7 @@ void define_gspn(py::module& m) {
         .def_readwrite("rotation", &LayoutInfo::rotation);
 
     // Place class
-    py::class_<Place, std::shared_ptr<Place>>(m, "Place", "Place in a GSPN")
+    py::classh<Place>(m, "Place", "Place in a GSPN")
         .def(py::init<uint64_t>(), "id"_a)
         .def("get_name", &Place::getName, "Get name of this place")
         .def("set_name", &Place::setName, "name"_a, "Set name of this place")
@@ -194,7 +194,7 @@ void define_gspn(py::module& m) {
         .def("has_restricted_capacity", &Place::hasRestrictedCapacity, "Is capacity of this place restricted");
 
     // Transition class
-    py::class_<Transition, std::shared_ptr<Transition>>(m, "Transition", "Transition in a GSPN")
+    py::classh<Transition>(m, "Transition", "Transition in a GSPN")
         .def(py::init<>())
         .def("get_id", &Transition::getID, "Get id of this transition")
         .def("set_name", &Transition::setName, "name"_a, "Set name of this transition")
@@ -232,7 +232,7 @@ void define_gspn(py::module& m) {
         ;
 
     // TimedTransition class
-    py::class_<TimedTransition, Transition, std::shared_ptr<TimedTransition>>(m, "TimedTransition", "TimedTransition in a GSPN")
+    py::classh<TimedTransition, Transition>(m, "TimedTransition", "TimedTransition in a GSPN")
         .def(py::init<>())
         .def("get_rate", &TimedTransition::getRate, "Get rate of this transition")
         .def("set_rate", &TimedTransition::setRate, "rate"_a, "Set rate of this transition")
@@ -245,14 +245,14 @@ void define_gspn(py::module& m) {
         .def("get_number_of_servers", &TimedTransition::getNumberOfServers, "Get number of servers");
 
     // ImmediateTransition class
-    py::class_<ImmediateTransition, Transition, std::shared_ptr<ImmediateTransition>>(m, "ImmediateTransition", "ImmediateTransition in a GSPN")
+    py::classh<ImmediateTransition, Transition>(m, "ImmediateTransition", "ImmediateTransition in a GSPN")
         .def(py::init<>())
         .def("get_weight", &ImmediateTransition::getWeight, "Get weight of this transition")
         .def("set_weight", &ImmediateTransition::setWeight, "weight"_a, "Set weight of this transition")
         .def("no_weight_attached", &ImmediateTransition::noWeightAttached, "True iff no weight is attached");
 
     // TransitionPartition class
-    py::class_<TransitionPartition>(m, "TransitionPartition")
+    py::classh<TransitionPartition>(m, "TransitionPartition")
         .def(py::init<>())
         .def_readwrite("priority", &TransitionPartition::priority)
         .def_readwrite("transitions", &TransitionPartition::transitions)

@@ -9,7 +9,7 @@ using PLSim = storm::simulator::DiscreteTimePrismProgramSimulator<ValueType>;
 
 template<typename ValueType>
 void define_sparse_model_simulator(py::module& m, std::string const& vtSuffix) {
-    py::class_<storm::simulator::DiscreteTimeSparseModelSimulator<ValueType>> dtsmsd(m, ("_DiscreteTimeSparseModelSimulator" + vtSuffix).c_str(),
+    py::classh<storm::simulator::DiscreteTimeSparseModelSimulator<ValueType>> dtsmsd(m, ("_DiscreteTimeSparseModelSimulator" + vtSuffix).c_str(),
                                                                                      "Simulator for sparse discrete-time models in memory (for ValueType)");
     dtsmsd.def(py::init<storm::models::sparse::Model<ValueType> const&>());
     dtsmsd.def("set_seed", &storm::simulator::DiscreteTimeSparseModelSimulator<ValueType>::setSeed, py::arg("seed"));
@@ -22,7 +22,7 @@ void define_sparse_model_simulator(py::module& m, std::string const& vtSuffix) {
 
 template<typename ValueType>
 void define_prism_program_simulator(py::module& m, std::string const& vtSuffix) {
-    py::class_<storm::simulator::DiscreteTimePrismProgramSimulator<ValueType>> dtpps(m, ("_DiscreteTimePrismProgramSimulator" + vtSuffix).c_str(),
+    py::classh<storm::simulator::DiscreteTimePrismProgramSimulator<ValueType>> dtpps(m, ("_DiscreteTimePrismProgramSimulator" + vtSuffix).c_str(),
                                                                                      "Simulator for prism programs");
     dtpps.def(py::init<storm::prism::Program const&, storm::builder::BuilderOptions const&>(), py::arg("program"), py::arg("options"));
     dtpps.def("set_seed", &storm::simulator::DiscreteTimePrismProgramSimulator<ValueType>::setSeed, py::arg("seed"));

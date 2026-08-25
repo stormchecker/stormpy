@@ -8,7 +8,7 @@ template<typename Number>
 void define_interval(py::module& m) {
     using Interval = carl::Interval<Number>;
 
-    py::class_<Interval>(m, "Interval")
+    py::classh<Interval>(m, "Interval")
         .def(py::init<const Number&>())
         .def(py::init<const Number&, const Number&>())
         .def(py::init<const Number&, carl::BoundType, const Number&, carl::BoundType>())

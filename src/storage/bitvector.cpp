@@ -7,7 +7,7 @@
 void define_bitvector(py::module& m) {
     using BitVector = storm::storage::BitVector;
 
-    py::class_<BitVector>(m, "BitVector")
+    py::classh<BitVector>(m, "BitVector")
         .def(py::init<>())
         .def(py::init<BitVector>(), "other"_a)
         .def(py::init<uint_fast64_t>(), "length"_a)

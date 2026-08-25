@@ -25,7 +25,7 @@ class DftSimulator:
         # Initialize random generator
         generator = stormpy.dft.RandomGenerator.create(seed)
         # Create simulator
-        self._simulator = stormpy.dft.DFTSimulator_double(self._dft, info, generator)
+        self._simulator = stormpy.dft.DFTSimulator(self._dft, info, generator)
         # Initialize variables
         self._state = None
         self._fail_candidates = dict()
@@ -104,11 +104,11 @@ class DftSimulator:
         for f in self._state.failable():
             if f.is_due_dependency():
                 self._is_failable_dependency = True
-                fail_dependency = f.as_dependency_double(self._dft)
+                fail_dependency = f.as_dependency(self._dft)
                 fail_be = fail_dependency.dependent_events[0]
                 self._fail_candidates[fail_be.name] = f
             else:
-                fail_be = f.as_be_double(self._dft)
+                fail_be = f.as_be(self._dft)
                 self._fail_candidates[fail_be.name] = f
 
     def let_fail(self, be, dependency_successful=True):

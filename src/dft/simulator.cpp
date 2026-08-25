@@ -4,6 +4,7 @@
 #include <storm-dft/generator/DftNextStateGenerator.h>
 #include <storm-dft/simulator/DFTTraceSimulator.h>
 
+#include "src/binding_type_index.h"
 #include "src/helpers.h"
 
 template<typename ValueType>
@@ -32,9 +33,11 @@ void define_simulator(py::module& m) {
 }
 
 template<typename ValueType>
-void define_simulator_typed(py::module& m, std::string const& vt_suffix) {
+void define_simulator_typed(py::module& m) {
     // Simulator for DFTs
-    py::class_<Simulator<ValueType>, std::shared_ptr<Simulator<ValueType>>>(m, ("DFTSimulator" + vt_suffix).c_str(), "Simulator for DFT traces")
+    auto simulator = stormpy::bindings::bindTemplateClass<Simulator<ValueType>, std::shared_ptr<Simulator<ValueType>>>(
+        m, "DFTSimulator", stormpy::bindings::typeIndex<ValueType>(), "Simulator for DFT traces");
+    simulator
         .def(py::init<storm::dft::storage::DFT<ValueType> const&, DFTStateInfo const&, RandomGenerator&>(), py::keep_alive<1, 2>(), py::keep_alive<1, 3>(),
              py::keep_alive<1, 4>(), py::arg("dft"), py::arg("state_generation_info"), py::arg("generator"), "Create Simulator")
         .def("reset", &Simulator<ValueType>::resetToInitial, "Reset to initial state")
@@ -47,5 +50,5 @@ void define_simulator_typed(py::module& m, std::string const& vt_suffix) {
         .def("simulate_trace", &Simulator<ValueType>::simulateCompleteTrace, py::arg("timebound"), "Simulate complete trace for given timebound");
 }
 
-template void define_simulator_typed<double>(py::module& m, std::string const& vt_suffix);
-template void define_simulator_typed<storm::RationalFunction>(py::module& m, std::string const& vt_suffix);
+template void define_simulator_typed<double>(py::module& m);
+template void define_simulator_typed<storm::RationalFunction>(py::module& m);

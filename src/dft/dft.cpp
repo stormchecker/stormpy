@@ -9,6 +9,7 @@
 #include <storm/adapters/RationalFunctionAdapter.h>
 #include <storm/settings/SettingsManager.h>
 
+#include "src/binding_type_index.h"
 #include "src/helpers.h"
 
 template<typename ValueType>
@@ -34,9 +35,11 @@ void define_dft(py::module& m) {
 }
 
 template<typename ValueType>
-void define_dft_typed(py::module& m, std::string const& vt_suffix) {
+void define_dft_typed(py::module& m) {
     // DFT class
-    py::class_<DFT<ValueType>, std::shared_ptr<DFT<ValueType>>>(m, ("DFT" + vt_suffix).c_str(), "Dynamic Fault Tree")
+    auto dft = stormpy::bindings::bindTemplateClass<DFT<ValueType>, std::shared_ptr<DFT<ValueType>>>(m, "DFT", stormpy::bindings::typeIndex<ValueType>(),
+                                                                                                     "Dynamic Fault Tree");
+    dft.def(py::init<DFT<ValueType> const&>(), "Copy a Dynamic Fault Tree")
         .def("nr_elements", &DFT<ValueType>::nrElements, "Total number of elements")
         .def("nr_be", &DFT<ValueType>::nrBasicElements, "Number of basic elements")
         .def("nr_dynamic", &DFT<ValueType>::nrDynamicElements, "Number of dynamic elements")
@@ -74,5 +77,5 @@ void define_symmetries(py::module& m) {
         .def("__str__", &streamToString<storm::dft::storage::DftSymmetries>);
 }
 
-template void define_dft_typed<double>(py::module& m, std::string const& vt_suffix);
-template void define_dft_typed<storm::RationalFunction>(py::module& m, std::string const& vt_suffix);
+template void define_dft_typed<double>(py::module& m);
+template void define_dft_typed<storm::RationalFunction>(py::module& m);

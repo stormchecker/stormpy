@@ -7,38 +7,14 @@ from . import _pars
 from ._pars import *
 
 from stormpy import ModelType
+from stormpy._template import TemplateClass
 
 _pars._set_up()
 
 
-class ModelInstantiator:
-    """
-    Class for instantiating models.
-    """
+ModelInstantiator = TemplateClass("ModelInstantiator", _pars)
 
-    def __init__(self, model):
-        """
-        Constructor.
-        :param model: Model.
-        """
-        if model.model_type == ModelType.MDP:
-            self._instantiator = PMdpInstantiator(model)
-        elif model.model_type == ModelType.DTMC:
-            self._instantiator = PDtmcInstantiator(model)
-        elif model.model_type == ModelType.CTMC:
-            self._instantiator = PCtmcInstantiator(model)
-        elif model.model_type == ModelType.MA:
-            self._instantiator = PMaInstantiator(model)
-        else:
-            raise stormpy.exceptions.StormError("Model type {} not supported".format(model.model_type))
-
-    def instantiate(self, valuation):
-        """
-        Instantiate model with given valuation.
-        :param valuation: Valuation from parameter to value.
-        :return: Instantiated model.
-        """
-        return self._instantiator.instantiate(valuation)
+ModelInstantiationChecker = TemplateClass("ModelInstantiationChecker", _pars)
 
 
 def simplify_model(model, formula):

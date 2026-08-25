@@ -9,6 +9,21 @@ from configurations import dft
 
 @dft
 class TestDft:
+    def test_generic_dft_type(self):
+        dft = stormpy.dft.load_dft_json_file(get_example_path("dft", "and.json"))
+
+        concrete_type = stormpy.dft.DFT[float]
+        assert type(dft) is concrete_type
+        assert concrete_type is stormpy.dft._dft._DFT_Double
+
+        explicit_copy = stormpy.dft.DFT[float](dft)
+        inferred_copy = stormpy.dft.DFT(dft)
+        assert type(explicit_copy) is concrete_type
+        assert type(inferred_copy) is concrete_type
+
+        builder = stormpy.dft.ExplicitDFTModelBuilder(dft)
+        assert type(builder) is stormpy.dft.ExplicitDFTModelBuilder[float]
+
     def test_parametric_dft(self):
         from stormpy import pycarl
 
@@ -17,7 +32,7 @@ class TestDft:
         assert dft.nr_elements() == 7
         assert dft.nr_be() == 4
         assert dft.nr_dynamic() == 0
-        assert type(dft) is stormpy.dft.DFT_ratfunc
+        assert type(dft) is stormpy.dft.DFT[stormpy.RationalFunction]
         parameters = stormpy.dft.get_parameters(dft)
         param_names = [x.name for x in parameters]
         assert "x" in param_names

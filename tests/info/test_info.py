@@ -35,6 +35,6 @@ class TestInfo:
         assert isinstance(hsh, str)
         assert hsh == stormpy.info.Version.git_hash
 
-    def test_number_repressentations(self):
+    def test_number_representations(self):
         assert isinstance(stormpy.info.storm_exact_use_cln(), bool)
         assert isinstance(stormpy.info.storm_ratfunc_use_cln(), bool)

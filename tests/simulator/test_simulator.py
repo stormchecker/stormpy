@@ -72,7 +72,6 @@ class TestSparseModelSimulator:
 
         simulator.restart()
         final_outcomes = dict()
-        print(simulator.get_reward_names())
         for n in range(10):
             assert not simulator.is_done()
             while not simulator.is_done():
@@ -91,7 +90,7 @@ class TestSparseModelSimulator:
             assert 1 <= count <= 10
 
     def test_simulate_mdp(self):
-        random.seed(23)
+        rng = random.Random(23)
         path = stormpy.examples.files.prism_mdp_slipgrid
         prism_program = stormpy.parse_prism_program(path)
         model = stormpy.build_model(prism_program)
@@ -105,7 +104,7 @@ class TestSparseModelSimulator:
             for n in range(20):
                 actions = simulator.available_actions()
                 assert len(actions) <= 4
-                select_action = random.randint(0, len(actions) - 1)
+                select_action = rng.randint(0, len(actions) - 1)
                 path.append(actions[select_action])
                 state, reward, labels = simulator.step(actions[select_action])
                 assert 0 <= state <= 15
@@ -117,11 +116,11 @@ class TestSparseModelSimulator:
         assert len(paths) == 3
         for path in paths:
             assert path[0] == 0
-            assert isinstance(len(path) % 2, int)
+            assert all(isinstance(p, int) for p in path)
             assert len(path) <= 41
 
     def test_simulate_mdp_valuations(self):
-        random.seed(23)
+        rng = random.Random(23)
         path = stormpy.examples.files.prism_mdp_slipgrid
         prism_program = stormpy.parse_prism_program(path)
         options = stormpy.BuilderOptions()
@@ -141,7 +140,7 @@ class TestSparseModelSimulator:
             for n in range(20):
                 actions = simulator.available_actions()
                 assert len(actions) <= 4
-                select_action = random.randint(0, len(actions) - 1)
+                select_action = rng.randint(0, len(actions) - 1)
                 assert actions[select_action] in ["north", "east", "south", "west"]
                 path.append(actions[select_action])
                 state, reward, labels = simulator.step(actions[select_action])
@@ -156,7 +155,8 @@ class TestSparseModelSimulator:
         for path in paths:
             assert path[0]["x"] == 1
             assert path[0]["y"] == 1
-            assert isinstance(len(path) % 2, int)
+            assert all(isinstance(p["x"], stormpy.utility.JsonContainerRational) for p in path[::2])
+            assert all(p in ["north", "east", "south", "west"] for p in path[1::2])
             assert len(path) <= 41
 
 
@@ -172,7 +172,7 @@ class TestPrismSimulator:
         assert int(state["s"]) == -1
 
     def test_simulate_mdp(self):
-        random.seed(23)
+        rng = random.Random(23)
         path = stormpy.examples.files.prism_mdp_slipgrid
         prism_program = stormpy.parse_prism_program(path)
         simulator = stormpy.simulator.create_simulator(prism_program, seed=42)
@@ -185,7 +185,7 @@ class TestPrismSimulator:
             for n in range(20):
                 actions = simulator.available_actions()
                 assert len(actions) <= 4
-                select_action = random.randint(0, len(actions) - 1)
+                select_action = rng.randint(0, len(actions) - 1)
                 assert actions[select_action] < 4
                 path.append(actions[select_action])
                 state, reward, labels = simulator.step(actions[select_action])
@@ -200,5 +200,6 @@ class TestPrismSimulator:
         for path in paths:
             assert path[0]["x"] == 1
             assert path[0]["y"] == 1
-            assert isinstance(len(path) % 2, int)
+            assert all(isinstance(p["x"], stormpy.utility.JsonContainerDouble) for p in path[::2])
+            assert all(isinstance(p, int) for p in path[1::2])
             assert len(path) <= 41

@@ -1,0 +1,13 @@
+{# Prepend a binder badge to pages paired with jupytext notebooks
+   (Nefertiti renders pages through page.html, so the body block
+   must be overridden here rather than in layout.html) #}
+{%- extends "!page.html" %}
+
+{% block body %}
+{% if pagename in notebook_docs %}
+<div class="binder-badge">
+  <strong>Try online:</strong> <a href="https://mybinder.org/v2/gh/stormchecker/stormpy/master?filepath=notebooks/{{ pagename }}.ipynb"><img alt="Binder badge" src="https://mybinder.org/badge_logo.svg"></a>
+</div>
+{% endif %}
+{{ super() }}
+{% endblock body %}

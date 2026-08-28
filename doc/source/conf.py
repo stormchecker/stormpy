@@ -4,6 +4,8 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
 # Needed for version information
+import pathlib
+
 import stormpy
 
 # -- Project information -----------------------------------------------------
@@ -117,28 +119,12 @@ html_static_path = ["_static"]
 html_css_files = ["custom.css"]
 html_favicon = "_static/favicon.png"
 
+# Execute notebooks with missing cached outputs; reuse cached results when sources are unchanged
+myst_nb_execution_mode = "cache"
+myst_nb_execution_timeout = -1  # parity with make check-docs: no per-cell timeout
 
-# -- Nbsphinx options --
-# Need to set newer require.js version to fix JavaScript issues with older version
-nbsphinx_requirejs_path = "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.7/require.min.js"
 
-# Regenerate .ipynb from paired .md:myst files via jupytext
-nbsphinx_custom_formats = {
-    ".md": "jupytext.reads",
-}
-
-# Add binder badge
-nbsphinx_prolog = """
-{% set docname = env.doc2path(env.docname, base=False) %}
-
-.. raw:: html
-
-    <div class="admonition note">
-      Try online: <span><a href="https://mybinder.org/v2/gh/stormchecker/stormpy/master?filepath=notebooks/{{ docname }}"><img alt="Binder badge" src="https://mybinder.org/badge_logo.svg" style="margin-bottom: 0rem"></a></span>
-    </div>
-"""
-
-# -- Myst options --
-myst_enable_extensions = [
-    "colon_fence",
-]
+# Documentation pages that are paired jupytext notebooks (used for binder badges)
+_source_dir = pathlib.Path(__file__).parent
+notebook_docs = sorted(str(p.relative_to(_source_dir).with_suffix("")) for p in _source_dir.rglob("*.md") if "jupytext:" in p.read_text(errors="ignore")[:500])
+html_context = {"notebook_docs": notebook_docs}

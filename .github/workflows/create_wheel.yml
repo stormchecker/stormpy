@@ -255,7 +255,7 @@ jobs:
 
           # Run tests
           python3 -c "import stormpy; print('Import successful')"
-          pip install pytest nbval numpy
+          pip install pytest numpy
           pytest test_files/tests
           EOF
 
@@ -330,5 +330,5 @@ jobs:
         run: |
           source venv/bin/activate
           python3 -c "import stormpy; print('Import successful')"
-          python3 -m pip install pytest nbval numpy
+          python3 -m pip install pytest numpy
           pytest test_files/tests

@@ -1,4 +1,4 @@
-.PHONY: default format notebooks doc check-docs clean-notebooks
+.PHONY: default format notebooks doc check-doc check-format-doc clean-notebooks
 
 # No default target
 default:
@@ -16,6 +16,10 @@ notebooks:
 # Build the documentation
 doc:
 	$(MAKE) -C doc html
+
+# Check that all Python code in the documentation is formatted with black
+check-format-doc:
+	jupytext --pipe "python -m black --check --diff {}" $$(grep -rl '^jupytext:' doc --include='*.md')
 
 # Perform roundtrip check for documentation and execute all code cells
 check-doc:

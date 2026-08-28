@@ -297,7 +297,7 @@ jobs:
              storm_base: "ci-debug",
              build_type: "Debug",
              setup_args: "--config-settings=cmake.define.STORMPY_ALLOW_STORM_FETCH=OFF",
-             optional_libs: "[test,parser,plot]"
+             optional_libs: "[test,parser,plot,doc]"
           }
           - {name: "Release",
              docker_tag: "ci",
@@ -336,12 +336,11 @@ jobs:
           docker commit ci movesrwth/stormpy:${{ matrix.build_type.docker_tag }}
           docker push movesrwth/stormpy:${{ matrix.build_type.docker_tag }}
 
-      - name: Install documentation dependencies
-        if: matrix.build_type.name == 'Release'
+      - name: Check documentation notebooks
         run: |
-          docker exec ci apt-get install -qq -y pandoc
+          docker exec ci bash -c "cd /opt/stormpy; pip install -q jupytext; make check-doc"
+
       - name: Build documentation
-        if: matrix.build_type.name == 'Release'
         run: |
           docker exec ci bash -c "cd /opt/stormpy/doc; make html"
           docker exec ci rm -r /opt/stormpy/doc/build/html/_sources

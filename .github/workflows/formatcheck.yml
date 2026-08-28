@@ -27,3 +27,14 @@ jobs:
         source: './src'
         clangFormatVersion: 20
         style: file
+
+  check_docs_format:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v7
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+    - run: pip install black[jupyter] jupytext
+    - run: make check-format-doc

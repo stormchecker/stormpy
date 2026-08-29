@@ -1,3 +1,5 @@
+#include <storm/adapters/RationalFunctionForward.h>
+
 #include "src/common.h"
 #include "src/dft/analysis.h"
 #include "src/dft/dft.h"

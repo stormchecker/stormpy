@@ -5,6 +5,7 @@
 #include <storm-dft/storage/DFT.h>
 #include <storm-dft/storage/DftSymmetries.h>
 #include <storm-dft/utility/DftModularizer.h>
+#include <storm-dft/utility/RelevantEvents.h>
 #include <storm-dft/utility/SymmetryFinder.h>
 #include <storm/adapters/RationalFunctionAdapter.h>
 #include <storm/settings/SettingsManager.h>

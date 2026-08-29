@@ -1,6 +1,6 @@
 #include "io.h"
 
-#include "src/helpers.h"
+#include <storm-dft/api/io.h>
 
 // Define python bindings
 void define_input(py::module& m) {

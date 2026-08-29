@@ -3,8 +3,6 @@
 #include <storm-dft/transformations/DftInstantiator.h>
 #include <storm/adapters/RationalFunctionAdapter.h>
 
-#include "src/helpers.h"
-
 using DFTInstantiator = storm::dft::transformations::DftInstantiator<storm::RationalFunction, double>;
 
 void define_transformations(py::module& m) {

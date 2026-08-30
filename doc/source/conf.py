@@ -121,7 +121,6 @@ html_favicon = "_static/favicon.png"
 
 # Execute notebooks with missing cached outputs; reuse cached results when sources are unchanged
 myst_nb_execution_mode = "cache"
-myst_nb_execution_timeout = -1  # parity with make check-docs: no per-cell timeout
 
 
 # Documentation pages that are paired jupytext notebooks (used for binder badges)

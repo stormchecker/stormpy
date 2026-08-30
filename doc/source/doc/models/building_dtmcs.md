@@ -98,7 +98,7 @@ for label in labels:
     state_labeling.add_label(label)
 ```
 
-Labels can be asociated with states. As an example, we label the state 0 with “init”:
+Labels can be associated with states. As an example, we label the state 0 with “init”:
 
 ```{code-cell} python3
 state_labeling.add_label_to_state("init", 0)

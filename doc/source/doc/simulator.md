@@ -64,7 +64,7 @@ simulator.step()
 simulator.step()
 ```
 
-We start the simulator by restarting. We then do 3 steps. Every step returns a triple (state, reward, labels). In particular, the simulation above reflects a path s0, s2, s5, s11. Taking the transitions inbetween yields the reward as shown above. While states s2 and s5 are not labelled, state s0 is labelled with `init` and state s11 is labelled with `done` and `five`. Indeed we can check this information on the model that we used for the simulator:
+We start the simulator by restarting. We then do 3 steps. Every step returns a triple (state, reward, labels). In particular, the simulation above reflects a path s0, s2, s5, s11. Taking the transitions in-between yields the reward as shown above. While states s2 and s5 are not labelled, state s0 is labelled with `init` and state s11 is labelled with `done` and `five`. Indeed we can check this information on the model that we used for the simulator:
 
 ```{code-cell} python3
 model.labeling.get_labels_of_state(11)

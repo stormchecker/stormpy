@@ -29,7 +29,7 @@ import stormpy
 
 ## Transition Matrix
 
-Since we want to build a nondeterminstic model, we create a transition matrix with a custom row group for each state:
+Since we want to build a nondeterministic model, we create a transition matrix with a custom row group for each state:
 
 ```{code-cell} python3
 builder = stormpy.SparseMatrixBuilder(rows=0, columns=0, entries=0, force_dimensions=False, has_custom_row_grouping=True, row_groups=0)

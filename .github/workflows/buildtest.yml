@@ -338,7 +338,7 @@ jobs:
 
       - name: Check documentation notebooks
         run: |
-          docker exec ci bash -c "cd /opt/stormpy; pip install -q jupytext; make check-doc"
+          docker exec ci bash -c "cd /opt/stormpy; make check-doc"
 
       - name: Build documentation
         run: |

@@ -2,24 +2,36 @@
 
 Work in progress!
 
-:::{toctree}
-:maxdepth: 2
-:caption: Stormpy modules:
+```{eval-rst}
+.. autosummary::
+   :toctree: api/generated
+   :template: autosummary/module.rst
+   :caption: Stormpy modules:
 
-api/core
-api/info
-api/exceptions
-api/logic
-api/storage
-api/utility
+   stormpy
+   stormpy.storage
+   stormpy.logic
+   stormpy.dft
+   stormpy.gspn
+   stormpy.pars
+   stormpy.pomdp
+   stormpy.info
+   stormpy.exceptions
+   stormpy.utility
+```
 
-api/dft
-api/gspn
-api/pars
-api/pomdp
+```{eval-rst}
+.. autosummary::
+   :toctree: api/generated
+   :template: autosummary/module.rst
+   :caption: Pycarl modules:
 
-api/pycarl/core
-api/pycarl/convert
-api/pycarl/formula
-api/pycarl/parse
-:::
+   stormpy.pycarl
+   stormpy.pycarl.gmp
+   stormpy.pycarl.cln
+   stormpy.pycarl.formula
+   stormpy.pycarl.gmp.formula
+   stormpy.pycarl.cln.formula
+   stormpy.pycarl.parse
+   stormpy.pycarl.convert
+```

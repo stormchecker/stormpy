@@ -5,6 +5,8 @@
 #include <storm-dft/storage/DftSymmetries.h>
 #include <storm/adapters/RationalFunctionAdapter.h>
 
+#include "src/binding_type_index.h"
+
 template<typename ValueType>
 using ExplicitDFTModelBuilder = storm::dft::builder::ExplicitDFTModelBuilder<ValueType>;
 
@@ -51,8 +53,10 @@ void define_analysis(py::module& m) {
 }
 
 template<typename ValueType>
-void define_analysis_typed(py::module& m, std::string const& vt_suffix) {
-    py::classh<ExplicitDFTModelBuilder<ValueType>>(m, ("ExplicitDFTModelBuilder" + vt_suffix).c_str(), "Builder to generate explicit model from DFT")
+void define_analysis_typed(py::module& m) {
+    auto builder = stormpy::bindings::bindTemplateClass<ExplicitDFTModelBuilder<ValueType>, py::smart_holder>(
+        m, "ExplicitDFTModelBuilder", stormpy::bindings::typeIndex<ValueType>(), "Builder to generate explicit model from DFT");
+    builder
         .def(py::init<storm::dft::storage::DFT<ValueType> const&, storm::dft::storage::DftSymmetries const&>(), "Constructor", py::arg("dft"),
              py::arg("symmetries") = storm::dft::storage::DftSymmetries())
         .def("build", &ExplicitDFTModelBuilder<ValueType>::buildModel, "Build state space of model", py::arg("iteration"),
@@ -61,24 +65,25 @@ void define_analysis_typed(py::module& m, std::string const& vt_suffix) {
         .def("get_partial_model", &ExplicitDFTModelBuilder<ValueType>::getModelApproximation, "Get partial model", py::arg("lower_bound"),
              py::arg("expected_time"));
 
-    m.def(("_analyze_dft" + vt_suffix).c_str(), &analyzeDFT<ValueType>, "Analyze the DFT", py::arg("dft"), py::arg("properties"), py::arg("symred") = true,
+    m.def("analyze_dft", &analyzeDFT<ValueType>, "Analyze the DFT", py::arg("dft"), py::arg("properties"), py::arg("symred") = true,
           py::arg("allow_modularisation") = false, py::arg("relevant_events") = storm::dft::utility::RelevantEvents(),
           py::arg("allow_dc_for_relevant") = false);
 
-    m.def(("_build_model" + vt_suffix).c_str(), &buildModel<ValueType>, "Build state-space model (CTMC or MA) for DFT", py::arg("dft"), py::arg("symmetries"),
-          py::arg("relevant_events") = storm::dft::utility::RelevantEvents(), py::arg("allow_dc_for_relevant") = false);
+    m.def("build_model", &buildModel<ValueType>, "Build state-space model (CTMC or MA) for DFT", py::arg("dft"),
+          py::arg("symmetries") = storm::dft::storage::DftSymmetries(), py::arg("relevant_events") = storm::dft::utility::RelevantEvents(),
+          py::arg("allow_dc_for_relevant") = false);
 
-    m.def(("_transform_dft" + vt_suffix).c_str(), &storm::dft::api::applyTransformations<ValueType>, "Apply transformations on DFT", py::arg("dft"),
-          py::arg("unique_constant_be"), py::arg("binary_fdeps"), py::arg("exponential_distributions"));
+    m.def("transform_dft", &storm::dft::api::applyTransformations<ValueType>, "Apply transformations on DFT", py::arg("dft"), py::arg("unique_constant_be"),
+          py::arg("binary_fdeps"), py::arg("exponential_distributions"));
 
-    m.def(("_compute_dependency_conflicts" + vt_suffix).c_str(), &storm::dft::api::computeDependencyConflicts<ValueType>,
-          "Set conflicts between FDEPs. Is used in analysis.", py::arg("dft"), py::arg("use_smt") = false, py::arg("solver_timeout") = 0);
+    m.def("compute_dependency_conflicts", &storm::dft::api::computeDependencyConflicts<ValueType>, "Set conflicts between FDEPs. Is used in analysis.",
+          py::arg("dft"), py::arg("use_smt") = false, py::arg("solver_timeout") = 0);
 
-    m.def(("_is_well_formed" + vt_suffix).c_str(), &storm::dft::api::isWellFormed<ValueType>, "Check whether DFT is well-formed.", py::arg("dft"),
+    m.def("is_well_formed", &storm::dft::api::isWellFormed<ValueType>, "Check whether DFT is well-formed.", py::arg("dft"),
           py::arg("check_valid_for_analysis") = true);
-    m.def(("_has_potential_modeling_issues" + vt_suffix).c_str(), &storm::dft::api::hasPotentialModelingIssues<ValueType>,
-          "Check whether DFT has potential modeling issues.", py::arg("dft"));
+    m.def("has_potential_modeling_issues", &storm::dft::api::hasPotentialModelingIssues<ValueType>, "Check whether DFT has potential modeling issues.",
+          py::arg("dft"));
 }
 
-template void define_analysis_typed<double>(py::module& m, std::string const& vt_suffix);
-template void define_analysis_typed<storm::RationalFunction>(py::module& m, std::string const& vt_suffix);
+template void define_analysis_typed<double>(py::module& m);
+template void define_analysis_typed<storm::RationalFunction>(py::module& m);

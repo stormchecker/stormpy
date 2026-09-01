@@ -60,3 +60,28 @@ class TestDftExport:
         assert dft2.nr_elements() == 23
         assert dft2.nr_be() == 13
         assert dft2.nr_dynamic() == 2
+
+    def test_export_parametric_dft_json_string(self):
+        dft = stormpy.dft.load_parametric_dft_galileo_file(get_example_path("dft", "symmetry_param.dft"))
+        parameter_names = {parameter.name for parameter in stormpy.dft.get_parameters(dft)}
+        assert parameter_names == {"x", "y"}
+
+        json_string = stormpy.dft.export_dft_json_string(dft)
+        dft2 = stormpy.dft.load_parametric_dft_json_string(json_string)
+
+        assert type(dft2) is stormpy.dft.DFT[stormpy.RationalFunction]
+        assert dft2.nr_elements() == dft.nr_elements()
+        assert {parameter.name for parameter in stormpy.dft.get_parameters(dft2)} == parameter_names
+
+    def test_export_parametric_dft_json_file(self, tmpdir):
+        dft = stormpy.dft.load_parametric_dft_galileo_file(get_example_path("dft", "symmetry_param.dft"))
+        parameter_names = {parameter.name for parameter in stormpy.dft.get_parameters(dft)}
+        assert parameter_names == {"x", "y"}
+
+        export_file = os.path.join(str(tmpdir), "symmetry_param.json")
+        stormpy.dft.export_dft_json_file(dft, export_file)
+        dft2 = stormpy.dft.load_parametric_dft_json_file(export_file)
+
+        assert type(dft2) is stormpy.dft.DFT[stormpy.RationalFunction]
+        assert dft2.nr_elements() == dft.nr_elements()
+        assert {parameter.name for parameter in stormpy.dft.get_parameters(dft2)} == parameter_names

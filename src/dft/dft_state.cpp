@@ -4,6 +4,7 @@
 #include <storm-dft/storage/FailableElements.h>
 #include <storm/adapters/RationalFunctionAdapter.h>
 
+#include "src/binding_type_index.h"
 #include "src/helpers.h"
 
 template<typename ValueType>
@@ -12,10 +13,11 @@ typedef storm::dft::storage::FailableElements Failable;
 typedef storm::dft::storage::FailableElements::const_iterator FailableIter;
 
 template<typename ValueType>
-void define_dft_state(py::module& m, std::string const& vt_suffix) {
+void define_dft_state(py::module& m) {
     // DFT state
-    py::classh<DFTState<ValueType>>(m, ("DFTState" + vt_suffix).c_str(), "DFT state")
-        .def("operational", &DFTState<ValueType>::isOperational, "Is element operational", py::arg("id"))
+    auto state =
+        stormpy::bindings::bindTemplateClass<DFTState<ValueType>, py::smart_holder>(m, "DFTState", stormpy::bindings::typeIndex<ValueType>(), "DFT state");
+    state.def("operational", &DFTState<ValueType>::isOperational, "Is element operational", py::arg("id"))
         .def(
             "failed", [](DFTState<ValueType> const& state, size_t id) { return state.hasFailed(id); }, "Is element failed", py::arg("id"))
         .def(
@@ -62,11 +64,11 @@ void define_failable_elements(py::module& m) {
 
     py::classh<FailableIter>(m, "FailableElement", "Failable element")
         .def("is_due_dependency", &FailableIter::isFailureDueToDependency, "Is failure due to dependency")
-        .def("as_be_double", &FailableIter::asBE<double>, py::arg("dft"), "Get BE which fails")
-        .def("as_be_ratfunc", &FailableIter::asBE<storm::RationalFunction>, py::arg("dft"), "Get BE which fails")
-        .def("as_dependency_double", &FailableIter::asDependency<double>, py::arg("dft"), "Get dependency which is triggered")
-        .def("as_dependency_ratfunc", &FailableIter::asDependency<storm::RationalFunction>, py::arg("dft"), "Get dependency which is triggered");
+        .def("as_be", &FailableIter::asBE<double>, py::arg("dft"), "Get BE which fails")
+        .def("as_be", &FailableIter::asBE<storm::RationalFunction>, py::arg("dft"), "Get BE which fails")
+        .def("as_dependency", &FailableIter::asDependency<double>, py::arg("dft"), "Get dependency which is triggered")
+        .def("as_dependency", &FailableIter::asDependency<storm::RationalFunction>, py::arg("dft"), "Get dependency which is triggered");
 }
 
-template void define_dft_state<double>(py::module& m, std::string const& vt_suffix);
-template void define_dft_state<storm::RationalFunction>(py::module& m, std::string const& vt_suffix);
+template void define_dft_state<double>(py::module& m);
+template void define_dft_state<storm::RationalFunction>(py::module& m);

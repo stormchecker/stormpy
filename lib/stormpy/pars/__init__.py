@@ -1,3 +1,5 @@
+from collections.abc import Mapping as _Mapping
+
 from stormpy.info import _config
 
 if not _config.STORM_WITH_PARS:
@@ -7,38 +9,35 @@ from . import _pars
 from ._pars import *
 
 from stormpy import ModelType
+from stormpy._template import TemplateClass, TemplateParameter as _TemplateParameter
 
 _pars._set_up()
 
 
-class ModelInstantiator:
-    """
-    Class for instantiating models.
-    """
+def _deduce_model_and_double(_family: TemplateClass, args: tuple[object, ...], kwargs: _Mapping[str, object]) -> object:
+    if args:
+        model = args[0]
+    else:
+        try:
+            model = kwargs["model"]
+        except KeyError:
+            raise TypeError("Cannot deduce template parameters without the model argument") from None
+    return model.model_type, float
 
-    def __init__(self, model):
-        """
-        Constructor.
-        :param model: Model.
-        """
-        if model.model_type == ModelType.MDP:
-            self._instantiator = PMdpInstantiator(model)
-        elif model.model_type == ModelType.DTMC:
-            self._instantiator = PDtmcInstantiator(model)
-        elif model.model_type == ModelType.CTMC:
-            self._instantiator = PCtmcInstantiator(model)
-        elif model.model_type == ModelType.MA:
-            self._instantiator = PMaInstantiator(model)
-        else:
-            raise stormpy.exceptions.StormError("Model type {} not supported".format(model.model_type))
 
-    def instantiate(self, valuation):
-        """
-        Instantiate model with given valuation.
-        :param valuation: Valuation from parameter to value.
-        :return: Instantiated model.
-        """
-        return self._instantiator.instantiate(valuation)
+ModelInstantiator = TemplateClass(
+    "stormpy.pars.ModelInstantiator",
+    _pars,
+    parameters=(_TemplateParameter("ModelType", kind="value"), "ValueType"),
+    deduce=_deduce_model_and_double,
+)
+
+ModelInstantiationChecker = TemplateClass(
+    "stormpy.pars.ModelInstantiationChecker",
+    _pars,
+    parameters=(_TemplateParameter("ModelType", kind="value"), "ResultType"),
+    deduce=_deduce_model_and_double,
+)
 
 
 def simplify_model(model, formula):

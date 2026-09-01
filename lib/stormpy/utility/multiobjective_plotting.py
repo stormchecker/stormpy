@@ -35,14 +35,14 @@ def _prepare_points_for_convex_pareto_plotting(points, lower_corner, upper_corne
     """
 
     def direction_as_operation(dir: stormpy.OptimizationDirection):
-        return max if dir == stormpy.OptimizationDirection.Maximize else min
+        return max if dir == stormpy.OptimizationDirection.MAXIMIZE else min
 
     if multi_obj_formula.nr_subformulas != 2:
         raise RuntimeError("Plotting is only supported for two dimensions")
     directions = [f.optimality_type for f in multi_obj_formula.subformulas]
 
-    origin_x = min(lower_corner[0], upper_corner[0]) if directions[0] == stormpy.OptimizationDirection.Maximize else max(lower_corner[0], upper_corner[0])
-    origin_y = min(lower_corner[1], upper_corner[1]) if directions[1] == stormpy.OptimizationDirection.Maximize else max(lower_corner[1], upper_corner[1])
+    origin_x = min(lower_corner[0], upper_corner[0]) if directions[0] == stormpy.OptimizationDirection.MAXIMIZE else max(lower_corner[0], upper_corner[0])
+    origin_y = min(lower_corner[1], upper_corner[1]) if directions[1] == stormpy.OptimizationDirection.MAXIMIZE else max(lower_corner[1], upper_corner[1])
     origin = np.array([[origin_x, origin_y]])
     x_cut_x = direction_as_operation(directions[0])([p[0] for p in points])
     x_cut = np.array([[x_cut_x, origin_y]])

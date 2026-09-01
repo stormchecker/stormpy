@@ -110,7 +110,7 @@ def initial_states(model):
 
 @pytest.fixture
 def matrix_format():
-    return MatrixFormat.Straight
+    return MatrixFormat.STRAIGHT
 
 
 class TestShortestPaths:

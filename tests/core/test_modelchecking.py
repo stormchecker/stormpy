@@ -76,7 +76,7 @@ class TestModelChecking:
         assert initial_state == 0
 
         env = stormpy.Environment()
-        env.solver_environment.minmax_solver_environment.method = stormpy.MinMaxMethod.value_iteration
+        env.solver_environment.minmax_solver_environment.method = stormpy.MinMaxMethod.VALUE_ITERATION
 
         task = stormpy.CheckTask(formulas[0].raw_formula, only_initial_states=True)
         task.set_produce_schedulers()
@@ -96,7 +96,7 @@ class TestModelChecking:
         assert initial_state == 0
 
         env = stormpy.Environment()
-        env.solver_environment.minmax_solver_environment.method = stormpy.MinMaxMethod.value_iteration
+        env.solver_environment.minmax_solver_environment.method = stormpy.MinMaxMethod.VALUE_ITERATION
 
         task = stormpy.CheckTask(formulas[0].raw_formula, only_initial_states=True)
         task.set_produce_schedulers()
@@ -128,7 +128,7 @@ class TestModelChecking:
         assert initial_state == 0
 
         env = stormpy.Environment()
-        env.solver_environment.minmax_solver_environment.method = stormpy.MinMaxMethod.value_iteration
+        env.solver_environment.minmax_solver_environment.method = stormpy.MinMaxMethod.VALUE_ITERATION
 
         task = stormpy.ExactCheckTask(formulas[0].raw_formula, only_initial_states=True)
         task.set_produce_schedulers()
@@ -148,7 +148,7 @@ class TestModelChecking:
         assert initial_state == 0
 
         env = stormpy.Environment()
-        env.solver_environment.minmax_solver_environment.method = stormpy.MinMaxMethod.value_iteration
+        env.solver_environment.minmax_solver_environment.method = stormpy.MinMaxMethod.VALUE_ITERATION
 
         task = stormpy.ExactCheckTask(formulas[0].raw_formula, only_initial_states=True)
         task.set_produce_schedulers()

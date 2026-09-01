@@ -28,49 +28,49 @@ class TestUmbOptions:
         opts = stormpy.UmbImportOptions()
         assert opts.build_choice_labeling is True
         assert opts.build_state_valuations is True
-        assert opts.value_type == stormpy.UmbImportValueType.Default
+        assert opts.value_type == stormpy.UmbImportValueType.DEFAULT
 
     def test_export_options_defaults(self):
         opts = stormpy.UmbExportOptions()
         assert opts.allow_choice_labeling_as_actions is True
         assert opts.allow_choice_origins_as_actions is False
         assert opts.canonicize_pomdp is True
-        assert opts.compression == stormpy.CompressionMode.Default
-        assert opts.value_type == stormpy.UmbExportValueType.Default
+        assert opts.compression == stormpy.CompressionMode.DEFAULT
+        assert opts.value_type == stormpy.UmbExportValueType.DEFAULT
 
     def test_import_options_set(self):
         opts = stormpy.UmbImportOptions()
-        opts.value_type = stormpy.UmbImportValueType.Double
+        opts.value_type = stormpy.UmbImportValueType.DOUBLE
         opts.build_choice_labeling = False
         opts.build_state_valuations = False
-        assert opts.value_type == stormpy.UmbImportValueType.Double
+        assert opts.value_type == stormpy.UmbImportValueType.DOUBLE
         assert opts.build_choice_labeling is False
         assert opts.build_state_valuations is False
 
     def test_export_options_set(self):
         opts = stormpy.UmbExportOptions()
-        opts.compression = stormpy.CompressionMode.Gzip
-        opts.value_type = stormpy.UmbExportValueType.Rational
-        assert opts.compression == stormpy.CompressionMode.Gzip
-        assert opts.value_type == stormpy.UmbExportValueType.Rational
+        opts.compression = stormpy.CompressionMode.GZIP
+        opts.value_type = stormpy.UmbExportValueType.RATIONAL
+        assert opts.compression == stormpy.CompressionMode.GZIP
+        assert opts.value_type == stormpy.UmbExportValueType.RATIONAL
 
     def test_compression_mode_enum(self):
-        assert stormpy.CompressionMode.Default
-        assert stormpy.CompressionMode.Gzip
-        assert stormpy.CompressionMode.Xz
-        assert stormpy.CompressionMode.NoCompression
+        assert stormpy.CompressionMode.DEFAULT
+        assert stormpy.CompressionMode.GZIP
+        assert stormpy.CompressionMode.XZ
+        assert stormpy.CompressionMode.NO_COMPRESSION
 
     def test_import_value_type_enum(self):
-        assert stormpy.UmbImportValueType.Default
-        assert stormpy.UmbImportValueType.Rational
-        assert stormpy.UmbImportValueType.Double
+        assert stormpy.UmbImportValueType.DEFAULT
+        assert stormpy.UmbImportValueType.RATIONAL
+        assert stormpy.UmbImportValueType.DOUBLE
 
     def test_export_value_type_enum(self):
-        assert stormpy.UmbExportValueType.Default
-        assert stormpy.UmbExportValueType.Rational
-        assert stormpy.UmbExportValueType.Double
-        assert stormpy.UmbExportValueType.DoubleInterval
-        assert stormpy.UmbExportValueType.RationalInterval
+        assert stormpy.UmbExportValueType.DEFAULT
+        assert stormpy.UmbExportValueType.RATIONAL
+        assert stormpy.UmbExportValueType.DOUBLE
+        assert stormpy.UmbExportValueType.DOUBLE_INTERVAL
+        assert stormpy.UmbExportValueType.RATIONAL_INTERVAL
 
 
 class TestUmbModel:
@@ -117,7 +117,7 @@ class TestUmbConvenienceFunctions:
 
     def test_export_with_gzip(self, dtmc, tmp_umb):
         opts = stormpy.UmbExportOptions()
-        opts.compression = stormpy.CompressionMode.Gzip
+        opts.compression = stormpy.CompressionMode.GZIP
         stormpy.export_to_umb(dtmc, tmp_umb, opts)
         model2 = stormpy.build_from_umb(tmp_umb)
         assert type(dtmc) == type(model2)
@@ -144,7 +144,7 @@ class TestUmbRoundTrip:
 
     def test_dtmc_gzip_round_trip(self, dtmc, tmp_umb):
         export_opts = stormpy.UmbExportOptions()
-        export_opts.compression = stormpy.CompressionMode.Gzip
+        export_opts.compression = stormpy.CompressionMode.GZIP
         umb = stormpy.sparse_model_to_umb(dtmc, export_opts)
         stormpy.umb_to_archive(umb, tmp_umb, export_opts)
         assert os.path.getsize(tmp_umb) > 0
@@ -154,7 +154,7 @@ class TestUmbRoundTrip:
 
     def test_dtmc_xz_round_trip(self, dtmc, tmp_umb):
         export_opts = stormpy.UmbExportOptions()
-        export_opts.compression = stormpy.CompressionMode.Xz
+        export_opts.compression = stormpy.CompressionMode.XZ
         umb = stormpy.sparse_model_to_umb(dtmc, export_opts)
         stormpy.umb_to_archive(umb, tmp_umb, export_opts)
         assert os.path.getsize(tmp_umb) > 0

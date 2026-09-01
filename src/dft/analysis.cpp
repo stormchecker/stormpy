@@ -38,7 +38,7 @@ void define_analysis(py::module& m) {
     py::native_enum<storm::dft::builder::ApproximationHeuristic>(m, "ApproximationHeuristic", "enum.Enum", "Heuristic for selecting states to explore next")
         .value("DEPTH", storm::dft::builder::ApproximationHeuristic::DEPTH)
         .value("PROBABILITY", storm::dft::builder::ApproximationHeuristic::PROBABILITY)
-        .value("BOUNDDIFFERENCE", storm::dft::builder::ApproximationHeuristic::BOUNDDIFFERENCE)
+        .value("BOUND_DIFFERENCE", storm::dft::builder::ApproximationHeuristic::BOUNDDIFFERENCE)
         .finalize();
 
     // RelevantEvents

@@ -249,8 +249,8 @@ void define_build(py::module& m) {
 
 void define_optimality_type(py::module& m) {
     py::native_enum<storm::solver::OptimizationDirection>(m, "OptimizationDirection", "enum.Enum")
-        .value("Minimize", storm::solver::OptimizationDirection::Minimize)
-        .value("Maximize", storm::solver::OptimizationDirection::Maximize)
+        .value("MINIMIZE", storm::solver::OptimizationDirection::Minimize)
+        .value("MAXIMIZE", storm::solver::OptimizationDirection::Maximize)
         .finalize();
 
     py::native_enum<storm::solver::UncertaintyResolutionMode>(m, "UncertaintyResolutionMode", "enum.Enum")

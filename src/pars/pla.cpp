@@ -98,13 +98,13 @@ std::set<storm::Polynomial> gatherDerivatives(storm::models::sparse::Model<storm
 void define_pla(py::module& m) {
     // RegionResult
     py::native_enum<storm::modelchecker::RegionResult>(m, "RegionResult", "enum.Enum", "Types of region check results")
-        .value("EXISTSSAT", storm::modelchecker::RegionResult::ExistsSat)
-        .value("EXISTSVIOLATED", storm::modelchecker::RegionResult::ExistsViolated)
-        .value("EXISTSBOTH", storm::modelchecker::RegionResult::ExistsBoth)
-        .value("CENTERSAT", storm::modelchecker::RegionResult::CenterSat)
-        .value("CENTERVIOLATED", storm::modelchecker::RegionResult::CenterViolated)
-        .value("ALLSAT", storm::modelchecker::RegionResult::AllSat)
-        .value("ALLVIOLATED", storm::modelchecker::RegionResult::AllViolated)
+        .value("EXISTS_SAT", storm::modelchecker::RegionResult::ExistsSat)
+        .value("EXISTS_VIOLATED", storm::modelchecker::RegionResult::ExistsViolated)
+        .value("EXISTS_BOTH", storm::modelchecker::RegionResult::ExistsBoth)
+        .value("CENTER_SAT", storm::modelchecker::RegionResult::CenterSat)
+        .value("CENTER_VIOLATED", storm::modelchecker::RegionResult::CenterViolated)
+        .value("ALL_SAT", storm::modelchecker::RegionResult::AllSat)
+        .value("ALL_VIOLATED", storm::modelchecker::RegionResult::AllViolated)
         .value("UNKNOWN", storm::modelchecker::RegionResult::Unknown)
         .finalize();
     m.attr("RegionResult").attr("friendly_name") =
@@ -113,8 +113,8 @@ void define_pla(py::module& m) {
     // RegionResultHypothesis
     py::native_enum<storm::modelchecker::RegionResultHypothesis>(m, "RegionResultHypothesis", "enum.Enum", "Hypothesis for the result of a parameter region")
         .value("UNKNOWN", storm::modelchecker::RegionResultHypothesis::Unknown)
-        .value("ALLSAT", storm::modelchecker::RegionResultHypothesis::AllSat)
-        .value("ALLVIOLATED", storm::modelchecker::RegionResultHypothesis::AllViolated)
+        .value("ALL_SAT", storm::modelchecker::RegionResultHypothesis::AllSat)
+        .value("ALL_VIOLATED", storm::modelchecker::RegionResultHypothesis::AllViolated)
         .finalize();
     m.attr("RegionResultHypothesis").attr("friendly_name") = py::cpp_function(&streamToString<storm::modelchecker::RegionResultHypothesis>,
                                                                               py::name("friendly_name"), py::is_method(m.attr("RegionResultHypothesis")));

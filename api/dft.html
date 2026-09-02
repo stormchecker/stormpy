@@ -1,0 +1,1633 @@
+
+<!DOCTYPE html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    
+    <meta name="docsearch:name" content="stormpy" />
+    <meta name="docsearch:package_type" content="" />
+    <meta name="docsearch:release" content="1.14.0" />
+    <meta name="docsearch:version" content="" />
+    
+      <meta name="theme-color" content="#0D6EFD" />
+    
+    
+      <title>Stormpy.dft &mdash; stormpy 1.14.0 documentation</title>
+    
+    <link rel="canonical" href="api/dft" />
+      <link rel="icon" href="../_static/favicon.png" />
+          <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8e8a900e" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/fonts/nunito/stylesheet.css?v=abf98f06" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/fonts/ubuntu-sans-mono/stylesheet.css?v=8616a587" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/pygments-dark.css?v=f21207c5" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/pygments-light.css?v=6c104457" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/bootstrap-icons.min.css?v=44730005" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/sphinx-nefertiti-blue.min.css?v=cbfc91e2" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=6c103ecc" /><!-- add (1) -->
+        <link rel="index" title="Index" href="../genindex.html" />
+        <link rel="search" title="Search" href="../search.html" />
+        <link rel="top" title="stormpy 1.14.0 documentation" href="#" />
+        <link rel="up" title="Stormpy API Reference" href="../api.html" />
+        <link rel="next" title="Stormpy.gspn" href="gspn.html" />
+        <link rel="prev" title="Stormpy.utility" href="utility.html" />
+    <style>
+      :root {
+        --nftt-body-font-family: "Nunito", var(--nftt-font-sans-serif) !important;
+        --nftt-font-monospace: "Ubuntu Sans Mono", var(--nftt-font-family-monospace) !important;
+        --nftt-project-name-font: var(--nftt-body-font-family);
+        --nftt-documentation-font: var(--nftt-body-font-family);
+        --nftt-doc-headers-font: "Georgia", var(--nftt-documentation-font);}
+    </style>
+  </head>
+  <body>
+    <div id="back-to-top-container" class="position-fixed start-50 translate-middle-x">
+      <button id="back-to-top" type="button" class="d-none btn btn-neutral btn-sm shadow px-4" data-bs-toggle="button">Back to top</button>
+    </div>
+    <header id="snftt-nav-bar" class="navbar navbar-expand-xl navbar-dark nftt-navbar flex-column fixed-top">
+      <div class="skip-links container-fluid visually-hidden-focusable overflow-hidden justify-content-start flex-grow-1">
+        <div class="border-bottom mb-2 pb-2 w-100">
+          <a class="d-none d-md-inline-flex p-2 m-1" href="#sidebar-filter">Skip to index filter</a>
+          <a class="d-inline-flex p-2 m-1" href="#content">Skip to main content</a>
+        </div>
+      </div>
+      <nav class="container-xxl nftt-gutter flex-nowrap" aria-label="Main navigation">
+        <div class="nftt-navbar-toggler">
+          <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle documentation navigation">
+            <i class="bi bi-list"></i>
+          </button>
+        </div>
+          <a
+            href="../index.html"
+            class="navbar-brand"
+          >
+            <img src="../_static/storm_logo.png" width="36" height="36" alt="Storm logo"
+              class="project-logo"
+            />
+            <span class="brand-text">stormpy</span><span class="brand-short-text">stormpy</span>
+          </a>
+        
+        
+          <ul class="nftt-header-links-large navbar-nav">
+          
+            
+            
+            
+            
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="../getting_started.html" data-snftt-hl-id="1"  >Getting Started</a>
+    </li>
+  
+
+  
+    <li class="nav-item dropdown">
+      <a class="snftt-hl nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" href="#" data-snftt-hl-id="2" data-snftt-hl-regexps="doc/*">Documentation</a>
+      <ul class="dropdown-menu">
+        
+          
+          
+          
+          
+  
+    <li >
+      <a class="snftt-hl dropdown-item" href="../advanced_topics.html" data-snftt-hl-id="3"  >Advanced Examples</a>
+    </li>
+  
+
+  
+    <li><hr class="dropdown-divider"></li>
+  
+
+  
+    <li >
+      <a class="snftt-hl dropdown-item" href="../using_pycarl.html" data-snftt-hl-id="4"  >Getting Started with Pycarl</a>
+    </li>
+  
+
+        
+      </ul>
+    </li>
+  
+
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="../api.html" data-snftt-hl-id="5"  data-snftt-hl-id="" data-snftt-hl-regexps="api/*">API</a>
+    </li>
+  
+
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="https://www.stormchecker.org/" data-snftt-hl-id="6"  >Storm</a>
+    </li>
+  
+
+          
+          </ul>
+        
+        <div class="d-flex d-xl-none">
+          <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#nfttSearch" aria-controls="nfttSearch" aria-label="Search">
+            <i class="bi bi-search"></i>
+          </button>
+          <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#nfttNavbar" aria-controls="nfttNavbar" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+        </div>
+        
+<div class="offcanvas-xl offcanvas-end flex-grow-1" tabindex="-1" id="nfttSearch" aria-labelledby="nfttSearchOffcanvasLabel" data-bs-scroll="true">
+  <div class="offcanvas-header px-4 pb-0">
+    <h5 class="offcanvas-title fw-bold" id="nfttSearchOffcanvasLabel">Search the documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#nfttSearch"></button>
+  </div>
+  <div class="offcanvas-body p-4 pt-0 p-xl-0 ps-xl-4">
+    <hr class="d-xl-none text-white-50">
+    <ul class="navbar-nav flex-row align-items-center flex-wrap ms-md-auto">
+      <li class="nav-item col-12 col-xl-auto">
+        <form id="nftt-search-form" action="../search.html" method="get">
+          <div class="input-group">
+            <input type="text" name="q" class="form-control search-input" placeholder="Search" aria-label="Search" aria-describedby="button-search">
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <button class="btn btn-primary" type="submit" id="button-search" aria-label="Search"><i class="bi bi-search"></i></button>
+          </div>
+        </form>
+      </li>
+    </ul>
+  </div>
+</div>
+
+        <div class="offcanvas-xl offcanvas-end" tabindex="-1" id="nfttNavbar" aria-labelledby="nfttNavbarOffcanvasLabel" data-bs-scroll="true">
+          <div class="offcanvas-header px-4 pb-0">
+            <div class="offcanvas-title navbar-brand" id="nfttNavbarOffcanvasLabel"><span class="brand-short-text">stormpy</span></div>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#nfttNavbar"></button>
+          </div>
+          <div class="offcanvas-body p-4 pt-0 p-xl-0 px-xl-3">
+            <hr class="d-xl-none text-white-50">
+            <ul class="navbar-nav flex-row align-items-center flex-wrap ms-lg-auto">
+              
+                <div class="nftt-header-links-small">
+                  
+                    
+                    
+                    
+                    <div class="d-inline-block">
+                      
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="../getting_started.html" data-snftt-hl-id="1"  >Getting Started</a>
+    </li>
+  
+
+  
+    <li class="nav-item dropdown">
+      <a class="snftt-hl nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" href="#" data-snftt-hl-id="2" data-snftt-hl-regexps="doc/*">Documentation</a>
+      <ul class="dropdown-menu">
+        
+          
+          
+          
+          
+  
+    <li >
+      <a class="snftt-hl dropdown-item" href="../advanced_topics.html" data-snftt-hl-id="3"  >Advanced Examples</a>
+    </li>
+  
+
+  
+    <li><hr class="dropdown-divider"></li>
+  
+
+  
+    <li >
+      <a class="snftt-hl dropdown-item" href="../using_pycarl.html" data-snftt-hl-id="4"  >Getting Started with Pycarl</a>
+    </li>
+  
+
+        
+      </ul>
+    </li>
+  
+
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="../api.html" data-snftt-hl-id="5"  data-snftt-hl-id="" data-snftt-hl-regexps="api/*">API</a>
+    </li>
+  
+
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="https://www.stormchecker.org/" data-snftt-hl-id="6"  >Storm</a>
+    </li>
+  
+
+                    </div>
+                  
+                  <li class="nav-item col-12 col-xl-auto h-100" aria-hidden="true">
+                    <div class="vr d-none d-xl-flex h-100 mx-xl-2 text-white-50"></div>
+                    <hr class="d-xl-none text-white-50">
+                  </li>
+                </div>
+              
+              
+              <li class="nav-item col-12 col-xl-auto">
+                <a class="nav-link py-2 py-xl-0 px-0 px-xl-2" href="https://github.com/stormchecker/stormpy" target="_blank" rel="noopener">
+                  <div class="d-flex align-items-center">
+                    <div class="me-2">
+                      <i class="bi bi-git size-24"></i>
+                    </div>
+                    <div class="repo d-flex flex-column align-items-center" data-snftt-repo-url="https://github.com/stormchecker/stormpy">
+                      stormpy
+                      <div class="d-flex justify-content-center" data-snftt-repo-metrics>
+                        <span class="pe-2 d-flex justify-content-center align-items-center">
+                          <i class="bi bi-tag size-14"></i>
+                          <span class="repo-metric" data-snftt-repo-tag></span>
+                        </span>
+                        <span class="pe-2 d-flex justify-content-center align-items-center">
+                          <i class="bi bi-star size-14"></i>
+                          <span class="repo-metric" data-snftt-repo-stars></span>
+                        </span>
+                        <span class="d-flex justify-content-center align-items-center">
+                          <i class="bi bi-diagram-2 size-14"></i>
+                          <span class="repo-metric" data-snftt-repo-forks></span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class="nav-item col-12 col-xl-auto h-100" aria-hidden="true">
+                <div class="vr d-none d-xl-flex h-100 mx-xl-2 text-white-50"></div>
+                <hr class="d-xl-none text-white-50">
+              </li>
+              
+              
+              
+              
+              <!-- lightdark-dropdown.html -->
+<li class="nav-item dropdown">
+  <a class="nav-link d-flex py-2 px-0 px-xl-2 dropdown-toggle align-items-center" id="snftt-luz" href="#" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" aria-label="Change appearance">
+    <i class="bi bi-circle-half" data-snftt-luz-icon-active></i>
+    <span id="snftt-luz-text" class="d-xl-none ms-2">Change appearance</span>
+  </a>
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="snftt-luz-text">
+    <li>
+      <h6 class="dropdown-header">Change appearance</h6>
+    </li>
+    <li>
+      <a class="dropdown-item d-flex align-items-center" data-snftt-luz="light" href="#" aria-pressed="false">
+        <span>
+          <i class="bi bi-sun" data-snftt-luz-icon="light"></i>
+        </span>
+        <span class="ms-3">Light</span>
+        <i class="bi bi-check ms-auto"></i>
+      </a>
+    </li>
+    <li>
+      <a class="dropdown-item d-flex align-items-center" data-snftt-luz="dark" href="#" aria-pressed="false">
+        <span>
+          <i class="bi bi-moon-stars" data-snftt-luz-icon="dark"></i>
+        </span>
+        <span class="ms-3">Dark</span>
+        <i class="bi bi-check ms-auto"></i>
+      </a>
+    </li>
+    <li>
+      <a class="dropdown-item current d-flex align-items-center" data-snftt-luz="default" href="#" aria-pressed="false">
+        <span>
+          <i class="bi bi-circle-half" data-snftt-luz-icon="default"></i>
+        </span>
+        <span class="ms-3">Automatic</span>
+        <i class="bi bi-check ms-auto"></i>
+      </a>
+    </li>
+  </ul>
+</li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      
+    </header>
+
+    <div class="container-fluid">
+      <div class="nftt-gutter nftt-page">
+        <aside class="nftt-sidebar ">
+          <div class="nftt-sidebar-content">
+            
+            <div class="title d-none d-xl-none">
+              <i class="bi bi-book"></i>&nbsp;&nbsp;<span>Index</span>
+            </div>
+            <div id="sidebar" tabindex="-1" class="offcanvas-xl offcanvas-start" aria-labelledby="nfttSidebarOffcanvasLabel">
+                <!-- sidebartemplate: "globaltoc.html" --><div class="offcanvas-header border-bottom">
+  <h5 class="offcanvas-title fw-bold" id="nfttSidebarOffcanvasLabel">
+    Index
+  </h5>
+  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#sidebar"></button>
+</div>
+
+<div class="offcanvas-body">
+  <nav class="toc" aria-label="Main menu">
+    <div class="mb-3 p-1 pb-4 border-bottom">
+      <input id="sidebar-filter" type="text" name="filter" class="form-control form-control-sm" placeholder="index filter" aria-label="index filter">
+    </div>
+    <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_topics.html">Advanced Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../doc/analysis.html">Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/building_models.html">Building Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/models/building_dtmcs.html">Discrete-time Markov chains (DTMCs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/models/building_mdps.html">Markov decision processes (MDPs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/models/building_ctmcs.html">Continuous-time Markov chains (CTMCs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/models/building_mas.html">Markov automata (MAs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/engines.html">Engines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/exploration.html">Exploring Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/simulator.html">Working with Simulators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/reward_models.html">Reward Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/schedulers.html">Working with Schedulers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/shortest_paths.html">Working with Shortest Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/parametric_models.html">Parametric Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/dfts.html">Dynamic Fault Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/gspns.html">Generalized Stochastic Petri Nets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/info.html">Storm(py) Information</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../using_pycarl.html">Getting Started with Pycarl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development.html">Developer information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributors.html">Contributors</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">Stormpy API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="core.html">Stormpy.core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="info.html">Stormpy.info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html">Stormpy.exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logic.html">Stormpy.logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="storage.html">Stormpy.storage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">Stormpy.utility</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Stormpy.dft</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gspn.html">Stormpy.gspn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pars.html">Stormpy.pars</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp.html">Stormpy.pomdp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycarl/core.html">Pycarl core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycarl/convert.html">Pycarl convert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycarl/formula.html">Pycarl formula</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycarl/parse.html">Pycarl parse</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav>
+  <template data-toggle-item-template>
+    <button class="btn btn-sm btn-link toctree-expand" type="button">
+      <i class="bi bi-caret-right"></i>
+      <span class="visually-hidden">Toggle menu contents</span>
+    </button>
+  </template>
+</div>
+            </div>
+            
+          </div>
+        </aside>
+        <article id="content" class="nftt-content" role="main">
+          <div><div class="d-flex flex-row justify-content-between">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="../index.html">Start</a></li>
+        <li class="breadcrumb-item"><a href="../api.html">Stormpy API Reference</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Stormpy.dft</li>
+    </ol>
+  </nav>
+  
+    <div class="fs085">
+        <a href="../_sources/api/dft.rst.txt"  rel="nofollow" aria-label="Show source of this document"><i class="bi bi-file-earmark-code"></i></a>
+    </div>
+  
+</div>
+            
+
+
+    <section id="module-stormpy.dft">
+<span id="stormpy-dft"></span><h1>Stormpy.dft<a class="headerlink" href="#module-stormpy.dft" title="Link to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.dft.ApproximationHeuristic">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ApproximationHeuristic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.dft.ApproximationHeuristic" title="Link to this definition">¶</a></dt>
+<dd><p>Heuristic for selecting states to explore next</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.dft.ApproximationHeuristic.BOUNDDIFFERENCE">
+<span class="sig-name descname"><span class="pre">BOUNDDIFFERENCE</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></span><a class="headerlink" href="#stormpy.dft.ApproximationHeuristic.BOUNDDIFFERENCE" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.dft.ApproximationHeuristic.DEPTH">
+<span class="sig-name descname"><span class="pre">DEPTH</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#stormpy.dft.ApproximationHeuristic.DEPTH" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.dft.ApproximationHeuristic.PROBABILITY">
+<span class="sig-name descname"><span class="pre">PROBABILITY</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></span><a class="headerlink" href="#stormpy.dft.ApproximationHeuristic.PROBABILITY" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.dft.DFTBE_double">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">DFTBE_double</span></span><a class="headerlink" href="#stormpy.dft.DFTBE_double" title="Link to this definition">¶</a></dt>
+<dd><p>Basic Event</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.dft.DFTBE_ratfunc">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">DFTBE_ratfunc</span></span><a class="headerlink" href="#stormpy.dft.DFTBE_ratfunc" title="Link to this definition">¶</a></dt>
+<dd><p>Basic Event</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.dft.DFTDependency_double">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">DFTDependency_double</span></span><a class="headerlink" href="#stormpy.dft.DFTDependency_double" title="Link to this definition">¶</a></dt>
+<dd><p>Dependency</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.dft.DFTDependency_double.dependent_events">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">dependent_events</span></span><a class="headerlink" href="#stormpy.dft.DFTDependency_double.dependent_events" title="Link to this definition">¶</a></dt>
+<dd><p>Dependent events</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.dft.DFTDependency_double.trigger">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">trigger</span></span><a class="headerlink" href="#stormpy.dft.DFTDependency_double.trigger" title="Link to this definition">¶</a></dt>
+<dd><p>Trigger event</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.dft.DFTDependency_ratfunc">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">DFTDependency_ratfunc</span></span><a class="headerlink" href="#stormpy.dft.DFTDependency_ratfunc" title="Link to this definition">¶</a></dt>
+<dd><p>Dependency</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.dft.DFTDependency_ratfunc.dependent_events">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">dependent_events</span></span><a class="headerlink" href="#stormpy.dft.DFTDependency_ratfunc.dependent_events" title="Link to this definition">¶</a></dt>
+<dd><p>Dependent events</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.dft.DFTDependency_ratfunc.trigger">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">trigger</span></span><a class="headerlink" href="#stormpy.dft.DFTDependency_ratfunc.trigger" title="Link to this definition">¶</a></dt>
+<dd><p>Trigger event</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.dft.DFTElementType">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">DFTElementType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.dft.DFTElementType" title="Link to this definition">¶</a></dt>
+<dd><dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.dft.DFTElementType.AND">
+<span class="sig-name descname"><span class="pre">AND</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></span><a class="headerlink" href="#stormpy.dft.DFTElementType.AND" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.dft.DFTElementType.BE">
+<span class="sig-name descname"><span class="pre">BE</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#stormpy.dft.DFTElementType.BE" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.dft.DFTElementType.MUTEX">
+<span class="sig-name descname"><span class="pre">MUTEX</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">9</span></span><a class="headerlink" href="#stormpy.dft.DFTElementType.MUTEX" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.dft.DFTElementType.OR">
+<span class="sig-name descname"><span class="pre">OR</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></span><a class="headerlink" href="#stormpy.dft.DFTElementType.OR" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.dft.DFTElementType.PAND">
+<span class="sig-name descname"><span class="pre">PAND</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></span><a class="headerlink" href="#stormpy.dft.DFTElementType.PAND" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.dft.DFTElementType.PDEP">
+<span class="sig-name descname"><span class="pre">PDEP</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">7</span></span><a class="headerlink" href="#stormpy.dft.DFTElementType.PDEP" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.dft.DFTElementType.POR">
+<span class="sig-name descname"><span class="pre">POR</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></span><a class="headerlink" href="#stormpy.dft.DFTElementType.POR" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.dft.DFTElementType.SEQ">
+<span class="sig-name descname"><span class="pre">SEQ</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">8</span></span><a class="headerlink" href="#stormpy.dft.DFTElementType.SEQ" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.dft.DFTElementType.SPARE">
+<span class="sig-name descname"><span class="pre">SPARE</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6</span></span><a class="headerlink" href="#stormpy.dft.DFTElementType.SPARE" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.dft.DFTElementType.VOT">
+<span class="sig-name descname"><span class="pre">VOT</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></span><a class="headerlink" href="#stormpy.dft.DFTElementType.VOT" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFTElementType.friendly_name">
+<span class="sig-name descname"><span class="pre">friendly_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTElementType" title="stormpy.dft._dft.DFTElementType"><span class="pre">stormpy.dft._dft.DFTElementType</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#stormpy.dft.DFTElementType.friendly_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.dft.DFTElement_double">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">DFTElement_double</span></span><a class="headerlink" href="#stormpy.dft.DFTElement_double" title="Link to this definition">¶</a></dt>
+<dd><p>DFT element</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.dft.DFTElement_double.id">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#stormpy.dft.DFTElement_double.id" title="Link to this definition">¶</a></dt>
+<dd><p>Id</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.dft.DFTElement_double.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#stormpy.dft.DFTElement_double.name" title="Link to this definition">¶</a></dt>
+<dd><p>Name</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.dft.DFTElement_double.type">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#stormpy.dft.DFTElement_double.type" title="Link to this definition">¶</a></dt>
+<dd><p>Type</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.dft.DFTElement_ratfunc">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">DFTElement_ratfunc</span></span><a class="headerlink" href="#stormpy.dft.DFTElement_ratfunc" title="Link to this definition">¶</a></dt>
+<dd><p>DFT element</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.dft.DFTElement_ratfunc.id">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#stormpy.dft.DFTElement_ratfunc.id" title="Link to this definition">¶</a></dt>
+<dd><p>Id</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.dft.DFTElement_ratfunc.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#stormpy.dft.DFTElement_ratfunc.name" title="Link to this definition">¶</a></dt>
+<dd><p>Name</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.dft.DFTElement_ratfunc.type">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#stormpy.dft.DFTElement_ratfunc.type" title="Link to this definition">¶</a></dt>
+<dd><p>Type</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.dft.DFTInstantiator">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">DFTInstantiator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTInstantiator" title="stormpy.dft._dft.DFTInstantiator"><span class="pre">stormpy.dft._dft.DFTInstantiator</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dft</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_ratfunc" title="stormpy.dft._dft.DFT_ratfunc"><span class="pre">stormpy.dft._dft.DFT_ratfunc</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.dft.DFTInstantiator" title="Link to this definition">¶</a></dt>
+<dd><p>Instantiator for parametric DFT</p>
+<p>Initialize with parametric DFT</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFTInstantiator.instantiate">
+<span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTInstantiator" title="stormpy.dft._dft.DFTInstantiator"><span class="pre">stormpy.dft._dft.DFTInstantiator</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">valuation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">collections.abc.Mapping</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.Variable" title="stormpy.pycarl._pycarl_core.Variable"><span class="pre">stormpy.pycarl._pycarl_core.Variable</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.cln.Rational" title="stormpy.pycarl.cln.Rational"><span class="pre">stormpy.pycarl.cln.Rational</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.dft.DFT_double" title="stormpy.dft._dft.DFT_double"><span class="pre">stormpy.dft._dft.DFT_double</span></a></span></span><a class="headerlink" href="#stormpy.dft.DFTInstantiator.instantiate" title="Link to this definition">¶</a></dt>
+<dd><p>Instantiate parametric DFT and obtain concrete DFT</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.dft.DFTSimulator_double">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">DFTSimulator_double</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTSimulator_double" title="stormpy.dft._dft.DFTSimulator_double"><span class="pre">stormpy.dft._dft.DFTSimulator_double</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dft</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_double" title="stormpy.dft._dft.DFT_double"><span class="pre">stormpy.dft._dft.DFT_double</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">state_generation_info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTStateInfo" title="stormpy.dft._dft.DFTStateInfo"><span class="pre">stormpy.dft._dft.DFTStateInfo</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">generator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.RandomGenerator" title="stormpy.dft._dft.RandomGenerator"><span class="pre">stormpy.dft._dft.RandomGenerator</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.dft.DFTSimulator_double" title="Link to this definition">¶</a></dt>
+<dd><p>Simulator for DFT traces</p>
+<p>Create Simulator</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFTSimulator_double.get_state">
+<span class="sig-name descname"><span class="pre">get_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTSimulator_double" title="stormpy.dft._dft.DFTSimulator_double"><span class="pre">stormpy.dft._dft.DFTSimulator_double</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.dft.DFTState_double" title="stormpy.dft._dft.DFTState_double"><span class="pre">stormpy.dft._dft.DFTState_double</span></a></span></span><a class="headerlink" href="#stormpy.dft.DFTSimulator_double.get_state" title="Link to this definition">¶</a></dt>
+<dd><p>Get current state</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFTSimulator_double.get_time">
+<span class="sig-name descname"><span class="pre">get_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTSimulator_double" title="stormpy.dft._dft.DFTSimulator_double"><span class="pre">stormpy.dft._dft.DFTSimulator_double</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#stormpy.dft.DFTSimulator_double.get_time" title="Link to this definition">¶</a></dt>
+<dd><p>Get total elapsed time so far</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFTSimulator_double.random_step">
+<span class="sig-name descname"><span class="pre">random_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTSimulator_double" title="stormpy.dft._dft.DFTSimulator_double"><span class="pre">stormpy.dft._dft.DFTSimulator_double</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.dft.SimulationStepResult" title="stormpy.dft._dft.SimulationStepResult"><span class="pre">stormpy.dft._dft.SimulationStepResult</span></a></span></span><a class="headerlink" href="#stormpy.dft.DFTSimulator_double.random_step" title="Link to this definition">¶</a></dt>
+<dd><p>Perform random simulation step.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFTSimulator_double.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTSimulator_double" title="stormpy.dft._dft.DFTSimulator_double"><span class="pre">stormpy.dft._dft.DFTSimulator_double</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.dft.DFTSimulator_double.reset" title="Link to this definition">¶</a></dt>
+<dd><p>Reset to initial state</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFTSimulator_double.reset_state">
+<span class="sig-name descname"><span class="pre">reset_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTSimulator_double" title="stormpy.dft._dft.DFTSimulator_double"><span class="pre">stormpy.dft._dft.DFTSimulator_double</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTState_double" title="stormpy.dft._dft.DFTState_double"><span class="pre">stormpy.dft._dft.DFTState_double</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.dft.DFTSimulator_double.reset_state" title="Link to this definition">¶</a></dt>
+<dd><p>Reset to state</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFTSimulator_double.simulate_trace">
+<span class="sig-name descname"><span class="pre">simulate_trace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTSimulator_double" title="stormpy.dft._dft.DFTSimulator_double"><span class="pre">stormpy.dft._dft.DFTSimulator_double</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">timebound</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.dft.SimulationTraceResult" title="stormpy.dft._dft.SimulationTraceResult"><span class="pre">stormpy.dft._dft.SimulationTraceResult</span></a></span></span><a class="headerlink" href="#stormpy.dft.DFTSimulator_double.simulate_trace" title="Link to this definition">¶</a></dt>
+<dd><p>Simulate complete trace for given timebound</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFTSimulator_double.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTSimulator_double" title="stormpy.dft._dft.DFTSimulator_double"><span class="pre">stormpy.dft._dft.DFTSimulator_double</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_failure</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.FailableElement" title="stormpy.dft._dft.FailableElement"><span class="pre">stormpy.dft._dft.FailableElement</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dependency_success</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.dft.SimulationStepResult" title="stormpy.dft._dft.SimulationStepResult"><span class="pre">stormpy.dft._dft.SimulationStepResult</span></a></span></span><a class="headerlink" href="#stormpy.dft.DFTSimulator_double.step" title="Link to this definition">¶</a></dt>
+<dd><p>Perform simulation step according to next_failure. For PDEPs, dependency_success determines whether the PDEP was successful or not.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.dft.DFTSimulator_ratfunc">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">DFTSimulator_ratfunc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTSimulator_ratfunc" title="stormpy.dft._dft.DFTSimulator_ratfunc"><span class="pre">stormpy.dft._dft.DFTSimulator_ratfunc</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dft</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_ratfunc" title="stormpy.dft._dft.DFT_ratfunc"><span class="pre">stormpy.dft._dft.DFT_ratfunc</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">state_generation_info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTStateInfo" title="stormpy.dft._dft.DFTStateInfo"><span class="pre">stormpy.dft._dft.DFTStateInfo</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">generator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.RandomGenerator" title="stormpy.dft._dft.RandomGenerator"><span class="pre">stormpy.dft._dft.RandomGenerator</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.dft.DFTSimulator_ratfunc" title="Link to this definition">¶</a></dt>
+<dd><p>Simulator for DFT traces</p>
+<p>Create Simulator</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFTSimulator_ratfunc.get_state">
+<span class="sig-name descname"><span class="pre">get_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTSimulator_ratfunc" title="stormpy.dft._dft.DFTSimulator_ratfunc"><span class="pre">stormpy.dft._dft.DFTSimulator_ratfunc</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.dft.DFTState_ratfunc" title="stormpy.dft._dft.DFTState_ratfunc"><span class="pre">stormpy.dft._dft.DFTState_ratfunc</span></a></span></span><a class="headerlink" href="#stormpy.dft.DFTSimulator_ratfunc.get_state" title="Link to this definition">¶</a></dt>
+<dd><p>Get current state</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFTSimulator_ratfunc.get_time">
+<span class="sig-name descname"><span class="pre">get_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTSimulator_ratfunc" title="stormpy.dft._dft.DFTSimulator_ratfunc"><span class="pre">stormpy.dft._dft.DFTSimulator_ratfunc</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#stormpy.dft.DFTSimulator_ratfunc.get_time" title="Link to this definition">¶</a></dt>
+<dd><p>Get total elapsed time so far</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFTSimulator_ratfunc.random_step">
+<span class="sig-name descname"><span class="pre">random_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTSimulator_ratfunc" title="stormpy.dft._dft.DFTSimulator_ratfunc"><span class="pre">stormpy.dft._dft.DFTSimulator_ratfunc</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.dft.SimulationStepResult" title="stormpy.dft._dft.SimulationStepResult"><span class="pre">stormpy.dft._dft.SimulationStepResult</span></a></span></span><a class="headerlink" href="#stormpy.dft.DFTSimulator_ratfunc.random_step" title="Link to this definition">¶</a></dt>
+<dd><p>Perform random simulation step.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFTSimulator_ratfunc.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTSimulator_ratfunc" title="stormpy.dft._dft.DFTSimulator_ratfunc"><span class="pre">stormpy.dft._dft.DFTSimulator_ratfunc</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.dft.DFTSimulator_ratfunc.reset" title="Link to this definition">¶</a></dt>
+<dd><p>Reset to initial state</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFTSimulator_ratfunc.reset_state">
+<span class="sig-name descname"><span class="pre">reset_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTSimulator_ratfunc" title="stormpy.dft._dft.DFTSimulator_ratfunc"><span class="pre">stormpy.dft._dft.DFTSimulator_ratfunc</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTState_ratfunc" title="stormpy.dft._dft.DFTState_ratfunc"><span class="pre">stormpy.dft._dft.DFTState_ratfunc</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.dft.DFTSimulator_ratfunc.reset_state" title="Link to this definition">¶</a></dt>
+<dd><p>Reset to state</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFTSimulator_ratfunc.simulate_trace">
+<span class="sig-name descname"><span class="pre">simulate_trace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTSimulator_ratfunc" title="stormpy.dft._dft.DFTSimulator_ratfunc"><span class="pre">stormpy.dft._dft.DFTSimulator_ratfunc</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">timebound</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.dft.SimulationTraceResult" title="stormpy.dft._dft.SimulationTraceResult"><span class="pre">stormpy.dft._dft.SimulationTraceResult</span></a></span></span><a class="headerlink" href="#stormpy.dft.DFTSimulator_ratfunc.simulate_trace" title="Link to this definition">¶</a></dt>
+<dd><p>Simulate complete trace for given timebound</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFTSimulator_ratfunc.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTSimulator_ratfunc" title="stormpy.dft._dft.DFTSimulator_ratfunc"><span class="pre">stormpy.dft._dft.DFTSimulator_ratfunc</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_failure</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.FailableElement" title="stormpy.dft._dft.FailableElement"><span class="pre">stormpy.dft._dft.FailableElement</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dependency_success</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.dft.SimulationStepResult" title="stormpy.dft._dft.SimulationStepResult"><span class="pre">stormpy.dft._dft.SimulationStepResult</span></a></span></span><a class="headerlink" href="#stormpy.dft.DFTSimulator_ratfunc.step" title="Link to this definition">¶</a></dt>
+<dd><p>Perform simulation step according to next_failure. For PDEPs, dependency_success determines whether the PDEP was successful or not.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.dft.DFTStateInfo">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">DFTStateInfo</span></span><a class="headerlink" href="#stormpy.dft.DFTStateInfo" title="Link to this definition">¶</a></dt>
+<dd><p>State Generation Info for DFT</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.dft.DFTState_double">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">DFTState_double</span></span><a class="headerlink" href="#stormpy.dft.DFTState_double" title="Link to this definition">¶</a></dt>
+<dd><p>DFT state</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFTState_double.dontcare">
+<span class="sig-name descname"><span class="pre">dontcare</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTState_double" title="stormpy.dft._dft.DFTState_double"><span class="pre">stormpy.dft._dft.DFTState_double</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#stormpy.dft.DFTState_double.dontcare" title="Link to this definition">¶</a></dt>
+<dd><p>Is element Don’t Care</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFTState_double.failable">
+<span class="sig-name descname"><span class="pre">failable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTState_double" title="stormpy.dft._dft.DFTState_double"><span class="pre">stormpy.dft._dft.DFTState_double</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">storm::dft::storage::FailableElements</span></span></span><a class="headerlink" href="#stormpy.dft.DFTState_double.failable" title="Link to this definition">¶</a></dt>
+<dd><p>Get failable elements</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFTState_double.failed">
+<span class="sig-name descname"><span class="pre">failed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTState_double" title="stormpy.dft._dft.DFTState_double"><span class="pre">stormpy.dft._dft.DFTState_double</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#stormpy.dft.DFTState_double.failed" title="Link to this definition">¶</a></dt>
+<dd><p>Is element failed</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFTState_double.failsafe">
+<span class="sig-name descname"><span class="pre">failsafe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTState_double" title="stormpy.dft._dft.DFTState_double"><span class="pre">stormpy.dft._dft.DFTState_double</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#stormpy.dft.DFTState_double.failsafe" title="Link to this definition">¶</a></dt>
+<dd><p>Is element fail-safe</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFTState_double.invalid">
+<span class="sig-name descname"><span class="pre">invalid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTState_double" title="stormpy.dft._dft.DFTState_double"><span class="pre">stormpy.dft._dft.DFTState_double</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#stormpy.dft.DFTState_double.invalid" title="Link to this definition">¶</a></dt>
+<dd><p>Is state invalid</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFTState_double.operational">
+<span class="sig-name descname"><span class="pre">operational</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTState_double" title="stormpy.dft._dft.DFTState_double"><span class="pre">stormpy.dft._dft.DFTState_double</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#stormpy.dft.DFTState_double.operational" title="Link to this definition">¶</a></dt>
+<dd><p>Is element operational</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFTState_double.spare_uses">
+<span class="sig-name descname"><span class="pre">spare_uses</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTState_double" title="stormpy.dft._dft.DFTState_double"><span class="pre">stormpy.dft._dft.DFTState_double</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">spare_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#stormpy.dft.DFTState_double.spare_uses" title="Link to this definition">¶</a></dt>
+<dd><p>Child currently used by a SPARE</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFTState_double.to_string">
+<span class="sig-name descname"><span class="pre">to_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTState_double" title="stormpy.dft._dft.DFTState_double"><span class="pre">stormpy.dft._dft.DFTState_double</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dft</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_double" title="stormpy.dft._dft.DFT_double"><span class="pre">stormpy.dft._dft.DFT_double</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#stormpy.dft.DFTState_double.to_string" title="Link to this definition">¶</a></dt>
+<dd><p>Print status</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.dft.DFTState_ratfunc">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">DFTState_ratfunc</span></span><a class="headerlink" href="#stormpy.dft.DFTState_ratfunc" title="Link to this definition">¶</a></dt>
+<dd><p>DFT state</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFTState_ratfunc.dontcare">
+<span class="sig-name descname"><span class="pre">dontcare</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTState_ratfunc" title="stormpy.dft._dft.DFTState_ratfunc"><span class="pre">stormpy.dft._dft.DFTState_ratfunc</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#stormpy.dft.DFTState_ratfunc.dontcare" title="Link to this definition">¶</a></dt>
+<dd><p>Is element Don’t Care</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFTState_ratfunc.failable">
+<span class="sig-name descname"><span class="pre">failable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTState_ratfunc" title="stormpy.dft._dft.DFTState_ratfunc"><span class="pre">stormpy.dft._dft.DFTState_ratfunc</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">storm::dft::storage::FailableElements</span></span></span><a class="headerlink" href="#stormpy.dft.DFTState_ratfunc.failable" title="Link to this definition">¶</a></dt>
+<dd><p>Get failable elements</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFTState_ratfunc.failed">
+<span class="sig-name descname"><span class="pre">failed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTState_ratfunc" title="stormpy.dft._dft.DFTState_ratfunc"><span class="pre">stormpy.dft._dft.DFTState_ratfunc</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#stormpy.dft.DFTState_ratfunc.failed" title="Link to this definition">¶</a></dt>
+<dd><p>Is element failed</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFTState_ratfunc.failsafe">
+<span class="sig-name descname"><span class="pre">failsafe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTState_ratfunc" title="stormpy.dft._dft.DFTState_ratfunc"><span class="pre">stormpy.dft._dft.DFTState_ratfunc</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#stormpy.dft.DFTState_ratfunc.failsafe" title="Link to this definition">¶</a></dt>
+<dd><p>Is element fail-safe</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFTState_ratfunc.invalid">
+<span class="sig-name descname"><span class="pre">invalid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTState_ratfunc" title="stormpy.dft._dft.DFTState_ratfunc"><span class="pre">stormpy.dft._dft.DFTState_ratfunc</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#stormpy.dft.DFTState_ratfunc.invalid" title="Link to this definition">¶</a></dt>
+<dd><p>Is state invalid</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFTState_ratfunc.operational">
+<span class="sig-name descname"><span class="pre">operational</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTState_ratfunc" title="stormpy.dft._dft.DFTState_ratfunc"><span class="pre">stormpy.dft._dft.DFTState_ratfunc</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#stormpy.dft.DFTState_ratfunc.operational" title="Link to this definition">¶</a></dt>
+<dd><p>Is element operational</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFTState_ratfunc.spare_uses">
+<span class="sig-name descname"><span class="pre">spare_uses</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTState_ratfunc" title="stormpy.dft._dft.DFTState_ratfunc"><span class="pre">stormpy.dft._dft.DFTState_ratfunc</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">spare_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#stormpy.dft.DFTState_ratfunc.spare_uses" title="Link to this definition">¶</a></dt>
+<dd><p>Child currently used by a SPARE</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFTState_ratfunc.to_string">
+<span class="sig-name descname"><span class="pre">to_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFTState_ratfunc" title="stormpy.dft._dft.DFTState_ratfunc"><span class="pre">stormpy.dft._dft.DFTState_ratfunc</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dft</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_ratfunc" title="stormpy.dft._dft.DFT_ratfunc"><span class="pre">stormpy.dft._dft.DFT_ratfunc</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#stormpy.dft.DFTState_ratfunc.to_string" title="Link to this definition">¶</a></dt>
+<dd><p>Print status</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.dft.DFT_double">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">DFT_double</span></span><a class="headerlink" href="#stormpy.dft.DFT_double" title="Link to this definition">¶</a></dt>
+<dd><p>Dynamic Fault Tree</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFT_double.can_have_nondeterminism">
+<span class="sig-name descname"><span class="pre">can_have_nondeterminism</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_double" title="stormpy.dft._dft.DFT_double"><span class="pre">stormpy.dft._dft.DFT_double</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#stormpy.dft.DFT_double.can_have_nondeterminism" title="Link to this definition">¶</a></dt>
+<dd><p>Whether the model can contain non-deterministic choices</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFT_double.get_element">
+<span class="sig-name descname"><span class="pre">get_element</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_double" title="stormpy.dft._dft.DFT_double"><span class="pre">stormpy.dft._dft.DFT_double</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">storm::dft::storage::elements::DFTElement&lt;double&gt;</span></span></span><a class="headerlink" href="#stormpy.dft.DFT_double.get_element" title="Link to this definition">¶</a></dt>
+<dd><p>Get DFT element at index</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFT_double.get_element_by_name">
+<span class="sig-name descname"><span class="pre">get_element_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_double" title="stormpy.dft._dft.DFT_double"><span class="pre">stormpy.dft._dft.DFT_double</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">storm::dft::storage::elements::DFTElement&lt;double&gt;</span></span></span><a class="headerlink" href="#stormpy.dft.DFT_double.get_element_by_name" title="Link to this definition">¶</a></dt>
+<dd><p>Get DFT element by name</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFT_double.modules">
+<span class="sig-name descname"><span class="pre">modules</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_double" title="stormpy.dft._dft.DFT_double"><span class="pre">stormpy.dft._dft.DFT_double</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">storm::dft::storage::DftIndependentModule</span></span></span><a class="headerlink" href="#stormpy.dft.DFT_double.modules" title="Link to this definition">¶</a></dt>
+<dd><p>Compute independent modules of DFT</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFT_double.nr_be">
+<span class="sig-name descname"><span class="pre">nr_be</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_double" title="stormpy.dft._dft.DFT_double"><span class="pre">stormpy.dft._dft.DFT_double</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#stormpy.dft.DFT_double.nr_be" title="Link to this definition">¶</a></dt>
+<dd><p>Number of basic elements</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFT_double.nr_dynamic">
+<span class="sig-name descname"><span class="pre">nr_dynamic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_double" title="stormpy.dft._dft.DFT_double"><span class="pre">stormpy.dft._dft.DFT_double</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#stormpy.dft.DFT_double.nr_dynamic" title="Link to this definition">¶</a></dt>
+<dd><p>Number of dynamic elements</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFT_double.nr_elements">
+<span class="sig-name descname"><span class="pre">nr_elements</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_double" title="stormpy.dft._dft.DFT_double"><span class="pre">stormpy.dft._dft.DFT_double</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#stormpy.dft.DFT_double.nr_elements" title="Link to this definition">¶</a></dt>
+<dd><p>Total number of elements</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFT_double.set_relevant_events">
+<span class="sig-name descname"><span class="pre">set_relevant_events</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_double" title="stormpy.dft._dft.DFT_double"><span class="pre">stormpy.dft._dft.DFT_double</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">relevant_events</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.RelevantEvents" title="stormpy.dft._dft.RelevantEvents"><span class="pre">stormpy.dft._dft.RelevantEvents</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_dc_for_revelant</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.dft.DFT_double.set_relevant_events" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFT_double.state_generation_info">
+<span class="sig-name descname"><span class="pre">state_generation_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_double" title="stormpy.dft._dft.DFT_double"><span class="pre">stormpy.dft._dft.DFT_double</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">symmetries</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DftSymmetries" title="stormpy.dft._dft.DftSymmetries"><span class="pre">stormpy.dft._dft.DftSymmetries</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">&lt;stormpy.dft._dft.DftSymmetries</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x7ff731206770&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">storm::dft::storage::DFTStateGenerationInfo</span></span></span><a class="headerlink" href="#stormpy.dft.DFT_double.state_generation_info" title="Link to this definition">¶</a></dt>
+<dd><p>Build state generation information</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFT_double.str_long">
+<span class="sig-name descname"><span class="pre">str_long</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_double" title="stormpy.dft._dft.DFT_double"><span class="pre">stormpy.dft._dft.DFT_double</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#stormpy.dft.DFT_double.str_long" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFT_double.symmetries">
+<span class="sig-name descname"><span class="pre">symmetries</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_double" title="stormpy.dft._dft.DFT_double"><span class="pre">stormpy.dft._dft.DFT_double</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.dft.DftSymmetries" title="stormpy.dft._dft.DftSymmetries"><span class="pre">stormpy.dft._dft.DftSymmetries</span></a></span></span><a class="headerlink" href="#stormpy.dft.DFT_double.symmetries" title="Link to this definition">¶</a></dt>
+<dd><p>Compute symmetries in DFT</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.dft.DFT_double.top_level_element">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">top_level_element</span></span><a class="headerlink" href="#stormpy.dft.DFT_double.top_level_element" title="Link to this definition">¶</a></dt>
+<dd><p>Get top level element</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.dft.DFT_ratfunc">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">DFT_ratfunc</span></span><a class="headerlink" href="#stormpy.dft.DFT_ratfunc" title="Link to this definition">¶</a></dt>
+<dd><p>Dynamic Fault Tree</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFT_ratfunc.can_have_nondeterminism">
+<span class="sig-name descname"><span class="pre">can_have_nondeterminism</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_ratfunc" title="stormpy.dft._dft.DFT_ratfunc"><span class="pre">stormpy.dft._dft.DFT_ratfunc</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#stormpy.dft.DFT_ratfunc.can_have_nondeterminism" title="Link to this definition">¶</a></dt>
+<dd><p>Whether the model can contain non-deterministic choices</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFT_ratfunc.get_element">
+<span class="sig-name descname"><span class="pre">get_element</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_ratfunc" title="stormpy.dft._dft.DFT_ratfunc"><span class="pre">stormpy.dft._dft.DFT_ratfunc</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">storm::dft::storage::elements::DFTElement&lt;carl::RationalFunction&lt;carl::FactorizedPolynomial&lt;carl::MultivariatePolynomial&lt;cln::cl_RA,</span> <span class="pre">carl::NotRelevant,</span> <span class="pre">carl::StdMultivariatePolynomialPolicies&lt;0&gt;</span> <span class="pre">&gt;</span> <span class="pre">&gt;,</span> <span class="pre">true&gt;</span> <span class="pre">&gt;</span></span></span><a class="headerlink" href="#stormpy.dft.DFT_ratfunc.get_element" title="Link to this definition">¶</a></dt>
+<dd><p>Get DFT element at index</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFT_ratfunc.get_element_by_name">
+<span class="sig-name descname"><span class="pre">get_element_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_ratfunc" title="stormpy.dft._dft.DFT_ratfunc"><span class="pre">stormpy.dft._dft.DFT_ratfunc</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">storm::dft::storage::elements::DFTElement&lt;carl::RationalFunction&lt;carl::FactorizedPolynomial&lt;carl::MultivariatePolynomial&lt;cln::cl_RA,</span> <span class="pre">carl::NotRelevant,</span> <span class="pre">carl::StdMultivariatePolynomialPolicies&lt;0&gt;</span> <span class="pre">&gt;</span> <span class="pre">&gt;,</span> <span class="pre">true&gt;</span> <span class="pre">&gt;</span></span></span><a class="headerlink" href="#stormpy.dft.DFT_ratfunc.get_element_by_name" title="Link to this definition">¶</a></dt>
+<dd><p>Get DFT element by name</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFT_ratfunc.modules">
+<span class="sig-name descname"><span class="pre">modules</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_ratfunc" title="stormpy.dft._dft.DFT_ratfunc"><span class="pre">stormpy.dft._dft.DFT_ratfunc</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">storm::dft::storage::DftIndependentModule</span></span></span><a class="headerlink" href="#stormpy.dft.DFT_ratfunc.modules" title="Link to this definition">¶</a></dt>
+<dd><p>Compute independent modules of DFT</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFT_ratfunc.nr_be">
+<span class="sig-name descname"><span class="pre">nr_be</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_ratfunc" title="stormpy.dft._dft.DFT_ratfunc"><span class="pre">stormpy.dft._dft.DFT_ratfunc</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#stormpy.dft.DFT_ratfunc.nr_be" title="Link to this definition">¶</a></dt>
+<dd><p>Number of basic elements</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFT_ratfunc.nr_dynamic">
+<span class="sig-name descname"><span class="pre">nr_dynamic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_ratfunc" title="stormpy.dft._dft.DFT_ratfunc"><span class="pre">stormpy.dft._dft.DFT_ratfunc</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#stormpy.dft.DFT_ratfunc.nr_dynamic" title="Link to this definition">¶</a></dt>
+<dd><p>Number of dynamic elements</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFT_ratfunc.nr_elements">
+<span class="sig-name descname"><span class="pre">nr_elements</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_ratfunc" title="stormpy.dft._dft.DFT_ratfunc"><span class="pre">stormpy.dft._dft.DFT_ratfunc</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#stormpy.dft.DFT_ratfunc.nr_elements" title="Link to this definition">¶</a></dt>
+<dd><p>Total number of elements</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFT_ratfunc.set_relevant_events">
+<span class="sig-name descname"><span class="pre">set_relevant_events</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_ratfunc" title="stormpy.dft._dft.DFT_ratfunc"><span class="pre">stormpy.dft._dft.DFT_ratfunc</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">relevant_events</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.RelevantEvents" title="stormpy.dft._dft.RelevantEvents"><span class="pre">stormpy.dft._dft.RelevantEvents</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_dc_for_revelant</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.dft.DFT_ratfunc.set_relevant_events" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFT_ratfunc.state_generation_info">
+<span class="sig-name descname"><span class="pre">state_generation_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_ratfunc" title="stormpy.dft._dft.DFT_ratfunc"><span class="pre">stormpy.dft._dft.DFT_ratfunc</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">symmetries</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DftSymmetries" title="stormpy.dft._dft.DftSymmetries"><span class="pre">stormpy.dft._dft.DftSymmetries</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">&lt;stormpy.dft._dft.DftSymmetries</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x7ff730b26db0&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">storm::dft::storage::DFTStateGenerationInfo</span></span></span><a class="headerlink" href="#stormpy.dft.DFT_ratfunc.state_generation_info" title="Link to this definition">¶</a></dt>
+<dd><p>Build state generation information</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFT_ratfunc.str_long">
+<span class="sig-name descname"><span class="pre">str_long</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_ratfunc" title="stormpy.dft._dft.DFT_ratfunc"><span class="pre">stormpy.dft._dft.DFT_ratfunc</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#stormpy.dft.DFT_ratfunc.str_long" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DFT_ratfunc.symmetries">
+<span class="sig-name descname"><span class="pre">symmetries</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_ratfunc" title="stormpy.dft._dft.DFT_ratfunc"><span class="pre">stormpy.dft._dft.DFT_ratfunc</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.dft.DftSymmetries" title="stormpy.dft._dft.DftSymmetries"><span class="pre">stormpy.dft._dft.DftSymmetries</span></a></span></span><a class="headerlink" href="#stormpy.dft.DFT_ratfunc.symmetries" title="Link to this definition">¶</a></dt>
+<dd><p>Compute symmetries in DFT</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.dft.DFT_ratfunc.top_level_element">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">top_level_element</span></span><a class="headerlink" href="#stormpy.dft.DFT_ratfunc.top_level_element" title="Link to this definition">¶</a></dt>
+<dd><p>Get top level element</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.dft.DftIndependentModule">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">DftIndependentModule</span></span><a class="headerlink" href="#stormpy.dft.DftIndependentModule" title="Link to this definition">¶</a></dt>
+<dd><p>Independent module in DFT</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DftIndependentModule.elements">
+<span class="sig-name descname"><span class="pre">elements</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DftIndependentModule" title="stormpy.dft._dft.DftIndependentModule"><span class="pre">stormpy.dft._dft.DftIndependentModule</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#stormpy.dft.DftIndependentModule.elements" title="Link to this definition">¶</a></dt>
+<dd><p>Get elements of module (excluding submodules)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DftIndependentModule.fully_static">
+<span class="sig-name descname"><span class="pre">fully_static</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DftIndependentModule" title="stormpy.dft._dft.DftIndependentModule"><span class="pre">stormpy.dft._dft.DftIndependentModule</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#stormpy.dft.DftIndependentModule.fully_static" title="Link to this definition">¶</a></dt>
+<dd><p>Whether the module contains only static elements (also in submodules)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DftIndependentModule.representative">
+<span class="sig-name descname"><span class="pre">representative</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DftIndependentModule" title="stormpy.dft._dft.DftIndependentModule"><span class="pre">stormpy.dft._dft.DftIndependentModule</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#stormpy.dft.DftIndependentModule.representative" title="Link to this definition">¶</a></dt>
+<dd><p>Get module representative</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DftIndependentModule.single_be">
+<span class="sig-name descname"><span class="pre">single_be</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DftIndependentModule" title="stormpy.dft._dft.DftIndependentModule"><span class="pre">stormpy.dft._dft.DftIndependentModule</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#stormpy.dft.DftIndependentModule.single_be" title="Link to this definition">¶</a></dt>
+<dd><p>Whether the module consists of a single BE (trivial module)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DftIndependentModule.static">
+<span class="sig-name descname"><span class="pre">static</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DftIndependentModule" title="stormpy.dft._dft.DftIndependentModule"><span class="pre">stormpy.dft._dft.DftIndependentModule</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#stormpy.dft.DftIndependentModule.static" title="Link to this definition">¶</a></dt>
+<dd><p>Whether the module contains only static elements (except in submodules)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DftIndependentModule.submodules">
+<span class="sig-name descname"><span class="pre">submodules</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DftIndependentModule" title="stormpy.dft._dft.DftIndependentModule"><span class="pre">stormpy.dft._dft.DftIndependentModule</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">set</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#stormpy.dft.DftIndependentModule" title="stormpy.dft._dft.DftIndependentModule"><span class="pre">stormpy.dft._dft.DftIndependentModule</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#stormpy.dft.DftIndependentModule.submodules" title="Link to this definition">¶</a></dt>
+<dd><p>Get submodules</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.dft.DftSymmetries">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">DftSymmetries</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DftSymmetries" title="stormpy.dft._dft.DftSymmetries"><span class="pre">stormpy.dft._dft.DftSymmetries</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.dft.DftSymmetries" title="Link to this definition">¶</a></dt>
+<dd><p>Symmetries in DFT</p>
+<p>Constructor for empty symmetry</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.DftSymmetries.get_group">
+<span class="sig-name descname"><span class="pre">get_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DftSymmetries" title="stormpy.dft._dft.DftSymmetries"><span class="pre">stormpy.dft._dft.DftSymmetries</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#stormpy.dft.DftSymmetries.get_group" title="Link to this definition">¶</a></dt>
+<dd><p>Get symmetry group</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.dft.ExplicitDFTModelBuilder_double">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ExplicitDFTModelBuilder_double</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.ExplicitDFTModelBuilder_double" title="stormpy.dft._dft.ExplicitDFTModelBuilder_double"><span class="pre">stormpy.dft._dft.ExplicitDFTModelBuilder_double</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dft</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">storm::dft::storage::DFT&lt;double&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symmetries</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DftSymmetries" title="stormpy.dft._dft.DftSymmetries"><span class="pre">stormpy.dft._dft.DftSymmetries</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">&lt;stormpy.dft._dft.DftSymmetries</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x7ff7313f42f0&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.dft.ExplicitDFTModelBuilder_double" title="Link to this definition">¶</a></dt>
+<dd><p>Builder to generate explicit model from DFT</p>
+<p>Constructor</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.ExplicitDFTModelBuilder_double.build">
+<span class="sig-name descname"><span class="pre">build</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.ExplicitDFTModelBuilder_double" title="stormpy.dft._dft.ExplicitDFTModelBuilder_double"><span class="pre">stormpy.dft._dft.ExplicitDFTModelBuilder_double</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">iteration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">approximation_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">approximation_heuristic</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.ApproximationHeuristic" title="stormpy.dft._dft.ApproximationHeuristic"><span class="pre">stormpy.dft._dft.ApproximationHeuristic</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">&lt;ApproximationHeuristic.DEPTH:</span> <span class="pre">0&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.dft.ExplicitDFTModelBuilder_double.build" title="Link to this definition">¶</a></dt>
+<dd><p>Build state space of model</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.ExplicitDFTModelBuilder_double.get_model">
+<span class="sig-name descname"><span class="pre">get_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.ExplicitDFTModelBuilder_double" title="stormpy.dft._dft.ExplicitDFTModelBuilder_double"><span class="pre">stormpy.dft._dft.ExplicitDFTModelBuilder_double</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">stormpy.storage._storage._SparseModel</span></span></span><a class="headerlink" href="#stormpy.dft.ExplicitDFTModelBuilder_double.get_model" title="Link to this definition">¶</a></dt>
+<dd><p>Get complete model</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.ExplicitDFTModelBuilder_double.get_partial_model">
+<span class="sig-name descname"><span class="pre">get_partial_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.ExplicitDFTModelBuilder_double" title="stormpy.dft._dft.ExplicitDFTModelBuilder_double"><span class="pre">stormpy.dft._dft.ExplicitDFTModelBuilder_double</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">lower_bound</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">stormpy.storage._storage._SparseModel</span></span></span><a class="headerlink" href="#stormpy.dft.ExplicitDFTModelBuilder_double.get_partial_model" title="Link to this definition">¶</a></dt>
+<dd><p>Get partial model</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.dft.ExplicitDFTModelBuilder_ratfunc">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ExplicitDFTModelBuilder_ratfunc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.ExplicitDFTModelBuilder_ratfunc" title="stormpy.dft._dft.ExplicitDFTModelBuilder_ratfunc"><span class="pre">stormpy.dft._dft.ExplicitDFTModelBuilder_ratfunc</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dft</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">storm::dft::storage::DFT&lt;carl::RationalFunction&lt;carl::FactorizedPolynomial&lt;carl::MultivariatePolynomial&lt;cln::cl_RA</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">carl</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">:NotRelevant</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">carl</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">:StdMultivariatePolynomialPolicies&lt;0&gt;</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true&gt;</span> <span class="pre">&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symmetries</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DftSymmetries" title="stormpy.dft._dft.DftSymmetries"><span class="pre">stormpy.dft._dft.DftSymmetries</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">&lt;stormpy.dft._dft.DftSymmetries</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x7ff7304b8df0&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.dft.ExplicitDFTModelBuilder_ratfunc" title="Link to this definition">¶</a></dt>
+<dd><p>Builder to generate explicit model from DFT</p>
+<p>Constructor</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.ExplicitDFTModelBuilder_ratfunc.build">
+<span class="sig-name descname"><span class="pre">build</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.ExplicitDFTModelBuilder_ratfunc" title="stormpy.dft._dft.ExplicitDFTModelBuilder_ratfunc"><span class="pre">stormpy.dft._dft.ExplicitDFTModelBuilder_ratfunc</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">iteration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">approximation_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">approximation_heuristic</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.ApproximationHeuristic" title="stormpy.dft._dft.ApproximationHeuristic"><span class="pre">stormpy.dft._dft.ApproximationHeuristic</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">&lt;ApproximationHeuristic.DEPTH:</span> <span class="pre">0&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.dft.ExplicitDFTModelBuilder_ratfunc.build" title="Link to this definition">¶</a></dt>
+<dd><p>Build state space of model</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.ExplicitDFTModelBuilder_ratfunc.get_model">
+<span class="sig-name descname"><span class="pre">get_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.ExplicitDFTModelBuilder_ratfunc" title="stormpy.dft._dft.ExplicitDFTModelBuilder_ratfunc"><span class="pre">stormpy.dft._dft.ExplicitDFTModelBuilder_ratfunc</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">stormpy.storage._storage._SparseParametricModel</span></span></span><a class="headerlink" href="#stormpy.dft.ExplicitDFTModelBuilder_ratfunc.get_model" title="Link to this definition">¶</a></dt>
+<dd><p>Get complete model</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.ExplicitDFTModelBuilder_ratfunc.get_partial_model">
+<span class="sig-name descname"><span class="pre">get_partial_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.ExplicitDFTModelBuilder_ratfunc" title="stormpy.dft._dft.ExplicitDFTModelBuilder_ratfunc"><span class="pre">stormpy.dft._dft.ExplicitDFTModelBuilder_ratfunc</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">lower_bound</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">stormpy.storage._storage._SparseParametricModel</span></span></span><a class="headerlink" href="#stormpy.dft.ExplicitDFTModelBuilder_ratfunc.get_partial_model" title="Link to this definition">¶</a></dt>
+<dd><p>Get partial model</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.dft.FailableElement">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">FailableElement</span></span><a class="headerlink" href="#stormpy.dft.FailableElement" title="Link to this definition">¶</a></dt>
+<dd><p>Failable element</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.FailableElement.as_be_double">
+<span class="sig-name descname"><span class="pre">as_be_double</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.FailableElement" title="stormpy.dft._dft.FailableElement"><span class="pre">stormpy.dft._dft.FailableElement</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dft</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_double" title="stormpy.dft._dft.DFT_double"><span class="pre">stormpy.dft._dft.DFT_double</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.dft.DFTBE_double" title="stormpy.dft._dft.DFTBE_double"><span class="pre">stormpy.dft._dft.DFTBE_double</span></a></span></span><a class="headerlink" href="#stormpy.dft.FailableElement.as_be_double" title="Link to this definition">¶</a></dt>
+<dd><p>Get BE which fails</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.FailableElement.as_be_ratfunc">
+<span class="sig-name descname"><span class="pre">as_be_ratfunc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.FailableElement" title="stormpy.dft._dft.FailableElement"><span class="pre">stormpy.dft._dft.FailableElement</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dft</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_ratfunc" title="stormpy.dft._dft.DFT_ratfunc"><span class="pre">stormpy.dft._dft.DFT_ratfunc</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.dft.DFTBE_ratfunc" title="stormpy.dft._dft.DFTBE_ratfunc"><span class="pre">stormpy.dft._dft.DFTBE_ratfunc</span></a></span></span><a class="headerlink" href="#stormpy.dft.FailableElement.as_be_ratfunc" title="Link to this definition">¶</a></dt>
+<dd><p>Get BE which fails</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.FailableElement.as_dependency_double">
+<span class="sig-name descname"><span class="pre">as_dependency_double</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.FailableElement" title="stormpy.dft._dft.FailableElement"><span class="pre">stormpy.dft._dft.FailableElement</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dft</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_double" title="stormpy.dft._dft.DFT_double"><span class="pre">stormpy.dft._dft.DFT_double</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.dft.DFTDependency_double" title="stormpy.dft._dft.DFTDependency_double"><span class="pre">stormpy.dft._dft.DFTDependency_double</span></a></span></span><a class="headerlink" href="#stormpy.dft.FailableElement.as_dependency_double" title="Link to this definition">¶</a></dt>
+<dd><p>Get dependency which is triggered</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.FailableElement.as_dependency_ratfunc">
+<span class="sig-name descname"><span class="pre">as_dependency_ratfunc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.FailableElement" title="stormpy.dft._dft.FailableElement"><span class="pre">stormpy.dft._dft.FailableElement</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dft</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_ratfunc" title="stormpy.dft._dft.DFT_ratfunc"><span class="pre">stormpy.dft._dft.DFT_ratfunc</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.dft.DFTDependency_ratfunc" title="stormpy.dft._dft.DFTDependency_ratfunc"><span class="pre">stormpy.dft._dft.DFTDependency_ratfunc</span></a></span></span><a class="headerlink" href="#stormpy.dft.FailableElement.as_dependency_ratfunc" title="Link to this definition">¶</a></dt>
+<dd><p>Get dependency which is triggered</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.FailableElement.is_due_dependency">
+<span class="sig-name descname"><span class="pre">is_due_dependency</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.FailableElement" title="stormpy.dft._dft.FailableElement"><span class="pre">stormpy.dft._dft.FailableElement</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#stormpy.dft.FailableElement.is_due_dependency" title="Link to this definition">¶</a></dt>
+<dd><p>Is failure due to dependency</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.dft.FailableElements">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">FailableElements</span></span><a class="headerlink" href="#stormpy.dft.FailableElements" title="Link to this definition">¶</a></dt>
+<dd><p>Failable elements in DFT state</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.dft.FailableIterator">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">FailableIterator</span></span><a class="headerlink" href="#stormpy.dft.FailableIterator" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.dft.RandomGenerator">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">RandomGenerator</span></span><a class="headerlink" href="#stormpy.dft.RandomGenerator" title="Link to this definition">¶</a></dt>
+<dd><p>Random number generator</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.RandomGenerator.create">
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.dft.RandomGenerator" title="stormpy.dft._dft.RandomGenerator"><span class="pre">stormpy.dft._dft.RandomGenerator</span></a></span></span><a class="headerlink" href="#stormpy.dft.RandomGenerator.create" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize random number generator</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.dft.RelevantEvents">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">RelevantEvents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.RelevantEvents" title="stormpy.dft._dft.RelevantEvents"><span class="pre">stormpy.dft._dft.RelevantEvents</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.dft.RelevantEvents" title="Link to this definition">¶</a></dt>
+<dd><p>Relevant events which should be observed</p>
+<p>Create empty list of relevant events</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.dft.RelevantEvents.is_relevant">
+<span class="sig-name descname"><span class="pre">is_relevant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.RelevantEvents" title="stormpy.dft._dft.RelevantEvents"><span class="pre">stormpy.dft._dft.RelevantEvents</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#stormpy.dft.RelevantEvents.is_relevant" title="Link to this definition">¶</a></dt>
+<dd><p>Check whether the given name is a relevant event</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.dft.SimulationStepResult">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">SimulationStepResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.dft.SimulationStepResult" title="Link to this definition">¶</a></dt>
+<dd><dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.dft.SimulationStepResult.INVALID">
+<span class="sig-name descname"><span class="pre">INVALID</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></span><a class="headerlink" href="#stormpy.dft.SimulationStepResult.INVALID" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.dft.SimulationStepResult.SUCCESSFUL">
+<span class="sig-name descname"><span class="pre">SUCCESSFUL</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#stormpy.dft.SimulationStepResult.SUCCESSFUL" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.dft.SimulationStepResult.UNSUCCESSFUL">
+<span class="sig-name descname"><span class="pre">UNSUCCESSFUL</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></span><a class="headerlink" href="#stormpy.dft.SimulationStepResult.UNSUCCESSFUL" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.dft.SimulationTraceResult">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">SimulationTraceResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.dft.SimulationTraceResult" title="Link to this definition">¶</a></dt>
+<dd><dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.dft.SimulationTraceResult.CONTINUE">
+<span class="sig-name descname"><span class="pre">CONTINUE</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></span><a class="headerlink" href="#stormpy.dft.SimulationTraceResult.CONTINUE" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.dft.SimulationTraceResult.INVALID">
+<span class="sig-name descname"><span class="pre">INVALID</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></span><a class="headerlink" href="#stormpy.dft.SimulationTraceResult.INVALID" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.dft.SimulationTraceResult.SUCCESSFUL">
+<span class="sig-name descname"><span class="pre">SUCCESSFUL</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#stormpy.dft.SimulationTraceResult.SUCCESSFUL" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.dft.SimulationTraceResult.UNSUCCESSFUL">
+<span class="sig-name descname"><span class="pre">UNSUCCESSFUL</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></span><a class="headerlink" href="#stormpy.dft.SimulationTraceResult.UNSUCCESSFUL" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="stormpy.dft.analyze_dft">
+<span class="sig-name descname"><span class="pre">analyze_dft</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ft</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symred</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_modularisation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relevant_events</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;stormpy.dft._dft.RelevantEvents</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_dc_for_relevant</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.dft.analyze_dft" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="stormpy.dft.build_model">
+<span class="sig-name descname"><span class="pre">build_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ft</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symmetries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;stormpy.dft._dft.DftSymmetries</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relevant_events</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;stormpy.dft._dft.RelevantEvents</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_dc_for_relevant</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.dft.build_model" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="stormpy.dft.compute_dependency_conflicts">
+<span class="sig-name descname"><span class="pre">compute_dependency_conflicts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ft</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_smt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver_timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.dft.compute_dependency_conflicts" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="stormpy.dft.compute_relevant_events">
+<span class="sig-name descname"><span class="pre">compute_relevant_events</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">properties</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">collections.abc.Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="logic.html#stormpy.logic.Formula" title="stormpy.logic._logic.Formula"><span class="pre">stormpy.logic._logic.Formula</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_relevant_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">collections.abc.Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.dft.RelevantEvents" title="stormpy.dft._dft.RelevantEvents"><span class="pre">stormpy.dft._dft.RelevantEvents</span></a></span></span><a class="headerlink" href="#stormpy.dft.compute_relevant_events" title="Link to this definition">¶</a></dt>
+<dd><p>Compute relevant event ids from properties and additional relevant names</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="stormpy.dft.export_dft_json_file">
+<span class="sig-name descname"><span class="pre">export_dft_json_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dft</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_double" title="stormpy.dft._dft.DFT_double"><span class="pre">stormpy.dft._dft.DFT_double</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.dft.export_dft_json_file" title="Link to this definition">¶</a></dt>
+<dd><p>Export DFT to JSON file</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="stormpy.dft.export_dft_json_string">
+<span class="sig-name descname"><span class="pre">export_dft_json_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dft</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_double" title="stormpy.dft._dft.DFT_double"><span class="pre">stormpy.dft._dft.DFT_double</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#stormpy.dft.export_dft_json_string" title="Link to this definition">¶</a></dt>
+<dd><p>Export DFT to JSON string</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="stormpy.dft.export_parametric_dft_json_file">
+<span class="sig-name descname"><span class="pre">export_parametric_dft_json_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dft</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_ratfunc" title="stormpy.dft._dft.DFT_ratfunc"><span class="pre">stormpy.dft._dft.DFT_ratfunc</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.dft.export_parametric_dft_json_file" title="Link to this definition">¶</a></dt>
+<dd><p>Export parametric DFT to JSON file</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="stormpy.dft.export_parametric_dft_json_string">
+<span class="sig-name descname"><span class="pre">export_parametric_dft_json_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dft</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.dft.DFT_ratfunc" title="stormpy.dft._dft.DFT_ratfunc"><span class="pre">stormpy.dft._dft.DFT_ratfunc</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#stormpy.dft.export_parametric_dft_json_string" title="Link to this definition">¶</a></dt>
+<dd><p>Export parametric DFT to JSON string</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="stormpy.dft.get_parameters">
+<span class="sig-name descname"><span class="pre">get_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dft</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">storm::dft::storage::DFT&lt;carl::RationalFunction&lt;carl::FactorizedPolynomial&lt;carl::MultivariatePolynomial&lt;cln::cl_RA</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">carl</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">:NotRelevant</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">carl</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">:StdMultivariatePolynomialPolicies&lt;0&gt;</span> <span class="pre">&gt;</span> <span class="pre">&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true&gt;</span> <span class="pre">&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">set</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.Variable" title="stormpy.pycarl._pycarl_core.Variable"><span class="pre">stormpy.pycarl._pycarl_core.Variable</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#stormpy.dft.get_parameters" title="Link to this definition">¶</a></dt>
+<dd><p>Collect parameters in parametric DFT</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="stormpy.dft.has_potential_modeling_issues">
+<span class="sig-name descname"><span class="pre">has_potential_modeling_issues</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ft</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.dft.has_potential_modeling_issues" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="stormpy.dft.is_well_formed">
+<span class="sig-name descname"><span class="pre">is_well_formed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ft</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_valid_for_analysis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.dft.is_well_formed" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="stormpy.dft.load_dft_galileo_file">
+<span class="sig-name descname"><span class="pre">load_dft_galileo_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.dft.DFT_double" title="stormpy.dft._dft.DFT_double"><span class="pre">stormpy.dft._dft.DFT_double</span></a></span></span><a class="headerlink" href="#stormpy.dft.load_dft_galileo_file" title="Link to this definition">¶</a></dt>
+<dd><p>Load DFT from Galileo file</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="stormpy.dft.load_dft_json_file">
+<span class="sig-name descname"><span class="pre">load_dft_json_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.dft.DFT_double" title="stormpy.dft._dft.DFT_double"><span class="pre">stormpy.dft._dft.DFT_double</span></a></span></span><a class="headerlink" href="#stormpy.dft.load_dft_json_file" title="Link to this definition">¶</a></dt>
+<dd><p>Load DFT from JSON file</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="stormpy.dft.load_dft_json_string">
+<span class="sig-name descname"><span class="pre">load_dft_json_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.dft.DFT_double" title="stormpy.dft._dft.DFT_double"><span class="pre">stormpy.dft._dft.DFT_double</span></a></span></span><a class="headerlink" href="#stormpy.dft.load_dft_json_string" title="Link to this definition">¶</a></dt>
+<dd><p>Load DFT from JSON string</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="stormpy.dft.load_parametric_dft_galileo_file">
+<span class="sig-name descname"><span class="pre">load_parametric_dft_galileo_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.dft.DFT_ratfunc" title="stormpy.dft._dft.DFT_ratfunc"><span class="pre">stormpy.dft._dft.DFT_ratfunc</span></a></span></span><a class="headerlink" href="#stormpy.dft.load_parametric_dft_galileo_file" title="Link to this definition">¶</a></dt>
+<dd><p>Load parametric DFT from Galileo file</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="stormpy.dft.load_parametric_dft_json_file">
+<span class="sig-name descname"><span class="pre">load_parametric_dft_json_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.dft.DFT_ratfunc" title="stormpy.dft._dft.DFT_ratfunc"><span class="pre">stormpy.dft._dft.DFT_ratfunc</span></a></span></span><a class="headerlink" href="#stormpy.dft.load_parametric_dft_json_file" title="Link to this definition">¶</a></dt>
+<dd><p>Load parametric DFT from JSON file</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="stormpy.dft.load_parametric_dft_json_string">
+<span class="sig-name descname"><span class="pre">load_parametric_dft_json_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.dft.DFT_ratfunc" title="stormpy.dft._dft.DFT_ratfunc"><span class="pre">stormpy.dft._dft.DFT_ratfunc</span></a></span></span><a class="headerlink" href="#stormpy.dft.load_parametric_dft_json_string" title="Link to this definition">¶</a></dt>
+<dd><p>Load parametric DFT from JSON string</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="stormpy.dft.modules_json">
+<span class="sig-name descname"><span class="pre">modules_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dft</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.dft.modules_json" title="Link to this definition">¶</a></dt>
+<dd><p>Create JSON representation of DFT modules.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dft</strong> – DFT.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>JSON object containing all modules in a recursive hierarchy.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="stormpy.dft.prepare_for_analysis">
+<span class="sig-name descname"><span class="pre">prepare_for_analysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ft</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.dft.prepare_for_analysis" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="stormpy.dft.transform_dft">
+<span class="sig-name descname"><span class="pre">transform_dft</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ft</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unique_constant_be</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary_fdeps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exponential_distributions</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.dft.transform_dft" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+
+
+</div>
+        </article>
+        <aside class="nftt-toc">
+          
+          <div class="my-sm-1 my-lg-0 ps-xl-3 text-muted">
+            <button class="btn btn-link p-lg-0 mb-2 mb-lg-0 text-decoration-none nftt-toc-toggle d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#tocContents" aria-expanded="false" aria-controls="tocContents"
+            >On this page <i class="ms-2 bi bi-chevron-expand"></i></button>
+            <div class="title d-none d-lg-block">
+              <i class="bi bi-file-earmark-text"></i>&nbsp;&nbsp;<span class="small">On this page</span>
+            </div>
+            <div class="collapse nftt-toc-collapse" id="tocContents">
+              <nav id="TableOfContents">
+                <ul>
+<li><a class="reference internal" href="#">Stormpy.dft</a><ul>
+<li><a class="reference internal" href="#stormpy.dft.ApproximationHeuristic"><code class="docutils literal notranslate"><span class="pre">ApproximationHeuristic</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.dft.ApproximationHeuristic.BOUNDDIFFERENCE"><code class="docutils literal notranslate"><span class="pre">ApproximationHeuristic.BOUNDDIFFERENCE</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.ApproximationHeuristic.DEPTH"><code class="docutils literal notranslate"><span class="pre">ApproximationHeuristic.DEPTH</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.ApproximationHeuristic.PROBABILITY"><code class="docutils literal notranslate"><span class="pre">ApproximationHeuristic.PROBABILITY</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.dft.DFTBE_double"><code class="docutils literal notranslate"><span class="pre">DFTBE_double</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTBE_ratfunc"><code class="docutils literal notranslate"><span class="pre">DFTBE_ratfunc</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTDependency_double"><code class="docutils literal notranslate"><span class="pre">DFTDependency_double</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.dft.DFTDependency_double.dependent_events"><code class="docutils literal notranslate"><span class="pre">DFTDependency_double.dependent_events</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTDependency_double.trigger"><code class="docutils literal notranslate"><span class="pre">DFTDependency_double.trigger</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.dft.DFTDependency_ratfunc"><code class="docutils literal notranslate"><span class="pre">DFTDependency_ratfunc</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.dft.DFTDependency_ratfunc.dependent_events"><code class="docutils literal notranslate"><span class="pre">DFTDependency_ratfunc.dependent_events</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTDependency_ratfunc.trigger"><code class="docutils literal notranslate"><span class="pre">DFTDependency_ratfunc.trigger</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.dft.DFTElementType"><code class="docutils literal notranslate"><span class="pre">DFTElementType</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.dft.DFTElementType.AND"><code class="docutils literal notranslate"><span class="pre">DFTElementType.AND</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTElementType.BE"><code class="docutils literal notranslate"><span class="pre">DFTElementType.BE</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTElementType.MUTEX"><code class="docutils literal notranslate"><span class="pre">DFTElementType.MUTEX</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTElementType.OR"><code class="docutils literal notranslate"><span class="pre">DFTElementType.OR</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTElementType.PAND"><code class="docutils literal notranslate"><span class="pre">DFTElementType.PAND</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTElementType.PDEP"><code class="docutils literal notranslate"><span class="pre">DFTElementType.PDEP</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTElementType.POR"><code class="docutils literal notranslate"><span class="pre">DFTElementType.POR</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTElementType.SEQ"><code class="docutils literal notranslate"><span class="pre">DFTElementType.SEQ</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTElementType.SPARE"><code class="docutils literal notranslate"><span class="pre">DFTElementType.SPARE</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTElementType.VOT"><code class="docutils literal notranslate"><span class="pre">DFTElementType.VOT</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTElementType.friendly_name"><code class="docutils literal notranslate"><span class="pre">DFTElementType.friendly_name()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.dft.DFTElement_double"><code class="docutils literal notranslate"><span class="pre">DFTElement_double</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.dft.DFTElement_double.id"><code class="docutils literal notranslate"><span class="pre">DFTElement_double.id</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTElement_double.name"><code class="docutils literal notranslate"><span class="pre">DFTElement_double.name</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTElement_double.type"><code class="docutils literal notranslate"><span class="pre">DFTElement_double.type</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.dft.DFTElement_ratfunc"><code class="docutils literal notranslate"><span class="pre">DFTElement_ratfunc</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.dft.DFTElement_ratfunc.id"><code class="docutils literal notranslate"><span class="pre">DFTElement_ratfunc.id</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTElement_ratfunc.name"><code class="docutils literal notranslate"><span class="pre">DFTElement_ratfunc.name</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTElement_ratfunc.type"><code class="docutils literal notranslate"><span class="pre">DFTElement_ratfunc.type</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.dft.DFTInstantiator"><code class="docutils literal notranslate"><span class="pre">DFTInstantiator</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.dft.DFTInstantiator.instantiate"><code class="docutils literal notranslate"><span class="pre">DFTInstantiator.instantiate()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.dft.DFTSimulator_double"><code class="docutils literal notranslate"><span class="pre">DFTSimulator_double</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.dft.DFTSimulator_double.get_state"><code class="docutils literal notranslate"><span class="pre">DFTSimulator_double.get_state()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTSimulator_double.get_time"><code class="docutils literal notranslate"><span class="pre">DFTSimulator_double.get_time()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTSimulator_double.random_step"><code class="docutils literal notranslate"><span class="pre">DFTSimulator_double.random_step()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTSimulator_double.reset"><code class="docutils literal notranslate"><span class="pre">DFTSimulator_double.reset()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTSimulator_double.reset_state"><code class="docutils literal notranslate"><span class="pre">DFTSimulator_double.reset_state()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTSimulator_double.simulate_trace"><code class="docutils literal notranslate"><span class="pre">DFTSimulator_double.simulate_trace()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTSimulator_double.step"><code class="docutils literal notranslate"><span class="pre">DFTSimulator_double.step()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.dft.DFTSimulator_ratfunc"><code class="docutils literal notranslate"><span class="pre">DFTSimulator_ratfunc</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.dft.DFTSimulator_ratfunc.get_state"><code class="docutils literal notranslate"><span class="pre">DFTSimulator_ratfunc.get_state()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTSimulator_ratfunc.get_time"><code class="docutils literal notranslate"><span class="pre">DFTSimulator_ratfunc.get_time()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTSimulator_ratfunc.random_step"><code class="docutils literal notranslate"><span class="pre">DFTSimulator_ratfunc.random_step()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTSimulator_ratfunc.reset"><code class="docutils literal notranslate"><span class="pre">DFTSimulator_ratfunc.reset()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTSimulator_ratfunc.reset_state"><code class="docutils literal notranslate"><span class="pre">DFTSimulator_ratfunc.reset_state()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTSimulator_ratfunc.simulate_trace"><code class="docutils literal notranslate"><span class="pre">DFTSimulator_ratfunc.simulate_trace()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTSimulator_ratfunc.step"><code class="docutils literal notranslate"><span class="pre">DFTSimulator_ratfunc.step()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.dft.DFTStateInfo"><code class="docutils literal notranslate"><span class="pre">DFTStateInfo</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTState_double"><code class="docutils literal notranslate"><span class="pre">DFTState_double</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.dft.DFTState_double.dontcare"><code class="docutils literal notranslate"><span class="pre">DFTState_double.dontcare()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTState_double.failable"><code class="docutils literal notranslate"><span class="pre">DFTState_double.failable()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTState_double.failed"><code class="docutils literal notranslate"><span class="pre">DFTState_double.failed()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTState_double.failsafe"><code class="docutils literal notranslate"><span class="pre">DFTState_double.failsafe()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTState_double.invalid"><code class="docutils literal notranslate"><span class="pre">DFTState_double.invalid()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTState_double.operational"><code class="docutils literal notranslate"><span class="pre">DFTState_double.operational()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTState_double.spare_uses"><code class="docutils literal notranslate"><span class="pre">DFTState_double.spare_uses()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTState_double.to_string"><code class="docutils literal notranslate"><span class="pre">DFTState_double.to_string()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.dft.DFTState_ratfunc"><code class="docutils literal notranslate"><span class="pre">DFTState_ratfunc</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.dft.DFTState_ratfunc.dontcare"><code class="docutils literal notranslate"><span class="pre">DFTState_ratfunc.dontcare()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTState_ratfunc.failable"><code class="docutils literal notranslate"><span class="pre">DFTState_ratfunc.failable()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTState_ratfunc.failed"><code class="docutils literal notranslate"><span class="pre">DFTState_ratfunc.failed()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTState_ratfunc.failsafe"><code class="docutils literal notranslate"><span class="pre">DFTState_ratfunc.failsafe()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTState_ratfunc.invalid"><code class="docutils literal notranslate"><span class="pre">DFTState_ratfunc.invalid()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTState_ratfunc.operational"><code class="docutils literal notranslate"><span class="pre">DFTState_ratfunc.operational()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTState_ratfunc.spare_uses"><code class="docutils literal notranslate"><span class="pre">DFTState_ratfunc.spare_uses()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFTState_ratfunc.to_string"><code class="docutils literal notranslate"><span class="pre">DFTState_ratfunc.to_string()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.dft.DFT_double"><code class="docutils literal notranslate"><span class="pre">DFT_double</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.dft.DFT_double.can_have_nondeterminism"><code class="docutils literal notranslate"><span class="pre">DFT_double.can_have_nondeterminism()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFT_double.get_element"><code class="docutils literal notranslate"><span class="pre">DFT_double.get_element()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFT_double.get_element_by_name"><code class="docutils literal notranslate"><span class="pre">DFT_double.get_element_by_name()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFT_double.modules"><code class="docutils literal notranslate"><span class="pre">DFT_double.modules()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFT_double.nr_be"><code class="docutils literal notranslate"><span class="pre">DFT_double.nr_be()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFT_double.nr_dynamic"><code class="docutils literal notranslate"><span class="pre">DFT_double.nr_dynamic()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFT_double.nr_elements"><code class="docutils literal notranslate"><span class="pre">DFT_double.nr_elements()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFT_double.set_relevant_events"><code class="docutils literal notranslate"><span class="pre">DFT_double.set_relevant_events()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFT_double.state_generation_info"><code class="docutils literal notranslate"><span class="pre">DFT_double.state_generation_info()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFT_double.str_long"><code class="docutils literal notranslate"><span class="pre">DFT_double.str_long()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFT_double.symmetries"><code class="docutils literal notranslate"><span class="pre">DFT_double.symmetries()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFT_double.top_level_element"><code class="docutils literal notranslate"><span class="pre">DFT_double.top_level_element</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.dft.DFT_ratfunc"><code class="docutils literal notranslate"><span class="pre">DFT_ratfunc</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.dft.DFT_ratfunc.can_have_nondeterminism"><code class="docutils literal notranslate"><span class="pre">DFT_ratfunc.can_have_nondeterminism()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFT_ratfunc.get_element"><code class="docutils literal notranslate"><span class="pre">DFT_ratfunc.get_element()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFT_ratfunc.get_element_by_name"><code class="docutils literal notranslate"><span class="pre">DFT_ratfunc.get_element_by_name()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFT_ratfunc.modules"><code class="docutils literal notranslate"><span class="pre">DFT_ratfunc.modules()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFT_ratfunc.nr_be"><code class="docutils literal notranslate"><span class="pre">DFT_ratfunc.nr_be()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFT_ratfunc.nr_dynamic"><code class="docutils literal notranslate"><span class="pre">DFT_ratfunc.nr_dynamic()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFT_ratfunc.nr_elements"><code class="docutils literal notranslate"><span class="pre">DFT_ratfunc.nr_elements()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFT_ratfunc.set_relevant_events"><code class="docutils literal notranslate"><span class="pre">DFT_ratfunc.set_relevant_events()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFT_ratfunc.state_generation_info"><code class="docutils literal notranslate"><span class="pre">DFT_ratfunc.state_generation_info()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFT_ratfunc.str_long"><code class="docutils literal notranslate"><span class="pre">DFT_ratfunc.str_long()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFT_ratfunc.symmetries"><code class="docutils literal notranslate"><span class="pre">DFT_ratfunc.symmetries()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DFT_ratfunc.top_level_element"><code class="docutils literal notranslate"><span class="pre">DFT_ratfunc.top_level_element</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.dft.DftIndependentModule"><code class="docutils literal notranslate"><span class="pre">DftIndependentModule</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.dft.DftIndependentModule.elements"><code class="docutils literal notranslate"><span class="pre">DftIndependentModule.elements()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DftIndependentModule.fully_static"><code class="docutils literal notranslate"><span class="pre">DftIndependentModule.fully_static()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DftIndependentModule.representative"><code class="docutils literal notranslate"><span class="pre">DftIndependentModule.representative()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DftIndependentModule.single_be"><code class="docutils literal notranslate"><span class="pre">DftIndependentModule.single_be()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DftIndependentModule.static"><code class="docutils literal notranslate"><span class="pre">DftIndependentModule.static()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.DftIndependentModule.submodules"><code class="docutils literal notranslate"><span class="pre">DftIndependentModule.submodules()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.dft.DftSymmetries"><code class="docutils literal notranslate"><span class="pre">DftSymmetries</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.dft.DftSymmetries.get_group"><code class="docutils literal notranslate"><span class="pre">DftSymmetries.get_group()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.dft.ExplicitDFTModelBuilder_double"><code class="docutils literal notranslate"><span class="pre">ExplicitDFTModelBuilder_double</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.dft.ExplicitDFTModelBuilder_double.build"><code class="docutils literal notranslate"><span class="pre">ExplicitDFTModelBuilder_double.build()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.ExplicitDFTModelBuilder_double.get_model"><code class="docutils literal notranslate"><span class="pre">ExplicitDFTModelBuilder_double.get_model()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.ExplicitDFTModelBuilder_double.get_partial_model"><code class="docutils literal notranslate"><span class="pre">ExplicitDFTModelBuilder_double.get_partial_model()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.dft.ExplicitDFTModelBuilder_ratfunc"><code class="docutils literal notranslate"><span class="pre">ExplicitDFTModelBuilder_ratfunc</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.dft.ExplicitDFTModelBuilder_ratfunc.build"><code class="docutils literal notranslate"><span class="pre">ExplicitDFTModelBuilder_ratfunc.build()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.ExplicitDFTModelBuilder_ratfunc.get_model"><code class="docutils literal notranslate"><span class="pre">ExplicitDFTModelBuilder_ratfunc.get_model()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.ExplicitDFTModelBuilder_ratfunc.get_partial_model"><code class="docutils literal notranslate"><span class="pre">ExplicitDFTModelBuilder_ratfunc.get_partial_model()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.dft.FailableElement"><code class="docutils literal notranslate"><span class="pre">FailableElement</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.dft.FailableElement.as_be_double"><code class="docutils literal notranslate"><span class="pre">FailableElement.as_be_double()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.FailableElement.as_be_ratfunc"><code class="docutils literal notranslate"><span class="pre">FailableElement.as_be_ratfunc()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.FailableElement.as_dependency_double"><code class="docutils literal notranslate"><span class="pre">FailableElement.as_dependency_double()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.FailableElement.as_dependency_ratfunc"><code class="docutils literal notranslate"><span class="pre">FailableElement.as_dependency_ratfunc()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.FailableElement.is_due_dependency"><code class="docutils literal notranslate"><span class="pre">FailableElement.is_due_dependency()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.dft.FailableElements"><code class="docutils literal notranslate"><span class="pre">FailableElements</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.FailableIterator"><code class="docutils literal notranslate"><span class="pre">FailableIterator</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.RandomGenerator"><code class="docutils literal notranslate"><span class="pre">RandomGenerator</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.dft.RandomGenerator.create"><code class="docutils literal notranslate"><span class="pre">RandomGenerator.create()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.dft.RelevantEvents"><code class="docutils literal notranslate"><span class="pre">RelevantEvents</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.dft.RelevantEvents.is_relevant"><code class="docutils literal notranslate"><span class="pre">RelevantEvents.is_relevant()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.dft.SimulationStepResult"><code class="docutils literal notranslate"><span class="pre">SimulationStepResult</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.dft.SimulationStepResult.INVALID"><code class="docutils literal notranslate"><span class="pre">SimulationStepResult.INVALID</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.SimulationStepResult.SUCCESSFUL"><code class="docutils literal notranslate"><span class="pre">SimulationStepResult.SUCCESSFUL</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.SimulationStepResult.UNSUCCESSFUL"><code class="docutils literal notranslate"><span class="pre">SimulationStepResult.UNSUCCESSFUL</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.dft.SimulationTraceResult"><code class="docutils literal notranslate"><span class="pre">SimulationTraceResult</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.dft.SimulationTraceResult.CONTINUE"><code class="docutils literal notranslate"><span class="pre">SimulationTraceResult.CONTINUE</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.SimulationTraceResult.INVALID"><code class="docutils literal notranslate"><span class="pre">SimulationTraceResult.INVALID</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.SimulationTraceResult.SUCCESSFUL"><code class="docutils literal notranslate"><span class="pre">SimulationTraceResult.SUCCESSFUL</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.SimulationTraceResult.UNSUCCESSFUL"><code class="docutils literal notranslate"><span class="pre">SimulationTraceResult.UNSUCCESSFUL</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.dft.analyze_dft"><code class="docutils literal notranslate"><span class="pre">analyze_dft()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.build_model"><code class="docutils literal notranslate"><span class="pre">build_model()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.compute_dependency_conflicts"><code class="docutils literal notranslate"><span class="pre">compute_dependency_conflicts()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.compute_relevant_events"><code class="docutils literal notranslate"><span class="pre">compute_relevant_events()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.export_dft_json_file"><code class="docutils literal notranslate"><span class="pre">export_dft_json_file()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.export_dft_json_string"><code class="docutils literal notranslate"><span class="pre">export_dft_json_string()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.export_parametric_dft_json_file"><code class="docutils literal notranslate"><span class="pre">export_parametric_dft_json_file()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.export_parametric_dft_json_string"><code class="docutils literal notranslate"><span class="pre">export_parametric_dft_json_string()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.get_parameters"><code class="docutils literal notranslate"><span class="pre">get_parameters()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.has_potential_modeling_issues"><code class="docutils literal notranslate"><span class="pre">has_potential_modeling_issues()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.is_well_formed"><code class="docutils literal notranslate"><span class="pre">is_well_formed()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.load_dft_galileo_file"><code class="docutils literal notranslate"><span class="pre">load_dft_galileo_file()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.load_dft_json_file"><code class="docutils literal notranslate"><span class="pre">load_dft_json_file()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.load_dft_json_string"><code class="docutils literal notranslate"><span class="pre">load_dft_json_string()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.load_parametric_dft_galileo_file"><code class="docutils literal notranslate"><span class="pre">load_parametric_dft_galileo_file()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.load_parametric_dft_json_file"><code class="docutils literal notranslate"><span class="pre">load_parametric_dft_json_file()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.load_parametric_dft_json_string"><code class="docutils literal notranslate"><span class="pre">load_parametric_dft_json_string()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.modules_json"><code class="docutils literal notranslate"><span class="pre">modules_json()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.prepare_for_analysis"><code class="docutils literal notranslate"><span class="pre">prepare_for_analysis()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.dft.transform_dft"><code class="docutils literal notranslate"><span class="pre">transform_dft()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+              </nav>
+            </div>
+          </div>
+          
+        </aside>
+      </div>
+    </div>
+
+    <footer class="nftt-footer">
+      <nav id="paginator" class="py-4" aria-label="Documentation navigation">
+    <div class="container">
+      <ul class="pagination justify-content-between mb-0"><li class="d-flex page-item">
+            <a href="utility.html" class="d-flex pe-5 px-lg-5 align-items-end" rel="prev" aria-label="Previous page: Stormpy.utility">
+              <span class="prev-page"><i class="bi bi-caret-left"></i></span>
+              <div class="d-none d-sm-flex flex-column">
+                <span class="text-small text-start text-muted">Previous</span>
+                <span class="underline">Stormpy.utility</span>
+              </div>
+            </a>
+          </li>
+        <li class="d-flex page-item ms-auto">
+            <a href="gspn.html" class="d-flex ps-5 px-lg-5 align-items-end" rel="next" aria-label="Next page: Stormpy.gspn">
+              <div class="d-flex flex-column">
+                <span class="text-small text-end text-start text-muted">Next</span>
+                <span class="underline">Stormpy.gspn</span>
+              </div>
+              <span class="next-page"><i class="bi bi-caret-right"></i></span>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </nav>
+
+      <div class="py-5 px-4 px-md-3">
+  <div class="container">
+    
+    <div class="row">
+      <ul id="nftt-footer-links" class="list-unstyled list-separator col-lg-12 pb-2 text-center">
+        
+          <li class="d-inline">
+            <a href="https://stormchecker.github.io/stormpy/"  class="list-item">Documentation</a>
+          </li>
+        
+          <li class="d-inline">
+            <a href="https://pypi.org/project/stormpy/"  class="list-item">Package</a>
+          </li>
+        
+          <li class="d-inline">
+            <a href="https://github.com/stormchecker/stormpy/"  class="list-item">Repository</a>
+          </li>
+        
+          <li class="d-inline">
+            <a href="https://github.com/stormchecker/stormpy/issues"  class="list-item">Issues</a>
+          </li>
+        
+      </ul>
+    </div>
+    
+
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <a class="brand-text d-inline-flex align-items-center mb-2 text-decoration-none" href="/" aria-label="stormpy">
+          <span class="fs-6 fw-bold">stormpy</span>
+        </a>
+        
+          <ul class="list-unstyled small text-muted">
+            <li>2016-2026 Storm Developers</li>
+          </ul>
+        
+        <div class="built-with pt-2">
+          Built with <a href="http://sphinx-doc.org">Sphinx 9.1.0</a> and <a href="https://github.com/danirus/sphinx-nefertiti">Nefertiti 0.9.9</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    </footer>
+
+    <div class="modal modal-xl fade" id="nftt-modal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen-xxl-down modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="nftt-modal-title"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="nftt-modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+    <script src="../_static/documentation_options.js?v=01009efc"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/docs-versions.js?v=08b0cbfb"></script>
+    <script src="../_static/sphinx-nefertiti.min.js?v=af404e0e"></script>
+    <script src="../_static/bootstrap.bundle.min.js?v=c066362f"></script>
+  </body>
+</html>

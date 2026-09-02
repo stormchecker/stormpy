@@ -1,0 +1,1101 @@
+
+<!DOCTYPE html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    
+    <meta name="docsearch:name" content="stormpy" />
+    <meta name="docsearch:package_type" content="" />
+    <meta name="docsearch:release" content="1.14.0" />
+    <meta name="docsearch:version" content="" />
+    
+      <meta name="theme-color" content="#0D6EFD" />
+    
+    
+      <title>Stormpy.pars &mdash; stormpy 1.14.0 documentation</title>
+    
+    <link rel="canonical" href="api/pars" />
+      <link rel="icon" href="../_static/favicon.png" />
+          <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8e8a900e" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/fonts/nunito/stylesheet.css?v=abf98f06" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/fonts/ubuntu-sans-mono/stylesheet.css?v=8616a587" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/pygments-dark.css?v=f21207c5" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/pygments-light.css?v=6c104457" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/bootstrap-icons.min.css?v=44730005" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/sphinx-nefertiti-blue.min.css?v=cbfc91e2" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=6c103ecc" /><!-- add (1) -->
+        <link rel="index" title="Index" href="../genindex.html" />
+        <link rel="search" title="Search" href="../search.html" />
+        <link rel="top" title="stormpy 1.14.0 documentation" href="#" />
+        <link rel="up" title="Stormpy API Reference" href="../api.html" />
+        <link rel="next" title="Stormpy.pomdp" href="pomdp.html" />
+        <link rel="prev" title="Stormpy.gspn" href="gspn.html" />
+    <style>
+      :root {
+        --nftt-body-font-family: "Nunito", var(--nftt-font-sans-serif) !important;
+        --nftt-font-monospace: "Ubuntu Sans Mono", var(--nftt-font-family-monospace) !important;
+        --nftt-project-name-font: var(--nftt-body-font-family);
+        --nftt-documentation-font: var(--nftt-body-font-family);
+        --nftt-doc-headers-font: "Georgia", var(--nftt-documentation-font);}
+    </style>
+  </head>
+  <body>
+    <div id="back-to-top-container" class="position-fixed start-50 translate-middle-x">
+      <button id="back-to-top" type="button" class="d-none btn btn-neutral btn-sm shadow px-4" data-bs-toggle="button">Back to top</button>
+    </div>
+    <header id="snftt-nav-bar" class="navbar navbar-expand-xl navbar-dark nftt-navbar flex-column fixed-top">
+      <div class="skip-links container-fluid visually-hidden-focusable overflow-hidden justify-content-start flex-grow-1">
+        <div class="border-bottom mb-2 pb-2 w-100">
+          <a class="d-none d-md-inline-flex p-2 m-1" href="#sidebar-filter">Skip to index filter</a>
+          <a class="d-inline-flex p-2 m-1" href="#content">Skip to main content</a>
+        </div>
+      </div>
+      <nav class="container-xxl nftt-gutter flex-nowrap" aria-label="Main navigation">
+        <div class="nftt-navbar-toggler">
+          <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle documentation navigation">
+            <i class="bi bi-list"></i>
+          </button>
+        </div>
+          <a
+            href="../index.html"
+            class="navbar-brand"
+          >
+            <img src="../_static/storm_logo.png" width="36" height="36" alt="Storm logo"
+              class="project-logo"
+            />
+            <span class="brand-text">stormpy</span><span class="brand-short-text">stormpy</span>
+          </a>
+        
+        
+          <ul class="nftt-header-links-large navbar-nav">
+          
+            
+            
+            
+            
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="../getting_started.html" data-snftt-hl-id="1"  >Getting Started</a>
+    </li>
+  
+
+  
+    <li class="nav-item dropdown">
+      <a class="snftt-hl nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" href="#" data-snftt-hl-id="2" data-snftt-hl-regexps="doc/*">Documentation</a>
+      <ul class="dropdown-menu">
+        
+          
+          
+          
+          
+  
+    <li >
+      <a class="snftt-hl dropdown-item" href="../advanced_topics.html" data-snftt-hl-id="3"  >Advanced Examples</a>
+    </li>
+  
+
+  
+    <li><hr class="dropdown-divider"></li>
+  
+
+  
+    <li >
+      <a class="snftt-hl dropdown-item" href="../using_pycarl.html" data-snftt-hl-id="4"  >Getting Started with Pycarl</a>
+    </li>
+  
+
+        
+      </ul>
+    </li>
+  
+
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="../api.html" data-snftt-hl-id="5"  data-snftt-hl-id="" data-snftt-hl-regexps="api/*">API</a>
+    </li>
+  
+
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="https://www.stormchecker.org/" data-snftt-hl-id="6"  >Storm</a>
+    </li>
+  
+
+          
+          </ul>
+        
+        <div class="d-flex d-xl-none">
+          <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#nfttSearch" aria-controls="nfttSearch" aria-label="Search">
+            <i class="bi bi-search"></i>
+          </button>
+          <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#nfttNavbar" aria-controls="nfttNavbar" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+        </div>
+        
+<div class="offcanvas-xl offcanvas-end flex-grow-1" tabindex="-1" id="nfttSearch" aria-labelledby="nfttSearchOffcanvasLabel" data-bs-scroll="true">
+  <div class="offcanvas-header px-4 pb-0">
+    <h5 class="offcanvas-title fw-bold" id="nfttSearchOffcanvasLabel">Search the documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#nfttSearch"></button>
+  </div>
+  <div class="offcanvas-body p-4 pt-0 p-xl-0 ps-xl-4">
+    <hr class="d-xl-none text-white-50">
+    <ul class="navbar-nav flex-row align-items-center flex-wrap ms-md-auto">
+      <li class="nav-item col-12 col-xl-auto">
+        <form id="nftt-search-form" action="../search.html" method="get">
+          <div class="input-group">
+            <input type="text" name="q" class="form-control search-input" placeholder="Search" aria-label="Search" aria-describedby="button-search">
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <button class="btn btn-primary" type="submit" id="button-search" aria-label="Search"><i class="bi bi-search"></i></button>
+          </div>
+        </form>
+      </li>
+    </ul>
+  </div>
+</div>
+
+        <div class="offcanvas-xl offcanvas-end" tabindex="-1" id="nfttNavbar" aria-labelledby="nfttNavbarOffcanvasLabel" data-bs-scroll="true">
+          <div class="offcanvas-header px-4 pb-0">
+            <div class="offcanvas-title navbar-brand" id="nfttNavbarOffcanvasLabel"><span class="brand-short-text">stormpy</span></div>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#nfttNavbar"></button>
+          </div>
+          <div class="offcanvas-body p-4 pt-0 p-xl-0 px-xl-3">
+            <hr class="d-xl-none text-white-50">
+            <ul class="navbar-nav flex-row align-items-center flex-wrap ms-lg-auto">
+              
+                <div class="nftt-header-links-small">
+                  
+                    
+                    
+                    
+                    <div class="d-inline-block">
+                      
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="../getting_started.html" data-snftt-hl-id="1"  >Getting Started</a>
+    </li>
+  
+
+  
+    <li class="nav-item dropdown">
+      <a class="snftt-hl nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" href="#" data-snftt-hl-id="2" data-snftt-hl-regexps="doc/*">Documentation</a>
+      <ul class="dropdown-menu">
+        
+          
+          
+          
+          
+  
+    <li >
+      <a class="snftt-hl dropdown-item" href="../advanced_topics.html" data-snftt-hl-id="3"  >Advanced Examples</a>
+    </li>
+  
+
+  
+    <li><hr class="dropdown-divider"></li>
+  
+
+  
+    <li >
+      <a class="snftt-hl dropdown-item" href="../using_pycarl.html" data-snftt-hl-id="4"  >Getting Started with Pycarl</a>
+    </li>
+  
+
+        
+      </ul>
+    </li>
+  
+
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="../api.html" data-snftt-hl-id="5"  data-snftt-hl-id="" data-snftt-hl-regexps="api/*">API</a>
+    </li>
+  
+
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="https://www.stormchecker.org/" data-snftt-hl-id="6"  >Storm</a>
+    </li>
+  
+
+                    </div>
+                  
+                  <li class="nav-item col-12 col-xl-auto h-100" aria-hidden="true">
+                    <div class="vr d-none d-xl-flex h-100 mx-xl-2 text-white-50"></div>
+                    <hr class="d-xl-none text-white-50">
+                  </li>
+                </div>
+              
+              
+              <li class="nav-item col-12 col-xl-auto">
+                <a class="nav-link py-2 py-xl-0 px-0 px-xl-2" href="https://github.com/stormchecker/stormpy" target="_blank" rel="noopener">
+                  <div class="d-flex align-items-center">
+                    <div class="me-2">
+                      <i class="bi bi-git size-24"></i>
+                    </div>
+                    <div class="repo d-flex flex-column align-items-center" data-snftt-repo-url="https://github.com/stormchecker/stormpy">
+                      stormpy
+                      <div class="d-flex justify-content-center" data-snftt-repo-metrics>
+                        <span class="pe-2 d-flex justify-content-center align-items-center">
+                          <i class="bi bi-tag size-14"></i>
+                          <span class="repo-metric" data-snftt-repo-tag></span>
+                        </span>
+                        <span class="pe-2 d-flex justify-content-center align-items-center">
+                          <i class="bi bi-star size-14"></i>
+                          <span class="repo-metric" data-snftt-repo-stars></span>
+                        </span>
+                        <span class="d-flex justify-content-center align-items-center">
+                          <i class="bi bi-diagram-2 size-14"></i>
+                          <span class="repo-metric" data-snftt-repo-forks></span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class="nav-item col-12 col-xl-auto h-100" aria-hidden="true">
+                <div class="vr d-none d-xl-flex h-100 mx-xl-2 text-white-50"></div>
+                <hr class="d-xl-none text-white-50">
+              </li>
+              
+              
+              
+              
+              <!-- lightdark-dropdown.html -->
+<li class="nav-item dropdown">
+  <a class="nav-link d-flex py-2 px-0 px-xl-2 dropdown-toggle align-items-center" id="snftt-luz" href="#" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" aria-label="Change appearance">
+    <i class="bi bi-circle-half" data-snftt-luz-icon-active></i>
+    <span id="snftt-luz-text" class="d-xl-none ms-2">Change appearance</span>
+  </a>
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="snftt-luz-text">
+    <li>
+      <h6 class="dropdown-header">Change appearance</h6>
+    </li>
+    <li>
+      <a class="dropdown-item d-flex align-items-center" data-snftt-luz="light" href="#" aria-pressed="false">
+        <span>
+          <i class="bi bi-sun" data-snftt-luz-icon="light"></i>
+        </span>
+        <span class="ms-3">Light</span>
+        <i class="bi bi-check ms-auto"></i>
+      </a>
+    </li>
+    <li>
+      <a class="dropdown-item d-flex align-items-center" data-snftt-luz="dark" href="#" aria-pressed="false">
+        <span>
+          <i class="bi bi-moon-stars" data-snftt-luz-icon="dark"></i>
+        </span>
+        <span class="ms-3">Dark</span>
+        <i class="bi bi-check ms-auto"></i>
+      </a>
+    </li>
+    <li>
+      <a class="dropdown-item current d-flex align-items-center" data-snftt-luz="default" href="#" aria-pressed="false">
+        <span>
+          <i class="bi bi-circle-half" data-snftt-luz-icon="default"></i>
+        </span>
+        <span class="ms-3">Automatic</span>
+        <i class="bi bi-check ms-auto"></i>
+      </a>
+    </li>
+  </ul>
+</li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      
+    </header>
+
+    <div class="container-fluid">
+      <div class="nftt-gutter nftt-page">
+        <aside class="nftt-sidebar ">
+          <div class="nftt-sidebar-content">
+            
+            <div class="title d-none d-xl-none">
+              <i class="bi bi-book"></i>&nbsp;&nbsp;<span>Index</span>
+            </div>
+            <div id="sidebar" tabindex="-1" class="offcanvas-xl offcanvas-start" aria-labelledby="nfttSidebarOffcanvasLabel">
+                <!-- sidebartemplate: "globaltoc.html" --><div class="offcanvas-header border-bottom">
+  <h5 class="offcanvas-title fw-bold" id="nfttSidebarOffcanvasLabel">
+    Index
+  </h5>
+  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#sidebar"></button>
+</div>
+
+<div class="offcanvas-body">
+  <nav class="toc" aria-label="Main menu">
+    <div class="mb-3 p-1 pb-4 border-bottom">
+      <input id="sidebar-filter" type="text" name="filter" class="form-control form-control-sm" placeholder="index filter" aria-label="index filter">
+    </div>
+    <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_topics.html">Advanced Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../doc/analysis.html">Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/building_models.html">Building Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/models/building_dtmcs.html">Discrete-time Markov chains (DTMCs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/models/building_mdps.html">Markov decision processes (MDPs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/models/building_ctmcs.html">Continuous-time Markov chains (CTMCs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/models/building_mas.html">Markov automata (MAs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/engines.html">Engines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/exploration.html">Exploring Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/simulator.html">Working with Simulators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/reward_models.html">Reward Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/schedulers.html">Working with Schedulers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/shortest_paths.html">Working with Shortest Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/parametric_models.html">Parametric Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/dfts.html">Dynamic Fault Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/gspns.html">Generalized Stochastic Petri Nets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/info.html">Storm(py) Information</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../using_pycarl.html">Getting Started with Pycarl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development.html">Developer information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributors.html">Contributors</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">Stormpy API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="core.html">Stormpy.core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="info.html">Stormpy.info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html">Stormpy.exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logic.html">Stormpy.logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="storage.html">Stormpy.storage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">Stormpy.utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dft.html">Stormpy.dft</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gspn.html">Stormpy.gspn</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Stormpy.pars</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp.html">Stormpy.pomdp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycarl/core.html">Pycarl core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycarl/convert.html">Pycarl convert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycarl/formula.html">Pycarl formula</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycarl/parse.html">Pycarl parse</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav>
+  <template data-toggle-item-template>
+    <button class="btn btn-sm btn-link toctree-expand" type="button">
+      <i class="bi bi-caret-right"></i>
+      <span class="visually-hidden">Toggle menu contents</span>
+    </button>
+  </template>
+</div>
+            </div>
+            
+          </div>
+        </aside>
+        <article id="content" class="nftt-content" role="main">
+          <div><div class="d-flex flex-row justify-content-between">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="../index.html">Start</a></li>
+        <li class="breadcrumb-item"><a href="../api.html">Stormpy API Reference</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Stormpy.pars</li>
+    </ol>
+  </nav>
+  
+    <div class="fs085">
+        <a href="../_sources/api/pars.rst.txt"  rel="nofollow" aria-label="Show source of this document"><i class="bi bi-file-earmark-code"></i></a>
+    </div>
+  
+</div>
+            
+
+
+    <section id="module-stormpy.pars">
+<span id="stormpy-pars"></span><h1>Stormpy.pars<a class="headerlink" href="#module-stormpy.pars" title="Link to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pars.DtmcParameterLiftingModelChecker">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">DtmcParameterLiftingModelChecker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.DtmcParameterLiftingModelChecker" title="stormpy.pars._pars.DtmcParameterLiftingModelChecker"><span class="pre">stormpy.pars._pars.DtmcParameterLiftingModelChecker</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pars.DtmcParameterLiftingModelChecker" title="Link to this definition">¶</a></dt>
+<dd><p>Region model checker for DTMCs</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pars.DtmcParameterLiftingModelChecker.get_bound_all_states">
+<span class="sig-name descname"><span class="pre">get_bound_all_states</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.DtmcParameterLiftingModelChecker" title="stormpy.pars._pars.DtmcParameterLiftingModelChecker"><span class="pre">stormpy.pars._pars.DtmcParameterLiftingModelChecker</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">environment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="core.html#stormpy.Environment" title="stormpy._core.Environment"><span class="pre">stormpy._core.Environment</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">region</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.ParameterRegion" title="stormpy.pars._pars.ParameterRegion"><span class="pre">stormpy.pars._pars.ParameterRegion</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">maximise</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="core.html#stormpy.ExplicitQuantitativeCheckResult" title="stormpy._core.ExplicitQuantitativeCheckResult"><span class="pre">stormpy._core.ExplicitQuantitativeCheckResult</span></a></span></span><a class="headerlink" href="#stormpy.pars.DtmcParameterLiftingModelChecker.get_bound_all_states" title="Link to this definition">¶</a></dt>
+<dd><p>Get bound</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pars.MdpParameterLiftingModelChecker">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">MdpParameterLiftingModelChecker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.MdpParameterLiftingModelChecker" title="stormpy.pars._pars.MdpParameterLiftingModelChecker"><span class="pre">stormpy.pars._pars.MdpParameterLiftingModelChecker</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pars.MdpParameterLiftingModelChecker" title="Link to this definition">¶</a></dt>
+<dd><p>Region model checker for MPDs</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pars.MdpParameterLiftingModelChecker.get_bound_all_states">
+<span class="sig-name descname"><span class="pre">get_bound_all_states</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.MdpParameterLiftingModelChecker" title="stormpy.pars._pars.MdpParameterLiftingModelChecker"><span class="pre">stormpy.pars._pars.MdpParameterLiftingModelChecker</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">environment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="core.html#stormpy.Environment" title="stormpy._core.Environment"><span class="pre">stormpy._core.Environment</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">region</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.ParameterRegion" title="stormpy.pars._pars.ParameterRegion"><span class="pre">stormpy.pars._pars.ParameterRegion</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">maximise</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="core.html#stormpy.ExplicitQuantitativeCheckResult" title="stormpy._core.ExplicitQuantitativeCheckResult"><span class="pre">stormpy._core.ExplicitQuantitativeCheckResult</span></a></span></span><a class="headerlink" href="#stormpy.pars.MdpParameterLiftingModelChecker.get_bound_all_states" title="Link to this definition">¶</a></dt>
+<dd><p>Get bound</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pars.ModelInstantiator">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ModelInstantiator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pars.ModelInstantiator" title="Link to this definition">¶</a></dt>
+<dd><p>Class for instantiating models.</p>
+<p>Constructor.
+:param model: Model.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pars.ModelInstantiator.instantiate">
+<span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">valuation</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pars.ModelInstantiator.instantiate" title="Link to this definition">¶</a></dt>
+<dd><p>Instantiate model with given valuation.
+:param valuation: Valuation from parameter to value.
+:return: Instantiated model.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pars.ModelType">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ModelType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pars.ModelType" title="Link to this definition">¶</a></dt>
+<dd><p>Type of the model</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pars.ModelType.CTMC">
+<span class="sig-name descname"><span class="pre">CTMC</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></span><a class="headerlink" href="#stormpy.pars.ModelType.CTMC" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pars.ModelType.DTMC">
+<span class="sig-name descname"><span class="pre">DTMC</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#stormpy.pars.ModelType.DTMC" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pars.ModelType.MA">
+<span class="sig-name descname"><span class="pre">MA</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></span><a class="headerlink" href="#stormpy.pars.ModelType.MA" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pars.ModelType.MDP">
+<span class="sig-name descname"><span class="pre">MDP</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></span><a class="headerlink" href="#stormpy.pars.ModelType.MDP" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pars.ModelType.POMDP">
+<span class="sig-name descname"><span class="pre">POMDP</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></span><a class="headerlink" href="#stormpy.pars.ModelType.POMDP" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pars.ModelType.SMG">
+<span class="sig-name descname"><span class="pre">SMG</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6</span></span><a class="headerlink" href="#stormpy.pars.ModelType.SMG" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pars.PCtmcExactInstantiationChecker">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">PCtmcExactInstantiationChecker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.PCtmcExactInstantiationChecker" title="stormpy.pars._pars.PCtmcExactInstantiationChecker"><span class="pre">stormpy.pars._pars.PCtmcExactInstantiationChecker</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parametric</span> <span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="storage.html#stormpy.storage.SparseParametricCtmc" title="stormpy.storage._storage.SparseParametricCtmc"><span class="pre">stormpy.storage._storage.SparseParametricCtmc</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pars.PCtmcExactInstantiationChecker" title="Link to this definition">¶</a></dt>
+<dd><p>Instantiate pCTMCs to exact CTMCs and immediately check</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pars.PCtmcExactInstantiationChecker.check">
+<span class="sig-name descname"><span class="pre">check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.PCtmcExactInstantiationChecker" title="stormpy.pars._pars.PCtmcExactInstantiationChecker"><span class="pre">stormpy.pars._pars.PCtmcExactInstantiationChecker</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="core.html#stormpy.Environment" title="stormpy._core.Environment"><span class="pre">stormpy._core.Environment</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">collections.abc.Mapping</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.Variable" title="stormpy.pycarl._pycarl_core.Variable"><span class="pre">stormpy.pycarl._pycarl_core.Variable</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.cln.Rational" title="stormpy.pycarl.cln.Rational"><span class="pre">stormpy.pycarl.cln.Rational</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">stormpy._core._CheckResult</span></span></span><a class="headerlink" href="#stormpy.pars.PCtmcExactInstantiationChecker.check" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pars.PCtmcExactInstantiationChecker.set_graph_preserving">
+<span class="sig-name descname"><span class="pre">set_graph_preserving</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.PCtmcExactInstantiationChecker" title="stormpy.pars._pars.PCtmcExactInstantiationChecker"><span class="pre">stormpy.pars._pars.PCtmcExactInstantiationChecker</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.pars.PCtmcExactInstantiationChecker.set_graph_preserving" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pars.PCtmcInstantiationChecker">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">PCtmcInstantiationChecker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.PCtmcInstantiationChecker" title="stormpy.pars._pars.PCtmcInstantiationChecker"><span class="pre">stormpy.pars._pars.PCtmcInstantiationChecker</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parametric</span> <span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="storage.html#stormpy.storage.SparseParametricCtmc" title="stormpy.storage._storage.SparseParametricCtmc"><span class="pre">stormpy.storage._storage.SparseParametricCtmc</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pars.PCtmcInstantiationChecker" title="Link to this definition">¶</a></dt>
+<dd><p>Instantiate pCTMCs to CTMCs and immediately check</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pars.PCtmcInstantiationChecker.check">
+<span class="sig-name descname"><span class="pre">check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.PCtmcInstantiationChecker" title="stormpy.pars._pars.PCtmcInstantiationChecker"><span class="pre">stormpy.pars._pars.PCtmcInstantiationChecker</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="core.html#stormpy.Environment" title="stormpy._core.Environment"><span class="pre">stormpy._core.Environment</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">collections.abc.Mapping</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.Variable" title="stormpy.pycarl._pycarl_core.Variable"><span class="pre">stormpy.pycarl._pycarl_core.Variable</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.cln.Rational" title="stormpy.pycarl.cln.Rational"><span class="pre">stormpy.pycarl.cln.Rational</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">stormpy._core._CheckResult</span></span></span><a class="headerlink" href="#stormpy.pars.PCtmcInstantiationChecker.check" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pars.PCtmcInstantiationChecker.set_graph_preserving">
+<span class="sig-name descname"><span class="pre">set_graph_preserving</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.PCtmcInstantiationChecker" title="stormpy.pars._pars.PCtmcInstantiationChecker"><span class="pre">stormpy.pars._pars.PCtmcInstantiationChecker</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.pars.PCtmcInstantiationChecker.set_graph_preserving" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pars.PCtmcInstantiator">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">PCtmcInstantiator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.PCtmcInstantiator" title="stormpy.pars._pars.PCtmcInstantiator"><span class="pre">stormpy.pars._pars.PCtmcInstantiator</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parametric</span> <span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="storage.html#stormpy.storage.SparseParametricCtmc" title="stormpy.storage._storage.SparseParametricCtmc"><span class="pre">stormpy.storage._storage.SparseParametricCtmc</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pars.PCtmcInstantiator" title="Link to this definition">¶</a></dt>
+<dd><p>Instantiate PCTMCs to CTMCs</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pars.PCtmcInstantiator.instantiate">
+<span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.PCtmcInstantiator" title="stormpy.pars._pars.PCtmcInstantiator"><span class="pre">stormpy.pars._pars.PCtmcInstantiator</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">collections.abc.Mapping</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.Variable" title="stormpy.pycarl._pycarl_core.Variable"><span class="pre">stormpy.pycarl._pycarl_core.Variable</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.cln.Rational" title="stormpy.pycarl.cln.Rational"><span class="pre">stormpy.pycarl.cln.Rational</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="storage.html#stormpy.storage.SparseCtmc" title="stormpy.storage._storage.SparseCtmc"><span class="pre">stormpy.storage._storage.SparseCtmc</span></a></span></span><a class="headerlink" href="#stormpy.pars.PCtmcInstantiator.instantiate" title="Link to this definition">¶</a></dt>
+<dd><p>Instantiate model with given parameter values</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pars.PDtmcExactInstantiationChecker">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">PDtmcExactInstantiationChecker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.PDtmcExactInstantiationChecker" title="stormpy.pars._pars.PDtmcExactInstantiationChecker"><span class="pre">stormpy.pars._pars.PDtmcExactInstantiationChecker</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parametric</span> <span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="storage.html#stormpy.storage.SparseParametricDtmc" title="stormpy.storage._storage.SparseParametricDtmc"><span class="pre">stormpy.storage._storage.SparseParametricDtmc</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pars.PDtmcExactInstantiationChecker" title="Link to this definition">¶</a></dt>
+<dd><p>Instantiate pDTMCs to exact DTMCs and immediately check</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pars.PDtmcExactInstantiationChecker.check">
+<span class="sig-name descname"><span class="pre">check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.PDtmcExactInstantiationChecker" title="stormpy.pars._pars.PDtmcExactInstantiationChecker"><span class="pre">stormpy.pars._pars.PDtmcExactInstantiationChecker</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="core.html#stormpy.Environment" title="stormpy._core.Environment"><span class="pre">stormpy._core.Environment</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">collections.abc.Mapping</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.Variable" title="stormpy.pycarl._pycarl_core.Variable"><span class="pre">stormpy.pycarl._pycarl_core.Variable</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.cln.Rational" title="stormpy.pycarl.cln.Rational"><span class="pre">stormpy.pycarl.cln.Rational</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">stormpy._core._CheckResult</span></span></span><a class="headerlink" href="#stormpy.pars.PDtmcExactInstantiationChecker.check" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pars.PDtmcExactInstantiationChecker.set_graph_preserving">
+<span class="sig-name descname"><span class="pre">set_graph_preserving</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.PDtmcExactInstantiationChecker" title="stormpy.pars._pars.PDtmcExactInstantiationChecker"><span class="pre">stormpy.pars._pars.PDtmcExactInstantiationChecker</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.pars.PDtmcExactInstantiationChecker.set_graph_preserving" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pars.PDtmcInstantiationChecker">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">PDtmcInstantiationChecker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.PDtmcInstantiationChecker" title="stormpy.pars._pars.PDtmcInstantiationChecker"><span class="pre">stormpy.pars._pars.PDtmcInstantiationChecker</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parametric</span> <span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="storage.html#stormpy.storage.SparseParametricDtmc" title="stormpy.storage._storage.SparseParametricDtmc"><span class="pre">stormpy.storage._storage.SparseParametricDtmc</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pars.PDtmcInstantiationChecker" title="Link to this definition">¶</a></dt>
+<dd><p>Instantiate pDTMCs to DTMCs and immediately check</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pars.PDtmcInstantiationChecker.check">
+<span class="sig-name descname"><span class="pre">check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.PDtmcInstantiationChecker" title="stormpy.pars._pars.PDtmcInstantiationChecker"><span class="pre">stormpy.pars._pars.PDtmcInstantiationChecker</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="core.html#stormpy.Environment" title="stormpy._core.Environment"><span class="pre">stormpy._core.Environment</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">collections.abc.Mapping</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.Variable" title="stormpy.pycarl._pycarl_core.Variable"><span class="pre">stormpy.pycarl._pycarl_core.Variable</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.cln.Rational" title="stormpy.pycarl.cln.Rational"><span class="pre">stormpy.pycarl.cln.Rational</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">stormpy._core._CheckResult</span></span></span><a class="headerlink" href="#stormpy.pars.PDtmcInstantiationChecker.check" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pars.PDtmcInstantiationChecker.set_graph_preserving">
+<span class="sig-name descname"><span class="pre">set_graph_preserving</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.PDtmcInstantiationChecker" title="stormpy.pars._pars.PDtmcInstantiationChecker"><span class="pre">stormpy.pars._pars.PDtmcInstantiationChecker</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.pars.PDtmcInstantiationChecker.set_graph_preserving" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pars.PDtmcInstantiator">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">PDtmcInstantiator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.PDtmcInstantiator" title="stormpy.pars._pars.PDtmcInstantiator"><span class="pre">stormpy.pars._pars.PDtmcInstantiator</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parametric</span> <span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="storage.html#stormpy.storage.SparseParametricDtmc" title="stormpy.storage._storage.SparseParametricDtmc"><span class="pre">stormpy.storage._storage.SparseParametricDtmc</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pars.PDtmcInstantiator" title="Link to this definition">¶</a></dt>
+<dd><p>Instantiate PDTMCs to DTMCs</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pars.PDtmcInstantiator.instantiate">
+<span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.PDtmcInstantiator" title="stormpy.pars._pars.PDtmcInstantiator"><span class="pre">stormpy.pars._pars.PDtmcInstantiator</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">collections.abc.Mapping</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.Variable" title="stormpy.pycarl._pycarl_core.Variable"><span class="pre">stormpy.pycarl._pycarl_core.Variable</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.cln.Rational" title="stormpy.pycarl.cln.Rational"><span class="pre">stormpy.pycarl.cln.Rational</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="storage.html#stormpy.storage.SparseDtmc" title="stormpy.storage._storage.SparseDtmc"><span class="pre">stormpy.storage._storage.SparseDtmc</span></a></span></span><a class="headerlink" href="#stormpy.pars.PDtmcInstantiator.instantiate" title="Link to this definition">¶</a></dt>
+<dd><p>Instantiate model with given parameter values</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pars.PMaInstantiator">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">PMaInstantiator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.PMaInstantiator" title="stormpy.pars._pars.PMaInstantiator"><span class="pre">stormpy.pars._pars.PMaInstantiator</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parametric</span> <span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="storage.html#stormpy.storage.SparseParametricMA" title="stormpy.storage._storage.SparseParametricMA"><span class="pre">stormpy.storage._storage.SparseParametricMA</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pars.PMaInstantiator" title="Link to this definition">¶</a></dt>
+<dd><p>Instantiate PMAs to MAs</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pars.PMaInstantiator.instantiate">
+<span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.PMaInstantiator" title="stormpy.pars._pars.PMaInstantiator"><span class="pre">stormpy.pars._pars.PMaInstantiator</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">collections.abc.Mapping</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.Variable" title="stormpy.pycarl._pycarl_core.Variable"><span class="pre">stormpy.pycarl._pycarl_core.Variable</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.cln.Rational" title="stormpy.pycarl.cln.Rational"><span class="pre">stormpy.pycarl.cln.Rational</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="storage.html#stormpy.storage.SparseMA" title="stormpy.storage._storage.SparseMA"><span class="pre">stormpy.storage._storage.SparseMA</span></a></span></span><a class="headerlink" href="#stormpy.pars.PMaInstantiator.instantiate" title="Link to this definition">¶</a></dt>
+<dd><p>Instantiate model with given parameter values</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pars.PMdpExactInstantiationChecker">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">PMdpExactInstantiationChecker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.PMdpExactInstantiationChecker" title="stormpy.pars._pars.PMdpExactInstantiationChecker"><span class="pre">stormpy.pars._pars.PMdpExactInstantiationChecker</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parametric</span> <span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="storage.html#stormpy.storage.SparseParametricMdp" title="stormpy.storage._storage.SparseParametricMdp"><span class="pre">stormpy.storage._storage.SparseParametricMdp</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pars.PMdpExactInstantiationChecker" title="Link to this definition">¶</a></dt>
+<dd><p>Instantiate PMDP to exact MDPs and immediately check</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pars.PMdpExactInstantiationChecker.check">
+<span class="sig-name descname"><span class="pre">check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.PMdpExactInstantiationChecker" title="stormpy.pars._pars.PMdpExactInstantiationChecker"><span class="pre">stormpy.pars._pars.PMdpExactInstantiationChecker</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="core.html#stormpy.Environment" title="stormpy._core.Environment"><span class="pre">stormpy._core.Environment</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">collections.abc.Mapping</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.Variable" title="stormpy.pycarl._pycarl_core.Variable"><span class="pre">stormpy.pycarl._pycarl_core.Variable</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.cln.Rational" title="stormpy.pycarl.cln.Rational"><span class="pre">stormpy.pycarl.cln.Rational</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">stormpy._core._CheckResult</span></span></span><a class="headerlink" href="#stormpy.pars.PMdpExactInstantiationChecker.check" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pars.PMdpExactInstantiationChecker.set_graph_preserving">
+<span class="sig-name descname"><span class="pre">set_graph_preserving</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.PMdpExactInstantiationChecker" title="stormpy.pars._pars.PMdpExactInstantiationChecker"><span class="pre">stormpy.pars._pars.PMdpExactInstantiationChecker</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.pars.PMdpExactInstantiationChecker.set_graph_preserving" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pars.PMdpInstantiationChecker">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">PMdpInstantiationChecker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.PMdpInstantiationChecker" title="stormpy.pars._pars.PMdpInstantiationChecker"><span class="pre">stormpy.pars._pars.PMdpInstantiationChecker</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parametric</span> <span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="storage.html#stormpy.storage.SparseParametricMdp" title="stormpy.storage._storage.SparseParametricMdp"><span class="pre">stormpy.storage._storage.SparseParametricMdp</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pars.PMdpInstantiationChecker" title="Link to this definition">¶</a></dt>
+<dd><p>Instantiate PMDP to MDPs and immediately check</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pars.PMdpInstantiationChecker.check">
+<span class="sig-name descname"><span class="pre">check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.PMdpInstantiationChecker" title="stormpy.pars._pars.PMdpInstantiationChecker"><span class="pre">stormpy.pars._pars.PMdpInstantiationChecker</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="core.html#stormpy.Environment" title="stormpy._core.Environment"><span class="pre">stormpy._core.Environment</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">collections.abc.Mapping</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.Variable" title="stormpy.pycarl._pycarl_core.Variable"><span class="pre">stormpy.pycarl._pycarl_core.Variable</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.cln.Rational" title="stormpy.pycarl.cln.Rational"><span class="pre">stormpy.pycarl.cln.Rational</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">stormpy._core._CheckResult</span></span></span><a class="headerlink" href="#stormpy.pars.PMdpInstantiationChecker.check" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pars.PMdpInstantiationChecker.set_graph_preserving">
+<span class="sig-name descname"><span class="pre">set_graph_preserving</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.PMdpInstantiationChecker" title="stormpy.pars._pars.PMdpInstantiationChecker"><span class="pre">stormpy.pars._pars.PMdpInstantiationChecker</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.pars.PMdpInstantiationChecker.set_graph_preserving" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pars.PMdpInstantiator">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">PMdpInstantiator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.PMdpInstantiator" title="stormpy.pars._pars.PMdpInstantiator"><span class="pre">stormpy.pars._pars.PMdpInstantiator</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parametric</span> <span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="storage.html#stormpy.storage.SparseParametricMdp" title="stormpy.storage._storage.SparseParametricMdp"><span class="pre">stormpy.storage._storage.SparseParametricMdp</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pars.PMdpInstantiator" title="Link to this definition">¶</a></dt>
+<dd><p>Instantiate PMDPs to MDPs</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pars.PMdpInstantiator.instantiate">
+<span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.PMdpInstantiator" title="stormpy.pars._pars.PMdpInstantiator"><span class="pre">stormpy.pars._pars.PMdpInstantiator</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">collections.abc.Mapping</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.Variable" title="stormpy.pycarl._pycarl_core.Variable"><span class="pre">stormpy.pycarl._pycarl_core.Variable</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.cln.Rational" title="stormpy.pycarl.cln.Rational"><span class="pre">stormpy.pycarl.cln.Rational</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="storage.html#stormpy.storage.SparseMdp" title="stormpy.storage._storage.SparseMdp"><span class="pre">stormpy.storage._storage.SparseMdp</span></a></span></span><a class="headerlink" href="#stormpy.pars.PMdpInstantiator.instantiate" title="Link to this definition">¶</a></dt>
+<dd><p>Instantiate model with given parameter values</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pars.ParameterRegion">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ParameterRegion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.ParameterRegion" title="stormpy.pars._pars.ParameterRegion"><span class="pre">stormpy.pars._pars.ParameterRegion</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">valuation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">collections.abc.Mapping</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.Variable" title="stormpy.pycarl._pycarl_core.Variable"><span class="pre">stormpy.pycarl._pycarl_core.Variable</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.cln.Rational" title="stormpy.pycarl.cln.Rational"><span class="pre">stormpy.pycarl.cln.Rational</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.cln.Rational" title="stormpy.pycarl.cln.Rational"><span class="pre">stormpy.pycarl.cln.Rational</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pars.ParameterRegion" title="Link to this definition">¶</a></dt>
+<dd><p>Parameter region</p>
+<p>Create region from valuation of var -&gt; (lower_bound, upper_bound)</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.pars.ParameterRegion.area">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">area</span></span><a class="headerlink" href="#stormpy.pars.ParameterRegion.area" title="Link to this definition">¶</a></dt>
+<dd><p>Get area</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pars.ParameterRegion.create_from_string">
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">create_from_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">region_string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variables</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">collections.abc.Set</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.Variable" title="stormpy.pycarl._pycarl_core.Variable"><span class="pre">stormpy.pycarl._pycarl_core.Variable</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.pars.ParameterRegion" title="stormpy.pars._pars.ParameterRegion"><span class="pre">stormpy.pars._pars.ParameterRegion</span></a></span></span><a class="headerlink" href="#stormpy.pars.ParameterRegion.create_from_string" title="Link to this definition">¶</a></dt>
+<dd><p>Create region from string</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pars.PartialPCtmcInstantiator">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">PartialPCtmcInstantiator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.PartialPCtmcInstantiator" title="stormpy.pars._pars.PartialPCtmcInstantiator"><span class="pre">stormpy.pars._pars.PartialPCtmcInstantiator</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parametric</span> <span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="storage.html#stormpy.storage.SparseParametricCtmc" title="stormpy.storage._storage.SparseParametricCtmc"><span class="pre">stormpy.storage._storage.SparseParametricCtmc</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pars.PartialPCtmcInstantiator" title="Link to this definition">¶</a></dt>
+<dd><p>Instantiate PCTMCs to CTMCs</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pars.PartialPCtmcInstantiator.instantiate">
+<span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.PartialPCtmcInstantiator" title="stormpy.pars._pars.PartialPCtmcInstantiator"><span class="pre">stormpy.pars._pars.PartialPCtmcInstantiator</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">collections.abc.Mapping</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.Variable" title="stormpy.pycarl._pycarl_core.Variable"><span class="pre">stormpy.pycarl._pycarl_core.Variable</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.cln.Rational" title="stormpy.pycarl.cln.Rational"><span class="pre">stormpy.pycarl.cln.Rational</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="storage.html#stormpy.storage.SparseParametricCtmc" title="stormpy.storage._storage.SparseParametricCtmc"><span class="pre">stormpy.storage._storage.SparseParametricCtmc</span></a></span></span><a class="headerlink" href="#stormpy.pars.PartialPCtmcInstantiator.instantiate" title="Link to this definition">¶</a></dt>
+<dd><p>Instantiate model with given parameter values</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pars.PartialPDtmcInstantiator">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">PartialPDtmcInstantiator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.PartialPDtmcInstantiator" title="stormpy.pars._pars.PartialPDtmcInstantiator"><span class="pre">stormpy.pars._pars.PartialPDtmcInstantiator</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parametric</span> <span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="storage.html#stormpy.storage.SparseParametricDtmc" title="stormpy.storage._storage.SparseParametricDtmc"><span class="pre">stormpy.storage._storage.SparseParametricDtmc</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pars.PartialPDtmcInstantiator" title="Link to this definition">¶</a></dt>
+<dd><p>Instantiate PDTMCs to DTMCs</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pars.PartialPDtmcInstantiator.instantiate">
+<span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.PartialPDtmcInstantiator" title="stormpy.pars._pars.PartialPDtmcInstantiator"><span class="pre">stormpy.pars._pars.PartialPDtmcInstantiator</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">collections.abc.Mapping</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.Variable" title="stormpy.pycarl._pycarl_core.Variable"><span class="pre">stormpy.pycarl._pycarl_core.Variable</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.cln.Rational" title="stormpy.pycarl.cln.Rational"><span class="pre">stormpy.pycarl.cln.Rational</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="storage.html#stormpy.storage.SparseParametricDtmc" title="stormpy.storage._storage.SparseParametricDtmc"><span class="pre">stormpy.storage._storage.SparseParametricDtmc</span></a></span></span><a class="headerlink" href="#stormpy.pars.PartialPDtmcInstantiator.instantiate" title="Link to this definition">¶</a></dt>
+<dd><p>Instantiate model with given parameter values</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pars.PartialPMaInstantiator">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">PartialPMaInstantiator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.PartialPMaInstantiator" title="stormpy.pars._pars.PartialPMaInstantiator"><span class="pre">stormpy.pars._pars.PartialPMaInstantiator</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parametric</span> <span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="storage.html#stormpy.storage.SparseParametricMA" title="stormpy.storage._storage.SparseParametricMA"><span class="pre">stormpy.storage._storage.SparseParametricMA</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pars.PartialPMaInstantiator" title="Link to this definition">¶</a></dt>
+<dd><p>Instantiate PMAs to MAs</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pars.PartialPMaInstantiator.instantiate">
+<span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.PartialPMaInstantiator" title="stormpy.pars._pars.PartialPMaInstantiator"><span class="pre">stormpy.pars._pars.PartialPMaInstantiator</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">collections.abc.Mapping</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.Variable" title="stormpy.pycarl._pycarl_core.Variable"><span class="pre">stormpy.pycarl._pycarl_core.Variable</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.cln.Rational" title="stormpy.pycarl.cln.Rational"><span class="pre">stormpy.pycarl.cln.Rational</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="storage.html#stormpy.storage.SparseParametricMA" title="stormpy.storage._storage.SparseParametricMA"><span class="pre">stormpy.storage._storage.SparseParametricMA</span></a></span></span><a class="headerlink" href="#stormpy.pars.PartialPMaInstantiator.instantiate" title="Link to this definition">¶</a></dt>
+<dd><p>Instantiate model with given parameter values</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pars.PartialPMdpInstantiator">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">PartialPMdpInstantiator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.PartialPMdpInstantiator" title="stormpy.pars._pars.PartialPMdpInstantiator"><span class="pre">stormpy.pars._pars.PartialPMdpInstantiator</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parametric</span> <span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="storage.html#stormpy.storage.SparseParametricMdp" title="stormpy.storage._storage.SparseParametricMdp"><span class="pre">stormpy.storage._storage.SparseParametricMdp</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pars.PartialPMdpInstantiator" title="Link to this definition">¶</a></dt>
+<dd><p>Instantiate PMDPs to MDPs</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pars.PartialPMdpInstantiator.instantiate">
+<span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.PartialPMdpInstantiator" title="stormpy.pars._pars.PartialPMdpInstantiator"><span class="pre">stormpy.pars._pars.PartialPMdpInstantiator</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">collections.abc.Mapping</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.Variable" title="stormpy.pycarl._pycarl_core.Variable"><span class="pre">stormpy.pycarl._pycarl_core.Variable</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.cln.Rational" title="stormpy.pycarl.cln.Rational"><span class="pre">stormpy.pycarl.cln.Rational</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="storage.html#stormpy.storage.SparseParametricMdp" title="stormpy.storage._storage.SparseParametricMdp"><span class="pre">stormpy.storage._storage.SparseParametricMdp</span></a></span></span><a class="headerlink" href="#stormpy.pars.PartialPMdpInstantiator.instantiate" title="Link to this definition">¶</a></dt>
+<dd><p>Instantiate model with given parameter values</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pars.RegionModelChecker">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">RegionModelChecker</span></span><a class="headerlink" href="#stormpy.pars.RegionModelChecker" title="Link to this definition">¶</a></dt>
+<dd><p>Region model checker via paramater lifting</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pars.RegionModelChecker.check_region">
+<span class="sig-name descname"><span class="pre">check_region</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.RegionModelChecker" title="stormpy.pars._pars.RegionModelChecker"><span class="pre">stormpy.pars._pars.RegionModelChecker</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">environment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="core.html#stormpy.Environment" title="stormpy._core.Environment"><span class="pre">stormpy._core.Environment</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">region</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.ParameterRegion" title="stormpy.pars._pars.ParameterRegion"><span class="pre">stormpy.pars._pars.ParameterRegion</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">hypothesis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.RegionResultHypothesis" title="stormpy.pars._pars.RegionResultHypothesis"><span class="pre">stormpy.pars._pars.RegionResultHypothesis</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">&lt;RegionResultHypothesis.UNKNOWN:</span> <span class="pre">0&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampleVertices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.pars.RegionResult" title="stormpy.pars._pars.RegionResult"><span class="pre">stormpy.pars._pars.RegionResult</span></a></span></span><a class="headerlink" href="#stormpy.pars.RegionModelChecker.check_region" title="Link to this definition">¶</a></dt>
+<dd><p>Check region</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pars.RegionModelChecker.get_bound">
+<span class="sig-name descname"><span class="pre">get_bound</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.RegionModelChecker" title="stormpy.pars._pars.RegionModelChecker"><span class="pre">stormpy.pars._pars.RegionModelChecker</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">environment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="core.html#stormpy.Environment" title="stormpy._core.Environment"><span class="pre">stormpy._core.Environment</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">region</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.ParameterRegion" title="stormpy.pars._pars.ParameterRegion"><span class="pre">stormpy.pars._pars.ParameterRegion</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">maximise</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.cln.Rational" title="stormpy.pycarl.cln.Rational"><span class="pre">stormpy.pycarl.cln.Rational</span></a></span></span><a class="headerlink" href="#stormpy.pars.RegionModelChecker.get_bound" title="Link to this definition">¶</a></dt>
+<dd><p>Get bound</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pars.RegionModelChecker.get_split_suggestion">
+<span class="sig-name descname"><span class="pre">get_split_suggestion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.RegionModelChecker" title="stormpy.pars._pars.RegionModelChecker"><span class="pre">stormpy.pars._pars.RegionModelChecker</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">relevant_parameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">collections.abc.Set</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.Variable" title="stormpy.pycarl._pycarl_core.Variable"><span class="pre">stormpy.pycarl._pycarl_core.Variable</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.cln.Rational" title="stormpy.pycarl.cln.Rational"><span class="pre">stormpy.pycarl.cln.Rational</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#stormpy.pars.RegionModelChecker.get_split_suggestion" title="Link to this definition">¶</a></dt>
+<dd><p>Get region split estimates</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pars.RegionModelChecker.specify">
+<span class="sig-name descname"><span class="pre">specify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.RegionModelChecker" title="stormpy.pars._pars.RegionModelChecker"><span class="pre">stormpy.pars._pars.RegionModelChecker</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">environment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="core.html#stormpy.Environment" title="stormpy._core.Environment"><span class="pre">stormpy._core.Environment</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">stormpy.storage._storage._SparseParametricModel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">formula</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="logic.html#stormpy.logic.Formula" title="stormpy.logic._logic.Formula"><span class="pre">stormpy.logic._logic.Formula</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">splitting_estimate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">storm::modelchecker::RegionSplitEstimateKind</span> <span class="pre">|</span> <span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_model_simplification</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graph_preserving</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.pars.RegionModelChecker.specify" title="Link to this definition">¶</a></dt>
+<dd><p>specify arguments</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pars.RegionRefinementChecker">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">RegionRefinementChecker</span></span><a class="headerlink" href="#stormpy.pars.RegionRefinementChecker" title="Link to this definition">¶</a></dt>
+<dd><p>Region refinement checker</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pars.RegionRefinementChecker.compute_extremum">
+<span class="sig-name descname"><span class="pre">compute_extremum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.RegionRefinementChecker" title="stormpy.pars._pars.RegionRefinementChecker"><span class="pre">stormpy.pars._pars.RegionRefinementChecker</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">environment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="core.html#stormpy.Environment" title="stormpy._core.Environment"><span class="pre">stormpy._core.Environment</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">region</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.ParameterRegion" title="stormpy.pars._pars.ParameterRegion"><span class="pre">stormpy.pars._pars.ParameterRegion</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">extremum_direction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="core.html#stormpy.OptimizationDirection" title="stormpy._core.OptimizationDirection"><span class="pre">stormpy._core.OptimizationDirection</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">precision</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.cln.Rational" title="stormpy.pycarl.cln.Rational"><span class="pre">stormpy.pycarl.cln.Rational</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">precision_absolute</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.cln.Rational" title="stormpy.pycarl.cln.Rational"><span class="pre">stormpy.pycarl.cln.Rational</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.Variable" title="stormpy.pycarl._pycarl_core.Variable"><span class="pre">stormpy.pycarl._pycarl_core.Variable</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.cln.Rational" title="stormpy.pycarl.cln.Rational"><span class="pre">stormpy.pycarl.cln.Rational</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#stormpy.pars.RegionRefinementChecker.compute_extremum" title="Link to this definition">¶</a></dt>
+<dd><p>Compute extremum value and point with precision</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pars.RegionRefinementChecker.specify">
+<span class="sig-name descname"><span class="pre">specify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.RegionRefinementChecker" title="stormpy.pars._pars.RegionRefinementChecker"><span class="pre">stormpy.pars._pars.RegionRefinementChecker</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">environment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="core.html#stormpy.Environment" title="stormpy._core.Environment"><span class="pre">stormpy._core.Environment</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">stormpy.storage._storage._SparseParametricModel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">formula</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="logic.html#stormpy.logic.Formula" title="stormpy.logic._logic.Formula"><span class="pre">stormpy.logic._logic.Formula</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_model_simplification</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graph_preserving</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.pars.RegionRefinementChecker.specify" title="Link to this definition">¶</a></dt>
+<dd><p>specify arguments</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pars.RegionResult">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">RegionResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pars.RegionResult" title="Link to this definition">¶</a></dt>
+<dd><p>Types of region check results</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pars.RegionResult.ALLSAT">
+<span class="sig-name descname"><span class="pre">ALLSAT</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">8</span></span><a class="headerlink" href="#stormpy.pars.RegionResult.ALLSAT" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pars.RegionResult.ALLVIOLATED">
+<span class="sig-name descname"><span class="pre">ALLVIOLATED</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">9</span></span><a class="headerlink" href="#stormpy.pars.RegionResult.ALLVIOLATED" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pars.RegionResult.CENTERSAT">
+<span class="sig-name descname"><span class="pre">CENTERSAT</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></span><a class="headerlink" href="#stormpy.pars.RegionResult.CENTERSAT" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pars.RegionResult.CENTERVIOLATED">
+<span class="sig-name descname"><span class="pre">CENTERVIOLATED</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></span><a class="headerlink" href="#stormpy.pars.RegionResult.CENTERVIOLATED" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pars.RegionResult.EXISTSBOTH">
+<span class="sig-name descname"><span class="pre">EXISTSBOTH</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">7</span></span><a class="headerlink" href="#stormpy.pars.RegionResult.EXISTSBOTH" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pars.RegionResult.EXISTSSAT">
+<span class="sig-name descname"><span class="pre">EXISTSSAT</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></span><a class="headerlink" href="#stormpy.pars.RegionResult.EXISTSSAT" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pars.RegionResult.EXISTSVIOLATED">
+<span class="sig-name descname"><span class="pre">EXISTSVIOLATED</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></span><a class="headerlink" href="#stormpy.pars.RegionResult.EXISTSVIOLATED" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pars.RegionResult.UNKNOWN">
+<span class="sig-name descname"><span class="pre">UNKNOWN</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#stormpy.pars.RegionResult.UNKNOWN" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pars.RegionResult.friendly_name">
+<span class="sig-name descname"><span class="pre">friendly_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.RegionResult" title="stormpy.pars._pars.RegionResult"><span class="pre">stormpy.pars._pars.RegionResult</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#stormpy.pars.RegionResult.friendly_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pars.RegionResultHypothesis">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">RegionResultHypothesis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pars.RegionResultHypothesis" title="Link to this definition">¶</a></dt>
+<dd><p>Hypothesis for the result of a parameter region</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pars.RegionResultHypothesis.ALLSAT">
+<span class="sig-name descname"><span class="pre">ALLSAT</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></span><a class="headerlink" href="#stormpy.pars.RegionResultHypothesis.ALLSAT" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pars.RegionResultHypothesis.ALLVIOLATED">
+<span class="sig-name descname"><span class="pre">ALLVIOLATED</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></span><a class="headerlink" href="#stormpy.pars.RegionResultHypothesis.ALLVIOLATED" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pars.RegionResultHypothesis.UNKNOWN">
+<span class="sig-name descname"><span class="pre">UNKNOWN</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#stormpy.pars.RegionResultHypothesis.UNKNOWN" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pars.RegionResultHypothesis.friendly_name">
+<span class="sig-name descname"><span class="pre">friendly_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pars.RegionResultHypothesis" title="stormpy.pars._pars.RegionResultHypothesis"><span class="pre">stormpy.pars._pars.RegionResultHypothesis</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#stormpy.pars.RegionResultHypothesis.friendly_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="stormpy.pars.create_region_checker">
+<span class="sig-name descname"><span class="pre">create_region_checker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">environment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="core.html#stormpy.Environment" title="stormpy._core.Environment"><span class="pre">stormpy._core.Environment</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">stormpy.storage._storage._SparseParametricModel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">formula</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="logic.html#stormpy.logic.Formula" title="stormpy.logic._logic.Formula"><span class="pre">stormpy.logic._logic.Formula</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_model_simplification</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graph_preserving</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preconditions_validated_manually</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.pars.RegionModelChecker" title="stormpy.pars._pars.RegionModelChecker"><span class="pre">stormpy.pars._pars.RegionModelChecker</span></a></span></span><a class="headerlink" href="#stormpy.pars.create_region_checker" title="Link to this definition">¶</a></dt>
+<dd><p>Create region checker</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="stormpy.pars.create_region_refinement_checker">
+<span class="sig-name descname"><span class="pre">create_region_refinement_checker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">environment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="core.html#stormpy.Environment" title="stormpy._core.Environment"><span class="pre">stormpy._core.Environment</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">stormpy.storage._storage._SparseParametricModel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">formula</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="logic.html#stormpy.logic.Formula" title="stormpy.logic._logic.Formula"><span class="pre">stormpy.logic._logic.Formula</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_model_simplification</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graph_preserving</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preconditions_validated_manually</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.pars.RegionRefinementChecker" title="stormpy.pars._pars.RegionRefinementChecker"><span class="pre">stormpy.pars._pars.RegionRefinementChecker</span></a></span></span><a class="headerlink" href="#stormpy.pars.create_region_refinement_checker" title="Link to this definition">¶</a></dt>
+<dd><p>Create region refinement checker</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="stormpy.pars.gather_derivatives">
+<span class="sig-name descname"><span class="pre">gather_derivatives</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">stormpy.storage._storage._SparseParametricModel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.Variable" title="stormpy.pycarl._pycarl_core.Variable"><span class="pre">stormpy.pycarl._pycarl_core.Variable</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">set</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pycarl/core.html#stormpy.pycarl.cln.FactorizedPolynomial" title="stormpy.pycarl.cln.FactorizedPolynomial"><span class="pre">stormpy.pycarl.cln.FactorizedPolynomial</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#stormpy.pars.gather_derivatives" title="Link to this definition">¶</a></dt>
+<dd><p>Gather all derivatives of transition probabilities</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="stormpy.pars.simplify_model">
+<span class="sig-name descname"><span class="pre">simplify_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">formula</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pars.simplify_model" title="Link to this definition">¶</a></dt>
+<dd><p>Simplify parametric model preserving the given formula by eliminating states with constant outgoing probabilities.
+:param model: Model.
+:param formula: Formula.
+:return: Tuple of simplified model and simplified formula.</p>
+</dd></dl>
+
+</section>
+
+
+</div>
+        </article>
+        <aside class="nftt-toc">
+          
+          <div class="my-sm-1 my-lg-0 ps-xl-3 text-muted">
+            <button class="btn btn-link p-lg-0 mb-2 mb-lg-0 text-decoration-none nftt-toc-toggle d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#tocContents" aria-expanded="false" aria-controls="tocContents"
+            >On this page <i class="ms-2 bi bi-chevron-expand"></i></button>
+            <div class="title d-none d-lg-block">
+              <i class="bi bi-file-earmark-text"></i>&nbsp;&nbsp;<span class="small">On this page</span>
+            </div>
+            <div class="collapse nftt-toc-collapse" id="tocContents">
+              <nav id="TableOfContents">
+                <ul>
+<li><a class="reference internal" href="#">Stormpy.pars</a><ul>
+<li><a class="reference internal" href="#stormpy.pars.DtmcParameterLiftingModelChecker"><code class="docutils literal notranslate"><span class="pre">DtmcParameterLiftingModelChecker</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pars.DtmcParameterLiftingModelChecker.get_bound_all_states"><code class="docutils literal notranslate"><span class="pre">DtmcParameterLiftingModelChecker.get_bound_all_states()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.pars.MdpParameterLiftingModelChecker"><code class="docutils literal notranslate"><span class="pre">MdpParameterLiftingModelChecker</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pars.MdpParameterLiftingModelChecker.get_bound_all_states"><code class="docutils literal notranslate"><span class="pre">MdpParameterLiftingModelChecker.get_bound_all_states()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.pars.ModelInstantiator"><code class="docutils literal notranslate"><span class="pre">ModelInstantiator</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pars.ModelInstantiator.instantiate"><code class="docutils literal notranslate"><span class="pre">ModelInstantiator.instantiate()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.pars.ModelType"><code class="docutils literal notranslate"><span class="pre">ModelType</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pars.ModelType.CTMC"><code class="docutils literal notranslate"><span class="pre">ModelType.CTMC</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pars.ModelType.DTMC"><code class="docutils literal notranslate"><span class="pre">ModelType.DTMC</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pars.ModelType.MA"><code class="docutils literal notranslate"><span class="pre">ModelType.MA</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pars.ModelType.MDP"><code class="docutils literal notranslate"><span class="pre">ModelType.MDP</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pars.ModelType.POMDP"><code class="docutils literal notranslate"><span class="pre">ModelType.POMDP</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pars.ModelType.SMG"><code class="docutils literal notranslate"><span class="pre">ModelType.SMG</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.pars.PCtmcExactInstantiationChecker"><code class="docutils literal notranslate"><span class="pre">PCtmcExactInstantiationChecker</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pars.PCtmcExactInstantiationChecker.check"><code class="docutils literal notranslate"><span class="pre">PCtmcExactInstantiationChecker.check()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pars.PCtmcExactInstantiationChecker.set_graph_preserving"><code class="docutils literal notranslate"><span class="pre">PCtmcExactInstantiationChecker.set_graph_preserving()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.pars.PCtmcInstantiationChecker"><code class="docutils literal notranslate"><span class="pre">PCtmcInstantiationChecker</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pars.PCtmcInstantiationChecker.check"><code class="docutils literal notranslate"><span class="pre">PCtmcInstantiationChecker.check()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pars.PCtmcInstantiationChecker.set_graph_preserving"><code class="docutils literal notranslate"><span class="pre">PCtmcInstantiationChecker.set_graph_preserving()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.pars.PCtmcInstantiator"><code class="docutils literal notranslate"><span class="pre">PCtmcInstantiator</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pars.PCtmcInstantiator.instantiate"><code class="docutils literal notranslate"><span class="pre">PCtmcInstantiator.instantiate()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.pars.PDtmcExactInstantiationChecker"><code class="docutils literal notranslate"><span class="pre">PDtmcExactInstantiationChecker</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pars.PDtmcExactInstantiationChecker.check"><code class="docutils literal notranslate"><span class="pre">PDtmcExactInstantiationChecker.check()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pars.PDtmcExactInstantiationChecker.set_graph_preserving"><code class="docutils literal notranslate"><span class="pre">PDtmcExactInstantiationChecker.set_graph_preserving()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.pars.PDtmcInstantiationChecker"><code class="docutils literal notranslate"><span class="pre">PDtmcInstantiationChecker</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pars.PDtmcInstantiationChecker.check"><code class="docutils literal notranslate"><span class="pre">PDtmcInstantiationChecker.check()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pars.PDtmcInstantiationChecker.set_graph_preserving"><code class="docutils literal notranslate"><span class="pre">PDtmcInstantiationChecker.set_graph_preserving()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.pars.PDtmcInstantiator"><code class="docutils literal notranslate"><span class="pre">PDtmcInstantiator</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pars.PDtmcInstantiator.instantiate"><code class="docutils literal notranslate"><span class="pre">PDtmcInstantiator.instantiate()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.pars.PMaInstantiator"><code class="docutils literal notranslate"><span class="pre">PMaInstantiator</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pars.PMaInstantiator.instantiate"><code class="docutils literal notranslate"><span class="pre">PMaInstantiator.instantiate()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.pars.PMdpExactInstantiationChecker"><code class="docutils literal notranslate"><span class="pre">PMdpExactInstantiationChecker</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pars.PMdpExactInstantiationChecker.check"><code class="docutils literal notranslate"><span class="pre">PMdpExactInstantiationChecker.check()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pars.PMdpExactInstantiationChecker.set_graph_preserving"><code class="docutils literal notranslate"><span class="pre">PMdpExactInstantiationChecker.set_graph_preserving()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.pars.PMdpInstantiationChecker"><code class="docutils literal notranslate"><span class="pre">PMdpInstantiationChecker</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pars.PMdpInstantiationChecker.check"><code class="docutils literal notranslate"><span class="pre">PMdpInstantiationChecker.check()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pars.PMdpInstantiationChecker.set_graph_preserving"><code class="docutils literal notranslate"><span class="pre">PMdpInstantiationChecker.set_graph_preserving()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.pars.PMdpInstantiator"><code class="docutils literal notranslate"><span class="pre">PMdpInstantiator</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pars.PMdpInstantiator.instantiate"><code class="docutils literal notranslate"><span class="pre">PMdpInstantiator.instantiate()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.pars.ParameterRegion"><code class="docutils literal notranslate"><span class="pre">ParameterRegion</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pars.ParameterRegion.area"><code class="docutils literal notranslate"><span class="pre">ParameterRegion.area</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pars.ParameterRegion.create_from_string"><code class="docutils literal notranslate"><span class="pre">ParameterRegion.create_from_string()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.pars.PartialPCtmcInstantiator"><code class="docutils literal notranslate"><span class="pre">PartialPCtmcInstantiator</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pars.PartialPCtmcInstantiator.instantiate"><code class="docutils literal notranslate"><span class="pre">PartialPCtmcInstantiator.instantiate()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.pars.PartialPDtmcInstantiator"><code class="docutils literal notranslate"><span class="pre">PartialPDtmcInstantiator</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pars.PartialPDtmcInstantiator.instantiate"><code class="docutils literal notranslate"><span class="pre">PartialPDtmcInstantiator.instantiate()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.pars.PartialPMaInstantiator"><code class="docutils literal notranslate"><span class="pre">PartialPMaInstantiator</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pars.PartialPMaInstantiator.instantiate"><code class="docutils literal notranslate"><span class="pre">PartialPMaInstantiator.instantiate()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.pars.PartialPMdpInstantiator"><code class="docutils literal notranslate"><span class="pre">PartialPMdpInstantiator</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pars.PartialPMdpInstantiator.instantiate"><code class="docutils literal notranslate"><span class="pre">PartialPMdpInstantiator.instantiate()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.pars.RegionModelChecker"><code class="docutils literal notranslate"><span class="pre">RegionModelChecker</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pars.RegionModelChecker.check_region"><code class="docutils literal notranslate"><span class="pre">RegionModelChecker.check_region()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pars.RegionModelChecker.get_bound"><code class="docutils literal notranslate"><span class="pre">RegionModelChecker.get_bound()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pars.RegionModelChecker.get_split_suggestion"><code class="docutils literal notranslate"><span class="pre">RegionModelChecker.get_split_suggestion()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pars.RegionModelChecker.specify"><code class="docutils literal notranslate"><span class="pre">RegionModelChecker.specify()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.pars.RegionRefinementChecker"><code class="docutils literal notranslate"><span class="pre">RegionRefinementChecker</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pars.RegionRefinementChecker.compute_extremum"><code class="docutils literal notranslate"><span class="pre">RegionRefinementChecker.compute_extremum()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pars.RegionRefinementChecker.specify"><code class="docutils literal notranslate"><span class="pre">RegionRefinementChecker.specify()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.pars.RegionResult"><code class="docutils literal notranslate"><span class="pre">RegionResult</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pars.RegionResult.ALLSAT"><code class="docutils literal notranslate"><span class="pre">RegionResult.ALLSAT</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pars.RegionResult.ALLVIOLATED"><code class="docutils literal notranslate"><span class="pre">RegionResult.ALLVIOLATED</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pars.RegionResult.CENTERSAT"><code class="docutils literal notranslate"><span class="pre">RegionResult.CENTERSAT</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pars.RegionResult.CENTERVIOLATED"><code class="docutils literal notranslate"><span class="pre">RegionResult.CENTERVIOLATED</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pars.RegionResult.EXISTSBOTH"><code class="docutils literal notranslate"><span class="pre">RegionResult.EXISTSBOTH</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pars.RegionResult.EXISTSSAT"><code class="docutils literal notranslate"><span class="pre">RegionResult.EXISTSSAT</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pars.RegionResult.EXISTSVIOLATED"><code class="docutils literal notranslate"><span class="pre">RegionResult.EXISTSVIOLATED</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pars.RegionResult.UNKNOWN"><code class="docutils literal notranslate"><span class="pre">RegionResult.UNKNOWN</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pars.RegionResult.friendly_name"><code class="docutils literal notranslate"><span class="pre">RegionResult.friendly_name()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.pars.RegionResultHypothesis"><code class="docutils literal notranslate"><span class="pre">RegionResultHypothesis</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pars.RegionResultHypothesis.ALLSAT"><code class="docutils literal notranslate"><span class="pre">RegionResultHypothesis.ALLSAT</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pars.RegionResultHypothesis.ALLVIOLATED"><code class="docutils literal notranslate"><span class="pre">RegionResultHypothesis.ALLVIOLATED</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pars.RegionResultHypothesis.UNKNOWN"><code class="docutils literal notranslate"><span class="pre">RegionResultHypothesis.UNKNOWN</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pars.RegionResultHypothesis.friendly_name"><code class="docutils literal notranslate"><span class="pre">RegionResultHypothesis.friendly_name()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.pars.create_region_checker"><code class="docutils literal notranslate"><span class="pre">create_region_checker()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pars.create_region_refinement_checker"><code class="docutils literal notranslate"><span class="pre">create_region_refinement_checker()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pars.gather_derivatives"><code class="docutils literal notranslate"><span class="pre">gather_derivatives()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pars.simplify_model"><code class="docutils literal notranslate"><span class="pre">simplify_model()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+              </nav>
+            </div>
+          </div>
+          
+        </aside>
+      </div>
+    </div>
+
+    <footer class="nftt-footer">
+      <nav id="paginator" class="py-4" aria-label="Documentation navigation">
+    <div class="container">
+      <ul class="pagination justify-content-between mb-0"><li class="d-flex page-item">
+            <a href="gspn.html" class="d-flex pe-5 px-lg-5 align-items-end" rel="prev" aria-label="Previous page: Stormpy.gspn">
+              <span class="prev-page"><i class="bi bi-caret-left"></i></span>
+              <div class="d-none d-sm-flex flex-column">
+                <span class="text-small text-start text-muted">Previous</span>
+                <span class="underline">Stormpy.gspn</span>
+              </div>
+            </a>
+          </li>
+        <li class="d-flex page-item ms-auto">
+            <a href="pomdp.html" class="d-flex ps-5 px-lg-5 align-items-end" rel="next" aria-label="Next page: Stormpy.pomdp">
+              <div class="d-flex flex-column">
+                <span class="text-small text-end text-start text-muted">Next</span>
+                <span class="underline">Stormpy.pomdp</span>
+              </div>
+              <span class="next-page"><i class="bi bi-caret-right"></i></span>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </nav>
+
+      <div class="py-5 px-4 px-md-3">
+  <div class="container">
+    
+    <div class="row">
+      <ul id="nftt-footer-links" class="list-unstyled list-separator col-lg-12 pb-2 text-center">
+        
+          <li class="d-inline">
+            <a href="https://stormchecker.github.io/stormpy/"  class="list-item">Documentation</a>
+          </li>
+        
+          <li class="d-inline">
+            <a href="https://pypi.org/project/stormpy/"  class="list-item">Package</a>
+          </li>
+        
+          <li class="d-inline">
+            <a href="https://github.com/stormchecker/stormpy/"  class="list-item">Repository</a>
+          </li>
+        
+          <li class="d-inline">
+            <a href="https://github.com/stormchecker/stormpy/issues"  class="list-item">Issues</a>
+          </li>
+        
+      </ul>
+    </div>
+    
+
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <a class="brand-text d-inline-flex align-items-center mb-2 text-decoration-none" href="/" aria-label="stormpy">
+          <span class="fs-6 fw-bold">stormpy</span>
+        </a>
+        
+          <ul class="list-unstyled small text-muted">
+            <li>2016-2026 Storm Developers</li>
+          </ul>
+        
+        <div class="built-with pt-2">
+          Built with <a href="http://sphinx-doc.org">Sphinx 9.1.0</a> and <a href="https://github.com/danirus/sphinx-nefertiti">Nefertiti 0.9.9</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    </footer>
+
+    <div class="modal modal-xl fade" id="nftt-modal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen-xxl-down modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="nftt-modal-title"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="nftt-modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+    <script src="../_static/documentation_options.js?v=01009efc"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/docs-versions.js?v=08b0cbfb"></script>
+    <script src="../_static/sphinx-nefertiti.min.js?v=af404e0e"></script>
+    <script src="../_static/bootstrap.bundle.min.js?v=c066362f"></script>
+  </body>
+</html>

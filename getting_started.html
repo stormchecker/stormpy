@@ -1,0 +1,821 @@
+
+<!DOCTYPE html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    
+    <meta name="docsearch:name" content="stormpy" />
+    <meta name="docsearch:package_type" content="" />
+    <meta name="docsearch:release" content="1.14.0" />
+    <meta name="docsearch:version" content="" />
+    
+      <meta name="theme-color" content="#0D6EFD" />
+    
+    
+      <title>Getting Started &mdash; stormpy 1.14.0 documentation</title>
+    
+    <link rel="canonical" href="getting_started" />
+      <link rel="icon" href="_static/favicon.png" />
+          <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8e8a900e" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="_static/fonts/nunito/stylesheet.css?v=abf98f06" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="_static/fonts/ubuntu-sans-mono/stylesheet.css?v=8616a587" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="_static/pygments-dark.css?v=f21207c5" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="_static/pygments-light.css?v=6c104457" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="_static/bootstrap-icons.min.css?v=44730005" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="_static/sphinx-nefertiti-blue.min.css?v=cbfc91e2" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="_static/custom.css?v=6c103ecc" /><!-- add (1) -->
+        <link rel="index" title="Index" href="genindex.html" />
+        <link rel="search" title="Search" href="search.html" />
+        <link rel="top" title="stormpy 1.14.0 documentation" href="#" />
+        <link rel="next" title="Advanced Examples" href="advanced_topics.html" />
+        <link rel="prev" title="Installation" href="installation.html" />
+    <style>
+      :root {
+        --nftt-body-font-family: "Nunito", var(--nftt-font-sans-serif) !important;
+        --nftt-font-monospace: "Ubuntu Sans Mono", var(--nftt-font-family-monospace) !important;
+        --nftt-project-name-font: var(--nftt-body-font-family);
+        --nftt-documentation-font: var(--nftt-body-font-family);
+        --nftt-doc-headers-font: "Georgia", var(--nftt-documentation-font);}
+    </style>
+  </head>
+  <body>
+    <div id="back-to-top-container" class="position-fixed start-50 translate-middle-x">
+      <button id="back-to-top" type="button" class="d-none btn btn-neutral btn-sm shadow px-4" data-bs-toggle="button">Back to top</button>
+    </div>
+    <header id="snftt-nav-bar" class="navbar navbar-expand-xl navbar-dark nftt-navbar flex-column fixed-top">
+      <div class="skip-links container-fluid visually-hidden-focusable overflow-hidden justify-content-start flex-grow-1">
+        <div class="border-bottom mb-2 pb-2 w-100">
+          <a class="d-none d-md-inline-flex p-2 m-1" href="#sidebar-filter">Skip to index filter</a>
+          <a class="d-inline-flex p-2 m-1" href="#content">Skip to main content</a>
+        </div>
+      </div>
+      <nav class="container-xxl nftt-gutter flex-nowrap" aria-label="Main navigation">
+        <div class="nftt-navbar-toggler">
+          <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle documentation navigation">
+            <i class="bi bi-list"></i>
+          </button>
+        </div>
+          <a
+            href="index.html"
+            class="navbar-brand"
+          >
+            <img src="_static/storm_logo.png" width="36" height="36" alt="Storm logo"
+              class="project-logo"
+            />
+            <span class="brand-text">stormpy</span><span class="brand-short-text">stormpy</span>
+          </a>
+        
+        
+          <ul class="nftt-header-links-large navbar-nav">
+          
+            
+            
+            
+            
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="#" data-snftt-hl-id="1"  >Getting Started</a>
+    </li>
+  
+
+  
+    <li class="nav-item dropdown">
+      <a class="snftt-hl nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" href="#" data-snftt-hl-id="2" data-snftt-hl-regexps="doc/*">Documentation</a>
+      <ul class="dropdown-menu">
+        
+          
+          
+          
+          
+  
+    <li >
+      <a class="snftt-hl dropdown-item" href="advanced_topics.html" data-snftt-hl-id="3"  >Advanced Examples</a>
+    </li>
+  
+
+  
+    <li><hr class="dropdown-divider"></li>
+  
+
+  
+    <li >
+      <a class="snftt-hl dropdown-item" href="using_pycarl.html" data-snftt-hl-id="4"  >Getting Started with Pycarl</a>
+    </li>
+  
+
+        
+      </ul>
+    </li>
+  
+
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="api.html" data-snftt-hl-id="5"  data-snftt-hl-id="" data-snftt-hl-regexps="api/*">API</a>
+    </li>
+  
+
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="https://www.stormchecker.org/" data-snftt-hl-id="6"  >Storm</a>
+    </li>
+  
+
+          
+          </ul>
+        
+        <div class="d-flex d-xl-none">
+          <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#nfttSearch" aria-controls="nfttSearch" aria-label="Search">
+            <i class="bi bi-search"></i>
+          </button>
+          <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#nfttNavbar" aria-controls="nfttNavbar" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+        </div>
+        
+<div class="offcanvas-xl offcanvas-end flex-grow-1" tabindex="-1" id="nfttSearch" aria-labelledby="nfttSearchOffcanvasLabel" data-bs-scroll="true">
+  <div class="offcanvas-header px-4 pb-0">
+    <h5 class="offcanvas-title fw-bold" id="nfttSearchOffcanvasLabel">Search the documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#nfttSearch"></button>
+  </div>
+  <div class="offcanvas-body p-4 pt-0 p-xl-0 ps-xl-4">
+    <hr class="d-xl-none text-white-50">
+    <ul class="navbar-nav flex-row align-items-center flex-wrap ms-md-auto">
+      <li class="nav-item col-12 col-xl-auto">
+        <form id="nftt-search-form" action="search.html" method="get">
+          <div class="input-group">
+            <input type="text" name="q" class="form-control search-input" placeholder="Search" aria-label="Search" aria-describedby="button-search">
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <button class="btn btn-primary" type="submit" id="button-search" aria-label="Search"><i class="bi bi-search"></i></button>
+          </div>
+        </form>
+      </li>
+    </ul>
+  </div>
+</div>
+
+        <div class="offcanvas-xl offcanvas-end" tabindex="-1" id="nfttNavbar" aria-labelledby="nfttNavbarOffcanvasLabel" data-bs-scroll="true">
+          <div class="offcanvas-header px-4 pb-0">
+            <div class="offcanvas-title navbar-brand" id="nfttNavbarOffcanvasLabel"><span class="brand-short-text">stormpy</span></div>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#nfttNavbar"></button>
+          </div>
+          <div class="offcanvas-body p-4 pt-0 p-xl-0 px-xl-3">
+            <hr class="d-xl-none text-white-50">
+            <ul class="navbar-nav flex-row align-items-center flex-wrap ms-lg-auto">
+              
+                <div class="nftt-header-links-small">
+                  
+                    
+                    
+                    
+                    <div class="d-inline-block">
+                      
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="#" data-snftt-hl-id="1"  >Getting Started</a>
+    </li>
+  
+
+  
+    <li class="nav-item dropdown">
+      <a class="snftt-hl nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" href="#" data-snftt-hl-id="2" data-snftt-hl-regexps="doc/*">Documentation</a>
+      <ul class="dropdown-menu">
+        
+          
+          
+          
+          
+  
+    <li >
+      <a class="snftt-hl dropdown-item" href="advanced_topics.html" data-snftt-hl-id="3"  >Advanced Examples</a>
+    </li>
+  
+
+  
+    <li><hr class="dropdown-divider"></li>
+  
+
+  
+    <li >
+      <a class="snftt-hl dropdown-item" href="using_pycarl.html" data-snftt-hl-id="4"  >Getting Started with Pycarl</a>
+    </li>
+  
+
+        
+      </ul>
+    </li>
+  
+
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="api.html" data-snftt-hl-id="5"  data-snftt-hl-id="" data-snftt-hl-regexps="api/*">API</a>
+    </li>
+  
+
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="https://www.stormchecker.org/" data-snftt-hl-id="6"  >Storm</a>
+    </li>
+  
+
+                    </div>
+                  
+                  <li class="nav-item col-12 col-xl-auto h-100" aria-hidden="true">
+                    <div class="vr d-none d-xl-flex h-100 mx-xl-2 text-white-50"></div>
+                    <hr class="d-xl-none text-white-50">
+                  </li>
+                </div>
+              
+              
+              <li class="nav-item col-12 col-xl-auto">
+                <a class="nav-link py-2 py-xl-0 px-0 px-xl-2" href="https://github.com/stormchecker/stormpy" target="_blank" rel="noopener">
+                  <div class="d-flex align-items-center">
+                    <div class="me-2">
+                      <i class="bi bi-git size-24"></i>
+                    </div>
+                    <div class="repo d-flex flex-column align-items-center" data-snftt-repo-url="https://github.com/stormchecker/stormpy">
+                      stormpy
+                      <div class="d-flex justify-content-center" data-snftt-repo-metrics>
+                        <span class="pe-2 d-flex justify-content-center align-items-center">
+                          <i class="bi bi-tag size-14"></i>
+                          <span class="repo-metric" data-snftt-repo-tag></span>
+                        </span>
+                        <span class="pe-2 d-flex justify-content-center align-items-center">
+                          <i class="bi bi-star size-14"></i>
+                          <span class="repo-metric" data-snftt-repo-stars></span>
+                        </span>
+                        <span class="d-flex justify-content-center align-items-center">
+                          <i class="bi bi-diagram-2 size-14"></i>
+                          <span class="repo-metric" data-snftt-repo-forks></span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class="nav-item col-12 col-xl-auto h-100" aria-hidden="true">
+                <div class="vr d-none d-xl-flex h-100 mx-xl-2 text-white-50"></div>
+                <hr class="d-xl-none text-white-50">
+              </li>
+              
+              
+              
+              
+              <!-- lightdark-dropdown.html -->
+<li class="nav-item dropdown">
+  <a class="nav-link d-flex py-2 px-0 px-xl-2 dropdown-toggle align-items-center" id="snftt-luz" href="#" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" aria-label="Change appearance">
+    <i class="bi bi-circle-half" data-snftt-luz-icon-active></i>
+    <span id="snftt-luz-text" class="d-xl-none ms-2">Change appearance</span>
+  </a>
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="snftt-luz-text">
+    <li>
+      <h6 class="dropdown-header">Change appearance</h6>
+    </li>
+    <li>
+      <a class="dropdown-item d-flex align-items-center" data-snftt-luz="light" href="#" aria-pressed="false">
+        <span>
+          <i class="bi bi-sun" data-snftt-luz-icon="light"></i>
+        </span>
+        <span class="ms-3">Light</span>
+        <i class="bi bi-check ms-auto"></i>
+      </a>
+    </li>
+    <li>
+      <a class="dropdown-item d-flex align-items-center" data-snftt-luz="dark" href="#" aria-pressed="false">
+        <span>
+          <i class="bi bi-moon-stars" data-snftt-luz-icon="dark"></i>
+        </span>
+        <span class="ms-3">Dark</span>
+        <i class="bi bi-check ms-auto"></i>
+      </a>
+    </li>
+    <li>
+      <a class="dropdown-item current d-flex align-items-center" data-snftt-luz="default" href="#" aria-pressed="false">
+        <span>
+          <i class="bi bi-circle-half" data-snftt-luz-icon="default"></i>
+        </span>
+        <span class="ms-3">Automatic</span>
+        <i class="bi bi-check ms-auto"></i>
+      </a>
+    </li>
+  </ul>
+</li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      
+    </header>
+
+    <div class="container-fluid">
+      <div class="nftt-gutter nftt-page">
+        <aside class="nftt-sidebar ">
+          <div class="nftt-sidebar-content">
+            
+            <div class="title d-none d-xl-none">
+              <i class="bi bi-book"></i>&nbsp;&nbsp;<span>Index</span>
+            </div>
+            <div id="sidebar" tabindex="-1" class="offcanvas-xl offcanvas-start" aria-labelledby="nfttSidebarOffcanvasLabel">
+                <!-- sidebartemplate: "globaltoc.html" --><div class="offcanvas-header border-bottom">
+  <h5 class="offcanvas-title fw-bold" id="nfttSidebarOffcanvasLabel">
+    Index
+  </h5>
+  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#sidebar"></button>
+</div>
+
+<div class="offcanvas-body">
+  <nav class="toc" aria-label="Main menu">
+    <div class="mb-3 p-1 pb-4 border-bottom">
+      <input id="sidebar-filter" type="text" name="filter" class="form-control form-control-sm" placeholder="index filter" aria-label="index filter">
+    </div>
+    <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="advanced_topics.html">Advanced Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="doc/analysis.html">Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/building_models.html">Building Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/models/building_dtmcs.html">Discrete-time Markov chains (DTMCs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/models/building_mdps.html">Markov decision processes (MDPs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/models/building_ctmcs.html">Continuous-time Markov chains (CTMCs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/models/building_mas.html">Markov automata (MAs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/engines.html">Engines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/exploration.html">Exploring Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/simulator.html">Working with Simulators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/reward_models.html">Reward Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/schedulers.html">Working with Schedulers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/shortest_paths.html">Working with Shortest Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/parametric_models.html">Parametric Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/dfts.html">Dynamic Fault Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/gspns.html">Generalized Stochastic Petri Nets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/info.html">Storm(py) Information</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="using_pycarl.html">Getting Started with Pycarl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Developer information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributors.html">Contributors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Stormpy API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/core.html">Stormpy.core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/info.html">Stormpy.info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/exceptions.html">Stormpy.exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/logic.html">Stormpy.logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/storage.html">Stormpy.storage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/utility.html">Stormpy.utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/dft.html">Stormpy.dft</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/gspn.html">Stormpy.gspn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pars.html">Stormpy.pars</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pomdp.html">Stormpy.pomdp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pycarl/core.html">Pycarl core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pycarl/convert.html">Pycarl convert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pycarl/formula.html">Pycarl formula</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pycarl/parse.html">Pycarl parse</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav>
+  <template data-toggle-item-template>
+    <button class="btn btn-sm btn-link toctree-expand" type="button">
+      <i class="bi bi-caret-right"></i>
+      <span class="visually-hidden">Toggle menu contents</span>
+    </button>
+  </template>
+</div>
+            </div>
+            
+          </div>
+        </aside>
+        <article id="content" class="nftt-content" role="main">
+          <div><div class="d-flex flex-row justify-content-between">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="index.html">Start</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Getting Started</li>
+    </ol>
+  </nav>
+  
+    <div class="fs085">
+        <a href="_sources/getting_started.md.txt"  rel="nofollow" aria-label="Show source of this document"><i class="bi bi-file-earmark-code"></i></a>
+    </div>
+  
+</div>
+            
+
+<div class="binder-badge">
+  <strong>Try online:</strong> <a href="https://mybinder.org/v2/gh/stormchecker/stormpy/master?filepath=notebooks/getting_started.ipynb"><img alt="Binder badge" src="https://mybinder.org/badge_logo.svg"></a>
+</div>
+
+
+    <section id="getting-started">
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">¶</a></h1>
+<p>Before starting with this guide, one should follow the instructions for <a class="reference internal" href="installation.html"><span class="std std-doc">Installation</span></a>.</p>
+<section id="a-quick-tour-through-stormpy">
+<h2>A Quick Tour through Stormpy<a class="headerlink" href="#a-quick-tour-through-stormpy" title="Link to this heading">¶</a></h2>
+<p>This guide is intended for people which have a basic understanding of probabilistic models and their verification. More details and further pointers to literature can be found on the
+<a class="reference external" href="https://www.stormchecker.org/">Storm website</a>.
+While we assume some very basic programming concepts, we refrain from using more advanced concepts of python throughout the guide.</p>
+<p>We start with a selection of high-level constructs in stormpy, and go into more details afterwards. More in-depth examples can be found in the <a class="reference internal" href="advanced_topics.html"><span class="std std-doc">Advanced Examples</span></a>.</p>
+<p>The code examples are also given in the <a class="reference external" href="https://github.com/stormchecker/stormpy/blob/master/examples/">examples/</a> folder. These boxes throughout the text will tell you which example contains the code discussed.</p>
+<p>We start by launching the python 3 interpreter:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python3
+</pre></div>
+</div>
+<p>First we import stormpy:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stormpy</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="building-models">
+<h3>Building models<a class="headerlink" href="#building-models" title="Link to this heading">¶</a></h3>
+<p><a class="reference external" href="https://github.com/stormchecker/stormpy/blob/master/examples/01-getting-started.py">01-getting-started.py</a></p>
+<p>There are several ways to create a Markov chain.
+One of the easiest is to parse a description of such a Markov chain and to let Storm build the chain.</p>
+<p>Here, we build a Markov chain from a prism program.
+Stormpy comes with a small set of examples, which we use here:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stormpy.examples</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">stormpy.examples.files</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>With this, we can now import the path of our prism file:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="n">stormpy</span><span class="o">.</span><span class="n">examples</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">prism_dtmc_die</span>
+<span class="n">prism_program</span> <span class="o">=</span> <span class="n">stormpy</span><span class="o">.</span><span class="n">parse_prism_program</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">prism_program</span></code> can be translated into a Markov chain:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">stormpy</span><span class="o">.</span><span class="n">build_model</span><span class="p">(</span><span class="n">prism_program</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Number of states: </span><span class="si">{}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">nr_states</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of states: 13
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"Number of transitions: </span><span class="si">{}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">nr_transitions</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of transitions: 20
+</pre></div>
+</div>
+</div>
+</div>
+<p>This tells us that the model has 13 states and 20 transitions.</p>
+<p>Moreover, initial states and deadlocks are indicated with a labelling function. We can see the labels present in the model by:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"Labels: </span><span class="si">{}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">labeling</span><span class="o">.</span><span class="n">get_labels</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Labels: {'six', 'two', 'five', 'four', 'done', 'init', 'one', 'three', 'deadlock'}
+</pre></div>
+</div>
+</div>
+</div>
+<p>We will investigate ways to examine the model in more detail later in <a class="reference internal" href="#Investigating-the-model"><span class="xref myst">Investigating the model</span></a>.</p>
+</section>
+<section id="building-properties">
+<h3>Building properties<a class="headerlink" href="#building-properties" title="Link to this heading">¶</a></h3>
+<p><a class="reference external" href="https://github.com/stormchecker/stormpy/blob/master/examples/02-getting-started.py">02-getting-started.py</a></p>
+<p>Storm takes properties in the prism-property format.
+To express that one is interested in the reachability of any state where the prism program variable <code class="docutils literal notranslate"><span class="pre">s</span></code> is 2, one would formulate:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>P=? [F s=2]
+</pre></div>
+</div>
+<p>Stormpy can be used to parse this. As the variables in the property refer to a program, the program has to be passed as an additional parameter:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_str</span> <span class="o">=</span> <span class="s2">"P=? [F s=2]"</span>
+<span class="n">properties</span> <span class="o">=</span> <span class="n">stormpy</span><span class="o">.</span><span class="n">parse_properties</span><span class="p">(</span><span class="n">formula_str</span><span class="p">,</span> <span class="n">prism_program</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notice that properties is now a list of properties containing a single element.</p>
+<p>However, if we build the model as before, then the appropriate information that the variable <code class="docutils literal notranslate"><span class="pre">s=2</span></code> in some states is not present.
+In order to label the states accordingly, we should notify Storm upon building the model that we would like to preserve given properties.
+Storm will then add the labels accordingly:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">stormpy</span><span class="o">.</span><span class="n">build_model</span><span class="p">(</span><span class="n">prism_program</span><span class="p">,</span> <span class="n">properties</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Labels in the model: </span><span class="si">{}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">labeling</span><span class="o">.</span><span class="n">get_labels</span><span class="p">())))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Labels in the model: ['(s = 2)', 'deadlock', 'init']
+</pre></div>
+</div>
+</div>
+</div>
+<p>Model building however now behaves slightly different: Only the properties passed are preserved, which means that model building might skip parts of the model.
+In particular, to check the probability of eventually reaching a state <code class="docutils literal notranslate"><span class="pre">x</span></code> where <code class="docutils literal notranslate"><span class="pre">s=2</span></code>, successor states of <code class="docutils literal notranslate"><span class="pre">x</span></code> are not relevant:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"Number of states: </span><span class="si">{}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">nr_states</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of states: 8
+</pre></div>
+</div>
+</div>
+</div>
+<p>If we consider another property, however, such as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>P=? [F s=7 &amp; d=2]
+</pre></div>
+</div>
+<p>then Storm is only skipping exploration of successors of the particular state <code class="docutils literal notranslate"><span class="pre">y</span></code> where <code class="docutils literal notranslate"><span class="pre">s=7</span></code> and <code class="docutils literal notranslate"><span class="pre">d=2</span></code>. In this model, state <code class="docutils literal notranslate"><span class="pre">y</span></code> has a self-loop, so effectively, the whole model is explored.</p>
+<p><a id='getting-started-checking-properties'></a></p>
+</section>
+<section id="checking-properties">
+<h3>Checking properties<a class="headerlink" href="#checking-properties" title="Link to this heading">¶</a></h3>
+<p><a class="reference external" href="https://github.com/stormchecker/stormpy/blob/master/examples/03-getting-started.py">03-getting-started.py</a></p>
+<p>The last lesson taught us to construct properties and models with matching state labels.
+Now default checking routines are just a simple command away:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">properties</span> <span class="o">=</span> <span class="n">stormpy</span><span class="o">.</span><span class="n">parse_properties</span><span class="p">(</span><span class="n">formula_str</span><span class="p">,</span> <span class="n">prism_program</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">stormpy</span><span class="o">.</span><span class="n">build_model</span><span class="p">(</span><span class="n">prism_program</span><span class="p">,</span> <span class="n">properties</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">stormpy</span><span class="o">.</span><span class="n">model_checking</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">properties</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result may contain information about all states.
+Instead, we can iterate over the results:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">result_for_all_states</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">get_values</span><span class="p">():</span>
+    <span class="k">pass</span>  <span class="c1"># do something with x</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="results-for-all-states">
+<h4>Results for all states<a class="headerlink" href="#results-for-all-states" title="Link to this heading">¶</a></h4>
+<p>Some model checking algorithms do not provide results for all states. In those cases, the result is not valid for all states, and to iterate over them, a different method is required. We will explain this later.</p>
+<p>A good way to get the result for the initial states is as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">initial_state</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">initial_states</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="n">initial_state</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="investigating-the-model">
+<h3>Investigating the model<a class="headerlink" href="#investigating-the-model" title="Link to this heading">¶</a></h3>
+<p><a class="reference external" href="https://github.com/stormchecker/stormpy/blob/master/examples/04-getting-started.py">04-getting-started.py</a></p>
+<p>One powerful part of the Storm model checker is to quickly create the Markov chain from higher-order descriptions, as seen above:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="n">stormpy</span><span class="o">.</span><span class="n">examples</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">prism_dtmc_die</span>
+<span class="n">prism_program</span> <span class="o">=</span> <span class="n">stormpy</span><span class="o">.</span><span class="n">parse_prism_program</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">stormpy</span><span class="o">.</span><span class="n">build_model</span><span class="p">(</span><span class="n">prism_program</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this example, we will exploit this, and explore the underlying Markov chain of the model.
+The most basic question might be what the type of the constructed model is:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">model_type</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ModelType.DTMC
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also directly explore the underlying state space/matrix.
+Notice that this code can be applied to both deterministic and non-deterministic models:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">states</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="n">state</span><span class="o">.</span><span class="n">actions</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">transition</span> <span class="ow">in</span> <span class="n">action</span><span class="o">.</span><span class="n">transitions</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"From state </span><span class="si">{}</span><span class="s2">, with probability </span><span class="si">{}</span><span class="s2">, go to state </span><span class="si">{}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">transition</span><span class="o">.</span><span class="n">value</span><span class="p">(),</span> <span class="n">transition</span><span class="o">.</span><span class="n">column</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>From state 0, with probability 0.5, go to state 1
+From state 0, with probability 0.5, go to state 2
+From state 1, with probability 0.5, go to state 3
+From state 1, with probability 0.5, go to state 4
+From state 2, with probability 0.5, go to state 5
+From state 2, with probability 0.5, go to state 6
+From state 3, with probability 0.5, go to state 1
+From state 3, with probability 0.5, go to state 7
+From state 4, with probability 0.5, go to state 8
+From state 4, with probability 0.5, go to state 9
+From state 5, with probability 0.5, go to state 10
+From state 5, with probability 0.5, go to state 11
+From state 6, with probability 0.5, go to state 2
+From state 6, with probability 0.5, go to state 12
+From state 7, with probability 1.0, go to state 7
+From state 8, with probability 1.0, go to state 8
+From state 9, with probability 1.0, go to state 9
+From state 10, with probability 1.0, go to state 10
+From state 11, with probability 1.0, go to state 11
+From state 12, with probability 1.0, go to state 12
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let us go into some more details. For DTMCs, each state has (at most) one outgoing probability distribution.
+Thus:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">states</span><span class="p">:</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">actions</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also check if a state is indeed an initial state. Notice that <code class="docutils literal notranslate"><span class="pre">model.initial_states</span></code> contains state ids, not states.:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">states</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">initial_states</span><span class="p">:</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+
+</div>
+        </article>
+        <aside class="nftt-toc">
+          
+          <div class="my-sm-1 my-lg-0 ps-xl-3 text-muted">
+            <button class="btn btn-link p-lg-0 mb-2 mb-lg-0 text-decoration-none nftt-toc-toggle d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#tocContents" aria-expanded="false" aria-controls="tocContents"
+            >On this page <i class="ms-2 bi bi-chevron-expand"></i></button>
+            <div class="title d-none d-lg-block">
+              <i class="bi bi-file-earmark-text"></i>&nbsp;&nbsp;<span class="small">On this page</span>
+            </div>
+            <div class="collapse nftt-toc-collapse" id="tocContents">
+              <nav id="TableOfContents">
+                <ul>
+<li><a class="reference internal" href="#">Getting Started</a><ul>
+<li><a class="reference internal" href="#a-quick-tour-through-stormpy">A Quick Tour through Stormpy</a><ul>
+<li><a class="reference internal" href="#building-models">Building models</a></li>
+<li><a class="reference internal" href="#building-properties">Building properties</a></li>
+<li><a class="reference internal" href="#checking-properties">Checking properties</a><ul>
+<li><a class="reference internal" href="#results-for-all-states">Results for all states</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#investigating-the-model">Investigating the model</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </nav>
+            </div>
+          </div>
+          
+        </aside>
+      </div>
+    </div>
+
+    <footer class="nftt-footer">
+      <nav id="paginator" class="py-4" aria-label="Documentation navigation">
+    <div class="container">
+      <ul class="pagination justify-content-between mb-0"><li class="d-flex page-item">
+            <a href="installation.html" class="d-flex pe-5 px-lg-5 align-items-end" rel="prev" aria-label="Previous page: Installation">
+              <span class="prev-page"><i class="bi bi-caret-left"></i></span>
+              <div class="d-none d-sm-flex flex-column">
+                <span class="text-small text-start text-muted">Previous</span>
+                <span class="underline">Installation</span>
+              </div>
+            </a>
+          </li>
+        <li class="d-flex page-item ms-auto">
+            <a href="advanced_topics.html" class="d-flex ps-5 px-lg-5 align-items-end" rel="next" aria-label="Next page: Advanced Examples">
+              <div class="d-flex flex-column">
+                <span class="text-small text-end text-start text-muted">Next</span>
+                <span class="underline">Advanced Examples</span>
+              </div>
+              <span class="next-page"><i class="bi bi-caret-right"></i></span>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </nav>
+
+      <div class="py-5 px-4 px-md-3">
+  <div class="container">
+    
+    <div class="row">
+      <ul id="nftt-footer-links" class="list-unstyled list-separator col-lg-12 pb-2 text-center">
+        
+          <li class="d-inline">
+            <a href="https://stormchecker.github.io/stormpy/"  class="list-item">Documentation</a>
+          </li>
+        
+          <li class="d-inline">
+            <a href="https://pypi.org/project/stormpy/"  class="list-item">Package</a>
+          </li>
+        
+          <li class="d-inline">
+            <a href="https://github.com/stormchecker/stormpy/"  class="list-item">Repository</a>
+          </li>
+        
+          <li class="d-inline">
+            <a href="https://github.com/stormchecker/stormpy/issues"  class="list-item">Issues</a>
+          </li>
+        
+      </ul>
+    </div>
+    
+
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <a class="brand-text d-inline-flex align-items-center mb-2 text-decoration-none" href="/" aria-label="stormpy">
+          <span class="fs-6 fw-bold">stormpy</span>
+        </a>
+        
+          <ul class="list-unstyled small text-muted">
+            <li>2016-2026 Storm Developers</li>
+          </ul>
+        
+        <div class="built-with pt-2">
+          Built with <a href="http://sphinx-doc.org">Sphinx 9.1.0</a> and <a href="https://github.com/danirus/sphinx-nefertiti">Nefertiti 0.9.9</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    </footer>
+
+    <div class="modal modal-xl fade" id="nftt-modal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen-xxl-down modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="nftt-modal-title"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="nftt-modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+    <script src="_static/documentation_options.js?v=01009efc"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/docs-versions.js?v=08b0cbfb"></script>
+    <script src="_static/sphinx-nefertiti.min.js?v=af404e0e"></script>
+    <script src="_static/bootstrap.bundle.min.js?v=c066362f"></script>
+  </body>
+</html>

@@ -1,0 +1,704 @@
+
+<!DOCTYPE html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    
+    <meta name="docsearch:name" content="stormpy" />
+    <meta name="docsearch:package_type" content="" />
+    <meta name="docsearch:release" content="1.14.0" />
+    <meta name="docsearch:version" content="" />
+    
+      <meta name="theme-color" content="#0D6EFD" />
+    
+    
+      <title>Installation &mdash; stormpy 1.14.0 documentation</title>
+    
+    <link rel="canonical" href="installation" />
+      <link rel="icon" href="_static/favicon.png" />
+          <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8e8a900e" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="_static/fonts/nunito/stylesheet.css?v=abf98f06" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="_static/fonts/ubuntu-sans-mono/stylesheet.css?v=8616a587" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="_static/pygments-dark.css?v=f21207c5" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="_static/pygments-light.css?v=6c104457" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="_static/bootstrap-icons.min.css?v=44730005" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="_static/sphinx-nefertiti-blue.min.css?v=cbfc91e2" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="_static/custom.css?v=6c103ecc" /><!-- add (1) -->
+        <link rel="index" title="Index" href="genindex.html" />
+        <link rel="search" title="Search" href="search.html" />
+        <link rel="top" title="stormpy 1.14.0 documentation" href="#" />
+        <link rel="next" title="Getting Started" href="getting_started.html" />
+        <link rel="prev" title="Stormpy Documentation" href="index.html" />
+    <style>
+      :root {
+        --nftt-body-font-family: "Nunito", var(--nftt-font-sans-serif) !important;
+        --nftt-font-monospace: "Ubuntu Sans Mono", var(--nftt-font-family-monospace) !important;
+        --nftt-project-name-font: var(--nftt-body-font-family);
+        --nftt-documentation-font: var(--nftt-body-font-family);
+        --nftt-doc-headers-font: "Georgia", var(--nftt-documentation-font);}
+    </style>
+  </head>
+  <body>
+    <div id="back-to-top-container" class="position-fixed start-50 translate-middle-x">
+      <button id="back-to-top" type="button" class="d-none btn btn-neutral btn-sm shadow px-4" data-bs-toggle="button">Back to top</button>
+    </div>
+    <header id="snftt-nav-bar" class="navbar navbar-expand-xl navbar-dark nftt-navbar flex-column fixed-top">
+      <div class="skip-links container-fluid visually-hidden-focusable overflow-hidden justify-content-start flex-grow-1">
+        <div class="border-bottom mb-2 pb-2 w-100">
+          <a class="d-none d-md-inline-flex p-2 m-1" href="#sidebar-filter">Skip to index filter</a>
+          <a class="d-inline-flex p-2 m-1" href="#content">Skip to main content</a>
+        </div>
+      </div>
+      <nav class="container-xxl nftt-gutter flex-nowrap" aria-label="Main navigation">
+        <div class="nftt-navbar-toggler">
+          <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle documentation navigation">
+            <i class="bi bi-list"></i>
+          </button>
+        </div>
+          <a
+            href="index.html"
+            class="navbar-brand"
+          >
+            <img src="_static/storm_logo.png" width="36" height="36" alt="Storm logo"
+              class="project-logo"
+            />
+            <span class="brand-text">stormpy</span><span class="brand-short-text">stormpy</span>
+          </a>
+        
+        
+          <ul class="nftt-header-links-large navbar-nav">
+          
+            
+            
+            
+            
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="getting_started.html" data-snftt-hl-id="1"  >Getting Started</a>
+    </li>
+  
+
+  
+    <li class="nav-item dropdown">
+      <a class="snftt-hl nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" href="#" data-snftt-hl-id="2" data-snftt-hl-regexps="doc/*">Documentation</a>
+      <ul class="dropdown-menu">
+        
+          
+          
+          
+          
+  
+    <li >
+      <a class="snftt-hl dropdown-item" href="advanced_topics.html" data-snftt-hl-id="3"  >Advanced Examples</a>
+    </li>
+  
+
+  
+    <li><hr class="dropdown-divider"></li>
+  
+
+  
+    <li >
+      <a class="snftt-hl dropdown-item" href="using_pycarl.html" data-snftt-hl-id="4"  >Getting Started with Pycarl</a>
+    </li>
+  
+
+        
+      </ul>
+    </li>
+  
+
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="api.html" data-snftt-hl-id="5"  data-snftt-hl-id="" data-snftt-hl-regexps="api/*">API</a>
+    </li>
+  
+
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="https://www.stormchecker.org/" data-snftt-hl-id="6"  >Storm</a>
+    </li>
+  
+
+          
+          </ul>
+        
+        <div class="d-flex d-xl-none">
+          <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#nfttSearch" aria-controls="nfttSearch" aria-label="Search">
+            <i class="bi bi-search"></i>
+          </button>
+          <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#nfttNavbar" aria-controls="nfttNavbar" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+        </div>
+        
+<div class="offcanvas-xl offcanvas-end flex-grow-1" tabindex="-1" id="nfttSearch" aria-labelledby="nfttSearchOffcanvasLabel" data-bs-scroll="true">
+  <div class="offcanvas-header px-4 pb-0">
+    <h5 class="offcanvas-title fw-bold" id="nfttSearchOffcanvasLabel">Search the documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#nfttSearch"></button>
+  </div>
+  <div class="offcanvas-body p-4 pt-0 p-xl-0 ps-xl-4">
+    <hr class="d-xl-none text-white-50">
+    <ul class="navbar-nav flex-row align-items-center flex-wrap ms-md-auto">
+      <li class="nav-item col-12 col-xl-auto">
+        <form id="nftt-search-form" action="search.html" method="get">
+          <div class="input-group">
+            <input type="text" name="q" class="form-control search-input" placeholder="Search" aria-label="Search" aria-describedby="button-search">
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <button class="btn btn-primary" type="submit" id="button-search" aria-label="Search"><i class="bi bi-search"></i></button>
+          </div>
+        </form>
+      </li>
+    </ul>
+  </div>
+</div>
+
+        <div class="offcanvas-xl offcanvas-end" tabindex="-1" id="nfttNavbar" aria-labelledby="nfttNavbarOffcanvasLabel" data-bs-scroll="true">
+          <div class="offcanvas-header px-4 pb-0">
+            <div class="offcanvas-title navbar-brand" id="nfttNavbarOffcanvasLabel"><span class="brand-short-text">stormpy</span></div>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#nfttNavbar"></button>
+          </div>
+          <div class="offcanvas-body p-4 pt-0 p-xl-0 px-xl-3">
+            <hr class="d-xl-none text-white-50">
+            <ul class="navbar-nav flex-row align-items-center flex-wrap ms-lg-auto">
+              
+                <div class="nftt-header-links-small">
+                  
+                    
+                    
+                    
+                    <div class="d-inline-block">
+                      
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="getting_started.html" data-snftt-hl-id="1"  >Getting Started</a>
+    </li>
+  
+
+  
+    <li class="nav-item dropdown">
+      <a class="snftt-hl nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" href="#" data-snftt-hl-id="2" data-snftt-hl-regexps="doc/*">Documentation</a>
+      <ul class="dropdown-menu">
+        
+          
+          
+          
+          
+  
+    <li >
+      <a class="snftt-hl dropdown-item" href="advanced_topics.html" data-snftt-hl-id="3"  >Advanced Examples</a>
+    </li>
+  
+
+  
+    <li><hr class="dropdown-divider"></li>
+  
+
+  
+    <li >
+      <a class="snftt-hl dropdown-item" href="using_pycarl.html" data-snftt-hl-id="4"  >Getting Started with Pycarl</a>
+    </li>
+  
+
+        
+      </ul>
+    </li>
+  
+
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="api.html" data-snftt-hl-id="5"  data-snftt-hl-id="" data-snftt-hl-regexps="api/*">API</a>
+    </li>
+  
+
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="https://www.stormchecker.org/" data-snftt-hl-id="6"  >Storm</a>
+    </li>
+  
+
+                    </div>
+                  
+                  <li class="nav-item col-12 col-xl-auto h-100" aria-hidden="true">
+                    <div class="vr d-none d-xl-flex h-100 mx-xl-2 text-white-50"></div>
+                    <hr class="d-xl-none text-white-50">
+                  </li>
+                </div>
+              
+              
+              <li class="nav-item col-12 col-xl-auto">
+                <a class="nav-link py-2 py-xl-0 px-0 px-xl-2" href="https://github.com/stormchecker/stormpy" target="_blank" rel="noopener">
+                  <div class="d-flex align-items-center">
+                    <div class="me-2">
+                      <i class="bi bi-git size-24"></i>
+                    </div>
+                    <div class="repo d-flex flex-column align-items-center" data-snftt-repo-url="https://github.com/stormchecker/stormpy">
+                      stormpy
+                      <div class="d-flex justify-content-center" data-snftt-repo-metrics>
+                        <span class="pe-2 d-flex justify-content-center align-items-center">
+                          <i class="bi bi-tag size-14"></i>
+                          <span class="repo-metric" data-snftt-repo-tag></span>
+                        </span>
+                        <span class="pe-2 d-flex justify-content-center align-items-center">
+                          <i class="bi bi-star size-14"></i>
+                          <span class="repo-metric" data-snftt-repo-stars></span>
+                        </span>
+                        <span class="d-flex justify-content-center align-items-center">
+                          <i class="bi bi-diagram-2 size-14"></i>
+                          <span class="repo-metric" data-snftt-repo-forks></span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class="nav-item col-12 col-xl-auto h-100" aria-hidden="true">
+                <div class="vr d-none d-xl-flex h-100 mx-xl-2 text-white-50"></div>
+                <hr class="d-xl-none text-white-50">
+              </li>
+              
+              
+              
+              
+              <!-- lightdark-dropdown.html -->
+<li class="nav-item dropdown">
+  <a class="nav-link d-flex py-2 px-0 px-xl-2 dropdown-toggle align-items-center" id="snftt-luz" href="#" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" aria-label="Change appearance">
+    <i class="bi bi-circle-half" data-snftt-luz-icon-active></i>
+    <span id="snftt-luz-text" class="d-xl-none ms-2">Change appearance</span>
+  </a>
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="snftt-luz-text">
+    <li>
+      <h6 class="dropdown-header">Change appearance</h6>
+    </li>
+    <li>
+      <a class="dropdown-item d-flex align-items-center" data-snftt-luz="light" href="#" aria-pressed="false">
+        <span>
+          <i class="bi bi-sun" data-snftt-luz-icon="light"></i>
+        </span>
+        <span class="ms-3">Light</span>
+        <i class="bi bi-check ms-auto"></i>
+      </a>
+    </li>
+    <li>
+      <a class="dropdown-item d-flex align-items-center" data-snftt-luz="dark" href="#" aria-pressed="false">
+        <span>
+          <i class="bi bi-moon-stars" data-snftt-luz-icon="dark"></i>
+        </span>
+        <span class="ms-3">Dark</span>
+        <i class="bi bi-check ms-auto"></i>
+      </a>
+    </li>
+    <li>
+      <a class="dropdown-item current d-flex align-items-center" data-snftt-luz="default" href="#" aria-pressed="false">
+        <span>
+          <i class="bi bi-circle-half" data-snftt-luz-icon="default"></i>
+        </span>
+        <span class="ms-3">Automatic</span>
+        <i class="bi bi-check ms-auto"></i>
+      </a>
+    </li>
+  </ul>
+</li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      
+    </header>
+
+    <div class="container-fluid">
+      <div class="nftt-gutter nftt-page">
+        <aside class="nftt-sidebar ">
+          <div class="nftt-sidebar-content">
+            
+            <div class="title d-none d-xl-none">
+              <i class="bi bi-book"></i>&nbsp;&nbsp;<span>Index</span>
+            </div>
+            <div id="sidebar" tabindex="-1" class="offcanvas-xl offcanvas-start" aria-labelledby="nfttSidebarOffcanvasLabel">
+                <!-- sidebartemplate: "globaltoc.html" --><div class="offcanvas-header border-bottom">
+  <h5 class="offcanvas-title fw-bold" id="nfttSidebarOffcanvasLabel">
+    Index
+  </h5>
+  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#sidebar"></button>
+</div>
+
+<div class="offcanvas-body">
+  <nav class="toc" aria-label="Main menu">
+    <div class="mb-3 p-1 pb-4 border-bottom">
+      <input id="sidebar-filter" type="text" name="filter" class="form-control form-control-sm" placeholder="index filter" aria-label="index filter">
+    </div>
+    <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="advanced_topics.html">Advanced Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="doc/analysis.html">Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/building_models.html">Building Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/models/building_dtmcs.html">Discrete-time Markov chains (DTMCs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/models/building_mdps.html">Markov decision processes (MDPs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/models/building_ctmcs.html">Continuous-time Markov chains (CTMCs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/models/building_mas.html">Markov automata (MAs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/engines.html">Engines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/exploration.html">Exploring Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/simulator.html">Working with Simulators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/reward_models.html">Reward Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/schedulers.html">Working with Schedulers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/shortest_paths.html">Working with Shortest Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/parametric_models.html">Parametric Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/dfts.html">Dynamic Fault Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/gspns.html">Generalized Stochastic Petri Nets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc/info.html">Storm(py) Information</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="using_pycarl.html">Getting Started with Pycarl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Developer information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributors.html">Contributors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Stormpy API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/core.html">Stormpy.core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/info.html">Stormpy.info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/exceptions.html">Stormpy.exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/logic.html">Stormpy.logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/storage.html">Stormpy.storage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/utility.html">Stormpy.utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/dft.html">Stormpy.dft</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/gspn.html">Stormpy.gspn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pars.html">Stormpy.pars</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pomdp.html">Stormpy.pomdp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pycarl/core.html">Pycarl core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pycarl/convert.html">Pycarl convert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pycarl/formula.html">Pycarl formula</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pycarl/parse.html">Pycarl parse</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav>
+  <template data-toggle-item-template>
+    <button class="btn btn-sm btn-link toctree-expand" type="button">
+      <i class="bi bi-caret-right"></i>
+      <span class="visually-hidden">Toggle menu contents</span>
+    </button>
+  </template>
+</div>
+            </div>
+            
+          </div>
+        </aside>
+        <article id="content" class="nftt-content" role="main">
+          <div><div class="d-flex flex-row justify-content-between">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="index.html">Start</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Installation</li>
+    </ol>
+  </nav>
+  
+    <div class="fs085">
+        <a href="_sources/installation.md.txt"  rel="nofollow" aria-label="Show source of this document"><i class="bi bi-file-earmark-code"></i></a>
+    </div>
+  
+</div>
+            
+
+
+    <section id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h1>
+<section id="installing-stormpy">
+<h2>Installing stormpy<a class="headerlink" href="#installing-stormpy" title="Link to this heading">¶</a></h2>
+<p>In most cases, it suffices to install the stormpy Python package, for example via</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>stormpy
+</pre></div>
+</div>
+<p>After the stormpy package was successfully installed, you can continue with our <a class="reference internal" href="getting_started.html"><span class="doc std std-doc">Getting Started</span></a>.</p>
+</section>
+<section id="manually-building-stormpy">
+<h2>Manually Building Stormpy<a class="headerlink" href="#manually-building-stormpy" title="Link to this heading">¶</a></h2>
+<p>The remainder describes the steps to manually build stormpy.</p>
+<section id="requirements">
+<h3>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">¶</a></h3>
+<p>Before installing stormpy, make sure</p>
+<ul class="simple">
+<li><p>Python 3 is available on your system.</p></li>
+<li><p>(optional) <a class="reference external" href="https://www.stormchecker.org/">Storm</a> is available</p></li>
+</ul>
+</section>
+<section id="compatibility-of-stormpy-and-storm">
+<span id="compatibility-stormpy-storm"></span><h3>Compatibility of stormpy and Storm<a class="headerlink" href="#compatibility-of-stormpy-and-storm" title="Link to this heading">¶</a></h3>
+<p>By default, stormpy will automatically install a compatible Storm.
+Alternatively, stormpy can use an existing installation of Storm.
+We refer to the <a class="reference external" href="https://www.stormchecker.org/documentation/obtain-storm/build.html">Storm documentation</a> for detailed installation instructions of Storm.
+The location of an existing Storm installation can be provided as an <a class="reference internal" href="#optional-build-arguments"><span class="xref myst">optional argument</span></a> during the build step of stormpy.</p>
+<p>Note that stormpy and Storm are continuously extended and modified.
+It is therefore important to use compatible versions of stormpy and Storm.
+Stormpy and Storm are compatible if they share the same major and minor version <code class="docutils literal notranslate"><span class="pre">x.y</span></code>.
+Stormpy version <code class="docutils literal notranslate"><span class="pre">x.y.z</span></code> is compatible with Storm version <code class="docutils literal notranslate"><span class="pre">x.y.z'</span></code>.</p>
+<p>You have two choices for stormpy depending on the version of Storm you are using:</p>
+<ol class="arabic simple">
+<li><p><strong>Release version</strong>:
+You use the latest <a class="reference external" href="https://github.com/stormchecker/storm/releases">release of Storm</a> or the <code class="docutils literal notranslate"><span class="pre">stable</span></code> branch.
+In these cases, you need to use the latest <a class="reference external" href="https://github.com/stormchecker/stormpy/releases">release of stormpy</a>.</p></li>
+<li><p><strong>Master branch</strong>:
+You use the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch of Storm.
+In this case, you need to use the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch of stormpy as well.
+Note that due to ongoing development in Storm, after some commits, the stormpy <code class="docutils literal notranslate"><span class="pre">master</span></code> might not work with the Storm <code class="docutils literal notranslate"><span class="pre">master</span></code> anymore.
+We will fix such issues as fast as possible.</p></li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Unfortunately, Stormpy currently does not work in conjunction with a homebrew installation of Storm.</p>
+</div>
+</section>
+<section id="virtual-environments">
+<h3>Virtual Environments<a class="headerlink" href="#virtual-environments" title="Link to this heading">¶</a></h3>
+<p>Virtual environments create isolated environments for your projects.
+This helps to keep your system clean, work with different versions of packages and different version of Python.
+While it is not required, we recommend the use of such virtual environments. To get you started, we recommend
+<a class="reference external" href="https://docs.python-guide.org/en/latest/dev/virtualenvs/">this guide</a> or
+<a class="reference external" href="https://realpython.com/blog/python/python-virtual-environments-a-primer">this primer</a>.</p>
+<p>In short, you can create a virtual environment <code class="docutils literal notranslate"><span class="pre">env</span></code> with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>env
+<span class="nb">source</span><span class="w"> </span>env/bin/activate
+</pre></div>
+</div>
+<p>The last step activates the virtual environment.
+Whenever using the environment, the console prompt is prefixed with <code class="docutils literal notranslate"><span class="pre">(env)</span></code>.</p>
+</section>
+<section id="building-stormpy">
+<h3>Building stormpy<a class="headerlink" href="#building-stormpy" title="Link to this heading">¶</a></h3>
+<p><strong>Clone</strong> the <a class="reference internal" href="#compatibility-stormpy-storm"><span class="std std-ref">compatible stormpy version</span></a> into any suitable location.
+For the <code class="docutils literal notranslate"><span class="pre">master</span></code> of stormpy use:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/stormchecker/stormpy.git
+<span class="nb">cd</span><span class="w"> </span>stormpy
+</pre></div>
+</div>
+<p>or for the latest release use the <code class="docutils literal notranslate"><span class="pre">stable</span></code> branch:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/stormchecker/stormpy.git<span class="w"> </span>-b<span class="w"> </span>stable
+<span class="nb">cd</span><span class="w"> </span>stormpy
+</pre></div>
+</div>
+<p><strong>Build</strong> stormpy using your favourite Python distribution way of installing, for example:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-v<span class="w"> </span>.
+</pre></div>
+</div>
+<section id="optional-build-arguments">
+<h4>Optional build arguments<a class="headerlink" href="#optional-build-arguments" title="Link to this heading">¶</a></h4>
+<p>The build step also takes optional CMake arguments via <code class="docutils literal notranslate"><span class="pre">--config-settings=cmake.define.&lt;cmake_option&gt;=&lt;value&gt;</span></code> (or short <code class="docutils literal notranslate"><span class="pre">-Ccmake.define.&lt;cmake_option&gt;=&lt;value&gt;</span></code>) for a more advanced configuration of stormpy.
+We refer to the section <code class="docutils literal notranslate"><span class="pre">[tool.scikit-build.cmake.define]</span></code> in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> for a full list of configuration options.</p>
+<section id="using-system-version-of-storm">
+<h5>Using system version of Storm<a class="headerlink" href="#using-system-version-of-storm" title="Link to this heading">¶</a></h5>
+<p>By default, stormpy is first searching for a local installation of Storm.
+Usage of the system version of Storm can be configured with the following flags:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--config-settings=cmake.define.STORMPY_ALLOW_STORM_SYSTEM=OFF</span></code> disables searching for a system version of Storm.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--config-settings=cmake.define.STORM_DIR_HINT=&lt;dir&gt;</span></code> sets the hint for the Storm directory.
+In case of a manually built Storm, the path should point to the build directory.</p></li>
+</ul>
+</section>
+<section id="using-fetched-version-of-storm">
+<h5>Using fetched version of Storm<a class="headerlink" href="#using-fetched-version-of-storm" title="Link to this heading">¶</a></h5>
+<p>If no system version of Storm could be found, Storm is automatically fetched and installed.
+Fetching a Storm version can be configured with the following flags:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--config-settings=cmake.define.STORMPY_ALLOW_STORM_FETCH=OFF</span></code> disables fetching of Storm.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--config-settings=cmake.define.STORM_GIT_REPO=&lt;url&gt;</span></code> changes the Git repository used for fetching Storm.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--config-settings=cmake.define.STORM_GIT_TAG=&lt;tag&gt;</span></code> changes the Git tag used for fetching Storm.</p></li>
+</ul>
+</section>
+<section id="disabling-functionality">
+<h5>Disabling functionality<a class="headerlink" href="#disabling-functionality" title="Link to this heading">¶</a></h5>
+<p>If you want to disable certain functionality in stormpy from being built you can add the following flags:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--config-settings=cmake.define.STORMPY_USE_STORM_DFT=OFF</span></code> to disable support for dynamic fault trees (DFTs).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--config-settings=cmake.define.STORMPY_USE_STORM_GSPN=OFF</span></code> to disable support for generalized stochastic Petri nets (GSPNs).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--config-settings=cmake.define.STORMPY_USE_STORM_PARS=OFF</span></code> to disable support for parametric models.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--config-settings=cmake.define.STORMPY_USE_STORM_POMDP=OFF</span></code> to disable support for POMDPs.</p></li>
+</ul>
+</section>
+<section id="building-stormpy-in-debug-mode">
+<h5>Building stormpy in debug mode<a class="headerlink" href="#building-stormpy-in-debug-mode" title="Link to this heading">¶</a></h5>
+<p>If you want to build stormpy in debug mode you can add the flag <code class="docutils literal notranslate"><span class="pre">--config-settings=cmake.build-type='Debug'</span></code>.</p>
+</section>
+<section id="setting-number-of-build-threads">
+<h5>Setting number of build threads<a class="headerlink" href="#setting-number-of-build-threads" title="Link to this heading">¶</a></h5>
+<p>If you want to configure the number of threads used to build stormpy, use the flag <code class="docutils literal notranslate"><span class="pre">--config-settings=cmake.define.CMAKE_BUILD_PARALLEL_LEVEL=&lt;number_of_jobs&gt;</span></code>.
+Alternatively, you can set the prefix <code class="docutils literal notranslate"><span class="pre">CMAKE_BUILD_PARALLEL_LEVEL=&lt;number_of_jobs&gt;</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">...</span></code>.</p>
+</section>
+</section>
+<section id="testing-stormpy-installation">
+<h4>Testing stormpy installation<a class="headerlink" href="#testing-stormpy-installation" title="Link to this heading">¶</a></h4>
+<p>After building, you can run the test files by invoking pytest directly with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>pytest
+py.test<span class="w"> </span>tests/
+</pre></div>
+</div>
+<p>If the tests pass, you can now use stormpy.
+To get started, continue with our <a class="reference internal" href="getting_started.html"><span class="doc std std-doc">Getting Started</span></a>, consult the test files in <code class="docutils literal notranslate"><span class="pre">tests/</span></code> or the <a class="reference internal" href="api.html"><span class="doc std std-doc">API</span></a> (work in progress).</p>
+</section>
+</section>
+</section>
+<section id="building-stormpy-documentation">
+<h2>Building stormpy documentation<a class="headerlink" href="#building-stormpy-documentation" title="Link to this heading">¶</a></h2>
+<p>To build this documentation, you need a local installation of stormpy and additional Python libraries.
+You can install the required Python dependencies automatically with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>.<span class="o">[</span>doc,numpy<span class="o">]</span>
+</pre></div>
+</div>
+<p>Then build the documentation:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>doc
+make<span class="w"> </span>html
+</pre></div>
+</div>
+<p>The documentation can then be opened from <code class="docutils literal notranslate"><span class="pre">build/html/index.html</span></code>.</p>
+</section>
+</section>
+
+
+</div>
+        </article>
+        <aside class="nftt-toc">
+          
+          <div class="my-sm-1 my-lg-0 ps-xl-3 text-muted">
+            <button class="btn btn-link p-lg-0 mb-2 mb-lg-0 text-decoration-none nftt-toc-toggle d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#tocContents" aria-expanded="false" aria-controls="tocContents"
+            >On this page <i class="ms-2 bi bi-chevron-expand"></i></button>
+            <div class="title d-none d-lg-block">
+              <i class="bi bi-file-earmark-text"></i>&nbsp;&nbsp;<span class="small">On this page</span>
+            </div>
+            <div class="collapse nftt-toc-collapse" id="tocContents">
+              <nav id="TableOfContents">
+                <ul>
+<li><a class="reference internal" href="#">Installation</a><ul>
+<li><a class="reference internal" href="#installing-stormpy">Installing stormpy</a></li>
+<li><a class="reference internal" href="#manually-building-stormpy">Manually Building Stormpy</a><ul>
+<li><a class="reference internal" href="#requirements">Requirements</a></li>
+<li><a class="reference internal" href="#compatibility-of-stormpy-and-storm">Compatibility of stormpy and Storm</a></li>
+<li><a class="reference internal" href="#virtual-environments">Virtual Environments</a></li>
+<li><a class="reference internal" href="#building-stormpy">Building stormpy</a><ul>
+<li><a class="reference internal" href="#optional-build-arguments">Optional build arguments</a><ul>
+<li><a class="reference internal" href="#using-system-version-of-storm">Using system version of Storm</a></li>
+<li><a class="reference internal" href="#using-fetched-version-of-storm">Using fetched version of Storm</a></li>
+<li><a class="reference internal" href="#disabling-functionality">Disabling functionality</a></li>
+<li><a class="reference internal" href="#building-stormpy-in-debug-mode">Building stormpy in debug mode</a></li>
+<li><a class="reference internal" href="#setting-number-of-build-threads">Setting number of build threads</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#testing-stormpy-installation">Testing stormpy installation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#building-stormpy-documentation">Building stormpy documentation</a></li>
+</ul>
+</li>
+</ul>
+
+              </nav>
+            </div>
+          </div>
+          
+        </aside>
+      </div>
+    </div>
+
+    <footer class="nftt-footer">
+      <nav id="paginator" class="py-4" aria-label="Documentation navigation">
+    <div class="container">
+      <ul class="pagination justify-content-between mb-0"><li class="d-flex page-item">
+            <a href="index.html" class="d-flex pe-5 px-lg-5 align-items-end" rel="prev" aria-label="Previous page: Stormpy Documentation">
+              <span class="prev-page"><i class="bi bi-caret-left"></i></span>
+              <div class="d-none d-sm-flex flex-column">
+                <span class="text-small text-start text-muted">Previous</span>
+                <span class="underline">Stormpy Documentation</span>
+              </div>
+            </a>
+          </li>
+        <li class="d-flex page-item ms-auto">
+            <a href="getting_started.html" class="d-flex ps-5 px-lg-5 align-items-end" rel="next" aria-label="Next page: Getting Started">
+              <div class="d-flex flex-column">
+                <span class="text-small text-end text-start text-muted">Next</span>
+                <span class="underline">Getting Started</span>
+              </div>
+              <span class="next-page"><i class="bi bi-caret-right"></i></span>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </nav>
+
+      <div class="py-5 px-4 px-md-3">
+  <div class="container">
+    
+    <div class="row">
+      <ul id="nftt-footer-links" class="list-unstyled list-separator col-lg-12 pb-2 text-center">
+        
+          <li class="d-inline">
+            <a href="https://stormchecker.github.io/stormpy/"  class="list-item">Documentation</a>
+          </li>
+        
+          <li class="d-inline">
+            <a href="https://pypi.org/project/stormpy/"  class="list-item">Package</a>
+          </li>
+        
+          <li class="d-inline">
+            <a href="https://github.com/stormchecker/stormpy/"  class="list-item">Repository</a>
+          </li>
+        
+          <li class="d-inline">
+            <a href="https://github.com/stormchecker/stormpy/issues"  class="list-item">Issues</a>
+          </li>
+        
+      </ul>
+    </div>
+    
+
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <a class="brand-text d-inline-flex align-items-center mb-2 text-decoration-none" href="/" aria-label="stormpy">
+          <span class="fs-6 fw-bold">stormpy</span>
+        </a>
+        
+          <ul class="list-unstyled small text-muted">
+            <li>2016-2026 Storm Developers</li>
+          </ul>
+        
+        <div class="built-with pt-2">
+          Built with <a href="http://sphinx-doc.org">Sphinx 9.1.0</a> and <a href="https://github.com/danirus/sphinx-nefertiti">Nefertiti 0.9.9</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    </footer>
+
+    <div class="modal modal-xl fade" id="nftt-modal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen-xxl-down modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="nftt-modal-title"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="nftt-modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+    <script src="_static/documentation_options.js?v=01009efc"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/docs-versions.js?v=08b0cbfb"></script>
+    <script src="_static/sphinx-nefertiti.min.js?v=af404e0e"></script>
+    <script src="_static/bootstrap.bundle.min.js?v=c066362f"></script>
+  </body>
+</html>

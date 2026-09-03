@@ -4,6 +4,14 @@ Changelog
 Version 1.14.x
 --------------
 
+### Version 1.14.1 (in development)
+
+- Revised number types:
+    * `stormpy.Polynomial` and `stormpy.RationalFunction` now refer to the correct (factorized) Storm number types and were formerly named `stormpy.FactorizedPolynomial` and `stormpy.FactorizedRationalFunction`.
+    * `stormpy.RawPolynomial` refers to the non-factorized polynomial.
+    * `stormpy.RationalFunctionCoefficient` replaces `stormpy.RationalRF`.
+    * Added `stormpy.Interval` and `stormpy.RationalInterval` aliases.
+
 ### Version 1.14.0 (2026/08)
 Requires Storm version >= 1.14.0.
 

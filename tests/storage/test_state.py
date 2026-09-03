@@ -176,7 +176,7 @@ class TestState:
         program = stormpy.parse_prism_program(get_example_path("pmdp", "two_dice.nm"))
         model = stormpy.build_parametric_model(program)
         assert model.states[1].id == 1
-        one = stormpy.FactorizedPolynomial(stormpy.RationalRF(1))
+        one = stormpy.Polynomial(stormpy.RationalFunctionCoefficient(1))
         i = 0
         for state in model.states:
             assert state.id == i

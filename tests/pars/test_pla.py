@@ -61,17 +61,17 @@ class TestPLA:
             else:
                 assert False
         region_valuation = dict()
-        region_valuation[pL] = (stormpy.RationalRF(0.7), stormpy.RationalRF(0.9))
-        region_valuation[pK] = (stormpy.RationalRF(0.75), stormpy.RationalRF(0.95))
+        region_valuation[pL] = (stormpy.RationalFunctionCoefficient(0.7), stormpy.RationalFunctionCoefficient(0.9))
+        region_valuation[pK] = (stormpy.RationalFunctionCoefficient(0.75), stormpy.RationalFunctionCoefficient(0.95))
         region = stormpy.pars.ParameterRegion(region_valuation)
         result = checker.check_region(env, region)
         assert result == stormpy.pars.RegionResult.ALLSAT
-        region_valuation[pL] = (stormpy.RationalRF(0.4), stormpy.RationalRF(0.65))
+        region_valuation[pL] = (stormpy.RationalFunctionCoefficient(0.4), stormpy.RationalFunctionCoefficient(0.65))
         region = stormpy.pars.ParameterRegion(region_valuation)
         result = checker.check_region(env, region, stormpy.pars.RegionResultHypothesis.UNKNOWN, True)
         assert result == stormpy.pars.RegionResult.EXISTSBOTH
-        region_valuation[pK] = (stormpy.RationalRF(0.2), stormpy.RationalRF(0.715))
-        region_valuation[pL] = (stormpy.RationalRF(0.1), stormpy.RationalRF(0.73))
+        region_valuation[pK] = (stormpy.RationalFunctionCoefficient(0.2), stormpy.RationalFunctionCoefficient(0.715))
+        region_valuation[pL] = (stormpy.RationalFunctionCoefficient(0.1), stormpy.RationalFunctionCoefficient(0.73))
         region = stormpy.pars.ParameterRegion(region_valuation)
         result = checker.check_region(env, region)
         assert result == stormpy.pars.RegionResult.ALLVIOLATED
@@ -151,9 +151,9 @@ class TestPLA:
         region = stormpy.pars.ParameterRegion.create_from_string("0.7<=pL<=0.9,0.75<=pK<=0.95", parameters)
 
         refinement_checker = stormpy.pars.create_region_refinement_checker(env, model, formulas[0].raw_formula)
-        precision = stormpy.RationalRF(1e-6)
+        precision = stormpy.RationalFunctionCoefficient(1e-6)
         value, point = refinement_checker.compute_extremum(env, region, stormpy.OptimizationDirection.Maximize, precision, False)
-        assert isinstance(value, stormpy.RationalRF)
+        assert isinstance(value, stormpy.RationalFunctionCoefficient)
         assert isinstance(point, dict)
         assert len(point) == 2
         assert 0.83 <= float(value) <= 0.84

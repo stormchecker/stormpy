@@ -15,13 +15,13 @@ class TestModelInstantiator:
         assert len(parameters) == 2
         instantiator = stormpy.pars.ModelInstantiator(model)
 
-        point = {p: stormpy.RationalRF("0.4") for p in parameters}
+        point = {p: stormpy.RationalFunctionCoefficient("0.4") for p in parameters}
         instantiated_model = instantiator.instantiate(point)
         assert instantiated_model.nr_states == model.nr_states
         assert not instantiated_model.has_parameters
         assert "0.4" in str(instantiated_model.transition_matrix[1])
 
-        point = {p: stormpy.RationalRF("0.5") for p in parameters}
+        point = {p: stormpy.RationalFunctionCoefficient("0.5") for p in parameters}
         instantiated_model2 = instantiator.instantiate(point)
         assert "0.5" in str(instantiated_model2.transition_matrix[1])
 
@@ -35,7 +35,7 @@ class TestModelInstantiator:
         point = dict()
         for x in parameters:
             assert x.name in {"p", "q"}
-            point[x] = stormpy.RationalRF(0.4)
+            point[x] = stormpy.RationalFunctionCoefficient(0.4)
         instantiated_model = instantiator.instantiate(point)
         assert instantiated_model.nr_states == model.nr_states
         assert not instantiated_model.has_parameters
@@ -53,13 +53,13 @@ class TestModelInstantiator:
         parameters = model.collect_all_parameters()
         instantiator = stormpy.pars.PDtmcInstantiator(model)
 
-        point = {p: stormpy.RationalRF("0.4") for p in parameters}
+        point = {p: stormpy.RationalFunctionCoefficient("0.4") for p in parameters}
         instantiated_model = instantiator.instantiate(point)
         assert instantiated_model.nr_states == model.nr_states
         assert not instantiated_model.has_parameters
         assert "0.4" in str(instantiated_model.transition_matrix[1])
 
-        point = {p: stormpy.RationalRF("0.5") for p in parameters}
+        point = {p: stormpy.RationalFunctionCoefficient("0.5") for p in parameters}
         instantiated_model2 = instantiator.instantiate(point)
         assert "0.5" in str(instantiated_model2.transition_matrix[1])
 
@@ -74,7 +74,7 @@ class TestModelInstantiator:
         inst_checker.set_graph_preserving(True)
         env = stormpy.Environment()
 
-        point = {p: stormpy.RationalRF(1 / 2) for p in parameters}
+        point = {p: stormpy.RationalFunctionCoefficient(1 / 2) for p in parameters}
         result = inst_checker.check(env, point)
         assert isinstance(result, stormpy.ExplicitQuantitativeCheckResult)
         res = result.at(model.initial_states[0])
@@ -92,7 +92,7 @@ class TestModelInstantiator:
         inst_checker.set_graph_preserving(True)
         env = stormpy.Environment()
 
-        point = {p: stormpy.RationalRF("1/2") for p in parameters}
+        point = {p: stormpy.RationalFunctionCoefficient("1/2") for p in parameters}
         result = inst_checker.check(env, point)
         assert isinstance(result, stormpy.ExplicitExactQuantitativeCheckResult)
         res = result.at(model.initial_states[0])
@@ -110,7 +110,7 @@ class TestModelInstantiator:
         inst_checker.set_graph_preserving(True)
         env = stormpy.Environment()
 
-        point = {p: stormpy.RationalRF("2/5") for p in parameters}
+        point = {p: stormpy.RationalFunctionCoefficient("2/5") for p in parameters}
         result = inst_checker.check(env, point)
         assert isinstance(result, stormpy.ExplicitExactQuantitativeCheckResult)
         res = result.at(model.initial_states[0])

@@ -3,20 +3,15 @@ import stormpy.info
 import stormpy.pars
 from stormpy import pycarl
 
-if stormpy.info.storm_ratfunc_use_cln():
-    from stormpy.pycarl import cln as pc
-else:
-    from stormpy.pycarl import gmp as pc
-
 import stormpy.examples
 import stormpy.examples.files
 
 
 def example_building_models_02():
     def make_factorized_rf(var, cache):
-        num = pc.FactorizedPolynomial(pc.Polynomial(var), cache)
-        denom = pc.FactorizedPolynomial(pc.Rational(1))
-        return pc.FactorizedRationalFunction(num, denom)
+        num = stormpy.Polynomial(stormpy.RawPolynomial(var), cache)
+        denom = stormpy.Polynomial(stormpy.RationalFunctionCoefficient(1))
+        return stormpy.RationalFunction(num, denom)
 
         # And the parametric
 
@@ -30,7 +25,7 @@ def example_building_models_02():
         assert pycarl.variable_with_name(p.name + "_bar").is_no_variable
         bar_parameters[p] = pycarl.Variable(p.name + "_bar")
 
-    substitutions = dict([[pc.Polynomial(1) - p, bar_parameters[p]] for p in parameters])
+    substitutions = dict([[stormpy.RawPolynomial(1) - p, bar_parameters[p]] for p in parameters])
     print(substitutions)
 
     matrix = model.transition_matrix

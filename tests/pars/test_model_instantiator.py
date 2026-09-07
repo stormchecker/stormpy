@@ -69,10 +69,10 @@ class TestModelInstantiator:
         model = stormpy.build_parametric_model(program, formulas)
 
         parameters = model.collect_all_parameters()
-        inst_checker = stormpy.pars.PDtmcInstantiationChecker(model)
+        env = stormpy.Environment()
+        inst_checker = stormpy.pars.PDtmcInstantiationChecker(env, model)
         inst_checker.specify_formula(stormpy.ParametricCheckTask(formulas[0].raw_formula, True))
         inst_checker.set_graph_preserving(True)
-        env = stormpy.Environment()
 
         point = {p: stormpy.RationalRF(1 / 2) for p in parameters}
         result = inst_checker.check(env, point)
@@ -87,10 +87,10 @@ class TestModelInstantiator:
         model = stormpy.build_parametric_model(program, formulas)
 
         parameters = model.collect_all_parameters()
-        inst_checker = stormpy.pars.PDtmcExactInstantiationChecker(model)
+        env = stormpy.Environment()
+        inst_checker = stormpy.pars.PDtmcExactInstantiationChecker(env, model)
         inst_checker.specify_formula(stormpy.ParametricCheckTask(formulas[0].raw_formula, True))
         inst_checker.set_graph_preserving(True)
-        env = stormpy.Environment()
 
         point = {p: stormpy.RationalRF("1/2") for p in parameters}
         result = inst_checker.check(env, point)
@@ -105,10 +105,10 @@ class TestModelInstantiator:
         model = stormpy.build_parametric_model(program, formulas)
 
         parameters = model.collect_all_parameters()
-        inst_checker = stormpy.pars.PDtmcExactInstantiationChecker(model)
+        env = stormpy.Environment()
+        inst_checker = stormpy.pars.PDtmcExactInstantiationChecker(env, model)
         inst_checker.specify_formula(stormpy.ParametricCheckTask(formulas[0].raw_formula, True))
         inst_checker.set_graph_preserving(True)
-        env = stormpy.Environment()
 
         point = {p: stormpy.RationalRF("2/5") for p in parameters}
         result = inst_checker.check(env, point)

@@ -5,6 +5,7 @@
 #include <storm-pars/modelchecker/instantiation/SparseMdpInstantiationModelChecker.h>
 #include <storm-pars/transformer/SparseParametricDtmcSimplifier.h>
 #include <storm/adapters/RationalFunctionAdapter.h>
+#include <storm/environment/Environment.h>
 #include <storm/modelchecker/prctl/helper/BaierUpperRewardBoundsComputer.h>
 #include <storm/modelchecker/prctl/helper/DsMpiUpperRewardBoundsComputer.h>
 #include <storm/modelchecker/propositional/SparsePropositionalModelChecker.h>
@@ -84,7 +85,7 @@ void define_typed_checker(py::module& m, const char* baseName, const char* baseD
     base.def("specify_formula", &BaseChecker::specifyFormula, "check_task"_a);
 
     py::classh<CheckerType>(m, derivedName, derivedDesc, base)
-        .def(py::init<ModelType>(), "parametric model"_a)
+        .def(py::init<storm::Environment, ModelType>(), "environment"_a, "parametric model"_a)
         .def(
             "check",
             [](CheckerType& c, storm::Environment const& env,

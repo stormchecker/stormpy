@@ -8,6 +8,7 @@
 #include <storm/modelchecker/results/SymbolicQualitativeCheckResult.h>
 #include <storm/modelchecker/results/SymbolicQuantitativeCheckResult.h>
 #include <storm/models/symbolic/StandardRewardModel.h>
+#include <storm/utility/ExtendedNumber.h>
 
 template<typename ValueType>
 std::shared_ptr<storm::modelchecker::QualitativeCheckResult> createFilterInitialStatesSparse(std::shared_ptr<storm::models::sparse::Model<ValueType>> model) {
@@ -94,8 +95,13 @@ void define_typed_result(py::module& m, std::string const& vtSuffix) {
 
     py::classh<storm::modelchecker::QuantitativeCheckResult<ValueType>, storm::modelchecker::CheckResult> quantitativeCheckResult(
         m, ("_" + vtSuffix + "QuantitativeCheckResult").c_str(), "Abstract class for quantitative model checking results");
-    quantitativeCheckResult.def_property_readonly("min", &storm::modelchecker::QuantitativeCheckResult<ValueType>::getMin, "Minimal value")
-        .def_property_readonly("max", &storm::modelchecker::QuantitativeCheckResult<ValueType>::getMax, "Maximal value");
+    quantitativeCheckResult
+        .def_property_readonly(
+            "min", [](storm::modelchecker::QuantitativeCheckResult<ValueType> const& res) { return storm::utility::narrow<ValueType>(res.getMin()); },
+            "Minimal value")
+        .def_property_readonly(
+            "max", [](storm::modelchecker::QuantitativeCheckResult<ValueType> const& res) { return storm::utility::narrow<ValueType>(res.getMax()); },
+            "Maximal value");
 
     py::classh<storm::modelchecker::ExplicitQuantitativeCheckResult<ValueType>>(m, ("Explicit" + vtSuffix + "QuantitativeCheckResult").c_str(),
                                                                                 "Explicit quantitative model checking result", quantitativeCheckResult)
@@ -103,11 +109,11 @@ void define_typed_result(py::module& m, std::string const& vtSuffix) {
         .def(
             "at",
             [](storm::modelchecker::ExplicitQuantitativeCheckResult<ValueType> const& result, storm::storage::sparse::state_type state) {
-                return result[state];
+                return storm::utility::narrow<ValueType>(result[state]);
             },
             py::arg("state"), "Get result for given state")
         .def(
-            "get_values", [](storm::modelchecker::ExplicitQuantitativeCheckResult<ValueType> const& res) { return res.getValueVector(); },
+            "get_values", [](storm::modelchecker::ExplicitQuantitativeCheckResult<ValueType> const& res) { return res.getFiniteValueVector(); },
             "Get model checking result values for all states")
         .def_property_readonly(
             "scheduler", [](storm::modelchecker::ExplicitQuantitativeCheckResult<ValueType> const& res) { return res.getScheduler(); }, "get scheduler");

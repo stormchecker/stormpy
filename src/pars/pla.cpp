@@ -5,6 +5,7 @@
 #include <storm-pars/modelchecker/region/SparseDtmcParameterLiftingModelChecker.h>
 #include <storm-pars/modelchecker/region/SparseMdpParameterLiftingModelChecker.h>
 #include <storm/api/verification.h>
+#include <storm/utility/ExtendedNumber.h>
 
 #include "src/helpers.h"
 
@@ -65,8 +66,8 @@ storm::modelchecker::RegionResult checkRegion(std::shared_ptr<RegionModelChecker
 }
 
 Region::CoefficientType getBoundAtInit(std::shared_ptr<RegionModelChecker>& checker, storm::Environment const& env, Region const& region, bool maximise) {
-    return checker->getBoundAtInitState(env, region,
-                                        maximise ? storm::solver::OptimizationDirection::Maximize : storm::solver::OptimizationDirection::Minimize);
+    return storm::utility::narrow<Region::CoefficientType>(
+        checker->getBoundAtInitState(env, region, maximise ? storm::solver::OptimizationDirection::Maximize : storm::solver::OptimizationDirection::Minimize));
 }
 
 storm::modelchecker::ExplicitQuantitativeCheckResult<double> getBound_dtmc(std::shared_ptr<DtmcParameterLiftingModelChecker>& checker,
@@ -158,8 +159,9 @@ void define_pla(py::module& m) {
             "compute_extremum",
             [](RegionRefinementChecker& r, storm::Environment const& env, Region const& region, storm::solver::OptimizationDirection const& dirForParameters,
                storm::RationalFunctionCoefficient const& precision, bool absolutePrecision) {
-                return r.computeExtremalValue(env, region, dirForParameters, storm::utility::one<storm::RationalFunction>() * precision, absolutePrecision,
-                                              std::nullopt);
+                auto [value, point] = r.computeExtremalValue(env, region, dirForParameters, storm::utility::one<storm::RationalFunction>() * precision,
+                                                             absolutePrecision, std::nullopt);
+                return std::make_pair(storm::utility::narrow<Region::CoefficientType>(value), std::move(point));
             },
             "Compute extremum value and point with precision", py::arg("environment"), py::arg("region"), py::arg("extremum_direction"), py::arg("precision"),
             py::arg("precision_absolute") = false);

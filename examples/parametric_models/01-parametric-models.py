@@ -20,7 +20,7 @@ def example_parametric_models_01():
     point = dict()
     for x in parameters:
         print(x.name)
-        point[x] = stormpy.RationalRF(0.4)
+        point[x] = stormpy.RationalFunctionCoefficient(0.4)
     instantiated_model = instantiator.instantiate(point)
     result = stormpy.model_checking(instantiated_model, properties[0])
     print(result)

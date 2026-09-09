@@ -2,9 +2,11 @@
 
 @PYCARL_IMPORTS@
 
+# Each name refers to matching Storm C++ type.
 Rational = pycarl.@PYCARL_EA_PACKAGE@.Rational
-RationalRF = pycarl.@PYCARL_RF_PACKAGE@.Rational
-Polynomial = pycarl.@PYCARL_RF_PACKAGE@.Polynomial
-FactorizedPolynomial = pycarl.@PYCARL_RF_PACKAGE@.FactorizedPolynomial
-RationalFunction = pycarl.@PYCARL_RF_PACKAGE@.RationalFunction
-FactorizedRationalFunction = pycarl.@PYCARL_RF_PACKAGE@.FactorizedRationalFunction
+RationalFunctionCoefficient = pycarl.@PYCARL_RF_PACKAGE@.Rational
+RawPolynomial = pycarl.@PYCARL_RF_PACKAGE@.Polynomial
+Polynomial = pycarl.@PYCARL_RF_PACKAGE@.FactorizedPolynomial
+RationalFunction = pycarl.@PYCARL_RF_PACKAGE@.FactorizedRationalFunction
+Interval = pycarl.Interval
+RationalInterval = pycarl.@PYCARL_EA_PACKAGE@.Interval

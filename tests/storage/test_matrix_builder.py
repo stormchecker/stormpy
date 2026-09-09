@@ -76,13 +76,13 @@ class TestMatrixBuilder:
 
         builder_5x5 = stormpy.ParametricSparseMatrixBuilder(5, 5, force_dimensions=False)
 
-        one_pol = stormpy.RationalRF(1)
-        one_pol = stormpy.FactorizedPolynomial(one_pol)
-        first_val = stormpy.FactorizedRationalFunction(one_pol)
+        one_pol = stormpy.RationalFunctionCoefficient(1)
+        one_pol = stormpy.Polynomial(one_pol)
+        first_val = stormpy.RationalFunction(one_pol)
 
-        two_pol = stormpy.RationalRF(2)
-        two_pol = stormpy.FactorizedPolynomial(two_pol)
-        sec_val = stormpy.FactorizedRationalFunction(two_pol)
+        two_pol = stormpy.RationalFunctionCoefficient(2)
+        two_pol = stormpy.Polynomial(two_pol)
+        sec_val = stormpy.RationalFunction(two_pol)
 
         builder_5x5.add_next_value(0, 0, first_val)
         builder_5x5.add_next_value(0, 1, first_val)
@@ -139,13 +139,13 @@ class TestMatrixBuilder:
     def test_parametric_matrix_replace_columns(self):
         builder = stormpy.ParametricSparseMatrixBuilder(3, 4, force_dimensions=False)
 
-        one_pol = stormpy.RationalRF(1)
-        one_pol = stormpy.FactorizedPolynomial(one_pol)
-        first_val = stormpy.FactorizedRationalFunction(one_pol, one_pol)
-        two_pol = stormpy.RationalRF(2)
-        two_pol = stormpy.FactorizedPolynomial(two_pol)
-        sec_val = stormpy.FactorizedRationalFunction(two_pol, two_pol)
-        third_val = stormpy.FactorizedRationalFunction(one_pol, two_pol)
+        one_pol = stormpy.RationalFunctionCoefficient(1)
+        one_pol = stormpy.Polynomial(one_pol)
+        first_val = stormpy.RationalFunction(one_pol, one_pol)
+        two_pol = stormpy.RationalFunctionCoefficient(2)
+        two_pol = stormpy.Polynomial(two_pol)
+        sec_val = stormpy.RationalFunction(two_pol, two_pol)
+        third_val = stormpy.RationalFunction(one_pol, two_pol)
 
         builder.add_next_value(0, 1, first_val)
         builder.add_next_value(0, 2, sec_val)
@@ -245,13 +245,13 @@ class TestMatrixBuilder:
     def test_parametric_matrix_from_numpy(self):
         import numpy as np
 
-        one_pol = stormpy.RationalRF(1)
-        one_pol = stormpy.FactorizedPolynomial(one_pol)
-        first_val = stormpy.FactorizedRationalFunction(one_pol, one_pol)
-        two_pol = stormpy.RationalRF(2)
-        two_pol = stormpy.FactorizedPolynomial(two_pol)
-        sec_val = stormpy.FactorizedRationalFunction(two_pol, two_pol)
-        third_val = stormpy.FactorizedRationalFunction(one_pol, two_pol)
+        one_pol = stormpy.RationalFunctionCoefficient(1)
+        one_pol = stormpy.Polynomial(one_pol)
+        first_val = stormpy.RationalFunction(one_pol, one_pol)
+        two_pol = stormpy.RationalFunctionCoefficient(2)
+        two_pol = stormpy.Polynomial(two_pol)
+        sec_val = stormpy.RationalFunction(two_pol, two_pol)
+        third_val = stormpy.RationalFunction(one_pol, two_pol)
 
         array = np.array([[sec_val, first_val], [first_val, 0], [0, sec_val], [third_val, third_val]])
 
@@ -298,13 +298,13 @@ class TestMatrixBuilder:
     def test_parametric_matrix_from_numpy_row_grouping(self):
         import numpy as np
 
-        one_pol = stormpy.RationalRF(1)
-        one_pol = stormpy.FactorizedPolynomial(one_pol)
-        first_val = stormpy.FactorizedRationalFunction(one_pol, one_pol)
-        two_pol = stormpy.RationalRF(2)
-        two_pol = stormpy.FactorizedPolynomial(two_pol)
-        sec_val = stormpy.FactorizedRationalFunction(two_pol, two_pol)
-        third_val = stormpy.FactorizedRationalFunction(one_pol, two_pol)
+        one_pol = stormpy.RationalFunctionCoefficient(1)
+        one_pol = stormpy.Polynomial(one_pol)
+        first_val = stormpy.RationalFunction(one_pol, one_pol)
+        two_pol = stormpy.RationalFunctionCoefficient(2)
+        two_pol = stormpy.Polynomial(two_pol)
+        sec_val = stormpy.RationalFunction(two_pol, two_pol)
+        third_val = stormpy.RationalFunction(one_pol, two_pol)
 
         array = np.array([[sec_val, first_val], [first_val, sec_val], [sec_val, sec_val], [third_val, third_val]])
 

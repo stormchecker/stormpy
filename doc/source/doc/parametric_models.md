@@ -50,7 +50,7 @@ Before we obtain an instantiated model, we need to map parameters to values: We 
 point = dict()
 for x in parameters:
     print(x.name)
-    point[x] = stormpy.RationalRF(0.4)
+    point[x] = stormpy.RationalFunctionCoefficient(0.4)
 instantiated_model = instantiator.instantiate(point)
 result = stormpy.model_checking(instantiated_model, properties[0])
 print(result.at(model.initial_states[0]))

@@ -1,0 +1,969 @@
+
+<!DOCTYPE html>
+<html class="no-js" lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    
+    <meta name="docsearch:name" content="stormpy" />
+    <meta name="docsearch:package_type" content="" />
+    <meta name="docsearch:release" content="1.14.0" />
+    <meta name="docsearch:version" content="" />
+    
+      <meta name="theme-color" content="#0D6EFD" />
+    
+    
+      <title>Pycarl parse &mdash; stormpy 1.14.0 documentation</title>
+    
+    <link rel="canonical" href="api/pycarl/parse" />
+      <link rel="icon" href="../../_static/favicon.png" />
+          <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8e8a900e" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../../_static/fonts/nunito/stylesheet.css?v=abf98f06" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../../_static/fonts/ubuntu-sans-mono/stylesheet.css?v=8616a587" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../../_static/pygments-dark.css?v=f21207c5" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../../_static/pygments-light.css?v=6c104457" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../../_static/bootstrap-icons.min.css?v=44730005" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../../_static/sphinx-nefertiti-blue.min.css?v=cbfc91e2" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=6c103ecc" /><!-- add (1) -->
+        <link rel="index" title="Index" href="../../genindex.html" />
+        <link rel="search" title="Search" href="../../search.html" />
+        <link rel="top" title="stormpy 1.14.0 documentation" href="#" />
+        <link rel="up" title="Stormpy API Reference" href="../../api.html" />
+        <link rel="prev" title="Pycarl formula" href="formula.html" />
+    <style>
+      :root {
+        --nftt-body-font-family: "Nunito", var(--nftt-font-sans-serif) !important;
+        --nftt-font-monospace: "Ubuntu Sans Mono", var(--nftt-font-family-monospace) !important;
+        --nftt-project-name-font: var(--nftt-body-font-family);
+        --nftt-documentation-font: var(--nftt-body-font-family);
+        --nftt-doc-headers-font: "Georgia", var(--nftt-documentation-font);}
+    </style>
+  </head>
+  <body>
+    <div id="back-to-top-container" class="position-fixed start-50 translate-middle-x">
+      <button id="back-to-top" type="button" class="d-none btn btn-neutral btn-sm shadow px-4" data-bs-toggle="button">Back to top</button>
+    </div>
+    <header id="snftt-nav-bar" class="navbar navbar-expand-xl navbar-dark nftt-navbar flex-column fixed-top">
+      <div class="skip-links container-fluid visually-hidden-focusable overflow-hidden justify-content-start flex-grow-1">
+        <div class="border-bottom mb-2 pb-2 w-100">
+          <a class="d-none d-md-inline-flex p-2 m-1" href="#sidebar-filter">Skip to index filter</a>
+          <a class="d-inline-flex p-2 m-1" href="#content">Skip to main content</a>
+        </div>
+      </div>
+      <nav class="container-xxl nftt-gutter flex-nowrap" aria-label="Main navigation">
+        <div class="nftt-navbar-toggler">
+          <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle documentation navigation">
+            <i class="bi bi-list"></i>
+          </button>
+        </div>
+          <a
+            href="../../index.html"
+            class="navbar-brand"
+          >
+            <img src="../../_static/storm_logo.png" width="36" height="36" alt="Storm logo"
+              class="project-logo"
+            />
+            <span class="brand-text">stormpy</span><span class="brand-short-text">stormpy</span>
+          </a>
+        
+        
+          <ul class="nftt-header-links-large navbar-nav">
+          
+            
+            
+            
+            
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="../../getting_started.html" data-snftt-hl-id="1"  >Getting Started</a>
+    </li>
+  
+
+  
+    <li class="nav-item dropdown">
+      <a class="snftt-hl nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" href="#" data-snftt-hl-id="2" data-snftt-hl-regexps="doc/*">Documentation</a>
+      <ul class="dropdown-menu">
+        
+          
+          
+          
+          
+  
+    <li >
+      <a class="snftt-hl dropdown-item" href="../../advanced_topics.html" data-snftt-hl-id="3"  >Advanced Examples</a>
+    </li>
+  
+
+  
+    <li><hr class="dropdown-divider"></li>
+  
+
+  
+    <li >
+      <a class="snftt-hl dropdown-item" href="../../using_pycarl.html" data-snftt-hl-id="4"  >Getting Started with Pycarl</a>
+    </li>
+  
+
+        
+      </ul>
+    </li>
+  
+
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="../../api.html" data-snftt-hl-id="5"  data-snftt-hl-id="" data-snftt-hl-regexps="api/*">API</a>
+    </li>
+  
+
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="https://www.stormchecker.org/" data-snftt-hl-id="6"  >Storm</a>
+    </li>
+  
+
+          
+          </ul>
+        
+        <div class="d-flex d-xl-none">
+          <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#nfttSearch" aria-controls="nfttSearch" aria-label="Search">
+            <i class="bi bi-search"></i>
+          </button>
+          <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#nfttNavbar" aria-controls="nfttNavbar" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+        </div>
+        
+<div class="offcanvas-xl offcanvas-end flex-grow-1" tabindex="-1" id="nfttSearch" aria-labelledby="nfttSearchOffcanvasLabel" data-bs-scroll="true">
+  <div class="offcanvas-header px-4 pb-0">
+    <h5 class="offcanvas-title fw-bold" id="nfttSearchOffcanvasLabel">Search the documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#nfttSearch"></button>
+  </div>
+  <div class="offcanvas-body p-4 pt-0 p-xl-0 ps-xl-4">
+    <hr class="d-xl-none text-white-50">
+    <ul class="navbar-nav flex-row align-items-center flex-wrap ms-md-auto">
+      <li class="nav-item col-12 col-xl-auto">
+        <form id="nftt-search-form" action="../../search.html" method="get">
+          <div class="input-group">
+            <input type="text" name="q" class="form-control search-input" placeholder="Search" aria-label="Search" aria-describedby="button-search">
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <button class="btn btn-primary" type="submit" id="button-search" aria-label="Search"><i class="bi bi-search"></i></button>
+          </div>
+        </form>
+      </li>
+    </ul>
+  </div>
+</div>
+
+        <div class="offcanvas-xl offcanvas-end" tabindex="-1" id="nfttNavbar" aria-labelledby="nfttNavbarOffcanvasLabel" data-bs-scroll="true">
+          <div class="offcanvas-header px-4 pb-0">
+            <div class="offcanvas-title navbar-brand" id="nfttNavbarOffcanvasLabel"><span class="brand-short-text">stormpy</span></div>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#nfttNavbar"></button>
+          </div>
+          <div class="offcanvas-body p-4 pt-0 p-xl-0 px-xl-3">
+            <hr class="d-xl-none text-white-50">
+            <ul class="navbar-nav flex-row align-items-center flex-wrap ms-lg-auto">
+              
+                <div class="nftt-header-links-small">
+                  
+                    
+                    
+                    
+                    <div class="d-inline-block">
+                      
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="../../getting_started.html" data-snftt-hl-id="1"  >Getting Started</a>
+    </li>
+  
+
+  
+    <li class="nav-item dropdown">
+      <a class="snftt-hl nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" href="#" data-snftt-hl-id="2" data-snftt-hl-regexps="doc/*">Documentation</a>
+      <ul class="dropdown-menu">
+        
+          
+          
+          
+          
+  
+    <li >
+      <a class="snftt-hl dropdown-item" href="../../advanced_topics.html" data-snftt-hl-id="3"  >Advanced Examples</a>
+    </li>
+  
+
+  
+    <li><hr class="dropdown-divider"></li>
+  
+
+  
+    <li >
+      <a class="snftt-hl dropdown-item" href="../../using_pycarl.html" data-snftt-hl-id="4"  >Getting Started with Pycarl</a>
+    </li>
+  
+
+        
+      </ul>
+    </li>
+  
+
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="../../api.html" data-snftt-hl-id="5"  data-snftt-hl-id="" data-snftt-hl-regexps="api/*">API</a>
+    </li>
+  
+
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="https://www.stormchecker.org/" data-snftt-hl-id="6"  >Storm</a>
+    </li>
+  
+
+                    </div>
+                  
+                  <li class="nav-item col-12 col-xl-auto h-100" aria-hidden="true">
+                    <div class="vr d-none d-xl-flex h-100 mx-xl-2 text-white-50"></div>
+                    <hr class="d-xl-none text-white-50">
+                  </li>
+                </div>
+              
+              
+              <li class="nav-item col-12 col-xl-auto">
+                <a class="nav-link py-2 py-xl-0 px-0 px-xl-2" href="https://github.com/stormchecker/stormpy" target="_blank" rel="noopener">
+                  <div class="d-flex align-items-center">
+                    <div class="me-2">
+                      <i class="bi bi-git size-24"></i>
+                    </div>
+                    <div class="repo d-flex flex-column align-items-center" data-snftt-repo-url="https://github.com/stormchecker/stormpy">
+                      stormpy
+                      <div class="d-flex justify-content-center" data-snftt-repo-metrics>
+                        <span class="pe-2 d-flex justify-content-center align-items-center">
+                          <i class="bi bi-tag size-14"></i>
+                          <span class="repo-metric" data-snftt-repo-tag></span>
+                        </span>
+                        <span class="pe-2 d-flex justify-content-center align-items-center">
+                          <i class="bi bi-star size-14"></i>
+                          <span class="repo-metric" data-snftt-repo-stars></span>
+                        </span>
+                        <span class="d-flex justify-content-center align-items-center">
+                          <i class="bi bi-diagram-2 size-14"></i>
+                          <span class="repo-metric" data-snftt-repo-forks></span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class="nav-item col-12 col-xl-auto h-100" aria-hidden="true">
+                <div class="vr d-none d-xl-flex h-100 mx-xl-2 text-white-50"></div>
+                <hr class="d-xl-none text-white-50">
+              </li>
+              
+              
+              
+              
+              <!-- lightdark-dropdown.html -->
+<li class="nav-item dropdown">
+  <a class="nav-link d-flex py-2 px-0 px-xl-2 dropdown-toggle align-items-center" id="snftt-luz" href="#" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" aria-label="Change appearance">
+    <i class="bi bi-circle-half" data-snftt-luz-icon-active></i>
+    <span id="snftt-luz-text" class="d-xl-none ms-2">Change appearance</span>
+  </a>
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="snftt-luz-text">
+    <li>
+      <h6 class="dropdown-header">Change appearance</h6>
+    </li>
+    <li>
+      <a class="dropdown-item d-flex align-items-center" data-snftt-luz="light" href="#" aria-pressed="false">
+        <span>
+          <i class="bi bi-sun" data-snftt-luz-icon="light"></i>
+        </span>
+        <span class="ms-3">Light</span>
+        <i class="bi bi-check ms-auto"></i>
+      </a>
+    </li>
+    <li>
+      <a class="dropdown-item d-flex align-items-center" data-snftt-luz="dark" href="#" aria-pressed="false">
+        <span>
+          <i class="bi bi-moon-stars" data-snftt-luz-icon="dark"></i>
+        </span>
+        <span class="ms-3">Dark</span>
+        <i class="bi bi-check ms-auto"></i>
+      </a>
+    </li>
+    <li>
+      <a class="dropdown-item current d-flex align-items-center" data-snftt-luz="default" href="#" aria-pressed="false">
+        <span>
+          <i class="bi bi-circle-half" data-snftt-luz-icon="default"></i>
+        </span>
+        <span class="ms-3">Automatic</span>
+        <i class="bi bi-check ms-auto"></i>
+      </a>
+    </li>
+  </ul>
+</li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      
+    </header>
+
+    <div class="container-fluid">
+      <div class="nftt-gutter nftt-page">
+        <aside class="nftt-sidebar ">
+          <div class="nftt-sidebar-content">
+            
+            <div class="title d-none d-xl-none">
+              <i class="bi bi-book"></i>&nbsp;&nbsp;<span>Index</span>
+            </div>
+            <div id="sidebar" tabindex="-1" class="offcanvas-xl offcanvas-start" aria-labelledby="nfttSidebarOffcanvasLabel">
+                <!-- sidebartemplate: "globaltoc.html" --><div class="offcanvas-header border-bottom">
+  <h5 class="offcanvas-title fw-bold" id="nfttSidebarOffcanvasLabel">
+    Index
+  </h5>
+  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#sidebar"></button>
+</div>
+
+<div class="offcanvas-body">
+  <nav class="toc" aria-label="Main menu">
+    <div class="mb-3 p-1 pb-4 border-bottom">
+      <input id="sidebar-filter" type="text" name="filter" class="form-control form-control-sm" placeholder="index filter" aria-label="index filter">
+    </div>
+    <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../advanced_topics.html">Advanced Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../doc/analysis.html">Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../doc/building_models.html">Building Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../doc/models/building_dtmcs.html">Discrete-time Markov chains (DTMCs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../doc/models/building_mdps.html">Markov decision processes (MDPs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../doc/models/building_ctmcs.html">Continuous-time Markov chains (CTMCs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../doc/models/building_mas.html">Markov automata (MAs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../doc/engines.html">Engines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../doc/exploration.html">Exploring Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../doc/simulator.html">Working with Simulators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../doc/reward_models.html">Reward Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../doc/schedulers.html">Working with Schedulers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../doc/shortest_paths.html">Working with Shortest Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../doc/parametric_models.html">Parametric Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../doc/dfts.html">Dynamic Fault Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../doc/gspns.html">Generalized Stochastic Petri Nets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../doc/info.html">Storm(py) Information</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../using_pycarl.html">Getting Started with Pycarl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../development.html">Developer information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributors.html">Contributors</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../api.html">Stormpy API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../core.html">Stormpy.core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../info.html">Stormpy.info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../exceptions.html">Stormpy.exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../logic.html">Stormpy.logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../storage.html">Stormpy.storage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../utility.html">Stormpy.utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dft.html">Stormpy.dft</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gspn.html">Stormpy.gspn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pars.html">Stormpy.pars</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pomdp.html">Stormpy.pomdp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html">Pycarl core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="convert.html">Pycarl convert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="formula.html">Pycarl formula</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Pycarl parse</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav>
+  <template data-toggle-item-template>
+    <button class="btn btn-sm btn-link toctree-expand" type="button">
+      <i class="bi bi-caret-right"></i>
+      <span class="visually-hidden">Toggle menu contents</span>
+    </button>
+  </template>
+</div>
+            </div>
+            
+          </div>
+        </aside>
+        <article id="content" class="nftt-content" role="main">
+          <div><div class="d-flex flex-row justify-content-between">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="../../index.html">Start</a></li>
+        <li class="breadcrumb-item"><a href="../../api.html">Stormpy API Reference</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Pycarl parse</li>
+    </ol>
+  </nav>
+  
+    <div class="fs085">
+        <a href="../../_sources/api/pycarl/parse.rst.txt"  rel="nofollow" aria-label="Show source of this document"><i class="bi bi-file-earmark-code"></i></a>
+    </div>
+  
+</div>
+            
+
+
+    <section id="pycarl-parse">
+<h1>Pycarl parse<a class="headerlink" href="#pycarl-parse" title="Link to this heading">¶</a></h1>
+<section id="module-stormpy.pycarl.parse">
+<span id="number-independent-types"></span><h2>Number independent types<a class="headerlink" href="#module-stormpy.pycarl.parse" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.CarlParserTransformer">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">CarlParserTransformer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pycarl.parse.CarlParserTransformer" title="Link to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.CarlParserTransformer.arith_nary">
+<span class="sig-name descname"><span class="pre">arith_nary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pycarl.parse.CarlParserTransformer.arith_nary" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.CarlParserTransformer.arith_unary">
+<span class="sig-name descname"><span class="pre">arith_unary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pycarl.parse.CarlParserTransformer.arith_unary" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.CarlParserTransformer.bool_value">
+<span class="sig-name descname"><span class="pre">bool_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pycarl.parse.CarlParserTransformer.bool_value" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.CarlParserTransformer.bool_variable">
+<span class="sig-name descname"><span class="pre">bool_variable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pycarl.parse.CarlParserTransformer.bool_variable" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.CarlParserTransformer.carl_expr">
+<span class="sig-name descname"><span class="pre">carl_expr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pycarl.parse.CarlParserTransformer.carl_expr" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.CarlParserTransformer.constraint">
+<span class="sig-name descname"><span class="pre">constraint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pycarl.parse.CarlParserTransformer.constraint" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.CarlParserTransformer.form_expr">
+<span class="sig-name descname"><span class="pre">form_expr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pycarl.parse.CarlParserTransformer.form_expr" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.CarlParserTransformer.formula_nary">
+<span class="sig-name descname"><span class="pre">formula_nary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pycarl.parse.CarlParserTransformer.formula_nary" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.CarlParserTransformer.formula_unary">
+<span class="sig-name descname"><span class="pre">formula_unary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pycarl.parse.CarlParserTransformer.formula_unary" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.CarlParserTransformer.number">
+<span class="sig-name descname"><span class="pre">number</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pycarl.parse.CarlParserTransformer.number" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.CarlParserTransformer.real_variable">
+<span class="sig-name descname"><span class="pre">real_variable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pycarl.parse.CarlParserTransformer.real_variable" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.CarlParserTransformer.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pycarl.parse.CarlParserTransformer.start" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.Lark">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">Lark</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grammar</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Grammar</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">IO</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pycarl.parse.Lark" title="Link to this definition">¶</a></dt>
+<dd><p>Main interface for the library.</p>
+<p>It’s mostly a thin wrapper for the many different parsers, and for the tree constructor.</p>
+<dl>
+<dt>Parameters:</dt><dd><p>grammar: a string or file-object containing the grammar spec (using Lark’s ebnf syntax)
+options: a dictionary controlling various aspects of Lark.</p>
+</dd>
+<dt>Example:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Lark</span><span class="p">(</span><span class="sa">r</span><span class="s1">'''start: "foo" '''</span><span class="p">)</span>
+<span class="go">Lark(...)</span>
+</pre></div>
+</div>
+<p><strong>===  General Options  ===</strong></p>
+<dl>
+<dt>start</dt><dd><p>The start symbol. Either a string, or a list of strings for multiple possible starts (Default: “start”)</p>
+</dd>
+<dt>debug</dt><dd><p>Display debug information and extra warnings. Use only when debugging (Default: <code class="docutils literal notranslate"><span class="pre">False</span></code>)
+When used with Earley, it generates a forest graph as “sppf.png”, if ‘dot’ is installed.</p>
+</dd>
+<dt>strict</dt><dd><p>Throw an exception on any potential ambiguity, including shift/reduce conflicts, and regex collisions.</p>
+</dd>
+<dt>transformer</dt><dd><p>Applies the transformer to every parse tree (equivalent to applying it after the parse, but faster)</p>
+</dd>
+<dt>propagate_positions</dt><dd><p>Propagates positional attributes into the ‘meta’ attribute of all tree branches.
+Sets attributes: (line, column, end_line, end_column, start_pos, end_pos,</p>
+<blockquote>
+<div><p>container_line, container_column, container_end_line, container_end_column)</p>
+</div></blockquote>
+<p>Accepts <code class="docutils literal notranslate"><span class="pre">False</span></code>, <code class="docutils literal notranslate"><span class="pre">True</span></code>, or a callable, which will filter which nodes to ignore when propagating.</p>
+</dd>
+<dt>maybe_placeholders</dt><dd><p>When <code class="docutils literal notranslate"><span class="pre">True</span></code>, the <code class="docutils literal notranslate"><span class="pre">[]</span></code> operator returns <code class="docutils literal notranslate"><span class="pre">None</span></code> when not matched.
+When <code class="docutils literal notranslate"><span class="pre">False</span></code>,  <code class="docutils literal notranslate"><span class="pre">[]</span></code> behaves like the <code class="docutils literal notranslate"><span class="pre">?</span></code> operator, and returns no value at all.
+(default= <code class="docutils literal notranslate"><span class="pre">True</span></code>)</p>
+</dd>
+<dt>cache</dt><dd><p>Cache the results of the Lark grammar analysis, for x2 to x3 faster loading. LALR only for now.</p>
+<ul class="simple">
+<li><p>When <code class="docutils literal notranslate"><span class="pre">False</span></code>, does nothing (default)</p></li>
+<li><p>When <code class="docutils literal notranslate"><span class="pre">True</span></code>, caches to a temporary file in the local directory</p></li>
+<li><p>When given a string, caches to the path pointed by the string</p></li>
+</ul>
+</dd>
+<dt>cache_grammar</dt><dd><p>For use with <code class="docutils literal notranslate"><span class="pre">cache</span></code> option. When <code class="docutils literal notranslate"><span class="pre">True</span></code>, the unanalyzed grammar is also included in the cache.
+Useful for classes that require the <code class="docutils literal notranslate"><span class="pre">Lark.grammar</span></code> to be present (e.g. Reconstructor).
+(default= <code class="docutils literal notranslate"><span class="pre">False</span></code>)</p>
+</dd>
+<dt>regex</dt><dd><p>When True, uses the <code class="docutils literal notranslate"><span class="pre">regex</span></code> module instead of the stdlib <code class="docutils literal notranslate"><span class="pre">re</span></code>.</p>
+</dd>
+<dt>g_regex_flags</dt><dd><p>Flags that are applied to all terminals (both regex and strings)</p>
+</dd>
+<dt>keep_all_tokens</dt><dd><p>Prevent the tree builder from automagically removing “punctuation” tokens (Default: <code class="docutils literal notranslate"><span class="pre">False</span></code>)</p>
+</dd>
+<dt>tree_class</dt><dd><p>Lark will produce trees comprised of instances of this class instead of the default <code class="docutils literal notranslate"><span class="pre">lark.Tree</span></code>.</p>
+</dd>
+</dl>
+<p><strong>=== Algorithm Options ===</strong></p>
+<dl class="simple">
+<dt>parser</dt><dd><p>Decides which parser engine to use. Accepts “earley” or “lalr”. (Default: “earley”).
+(there is also a “cyk” option for legacy)</p>
+</dd>
+<dt>lexer</dt><dd><p>Decides whether or not to use a lexer stage</p>
+<ul class="simple">
+<li><p>“auto” (default): Choose for me based on the parser</p></li>
+<li><p>“basic”: Use a basic lexer</p></li>
+<li><p>“contextual”: Stronger lexer (only works with parser=”lalr”)</p></li>
+<li><p>“dynamic”: Flexible and powerful (only with parser=”earley”)</p></li>
+<li><p>“dynamic_complete”: Same as dynamic, but tries <em>every</em> variation of tokenizing possible.</p></li>
+</ul>
+</dd>
+<dt>ambiguity</dt><dd><p>Decides how to handle ambiguity in the parse. Only relevant if parser=”earley”</p>
+<ul class="simple">
+<li><p>“resolve”: The parser will automatically choose the simplest derivation
+(it chooses consistently: greedy for tokens, non-greedy for rules)</p></li>
+<li><p>“explicit”: The parser will return all derivations wrapped in “_ambig” tree nodes (i.e. a forest).</p></li>
+<li><p>“forest”: The parser will return the root of the shared packed parse forest.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>=== Misc. / Domain Specific Options ===</strong></p>
+<dl class="simple">
+<dt>postlex</dt><dd><p>Lexer post-processing (Default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) Only works with the basic and contextual lexers.</p>
+</dd>
+<dt>priority</dt><dd><p>How priorities should be evaluated - “auto”, <code class="docutils literal notranslate"><span class="pre">None</span></code>, “normal”, “invert” (Default: “auto”)</p>
+</dd>
+<dt>lexer_callbacks</dt><dd><p>Dictionary of callbacks for the lexer. May alter tokens during lexing. Use with caution.</p>
+</dd>
+<dt>use_bytes</dt><dd><p>Accept an input of type <code class="docutils literal notranslate"><span class="pre">bytes</span></code> instead of <code class="docutils literal notranslate"><span class="pre">str</span></code>.</p>
+</dd>
+<dt>ordered_sets</dt><dd><p>Should Earley use ordered-sets to achieve stable output (~10% slower than regular sets. Default: True)</p>
+</dd>
+<dt>edit_terminals</dt><dd><p>A callback for editing the terminals before parse.</p>
+</dd>
+<dt>import_paths</dt><dd><p>A List of either paths or loader functions to specify from where grammars are imported</p>
+</dd>
+<dt>source_path</dt><dd><p>Override the source of from where the grammar was loaded. Useful for relative imports and unconventional grammar loading</p>
+</dd>
+</dl>
+<p><strong>=== End of Options ===</strong></p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.Lark.get_terminal">
+<span class="sig-name descname"><span class="pre">get_terminal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">TerminalDef</span></span></span><a class="headerlink" href="#stormpy.pycarl.parse.Lark.get_terminal" title="Link to this definition">¶</a></dt>
+<dd><p>Get information about a terminal</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.Lark.grammar">
+<span class="sig-name descname"><span class="pre">grammar</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Grammar</span></span><a class="headerlink" href="#stormpy.pycarl.parse.Lark.grammar" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.Lark.lex">
+<span class="sig-name descname"><span class="pre">lex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnyStr</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">TextSlice</span><span class="p"><span class="pre">[</span></span><span class="pre">AnyStr</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dont_ignore</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">Token</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#stormpy.pycarl.parse.Lark.lex" title="Link to this definition">¶</a></dt>
+<dd><p>Only lex (and postlex) the text, without parsing it. Only relevant when lexer=’basic’</p>
+<p>When dont_ignore=True, the lexer will return all tokens, even those marked for %ignore.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>UnexpectedCharacters</strong> – In case the lexer cannot find a suitable match.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.Lark.lexer">
+<span class="sig-name descname"><span class="pre">lexer</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Lexer</span></span><a class="headerlink" href="#stormpy.pycarl.parse.Lark.lexer" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.Lark.load">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_T</span></span></span><a class="headerlink" href="#stormpy.pycarl.parse.Lark.load" title="Link to this definition">¶</a></dt>
+<dd><p>Loads an instance from the given file object</p>
+<p>Useful for caching and multiprocessing.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.Lark.open">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">open</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grammar_filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rel_to</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_T</span></span></span><a class="headerlink" href="#stormpy.pycarl.parse.Lark.open" title="Link to this definition">¶</a></dt>
+<dd><p>Create an instance of Lark with the grammar given by its filename</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">rel_to</span></code> is provided, the function will find the grammar filename in relation to it.</p>
+<p>Example:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Lark</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">"grammar_file.lark"</span><span class="p">,</span> <span class="n">rel_to</span><span class="o">=</span><span class="vm">__file__</span><span class="p">,</span> <span class="n">parser</span><span class="o">=</span><span class="s2">"lalr"</span><span class="p">)</span>
+<span class="go">Lark(...)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.Lark.open_from_package">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">open_from_package</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grammar_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_paths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['']</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_T</span></span></span><a class="headerlink" href="#stormpy.pycarl.parse.Lark.open_from_package" title="Link to this definition">¶</a></dt>
+<dd><p>Create an instance of Lark with the grammar loaded from within the package <cite>package</cite>.
+This allows grammar loading from zipapps.</p>
+<p>Imports in the grammar will use the <cite>package</cite> and <cite>search_paths</cite> provided, through <cite>FromPackageLoader</cite></p>
+<p>Example:</p>
+<blockquote>
+<div><p>Lark.open_from_package(__name__, “example.lark”, (“grammars”,), parser=…)</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.Lark.options">
+<span class="sig-name descname"><span class="pre">options</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">LarkOptions</span></span><a class="headerlink" href="#stormpy.pycarl.parse.Lark.options" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.Lark.parse">
+<span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnyStr</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">TextSlice</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#stormpy.pycarl.parse.UnexpectedInput" title="stormpy.pycarl.parse.UnexpectedInput"><span class="pre">UnexpectedInput</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ParseTree</span></span></span><a class="headerlink" href="#stormpy.pycarl.parse.Lark.parse" title="Link to this definition">¶</a></dt>
+<dd><p>Parse the given text, according to the options provided.</p>
+<dl>
+<dt>Parameters:</dt><dd><dl class="simple">
+<dt>text (LarkInput): Text to be parsed, as <cite>str</cite> or <cite>bytes</cite>.</dt><dd><p>TextSlice may also be used, but only when lexer=’basic’ or ‘contextual’.
+If Lark was created with a custom lexer, this may be an object of any type.</p>
+</dd>
+</dl>
+<p>start (str, optional): Required if Lark was given multiple possible start symbols (using the start option).
+on_error (function, optional): if provided, will be called on UnexpectedInput error,</p>
+<blockquote>
+<div><p>with the exception as its argument. Return true to resume parsing, or false to raise the exception.
+LALR only. See examples/advanced/error_handling.py for an example of how to use on_error.</p>
+</div></blockquote>
+</dd>
+<dt>Returns:</dt><dd><p>If a transformer is supplied to <code class="docutils literal notranslate"><span class="pre">__init__</span></code>, returns whatever is the
+result of the transformation. Otherwise, returns a Tree instance.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#stormpy.pycarl.parse.UnexpectedInput" title="stormpy.pycarl.parse.UnexpectedInput"><strong>UnexpectedInput</strong></a> – On a parse error, one of these sub-exceptions will rise:
+<code class="docutils literal notranslate"><span class="pre">UnexpectedCharacters</span></code>, <code class="docutils literal notranslate"><span class="pre">UnexpectedToken</span></code>, or <code class="docutils literal notranslate"><span class="pre">UnexpectedEOF</span></code>.
+For convenience, these sub-exceptions also inherit from <code class="docutils literal notranslate"><span class="pre">ParserError</span></code> and <code class="docutils literal notranslate"><span class="pre">LexerError</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.Lark.parse_interactive">
+<span class="sig-name descname"><span class="pre">parse_interactive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnyStr</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">TextSlice</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">InteractiveParser</span></span></span><a class="headerlink" href="#stormpy.pycarl.parse.Lark.parse_interactive" title="Link to this definition">¶</a></dt>
+<dd><p>Start an interactive parsing session. Only works when parser=’lalr’.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>text (LarkInput, optional): Text to be parsed. Required for <code class="docutils literal notranslate"><span class="pre">resume_parse()</span></code>.
+start (str, optional): Start symbol</p>
+</dd>
+<dt>Returns:</dt><dd><p>A new InteractiveParser instance.</p>
+</dd>
+</dl>
+<p>See Also: <code class="docutils literal notranslate"><span class="pre">Lark.parse()</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.Lark.parser">
+<span class="sig-name descname"><span class="pre">parser</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ParsingFrontend</span></span><a class="headerlink" href="#stormpy.pycarl.parse.Lark.parser" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.Lark.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude_options</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.pycarl.parse.Lark.save" title="Link to this definition">¶</a></dt>
+<dd><p>Saves the instance into the given file object</p>
+<p>Useful for caching and multiprocessing.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.Lark.source_grammar">
+<span class="sig-name descname"><span class="pre">source_grammar</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#stormpy.pycarl.parse.Lark.source_grammar" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.Lark.source_path">
+<span class="sig-name descname"><span class="pre">source_path</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#stormpy.pycarl.parse.Lark.source_path" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.Lark.terminals">
+<span class="sig-name descname"><span class="pre">terminals</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><span class="pre">TerminalDef</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#stormpy.pycarl.parse.Lark.terminals" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.ParserError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ParserError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pycarl.parse.ParserError" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.UnexpectedInput">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">UnexpectedInput</span></span><a class="headerlink" href="#stormpy.pycarl.parse.UnexpectedInput" title="Link to this definition">¶</a></dt>
+<dd><p>UnexpectedInput Error.</p>
+<p>Used as a base class for the following exceptions:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">UnexpectedCharacters</span></code>: The lexer encountered an unexpected string</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">UnexpectedToken</span></code>: The parser received an unexpected token</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">UnexpectedEOF</span></code>: The parser expected a token, but the input ended</p></li>
+</ul>
+<p>After catching one of these exceptions, you may call the following helper methods to create a nicer error message.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.UnexpectedInput.column">
+<span class="sig-name descname"><span class="pre">column</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#stormpy.pycarl.parse.UnexpectedInput.column" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.UnexpectedInput.get_context">
+<span class="sig-name descname"><span class="pre">get_context</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">span</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">40</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#stormpy.pycarl.parse.UnexpectedInput.get_context" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a pretty string pinpointing the error in the text,
+with span amount of context characters around it.</p>
+<dl class="simple">
+<dt>Note:</dt><dd><p>The parser doesn’t hold a copy of the text it has to parse,
+so you have to provide it again</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.UnexpectedInput.interactive_parser">
+<span class="sig-name descname"><span class="pre">interactive_parser</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">InteractiveParser</span></span><a class="headerlink" href="#stormpy.pycarl.parse.UnexpectedInput.interactive_parser" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.UnexpectedInput.line">
+<span class="sig-name descname"><span class="pre">line</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#stormpy.pycarl.parse.UnexpectedInput.line" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.UnexpectedInput.match_examples">
+<span class="sig-name descname"><span class="pre">match_examples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parse_fn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tree</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">examples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token_type_match_fallback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_accepts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">T</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.pycarl.parse.UnexpectedInput.match_examples" title="Link to this definition">¶</a></dt>
+<dd><p>Allows you to detect what’s wrong in the input text by matching
+against example errors.</p>
+<p>Given a parser instance and a dictionary mapping some label with
+some malformed syntax examples, it’ll return the label for the
+example that bests matches the current error. The function will
+iterate the dictionary until it finds a matching error, and
+return the corresponding value.</p>
+<p>For an example usage, see <cite>examples/error_reporting_lalr.py</cite></p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>parse_fn: parse function (usually <code class="docutils literal notranslate"><span class="pre">lark_instance.parse</span></code>)
+examples: dictionary of <code class="docutils literal notranslate"><span class="pre">{'example_string':</span> <span class="pre">value}</span></code>.
+use_accepts: Recommended to keep this as <code class="docutils literal notranslate"><span class="pre">use_accepts=True</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.UnexpectedInput.pos_in_stream">
+<span class="sig-name descname"><span class="pre">pos_in_stream</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#stormpy.pycarl.parse.UnexpectedInput.pos_in_stream" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.UnexpectedInput.state">
+<span class="sig-name descname"><span class="pre">state</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Any</span></span><a class="headerlink" href="#stormpy.pycarl.parse.UnexpectedInput.state" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="stormpy.pycarl.parse.deserialize">
+<span class="sig-name descname"><span class="pre">deserialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pycarl.parse.deserialize" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="number-dependent-types-gmp">
+<h2>Number dependent types (gmp)<a class="headerlink" href="#number-dependent-types-gmp" title="Link to this heading">¶</a></h2>
+</section>
+<section id="number-dependent-types-cln">
+<h2>Number dependent types (cln)<a class="headerlink" href="#number-dependent-types-cln" title="Link to this heading">¶</a></h2>
+</section>
+</section>
+
+
+</div>
+        </article>
+        <aside class="nftt-toc">
+          
+          <div class="my-sm-1 my-lg-0 ps-xl-3 text-muted">
+            <button class="btn btn-link p-lg-0 mb-2 mb-lg-0 text-decoration-none nftt-toc-toggle d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#tocContents" aria-expanded="false" aria-controls="tocContents"
+            >On this page <i class="ms-2 bi bi-chevron-expand"></i></button>
+            <div class="title d-none d-lg-block">
+              <i class="bi bi-file-earmark-text"></i>&nbsp;&nbsp;<span class="small">On this page</span>
+            </div>
+            <div class="collapse nftt-toc-collapse" id="tocContents">
+              <nav id="TableOfContents">
+                <ul>
+<li><a class="reference internal" href="#">Pycarl parse</a><ul>
+<li><a class="reference internal" href="#module-stormpy.pycarl.parse">Number independent types</a><ul>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.CarlParserTransformer"><code class="docutils literal notranslate"><span class="pre">CarlParserTransformer</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.CarlParserTransformer.arith_nary"><code class="docutils literal notranslate"><span class="pre">CarlParserTransformer.arith_nary()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.CarlParserTransformer.arith_unary"><code class="docutils literal notranslate"><span class="pre">CarlParserTransformer.arith_unary()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.CarlParserTransformer.bool_value"><code class="docutils literal notranslate"><span class="pre">CarlParserTransformer.bool_value()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.CarlParserTransformer.bool_variable"><code class="docutils literal notranslate"><span class="pre">CarlParserTransformer.bool_variable()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.CarlParserTransformer.carl_expr"><code class="docutils literal notranslate"><span class="pre">CarlParserTransformer.carl_expr()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.CarlParserTransformer.constraint"><code class="docutils literal notranslate"><span class="pre">CarlParserTransformer.constraint()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.CarlParserTransformer.form_expr"><code class="docutils literal notranslate"><span class="pre">CarlParserTransformer.form_expr()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.CarlParserTransformer.formula_nary"><code class="docutils literal notranslate"><span class="pre">CarlParserTransformer.formula_nary()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.CarlParserTransformer.formula_unary"><code class="docutils literal notranslate"><span class="pre">CarlParserTransformer.formula_unary()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.CarlParserTransformer.number"><code class="docutils literal notranslate"><span class="pre">CarlParserTransformer.number()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.CarlParserTransformer.real_variable"><code class="docutils literal notranslate"><span class="pre">CarlParserTransformer.real_variable()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.CarlParserTransformer.start"><code class="docutils literal notranslate"><span class="pre">CarlParserTransformer.start()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.Lark"><code class="docutils literal notranslate"><span class="pre">Lark</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.Lark.get_terminal"><code class="docutils literal notranslate"><span class="pre">Lark.get_terminal()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.Lark.grammar"><code class="docutils literal notranslate"><span class="pre">Lark.grammar</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.Lark.lex"><code class="docutils literal notranslate"><span class="pre">Lark.lex()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.Lark.lexer"><code class="docutils literal notranslate"><span class="pre">Lark.lexer</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.Lark.load"><code class="docutils literal notranslate"><span class="pre">Lark.load()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.Lark.open"><code class="docutils literal notranslate"><span class="pre">Lark.open()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.Lark.open_from_package"><code class="docutils literal notranslate"><span class="pre">Lark.open_from_package()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.Lark.options"><code class="docutils literal notranslate"><span class="pre">Lark.options</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.Lark.parse"><code class="docutils literal notranslate"><span class="pre">Lark.parse()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.Lark.parse_interactive"><code class="docutils literal notranslate"><span class="pre">Lark.parse_interactive()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.Lark.parser"><code class="docutils literal notranslate"><span class="pre">Lark.parser</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.Lark.save"><code class="docutils literal notranslate"><span class="pre">Lark.save()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.Lark.source_grammar"><code class="docutils literal notranslate"><span class="pre">Lark.source_grammar</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.Lark.source_path"><code class="docutils literal notranslate"><span class="pre">Lark.source_path</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.Lark.terminals"><code class="docutils literal notranslate"><span class="pre">Lark.terminals</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.ParserError"><code class="docutils literal notranslate"><span class="pre">ParserError</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.UnexpectedInput"><code class="docutils literal notranslate"><span class="pre">UnexpectedInput</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.UnexpectedInput.column"><code class="docutils literal notranslate"><span class="pre">UnexpectedInput.column</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.UnexpectedInput.get_context"><code class="docutils literal notranslate"><span class="pre">UnexpectedInput.get_context()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.UnexpectedInput.interactive_parser"><code class="docutils literal notranslate"><span class="pre">UnexpectedInput.interactive_parser</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.UnexpectedInput.line"><code class="docutils literal notranslate"><span class="pre">UnexpectedInput.line</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.UnexpectedInput.match_examples"><code class="docutils literal notranslate"><span class="pre">UnexpectedInput.match_examples()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.UnexpectedInput.pos_in_stream"><code class="docutils literal notranslate"><span class="pre">UnexpectedInput.pos_in_stream</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.UnexpectedInput.state"><code class="docutils literal notranslate"><span class="pre">UnexpectedInput.state</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.pycarl.parse.deserialize"><code class="docutils literal notranslate"><span class="pre">deserialize()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#number-dependent-types-gmp">Number dependent types (gmp)</a></li>
+<li><a class="reference internal" href="#number-dependent-types-cln">Number dependent types (cln)</a></li>
+</ul>
+</li>
+</ul>
+
+              </nav>
+            </div>
+          </div>
+          
+        </aside>
+      </div>
+    </div>
+
+    <footer class="nftt-footer">
+      <nav id="paginator" class="py-4" aria-label="Documentation navigation">
+    <div class="container">
+      <ul class="pagination justify-content-between mb-0"><li class="d-flex page-item">
+            <a href="formula.html" class="d-flex pe-5 px-lg-5 align-items-end" rel="prev" aria-label="Previous page: Pycarl formula">
+              <span class="prev-page"><i class="bi bi-caret-left"></i></span>
+              <div class="d-none d-sm-flex flex-column">
+                <span class="text-small text-start text-muted">Previous</span>
+                <span class="underline">Pycarl formula</span>
+              </div>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </nav>
+
+      <div class="py-5 px-4 px-md-3">
+  <div class="container">
+    
+    <div class="row">
+      <ul id="nftt-footer-links" class="list-unstyled list-separator col-lg-12 pb-2 text-center">
+        
+          <li class="d-inline">
+            <a href="https://stormchecker.github.io/stormpy/"  class="list-item">Documentation</a>
+          </li>
+        
+          <li class="d-inline">
+            <a href="https://pypi.org/project/stormpy/"  class="list-item">Package</a>
+          </li>
+        
+          <li class="d-inline">
+            <a href="https://github.com/stormchecker/stormpy/"  class="list-item">Repository</a>
+          </li>
+        
+          <li class="d-inline">
+            <a href="https://github.com/stormchecker/stormpy/issues"  class="list-item">Issues</a>
+          </li>
+        
+      </ul>
+    </div>
+    
+
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <a class="brand-text d-inline-flex align-items-center mb-2 text-decoration-none" href="/" aria-label="stormpy">
+          <span class="fs-6 fw-bold">stormpy</span>
+        </a>
+        
+          <ul class="list-unstyled small text-muted">
+            <li>2016-2026 Storm Developers</li>
+          </ul>
+        
+        <div class="built-with pt-2">
+          Built with <a href="http://sphinx-doc.org">Sphinx 9.1.0</a> and <a href="https://github.com/danirus/sphinx-nefertiti">Nefertiti 0.9.9</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    </footer>
+
+    <div class="modal modal-xl fade" id="nftt-modal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen-xxl-down modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="nftt-modal-title"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="nftt-modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+    <script src="../../_static/documentation_options.js?v=01009efc"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/docs-versions.js?v=08b0cbfb"></script>
+    <script src="../../_static/sphinx-nefertiti.min.js?v=af404e0e"></script>
+    <script src="../../_static/bootstrap.bundle.min.js?v=c066362f"></script>
+  </body>
+</html>

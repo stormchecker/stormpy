@@ -14,6 +14,8 @@ class TestModelInstantiator:
         parameters = model.collect_all_parameters()
         assert len(parameters) == 2
         instantiator = stormpy.pars.ModelInstantiator(model)
+        assert type(instantiator) is stormpy.pars.ModelInstantiator[stormpy.ModelType.DTMC, float]
+        assert tuple(parameter.kind for parameter in stormpy.pars.ModelInstantiator.metadata.parameters) == ("value", "type")
 
         point = {p: stormpy.RationalRF("0.4") for p in parameters}
         instantiated_model = instantiator.instantiate(point)
@@ -31,7 +33,7 @@ class TestModelInstantiator:
         model = stormpy.build_parametric_model(program, formulas)
         parameters = model.collect_all_parameters()
         assert len(parameters) == 2
-        instantiator = stormpy.pars.PDtmcInstantiator(model)
+        instantiator = stormpy.pars.ModelInstantiator[stormpy.ModelType.DTMC, float](model)
         point = dict()
         for x in parameters:
             assert x.name in {"p", "q"}
@@ -51,7 +53,7 @@ class TestModelInstantiator:
         model = stormpy.build_parametric_model(program, formulas)
 
         parameters = model.collect_all_parameters()
-        instantiator = stormpy.pars.PDtmcInstantiator(model)
+        instantiator = stormpy.pars.ModelInstantiator[stormpy.ModelType.DTMC, float](model)
 
         point = {p: stormpy.RationalRF("0.4") for p in parameters}
         instantiated_model = instantiator.instantiate(point)
@@ -70,7 +72,8 @@ class TestModelInstantiator:
 
         parameters = model.collect_all_parameters()
         env = stormpy.Environment()
-        inst_checker = stormpy.pars.PDtmcInstantiationChecker(env, model)
+        inst_checker = stormpy.pars.ModelInstantiationChecker(env, model)
+        assert type(inst_checker) is stormpy.pars.ModelInstantiationChecker[stormpy.ModelType.DTMC, float]
         inst_checker.specify_formula(stormpy.ParametricCheckTask(formulas[0].raw_formula, True))
         inst_checker.set_graph_preserving(True)
 
@@ -88,7 +91,7 @@ class TestModelInstantiator:
 
         parameters = model.collect_all_parameters()
         env = stormpy.Environment()
-        inst_checker = stormpy.pars.PDtmcExactInstantiationChecker(env, model)
+        inst_checker = stormpy.pars.ModelInstantiationChecker[stormpy.ModelType.DTMC, stormpy.Rational](env, model)
         inst_checker.specify_formula(stormpy.ParametricCheckTask(formulas[0].raw_formula, True))
         inst_checker.set_graph_preserving(True)
 
@@ -106,7 +109,7 @@ class TestModelInstantiator:
 
         parameters = model.collect_all_parameters()
         env = stormpy.Environment()
-        inst_checker = stormpy.pars.PDtmcExactInstantiationChecker(env, model)
+        inst_checker = stormpy.pars.ModelInstantiationChecker[stormpy.ModelType.DTMC, stormpy.Rational](env, model)
         inst_checker.specify_formula(stormpy.ParametricCheckTask(formulas[0].raw_formula, True))
         inst_checker.set_graph_preserving(True)
 

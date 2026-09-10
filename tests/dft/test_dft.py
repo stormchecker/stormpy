@@ -9,15 +9,47 @@ from configurations import dft
 
 @dft
 class TestDft:
+    def test_generic_dft_type(self):
+        dft = stormpy.dft.load_dft_json_file(get_example_path("dft", "and.json"))
+
+        concrete_type = stormpy.dft.DFT[float]
+        assert type(dft) is concrete_type
+        assert concrete_type is stormpy.dft._dft._DFT_Double
+
+        metadata = stormpy.dft.DFT.metadata
+        assert metadata.canonical_name == "stormpy.dft.DFT"
+        assert tuple(parameter.name for parameter in metadata.parameters) == ("ValueType",)
+        assert metadata.instantiations[0].native_name.startswith("stormpy.dft._dft._DFT_")
+        assert repr(stormpy.dft.DFT) == "<template class stormpy.dft.DFT>"
+
+        explicit_copy = stormpy.dft.DFT[float](dft)
+        inferred_copy = stormpy.dft.DFT(dft)
+        keyword_inferred_copy = stormpy.dft.DFT(dft=dft)
+        assert type(explicit_copy) is concrete_type
+        assert type(inferred_copy) is concrete_type
+        assert type(keyword_inferred_copy) is concrete_type
+
+        builder = stormpy.dft.ExplicitDFTModelBuilder(dft)
+        assert type(builder) is stormpy.dft.ExplicitDFTModelBuilder[float]
+
     def test_parametric_dft(self):
         from stormpy import pycarl
 
         pycarl.clear_pools()
+        generic_dft = stormpy.dft.load_parametric_dft_json_file(get_example_path("dft", "and.json"))
+        assert type(generic_dft) is stormpy.dft.DFT[stormpy.RationalFunction]
+        assert stormpy.dft.DFT[stormpy.RationalFunction] is stormpy.dft._dft._DFT_RationalFunction
+
+        builder = stormpy.dft.ExplicitDFTModelBuilder(generic_dft)
+        assert type(builder) is stormpy.dft.ExplicitDFTModelBuilder[stormpy.RationalFunction]
+
+        model = stormpy.dft.build_model(generic_dft)
+        assert model.supports_parameters
+
         dft = stormpy.dft.load_parametric_dft_galileo_file(get_example_path("dft", "symmetry_param.dft"))
         assert dft.nr_elements() == 7
         assert dft.nr_be() == 4
         assert dft.nr_dynamic() == 0
-        assert type(dft) is stormpy.dft.DFT_ratfunc
         parameters = stormpy.dft.get_parameters(dft)
         param_names = [x.name for x in parameters]
         assert "x" in param_names

@@ -16,7 +16,7 @@ def example_parametric_models_01():
     parameters = model.collect_all_parameters()
     assert len(parameters) == 2
 
-    instantiator = stormpy.pars.PDtmcInstantiator(model)
+    instantiator = stormpy.pars.ModelInstantiator[stormpy.ModelType.DTMC, float](model)
     point = dict()
     for x in parameters:
         print(x.name)

@@ -3,7 +3,6 @@
 #include <storm-pars/modelchecker/instantiation/SparseCtmcInstantiationModelChecker.h>
 #include <storm-pars/modelchecker/instantiation/SparseDtmcInstantiationModelChecker.h>
 #include <storm-pars/modelchecker/instantiation/SparseMdpInstantiationModelChecker.h>
-#include <storm-pars/transformer/SparseParametricDtmcSimplifier.h>
 #include <storm/adapters/RationalFunctionAdapter.h>
 #include <storm/environment/Environment.h>
 #include <storm/modelchecker/prctl/helper/BaierUpperRewardBoundsComputer.h>

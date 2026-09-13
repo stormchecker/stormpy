@@ -1,0 +1,1057 @@
+
+<!DOCTYPE html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    
+    <meta name="docsearch:name" content="stormpy" />
+    <meta name="docsearch:package_type" content="" />
+    <meta name="docsearch:release" content="1.14.0" />
+    <meta name="docsearch:version" content="" />
+    
+      <meta name="theme-color" content="#0D6EFD" />
+    
+    
+      <title>Stormpy.logic &mdash; stormpy 1.14.0 documentation</title>
+    
+    <link rel="canonical" href="api/logic" />
+      <link rel="icon" href="../_static/favicon.png" />
+          <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8e8a900e" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/fonts/nunito/stylesheet.css?v=abf98f06" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/fonts/ubuntu-sans-mono/stylesheet.css?v=8616a587" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/pygments-dark.css?v=f21207c5" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/pygments-light.css?v=6c104457" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/bootstrap-icons.min.css?v=44730005" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/sphinx-nefertiti-blue.min.css?v=cbfc91e2" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=6c103ecc" /><!-- add (1) -->
+        <link rel="index" title="Index" href="../genindex.html" />
+        <link rel="search" title="Search" href="../search.html" />
+        <link rel="top" title="stormpy 1.14.0 documentation" href="#" />
+        <link rel="up" title="Stormpy API Reference" href="../api.html" />
+        <link rel="next" title="Stormpy.storage" href="storage.html" />
+        <link rel="prev" title="Stormpy.exceptions" href="exceptions.html" />
+    <style>
+      :root {
+        --nftt-body-font-family: "Nunito", var(--nftt-font-sans-serif) !important;
+        --nftt-font-monospace: "Ubuntu Sans Mono", var(--nftt-font-family-monospace) !important;
+        --nftt-project-name-font: var(--nftt-body-font-family);
+        --nftt-documentation-font: var(--nftt-body-font-family);
+        --nftt-doc-headers-font: "Georgia", var(--nftt-documentation-font);}
+    </style>
+  </head>
+  <body>
+    <div id="back-to-top-container" class="position-fixed start-50 translate-middle-x">
+      <button id="back-to-top" type="button" class="d-none btn btn-neutral btn-sm shadow px-4" data-bs-toggle="button">Back to top</button>
+    </div>
+    <header id="snftt-nav-bar" class="navbar navbar-expand-xl navbar-dark nftt-navbar flex-column fixed-top">
+      <div class="skip-links container-fluid visually-hidden-focusable overflow-hidden justify-content-start flex-grow-1">
+        <div class="border-bottom mb-2 pb-2 w-100">
+          <a class="d-none d-md-inline-flex p-2 m-1" href="#sidebar-filter">Skip to index filter</a>
+          <a class="d-inline-flex p-2 m-1" href="#content">Skip to main content</a>
+        </div>
+      </div>
+      <nav class="container-xxl nftt-gutter flex-nowrap" aria-label="Main navigation">
+        <div class="nftt-navbar-toggler">
+          <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle documentation navigation">
+            <i class="bi bi-list"></i>
+          </button>
+        </div>
+          <a
+            href="../index.html"
+            class="navbar-brand"
+          >
+            <img src="../_static/storm_logo.png" width="36" height="36" alt="Storm logo"
+              class="project-logo"
+            />
+            <span class="brand-text">stormpy</span><span class="brand-short-text">stormpy</span>
+          </a>
+        
+        
+          <ul class="nftt-header-links-large navbar-nav">
+          
+            
+            
+            
+            
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="../getting_started.html" data-snftt-hl-id="1"  >Getting Started</a>
+    </li>
+  
+
+  
+    <li class="nav-item dropdown">
+      <a class="snftt-hl nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" href="#" data-snftt-hl-id="2" data-snftt-hl-regexps="doc/*">Documentation</a>
+      <ul class="dropdown-menu">
+        
+          
+          
+          
+          
+  
+    <li >
+      <a class="snftt-hl dropdown-item" href="../advanced_topics.html" data-snftt-hl-id="3"  >Advanced Examples</a>
+    </li>
+  
+
+  
+    <li><hr class="dropdown-divider"></li>
+  
+
+  
+    <li >
+      <a class="snftt-hl dropdown-item" href="../using_pycarl.html" data-snftt-hl-id="4"  >Getting Started with Pycarl</a>
+    </li>
+  
+
+        
+      </ul>
+    </li>
+  
+
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="../api.html" data-snftt-hl-id="5"  data-snftt-hl-id="" data-snftt-hl-regexps="api/*">API</a>
+    </li>
+  
+
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="https://www.stormchecker.org/" data-snftt-hl-id="6"  >Storm</a>
+    </li>
+  
+
+          
+          </ul>
+        
+        <div class="d-flex d-xl-none">
+          <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#nfttSearch" aria-controls="nfttSearch" aria-label="Search">
+            <i class="bi bi-search"></i>
+          </button>
+          <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#nfttNavbar" aria-controls="nfttNavbar" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+        </div>
+        
+<div class="offcanvas-xl offcanvas-end flex-grow-1" tabindex="-1" id="nfttSearch" aria-labelledby="nfttSearchOffcanvasLabel" data-bs-scroll="true">
+  <div class="offcanvas-header px-4 pb-0">
+    <h5 class="offcanvas-title fw-bold" id="nfttSearchOffcanvasLabel">Search the documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#nfttSearch"></button>
+  </div>
+  <div class="offcanvas-body p-4 pt-0 p-xl-0 ps-xl-4">
+    <hr class="d-xl-none text-white-50">
+    <ul class="navbar-nav flex-row align-items-center flex-wrap ms-md-auto">
+      <li class="nav-item col-12 col-xl-auto">
+        <form id="nftt-search-form" action="../search.html" method="get">
+          <div class="input-group">
+            <input type="text" name="q" class="form-control search-input" placeholder="Search" aria-label="Search" aria-describedby="button-search">
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <button class="btn btn-primary" type="submit" id="button-search" aria-label="Search"><i class="bi bi-search"></i></button>
+          </div>
+        </form>
+      </li>
+    </ul>
+  </div>
+</div>
+
+        <div class="offcanvas-xl offcanvas-end" tabindex="-1" id="nfttNavbar" aria-labelledby="nfttNavbarOffcanvasLabel" data-bs-scroll="true">
+          <div class="offcanvas-header px-4 pb-0">
+            <div class="offcanvas-title navbar-brand" id="nfttNavbarOffcanvasLabel"><span class="brand-short-text">stormpy</span></div>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#nfttNavbar"></button>
+          </div>
+          <div class="offcanvas-body p-4 pt-0 p-xl-0 px-xl-3">
+            <hr class="d-xl-none text-white-50">
+            <ul class="navbar-nav flex-row align-items-center flex-wrap ms-lg-auto">
+              
+                <div class="nftt-header-links-small">
+                  
+                    
+                    
+                    
+                    <div class="d-inline-block">
+                      
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="../getting_started.html" data-snftt-hl-id="1"  >Getting Started</a>
+    </li>
+  
+
+  
+    <li class="nav-item dropdown">
+      <a class="snftt-hl nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" href="#" data-snftt-hl-id="2" data-snftt-hl-regexps="doc/*">Documentation</a>
+      <ul class="dropdown-menu">
+        
+          
+          
+          
+          
+  
+    <li >
+      <a class="snftt-hl dropdown-item" href="../advanced_topics.html" data-snftt-hl-id="3"  >Advanced Examples</a>
+    </li>
+  
+
+  
+    <li><hr class="dropdown-divider"></li>
+  
+
+  
+    <li >
+      <a class="snftt-hl dropdown-item" href="../using_pycarl.html" data-snftt-hl-id="4"  >Getting Started with Pycarl</a>
+    </li>
+  
+
+        
+      </ul>
+    </li>
+  
+
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="../api.html" data-snftt-hl-id="5"  data-snftt-hl-id="" data-snftt-hl-regexps="api/*">API</a>
+    </li>
+  
+
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="https://www.stormchecker.org/" data-snftt-hl-id="6"  >Storm</a>
+    </li>
+  
+
+                    </div>
+                  
+                  <li class="nav-item col-12 col-xl-auto h-100" aria-hidden="true">
+                    <div class="vr d-none d-xl-flex h-100 mx-xl-2 text-white-50"></div>
+                    <hr class="d-xl-none text-white-50">
+                  </li>
+                </div>
+              
+              
+              <li class="nav-item col-12 col-xl-auto">
+                <a class="nav-link py-2 py-xl-0 px-0 px-xl-2" href="https://github.com/stormchecker/stormpy" target="_blank" rel="noopener">
+                  <div class="d-flex align-items-center">
+                    <div class="me-2">
+                      <i class="bi bi-git size-24"></i>
+                    </div>
+                    <div class="repo d-flex flex-column align-items-center" data-snftt-repo-url="https://github.com/stormchecker/stormpy">
+                      stormpy
+                      <div class="d-flex justify-content-center" data-snftt-repo-metrics>
+                        <span class="pe-2 d-flex justify-content-center align-items-center">
+                          <i class="bi bi-tag size-14"></i>
+                          <span class="repo-metric" data-snftt-repo-tag></span>
+                        </span>
+                        <span class="pe-2 d-flex justify-content-center align-items-center">
+                          <i class="bi bi-star size-14"></i>
+                          <span class="repo-metric" data-snftt-repo-stars></span>
+                        </span>
+                        <span class="d-flex justify-content-center align-items-center">
+                          <i class="bi bi-diagram-2 size-14"></i>
+                          <span class="repo-metric" data-snftt-repo-forks></span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class="nav-item col-12 col-xl-auto h-100" aria-hidden="true">
+                <div class="vr d-none d-xl-flex h-100 mx-xl-2 text-white-50"></div>
+                <hr class="d-xl-none text-white-50">
+              </li>
+              
+              
+              
+              
+              <!-- lightdark-dropdown.html -->
+<li class="nav-item dropdown">
+  <a class="nav-link d-flex py-2 px-0 px-xl-2 dropdown-toggle align-items-center" id="snftt-luz" href="#" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" aria-label="Change appearance">
+    <i class="bi bi-circle-half" data-snftt-luz-icon-active></i>
+    <span id="snftt-luz-text" class="d-xl-none ms-2">Change appearance</span>
+  </a>
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="snftt-luz-text">
+    <li>
+      <h6 class="dropdown-header">Change appearance</h6>
+    </li>
+    <li>
+      <a class="dropdown-item d-flex align-items-center" data-snftt-luz="light" href="#" aria-pressed="false">
+        <span>
+          <i class="bi bi-sun" data-snftt-luz-icon="light"></i>
+        </span>
+        <span class="ms-3">Light</span>
+        <i class="bi bi-check ms-auto"></i>
+      </a>
+    </li>
+    <li>
+      <a class="dropdown-item d-flex align-items-center" data-snftt-luz="dark" href="#" aria-pressed="false">
+        <span>
+          <i class="bi bi-moon-stars" data-snftt-luz-icon="dark"></i>
+        </span>
+        <span class="ms-3">Dark</span>
+        <i class="bi bi-check ms-auto"></i>
+      </a>
+    </li>
+    <li>
+      <a class="dropdown-item current d-flex align-items-center" data-snftt-luz="default" href="#" aria-pressed="false">
+        <span>
+          <i class="bi bi-circle-half" data-snftt-luz-icon="default"></i>
+        </span>
+        <span class="ms-3">Automatic</span>
+        <i class="bi bi-check ms-auto"></i>
+      </a>
+    </li>
+  </ul>
+</li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      
+    </header>
+
+    <div class="container-fluid">
+      <div class="nftt-gutter nftt-page">
+        <aside class="nftt-sidebar ">
+          <div class="nftt-sidebar-content">
+            
+            <div class="title d-none d-xl-none">
+              <i class="bi bi-book"></i>&nbsp;&nbsp;<span>Index</span>
+            </div>
+            <div id="sidebar" tabindex="-1" class="offcanvas-xl offcanvas-start" aria-labelledby="nfttSidebarOffcanvasLabel">
+                <!-- sidebartemplate: "globaltoc.html" --><div class="offcanvas-header border-bottom">
+  <h5 class="offcanvas-title fw-bold" id="nfttSidebarOffcanvasLabel">
+    Index
+  </h5>
+  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#sidebar"></button>
+</div>
+
+<div class="offcanvas-body">
+  <nav class="toc" aria-label="Main menu">
+    <div class="mb-3 p-1 pb-4 border-bottom">
+      <input id="sidebar-filter" type="text" name="filter" class="form-control form-control-sm" placeholder="index filter" aria-label="index filter">
+    </div>
+    <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_topics.html">Advanced Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../doc/analysis.html">Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/building_models.html">Building Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/models/building_dtmcs.html">Discrete-time Markov chains (DTMCs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/models/building_mdps.html">Markov decision processes (MDPs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/models/building_ctmcs.html">Continuous-time Markov chains (CTMCs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/models/building_mas.html">Markov automata (MAs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/engines.html">Engines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/exploration.html">Exploring Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/simulator.html">Working with Simulators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/reward_models.html">Reward Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/schedulers.html">Working with Schedulers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/shortest_paths.html">Working with Shortest Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/parametric_models.html">Parametric Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/dfts.html">Dynamic Fault Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/gspns.html">Generalized Stochastic Petri Nets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/info.html">Storm(py) Information</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../using_pycarl.html">Getting Started with Pycarl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development.html">Developer information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributors.html">Contributors</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">Stormpy API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="core.html">Stormpy.core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="info.html">Stormpy.info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html">Stormpy.exceptions</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Stormpy.logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="storage.html">Stormpy.storage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">Stormpy.utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dft.html">Stormpy.dft</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gspn.html">Stormpy.gspn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pars.html">Stormpy.pars</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp.html">Stormpy.pomdp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycarl/core.html">Pycarl core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycarl/convert.html">Pycarl convert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycarl/formula.html">Pycarl formula</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycarl/parse.html">Pycarl parse</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav>
+  <template data-toggle-item-template>
+    <button class="btn btn-sm btn-link toctree-expand" type="button">
+      <i class="bi bi-caret-right"></i>
+      <span class="visually-hidden">Toggle menu contents</span>
+    </button>
+  </template>
+</div>
+            </div>
+            
+          </div>
+        </aside>
+        <article id="content" class="nftt-content" role="main">
+          <div><div class="d-flex flex-row justify-content-between">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="../index.html">Start</a></li>
+        <li class="breadcrumb-item"><a href="../api.html">Stormpy API Reference</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Stormpy.logic</li>
+    </ol>
+  </nav>
+  
+    <div class="fs085">
+        <a href="../_sources/api/logic.rst.txt"  rel="nofollow" aria-label="Show source of this document"><i class="bi bi-file-earmark-code"></i></a>
+    </div>
+  
+</div>
+            
+
+
+    <section id="module-stormpy.logic">
+<span id="stormpy-logic"></span><h1>Stormpy.logic<a class="headerlink" href="#module-stormpy.logic" title="Link to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.logic.AtomicExpressionFormula">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">AtomicExpressionFormula</span></span><a class="headerlink" href="#stormpy.logic.AtomicExpressionFormula" title="Link to this definition">¶</a></dt>
+<dd><p>Formula with an atomic expression</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.logic.AtomicExpressionFormula.get_expression">
+<span class="sig-name descname"><span class="pre">get_expression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.logic.AtomicExpressionFormula" title="stormpy.logic._logic.AtomicExpressionFormula"><span class="pre">stormpy.logic._logic.AtomicExpressionFormula</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="storage.html#stormpy.storage.Expression" title="stormpy.storage._storage.Expression"><span class="pre">stormpy.storage._storage.Expression</span></a></span></span><a class="headerlink" href="#stormpy.logic.AtomicExpressionFormula.get_expression" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.logic.AtomicLabelFormula">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">AtomicLabelFormula</span></span><a class="headerlink" href="#stormpy.logic.AtomicLabelFormula" title="Link to this definition">¶</a></dt>
+<dd><p>Formula with an atomic label</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.logic.AtomicLabelFormula.label">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">label</span></span><a class="headerlink" href="#stormpy.logic.AtomicLabelFormula.label" title="Link to this definition">¶</a></dt>
+<dd><p>label in the formula</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.logic.BinaryBooleanOperatorType">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">BinaryBooleanOperatorType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.logic.BinaryBooleanOperatorType" title="Link to this definition">¶</a></dt>
+<dd><dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.logic.BinaryBooleanOperatorType.AND">
+<span class="sig-name descname"><span class="pre">AND</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#stormpy.logic.BinaryBooleanOperatorType.AND" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.logic.BinaryBooleanOperatorType.OR">
+<span class="sig-name descname"><span class="pre">OR</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></span><a class="headerlink" href="#stormpy.logic.BinaryBooleanOperatorType.OR" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.logic.BinaryPathFormula">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">BinaryPathFormula</span></span><a class="headerlink" href="#stormpy.logic.BinaryPathFormula" title="Link to this definition">¶</a></dt>
+<dd><p>Path formula with two operands</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.logic.BinaryPathFormula.left_subformula">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">left_subformula</span></span><a class="headerlink" href="#stormpy.logic.BinaryPathFormula.left_subformula" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.logic.BinaryPathFormula.right_subformula">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">right_subformula</span></span><a class="headerlink" href="#stormpy.logic.BinaryPathFormula.right_subformula" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.logic.BinaryStateFormula">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">BinaryStateFormula</span></span><a class="headerlink" href="#stormpy.logic.BinaryStateFormula" title="Link to this definition">¶</a></dt>
+<dd><p>State formula with two operands</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.logic.BooleanBinaryStateFormula">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">BooleanBinaryStateFormula</span></span><a class="headerlink" href="#stormpy.logic.BooleanBinaryStateFormula" title="Link to this definition">¶</a></dt>
+<dd><p>Boolean binary state formula</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.logic.BooleanLiteralFormula">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">BooleanLiteralFormula</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.logic.BooleanLiteralFormula" title="stormpy.logic._logic.BooleanLiteralFormula"><span class="pre">stormpy.logic._logic.BooleanLiteralFormula</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">truth</span> <span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.logic.BooleanLiteralFormula" title="Link to this definition">¶</a></dt>
+<dd><p>Formula with a boolean literal</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.logic.BoundedUntilFormula">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">BoundedUntilFormula</span></span><a class="headerlink" href="#stormpy.logic.BoundedUntilFormula" title="Link to this definition">¶</a></dt>
+<dd><p>Until Formula with either a step or a time bound.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.logic.BoundedUntilFormula.has_lower_bound">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">has_lower_bound</span></span><a class="headerlink" href="#stormpy.logic.BoundedUntilFormula.has_lower_bound" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.logic.BoundedUntilFormula.is_multidimensional">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_multidimensional</span></span><a class="headerlink" href="#stormpy.logic.BoundedUntilFormula.is_multidimensional" title="Link to this definition">¶</a></dt>
+<dd><p>Is the bound multi-dimensional</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.logic.BoundedUntilFormula.left_subformula">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">left_subformula</span></span><a class="headerlink" href="#stormpy.logic.BoundedUntilFormula.left_subformula" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.logic.BoundedUntilFormula.right_subformula">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">right_subformula</span></span><a class="headerlink" href="#stormpy.logic.BoundedUntilFormula.right_subformula" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.logic.BoundedUntilFormula.upper_bound_expression">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">upper_bound_expression</span></span><a class="headerlink" href="#stormpy.logic.BoundedUntilFormula.upper_bound_expression" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.logic.ComparisonType">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ComparisonType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.logic.ComparisonType" title="Link to this definition">¶</a></dt>
+<dd><dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.logic.ComparisonType.GEQ">
+<span class="sig-name descname"><span class="pre">GEQ</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></span><a class="headerlink" href="#stormpy.logic.ComparisonType.GEQ" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.logic.ComparisonType.GREATER">
+<span class="sig-name descname"><span class="pre">GREATER</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></span><a class="headerlink" href="#stormpy.logic.ComparisonType.GREATER" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.logic.ComparisonType.LEQ">
+<span class="sig-name descname"><span class="pre">LEQ</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></span><a class="headerlink" href="#stormpy.logic.ComparisonType.LEQ" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.logic.ComparisonType.LESS">
+<span class="sig-name descname"><span class="pre">LESS</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#stormpy.logic.ComparisonType.LESS" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.logic.ConditionalFormula">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ConditionalFormula</span></span><a class="headerlink" href="#stormpy.logic.ConditionalFormula" title="Link to this definition">¶</a></dt>
+<dd><p>Formula with the right hand side being a condition.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.logic.ConditionalFormula.conditional_subformula">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">conditional_subformula</span></span><a class="headerlink" href="#stormpy.logic.ConditionalFormula.conditional_subformula" title="Link to this definition">¶</a></dt>
+<dd><p>the conditional subformula</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.logic.ConditionalFormula.main_subformula">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">main_subformula</span></span><a class="headerlink" href="#stormpy.logic.ConditionalFormula.main_subformula" title="Link to this definition">¶</a></dt>
+<dd><p>the subformula</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.logic.CumulativeRewardFormula">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">CumulativeRewardFormula</span></span><a class="headerlink" href="#stormpy.logic.CumulativeRewardFormula" title="Link to this definition">¶</a></dt>
+<dd><p>Summed rewards over a the paths</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.logic.EventuallyFormula">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">EventuallyFormula</span></span><a class="headerlink" href="#stormpy.logic.EventuallyFormula" title="Link to this definition">¶</a></dt>
+<dd><p>Formula for eventually</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.logic.EventuallyFormula.subformula">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">subformula</span></span><a class="headerlink" href="#stormpy.logic.EventuallyFormula.subformula" title="Link to this definition">¶</a></dt>
+<dd><p>the subformula</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.logic.Formula">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">Formula</span></span><a class="headerlink" href="#stormpy.logic.Formula" title="Link to this definition">¶</a></dt>
+<dd><p>Generic Storm Formula</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.logic.Formula.clone">
+<span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.logic.Formula" title="stormpy.logic._logic.Formula"><span class="pre">stormpy.logic._logic.Formula</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.logic.Formula" title="stormpy.logic._logic.Formula"><span class="pre">stormpy.logic._logic.Formula</span></a></span></span><a class="headerlink" href="#stormpy.logic.Formula.clone" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.logic.Formula.is_bounded_until_formula">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_bounded_until_formula</span></span><a class="headerlink" href="#stormpy.logic.Formula.is_bounded_until_formula" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.logic.Formula.is_eventually_formula">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_eventually_formula</span></span><a class="headerlink" href="#stormpy.logic.Formula.is_eventually_formula" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.logic.Formula.is_multi_objective_formula">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_multi_objective_formula</span></span><a class="headerlink" href="#stormpy.logic.Formula.is_multi_objective_formula" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.logic.Formula.is_probability_operator">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_probability_operator</span></span><a class="headerlink" href="#stormpy.logic.Formula.is_probability_operator" title="Link to this definition">¶</a></dt>
+<dd><p>is it a probability operator</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.logic.Formula.is_reward_operator">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_reward_operator</span></span><a class="headerlink" href="#stormpy.logic.Formula.is_reward_operator" title="Link to this definition">¶</a></dt>
+<dd><p>is it a reward operator</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.logic.Formula.is_until_formula">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_until_formula</span></span><a class="headerlink" href="#stormpy.logic.Formula.is_until_formula" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.logic.Formula.substitute">
+<span class="sig-name descname"><span class="pre">substitute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.logic.Formula" title="stormpy.logic._logic.Formula"><span class="pre">stormpy.logic._logic.Formula</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">constants_map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">collections.abc.Mapping</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="storage.html#stormpy.storage.Variable" title="stormpy.storage._storage.Variable"><span class="pre">stormpy.storage._storage.Variable</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="storage.html#stormpy.storage.Expression" title="stormpy.storage._storage.Expression"><span class="pre">stormpy.storage._storage.Expression</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.logic.Formula" title="stormpy.logic._logic.Formula"><span class="pre">stormpy.logic._logic.Formula</span></a></span></span><a class="headerlink" href="#stormpy.logic.Formula.substitute" title="Link to this definition">¶</a></dt>
+<dd><p>Substitute variables</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.logic.Formula.substitute_labels_by_labels">
+<span class="sig-name descname"><span class="pre">substitute_labels_by_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.logic.Formula" title="stormpy.logic._logic.Formula"><span class="pre">stormpy.logic._logic.Formula</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">replacements</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">collections.abc.Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.logic.Formula" title="stormpy.logic._logic.Formula"><span class="pre">stormpy.logic._logic.Formula</span></a></span></span><a class="headerlink" href="#stormpy.logic.Formula.substitute_labels_by_labels" title="Link to this definition">¶</a></dt>
+<dd><p>substitute label occurences</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.logic.GameFormula">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">GameFormula</span></span><a class="headerlink" href="#stormpy.logic.GameFormula" title="Link to this definition">¶</a></dt>
+<dd><p>Game formula</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.logic.GameFormula.is_game_formula">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_game_formula</span></span><a class="headerlink" href="#stormpy.logic.GameFormula.is_game_formula" title="Link to this definition">¶</a></dt>
+<dd><p>is it a game formula</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.logic.GloballyFormula">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">GloballyFormula</span></span><a class="headerlink" href="#stormpy.logic.GloballyFormula" title="Link to this definition">¶</a></dt>
+<dd><p>Formula for globally</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.logic.InstantaneousRewardFormula">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">InstantaneousRewardFormula</span></span><a class="headerlink" href="#stormpy.logic.InstantaneousRewardFormula" title="Link to this definition">¶</a></dt>
+<dd><p>Instantaneous reward</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.logic.LongRunAvarageOperator">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">LongRunAvarageOperator</span></span><a class="headerlink" href="#stormpy.logic.LongRunAvarageOperator" title="Link to this definition">¶</a></dt>
+<dd><p>Long run average operator</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.logic.LongRunAverageRewardFormula">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">LongRunAverageRewardFormula</span></span><a class="headerlink" href="#stormpy.logic.LongRunAverageRewardFormula" title="Link to this definition">¶</a></dt>
+<dd><p>Long run average reward</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.logic.MultiObjectiveFormula">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">MultiObjectiveFormula</span></span><a class="headerlink" href="#stormpy.logic.MultiObjectiveFormula" title="Link to this definition">¶</a></dt>
+<dd><p>Multi objective formula</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.logic.MultiObjectiveFormula.nr_subformulas">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">nr_subformulas</span></span><a class="headerlink" href="#stormpy.logic.MultiObjectiveFormula.nr_subformulas" title="Link to this definition">¶</a></dt>
+<dd><p>Get number of subformulas</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.logic.MultiObjectiveFormula.subformulas">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">subformulas</span></span><a class="headerlink" href="#stormpy.logic.MultiObjectiveFormula.subformulas" title="Link to this definition">¶</a></dt>
+<dd><p>Get vector of subformulas</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.logic.OperatorFormula">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">OperatorFormula</span></span><a class="headerlink" href="#stormpy.logic.OperatorFormula" title="Link to this definition">¶</a></dt>
+<dd><p>Operator formula</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.logic.OperatorFormula.comparison_type">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">comparison_type</span></span><a class="headerlink" href="#stormpy.logic.OperatorFormula.comparison_type" title="Link to this definition">¶</a></dt>
+<dd><p>Comparison type of bound</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.logic.OperatorFormula.has_bound">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">has_bound</span></span><a class="headerlink" href="#stormpy.logic.OperatorFormula.has_bound" title="Link to this definition">¶</a></dt>
+<dd><p>Flag if formula is bounded</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.logic.OperatorFormula.has_optimality_type">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">has_optimality_type</span></span><a class="headerlink" href="#stormpy.logic.OperatorFormula.has_optimality_type" title="Link to this definition">¶</a></dt>
+<dd><p>Flag if an optimality type is present</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.logic.OperatorFormula.optimality_type">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">optimality_type</span></span><a class="headerlink" href="#stormpy.logic.OperatorFormula.optimality_type" title="Link to this definition">¶</a></dt>
+<dd><p>Flag for the optimality type</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.logic.OperatorFormula.remove_bound">
+<span class="sig-name descname"><span class="pre">remove_bound</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.logic.OperatorFormula" title="stormpy.logic._logic.OperatorFormula"><span class="pre">stormpy.logic._logic.OperatorFormula</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.logic.OperatorFormula.remove_bound" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.logic.OperatorFormula.remove_optimality_type">
+<span class="sig-name descname"><span class="pre">remove_optimality_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.logic.OperatorFormula" title="stormpy.logic._logic.OperatorFormula"><span class="pre">stormpy.logic._logic.OperatorFormula</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.logic.OperatorFormula.remove_optimality_type" title="Link to this definition">¶</a></dt>
+<dd><p>remove the optimality type</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.logic.OperatorFormula.set_bound">
+<span class="sig-name descname"><span class="pre">set_bound</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.logic.OperatorFormula" title="stormpy.logic._logic.OperatorFormula"><span class="pre">stormpy.logic._logic.OperatorFormula</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">comparison_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.logic.ComparisonType" title="stormpy.logic._logic.ComparisonType"><span class="pre">stormpy.logic._logic.ComparisonType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">bound</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="storage.html#stormpy.storage.Expression" title="stormpy.storage._storage.Expression"><span class="pre">stormpy.storage._storage.Expression</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.logic.OperatorFormula.set_bound" title="Link to this definition">¶</a></dt>
+<dd><p>Set bound</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.logic.OperatorFormula.set_optimality_type">
+<span class="sig-name descname"><span class="pre">set_optimality_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.logic.OperatorFormula" title="stormpy.logic._logic.OperatorFormula"><span class="pre">stormpy.logic._logic.OperatorFormula</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_optimality_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="core.html#stormpy.OptimizationDirection" title="stormpy._core.OptimizationDirection"><span class="pre">stormpy._core.OptimizationDirection</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.logic.OperatorFormula.set_optimality_type" title="Link to this definition">¶</a></dt>
+<dd><p>set the optimality type (use remove optimiality type for clearing)</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.logic.OperatorFormula.threshold">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">threshold</span></span><a class="headerlink" href="#stormpy.logic.OperatorFormula.threshold" title="Link to this definition">¶</a></dt>
+<dd><p>Threshold of bound (currently only applicable to rational expressions)</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.logic.OperatorFormula.threshold_expr">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">threshold_expr</span></span><a class="headerlink" href="#stormpy.logic.OperatorFormula.threshold_expr" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.logic.PathFormula">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">PathFormula</span></span><a class="headerlink" href="#stormpy.logic.PathFormula" title="Link to this definition">¶</a></dt>
+<dd><p>Formula about the probability of a set of paths in an automaton</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.logic.ProbabilityOperator">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ProbabilityOperator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.logic.ProbabilityOperator" title="stormpy.logic._logic.ProbabilityOperator"><span class="pre">stormpy.logic._logic.ProbabilityOperator</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">subformula</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.logic.Formula" title="stormpy.logic._logic.Formula"><span class="pre">stormpy.logic._logic.Formula</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.logic.ProbabilityOperator" title="Link to this definition">¶</a></dt>
+<dd><p>Probability operator</p>
+<p>construct probability operator formula</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.logic.RewardOperator">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">RewardOperator</span></span><a class="headerlink" href="#stormpy.logic.RewardOperator" title="Link to this definition">¶</a></dt>
+<dd><p>Reward operator</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.logic.RewardOperator.has_reward_name">
+<span class="sig-name descname"><span class="pre">has_reward_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.logic.RewardOperator" title="stormpy.logic._logic.RewardOperator"><span class="pre">stormpy.logic._logic.RewardOperator</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#stormpy.logic.RewardOperator.has_reward_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.logic.RewardOperator.reward_name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">reward_name</span></span><a class="headerlink" href="#stormpy.logic.RewardOperator.reward_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.logic.StateFormula">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">StateFormula</span></span><a class="headerlink" href="#stormpy.logic.StateFormula" title="Link to this definition">¶</a></dt>
+<dd><p>Formula about a state of an automaton</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.logic.TimeOperator">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">TimeOperator</span></span><a class="headerlink" href="#stormpy.logic.TimeOperator" title="Link to this definition">¶</a></dt>
+<dd><p>The time operator</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.logic.UnaryBooleanStateFormula">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">UnaryBooleanStateFormula</span></span><a class="headerlink" href="#stormpy.logic.UnaryBooleanStateFormula" title="Link to this definition">¶</a></dt>
+<dd><p>Unary boolean state formula</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.logic.UnaryPathFormula">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">UnaryPathFormula</span></span><a class="headerlink" href="#stormpy.logic.UnaryPathFormula" title="Link to this definition">¶</a></dt>
+<dd><p>Path formula with one operand</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.logic.UnaryPathFormula.subformula">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">subformula</span></span><a class="headerlink" href="#stormpy.logic.UnaryPathFormula.subformula" title="Link to this definition">¶</a></dt>
+<dd><p>the subformula</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.logic.UnaryStateFormula">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">UnaryStateFormula</span></span><a class="headerlink" href="#stormpy.logic.UnaryStateFormula" title="Link to this definition">¶</a></dt>
+<dd><p>State formula with one operand</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.logic.UnaryStateFormula.subformula">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">subformula</span></span><a class="headerlink" href="#stormpy.logic.UnaryStateFormula.subformula" title="Link to this definition">¶</a></dt>
+<dd><p>the subformula</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.logic.UntilFormula">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">UntilFormula</span></span><a class="headerlink" href="#stormpy.logic.UntilFormula" title="Link to this definition">¶</a></dt>
+<dd><p>Path Formula for unbounded until</p>
+</dd></dl>
+
+</section>
+
+
+</div>
+        </article>
+        <aside class="nftt-toc">
+          
+          <div class="my-sm-1 my-lg-0 ps-xl-3 text-muted">
+            <button class="btn btn-link p-lg-0 mb-2 mb-lg-0 text-decoration-none nftt-toc-toggle d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#tocContents" aria-expanded="false" aria-controls="tocContents"
+            >On this page <i class="ms-2 bi bi-chevron-expand"></i></button>
+            <div class="title d-none d-lg-block">
+              <i class="bi bi-file-earmark-text"></i>&nbsp;&nbsp;<span class="small">On this page</span>
+            </div>
+            <div class="collapse nftt-toc-collapse" id="tocContents">
+              <nav id="TableOfContents">
+                <ul>
+<li><a class="reference internal" href="#">Stormpy.logic</a><ul>
+<li><a class="reference internal" href="#stormpy.logic.AtomicExpressionFormula"><code class="docutils literal notranslate"><span class="pre">AtomicExpressionFormula</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.logic.AtomicExpressionFormula.get_expression"><code class="docutils literal notranslate"><span class="pre">AtomicExpressionFormula.get_expression()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.logic.AtomicLabelFormula"><code class="docutils literal notranslate"><span class="pre">AtomicLabelFormula</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.logic.AtomicLabelFormula.label"><code class="docutils literal notranslate"><span class="pre">AtomicLabelFormula.label</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.logic.BinaryBooleanOperatorType"><code class="docutils literal notranslate"><span class="pre">BinaryBooleanOperatorType</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.logic.BinaryBooleanOperatorType.AND"><code class="docutils literal notranslate"><span class="pre">BinaryBooleanOperatorType.AND</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.BinaryBooleanOperatorType.OR"><code class="docutils literal notranslate"><span class="pre">BinaryBooleanOperatorType.OR</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.logic.BinaryPathFormula"><code class="docutils literal notranslate"><span class="pre">BinaryPathFormula</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.logic.BinaryPathFormula.left_subformula"><code class="docutils literal notranslate"><span class="pre">BinaryPathFormula.left_subformula</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.BinaryPathFormula.right_subformula"><code class="docutils literal notranslate"><span class="pre">BinaryPathFormula.right_subformula</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.logic.BinaryStateFormula"><code class="docutils literal notranslate"><span class="pre">BinaryStateFormula</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.BooleanBinaryStateFormula"><code class="docutils literal notranslate"><span class="pre">BooleanBinaryStateFormula</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.BooleanLiteralFormula"><code class="docutils literal notranslate"><span class="pre">BooleanLiteralFormula</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.BoundedUntilFormula"><code class="docutils literal notranslate"><span class="pre">BoundedUntilFormula</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.logic.BoundedUntilFormula.has_lower_bound"><code class="docutils literal notranslate"><span class="pre">BoundedUntilFormula.has_lower_bound</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.BoundedUntilFormula.is_multidimensional"><code class="docutils literal notranslate"><span class="pre">BoundedUntilFormula.is_multidimensional</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.BoundedUntilFormula.left_subformula"><code class="docutils literal notranslate"><span class="pre">BoundedUntilFormula.left_subformula</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.BoundedUntilFormula.right_subformula"><code class="docutils literal notranslate"><span class="pre">BoundedUntilFormula.right_subformula</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.BoundedUntilFormula.upper_bound_expression"><code class="docutils literal notranslate"><span class="pre">BoundedUntilFormula.upper_bound_expression</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.logic.ComparisonType"><code class="docutils literal notranslate"><span class="pre">ComparisonType</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.logic.ComparisonType.GEQ"><code class="docutils literal notranslate"><span class="pre">ComparisonType.GEQ</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.ComparisonType.GREATER"><code class="docutils literal notranslate"><span class="pre">ComparisonType.GREATER</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.ComparisonType.LEQ"><code class="docutils literal notranslate"><span class="pre">ComparisonType.LEQ</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.ComparisonType.LESS"><code class="docutils literal notranslate"><span class="pre">ComparisonType.LESS</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.logic.ConditionalFormula"><code class="docutils literal notranslate"><span class="pre">ConditionalFormula</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.logic.ConditionalFormula.conditional_subformula"><code class="docutils literal notranslate"><span class="pre">ConditionalFormula.conditional_subformula</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.ConditionalFormula.main_subformula"><code class="docutils literal notranslate"><span class="pre">ConditionalFormula.main_subformula</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.logic.CumulativeRewardFormula"><code class="docutils literal notranslate"><span class="pre">CumulativeRewardFormula</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.EventuallyFormula"><code class="docutils literal notranslate"><span class="pre">EventuallyFormula</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.logic.EventuallyFormula.subformula"><code class="docutils literal notranslate"><span class="pre">EventuallyFormula.subformula</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.logic.Formula"><code class="docutils literal notranslate"><span class="pre">Formula</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.logic.Formula.clone"><code class="docutils literal notranslate"><span class="pre">Formula.clone()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.Formula.is_bounded_until_formula"><code class="docutils literal notranslate"><span class="pre">Formula.is_bounded_until_formula</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.Formula.is_eventually_formula"><code class="docutils literal notranslate"><span class="pre">Formula.is_eventually_formula</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.Formula.is_multi_objective_formula"><code class="docutils literal notranslate"><span class="pre">Formula.is_multi_objective_formula</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.Formula.is_probability_operator"><code class="docutils literal notranslate"><span class="pre">Formula.is_probability_operator</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.Formula.is_reward_operator"><code class="docutils literal notranslate"><span class="pre">Formula.is_reward_operator</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.Formula.is_until_formula"><code class="docutils literal notranslate"><span class="pre">Formula.is_until_formula</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.Formula.substitute"><code class="docutils literal notranslate"><span class="pre">Formula.substitute()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.Formula.substitute_labels_by_labels"><code class="docutils literal notranslate"><span class="pre">Formula.substitute_labels_by_labels()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.logic.GameFormula"><code class="docutils literal notranslate"><span class="pre">GameFormula</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.logic.GameFormula.is_game_formula"><code class="docutils literal notranslate"><span class="pre">GameFormula.is_game_formula</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.logic.GloballyFormula"><code class="docutils literal notranslate"><span class="pre">GloballyFormula</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.InstantaneousRewardFormula"><code class="docutils literal notranslate"><span class="pre">InstantaneousRewardFormula</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.LongRunAvarageOperator"><code class="docutils literal notranslate"><span class="pre">LongRunAvarageOperator</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.LongRunAverageRewardFormula"><code class="docutils literal notranslate"><span class="pre">LongRunAverageRewardFormula</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.MultiObjectiveFormula"><code class="docutils literal notranslate"><span class="pre">MultiObjectiveFormula</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.logic.MultiObjectiveFormula.nr_subformulas"><code class="docutils literal notranslate"><span class="pre">MultiObjectiveFormula.nr_subformulas</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.MultiObjectiveFormula.subformulas"><code class="docutils literal notranslate"><span class="pre">MultiObjectiveFormula.subformulas</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.logic.OperatorFormula"><code class="docutils literal notranslate"><span class="pre">OperatorFormula</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.logic.OperatorFormula.comparison_type"><code class="docutils literal notranslate"><span class="pre">OperatorFormula.comparison_type</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.OperatorFormula.has_bound"><code class="docutils literal notranslate"><span class="pre">OperatorFormula.has_bound</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.OperatorFormula.has_optimality_type"><code class="docutils literal notranslate"><span class="pre">OperatorFormula.has_optimality_type</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.OperatorFormula.optimality_type"><code class="docutils literal notranslate"><span class="pre">OperatorFormula.optimality_type</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.OperatorFormula.remove_bound"><code class="docutils literal notranslate"><span class="pre">OperatorFormula.remove_bound()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.OperatorFormula.remove_optimality_type"><code class="docutils literal notranslate"><span class="pre">OperatorFormula.remove_optimality_type()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.OperatorFormula.set_bound"><code class="docutils literal notranslate"><span class="pre">OperatorFormula.set_bound()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.OperatorFormula.set_optimality_type"><code class="docutils literal notranslate"><span class="pre">OperatorFormula.set_optimality_type()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.OperatorFormula.threshold"><code class="docutils literal notranslate"><span class="pre">OperatorFormula.threshold</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.OperatorFormula.threshold_expr"><code class="docutils literal notranslate"><span class="pre">OperatorFormula.threshold_expr</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.logic.PathFormula"><code class="docutils literal notranslate"><span class="pre">PathFormula</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.ProbabilityOperator"><code class="docutils literal notranslate"><span class="pre">ProbabilityOperator</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.RewardOperator"><code class="docutils literal notranslate"><span class="pre">RewardOperator</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.logic.RewardOperator.has_reward_name"><code class="docutils literal notranslate"><span class="pre">RewardOperator.has_reward_name()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.RewardOperator.reward_name"><code class="docutils literal notranslate"><span class="pre">RewardOperator.reward_name</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.logic.StateFormula"><code class="docutils literal notranslate"><span class="pre">StateFormula</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.TimeOperator"><code class="docutils literal notranslate"><span class="pre">TimeOperator</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.UnaryBooleanStateFormula"><code class="docutils literal notranslate"><span class="pre">UnaryBooleanStateFormula</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.logic.UnaryPathFormula"><code class="docutils literal notranslate"><span class="pre">UnaryPathFormula</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.logic.UnaryPathFormula.subformula"><code class="docutils literal notranslate"><span class="pre">UnaryPathFormula.subformula</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.logic.UnaryStateFormula"><code class="docutils literal notranslate"><span class="pre">UnaryStateFormula</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.logic.UnaryStateFormula.subformula"><code class="docutils literal notranslate"><span class="pre">UnaryStateFormula.subformula</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.logic.UntilFormula"><code class="docutils literal notranslate"><span class="pre">UntilFormula</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+              </nav>
+            </div>
+          </div>
+          
+        </aside>
+      </div>
+    </div>
+
+    <footer class="nftt-footer">
+      <nav id="paginator" class="py-4" aria-label="Documentation navigation">
+    <div class="container">
+      <ul class="pagination justify-content-between mb-0"><li class="d-flex page-item">
+            <a href="exceptions.html" class="d-flex pe-5 px-lg-5 align-items-end" rel="prev" aria-label="Previous page: Stormpy.exceptions">
+              <span class="prev-page"><i class="bi bi-caret-left"></i></span>
+              <div class="d-none d-sm-flex flex-column">
+                <span class="text-small text-start text-muted">Previous</span>
+                <span class="underline">Stormpy.exceptions</span>
+              </div>
+            </a>
+          </li>
+        <li class="d-flex page-item ms-auto">
+            <a href="storage.html" class="d-flex ps-5 px-lg-5 align-items-end" rel="next" aria-label="Next page: Stormpy.storage">
+              <div class="d-flex flex-column">
+                <span class="text-small text-end text-start text-muted">Next</span>
+                <span class="underline">Stormpy.storage</span>
+              </div>
+              <span class="next-page"><i class="bi bi-caret-right"></i></span>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </nav>
+
+      <div class="py-5 px-4 px-md-3">
+  <div class="container">
+    
+    <div class="row">
+      <ul id="nftt-footer-links" class="list-unstyled list-separator col-lg-12 pb-2 text-center">
+        
+          <li class="d-inline">
+            <a href="https://stormchecker.github.io/stormpy/"  class="list-item">Documentation</a>
+          </li>
+        
+          <li class="d-inline">
+            <a href="https://pypi.org/project/stormpy/"  class="list-item">Package</a>
+          </li>
+        
+          <li class="d-inline">
+            <a href="https://github.com/stormchecker/stormpy/"  class="list-item">Repository</a>
+          </li>
+        
+          <li class="d-inline">
+            <a href="https://github.com/stormchecker/stormpy/issues"  class="list-item">Issues</a>
+          </li>
+        
+      </ul>
+    </div>
+    
+
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <a class="brand-text d-inline-flex align-items-center mb-2 text-decoration-none" href="/" aria-label="stormpy">
+          <span class="fs-6 fw-bold">stormpy</span>
+        </a>
+        
+          <ul class="list-unstyled small text-muted">
+            <li>2016-2026 Storm Developers</li>
+          </ul>
+        
+        <div class="built-with pt-2">
+          Built with <a href="http://sphinx-doc.org">Sphinx 9.1.0</a> and <a href="https://github.com/danirus/sphinx-nefertiti">Nefertiti 0.9.9</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    </footer>
+
+    <div class="modal modal-xl fade" id="nftt-modal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen-xxl-down modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="nftt-modal-title"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="nftt-modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+    <script src="../_static/documentation_options.js?v=01009efc"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/docs-versions.js?v=08b0cbfb"></script>
+    <script src="../_static/sphinx-nefertiti.min.js?v=af404e0e"></script>
+    <script src="../_static/bootstrap.bundle.min.js?v=c066362f"></script>
+  </body>
+</html>

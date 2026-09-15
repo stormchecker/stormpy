@@ -17,7 +17,7 @@ class TestTransformations:
         instantiator = stormpy.dft.DFTInstantiator(dft)
         x = pycarl.variable_with_name("x")
         y = pycarl.variable_with_name("y")
-        valuation = {x: stormpy.RationalRF("5"), y: stormpy.RationalRF("0.01")}
+        valuation = {x: stormpy.RationalFunctionCoefficient("5"), y: stormpy.RationalFunctionCoefficient("0.01")}
         inst_dft = instantiator.instantiate(valuation)
         assert inst_dft.nr_elements() == 7
         assert inst_dft.nr_be() == 4

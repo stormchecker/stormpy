@@ -12,6 +12,7 @@
 #include "src/core/result.h"
 #include "src/core/simulator.h"
 #include "src/core/transformation.h"
+#include "src/core/valuetype.h"
 
 PYBIND11_MODULE(_core, m) {
     m.doc() = "core";
@@ -23,6 +24,7 @@ PYBIND11_MODULE(_core, m) {
 
     define_environment(m);
     define_core(m);
+    define_value_types(m);
 
     define_property(m);
     define_parse(m);

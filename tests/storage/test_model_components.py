@@ -818,12 +818,12 @@ class TestSparseModelComponents:
             from stormpy.pycarl import gmp as pc
 
         def create_polynomial(pol):
-            num = pc.create_factorized_polynomial(pc.Polynomial(pol))
-            return pc.FactorizedRationalFunction(num)
+            num = pc.create_factorized_polynomial(stormpy.RawPolynomial(pol))
+            return stormpy.RationalFunction(num)
 
         def create_number(num):
-            num = pc.FactorizedPolynomial(pc.Rational(num))
-            return pc.FactorizedRationalFunction(num)
+            num = stormpy.Polynomial(stormpy.RationalFunctionCoefficient(num))
+            return stormpy.RationalFunction(num)
 
         from stormpy.pycarl import Variable
 
@@ -896,7 +896,7 @@ class TestSparseModelComponents:
         assert dtmc.nr_transitions == 20
         assert dtmc.transition_matrix.nr_entries == dtmc.nr_transitions
         for e in dtmc.transition_matrix:
-            assert type(e.value()) is pc.FactorizedRationalFunction
+            assert type(e.value()) is stormpy.RationalFunction
         for state in dtmc.states:
             assert len(state.actions) <= 1
 

@@ -20,7 +20,7 @@ class TestParametric:
         assert initial_state == 0
         result = stormpy.model_checking(model, formulas[0])
         func = result.at(initial_state)
-        one = stormpy.FactorizedPolynomial(stormpy.RationalRF(1))
+        one = stormpy.Polynomial(stormpy.RationalFunctionCoefficient(1))
         assert func.denominator == one
 
     def test_parametric_model_checking_sparse_die(self):
@@ -45,12 +45,12 @@ class TestParametric:
         parameters = model.collect_all_parameters()
         for par in parameters:
             if par.name == "p":
-                p = pc.create_factorized_polynomial(pc.Polynomial(par))
+                p = pc.create_factorized_polynomial(stormpy.RawPolynomial(par))
             else:
                 assert par.name == "q"
-                q = pc.create_factorized_polynomial(pc.Polynomial(par))
+                q = pc.create_factorized_polynomial(stormpy.RawPolynomial(par))
 
-        one = stormpy.FactorizedPolynomial(stormpy.RationalRF(1))
+        one = stormpy.Polynomial(stormpy.RationalFunctionCoefficient(1))
         num = p * p * (q - one)
         denom = p * q - one
         assert func.numerator == num
@@ -198,7 +198,7 @@ class TestParametric:
         parameters = model.collect_all_parameters()
         assert len(parameters) == 2
         region = stormpy.pars.ParameterRegion.create_from_string("0.7<=pL<=0.9,0.75<=pK<=0.95", parameters)
-        assert region.area == stormpy.RationalRF(1) / stormpy.RationalRF(25)
+        assert region.area == stormpy.RationalFunctionCoefficient(1) / stormpy.RationalFunctionCoefficient(25)
         for par in parameters:
             if par.name == "pL":
                 pL = par
@@ -206,7 +206,10 @@ class TestParametric:
                 pK = par
             else:
                 assert False
-        dec = stormpy.RationalRF(100)
-        region_valuation = {pL: (stormpy.RationalRF(70) / dec, stormpy.RationalRF(90) / dec), pK: (stormpy.RationalRF(75) / dec, stormpy.RationalRF(95) / dec)}
+        dec = stormpy.RationalFunctionCoefficient(100)
+        region_valuation = {
+            pL: (stormpy.RationalFunctionCoefficient(70) / dec, stormpy.RationalFunctionCoefficient(90) / dec),
+            pK: (stormpy.RationalFunctionCoefficient(75) / dec, stormpy.RationalFunctionCoefficient(95) / dec),
+        }
         region = stormpy.pars.ParameterRegion(region_valuation)
-        assert region.area == stormpy.RationalRF(1) / stormpy.RationalRF(25)
+        assert region.area == stormpy.RationalFunctionCoefficient(1) / stormpy.RationalFunctionCoefficient(25)

@@ -111,9 +111,9 @@ class TestMatrix:
         assert initial_state == 0
         matrix = model.transition_matrix
         # Check matrix
-        one_pol = stormpy.RationalRF(1)
-        one_pol = stormpy.FactorizedPolynomial(one_pol)
-        one = stormpy.FactorizedRationalFunction(one_pol, one_pol)
+        one_pol = stormpy.RationalFunctionCoefficient(1)
+        one_pol = stormpy.Polynomial(one_pol)
+        one = stormpy.RationalFunction(one_pol, one_pol)
         for e in matrix:
             assert e.value() == one or len(e.value().gather_variables()) > 0
         # First model checking
@@ -122,9 +122,9 @@ class TestMatrix:
         assert len(ratFunc.gather_variables()) > 0
 
         # Change probabilities
-        two_pol = stormpy.RationalRF(2)
-        two_pol = stormpy.FactorizedPolynomial(two_pol)
-        new_val = stormpy.FactorizedRationalFunction(one_pol, two_pol)
+        two_pol = stormpy.RationalFunctionCoefficient(2)
+        two_pol = stormpy.Polynomial(two_pol)
+        new_val = stormpy.RationalFunction(one_pol, two_pol)
         for e in matrix:
             if len(e.value().gather_variables()) > 0:
                 e.set_value(new_val)

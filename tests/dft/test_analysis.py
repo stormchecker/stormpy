@@ -1,3 +1,4 @@
+import pytest
 import stormpy
 from helpers.helper import get_example_path
 
@@ -33,7 +34,7 @@ class TestAnalysis:
 
     def test_explicit_model_builder(self):
         dft = stormpy.dft.load_dft_json_file(get_example_path("dft", "and.json"))
-        builder = stormpy.dft.ExplicitDFTModelBuilder_double(dft)
+        builder = stormpy.dft.ExplicitDFTModelBuilder[float](dft)
         builder.build(0)
         model = builder.get_model()
         assert model.model_type == stormpy.ModelType.CTMC
@@ -41,6 +42,16 @@ class TestAnalysis:
         assert model.nr_states == 4
         assert model.nr_transitions == 5
         assert not model.supports_parameters
+
+    def test_explicit_model_builder_unsupported_value_type(self):
+        double_dft = stormpy.dft.load_dft_json_file(get_example_path("dft", "and.json"))
+        with pytest.raises(TypeError, match="ExplicitDFTModelBuilder has no instantiation"):
+            stormpy.dft.ExplicitDFTModelBuilder[stormpy.Rational](double_dft)
+
+    def test_explicit_model_builder_mismatched_dft_type(self):
+        double_dft = stormpy.dft.load_dft_json_file(get_example_path("dft", "and.json"))
+        with pytest.raises(TypeError, match="incompatible constructor arguments"):
+            stormpy.dft.ExplicitDFTModelBuilder[stormpy.RationalFunction](double_dft)
 
     def test_explicit_model_builder_approximation(self):
         dft = stormpy.dft.load_dft_galileo_file(get_example_path("dft", "rc.dft"))
@@ -50,7 +61,7 @@ class TestAnalysis:
         assert not issue
         properties = stormpy.parse_properties('T=? [ F "failed" ]')
         prop = properties[0]
-        builder = stormpy.dft.ExplicitDFTModelBuilder_double(dft)
+        builder = stormpy.dft.ExplicitDFTModelBuilder(dft)
 
         # Iteration 0
         builder.build(0, 1.0)
@@ -106,7 +117,7 @@ class TestAnalysis:
         dft = stormpy.dft.load_dft_galileo_file(get_example_path("dft", "rc.dft"))
         properties = stormpy.parse_properties('T=? [ F "failed" ]')
         prop = properties[0]
-        builder = stormpy.dft.ExplicitDFTModelBuilder_double(dft)
+        builder = stormpy.dft.ExplicitDFTModelBuilder(dft)
 
         # Iteration 0
         builder.build(0, 1.0)

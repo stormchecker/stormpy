@@ -41,7 +41,7 @@ In order to obtain a standard DTMC, MDP or other Markov model, we need to instan
 ```{code-cell} python3
 import stormpy.pars
 
-instantiator = stormpy.pars.PDtmcInstantiator(model)
+instantiator = stormpy.pars.ModelInstantiator[stormpy.ModelType.DTMC, float](model)
 ```
 
 Before we obtain an instantiated model, we need to map parameters to values: We build such a dictionary as follows:

@@ -20,8 +20,6 @@ void define_output(py::module& m) {
     // Export DFT
     m.def("export_dft_json_file", &storm::dft::api::exportDFTToJsonFile<double>, "Export DFT to JSON file", py::arg("dft"), py::arg("path"));
     m.def("export_dft_json_string", &storm::dft::api::exportDFTToJsonString<double>, "Export DFT to JSON string", py::arg("dft"));
-    m.def("export_parametric_dft_json_file", &storm::dft::api::exportDFTToJsonFile<storm::RationalFunction>, "Export parametric DFT to JSON file",
-          py::arg("dft"), py::arg("path"));
-    m.def("export_parametric_dft_json_string", &storm::dft::api::exportDFTToJsonString<storm::RationalFunction>, "Export parametric DFT to JSON string",
-          py::arg("dft"));
+    m.def("export_dft_json_file", &storm::dft::api::exportDFTToJsonFile<storm::RationalFunction>, "Export DFT to JSON file", py::arg("dft"), py::arg("path"));
+    m.def("export_dft_json_string", &storm::dft::api::exportDFTToJsonString<storm::RationalFunction>, "Export DFT to JSON string", py::arg("dft"));
 }

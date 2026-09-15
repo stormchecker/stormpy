@@ -12,7 +12,7 @@ class TestSimulator:
         dft.set_relevant_events(stormpy.dft.RelevantEvents(), False)
         info = dft.state_generation_info()
         generator = stormpy.dft.RandomGenerator.create(5)
-        simulator = stormpy.dft.DFTSimulator_double(dft, info, generator)
+        simulator = stormpy.dft.DFTSimulator(dft, info, generator)
         old_time = 0
         res = simulator.random_step()
         assert res == stormpy.dft.SimulationStepResult.SUCCESSFUL
@@ -35,7 +35,7 @@ class TestSimulator:
         dft.set_relevant_events(stormpy.dft.RelevantEvents(), False)
         info = dft.state_generation_info()
         generator = stormpy.dft.RandomGenerator.create(5)
-        simulator = stormpy.dft.DFTSimulator_double(dft, info, generator)
+        simulator = stormpy.dft.DFTSimulator(dft, info, generator)
         res = simulator.simulate_trace(2)
         assert res == stormpy.dft.SimulationTraceResult.SUCCESSFUL
         res = simulator.simulate_trace(2)
@@ -49,7 +49,7 @@ class TestSimulator:
         dft.set_relevant_events(stormpy.dft.RelevantEvents(), False)
         info = dft.state_generation_info()
         generator = stormpy.dft.RandomGenerator.create(5)
-        simulator = stormpy.dft.DFTSimulator_double(dft, info, generator)
+        simulator = stormpy.dft.DFTSimulator(dft, info, generator)
         res = simulator.simulate_trace(2)
         assert res == stormpy.dft.SimulationTraceResult.UNSUCCESSFUL
         res = simulator.simulate_trace(2)
@@ -62,7 +62,7 @@ class TestSimulator:
         dft.set_relevant_events(stormpy.dft.RelevantEvents(), False)
         info = dft.state_generation_info()
         generator = stormpy.dft.RandomGenerator.create(5)
-        simulator = stormpy.dft.DFTSimulator_double(dft, info, generator)
+        simulator = stormpy.dft.DFTSimulator(dft, info, generator)
 
         failable_check = ["B", "C"]
         a = dft.get_element_by_name("A").id
@@ -81,7 +81,7 @@ class TestSimulator:
         failable = state.failable()
         for f in failable:
             assert not f.is_due_dependency()
-            fail_be = f.as_be_double(dft)
+            fail_be = f.as_be(dft)
             assert fail_be.name in failable_check
             if fail_be.name == "C":
                 next_fail = f
@@ -100,7 +100,7 @@ class TestSimulator:
         failable = state.failable()
         for f in failable:
             assert not f.is_due_dependency()
-            fail_be = f.as_be_double(dft)
+            fail_be = f.as_be(dft)
             assert fail_be.name == "B"
             next_fail = f
         res = simulator.step(next_fail)
@@ -123,7 +123,7 @@ class TestSimulator:
         dft.set_relevant_events(stormpy.dft.RelevantEvents(), False)
         info = dft.state_generation_info()
         generator = stormpy.dft.RandomGenerator.create(5)
-        simulator = stormpy.dft.DFTSimulator_double(dft, info, generator)
+        simulator = stormpy.dft.DFTSimulator(dft, info, generator)
 
         p = dft.get_element_by_name("P").id
         b = dft.get_element_by_name("B").id
@@ -138,7 +138,7 @@ class TestSimulator:
         failable = state.failable()
         for f in failable:
             assert not f.is_due_dependency()
-            fail_be = f.as_be_double(dft)
+            fail_be = f.as_be(dft)
             assert fail_be.name in ["B", "P", "B_Power"]
             if fail_be.name == "B_Power":
                 next_fail = f
@@ -153,7 +153,7 @@ class TestSimulator:
         failable = state.failable()
         for f in failable:
             assert f.is_due_dependency
-            fail_dependency = f.as_dependency_double(dft)
+            fail_dependency = f.as_dependency(dft)
             assert len(fail_dependency.dependent_events) == 1
             fail_be = fail_dependency.dependent_events[0]
             assert fail_be.name in ["B", "P"]

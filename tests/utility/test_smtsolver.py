@@ -12,11 +12,11 @@ class TestSmtSolver:
         manager = stormpy.ExpressionManager()
         solver = stormpy.utility.Z3SmtSolver(manager)
         solver.add(manager.create_boolean(True))
-        assert solver.check() != stormpy.utility.SmtCheckResult.Unsat
-        assert solver.check() == stormpy.utility.SmtCheckResult.Sat
+        assert solver.check() != stormpy.utility.SmtCheckResult.UNSAT
+        assert solver.check() == stormpy.utility.SmtCheckResult.SAT
         solver.add(manager.create_boolean(False))
-        assert solver.check() == stormpy.utility.SmtCheckResult.Unsat
-        assert solver.check() != stormpy.utility.SmtCheckResult.Sat
+        assert solver.check() == stormpy.utility.SmtCheckResult.UNSAT
+        assert solver.check() != stormpy.utility.SmtCheckResult.SAT
 
     def test_smtsolver_arithmetic_unsat(self):
         manager = stormpy.ExpressionManager()
@@ -27,7 +27,7 @@ class TestSmtSolver:
         solver = stormpy.utility.Z3SmtSolver(manager)
         solver.add(c1)
         solver.add(c2)
-        assert solver.check() == stormpy.utility.SmtCheckResult.Unsat
+        assert solver.check() == stormpy.utility.SmtCheckResult.UNSAT
 
     def test_smtsolver_arithmetic_unsat(self):
         manager = stormpy.ExpressionManager()
@@ -38,7 +38,7 @@ class TestSmtSolver:
         solver = stormpy.utility.Z3SmtSolver(manager)
         solver.add(c1)
         solver.add(c2)
-        assert solver.check() == stormpy.utility.SmtCheckResult.Unsat
+        assert solver.check() == stormpy.utility.SmtCheckResult.UNSAT
 
     def test_smtsolver_arithmetic_unsat(self):
         manager = stormpy.ExpressionManager()
@@ -49,5 +49,5 @@ class TestSmtSolver:
         solver = stormpy.utility.Z3SmtSolver(manager)
         solver.add(c1)
         solver.add(c2)
-        assert solver.check() == stormpy.utility.SmtCheckResult.Sat
+        assert solver.check() == stormpy.utility.SmtCheckResult.SAT
         assert solver.model.get_integer_value(x) == 1

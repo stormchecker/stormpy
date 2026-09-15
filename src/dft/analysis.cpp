@@ -6,6 +6,7 @@
 #include <storm-dft/parser/DFTJsonParser.h>
 #include <storm-dft/storage/DftSymmetries.h>
 #include <storm/adapters/RationalFunctionAdapter.h>
+#include <storm/utility/ExtendedNumber.h>
 
 template<typename ValueType>
 using ExplicitDFTModelBuilder = storm::dft::builder::ExplicitDFTModelBuilder<ValueType>;
@@ -18,8 +19,9 @@ std::vector<ValueType> analyzeDFT(storm::dft::storage::DFT<ValueType> const& dft
         dft, properties, symred, allowModularisation, relevantEvents, allowDCForRelevant, 0.0, storm::dft::builder::ApproximationHeuristic::DEPTH, false);
 
     std::vector<ValueType> results;
-    for (auto result : dftResults) {
-        results.push_back(boost::get<ValueType>(result));
+    for (auto const& result : dftResults) {
+        results.push_back(
+            storm::utility::narrow<ValueType>(boost::get<typename storm::dft::modelchecker::DFTModelChecker<ValueType>::ExtendedValueType>(result)));
     }
     return results;
 }
@@ -40,7 +42,7 @@ void define_analysis(py::module& m) {
     py::native_enum<storm::dft::builder::ApproximationHeuristic>(m, "ApproximationHeuristic", "enum.Enum", "Heuristic for selecting states to explore next")
         .value("DEPTH", storm::dft::builder::ApproximationHeuristic::DEPTH)
         .value("PROBABILITY", storm::dft::builder::ApproximationHeuristic::PROBABILITY)
-        .value("BOUNDDIFFERENCE", storm::dft::builder::ApproximationHeuristic::BOUNDDIFFERENCE)
+        .value("BOUND_DIFFERENCE", storm::dft::builder::ApproximationHeuristic::BOUNDDIFFERENCE)
         .finalize();
 
     // RelevantEvents

@@ -16,16 +16,16 @@
 
 void define_umb(py::module& m) {
     py::native_enum<storm::io::CompressionMode>(m, "CompressionMode", "enum.Enum", "Compression mode for UMB archives")
-        .value("Default", storm::io::CompressionMode::Default)
-        .value("NoCompression", storm::io::CompressionMode::None)
-        .value("Gzip", storm::io::CompressionMode::Gzip)
-        .value("Xz", storm::io::CompressionMode::Xz)
+        .value("DEFAULT", storm::io::CompressionMode::Default)
+        .value("NO_COMPRESSION", storm::io::CompressionMode::None)
+        .value("GZIP", storm::io::CompressionMode::Gzip)
+        .value("XZ", storm::io::CompressionMode::Xz)
         .finalize();
 
     py::native_enum<storm::umb::ImportOptions::ValueType>(m, "UmbImportValueType", "enum.Enum", "Value type for UMB import")
-        .value("Default", storm::umb::ImportOptions::ValueType::Default)
-        .value("Rational", storm::umb::ImportOptions::ValueType::Rational)
-        .value("Double", storm::umb::ImportOptions::ValueType::Double)
+        .value("DEFAULT", storm::umb::ImportOptions::ValueType::Default)
+        .value("RATIONAL", storm::umb::ImportOptions::ValueType::Rational)
+        .value("DOUBLE", storm::umb::ImportOptions::ValueType::Double)
         .finalize();
 
     py::classh<storm::umb::ImportOptions>(m, "UmbImportOptions", "Options for importing UMB models")
@@ -35,11 +35,11 @@ void define_umb(py::module& m) {
         .def_readwrite("build_state_valuations", &storm::umb::ImportOptions::buildStateValuations, "Whether to build state valuations");
 
     py::native_enum<storm::umb::ExportOptions::ValueType>(m, "UmbExportValueType", "enum.Enum", "Value type for UMB export")
-        .value("Default", storm::umb::ExportOptions::ValueType::Default)
-        .value("Rational", storm::umb::ExportOptions::ValueType::Rational)
-        .value("Double", storm::umb::ExportOptions::ValueType::Double)
-        .value("DoubleInterval", storm::umb::ExportOptions::ValueType::DoubleInterval)
-        .value("RationalInterval", storm::umb::ExportOptions::ValueType::RationalInterval)
+        .value("DEFAULT", storm::umb::ExportOptions::ValueType::Default)
+        .value("RATIONAL", storm::umb::ExportOptions::ValueType::Rational)
+        .value("DOUBLE", storm::umb::ExportOptions::ValueType::Double)
+        .value("DOUBLE_INTERVAL", storm::umb::ExportOptions::ValueType::DoubleInterval)
+        .value("RATIONAL_INTERVAL", storm::umb::ExportOptions::ValueType::RationalInterval)
         .finalize();
 
     py::classh<storm::umb::ExportOptions>(m, "UmbExportOptions", "Options for exporting UMB models")

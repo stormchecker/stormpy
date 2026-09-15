@@ -14,6 +14,9 @@ The following contains some general guidelines for developers.
   Proper formatting can be ensured by executing ``black .``.
   The CI automatically checks for proper formatting as well.
 
+### Enum naming
+- Enum values exposed to Python via `py::native_enum` must use `UPPER_CASE_WITH_UNDERSCORES` in the string name in `.value("NAME", ...)`.
+
 
 ## Dependencies
 - The bindings are created with [pybind11](https://pybind11.readthedocs.io).

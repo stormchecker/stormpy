@@ -40,8 +40,8 @@ void define_ksp(py::module& m) {
         .def_readwrite("distance", &Path::distance);
 
     py::native_enum<MatrixFormat>(m, "MatrixFormat", "enum.Enum")
-        .value("Straight", MatrixFormat::straight)
-        .value("I_Minus_P", MatrixFormat::iMinusP)
+        .value("STRAIGHT", MatrixFormat::straight)
+        .value("I_MINUS_P", MatrixFormat::iMinusP)
         .finalize();
 
     py::classh<ShortestPathsGenerator>(m, "ShortestPathsGenerator")

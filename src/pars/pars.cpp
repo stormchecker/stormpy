@@ -2,14 +2,13 @@
 
 #include <storm-pars/settings/modules/ParametricSettings.h>
 #include <storm-pars/settings/modules/RegionSettings.h>
-#include <storm-pars/transformer/SparseParametricDtmcSimplifier.h>
-#include <storm-pars/transformer/SparseParametricMdpSimplifier.h>
+#include <storm-pars/transformer/SparseParametricModelSimplifier.h>
 #include <storm/settings/SettingsManager.h>
 
 typedef storm::models::sparse::Dtmc<storm::RationalFunction> Dtmc;
 typedef storm::models::sparse::Mdp<storm::RationalFunction> Mdp;
-typedef storm::transformer::SparseParametricDtmcSimplifier<Dtmc> SparseParametricDtmcSimplifier;
-typedef storm::transformer::SparseParametricMdpSimplifier<Mdp> SparseParametricMdpSimplifier;
+typedef storm::transformer::SparseParametricModelSimplifier<Dtmc> SparseParametricDtmcSimplifier;
+typedef storm::transformer::SparseParametricModelSimplifier<Mdp> SparseParametricMdpSimplifier;
 
 void define_pars(py::module& m) {
     m.def(

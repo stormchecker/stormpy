@@ -12,8 +12,8 @@ def example_analysis_03():
     properties = stormpy.parse_properties(formula_str, prism_program)
     model = stormpy.build_model(prism_program, properties)
     env = stormpy.Environment()
-    env.solver_environment.set_linear_equation_solver_type(stormpy.EquationSolverType.native)
-    env.solver_environment.native_solver_environment.method = stormpy.NativeLinearEquationSolverMethod.optimistic_value_iteration
+    env.solver_environment.set_linear_equation_solver_type(stormpy.EquationSolverType.NATIVE)
+    env.solver_environment.native_solver_environment.method = stormpy.NativeLinearEquationSolverMethod.OPTIMISTIC_VALUE_ITERATION
     env.solver_environment.native_solver_environment.precision = stormpy.Rational("0.9")
     # env.solver_environment.native_solver_environment.maximum_iterations = 2
     result = stormpy.model_checking(model, properties[0], environment=env)

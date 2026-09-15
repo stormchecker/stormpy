@@ -72,8 +72,8 @@ We can also vary the model checking algorithm:
 
 ```{code-cell} python3
 env = stormpy.Environment()
-env.solver_environment.set_linear_equation_solver_type(stormpy.EquationSolverType.native)
-env.solver_environment.native_solver_environment.method = stormpy.NativeLinearEquationSolverMethod.power_iteration
+env.solver_environment.set_linear_equation_solver_type(stormpy.EquationSolverType.NATIVE)
+env.solver_environment.native_solver_environment.method = stormpy.NativeLinearEquationSolverMethod.POWER_ITERATION
 result = stormpy.model_checking(model, properties[0], environment=env)
 ```
 

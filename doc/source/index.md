@@ -12,6 +12,7 @@ getting_started
 advanced_topics
 using_pycarl
 development
+writing_a_binding
 contributors
 api
 ```

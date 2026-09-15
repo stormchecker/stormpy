@@ -1,6 +1,11 @@
 # Developer information
 The following contains some general guidelines for developers.
 
+## How to write a binding
+
+See [How to write a stormpy binding](writing_a_binding.md).
+
+
 ## Structure
 - C++ bindings are defined in ``src``.
 - Python methods are defined in ``lib/stormpy``.

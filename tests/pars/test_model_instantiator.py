@@ -74,12 +74,12 @@ class TestModelInstantiator:
         env = stormpy.Environment()
         inst_checker = stormpy.pars.ModelInstantiationChecker(env, model)
         assert type(inst_checker) is stormpy.pars.ModelInstantiationChecker[stormpy.ModelType.DTMC, float]
-        inst_checker.specify_formula(stormpy.ParametricCheckTask(formulas[0].raw_formula, True))
+        inst_checker.specify_formula(stormpy.CheckTask[stormpy.RationalFunction](formulas[0].raw_formula, True))
         inst_checker.set_graph_preserving(True)
 
         point = {p: stormpy.RationalFunctionCoefficient(1 / 2) for p in parameters}
         result = inst_checker.check(env, point)
-        assert isinstance(result, stormpy.ExplicitQuantitativeCheckResult)
+        assert isinstance(result, stormpy.ExplicitQuantitativeCheckResult[float])
         res = result.at(model.initial_states[0])
         assert isinstance(res, float)
         assert math.isclose(res, 29 / 15)
@@ -92,12 +92,12 @@ class TestModelInstantiator:
         parameters = model.collect_all_parameters()
         env = stormpy.Environment()
         inst_checker = stormpy.pars.ModelInstantiationChecker[stormpy.ModelType.DTMC, stormpy.Rational](env, model)
-        inst_checker.specify_formula(stormpy.ParametricCheckTask(formulas[0].raw_formula, True))
+        inst_checker.specify_formula(stormpy.CheckTask[stormpy.RationalFunction](formulas[0].raw_formula, True))
         inst_checker.set_graph_preserving(True)
 
         point = {p: stormpy.RationalFunctionCoefficient("1/2") for p in parameters}
         result = inst_checker.check(env, point)
-        assert isinstance(result, stormpy.ExplicitExactQuantitativeCheckResult)
+        assert isinstance(result, stormpy.ExplicitQuantitativeCheckResult[stormpy.Rational])
         res = result.at(model.initial_states[0])
         assert isinstance(res, stormpy.Rational)
         assert res == stormpy.Rational("29/15")
@@ -110,12 +110,12 @@ class TestModelInstantiator:
         parameters = model.collect_all_parameters()
         env = stormpy.Environment()
         inst_checker = stormpy.pars.ModelInstantiationChecker[stormpy.ModelType.DTMC, stormpy.Rational](env, model)
-        inst_checker.specify_formula(stormpy.ParametricCheckTask(formulas[0].raw_formula, True))
+        inst_checker.specify_formula(stormpy.CheckTask[stormpy.RationalFunction](formulas[0].raw_formula, True))
         inst_checker.set_graph_preserving(True)
 
         point = {p: stormpy.RationalFunctionCoefficient("2/5") for p in parameters}
         result = inst_checker.check(env, point)
-        assert isinstance(result, stormpy.ExplicitExactQuantitativeCheckResult)
+        assert isinstance(result, stormpy.ExplicitQuantitativeCheckResult[stormpy.Rational])
         res = result.at(model.initial_states[0])
         assert isinstance(res, stormpy.Rational)
         assert res == stormpy.Rational("4/35")

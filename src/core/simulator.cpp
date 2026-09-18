@@ -4,13 +4,15 @@
 #include <storm/simulator/DiscreteTimeSparseModelSimulator.h>
 #include <storm/simulator/PrismProgramSimulator.h>
 
+#include "src/binding_type_index.h"
+
 template<typename ValueType>
 using PLSim = storm::simulator::DiscreteTimePrismProgramSimulator<ValueType>;
 
 template<typename ValueType>
-void define_sparse_model_simulator(py::module& m, std::string const& vtSuffix) {
-    py::classh<storm::simulator::DiscreteTimeSparseModelSimulator<ValueType>> dtsmsd(m, ("_DiscreteTimeSparseModelSimulator" + vtSuffix).c_str(),
-                                                                                     "Simulator for sparse discrete-time models in memory (for ValueType)");
+void define_sparse_model_simulator(py::module& m) {
+    auto dtsmsd = stormpy::bindings::bindTemplateClass<storm::simulator::DiscreteTimeSparseModelSimulator<ValueType>>(
+        m, "DiscreteTimeSparseModelSimulator", stormpy::bindings::typeIndex<ValueType>(), "Simulator for sparse discrete-time models in memory");
     dtsmsd.def(py::init<storm::models::sparse::Model<ValueType> const&>());
     dtsmsd.def("set_seed", &storm::simulator::DiscreteTimeSparseModelSimulator<ValueType>::setSeed, py::arg("seed"));
     dtsmsd.def("step", &storm::simulator::DiscreteTimeSparseModelSimulator<ValueType>::step, py::arg("action"));
@@ -21,9 +23,9 @@ void define_sparse_model_simulator(py::module& m, std::string const& vtSuffix) {
 }
 
 template<typename ValueType>
-void define_prism_program_simulator(py::module& m, std::string const& vtSuffix) {
-    py::classh<storm::simulator::DiscreteTimePrismProgramSimulator<ValueType>> dtpps(m, ("_DiscreteTimePrismProgramSimulator" + vtSuffix).c_str(),
-                                                                                     "Simulator for prism programs");
+void define_prism_program_simulator(py::module& m) {
+    auto dtpps = stormpy::bindings::bindTemplateClass<storm::simulator::DiscreteTimePrismProgramSimulator<ValueType>>(
+        m, "DiscreteTimePrismProgramSimulator", stormpy::bindings::typeIndex<ValueType>(), "Simulator for prism programs");
     dtpps.def(py::init<storm::prism::Program const&, storm::builder::BuilderOptions const&>(), py::arg("program"), py::arg("options"));
     dtpps.def("set_seed", &storm::simulator::DiscreteTimePrismProgramSimulator<ValueType>::setSeed, py::arg("seed"));
     dtpps.def("step", &storm::simulator::DiscreteTimePrismProgramSimulator<ValueType>::step, py::arg("action_index"),
@@ -56,7 +58,7 @@ void define_prism_program_simulator(py::module& m, std::string const& vtSuffix) 
               "Get names of the rewards provided by the simulator");
 }
 
-template void define_sparse_model_simulator<double>(py::module& m, std::string const& vtSuffix);
-template void define_sparse_model_simulator<storm::RationalNumber>(py::module& m, std::string const& vtSuffix);
+template void define_sparse_model_simulator<double>(py::module& m);
+template void define_sparse_model_simulator<storm::RationalNumber>(py::module& m);
 
-template void define_prism_program_simulator<double>(py::module& m, std::string const& vtSuffix);
+template void define_prism_program_simulator<double>(py::module& m);

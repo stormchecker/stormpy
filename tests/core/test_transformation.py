@@ -151,7 +151,7 @@ class TestAddUncertainty:
         model = stormpy.build_model(program)
         assert type(model) is stormpy.SparseDtmc[float]
         assert model.nr_states == 13
-        transformer = stormpy.AddUncertaintyDouble(model)
+        transformer = stormpy.AddUncertainty[float](model)
         interval_model = transformer.transform(0.1)
         assert type(interval_model) is stormpy.SparseDtmc[stormpy.Interval]
         assert interval_model.nr_states == 13
@@ -165,7 +165,7 @@ class TestAddUncertainty:
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
         model = stormpy.build_sparse_exact_model(program)
         assert type(model) is stormpy.SparseDtmc[stormpy.Rational]
-        transformer = stormpy.AddUncertaintyExact(model)
+        transformer = stormpy.AddUncertainty[stormpy.Rational](model)
         interval_model = transformer.transform(stormpy.Rational("1/10"))
         assert type(interval_model) is stormpy.SparseDtmc[stormpy.RationalInterval]
         assert interval_model.nr_states == model.nr_states

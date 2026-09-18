@@ -7,6 +7,64 @@ from .storage import *
 from .logic import *
 from . import exceptions
 
+from ._template import (
+    TemplateClass as _TemplateClass,
+    TemplateParameter as _TemplateParameter,
+    deduce_default as _deduce_default,
+    deduce_from_object as _deduce_from_object,
+)
+
+# src/core/core.cpp
+ExplicitModelBuilderOptions = _TemplateClass("stormpy.ExplicitModelBuilderOptions", _core, parameters=("ValueType",), deduce=_deduce_default(float))
+ExplicitModelBuilder = _TemplateClass("stormpy.ExplicitModelBuilder", _core, parameters=("ValueType",))
+ActionMask = _TemplateClass("stormpy.ActionMask", _core, parameters=("ValueType",))
+StateValuationFunctionActionMask = _TemplateClass("stormpy.StateValuationFunctionActionMask", _core, parameters=("ValueType",), deduce=_deduce_default(float))
+
+# src/core/modelchecking.cpp
+CheckTask = _TemplateClass("stormpy.CheckTask", _core, parameters=("ValueType",), deduce=_deduce_default(float))
+ExplicitModelCheckerHint = _TemplateClass("stormpy.ExplicitModelCheckerHint", _core, parameters=("ValueType",), deduce=_deduce_default(float))
+
+# src/core/result.cpp
+ExplicitQualitativeCheckResult = _TemplateClass("stormpy.ExplicitQualitativeCheckResult", _core, parameters=("ValueType",))
+SymbolicQualitativeCheckResult = _TemplateClass("stormpy.SymbolicQualitativeCheckResult", _core, parameters=(_TemplateParameter("DdType", kind="value"),))
+QuantitativeCheckResult = _TemplateClass("stormpy.QuantitativeCheckResult", _core, parameters=("ValueType",))
+ExplicitQuantitativeCheckResult = _TemplateClass("stormpy.ExplicitQuantitativeCheckResult", _core, parameters=("ValueType",), deduce=_deduce_default(float))
+SymbolicQuantitativeCheckResult = _TemplateClass(
+    "stormpy.SymbolicQuantitativeCheckResult", _core, parameters=(_TemplateParameter("DdType", kind="value"), "ValueType")
+)
+HybridQuantitativeCheckResult = _TemplateClass(
+    "stormpy.HybridQuantitativeCheckResult", _core, parameters=(_TemplateParameter("DdType", kind="value"), "ValueType")
+)
+ParetoCurveCheckResult = _TemplateClass("stormpy.ParetoCurveCheckResult", _core, parameters=("ValueType",))
+ExplicitParetoCurveCheckResult = _TemplateClass("stormpy.ExplicitParetoCurveCheckResult", _core, parameters=("ValueType",))
+
+# src/core/simulator.cpp
+DiscreteTimeSparseModelSimulator = _TemplateClass(
+    "stormpy.DiscreteTimeSparseModelSimulator", _core, parameters=("ValueType",), deduce=_deduce_from_object(storage.parameters_of_model, keyword="model")
+)
+DiscreteTimePrismProgramSimulator = _TemplateClass("stormpy.DiscreteTimePrismProgramSimulator", _core, parameters=("ValueType",), deduce=_deduce_default(float))
+
+# src/core/multiobjective.cpp
+WeightedObjectiveMdpModelChecker = _TemplateClass("stormpy.WeightedObjectiveMdpModelChecker", _core, parameters=("ValueType",))
+
+# src/core/transformation.cpp
+SubsystemBuilderReturnType = _TemplateClass("stormpy.SubsystemBuilderReturnType", _core, parameters=("ValueType",))
+EndComponentEliminatorReturnType = _TemplateClass("stormpy.EndComponentEliminatorReturnType", _core, parameters=("ValueType",))
+AddUncertainty = _TemplateClass(
+    "stormpy.AddUncertainty", _core, parameters=("ValueType",), deduce=_deduce_from_object(storage.parameters_of_model, keyword="model")
+)
+
+# src/core/analysis.cpp
+ConstraintCollector = _TemplateClass(
+    "stormpy.ConstraintCollector", _core, parameters=("ValueType",), deduce=_deduce_from_object(storage.parameters_of_model, keyword="model")
+)
+
+# src/core/counterexample.cpp
+SMTCounterExampleGeneratorStats = _TemplateClass("stormpy.SMTCounterExampleGeneratorStats", _core, parameters=("ValueType",), deduce=_deduce_default(float))
+SMTCounterExampleGeneratorOptions = _TemplateClass("stormpy.SMTCounterExampleGeneratorOptions", _core, parameters=("ValueType",), deduce=_deduce_default(float))
+SMTCounterExampleGenerator = _TemplateClass("stormpy.SMTCounterExampleGenerator", _core, parameters=("ValueType",))
+SMTCounterExampleInput = _TemplateClass("stormpy.SMTCounterExampleInput", _core, parameters=("ValueType",))
+
 from enum import Enum
 
 try:
@@ -384,10 +442,7 @@ def perform_sparse_bisimulation(model, properties, bisimulation_type, graph_pres
     :return: Model after bisimulation.
     """
     formulae = [(prop.raw_formula if isinstance(prop, Property) else prop) for prop in properties]
-    if model.supports_parameters:
-        return _core._perform_parametric_bisimulation(model, formulae, bisimulation_type, graph_preserving, tolerance)
-    else:
-        return _core._perform_bisimulation(model, formulae, bisimulation_type, graph_preserving, tolerance)
+    return _core._perform_bisimulation(model, formulae, bisimulation_type, graph_preserving, tolerance)
 
 
 def perform_symbolic_bisimulation(model, properties, quotient_format=stormpy.QuotientFormat.DD, bisimulation_options=stormpy.BisimulationOptionsDd()):
@@ -401,10 +456,7 @@ def perform_symbolic_bisimulation(model, properties, quotient_format=stormpy.Quo
     """
     formulae = [(prop.raw_formula if isinstance(prop, Property) else prop) for prop in properties]
     bisimulation_type = BisimulationType.STRONG
-    if model.supports_parameters:
-        return _core._perform_symbolic_parametric_bisimulation(model, formulae, bisimulation_type, quotient_format, bisimulation_options)
-    else:
-        return _core._perform_symbolic_bisimulation(model, formulae, bisimulation_type, quotient_format, bisimulation_options)
+    return _core._perform_symbolic_bisimulation(model, formulae, bisimulation_type, quotient_format, bisimulation_options)
 
 
 def model_checking(model, property, only_initial_states=False, extract_scheduler=False, force_fully_observable=False, environment=Environment()):
@@ -445,56 +497,25 @@ def check_model_sparse(model, property, only_initial_states=False, extract_sched
     :return: Model checking result.
     :rtype: CheckResult
     """
-    if isinstance(property, Property):
-        formula = property.raw_formula
-    else:
-        formula = property
-
+    formula = property.raw_formula if isinstance(property, Property) else property
     if model.is_partially_observable:
-        if force_fully_observable:
-            # Note that casting a model to a fully observable model wont work with python/pybind, so we actually have other access points
-            if model.supports_parameters:
-                raise NotImplementedError("Model checking of partially observable models is not supported for parametric models.")
-            elif model.supports_uncertainty:
-                raise NotImplementedError("Model checking of partially observable models is not supported for interval models.")
-            elif model.is_exact:
-                task = _core.ExactCheckTask(formula, only_initial_states)
-                task.set_produce_schedulers(extract_scheduler)
-                if hint:
-                    task.set_hint(hint)
-                return _core._exact_model_checking_fully_observable(model, task, environment=environment)
-            else:
-                task = _core.CheckTask(formula, only_initial_states)
-                task.set_produce_schedulers(extract_scheduler)
-                if hint:
-                    task.set_hint(hint)
-                return _core._model_checking_fully_observable(model, task, environment=environment)
-        else:
+        if not force_fully_observable:
             raise RuntimeError("Model checking of partially observable models is handled via dedicated methods, unless the force fully-observable is set.")
-
-    if model.supports_parameters:
-        task = _core.ParametricCheckTask(formula, only_initial_states)
-        task.set_produce_schedulers(extract_scheduler)
-        if hint:
-            task.set_hint(hint)
-        return _core._parametric_model_checking_sparse_engine(model, task, environment=environment)
-    else:
-        if model.is_exact:
-            if formula.is_multi_objective_formula:
-                return _core._multi_objective_model_checking_exact(model, formula, environment=environment)
-            task = _core.ExactCheckTask(formula, only_initial_states)
-            task.set_produce_schedulers(extract_scheduler)
-            if hint:
-                task.set_hint(hint)
-            return _core._exact_model_checking_sparse_engine(model, task, environment=environment)
-        else:
-            if formula.is_multi_objective_formula:
-                return _core._multi_objective_model_checking_double(model, formula, environment=environment)
-            task = _core.CheckTask(formula, only_initial_states)
-            task.set_produce_schedulers(extract_scheduler)
-            if hint:
-                task.set_hint(hint)
-            return _core._model_checking_sparse_engine(model, task, environment=environment)
+        if model.supports_parameters:
+            raise NotImplementedError("Model checking of partially observable models is not supported for parametric models.")
+        if model.supports_uncertainty:
+            raise NotImplementedError("Model checking of partially observable models is not supported for interval models.")
+    elif model.supports_uncertainty:
+        raise NotImplementedError("Model checking of interval models is handled via dedicated methods.")
+    elif formula.is_multi_objective_formula and not model.supports_parameters:
+        return _core._multi_objective_model_checking(model, formula, environment=environment)
+    task = CheckTask[storage.parameters_of_model(model)](formula, only_initial_states)
+    task.set_produce_schedulers(extract_scheduler)
+    if hint:
+        task.set_hint(hint)
+    if model.is_partially_observable:
+        return _core._model_checking_fully_observable(model, task, environment=environment)
+    return _core._model_checking_sparse_engine(model, task, environment=environment)
 
 
 def check_model_dd(model, property, only_initial_states=False, environment=Environment()):
@@ -506,17 +527,12 @@ def check_model_dd(model, property, only_initial_states=False, environment=Envir
     :return: Model checking result.
     :rtype: CheckResult
     """
-    if isinstance(property, Property):
-        formula = property.raw_formula
-    else:
-        formula = property
-
-    if model.supports_parameters:
-        task = _core.ParametricCheckTask(formula, only_initial_states)
-        return _core._parametric_model_checking_dd_engine(model, task, environment=environment)
-    else:
-        task = _core.CheckTask(formula, only_initial_states)
-        return _core._model_checking_dd_engine(model, task, environment=environment)
+    if model.is_exact and not model.supports_parameters:
+        raise NotImplementedError("Model checking of exact symbolic models is not supported by the dd engine.")
+    formula = property.raw_formula if isinstance(property, Property) else property
+    value_type = RationalFunction if model.supports_parameters else Rational if model.is_exact else float
+    task = CheckTask[value_type](formula, only_initial_states)
+    return _core._model_checking_dd_engine(model, task, environment=environment)
 
 
 def check_model_hybrid(model, property, only_initial_states=False, environment=Environment()):
@@ -528,17 +544,12 @@ def check_model_hybrid(model, property, only_initial_states=False, environment=E
     :return: Model checking result.
     :rtype: CheckResult
     """
-    if isinstance(property, Property):
-        formula = property.raw_formula
-    else:
-        formula = property
-
-    if model.supports_parameters:
-        task = _core.ParametricCheckTask(formula, only_initial_states)
-        return _core._parametric_model_checking_hybrid_engine(model, task, environment=environment)
-    else:
-        task = _core.CheckTask(formula, only_initial_states)
-        return _core._model_checking_hybrid_engine(model, task, environment=environment)
+    if model.is_exact and not model.supports_parameters:
+        raise NotImplementedError("Model checking of exact symbolic models is not supported by the hybrid engine.")
+    formula = property.raw_formula if isinstance(property, Property) else property
+    value_type = RationalFunction if model.supports_parameters else Rational if model.is_exact else float
+    task = CheckTask[value_type](formula, only_initial_states)
+    return _core._model_checking_hybrid_engine(model, task, environment=environment)
 
 
 def set_state_valuations(model, new_state_valuations):
@@ -566,10 +577,7 @@ def transform_to_sparse_model(model):
     :param model: Symbolic model.
     :return: Sparse model.
     """
-    if model.supports_parameters:
-        return _core._transform_to_sparse_parametric_model(model)
-    else:
-        return _core._transform_to_sparse_model(model)
+    return _core._transform_to_sparse_model(model)
 
 
 def transform_to_discrete_time_model(model, properties):
@@ -580,10 +588,7 @@ def transform_to_discrete_time_model(model, properties):
     :return: Tuple (Discrete-time model, converted properties).
     """
     formulae = [(prop.raw_formula if isinstance(prop, Property) else prop) for prop in properties]
-    if model.supports_parameters:
-        return _core._transform_to_discrete_time_parametric_model(model, formulae)
-    else:
-        return _core._transform_to_discrete_time_model(model, formulae)
+    return _core._transform_to_discrete_time_model(model, formulae)
 
 
 def eliminate_non_markovian_chains(ma, properties, label_behavior):
@@ -595,10 +600,7 @@ def eliminate_non_markovian_chains(ma, properties, label_behavior):
     :return: Tuple (converted MA, converted properties).
     """
     formulae = [(prop.raw_formula if isinstance(prop, Property) else prop) for prop in properties]
-    if ma.supports_parameters:
-        return _core._eliminate_non_markovian_chains_parametric(ma, formulae, label_behavior)
-    else:
-        return _core._eliminate_non_markovian_chains(ma, formulae, label_behavior)
+    return _core._eliminate_non_markovian_chains(ma, formulae, label_behavior)
 
 
 def prob01min_states(model, eventually_formula):
@@ -630,28 +632,19 @@ def compute_prob01_states(model, phi_states, psi_states):
     if model.model_type != ModelType.DTMC:
         raise stormpy.exceptions.StormError("Prob 01 is only defined for DTMCs -- model must be a DTMC")
 
-    if model.supports_parameters:
-        return _core._compute_prob01states_rationalfunc(model, phi_states, psi_states)
-    else:
-        return _core._compute_prob01states_double(model, phi_states, psi_states)
+    return _core._compute_prob01states(model, phi_states, psi_states)
 
 
 def compute_prob01min_states(model, phi_states, psi_states):
     if model.model_type == ModelType.DTMC:
         return compute_prob01_states(model, phi_states, psi_states)
-    if model.supports_parameters:
-        return _core._compute_prob01states_min_rationalfunc(model, phi_states, psi_states)
-    else:
-        return _core._compute_prob01states_min_double(model, phi_states, psi_states)
+    return _core._compute_prob01states_min(model, phi_states, psi_states)
 
 
 def compute_prob01max_states(model, phi_states, psi_states):
     if model.model_type == ModelType.DTMC:
         return compute_prob01_states(model, phi_states, psi_states)
-    if model.supports_parameters:
-        return _core._compute_prob01states_max_rationalfunc(model, phi_states, psi_states)
-    else:
-        return _core._compute_prob01states_max_double(model, phi_states, psi_states)
+    return _core._compute_prob01states_max(model, phi_states, psi_states)
 
 
 def topological_sort(model, forward=True, initial=[]):
@@ -662,13 +655,14 @@ def topological_sort(model, forward=True, initial=[]):
     :param initial: a list of states
     :return: A topological sort of the states
     """
+    if not model.is_sparse_model:
+        raise NotImplementedError("Topological sorting is only supported for sparse models.")
+    if model.supports_uncertainty:
+        raise NotImplementedError("Topological sorting of interval models is not supported.")
+    if model.is_exact and not model.supports_parameters:
+        raise NotImplementedError("Topological sorting of exact models is not supported.")
     matrix = model.transition_matrix if forward else model.backward_transition_matrix
-    if isinstance(model, storage.SparseModel[stormpy.RationalFunction]):
-        return storage._storage._topological_sort_rf(matrix, initial)
-    elif isinstance(model, storage.SparseModel[float]):
-        return storage._storage._topological_sort_double(matrix, initial)
-    else:
-        raise stormpy.exceptions.StormError("Unknown kind of model.")
+    return storage._storage._topological_sort(matrix, initial)
 
 
 def get_reachable_states(model, initial_states, constraint_states, target_states, maximal_steps=None, choice_filter=None):
@@ -683,11 +677,7 @@ def get_reachable_states(model, initial_states, constraint_states, target_states
     :param choice_filter:
     :return:
     """
-    if model.supports_parameters:
-        return _core._get_reachable_states_rf(model, initial_states, constraint_states, target_states, maximal_steps, choice_filter)
-    if model.is_exact:
-        return _core._get_reachable_states_exact(model, initial_states, constraint_states, target_states, maximal_steps, choice_filter)
-    return _core._get_reachable_states_double(model, initial_states, constraint_states, target_states, maximal_steps, choice_filter)
+    return _core._get_reachable_states(model, initial_states, constraint_states, target_states, maximal_steps, choice_filter)
 
 
 def compute_expected_number_of_visits(environment, model):
@@ -700,9 +690,7 @@ def compute_expected_number_of_visits(environment, model):
     """
     if model.supports_parameters:
         raise NotImplementedError("Expected number of visits is not implemented for parametric models")
-    if model.is_exact:
-        return _core._compute_expected_number_of_visits_exact(environment, model)
-    return _core._compute_expected_number_of_visits_double(environment, model)
+    return _core._compute_expected_number_of_visits(environment, model)
 
 
 def compute_steady_state_distribution(environment, model):
@@ -715,9 +703,7 @@ def compute_steady_state_distribution(environment, model):
     """
     if model.supports_parameters:
         raise NotImplementedError("Steady-state distribution is not implemented for parametric models")
-    if model.is_exact:
-        return _core._compute_steady_state_distribution_exact(environment, model)
-    return _core._compute_steady_state_distribution_double(environment, model)
+    return _core._compute_steady_state_distribution(environment, model)
 
 
 def construct_submodel(model, states, actions, keep_unreachable_states=True, options=SubsystemBuilderOptions()):
@@ -730,15 +716,7 @@ def construct_submodel(model, states, actions, keep_unreachable_states=True, opt
     :param options: An options object of type SubsystemBuilderOptions
     :return: A model with fewer states/actions
     """
-    if model.supports_parameters:
-        return _core._construct_subsystem_RatFunc(model, states, actions, keep_unreachable_states, options)
-    if model.supports_uncertainty:
-        if model.is_exact:
-            return _core._construct_subsystem_RationalInterval(model, states, actions, keep_unreachable_states, options)
-        return _core._construct_subsystem_Interval(model, states, actions, keep_unreachable_states, options)
-    if model.is_exact:
-        return _core._construct_subsystem_Exact(model, states, actions, keep_unreachable_states, options)
-    return _core._construct_subsystem_Double(model, states, actions, keep_unreachable_states, options)
+    return _core._construct_subsystem(model, states, actions, keep_unreachable_states, options)
 
 
 def make_weighted_objective_mdp_model_checker(environment, model, formula, compute_scheduler):
@@ -752,9 +730,7 @@ def make_weighted_objective_mdp_model_checker(environment, model, formula, compu
     """
     if model.supports_parameters or model.supports_uncertainty:
         raise ValueError("Parameters and intervals are not supported.")
-    if model.is_exact:
-        return _core._make_weighted_objective_mdp_model_checker_Exact(environment, model, formula, compute_scheduler)
-    return _core._make_weighted_objective_mdp_model_checker_Double(environment, model, formula, compute_scheduler)
+    return _core._make_weighted_objective_mdp_model_checker(environment, model, formula, compute_scheduler)
 
 
 def eliminate_ECs(matrix, subsystem, possible_ecs, add_sink_row_states, add_self_loop_at_sink_states=False):
@@ -775,17 +751,7 @@ def eliminate_ECs(matrix, subsystem, possible_ecs, add_sink_row_states, add_self
     assert matrix.nr_columns == subsystem.size(), "subsystem vector should have an entry for every state."
     assert matrix.nr_rows == possible_ecs.size(), "possible_ecs vector should have an entry for every row."
     assert matrix.nr_columns == add_sink_row_states.size(), "add_sink_row_states vector should have an entry for every state."
-
-    if isinstance(matrix, storage.SparseMatrix[stormpy.RationalInterval]):
-        return _core._eliminate_end_components_RationalInterval(matrix, subsystem, possible_ecs, add_sink_row_states, add_self_loop_at_sink_states)
-    elif isinstance(matrix, storage.SparseMatrix[stormpy.Interval]):
-        return _core._eliminate_end_components_Interval(matrix, subsystem, possible_ecs, add_sink_row_states, add_self_loop_at_sink_states)
-    elif isinstance(matrix, storage.SparseMatrix[stormpy.Rational]):
-        return _core._eliminate_end_components_Exact(matrix, subsystem, possible_ecs, add_sink_row_states, add_self_loop_at_sink_states)
-    elif isinstance(matrix, storage.SparseMatrix[float]):
-        return _core._eliminate_end_components_Double(matrix, subsystem, possible_ecs, add_sink_row_states, add_self_loop_at_sink_states)
-    else:
-        raise TypeError(f"eliminate_ECs: unsupported matrix type {type(matrix)}")
+    return _core._eliminate_end_components(matrix, subsystem, possible_ecs, add_sink_row_states, add_self_loop_at_sink_states)
 
 
 def parse_properties(properties, context=None, filters=None):
@@ -819,14 +785,6 @@ def export_to_drn(model, file, options=DirectEncodingExporterOptions()):
     :param options: DirectEncodingExporterOptions
     :return:
     """
-    if model.supports_parameters:
-        return _core._export_parametric_to_drn(model, file, options)
-    if model.supports_uncertainty and model.is_exact:
-        return _core._export_exact_to_drn_interval(model, file, options)
-    if model.supports_uncertainty:
-        return _core._export_to_drn_interval(model, file, options)
-    if model.is_exact:
-        return _core._export_exact_to_drn(model, file, options)
     return _core._export_to_drn(model, file, options)
 
 

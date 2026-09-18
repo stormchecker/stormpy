@@ -37,7 +37,7 @@ def example_building_models_04():
         cond3 = json.loads(str(state_valuation.to_json()))["x1"] < 40
         return cond1 or (cond2 and cond3)
 
-    constructor = stormpy.make_sparse_model_builder(prism_program, options, stormpy.StateValuationFunctionActionMaskDouble(permissive_policy))
+    constructor = stormpy.make_sparse_model_builder(prism_program, options, stormpy.StateValuationFunctionActionMask[float](permissive_policy))
     model = constructor.build()
     print(model)
 

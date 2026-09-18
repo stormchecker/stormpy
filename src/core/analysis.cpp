@@ -2,10 +2,13 @@
 
 #include <storm/analysis/GraphConditions.h>
 
+#include "src/binding_type_index.h"
+
 // Define python bindings
 void define_graph_constraints(py::module& m) {
     // ConstraintCollector
-    py::classh<storm::analysis::ConstraintCollector<storm::RationalFunction>>(m, "ConstraintCollector", "Collector for constraints on parametric Markov chains")
+    stormpy::bindings::bindTemplateClass<storm::analysis::ConstraintCollector<storm::RationalFunction>>(
+        m, "ConstraintCollector", stormpy::bindings::typeIndex<storm::RationalFunction>(), "Collector for constraints on parametric Markov chains")
         .def(py::init<storm::models::sparse::Model<storm::RationalFunction> const&>(), py::arg("model"))
         .def_property_readonly("wellformed_constraints", &storm::analysis::ConstraintCollector<storm::RationalFunction>::getWellformedConstraints,
                                "Get the constraints ensuring a wellformed model")

@@ -15,6 +15,8 @@
 #include <storm/utility/SignalHandler.h>
 #include <storm/utility/initialize.h>
 
+#include "src/binding_type_index.h"
+
 void define_core(py::module& m) {
     // Init
     m.def(
@@ -106,27 +108,21 @@ std::shared_ptr<storm::models::symbolic::Model<DdType, ValueType>> buildSymbolic
 template<typename ValueType>
 void define_build_sparse_model_defs(py::module& m) {
     std::string type;
-    std::string classType;
     std::string desc;
     if constexpr (std::is_same_v<ValueType, double>) {
         type = "";
-        classType = "";
         desc = "";
     } else if constexpr (std::is_same_v<ValueType, storm::RationalNumber>) {
         type = "exact_";
-        classType = "Exact";
         desc = "";
     } else if constexpr (std::is_same_v<ValueType, storm::RationalFunction>) {
         type = "parametric_";
-        classType = "Parametric";
         desc = "parametric ";
     } else if constexpr (std::is_same_v<ValueType, storm::Interval>) {
         type = "interval_";
-        classType = "Interval";
         desc = "interval ";
     } else if constexpr (std::is_same_v<ValueType, storm::RationalInterval>) {
         type = "exact_interval_";
-        classType = "ExactInterval";
         desc = "exact interval ";
     }
 
@@ -144,8 +140,8 @@ void define_build_sparse_model_defs(py::module& m) {
           ("Build the " + desc + "model from DRN" + (std::is_same_v<ValueType, storm::RationalFunction> ? " (parametric)" : "")).c_str(), py::arg("file"),
           py::arg("options") = storm::parser::DirectEncodingParserOptions());
 
-    py::classh<typename storm::builder::ExplicitModelBuilder<ValueType>::Options>(m, ("Explicit" + classType + "ModelBuilderOptions").c_str(),
-                                                                                  "Options for the explicit model builder")
+    stormpy::bindings::bindTemplateClass<typename storm::builder::ExplicitModelBuilder<ValueType>::Options>(
+        m, "ExplicitModelBuilderOptions", stormpy::bindings::typeIndex<ValueType>(), "Options for the explicit model builder")
         .def(py::init<>(), "Create")
         .def_readwrite("exploration_order", &storm::builder::ExplicitModelBuilder<ValueType>::Options::explorationOrder,
                        "The order in which to explore the model")
@@ -164,7 +160,8 @@ void define_build_sparse_model_defs(py::module& m) {
         m.def("make_sparse_model_builder", &storm::api::makeExplicitModelBuilder<double>, "Construct a builder instance", py::arg("model_description"),
               py::arg("options"), py::arg("action_mask") = nullptr,
               py::arg("exploration_options") = typename storm::builder::ExplicitModelBuilder<ValueType>::Options());
-        py::classh<storm::builder::ExplicitModelBuilder<double>>(m, "ExplicitModelBuilder", "Model builder for sparse models")
+        stormpy::bindings::bindTemplateClass<storm::builder::ExplicitModelBuilder<double>>(m, "ExplicitModelBuilder", stormpy::bindings::typeIndex<double>(),
+                                                                                           "Model builder for sparse models")
             .def("build", &storm::builder::ExplicitModelBuilder<double>::build, "Build the model", py::call_guard<py::gil_scoped_release>())
             .def("export_lookup", &storm::builder::ExplicitModelBuilder<double>::exportExplicitStateLookup, "Export a lookup model");
     } else if constexpr (std::is_same_v<ValueType, storm::RationalFunction>) {
@@ -174,7 +171,8 @@ void define_build_sparse_model_defs(py::module& m) {
         m.def("make_sparse_model_builder_parametric", &storm::api::makeExplicitModelBuilder<storm::RationalFunction>, "Construct a builder instance",
               py::arg("model_description"), py::arg("options"), py::arg("action_mask") = nullptr,
               py::arg("exploration_options") = typename storm::builder::ExplicitModelBuilder<ValueType>::Options());
-        py::classh<storm::builder::ExplicitModelBuilder<storm::RationalFunction>>(m, "ExplicitParametricModelBuilder", "Model builder for sparse models")
+        stormpy::bindings::bindTemplateClass<storm::builder::ExplicitModelBuilder<storm::RationalFunction>>(
+            m, "ExplicitModelBuilder", stormpy::bindings::typeIndex<storm::RationalFunction>(), "Model builder for sparse models")
             .def("build", &storm::builder::ExplicitModelBuilder<storm::RationalFunction>::build, "Build the model", py::call_guard<py::gil_scoped_release>())
             .def("export_lookup", &storm::builder::ExplicitModelBuilder<storm::RationalFunction>::exportExplicitStateLookup, "Export a lookup model");
     } else if constexpr (std::is_same_v<ValueType, storm::RationalNumber>) {
@@ -242,9 +240,11 @@ void define_build(py::module& m) {
         .def("set_build_all_reward_models", &storm::builder::BuilderOptions::setBuildAllRewardModels, "Build with all reward models",
              py::arg("new_value") = true);
 
-    py::classh<storm::generator::ActionMask<double>> actionmask(m, "ActionMaskDouble");
-    py::classh<storm::generator::StateValuationFunctionMask<double>> actfuncmask(m, "StateValuationFunctionActionMaskDouble", actionmask);
-    actfuncmask.def(py::init<std::function<bool(storm::expressions::SimpleValuation const&, uint64_t)>>(), py::arg("f"));
+    auto actionmask =
+        stormpy::bindings::bindTemplateClass<storm::generator::ActionMask<double>>(m, "ActionMask", stormpy::bindings::typeIndex<double>(), "Mask for actions");
+    stormpy::bindings::bindTemplateClass<storm::generator::StateValuationFunctionMask<double>>(
+        m, "StateValuationFunctionActionMask", stormpy::bindings::typeIndex<double>(), "Action mask based on state valuations", actionmask)
+        .def(py::init<std::function<bool(storm::expressions::SimpleValuation const&, uint64_t)>>(), py::arg("f"));
 }
 
 void define_optimality_type(py::module& m) {
@@ -270,26 +270,7 @@ void exportDRN(std::shared_ptr<storm::models::sparse::Model<ValueType>> model, s
 
 template<typename ValueType>
 void define_export_drn(py::module& m) {
-    std::string prefix;
-    std::string suffix;
-    if constexpr (std::is_same_v<ValueType, double>) {
-        prefix = "";
-        suffix = "";
-    } else if constexpr (std::is_same_v<ValueType, storm::RationalNumber>) {
-        prefix = "_exact";
-        suffix = "";
-    } else if constexpr (std::is_same_v<ValueType, storm::RationalFunction>) {
-        prefix = "_parametric";
-        suffix = "";
-    } else if constexpr (std::is_same_v<ValueType, storm::Interval>) {
-        prefix = "";
-        suffix = "_interval";
-    } else if constexpr (std::is_same_v<ValueType, storm::RationalInterval>) {
-        prefix = "_exact";
-        suffix = "_interval";
-    }
-
-    m.def(("_export" + prefix + "_to_drn" + suffix).c_str(), &exportDRN<ValueType>,
+    m.def("_export_to_drn", &exportDRN<ValueType>,
           ("Export " + (std::is_same_v<ValueType, storm::RationalFunction> ? std::string("parametric ") : std::string()) + "model in DRN format").c_str(),
           py::arg("model"), py::arg("file"), py::arg("options") = storm::io::DirectEncodingExporterOptions());
 }

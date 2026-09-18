@@ -55,45 +55,50 @@ SparseModelComponents = TemplateClass(
     deduce=_deduce_from_object(SparseMatrix.parameters_of, keyword="transition_matrix", default=(float,)),
 )
 
+
 # src/storage/model.cpp
-_model_parameters = lambda source: SparseMatrix.parameters_of(source.transition_matrix)
+def parameters_of_model(model):
+    """Return the value-type parameter of a sparse model or model components."""
+
+    return SparseMatrix.parameters_of(model.transition_matrix)
+
 
 SparseModel = TemplateClass("stormpy.storage.SparseModel", _storage, parameters=("ValueType",), deduce=_deduce_default(float))
 SparseDtmc = TemplateClass(
     "stormpy.storage.SparseDtmc",
     _storage,
     parameters=("ValueType",),
-    deduce=_deduce_from_object(_model_parameters, keyword=("components", "other_model")),
+    deduce=_deduce_from_object(parameters_of_model, keyword=("components", "other_model")),
 )
 SparseMdp = TemplateClass(
     "stormpy.storage.SparseMdp",
     _storage,
     parameters=("ValueType",),
-    deduce=_deduce_from_object(_model_parameters, keyword=("components", "other_model")),
+    deduce=_deduce_from_object(parameters_of_model, keyword=("components", "other_model")),
 )
 SparsePomdp = TemplateClass(
     "stormpy.storage.SparsePomdp",
     _storage,
     parameters=("ValueType",),
-    deduce=_deduce_from_object(_model_parameters, keyword=("components", "other_model")),
+    deduce=_deduce_from_object(parameters_of_model, keyword=("components", "other_model")),
 )
 SparseCtmc = TemplateClass(
     "stormpy.storage.SparseCtmc",
     _storage,
     parameters=("ValueType",),
-    deduce=_deduce_from_object(_model_parameters, keyword=("components", "other_model")),
+    deduce=_deduce_from_object(parameters_of_model, keyword=("components", "other_model")),
 )
 SparseMA = TemplateClass(
     "stormpy.storage.SparseMA",
     _storage,
     parameters=("ValueType",),
-    deduce=_deduce_from_object(_model_parameters, keyword=("components", "other_model")),
+    deduce=_deduce_from_object(parameters_of_model, keyword=("components", "other_model")),
 )
 SparseSmg = TemplateClass(
     "stormpy.storage.SparseSmg",
     _storage,
     parameters=("ValueType",),
-    deduce=_deduce_from_object(_model_parameters, keyword=("components", "other_model")),
+    deduce=_deduce_from_object(parameters_of_model, keyword=("components", "other_model")),
 )
 SparseRewardModel = TemplateClass("stormpy.storage.SparseRewardModel", _storage, parameters=("ValueType",), deduce=_deduce_default(float))
 SymbolicModel = TemplateClass("stormpy.storage.SymbolicModel", _storage, parameters=(_TemplateParameter("DdType", kind="value"), "ValueType"))
@@ -108,7 +113,7 @@ MaximalEndComponentDecomposition = TemplateClass(
     "stormpy.storage.MaximalEndComponentDecomposition",
     _storage,
     parameters=("ValueType",),
-    deduce=_deduce_from_object(_model_parameters, keyword="model"),
+    deduce=_deduce_from_object(parameters_of_model, keyword="model"),
 )
 
 # src/storage/memorystructure.cpp
@@ -116,7 +121,7 @@ MemoryStructureBuilder = TemplateClass(
     "stormpy.storage.MemoryStructureBuilder",
     _storage,
     parameters=("ValueType",),
-    deduce=_deduce_from_object(_model_parameters, keyword="model", position=1),
+    deduce=_deduce_from_object(parameters_of_model, keyword="model", position=1),
 )
 MemoryStructureProduct = TemplateClass("stormpy.storage.MemoryStructureProduct", _storage, parameters=("ValueType",), deduce=_deduce_default(float))
 

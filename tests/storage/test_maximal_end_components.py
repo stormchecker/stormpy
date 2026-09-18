@@ -70,7 +70,7 @@ class TestECElimination:
         program = stormpy.parse_prism_program(get_example_path("mdp", "two_dice.nm"))
         formulas = stormpy.parse_properties_for_prism_program('P=? [ F "two" ]', program)
         model = stormpy.build_model(program, formulas)
-        transformer = stormpy.AddUncertaintyDouble(model)
+        transformer = stormpy.AddUncertainty[float](model)
         interval_model = transformer.transform(0.01)
         assert type(interval_model) is stormpy.SparseMdp[stormpy.Interval]
         subsystem = stormpy.BitVector(interval_model.nr_states, True)
@@ -85,7 +85,7 @@ class TestECElimination:
         program = stormpy.parse_prism_program(get_example_path("mdp", "two_dice.nm"))
         formulas = stormpy.parse_properties_for_prism_program('P=? [ F "two" ]', program)
         model = stormpy.build_sparse_exact_model(program, formulas)
-        transformer = stormpy.AddUncertaintyExact(model)
+        transformer = stormpy.AddUncertainty[stormpy.Rational](model)
         exact_interval_model = transformer.transform(stormpy.Rational("1/100"))
         assert type(exact_interval_model) is stormpy.SparseMdp[stormpy.RationalInterval]
         subsystem = stormpy.BitVector(exact_interval_model.nr_states, True)

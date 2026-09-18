@@ -105,10 +105,7 @@ class SparseSimulator(Simulator):
     def __init__(self, model, seed=None):
         super().__init__(seed)
         self._model = model
-        if self._model.is_exact:
-            self._engine = stormpy._core._DiscreteTimeSparseModelSimulatorExact(model)
-        else:
-            self._engine = stormpy._core._DiscreteTimeSparseModelSimulatorDouble(model)
+        self._engine = stormpy.DiscreteTimeSparseModelSimulator(model)
         if seed is not None:
             self._engine.set_seed(seed)
         self._state_valuations = None
@@ -234,7 +231,7 @@ class PrismSimulator(Simulator):
         super().__init__(seed)
         self._program = program
         # TODO support exact arithmetic here
-        self._engine = stormpy._core._DiscreteTimePrismProgramSimulatorDouble(program, options)
+        self._engine = stormpy.DiscreteTimePrismProgramSimulator[float](program, options)
         if seed is not None:
             self._engine.set_seed(seed)
         self.set_full_observability(self._program.model_type != stormpy.storage.PrismModelType.POMDP)

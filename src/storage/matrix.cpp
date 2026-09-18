@@ -22,11 +22,11 @@ using row_index = unsigned int;
 
 void define_sparse_matrix_nt(py::module& m) {
     m.def(
-        "_topological_sort_double",
+        "_topological_sort",
         [](SparseMatrix<double>& matrix, std::vector<uint64_t> initial) { return storm::utility::graph::getTopologicalSort(matrix, initial); }, "matrix"_a,
         "initial"_a, "get topological sort w.r.t. a transition matrix");
     m.def(
-        "_topological_sort_rf",
+        "_topological_sort",
         [](SparseMatrix<storm::RationalFunction>& matrix, std::vector<uint64_t> initial) { return storm::utility::graph::getTopologicalSort(matrix, initial); },
         "matrix"_a, "initial"_a, "get topological sort w.r.t. a transition matrix");
 }

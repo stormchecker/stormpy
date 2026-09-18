@@ -3,6 +3,8 @@
 #include <storm-counterexamples/api/counterexamples.h>
 #include <storm/environment/Environment.h>
 
+#include "src/binding_type_index.h"
+
 using namespace storm::counterexamples;
 
 // Define python bindings
@@ -37,7 +39,8 @@ void define_counterexamples(py::module& m) {
 
     using CexGeneratorStats = SMTMinimalLabelSetGenerator<double>::GeneratorStats;
 
-    py::classh<CexGeneratorStats>(m, "SMTCounterExampleGeneratorStats", "Stats for highlevel counterexample generation")
+    stormpy::bindings::bindTemplateClass<CexGeneratorStats>(m, "SMTCounterExampleGeneratorStats", stormpy::bindings::typeIndex<double>(),
+                                                            "Stats for highlevel counterexample generation")
         .def(py::init<>())
         .def_readonly("analysis_time", &CexGeneratorStats::analysisTime)
         .def_readonly("setup_time", &CexGeneratorStats::setupTime)
@@ -47,7 +50,8 @@ void define_counterexamples(py::module& m) {
         .def_readonly("iterations", &CexGeneratorStats::iterations);
 
     using CexGeneratorOptions = SMTMinimalLabelSetGenerator<double>::Options;
-    py::classh<CexGeneratorOptions>(m, "SMTCounterExampleGeneratorOptions", "Options for highlevel counterexample generation")
+    stormpy::bindings::bindTemplateClass<CexGeneratorOptions>(m, "SMTCounterExampleGeneratorOptions", stormpy::bindings::typeIndex<double>(),
+                                                              "Options for highlevel counterexample generation")
         .def(py::init<>())
         .def_readwrite("check_threshold_feasible", &CexGeneratorOptions::checkThresholdFeasible)
         .def_readwrite("encode_reachability", &CexGeneratorOptions::encodeReachability)
@@ -57,7 +61,8 @@ void define_counterexamples(py::module& m) {
         .def_readwrite("maximum_counterexamples", &CexGeneratorOptions::maximumCounterexamples)
         .def_readwrite("continue_after_first_counterexample", &CexGeneratorOptions::continueAfterFirstCounterexampleUntil)
         .def_readwrite("maximum_iterations_after_counterexample", &CexGeneratorOptions::maximumExtraIterations);
-    py::classh<SMTMinimalLabelSetGenerator<double>>(m, "SMTCounterExampleGenerator", "Highlevel Counterexample Generator with SMT as backend")
+    stormpy::bindings::bindTemplateClass<SMTMinimalLabelSetGenerator<double>>(m, "SMTCounterExampleGenerator", stormpy::bindings::typeIndex<double>(),
+                                                                              "Highlevel Counterexample Generator with SMT as backend")
         .def_static("precompute", &SMTMinimalLabelSetGenerator<double>::precompute, "Precompute input for counterexample generation", py::arg("env"),
                     py::arg("symbolic_model"), py::arg("model"), py::arg("formula"))
         .def_static("build", &SMTMinimalLabelSetGenerator<double>::computeCounterexampleLabelSet, "Compute counterexample", py::arg("env"), py::arg("stats"),
@@ -66,7 +71,8 @@ void define_counterexamples(py::module& m) {
         ;
 
     using CexInput = SMTMinimalLabelSetGenerator<double>::CexInput;
-    py::classh<CexInput>(m, "SMTCounterExampleInput", "Precomputed input for counterexample generation")
+    stormpy::bindings::bindTemplateClass<CexInput>(m, "SMTCounterExampleInput", stormpy::bindings::typeIndex<double>(),
+                                                   "Precomputed input for counterexample generation")
         .def("add_reward_and_threshold", &CexInput::addRewardThresholdCombination, "add another reward structure and threshold", py::arg("reward_name"),
              py::arg("threshold"));
 }

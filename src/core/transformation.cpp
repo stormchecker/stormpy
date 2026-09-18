@@ -7,6 +7,8 @@
 #include <storm/transformer/EndComponentEliminator.h>
 #include <storm/transformer/SubsystemBuilder.h>
 
+#include "src/binding_type_index.h"
+
 // Thin wrappers.
 template<typename VT>
 storm::transformer::SubsystemBuilderReturnType<VT> constructSubsystem(storm::models::sparse::Model<VT> const& originalModel,
@@ -32,23 +34,14 @@ typename storm::transformer::EndComponentEliminator<ValueType>::EndComponentElim
 
 template<typename ValueType>
 void define_transformation_mdef(py::module& m) {
-    std::string type, desc;
-    if constexpr (std::is_same_v<ValueType, double>) {
-        type = "";
-        desc = "";
-    } else if constexpr (std::is_same_v<ValueType, storm::RationalFunction>) {
-        type = "_parametric";
-        desc = "parametric ";
-    }
-
-    m.def(("_transform_to_sparse" + type + "_model").c_str(), &storm::api::transformSymbolicToSparseModel<storm::dd::DdType::Sylvan, ValueType>,
-          ("Transform symbolic " + desc + "model into sparse " + desc + "model").c_str(), py::arg("model"),
+    m.def("_transform_to_sparse_model", &storm::api::transformSymbolicToSparseModel<storm::dd::DdType::Sylvan, ValueType>,
+          "Transform a symbolic model into a sparse model", py::arg("model"),
           py::arg("formulae") = std::vector<std::shared_ptr<storm::logic::Formula const>>());
-    m.def(("_transform_to_discrete_time" + type + "_model").c_str(), &transformContinuousToDiscreteTimeSparseModel<ValueType>,
-          ("Transform " + desc + "continuous time model to " + desc + "discrete time model").c_str(), py::arg("model"),
+    m.def("_transform_to_discrete_time_model", &transformContinuousToDiscreteTimeSparseModel<ValueType>,
+          "Transform a continuous-time model into a discrete-time model", py::arg("model"),
           py::arg("formulae") = std::vector<std::shared_ptr<storm::logic::Formula const>>());
-    m.def(("_eliminate_non_markovian_chains" + type).c_str(), &storm::api::eliminateNonMarkovianChains<ValueType>,
-          "Eliminate chains of non-Markovian states in Markov automaton.", py::arg("ma"), py::arg("formulae"), py::arg("label_behavior"));
+    m.def("_eliminate_non_markovian_chains", &storm::api::eliminateNonMarkovianChains<ValueType>,
+          "Eliminate chains of non-Markovian states in a Markov automaton", py::arg("ma"), py::arg("formulae"), py::arg("label_behavior"));
 }
 
 void define_transformation(py::module& m) {
@@ -73,9 +66,10 @@ void define_transformation(py::module& m) {
 }
 
 template<typename ValueType>
-void define_transformation_typed(py::module& m, std::string const& vtSuffix) {
-    py::classh<storm::transformer::SubsystemBuilderReturnType<ValueType>>(m, ("SubsystemBuilderReturnType" + vtSuffix).c_str(),
-                                                                          "Result of the construction of a subsystem")
+void define_transformation_typed(py::module& m) {
+    auto const index = stormpy::bindings::typeIndex<ValueType>();
+    stormpy::bindings::bindTemplateClass<storm::transformer::SubsystemBuilderReturnType<ValueType>>(m, "SubsystemBuilderReturnType", index,
+                                                                                                    "Result of the construction of a subsystem")
         .def_readonly("model", &storm::transformer::SubsystemBuilderReturnType<ValueType>::model, "the submodel")
         .def_readonly("new_to_old_state_mapping", &storm::transformer::SubsystemBuilderReturnType<ValueType>::newToOldStateIndexMapping,
                       "for each state in result, the state index in the original model")
@@ -85,10 +79,10 @@ void define_transformation_typed(py::module& m, std::string const& vtSuffix) {
                       "Actions of the subsystem available in the original system")
         .def_readonly("deadlock_label", &storm::transformer::SubsystemBuilderReturnType<ValueType>::deadlockLabel,
                       "If set, deadlock states have been introduced and have been assigned this label");
-    m.def(("_construct_subsystem_" + vtSuffix).c_str(), &constructSubsystem<ValueType>, "build a subsystem of a sparse model");
+    m.def("_construct_subsystem", &constructSubsystem<ValueType>, "build a subsystem of a sparse model");
 
-    py::classh<typename storm::transformer::EndComponentEliminator<ValueType>::EndComponentEliminatorReturnType>(
-        m, ("EndComponentEliminatorReturnType" + vtSuffix).c_str(), "Container for result of endcomponent elimination")
+    stormpy::bindings::bindTemplateClass<typename storm::transformer::EndComponentEliminator<ValueType>::EndComponentEliminatorReturnType>(
+        m, "EndComponentEliminatorReturnType", index, "Container for result of endcomponent elimination")
         .def_readonly("matrix", &storm::transformer::EndComponentEliminator<ValueType>::EndComponentEliminatorReturnType::matrix, "The resulting matrix")
         .def_readonly("new_to_old_row_mapping", &storm::transformer::EndComponentEliminator<ValueType>::EndComponentEliminatorReturnType::newToOldRowMapping,
                       "Index mapping that gives for each row of the new matrix the corresponding row in the original matrix")
@@ -97,24 +91,24 @@ void define_transformation_typed(py::module& m, std::string const& vtSuffix) {
                       "For each state of the original matrix (and subsystem) the corresponding state in the result. Removed states are mapped to the EC.")
         .def_readonly("sink_rows", &storm::transformer::EndComponentEliminator<ValueType>::EndComponentEliminatorReturnType::sinkRows,
                       "Rows that indicate staying in the EC forever");
-    m.def(("_eliminate_end_components_" + vtSuffix).c_str(), &eliminateECs<ValueType>, "Eliminate ECs in the subsystem", py::arg("matrix"),
-          py::arg("subsystem"), py::arg("possible_ec_rows"), py::arg("addSinkRowStates"), py::arg("addSelfLoopAtSinkStates"));
+    m.def("_eliminate_end_components", &eliminateECs<ValueType>, "Eliminate ECs in the subsystem", py::arg("matrix"), py::arg("subsystem"),
+          py::arg("possible_ec_rows"), py::arg("addSinkRowStates"), py::arg("addSelfLoopAtSinkStates"));
 }
 
 template<typename ValueType>
-void define_transformation_typed_only_numbers(py::module& m, std::string const& vtSuffix) {
-    py::classh<storm::transformer::AddUncertainty<ValueType>>(m, ("AddUncertainty" + vtSuffix).c_str(),
-                                                              "Transform model into interval model with specified uncertainty")
+void define_transformation_typed_only_numbers(py::module& m) {
+    stormpy::bindings::bindTemplateClass<storm::transformer::AddUncertainty<ValueType>>(m, "AddUncertainty", stormpy::bindings::typeIndex<ValueType>(),
+                                                                                        "Transform model into interval model with specified uncertainty")
         .def(py::init<std::shared_ptr<storm::models::sparse::Model<ValueType>> const&>(), py::arg("model"))
         .def("transform", &storm::transformer::AddUncertainty<ValueType>::transform, "Transform the model", py::arg("additive_uncertainty"),
              py::arg("minimal_value") = storm::utility::convertNumber<ValueType>(0.0001), py::arg("max_successors") = std::optional<uint64_t>{});
 }
 
-template void define_transformation_typed<double>(py::module& m, std::string const& vtSuffix);
-template void define_transformation_typed<storm::RationalNumber>(py::module& m, std::string const& vtSuffix);
-template void define_transformation_typed<storm::RationalFunction>(py::module& m, std::string const& vtSuffix);
-template void define_transformation_typed<storm::Interval>(py::module& m, std::string const& vtSuffix);
-template void define_transformation_typed<storm::RationalInterval>(py::module& m, std::string const& vtSuffix);
+template void define_transformation_typed<double>(py::module& m);
+template void define_transformation_typed<storm::RationalNumber>(py::module& m);
+template void define_transformation_typed<storm::RationalFunction>(py::module& m);
+template void define_transformation_typed<storm::Interval>(py::module& m);
+template void define_transformation_typed<storm::RationalInterval>(py::module& m);
 
-template void define_transformation_typed_only_numbers<double>(py::module& m, std::string const& vtSuffix);
-template void define_transformation_typed_only_numbers<storm::RationalNumber>(py::module& m, std::string const& vtSuffix);
+template void define_transformation_typed_only_numbers<double>(py::module& m);
+template void define_transformation_typed_only_numbers<storm::RationalNumber>(py::module& m);

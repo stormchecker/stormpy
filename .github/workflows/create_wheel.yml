@@ -231,7 +231,8 @@ jobs:
           if command -v apt; then
             apt update && DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt install -y python3 python3-pip python3-venv
           elif command -v dnf; then
-            dnf install -y python3 python3-pip
+            # libatomic is not shipped on fedora
+            dnf install -y python3 python3-pip libatomic
           elif command -v pacman; then
             pacman -Syu --noconfirm python python-pip
           fi

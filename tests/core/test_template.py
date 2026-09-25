@@ -23,6 +23,22 @@ def call_guide(guide, *args, **kwargs):
     return guide(None, args, kwargs)
 
 
+def test_builtin_deduction_sources_are_exposed_as_metadata():
+    from stormpy._template import DeductionSource
+
+    module = SimpleNamespace(_template_instantiations={"Example": {("base",): BaseImplementation}})
+    from_object = TemplateClass(
+        "test.Example",
+        module,
+        parameters=["kind"],
+        deduce=deduce_from_object(lambda value: value, keyword=("model", "source"), position=1),
+    )
+    assert from_object.metadata.deduction_source == DeductionSource(1, ("model", "source"))
+    from_first = TemplateClass("test.Example", module, parameters=["kind"], deduce=deduce_from_first_argument(keyword="source"))
+    assert from_first.metadata.deduction_source == DeductionSource(0, ("source",))
+    assert make_family(deduce=deduce_default("base")).metadata.deduction_source is None
+
+
 def test_deduction_selects_exact_registered_subclass():
     family = make_family(deduce=deduce_from_first_argument())
     family.register("derived", DerivedImplementation)

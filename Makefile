@@ -9,6 +9,10 @@ format:
 	black .
 	jupytext --sync --pipe "python -m black {}" $$(grep -rl '^jupytext:' doc --include='*.md')
 
+# Perform all checks
+check: check-format-doc check-doc
+	pytest .
+
 # Create Jupyter notebooks from Myst files in documentation
 notebooks:
 	jupytext --to notebook $$(grep -rl '^jupytext:' doc --include='*.md')

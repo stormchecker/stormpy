@@ -1,14 +1,11 @@
 #include "dft.h"
 
-#include <storm-dft/settings/modules/DftIOSettings.h>
-#include <storm-dft/settings/modules/FaultTreeSettings.h>
 #include <storm-dft/storage/DFT.h>
 #include <storm-dft/storage/DftSymmetries.h>
 #include <storm-dft/utility/DftModularizer.h>
 #include <storm-dft/utility/RelevantEvents.h>
 #include <storm-dft/utility/SymmetryFinder.h>
 #include <storm/adapters/RationalFunctionAdapter.h>
-#include <storm/settings/SettingsManager.h>
 
 #include "src/helpers.h"
 
@@ -23,14 +20,6 @@ std::set<storm::RationalFunctionVariable> getParameters(DFT<storm::RationalFunct
 }
 
 void define_dft(py::module& m) {
-    m.def(
-        "_set_up",
-        []() {
-            storm::settings::addModule<storm::dft::settings::modules::FaultTreeSettings>();
-            storm::settings::addModule<storm::dft::settings::modules::DftIOSettings>();
-        },
-        "Initialize Storm-dft");
-
     m.def("get_parameters", &getParameters, "Collect parameters in parametric DFT", py::arg("dft"));
 }
 

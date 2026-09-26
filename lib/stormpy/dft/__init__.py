@@ -7,23 +7,25 @@ from . import _dft
 from ._dft import *
 from .modules import modules_json
 
-_dft._set_up()
 
-
-def analyze_dft(ft, properties, symred=True, allow_modularisation=False, relevant_events=RelevantEvents(), allow_dc_for_relevant=False):
+def analyze_dft(ft, properties, relevant_events=RelevantEvents(), environment=None):
+    if environment is None:
+        environment = DftEnvironment()
     if isinstance(ft, DFT_double):
-        return _dft._analyze_dft_double(ft, properties, symred, allow_modularisation, relevant_events, allow_dc_for_relevant)
+        return _dft._analyze_dft_double(environment, ft, properties, relevant_events)
     else:
         assert isinstance(ft, DFT_ratfunc)
-        return _dft._analyze_dft_ratfunc(ft, properties, symred, allow_modularisation, relevant_events, allow_dc_for_relevant)
+        return _dft._analyze_dft_ratfunc(environment, ft, properties, relevant_events)
 
 
-def build_model(ft, symmetries=DftSymmetries(), relevant_events=RelevantEvents(), allow_dc_for_relevant=False):
+def build_model(ft, symmetries=DftSymmetries(), relevant_events=RelevantEvents(), environment=None):
+    if environment is None:
+        environment = DftEnvironment()
     if isinstance(ft, DFT_double):
-        return _dft._build_model_double(ft, symmetries, relevant_events, allow_dc_for_relevant)
+        return _dft._build_model_double(environment, ft, symmetries, relevant_events)
     else:
         assert isinstance(ft, DFT_ratfunc)
-        return _dft._build_model_ratfunc(ft, symmetries, relevant_events, allow_dc_for_relevant)
+        return _dft._build_model_ratfunc(environment, ft, symmetries, relevant_events)
 
 
 def transform_dft(ft, unique_constant_be, binary_fdeps, exponential_distributions):

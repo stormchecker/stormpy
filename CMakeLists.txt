@@ -174,7 +174,12 @@ if(APPLE)
 else()
     set(RELPOS_STRING "$ORIGIN")
 endif()
-SET(CMAKE_INSTALL_RPATH "${RELPOS_STRING}/../../../lib/storm;${RELPOS_STRING}/../../../lib/storm/resources;${RELPOS_STRING}/../../lib/storm;${RELPOS_STRING}/../../lib/storm/resources;${RELPOS_STRING}/../lib/storm;${RELPOS_STRING}/../lib/storm/resources;${RELPOS_STRING}/lib/storm;${RELPOS_STRING}/lib/storm/resources;${RELPOS_STRING};${RELPOS_STRING}/resources;${RELPOS_STRING}/../lib;${RELPOS_STRING}/lib")
+set(CMAKE_INSTALL_RPATH
+    "${RELPOS_STRING}/lib"          # Root extensions, e.g. stormpy/_core.so
+    "${RELPOS_STRING}/../lib"       # Depth-one extensions, e.g. stormpy/info/_info.so
+    "${RELPOS_STRING}/../../lib"    # Depth-two extensions, e.g. stormpy/pycarl/cln/_cln.so
+    "${RELPOS_STRING}/../../../lib" # Depth-three extensions, e.g. stormpy/pycarl/cln/formula/_formula.so
+)
 # add the automatically determined parts of the RPATH
 # which point to directories outside the build tree to the install RPATH
 SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)

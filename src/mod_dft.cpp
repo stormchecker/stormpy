@@ -5,6 +5,7 @@
 #include "src/dft/dft.h"
 #include "src/dft/dft_elements.h"
 #include "src/dft/dft_state.h"
+#include "src/dft/environment.h"
 #include "src/dft/io.h"
 #include "src/dft/module.h"
 #include "src/dft/simulator.h"
@@ -19,6 +20,7 @@ PYBIND11_MODULE(_dft, m) {
 #endif
 
     define_symmetries(m);  // Must be before define_analysis_typed
+    define_dft_environment(m);
     define_analysis(m);
     define_analysis_typed<double>(m);
     define_analysis_typed<storm::RationalFunction>(m);

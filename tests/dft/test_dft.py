@@ -29,21 +29,22 @@ class TestDft:
         assert type(inferred_copy) is concrete_type
         assert type(keyword_inferred_copy) is concrete_type
 
-        builder = stormpy.dft.ExplicitDFTModelBuilder(dft)
+        builder = stormpy.dft.ExplicitDFTModelBuilder(stormpy.dft.DftEnvironment(), dft)
         assert type(builder) is stormpy.dft.ExplicitDFTModelBuilder[float]
 
     def test_parametric_dft(self):
         from stormpy import pycarl
 
         pycarl.clear_pools()
+        env = stormpy.dft.DftEnvironment()
         generic_dft = stormpy.dft.load_parametric_dft_json_file(get_example_path("dft", "and.json"))
         assert type(generic_dft) is stormpy.dft.DFT[stormpy.RationalFunction]
         assert stormpy.dft.DFT[stormpy.RationalFunction] is stormpy.dft._dft._DFT_RationalFunction
 
-        builder = stormpy.dft.ExplicitDFTModelBuilder(generic_dft)
+        builder = stormpy.dft.ExplicitDFTModelBuilder(env, generic_dft)
         assert type(builder) is stormpy.dft.ExplicitDFTModelBuilder[stormpy.RationalFunction]
 
-        model = stormpy.dft.build_model(generic_dft)
+        model = stormpy.dft.build_model(env, generic_dft)
         assert model.supports_parameters
 
         dft = stormpy.dft.load_parametric_dft_galileo_file(get_example_path("dft", "symmetry_param.dft"))

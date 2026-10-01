@@ -6,10 +6,7 @@ if not _config.STORM_WITH_DFT:
 from . import _dft
 from ._dft import *
 from .modules import modules_json
-from stormpy._template import TemplateClass, deduce_from_first_argument as _deduce_from_first_argument
-
-_dft._set_up()
-
+from stormpy._template import TemplateClass, deduce_from_first_argument as _deduce_from_first_argument, deduce_from_object as _deduce_from_object
 
 DFT = TemplateClass(
     "stormpy.dft.DFT",
@@ -53,7 +50,7 @@ ExplicitDFTModelBuilder = TemplateClass(
     "stormpy.dft.ExplicitDFTModelBuilder",
     _dft,
     parameters=("ValueType",),
-    deduce=_deduce_from_first_argument(DFT, keyword="dft"),
+    deduce=_deduce_from_object(DFT.parameters_of, position=1, keyword="dft"),
 )
 
 _deduce_dft_parameters = _deduce_from_first_argument(DFT, keyword="dft")

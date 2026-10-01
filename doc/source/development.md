@@ -4,7 +4,7 @@ The following contains some general guidelines for developers.
 ## Structure
 - C++ bindings are defined in ``src``.
 - Python methods are defined in ``lib/stormpy``.
-- Tests are given in ``tests``.
+- Tests are given in ``lib/stormpy/tests`` and ship with the package. Run the installed suite with ``python -m pytest --pyargs stormpy.tests``.
 - The Sphinx documentation can be found in ``doc/source``.
 
 

@@ -375,7 +375,7 @@ std::map<uint32_t, std::pair<storm::RationalNumber, storm::RationalNumber>> simu
         result[state] = hitsVisits;
     };
 
-    const auto sampleBehavior = [&gen, &dis](std::vector<storm::generator::Choice<ValueType, StateType>> const& choices) -> StateType {
+    const auto sampleBehavior = [&gen, &dis](auto const& choices) -> StateType {
         ValueType rnd = dis(gen);
         STORM_LOG_THROW(choices.size() == 1, storm::exceptions::InvalidStateException, "nondeterminism");
         auto choice = choices[0];

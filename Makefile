@@ -1,4 +1,4 @@
-.PHONY: default format notebooks doc check-doc check-format-doc clean-notebooks
+.PHONY: default format check check-doc check-format-doc notebooks doc clean-notebooks
 
 # No default target
 default:
@@ -9,13 +9,9 @@ format:
 	black .
 	jupytext --sync --pipe "python -m black {}" $$(grep -rl '^jupytext:' doc --include='*.md')
 
-# Create Jupyter notebooks from Myst files in documentation
-notebooks:
-	jupytext --to notebook $$(grep -rl '^jupytext:' doc --include='*.md')
-
-# Build the documentation
-doc:
-	$(MAKE) -C doc html
+# Perform all checks
+check: check-format-doc check-doc
+	pytest .
 
 # Check that all Python code in the documentation is formatted with black
 check-format-doc:
@@ -27,6 +23,14 @@ check-doc:
 	for f in $$(grep -rl '^jupytext:' doc --include='*.md'); do \
 		jupytext --to py:percent --output - $$f | python3 - || exit 1; \
 	done
+
+# Create Jupyter notebooks from Myst files in documentation
+notebooks:
+	jupytext --to notebook $$(grep -rl '^jupytext:' doc --include='*.md')
+
+# Build the documentation
+doc:
+	$(MAKE) -C doc html
 
 # Remove all generated Jupyter notebooks
 clean-notebooks:

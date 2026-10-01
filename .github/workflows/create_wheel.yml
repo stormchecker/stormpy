@@ -203,22 +203,6 @@ jobs:
           pattern: stormpy-wheels-${{ matrix.arch.name }}-${{ inputs.build_type }}
           path: dist
           merge-multiple: true
-      - name: Checkout test files (default current repo)
-        if: ${{ inputs.repo == '' }}
-        uses: actions/checkout@v7
-        with:
-          path: dist/test_files
-          sparse-checkout: |
-            tests
-      - name: Checkout test files (custom repo)
-        if: ${{ inputs.repo != '' }}
-        uses: actions/checkout@v7
-        with:
-          repository: ${{ inputs.repo }}
-          ref: ${{ inputs.ref }}
-          path: dist/test_files
-          sparse-checkout: |
-            tests
       - name: Install from wheel and test
         run: |
           docker run -i --rm -v ./dist:/wheel ${{ matrix.distro }} /bin/bash << 'EOF'
@@ -252,12 +236,11 @@ jobs:
           echo "Installing $WHEEL..."
           python3 -m venv venv
           source venv/bin/activate
-          python3 -m pip install "$WHEEL"
+          python3 -m pip install "${WHEEL}[test]"
 
           # Run tests
           python3 -c "import stormpy; print('Import successful')"
-          pip install pytest numpy
-          pytest test_files/tests
+          python3 -m pytest --pyargs stormpy.tests
           EOF
 
 
@@ -309,27 +292,10 @@ jobs:
           echo "Installing $WHEEL..."
           python3 -m venv venv
           source venv/bin/activate
-          python3 -m pip install "$WHEEL"
-      - name: Checkout test files (default current repo)
-        if: ${{ inputs.repo == '' }}
-        uses: actions/checkout@v7
-        with:
-          path: dist/test_files
-          sparse-checkout: |
-            tests
-      - name: Checkout test files (custom repo)
-        if: ${{ inputs.repo != '' }}
-        uses: actions/checkout@v7
-        with:
-          repository: ${{ inputs.repo }}
-          ref: ${{ inputs.ref }}
-          path: dist/test_files
-          sparse-checkout: |
-            tests
+          python3 -m pip install "${WHEEL}[test]"
       - name: Test
         working-directory: dist
         run: |
           source venv/bin/activate
           python3 -c "import stormpy; print('Import successful')"
-          python3 -m pip install pytest numpy
-          pytest test_files/tests
+          python3 -m pytest --pyargs stormpy.tests

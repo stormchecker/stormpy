@@ -3,6 +3,8 @@
 #include <storm-dft/api/analysis.h>
 #include <storm-dft/api/transformation.h>
 #include <storm-dft/builder/ExplicitDFTModelBuilder.h>
+#include <storm-dft/environment/DftEnvironment.h>
+#include <storm-dft/environment/ModelBuilderEnvironment.h>
 #include <storm-dft/parser/DFTJsonParser.h>
 #include <storm-dft/storage/DftSymmetries.h>
 #include <storm/adapters/RationalFunctionAdapter.h>
@@ -15,10 +17,10 @@ using ExplicitDFTModelBuilder = storm::dft::builder::ExplicitDFTModelBuilder<Val
 
 // Thin wrapper for DFT analysis
 template<typename ValueType>
-std::vector<ValueType> analyzeDFT(storm::dft::storage::DFT<ValueType> const& dft, std::vector<std::shared_ptr<storm::logic::Formula const>> const& properties,
-                                  bool symred, bool allowModularisation, storm::dft::utility::RelevantEvents const& relevantEvents, bool allowDCForRelevant) {
-    typename storm::dft::modelchecker::DFTModelChecker<ValueType>::dft_results dftResults = storm::dft::api::analyzeDFT(
-        dft, properties, symred, allowModularisation, relevantEvents, allowDCForRelevant, 0.0, storm::dft::builder::ApproximationHeuristic::DEPTH, false);
+std::vector<ValueType> analyzeDFT(storm::dft::DftEnvironment const& env, storm::dft::storage::DFT<ValueType> const& dft,
+                                  std::vector<std::shared_ptr<storm::logic::Formula const>> const& properties,
+                                  storm::dft::utility::RelevantEvents const& relevantEvents) {
+    typename storm::dft::modelchecker::DFTModelChecker<ValueType>::dft_results dftResults = storm::dft::api::analyzeDFT(env, dft, properties, relevantEvents);
 
     std::vector<ValueType> results;
     for (auto const& result : dftResults) {
@@ -30,11 +32,11 @@ std::vector<ValueType> analyzeDFT(storm::dft::storage::DFT<ValueType> const& dft
 
 // Thin wrapper for building state space from DFT
 template<typename ValueType>
-std::shared_ptr<storm::models::sparse::Model<ValueType>> buildModel(storm::dft::storage::DFT<ValueType> const& dft,
+std::shared_ptr<storm::models::sparse::Model<ValueType>> buildModel(storm::dft::DftEnvironment const& env, storm::dft::storage::DFT<ValueType> const& dft,
                                                                     storm::dft::storage::DftSymmetries const& symmetries,
-                                                                    storm::dft::utility::RelevantEvents const& relevantEvents, bool allowDCForRelevant) {
-    dft.setRelevantEvents(relevantEvents, allowDCForRelevant);
-    storm::dft::builder::ExplicitDFTModelBuilder<ValueType> builder(dft, symmetries);
+                                                                    storm::dft::utility::RelevantEvents const& relevantEvents) {
+    dft.setRelevantEvents(relevantEvents, env.modelBuilder().isAllowDCForRelevantEvents());
+    storm::dft::builder::ExplicitDFTModelBuilder<ValueType> builder(env, dft, symmetries);
     builder.buildModel(0, 0.0);
     return builder.getModel();
 }
@@ -53,7 +55,7 @@ void define_analysis(py::module& m) {
         .def("is_relevant", &storm::dft::utility::RelevantEvents::isRelevant, "Check whether the given name is a relevant event", py::arg("name"));
 
     m.def("compute_relevant_events", &storm::dft::api::computeRelevantEvents, "Compute relevant event ids from properties and additional relevant names",
-          py::arg("properties"), py::arg("additional_relevant_names") = std::vector<std::string>());
+          py::arg("properties"), py::arg("additional_relevant_names") = std::vector<std::string>(), py::arg("add_labels_claiming") = false);
 }
 
 template<typename ValueType>
@@ -61,7 +63,8 @@ void define_analysis_typed(py::module& m) {
     auto builder = stormpy::bindings::bindTemplateClass<ExplicitDFTModelBuilder<ValueType>>(
         m, "ExplicitDFTModelBuilder", stormpy::bindings::typeIndex<ValueType>(), "Builder to generate explicit model from DFT");
     builder
-        .def(py::init<storm::dft::storage::DFT<ValueType> const&, storm::dft::storage::DftSymmetries const&>(), "Constructor", py::arg("dft"),
+        .def(py::init<storm::dft::DftEnvironment const&, storm::dft::storage::DFT<ValueType> const&, storm::dft::storage::DftSymmetries const&>(),
+             py::keep_alive<1, 2>(), py::keep_alive<1, 3>(), "Constructor", py::arg("env"), py::arg("dft"),
              py::arg("symmetries") = storm::dft::storage::DftSymmetries())
         .def("build", &ExplicitDFTModelBuilder<ValueType>::buildModel, "Build state space of model", py::arg("iteration"),
              py::arg("approximation_threshold") = 0.0, py::arg("approximation_heuristic") = storm::dft::builder::ApproximationHeuristic::DEPTH)
@@ -69,13 +72,11 @@ void define_analysis_typed(py::module& m) {
         .def("get_partial_model", &ExplicitDFTModelBuilder<ValueType>::getModelApproximation, "Get partial model", py::arg("lower_bound"),
              py::arg("expected_time"));
 
-    m.def("analyze_dft", &analyzeDFT<ValueType>, "Analyze the DFT", py::arg("dft"), py::arg("properties"), py::arg("symred") = true,
-          py::arg("allow_modularisation") = false, py::arg("relevant_events") = storm::dft::utility::RelevantEvents(),
-          py::arg("allow_dc_for_relevant") = false);
+    m.def("analyze_dft", &analyzeDFT<ValueType>, "Analyze the DFT", py::arg("env"), py::arg("dft"), py::arg("properties"),
+          py::arg("relevant_events") = storm::dft::utility::RelevantEvents());
 
-    m.def("build_model", &buildModel<ValueType>, "Build state-space model (CTMC or MA) for DFT", py::arg("dft"),
-          py::arg("symmetries") = storm::dft::storage::DftSymmetries(), py::arg("relevant_events") = storm::dft::utility::RelevantEvents(),
-          py::arg("allow_dc_for_relevant") = false);
+    m.def("build_model", &buildModel<ValueType>, "Build state-space model (CTMC or MA) for DFT", py::arg("env"), py::arg("dft"),
+          py::arg("symmetries") = storm::dft::storage::DftSymmetries(), py::arg("relevant_events") = storm::dft::utility::RelevantEvents());
 
     m.def("transform_dft", &storm::dft::api::applyTransformations<ValueType>, "Apply transformations on DFT", py::arg("dft"), py::arg("unique_constant_be"),
           py::arg("binary_fdeps"), py::arg("exponential_distributions"));

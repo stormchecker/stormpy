@@ -112,13 +112,13 @@ Alternatively, you can set the prefix `CMAKE_BUILD_PARALLEL_LEVEL=<number_of_job
 
 
 #### Testing stormpy installation
-After building, you can run the test files by invoking pytest directly with:
+The tests ship with stormpy and can be run from any directory after installing the test dependencies:
 ```bash
-pip install pytest
-py.test tests/
+pip install "stormpy[test]"
+python -m pytest --pyargs stormpy.tests
 ```
 If the tests pass, you can now use stormpy.
-To get started, continue with our [Getting Started](getting_started), consult the test files in `tests/` or the [API](api) (work in progress).
+To get started, continue with our [Getting Started](getting_started), consult the test files in `lib/stormpy/tests/` or the [API](api) (work in progress).
 
 
 ## Building stormpy documentation

@@ -30,11 +30,11 @@ void define_dft_typed(py::module& m) {
     auto dft = stormpy::bindings::bindTemplateClass<DFT<ValueType>>(m, "DFT", stormpy::bindings::typeIndex<ValueType>(), "Dynamic Fault Tree");
     dft.def(py::init<DFT<ValueType> const&>(), "Copy a Dynamic Fault Tree", py::arg("dft"))
         .def("nr_elements", &DFT<ValueType>::nrElements, "Total number of elements")
-        .def("nr_be", &DFT<ValueType>::nrBasicElements, "Number of basic elements")
-        .def("nr_dynamic", &DFT<ValueType>::nrDynamicElements, "Number of dynamic elements")
+        .def("nr_basic_elements", &DFT<ValueType>::nrBasicElements, "Number of basic elements")
+        .def("nr_dynamic_elements", &DFT<ValueType>::nrDynamicElements, "Number of dynamic elements")
         .def("can_have_nondeterminism", &DFT<ValueType>::canHaveNondeterminism, "Whether the model can contain non-deterministic choices")
         .def("__str__", &DFT<ValueType>::getInfoString)
-        .def("str_long", &DFT<ValueType>::getElementsString)
+        .def("get_elements_string", &DFT<ValueType>::getElementsString)
         .def_property_readonly(
             "top_level_element", [](DFT<ValueType>& dft) { return dft.getElement(dft.getTopLevelIndex()); }, "Get top level element")
         .def("get_element", &DFT<ValueType>::getElement, "Get DFT element at index", py::arg("index"))
@@ -50,9 +50,9 @@ void define_dft_typed(py::module& m) {
             "Compute independent modules of DFT")
         .def(
             "symmetries", [](DFT<ValueType>& dft) { return storm::dft::utility::SymmetryFinder<ValueType>::findSymmetries(dft); }, "Compute symmetries in DFT")
-        .def("state_generation_info", &DFT<ValueType>::buildStateGenerationInfo, "Build state generation information",
+        .def("build_state_generation_info", &DFT<ValueType>::buildStateGenerationInfo, "Build state generation information",
              py::arg("symmetries") = storm::dft::storage::DftSymmetries())
-        .def("set_relevant_events", &DFT<ValueType>::setRelevantEvents, py::arg("relevant_events"), py::arg("allow_dc_for_revelant"));
+        .def("set_relevant_events", &DFT<ValueType>::setRelevantEvents, py::arg("relevant_events"), py::arg("allow_dc_for_relevant"));
 }
 
 void define_symmetries(py::module& m) {

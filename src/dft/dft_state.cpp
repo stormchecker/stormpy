@@ -18,14 +18,14 @@ template<typename ValueType>
 void define_dft_state(py::module& m) {
     // DFT state
     auto state = stormpy::bindings::bindTemplateClass<DFTState<ValueType>>(m, "DFTState", stormpy::bindings::typeIndex<ValueType>(), "DFT state");
-    state.def("operational", &DFTState<ValueType>::isOperational, "Is element operational", py::arg("id"))
+    state.def("is_operational", &DFTState<ValueType>::isOperational, "Is element operational", py::arg("id"))
         .def(
-            "failed", [](DFTState<ValueType> const& state, size_t id) { return state.hasFailed(id); }, "Is element failed", py::arg("id"))
+            "has_failed", [](DFTState<ValueType> const& state, size_t id) { return state.hasFailed(id); }, "Is element failed", py::arg("id"))
         .def(
-            "failsafe", [](DFTState<ValueType> const& state, size_t id) { return state.isFailsafe(id); }, "Is element fail-safe", py::arg("id"))
-        .def("dontcare", &DFTState<ValueType>::dontCare, "Is element Don't Care", py::arg("id"))
-        .def("invalid", &DFTState<ValueType>::isInvalid, "Is state invalid")
-        .def("failable", &DFTState<ValueType>::getFailableElements, "Get failable elements")
+            "is_failsafe", [](DFTState<ValueType> const& state, size_t id) { return state.isFailsafe(id); }, "Is element fail-safe", py::arg("id"))
+        .def("dont_care", &DFTState<ValueType>::dontCare, "Is element Don't Care", py::arg("id"))
+        .def("is_invalid", &DFTState<ValueType>::isInvalid, "Is state invalid")
+        .def("get_failable_elements", &DFTState<ValueType>::getFailableElements, "Get failable elements")
         .def("spare_uses", &DFTState<ValueType>::uses, "Child currently used by a SPARE", py::arg("spare_id"))
         .def("__str__", [](DFTState<ValueType> const& state) { return streamToString<storm::storage::BitVector>(state.status()); })
         .def(

@@ -46,7 +46,7 @@ void define_dft_elements_typed(py::module& m) {
     be.def("__str__", &BE<ValueType>::toString);
 
     auto dependency = stormpy::bindings::bindTemplateClass<Dependency<ValueType>>(m, "DFTDependency", index, "Dependency", element);
-    dependency.def_property_readonly("trigger", &Dependency<ValueType>::triggerEvent, "Trigger event")
+    dependency.def_property_readonly("trigger_event", &Dependency<ValueType>::triggerEvent, "Trigger event")
         .def_property_readonly("dependent_events", &Dependency<ValueType>::dependentEvents, "Dependent events")
         .def("__str__", &Dependency<ValueType>::toString);
 }

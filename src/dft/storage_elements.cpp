@@ -1,4 +1,4 @@
-#include "dft_elements.h"
+#include "storage_elements.h"
 
 #include <storm-dft/storage/elements/DFTElements.h>
 #include <storm/adapters/RationalFunctionAdapter.h>

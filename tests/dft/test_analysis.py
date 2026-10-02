@@ -34,7 +34,7 @@ class TestAnalysis:
 
     def test_explicit_model_builder(self):
         dft = stormpy.dft.load_dft_json_file(get_example_path("dft", "and.json"))
-        builder = stormpy.dft.ExplicitDFTModelBuilder[float](stormpy.dft.DftEnvironment(), dft)
+        builder = stormpy.dft.ExplicitDFTModelBuilder[float](stormpy.dft.DftEnvironment(), dft, stormpy.dft.DftSymmetries())
         builder.build(0)
         model = builder.get_model()
         assert model.model_type == stormpy.ModelType.CTMC
@@ -61,7 +61,7 @@ class TestAnalysis:
         assert not issue
         properties = stormpy.parse_properties('T=? [ F "failed" ]')
         prop = properties[0]
-        builder = stormpy.dft.ExplicitDFTModelBuilder(stormpy.dft.DftEnvironment(), dft)
+        builder = stormpy.dft.ExplicitDFTModelBuilder(stormpy.dft.DftEnvironment(), dft, stormpy.dft.DftSymmetries())
 
         # Iteration 0
         builder.build(0, 1.0)
@@ -117,7 +117,7 @@ class TestAnalysis:
         dft = stormpy.dft.load_dft_galileo_file(get_example_path("dft", "rc.dft"))
         properties = stormpy.parse_properties('T=? [ F "failed" ]')
         prop = properties[0]
-        builder = stormpy.dft.ExplicitDFTModelBuilder(stormpy.dft.DftEnvironment(), dft)
+        builder = stormpy.dft.ExplicitDFTModelBuilder(stormpy.dft.DftEnvironment(), dft, stormpy.dft.DftSymmetries())
 
         # Iteration 0
         builder.build(0, 1.0)

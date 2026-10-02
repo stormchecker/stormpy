@@ -1,6 +1,5 @@
 import stormpy
 import stormpy.dft
-from stormpy.dft.simulator import DftSimulator
 
 import stormpy.examples
 import stormpy.examples.files
@@ -17,10 +16,10 @@ def example_dft_simulator_02():
     # Load DFT from Galileo
     path = stormpy.examples.files.dft_galileo_hecs
     dft = stormpy.dft.load_dft_galileo_file(path)
-    print("DFT with {} elements, {} BEs and {} dynamic elements.".format(dft.nr_elements(), dft.nr_be(), dft.nr_dynamic()))
+    print("DFT with {} elements, {} BEs and {} dynamic elements.".format(dft.nr_elements(), dft.nr_basic_elements(), dft.nr_dynamic_elements()))
 
     # Create simulator
-    simulator = DftSimulator(dft, seed=42)
+    simulator = stormpy.dft.DFTSimulator(dft, seed=42)
     print_status(simulator)
 
     choices = ["n15", "n118", "n134", "n23", "n7"]

@@ -1,4 +1,4 @@
-#include "dft_elements.h"
+#include "storage_elements.h"
 
 #include <storm-dft/storage/elements/DFTElements.h>
 #include <storm/adapters/RationalFunctionAdapter.h>
@@ -13,7 +13,7 @@ using BE = storm::dft::storage::elements::DFTBE<ValueType>;
 template<typename ValueType>
 using Dependency = storm::dft::storage::elements::DFTDependency<ValueType>;
 
-void define_dft_elements(py::module& m) {
+void define_storage_elements(py::module& m) {
     // DFT element type
     py::native_enum<storm::dft::storage::elements::DFTElementType>(m, "DFTElementType", "enum.Enum")
         .value("BE", storm::dft::storage::elements::DFTElementType::BE)
@@ -33,7 +33,7 @@ void define_dft_elements(py::module& m) {
 }
 
 template<typename ValueType>
-void define_dft_elements_typed(py::module& m) {
+void define_storage_elements_typed(py::module& m) {
     // DFT elements
     auto const index = stormpy::bindings::typeIndex<ValueType>();
     auto element = stormpy::bindings::bindTemplateClass<DFTElement<ValueType>>(m, "DFTElement", index, "DFT element");
@@ -46,10 +46,10 @@ void define_dft_elements_typed(py::module& m) {
     be.def("__str__", &BE<ValueType>::toString);
 
     auto dependency = stormpy::bindings::bindTemplateClass<Dependency<ValueType>>(m, "DFTDependency", index, "Dependency", element);
-    dependency.def_property_readonly("trigger", &Dependency<ValueType>::triggerEvent, "Trigger event")
+    dependency.def_property_readonly("trigger_event", &Dependency<ValueType>::triggerEvent, "Trigger event")
         .def_property_readonly("dependent_events", &Dependency<ValueType>::dependentEvents, "Dependent events")
         .def("__str__", &Dependency<ValueType>::toString);
 }
 
-template void define_dft_elements_typed<double>(py::module& m);
-template void define_dft_elements_typed<storm::RationalFunction>(py::module& m);
+template void define_storage_elements_typed<double>(py::module& m);
+template void define_storage_elements_typed<storm::RationalFunction>(py::module& m);

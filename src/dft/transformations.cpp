@@ -1,5 +1,6 @@
-#include "dft.h"
+#include "transformations.h"
 
+#include <storm-dft/storage/DFT.h>
 #include <storm-dft/transformations/DftInstantiator.h>
 #include <storm/adapters/RationalFunctionAdapter.h>
 
@@ -10,7 +11,7 @@ using DFTInstantiator = storm::dft::transformations::DftInstantiator<storm::Rati
 
 void define_transformations(py::module& m) {
     auto instantiator = stormpy::bindings::bindTemplateClass<DFTInstantiator>(
-        m, "DFTInstantiator", stormpy::bindings::typeIndex<storm::RationalFunction, double>(), "Instantiator for parametric DFT");
+        m, "DftInstantiator", stormpy::bindings::typeIndex<storm::RationalFunction, double>(), "Instantiator for parametric DFT");
     instantiator.def(py::init<storm::dft::storage::DFT<storm::RationalFunction> const&>(), "Initialize with parametric DFT", py::arg("dft"))
         .def("instantiate", &DFTInstantiator::instantiate, "Instantiate parametric DFT and obtain concrete DFT", py::arg("valuation"));
 }

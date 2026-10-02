@@ -24,7 +24,7 @@ void define_simulator(py::module& m) {
         .value("INVALID", storm::dft::simulator::SimulationTraceResult::INVALID)
         .value("CONTINUE", storm::dft::simulator::SimulationTraceResult::CONTINUE)
         .finalize();
-    py::classh<DFTStateInfo>(m, "DFTStateInfo", "State Generation Info for DFT");
+    py::classh<DFTStateInfo>(m, "DFTStateGenerationInfo", "State Generation Info for DFT");
 
     py::classh<RandomGenerator>(m, "RandomGenerator", "Random number generator")
         .def_static(
@@ -34,8 +34,8 @@ void define_simulator(py::module& m) {
 template<typename ValueType>
 void define_simulator_typed(py::module& m) {
     // Simulator for DFTs
-    auto simulator =
-        stormpy::bindings::bindTemplateClass<Simulator<ValueType>>(m, "DFTSimulator", stormpy::bindings::typeIndex<ValueType>(), "Simulator for DFT traces");
+    auto simulator = stormpy::bindings::bindTemplateClass<Simulator<ValueType>>(m, "DFTTraceSimulator", stormpy::bindings::typeIndex<ValueType>(),
+                                                                                "Simulator for DFT traces");
     simulator
         .def(py::init<storm::dft::storage::DFT<ValueType> const&, DFTStateInfo const&, RandomGenerator&>(), py::keep_alive<1, 2>(), py::keep_alive<1, 3>(),
              py::keep_alive<1, 4>(), py::arg("dft"), py::arg("state_generation_info"), py::arg("generator"), "Create Simulator")

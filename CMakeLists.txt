@@ -286,11 +286,11 @@ function(stormpy_module MOD_NAME OUT_DIR ADDITIONAL_INCLUDES ADDITIONAL_LIBS)
                          "${ADDITIONAL_LIBS}")
 endfunction(stormpy_module)
 # Helper function to build an optional stormpy module (if supported and required)
-function(stormpy_optional_module MOD_NAME DESCRIPTION)
+function(stormpy_optional_module MOD_NAME OUT_DIR DESCRIPTION)
     string(TOUPPER "${MOD_NAME}" LIB_NAME)
     if(STORMPY_HAVE_STORM_${LIB_NAME} AND STORMPY_USE_STORM_${LIB_NAME})
         build_stormpy_module("stormpy_${MOD_NAME}"
-                             "${MOD_NAME}" "${MOD_NAME}"
+                             "${OUT_DIR}" "${MOD_NAME}"
                              "mod_${MOD_NAME}.cpp" "${MOD_NAME}/*.cpp"
                              "${storm-${MOD_NAME}_INCLUDE_DIR}"
                              "storm-${MOD_NAME}")
@@ -342,10 +342,10 @@ stormpy_module(storage storage "" "")
 stormpy_module(utility utility "" "")
 
 # Build optional stormpy modules
-stormpy_optional_module(dft "DFT")
-stormpy_optional_module(gspn "GSPN")
-stormpy_optional_module(pars "parametric models")
-stormpy_optional_module(pomdp "POMDP")
+stormpy_optional_module(dft "dft/developer" "DFT" )
+stormpy_optional_module(gspn "gspn" "GSPN")
+stormpy_optional_module(pars "pars" "parametric models")
+stormpy_optional_module(pomdp "pomdp" "POMDP")
 
 # Build pycarl modules
 ######

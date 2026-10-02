@@ -1,5 +1,6 @@
-#include "dft.h"
+#include "transformations.h"
 
+#include <storm-dft/storage/DFT.h>
 #include <storm-dft/transformations/DftInstantiator.h>
 #include <storm/adapters/RationalFunctionAdapter.h>
 

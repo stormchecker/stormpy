@@ -1,35 +1,40 @@
-import stormpy
-import stormpy.dft
+"""Public, ergonomic simulator for Dynamic Fault Trees."""
+
+from . import developer
 
 
-class DftSimulator:
+class DFTSimulator:
     """
-    Simulator for DFT.
-    Adds convenience function to stormpy.dft.Simulator.
+    High-level simulator for Dynamic Fault Trees.
+
+    Wraps :class:`stormpy.dft.developer.DFTTraceSimulator`: builds the random
+    number generator and state-generation information automatically, and
+    resolves failable elements to their BE/dependency names.
     """
 
-    def __init__(self, dft, seed=42, relevant=[]):
+    def __init__(self, dft, seed=42, relevant_events=None):
         """
         Create simulator.
 
-        :param dft: DFT.
-        :param seed: Seed for random number generator.
-        :param relevant: List of relevant events. 'all' sets all events as relevant.
+        :param dft: DFT to simulate.
+        :param seed: Seed for the pseudo-random number generator.
+        :param relevant_events: Additional names to mark as relevant events (beyond the top-level event),
+            or ``None``.
         """
         self._dft = dft
-        # Set only top event as relevant
-        relevant_events = stormpy.dft.compute_relevant_events([], additional_relevant_names=relevant)
+        # Set only top event as relevant (plus any additionally requested events)
+        relevant_events = developer.compute_relevant_events([], additional_relevant_names=relevant_events or [])
         self._dft.set_relevant_events(relevant_events, False)
         # Create information for state space generation
-        info = self._dft.state_generation_info()
+        info = self._dft.build_state_generation_info(developer.DftSymmetries())
         # Initialize random generator
-        generator = stormpy.dft.RandomGenerator.create(seed)
+        generator = developer.RandomGenerator.create(seed)
         # Create simulator
-        self._simulator = stormpy.dft.DFTSimulator(self._dft, info, generator)
+        self._simulator = developer.DFTTraceSimulator(self._dft, info, generator)
         # Select the value-type-specific methods once to avoid pybind11 overload
         # resolution for every failable element in every simulation step.
-        failable_element = stormpy.dft.FailableElement
-        if stormpy.dft.DFT.parameters_of(self._dft) == (float,):
+        failable_element = developer.FailableElement
+        if developer.DFT.parameters_of(self._dft) == (float,):
             self._as_be = failable_element.as_be_double
             self._as_dependency = failable_element.as_dependency_double
         else:
@@ -46,27 +51,27 @@ class DftSimulator:
         """
         Get current status of DFT elements.
 
-        :return: Dictionary elements -> status.
+        :return: Tuple (overall status, dict element -> status).
         """
-        if self._state.invalid():
+        if self._state.is_invalid():
             return "State is invalid because a SEQ is violated", dict()
 
         dft_state = "DFT is {}".format("Failed" if self.is_failed() else "Operational")
         element_states = dict()
         for i in range(self._dft.nr_elements()):
             # Order of checks is important!
-            if self._state.operational(i):
+            if self._state.is_operational(i):
                 status = "Operational"
-            elif self._state.dontcare(i):
+            elif self._state.dont_care(i):
                 status = "Don't Care"
-            elif self._state.failsafe(i):
+            elif self._state.is_failsafe(i):
                 status = "FailSafe"
-            elif self._state.failed(i):
+            elif self._state.has_failed(i):
                 status = "Failed"
             else:
                 status = "Unknown"
             elem = self._dft.get_element(i)
-            if elem.type == stormpy.dft.DFTElementType.SPARE:
+            if elem.type == developer.DFTElementType.SPARE:
                 cur_used = self._state.spare_uses(i)
                 if cur_used == i:
                     status += ", not using anything"
@@ -106,11 +111,11 @@ class DftSimulator:
         """
         # Update state
         self._state = self._simulator.get_state()
-        self._failed = self._state.failed(self._dft.top_level_element.id)
+        self._failed = self._state.has_failed(self._dft.top_level_element.id)
         # Compute next failures
         self._fail_candidates.clear()
         self._is_failable_dependency = False
-        for f in self._state.failable():
+        for f in self._state.get_failable_elements():
             if f.is_due_dependency():
                 self._is_failable_dependency = True
                 fail_dependency = self._as_dependency(f, self._dft)
@@ -159,7 +164,7 @@ class DftSimulator:
         success = 0
         for i in range(nr_traces):
             res = self._simulator.simulate_trace(timebound)
-            if res == stormpy.dft.SimulationTraceResult.SUCCESSFUL:
+            if res == developer.SimulationTraceResult.SUCCESSFUL:
                 success += 1
         self.reset()
         return success
@@ -186,4 +191,4 @@ class DftSimulator:
 
         :return: True iff the simulation has ended.
         """
-        return self.is_failed() or self._state.invalid() or self.nr_next_failures() == 0
+        return self.is_failed() or self._state.is_invalid() or self.nr_next_failures() == 0

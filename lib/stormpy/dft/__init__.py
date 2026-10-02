@@ -1,73 +1,107 @@
-from stormpy.info import _config
+"""Public API for Dynamic Fault Tree (DFT) analysis.
 
-if not _config.STORM_WITH_DFT:
-    raise ImportError("No support for DFTs was built in Storm.")
+This is a curated, documented façade over the raw pybind11 bindings in
+:mod:`stormpy.dft.developer`. It re-exports the parts of the native API that
+are already good public names, adds a few hand-written convenience wrappers
+(:class:`DftIndependentModule`, :class:`DFTSimulator`), and otherwise leaves
+low-level/advanced functionality (e.g. :class:`~stormpy.dft.developer.RandomGenerator`,
+raw ``ValueType``-specific overloads) to :mod:`stormpy.dft.developer`.
+"""
 
-from . import _dft
-from ._dft import *
-from .modules import modules_json
-from stormpy._template import TemplateClass, deduce_from_first_argument as _deduce_from_first_argument, deduce_from_object as _deduce_from_object
+from . import developer
 
-DFT = TemplateClass(
-    "stormpy.dft.DFT",
-    _dft,
-    parameters=("ValueType",),
-    deduce=_deduce_from_first_argument(keyword="dft"),
-)
+# Template families: re-exported unmodified, since each is already a clean,
+# well-scoped query/data object.
+DFT = developer.DFT
+DFTElement = developer.DFTElement
+DFTBE = developer.DFTBE
+DFTDependency = developer.DFTDependency
+DFTState = developer.DFTState
+ExplicitDFTModelBuilder = developer.ExplicitDFTModelBuilder
 
-DFTElement = TemplateClass(
-    "stormpy.dft.DFTElement",
-    _dft,
-    parameters=("ValueType",),
-)
+# Renamed for public clarity: matches the DftEnvironment/DftSymmetries capitalization
+# convention used elsewhere in this API (the native binding follows storm-dft's own,
+# inconsistent, all-caps "DFT" spelling for this one class).
+DFTInstantiator = developer.DftInstantiator
 
-DFTBE = TemplateClass(
-    "stormpy.dft.DFTBE",
-    _dft,
-    parameters=("ValueType",),
-)
-
-DFTDependency = TemplateClass(
-    "stormpy.dft.DFTDependency",
-    _dft,
-    parameters=("ValueType",),
-)
-
-DFTState = TemplateClass(
-    "stormpy.dft.DFTState",
-    _dft,
-    parameters=("ValueType",),
-)
-
-DFTSimulator = TemplateClass(
-    "stormpy.dft.DFTSimulator",
-    _dft,
-    parameters=("ValueType",),
-    deduce=_deduce_from_first_argument(DFT, keyword="dft"),
-)
-
-ExplicitDFTModelBuilder = TemplateClass(
-    "stormpy.dft.ExplicitDFTModelBuilder",
-    _dft,
-    parameters=("ValueType",),
-    deduce=_deduce_from_object(DFT.parameters_of, position=1, keyword="dft"),
-)
-
-_deduce_dft_parameters = _deduce_from_first_argument(DFT, keyword="dft")
+# Non-template classes and enums, already well-named: re-exported unmodified.
+DftSymmetries = developer.DftSymmetries
+DftEnvironment = developer.DftEnvironment
+AnalysisEnvironment = developer.AnalysisEnvironment
+ModelBuilderEnvironment = developer.ModelBuilderEnvironment
+TransformationEnvironment = developer.TransformationEnvironment
+RelevantEvents = developer.RelevantEvents
+DFTElementType = developer.DFTElementType
+ApproximationHeuristic = developer.ApproximationHeuristic
+SimulationStepResult = developer.SimulationStepResult
+SimulationTraceResult = developer.SimulationTraceResult
 
 
-def _deduce_dft_instantiator(family, args, kwargs):
-    return (*_deduce_dft_parameters(family, args, kwargs), float)
+# Analysis functions.
+#
+# analyze_dft/build_model restore a Python-level default for relevant_events/symmetries:
+# the native developer.analyze_dft/developer.build_model require them explicitly (developer
+# mirrors the C++ API 1:1, with no conveniences), so the default lives here instead.
+def analyze_dft(env, dft, properties, relevant_events=None):
+    """
+    Analyze the DFT.
+
+    :param env: Environment for the analysis.
+    :param dft: DFT.
+    :param properties: PCTL formulas capturing the properties to check.
+    :param relevant_events: Relevant events which should be observed, or ``None`` for none.
+    :return: Results.
+    """
+    return developer.analyze_dft(env, dft, properties, relevant_events if relevant_events is not None else developer.RelevantEvents())
 
 
-DFTInstantiator = TemplateClass(
-    "stormpy.dft.DFTInstantiator",
-    _dft,
-    parameters=("SourceValueType", "TargetValueType"),
-    deduce=_deduce_dft_instantiator,
-)
+def build_model(env, dft, symmetries=None, relevant_events=None):
+    """
+    Build state-space model (CTMC or MA) for DFT.
+
+    :param env: Environment for the analysis.
+    :param dft: DFT.
+    :param symmetries: Symmetries in the DFT, or ``None`` for none.
+    :param relevant_events: Relevant events which should be observed, or ``None`` for none.
+    :return: The built model.
+    """
+    return developer.build_model(
+        env,
+        dft,
+        symmetries if symmetries is not None else developer.DftSymmetries(),
+        relevant_events if relevant_events is not None else developer.RelevantEvents(),
+    )
 
 
-def prepare_for_analysis(ft):
-    compute_dependency_conflicts(ft, use_smt=False)
-    return transform_dft(ft, unique_constant_be=True, binary_fdeps=True, exponential_distributions=True)
+transform_dft = developer.transform_dft
+compute_dependency_conflicts = developer.compute_dependency_conflicts
+is_well_formed = developer.is_well_formed
+has_potential_modeling_issues = developer.has_potential_modeling_issues
+compute_relevant_events = developer.compute_relevant_events
+get_parameters = developer.get_parameters
+
+# Input/output
+load_dft_galileo_file = developer.load_dft_galileo_file
+load_parametric_dft_galileo_file = developer.load_parametric_dft_galileo_file
+load_dft_json_file = developer.load_dft_json_file
+load_dft_json_string = developer.load_dft_json_string
+load_parametric_dft_json_file = developer.load_parametric_dft_json_file
+load_parametric_dft_json_string = developer.load_parametric_dft_json_string
+export_dft_json_file = developer.export_dft_json_file
+export_dft_json_string = developer.export_dft_json_string
+
+# Hand-written curated wrappers
+from ._module import DftIndependentModule, modules, modules_json
+from ._simulator import DFTSimulator
+
+
+def prepare_for_analysis(dft):
+    """
+    Prepare a DFT for analysis: mark FDEP conflicts and apply the standard
+    set of DFT-to-CTMC/MA transformations expected by the model builder.
+
+    :param dft: The DFT to prepare.
+    :return: The prepared DFT.
+    """
+    compute_dependency_conflicts(dft, use_smt=False)
+    return transform_dft(dft, unique_constant_be=True, binary_fdeps=True, exponential_distributions=True)

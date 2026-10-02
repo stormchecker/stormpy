@@ -169,3 +169,66 @@ class TestSimulator:
         failable = state.get_failable_elements()
         for f in failable:
             assert False  # no failable elements
+
+    def test_random_fail(self):
+        dft = stormpy.dft.load_dft_json_file(get_example_path("dft", "and.json"))
+        simulator = stormpy.dft.DFTSimulator(dft, seed=5)
+        assert not simulator.is_failed()
+        assert not simulator.is_done()
+        assert simulator.random_fail() == stormpy.dft.SimulationStepResult.SUCCESSFUL
+        assert not simulator.is_done()
+        assert simulator.random_fail() == stormpy.dft.SimulationStepResult.SUCCESSFUL
+        assert simulator.is_failed()
+        assert simulator.is_done()
+        # No further BE can fail
+        assert simulator.random_fail() == stormpy.dft.SimulationStepResult.UNSUCCESSFUL
+
+    def test_simulate_traces(self):
+        dft = stormpy.dft.load_dft_galileo_file(get_example_path("dft", "rc2.dft"))
+        dft = stormpy.dft.prepare_for_analysis(dft)
+        simulator = stormpy.dft.DFTSimulator(dft, seed=5)
+        successes = simulator.simulate_traces(2, 3)
+        assert successes == 1
+
+    def test_let_fail(self):
+        dft = stormpy.dft.load_dft_json_file(get_example_path("dft", "and.json"))
+        simulator = stormpy.dft.DFTSimulator(dft, seed=5)
+
+        assert not simulator.is_next_dependency_failure()
+        candidates = simulator.next_failures()
+        assert set(candidates) == {"B", "C"}
+
+        simulator.let_fail("C")
+        assert not simulator.is_failed()
+        assert simulator.next_failures() == ["B"]
+
+        simulator.let_fail("B")
+        assert simulator.is_failed()
+        assert simulator.is_done()
+        dft_state, element_states = simulator.status()
+        assert dft_state == "DFT is Failed"
+        statuses_by_name = {element.name: status for element, status in element_states.items()}
+        assert statuses_by_name["A"] == "Failed"
+        assert statuses_by_name["B"] in ("Failed", "Don't Care")
+        assert statuses_by_name["C"] in ("Failed", "Don't Care")
+
+    def test_let_fail_dependency(self):
+        dft = stormpy.dft.load_dft_galileo_file(get_example_path("dft", "fdep.dft"))
+        dft = stormpy.dft.prepare_for_analysis(dft)
+        simulator = stormpy.dft.DFTSimulator(dft, seed=5)
+
+        assert not simulator.is_next_dependency_failure()
+        candidates = simulator.next_failures()
+        assert set(candidates) == {"B", "P", "B_Power"}
+
+        simulator.let_fail("B_Power")
+        assert simulator.is_next_dependency_failure()
+
+        simulator.let_fail("B")
+        assert simulator.is_failed()
+        _, element_states = simulator.status()
+        statuses_by_name = {element.name: status for element, status in element_states.items()}
+        assert statuses_by_name["P"] in ("Failed", "Don't Care")
+        assert statuses_by_name["B"] in ("Failed", "Don't Care")
+        assert statuses_by_name["B_Power"] in ("Failed", "Don't Care")
+        assert statuses_by_name["System"] == "Failed"

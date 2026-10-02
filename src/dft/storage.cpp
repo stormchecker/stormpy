@@ -1,7 +1,11 @@
 #include "storage.h"
 
 #include <storm-dft/storage/DFT.h>
+#include <storm-dft/storage/DFTState.h>
+#include <storm-dft/storage/DftModule.h>
 #include <storm-dft/storage/DftSymmetries.h>
+#include <storm-dft/storage/FailableElements.h>
+#include <storm-dft/storage/elements/DFTDependency.h>
 #include <storm-dft/utility/DftModularizer.h>
 #include <storm-dft/utility/RelevantEvents.h>
 #include <storm-dft/utility/SymmetryFinder.h>
@@ -13,7 +17,10 @@
 template<typename ValueType>
 using DFT = storm::dft::storage::DFT<ValueType>;
 template<typename ValueType>
-using DFTElement = storm::dft::storage::elements::DFTElement<ValueType>;
+using DFTState = storm::dft::storage::DFTState<ValueType>;
+typedef storm::dft::storage::FailableElements Failable;
+typedef storm::dft::storage::FailableElements::const_iterator FailableIter;
+using DftIndependentModule = storm::dft::storage::DftIndependentModule;
 
 // requires pycarl.Variable
 std::set<storm::RationalFunctionVariable> getParameters(DFT<storm::RationalFunction> const& dft) {
@@ -50,8 +57,7 @@ void define_dft_typed(py::module& m) {
             "Compute independent modules of DFT")
         .def(
             "symmetries", [](DFT<ValueType>& dft) { return storm::dft::utility::SymmetryFinder<ValueType>::findSymmetries(dft); }, "Compute symmetries in DFT")
-        .def("build_state_generation_info", &DFT<ValueType>::buildStateGenerationInfo, "Build state generation information",
-             py::arg("symmetries") = storm::dft::storage::DftSymmetries())
+        .def("build_state_generation_info", &DFT<ValueType>::buildStateGenerationInfo, "Build state generation information", py::arg("symmetries"))
         .def("set_relevant_events", &DFT<ValueType>::setRelevantEvents, py::arg("relevant_events"), py::arg("allow_dc_for_relevant"));
 }
 
@@ -65,18 +71,6 @@ void define_symmetries(py::module& m) {
         .def("get_group", &storm::dft::storage::DftSymmetries::getSymmetryGroup, "Get symmetry group", py::arg("index"))
         .def("__str__", &streamToString<storm::dft::storage::DftSymmetries>);
 }
-
-template void define_dft_typed<double>(py::module& m);
-template void define_dft_typed<storm::RationalFunction>(py::module& m);
-
-#include <storm-dft/storage/DFTState.h>
-#include <storm-dft/storage/FailableElements.h>
-#include <storm-dft/storage/elements/DFTDependency.h>
-
-template<typename ValueType>
-using DFTState = storm::dft::storage::DFTState<ValueType>;
-typedef storm::dft::storage::FailableElements Failable;
-typedef storm::dft::storage::FailableElements::const_iterator FailableIter;
 
 template<typename ValueType>
 void define_dft_state(py::module& m) {
@@ -140,13 +134,6 @@ void define_failable_elements(py::module& m) {
              "Get dependency which is triggered in a rational-function-valued DFT");
 }
 
-template void define_dft_state<double>(py::module& m);
-template void define_dft_state<storm::RationalFunction>(py::module& m);
-
-#include <storm-dft/storage/DftModule.h>
-
-using DftIndependentModule = storm::dft::storage::DftIndependentModule;
-
 void define_module(py::module& m) {
     py::classh<DftIndependentModule>(m, "DftIndependentModule", "Independent module in DFT")
         .def("is_static", &DftIndependentModule::isStatic, "Whether the module contains only static elements (except in submodules)")
@@ -158,3 +145,8 @@ void define_module(py::module& m) {
         .def("get_subtree", &DftIndependentModule::getSubtree<double>, "Get subtree formed by module", py::arg("dft"))
         .def("get_subtree", &DftIndependentModule::getSubtree<storm::RationalFunction>, "Get subtree formed by module", py::arg("dft"));
 }
+
+template void define_dft_typed<double>(py::module& m);
+template void define_dft_typed<storm::RationalFunction>(py::module& m);
+template void define_dft_state<double>(py::module& m);
+template void define_dft_state<storm::RationalFunction>(py::module& m);

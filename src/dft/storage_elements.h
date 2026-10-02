@@ -2,7 +2,7 @@
 
 #include "src/dft/common.h"
 
-void define_dft_elements(py::module& m);
+void define_storage_elements(py::module& m);
 
 template<typename ValueType>
-void define_dft_elements_typed(py::module& m);
+void define_storage_elements_typed(py::module& m);

@@ -44,7 +44,7 @@ After loading the DFT, we can display some common statistics about the model:
 
 ```{code-cell} python3
 print("DFT with {} elements.".format(dft.nr_elements()))
-print("DFT has {} BEs and {} dynamic elements.".format(dft.nr_be(), dft.nr_dynamic()))
+print("DFT has {} BEs and {} dynamic elements.".format(dft.nr_basic_elements(), dft.nr_dynamic_elements()))
 ```
 
 ## Analyzing DFTs

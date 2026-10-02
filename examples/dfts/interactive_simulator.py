@@ -4,7 +4,6 @@ import pathlib
 
 import stormpy
 import stormpy.dft
-from stormpy.dft.simulator import DftSimulator
 
 
 def get_status(simulator):
@@ -56,11 +55,11 @@ def main():
         dft = stormpy.dft.load_dft_json_file(args.infile)
     else:
         dft = stormpy.dft.load_dft_galileo_file(args.infile)
-    logging.info("Loaded DFT with {} elements, {} BEs and {} dynamic elements.".format(dft.nr_elements(), dft.nr_be(), dft.nr_dynamic()))
+    logging.info("Loaded DFT with {} elements, {} BEs and {} dynamic elements.".format(dft.nr_elements(), dft.nr_basic_elements(), dft.nr_dynamic_elements()))
     dft = stormpy.dft.prepare_for_analysis(dft)
 
     # Create simulator
-    simulator = DftSimulator(dft, seed=42, relevant=["all"])
+    simulator = stormpy.dft.DFTSimulator(dft, seed=42, relevant_events=["all"])
 
     # Get initial state
     logging.info("Initial status:")

@@ -15,7 +15,7 @@ def example_dfts_01():
     path = stormpy.examples.files.dft_galileo_hecs
     dft = stormpy.dft.load_dft_galileo_file(path)
     print("DFT with {} elements.".format(dft.nr_elements()))
-    print("DFT has {} BEs and {} dynamic elements.".format(dft.nr_be(), dft.nr_dynamic()))
+    print("DFT has {} BEs and {} dynamic elements.".format(dft.nr_basic_elements(), dft.nr_dynamic_elements()))
 
     # Analyze
     formula_str = 'T=? [ F "failed" ]'

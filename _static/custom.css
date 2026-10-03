@@ -1,0 +1,40 @@
+/* Compact binder badge at the top of notebook pages */
+.binder-badge {
+    display: inline-block;
+    margin: 0 0 0.5rem;
+}
+.binder-badge img {
+    vertical-align: middle;
+    margin-bottom: 0.15em;
+}
+
+/* Reset gutter for doc containers and notebook cells */
+.container, .cell_output, .cell_input {
+    --nftt-gutter-x: 0rem;
+}
+
+/* Style the output area (border/radius), matching the old nbsphinx look */
+div.cell_output.container div.output {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+}
+
+/* Remove myst_nb green left border on input cells */
+div.cell > div.cell_input {
+    border-left-color: var(--mystnb-source-border-color, #cccccc);
+}
+
+div.cell .highlight {
+    margin-bottom: 0;
+}
+
+.cell_output {
+    margin-top: 0;
+}
+.cell_output .output.stream {
+    margin-top: 0;
+}
+
+div.cell pre {
+    padding: 0.5rem;
+}

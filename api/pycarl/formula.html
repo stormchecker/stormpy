@@ -1,0 +1,1051 @@
+
+<!DOCTYPE html>
+<html class="no-js" lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    
+    <meta name="docsearch:name" content="stormpy" />
+    <meta name="docsearch:package_type" content="" />
+    <meta name="docsearch:release" content="1.14.0" />
+    <meta name="docsearch:version" content="" />
+    
+      <meta name="theme-color" content="#0D6EFD" />
+    
+    
+      <title>Pycarl formula &mdash; stormpy 1.14.0 documentation</title>
+    
+    <link rel="canonical" href="api/pycarl/formula" />
+      <link rel="icon" href="../../_static/favicon.png" />
+          <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8e8a900e" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../../_static/fonts/nunito/stylesheet.css?v=abf98f06" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../../_static/fonts/ubuntu-sans-mono/stylesheet.css?v=8616a587" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../../_static/pygments-dark.css?v=f21207c5" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../../_static/pygments-light.css?v=6c104457" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../../_static/bootstrap-icons.min.css?v=44730005" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../../_static/sphinx-nefertiti-blue.min.css?v=cbfc91e2" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=6c103ecc" /><!-- add (1) -->
+        <link rel="index" title="Index" href="../../genindex.html" />
+        <link rel="search" title="Search" href="../../search.html" />
+        <link rel="top" title="stormpy 1.14.0 documentation" href="#" />
+        <link rel="up" title="Stormpy API Reference" href="../../api.html" />
+        <link rel="next" title="Pycarl parse" href="parse.html" />
+        <link rel="prev" title="Pycarl convert" href="convert.html" />
+    <style>
+      :root {
+        --nftt-body-font-family: "Nunito", var(--nftt-font-sans-serif) !important;
+        --nftt-font-monospace: "Ubuntu Sans Mono", var(--nftt-font-family-monospace) !important;
+        --nftt-project-name-font: var(--nftt-body-font-family);
+        --nftt-documentation-font: var(--nftt-body-font-family);
+        --nftt-doc-headers-font: "Georgia", var(--nftt-documentation-font);}
+    </style>
+  </head>
+  <body>
+    <div id="back-to-top-container" class="position-fixed start-50 translate-middle-x">
+      <button id="back-to-top" type="button" class="d-none btn btn-neutral btn-sm shadow px-4" data-bs-toggle="button">Back to top</button>
+    </div>
+    <header id="snftt-nav-bar" class="navbar navbar-expand-xl navbar-dark nftt-navbar flex-column fixed-top">
+      <div class="skip-links container-fluid visually-hidden-focusable overflow-hidden justify-content-start flex-grow-1">
+        <div class="border-bottom mb-2 pb-2 w-100">
+          <a class="d-none d-md-inline-flex p-2 m-1" href="#sidebar-filter">Skip to index filter</a>
+          <a class="d-inline-flex p-2 m-1" href="#content">Skip to main content</a>
+        </div>
+      </div>
+      <nav class="container-xxl nftt-gutter flex-nowrap" aria-label="Main navigation">
+        <div class="nftt-navbar-toggler">
+          <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle documentation navigation">
+            <i class="bi bi-list"></i>
+          </button>
+        </div>
+          <a
+            href="../../index.html"
+            class="navbar-brand"
+          >
+            <img src="../../_static/storm_logo.png" width="36" height="36" alt="Storm logo"
+              class="project-logo"
+            />
+            <span class="brand-text">stormpy</span><span class="brand-short-text">stormpy</span>
+          </a>
+        
+        
+          <ul class="nftt-header-links-large navbar-nav">
+          
+            
+            
+            
+            
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="../../getting_started.html" data-snftt-hl-id="1"  >Getting Started</a>
+    </li>
+  
+
+  
+    <li class="nav-item dropdown">
+      <a class="snftt-hl nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" href="#" data-snftt-hl-id="2" data-snftt-hl-regexps="doc/*">Documentation</a>
+      <ul class="dropdown-menu">
+        
+          
+          
+          
+          
+  
+    <li >
+      <a class="snftt-hl dropdown-item" href="../../advanced_topics.html" data-snftt-hl-id="3"  >Advanced Examples</a>
+    </li>
+  
+
+  
+    <li><hr class="dropdown-divider"></li>
+  
+
+  
+    <li >
+      <a class="snftt-hl dropdown-item" href="../../using_pycarl.html" data-snftt-hl-id="4"  >Getting Started with Pycarl</a>
+    </li>
+  
+
+        
+      </ul>
+    </li>
+  
+
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="../../api.html" data-snftt-hl-id="5"  data-snftt-hl-id="" data-snftt-hl-regexps="api/*">API</a>
+    </li>
+  
+
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="https://www.stormchecker.org/" data-snftt-hl-id="6"  >Storm</a>
+    </li>
+  
+
+          
+          </ul>
+        
+        <div class="d-flex d-xl-none">
+          <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#nfttSearch" aria-controls="nfttSearch" aria-label="Search">
+            <i class="bi bi-search"></i>
+          </button>
+          <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#nfttNavbar" aria-controls="nfttNavbar" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+        </div>
+        
+<div class="offcanvas-xl offcanvas-end flex-grow-1" tabindex="-1" id="nfttSearch" aria-labelledby="nfttSearchOffcanvasLabel" data-bs-scroll="true">
+  <div class="offcanvas-header px-4 pb-0">
+    <h5 class="offcanvas-title fw-bold" id="nfttSearchOffcanvasLabel">Search the documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#nfttSearch"></button>
+  </div>
+  <div class="offcanvas-body p-4 pt-0 p-xl-0 ps-xl-4">
+    <hr class="d-xl-none text-white-50">
+    <ul class="navbar-nav flex-row align-items-center flex-wrap ms-md-auto">
+      <li class="nav-item col-12 col-xl-auto">
+        <form id="nftt-search-form" action="../../search.html" method="get">
+          <div class="input-group">
+            <input type="text" name="q" class="form-control search-input" placeholder="Search" aria-label="Search" aria-describedby="button-search">
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <button class="btn btn-primary" type="submit" id="button-search" aria-label="Search"><i class="bi bi-search"></i></button>
+          </div>
+        </form>
+      </li>
+    </ul>
+  </div>
+</div>
+
+        <div class="offcanvas-xl offcanvas-end" tabindex="-1" id="nfttNavbar" aria-labelledby="nfttNavbarOffcanvasLabel" data-bs-scroll="true">
+          <div class="offcanvas-header px-4 pb-0">
+            <div class="offcanvas-title navbar-brand" id="nfttNavbarOffcanvasLabel"><span class="brand-short-text">stormpy</span></div>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#nfttNavbar"></button>
+          </div>
+          <div class="offcanvas-body p-4 pt-0 p-xl-0 px-xl-3">
+            <hr class="d-xl-none text-white-50">
+            <ul class="navbar-nav flex-row align-items-center flex-wrap ms-lg-auto">
+              
+                <div class="nftt-header-links-small">
+                  
+                    
+                    
+                    
+                    <div class="d-inline-block">
+                      
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="../../getting_started.html" data-snftt-hl-id="1"  >Getting Started</a>
+    </li>
+  
+
+  
+    <li class="nav-item dropdown">
+      <a class="snftt-hl nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" href="#" data-snftt-hl-id="2" data-snftt-hl-regexps="doc/*">Documentation</a>
+      <ul class="dropdown-menu">
+        
+          
+          
+          
+          
+  
+    <li >
+      <a class="snftt-hl dropdown-item" href="../../advanced_topics.html" data-snftt-hl-id="3"  >Advanced Examples</a>
+    </li>
+  
+
+  
+    <li><hr class="dropdown-divider"></li>
+  
+
+  
+    <li >
+      <a class="snftt-hl dropdown-item" href="../../using_pycarl.html" data-snftt-hl-id="4"  >Getting Started with Pycarl</a>
+    </li>
+  
+
+        
+      </ul>
+    </li>
+  
+
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="../../api.html" data-snftt-hl-id="5"  data-snftt-hl-id="" data-snftt-hl-regexps="api/*">API</a>
+    </li>
+  
+
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="https://www.stormchecker.org/" data-snftt-hl-id="6"  >Storm</a>
+    </li>
+  
+
+                    </div>
+                  
+                  <li class="nav-item col-12 col-xl-auto h-100" aria-hidden="true">
+                    <div class="vr d-none d-xl-flex h-100 mx-xl-2 text-white-50"></div>
+                    <hr class="d-xl-none text-white-50">
+                  </li>
+                </div>
+              
+              
+              <li class="nav-item col-12 col-xl-auto">
+                <a class="nav-link py-2 py-xl-0 px-0 px-xl-2" href="https://github.com/stormchecker/stormpy" target="_blank" rel="noopener">
+                  <div class="d-flex align-items-center">
+                    <div class="me-2">
+                      <i class="bi bi-git size-24"></i>
+                    </div>
+                    <div class="repo d-flex flex-column align-items-center" data-snftt-repo-url="https://github.com/stormchecker/stormpy">
+                      stormpy
+                      <div class="d-flex justify-content-center" data-snftt-repo-metrics>
+                        <span class="pe-2 d-flex justify-content-center align-items-center">
+                          <i class="bi bi-tag size-14"></i>
+                          <span class="repo-metric" data-snftt-repo-tag></span>
+                        </span>
+                        <span class="pe-2 d-flex justify-content-center align-items-center">
+                          <i class="bi bi-star size-14"></i>
+                          <span class="repo-metric" data-snftt-repo-stars></span>
+                        </span>
+                        <span class="d-flex justify-content-center align-items-center">
+                          <i class="bi bi-diagram-2 size-14"></i>
+                          <span class="repo-metric" data-snftt-repo-forks></span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class="nav-item col-12 col-xl-auto h-100" aria-hidden="true">
+                <div class="vr d-none d-xl-flex h-100 mx-xl-2 text-white-50"></div>
+                <hr class="d-xl-none text-white-50">
+              </li>
+              
+              
+              
+              
+              <!-- lightdark-dropdown.html -->
+<li class="nav-item dropdown">
+  <a class="nav-link d-flex py-2 px-0 px-xl-2 dropdown-toggle align-items-center" id="snftt-luz" href="#" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" aria-label="Change appearance">
+    <i class="bi bi-circle-half" data-snftt-luz-icon-active></i>
+    <span id="snftt-luz-text" class="d-xl-none ms-2">Change appearance</span>
+  </a>
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="snftt-luz-text">
+    <li>
+      <h6 class="dropdown-header">Change appearance</h6>
+    </li>
+    <li>
+      <a class="dropdown-item d-flex align-items-center" data-snftt-luz="light" href="#" aria-pressed="false">
+        <span>
+          <i class="bi bi-sun" data-snftt-luz-icon="light"></i>
+        </span>
+        <span class="ms-3">Light</span>
+        <i class="bi bi-check ms-auto"></i>
+      </a>
+    </li>
+    <li>
+      <a class="dropdown-item d-flex align-items-center" data-snftt-luz="dark" href="#" aria-pressed="false">
+        <span>
+          <i class="bi bi-moon-stars" data-snftt-luz-icon="dark"></i>
+        </span>
+        <span class="ms-3">Dark</span>
+        <i class="bi bi-check ms-auto"></i>
+      </a>
+    </li>
+    <li>
+      <a class="dropdown-item current d-flex align-items-center" data-snftt-luz="default" href="#" aria-pressed="false">
+        <span>
+          <i class="bi bi-circle-half" data-snftt-luz-icon="default"></i>
+        </span>
+        <span class="ms-3">Automatic</span>
+        <i class="bi bi-check ms-auto"></i>
+      </a>
+    </li>
+  </ul>
+</li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      
+    </header>
+
+    <div class="container-fluid">
+      <div class="nftt-gutter nftt-page">
+        <aside class="nftt-sidebar ">
+          <div class="nftt-sidebar-content">
+            
+            <div class="title d-none d-xl-none">
+              <i class="bi bi-book"></i>&nbsp;&nbsp;<span>Index</span>
+            </div>
+            <div id="sidebar" tabindex="-1" class="offcanvas-xl offcanvas-start" aria-labelledby="nfttSidebarOffcanvasLabel">
+                <!-- sidebartemplate: "globaltoc.html" --><div class="offcanvas-header border-bottom">
+  <h5 class="offcanvas-title fw-bold" id="nfttSidebarOffcanvasLabel">
+    Index
+  </h5>
+  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#sidebar"></button>
+</div>
+
+<div class="offcanvas-body">
+  <nav class="toc" aria-label="Main menu">
+    <div class="mb-3 p-1 pb-4 border-bottom">
+      <input id="sidebar-filter" type="text" name="filter" class="form-control form-control-sm" placeholder="index filter" aria-label="index filter">
+    </div>
+    <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../advanced_topics.html">Advanced Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../doc/analysis.html">Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../doc/building_models.html">Building Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../doc/models/building_dtmcs.html">Discrete-time Markov chains (DTMCs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../doc/models/building_mdps.html">Markov decision processes (MDPs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../doc/models/building_ctmcs.html">Continuous-time Markov chains (CTMCs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../doc/models/building_mas.html">Markov automata (MAs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../doc/engines.html">Engines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../doc/exploration.html">Exploring Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../doc/simulator.html">Working with Simulators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../doc/reward_models.html">Reward Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../doc/schedulers.html">Working with Schedulers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../doc/shortest_paths.html">Working with Shortest Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../doc/parametric_models.html">Parametric Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../doc/dfts.html">Dynamic Fault Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../doc/gspns.html">Generalized Stochastic Petri Nets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../doc/info.html">Storm(py) Information</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../using_pycarl.html">Getting Started with Pycarl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../development.html">Developer information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributors.html">Contributors</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../api.html">Stormpy API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../core.html">Stormpy.core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../info.html">Stormpy.info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../exceptions.html">Stormpy.exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../logic.html">Stormpy.logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../storage.html">Stormpy.storage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../utility.html">Stormpy.utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dft.html">Stormpy.dft</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gspn.html">Stormpy.gspn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pars.html">Stormpy.pars</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pomdp.html">Stormpy.pomdp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html">Pycarl core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="convert.html">Pycarl convert</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Pycarl formula</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parse.html">Pycarl parse</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav>
+  <template data-toggle-item-template>
+    <button class="btn btn-sm btn-link toctree-expand" type="button">
+      <i class="bi bi-caret-right"></i>
+      <span class="visually-hidden">Toggle menu contents</span>
+    </button>
+  </template>
+</div>
+            </div>
+            
+          </div>
+        </aside>
+        <article id="content" class="nftt-content" role="main">
+          <div><div class="d-flex flex-row justify-content-between">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="../../index.html">Start</a></li>
+        <li class="breadcrumb-item"><a href="../../api.html">Stormpy API Reference</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Pycarl formula</li>
+    </ol>
+  </nav>
+  
+    <div class="fs085">
+        <a href="../../_sources/api/pycarl/formula.rst.txt"  rel="nofollow" aria-label="Show source of this document"><i class="bi bi-file-earmark-code"></i></a>
+    </div>
+  
+</div>
+            
+
+
+    <section id="pycarl-formula">
+<h1>Pycarl formula<a class="headerlink" href="#pycarl-formula" title="Link to this heading">¶</a></h1>
+<section id="module-stormpy.pycarl.formula">
+<span id="number-independent-types"></span><h2>Number independent types<a class="headerlink" href="#module-stormpy.pycarl.formula" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pycarl.formula.FormulaType">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">FormulaType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pycarl.formula.FormulaType" title="Link to this definition">¶</a></dt>
+<dd><dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pycarl.formula.FormulaType.AND">
+<span class="sig-name descname"><span class="pre">AND</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">8</span></span><a class="headerlink" href="#stormpy.pycarl.formula.FormulaType.AND" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pycarl.formula.FormulaType.BITVECTOR">
+<span class="sig-name descname"><span class="pre">BITVECTOR</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">15</span></span><a class="headerlink" href="#stormpy.pycarl.formula.FormulaType.BITVECTOR" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pycarl.formula.FormulaType.BOOL">
+<span class="sig-name descname"><span class="pre">BOOL</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></span><a class="headerlink" href="#stormpy.pycarl.formula.FormulaType.BOOL" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pycarl.formula.FormulaType.CONSTRAINT">
+<span class="sig-name descname"><span class="pre">CONSTRAINT</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">12</span></span><a class="headerlink" href="#stormpy.pycarl.formula.FormulaType.CONSTRAINT" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pycarl.formula.FormulaType.EXISTS">
+<span class="sig-name descname"><span class="pre">EXISTS</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></span><a class="headerlink" href="#stormpy.pycarl.formula.FormulaType.EXISTS" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pycarl.formula.FormulaType.FALSE">
+<span class="sig-name descname"><span class="pre">FALSE</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></span><a class="headerlink" href="#stormpy.pycarl.formula.FormulaType.FALSE" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pycarl.formula.FormulaType.FORALL">
+<span class="sig-name descname"><span class="pre">FORALL</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></span><a class="headerlink" href="#stormpy.pycarl.formula.FormulaType.FORALL" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pycarl.formula.FormulaType.IFF">
+<span class="sig-name descname"><span class="pre">IFF</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">11</span></span><a class="headerlink" href="#stormpy.pycarl.formula.FormulaType.IFF" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pycarl.formula.FormulaType.IMPLIES">
+<span class="sig-name descname"><span class="pre">IMPLIES</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">7</span></span><a class="headerlink" href="#stormpy.pycarl.formula.FormulaType.IMPLIES" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pycarl.formula.FormulaType.ITE">
+<span class="sig-name descname"><span class="pre">ITE</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#stormpy.pycarl.formula.FormulaType.ITE" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pycarl.formula.FormulaType.NOT">
+<span class="sig-name descname"><span class="pre">NOT</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6</span></span><a class="headerlink" href="#stormpy.pycarl.formula.FormulaType.NOT" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pycarl.formula.FormulaType.OR">
+<span class="sig-name descname"><span class="pre">OR</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">9</span></span><a class="headerlink" href="#stormpy.pycarl.formula.FormulaType.OR" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pycarl.formula.FormulaType.TRUE">
+<span class="sig-name descname"><span class="pre">TRUE</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></span><a class="headerlink" href="#stormpy.pycarl.formula.FormulaType.TRUE" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pycarl.formula.FormulaType.UEQ">
+<span class="sig-name descname"><span class="pre">UEQ</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">16</span></span><a class="headerlink" href="#stormpy.pycarl.formula.FormulaType.UEQ" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pycarl.formula.FormulaType.XOR">
+<span class="sig-name descname"><span class="pre">XOR</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10</span></span><a class="headerlink" href="#stormpy.pycarl.formula.FormulaType.XOR" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pycarl.formula.Relation">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">Relation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pycarl.formula.Relation" title="Link to this definition">¶</a></dt>
+<dd><dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pycarl.formula.Relation.EQ">
+<span class="sig-name descname"><span class="pre">EQ</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#stormpy.pycarl.formula.Relation.EQ" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pycarl.formula.Relation.GEQ">
+<span class="sig-name descname"><span class="pre">GEQ</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></span><a class="headerlink" href="#stormpy.pycarl.formula.Relation.GEQ" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pycarl.formula.Relation.GREATER">
+<span class="sig-name descname"><span class="pre">GREATER</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></span><a class="headerlink" href="#stormpy.pycarl.formula.Relation.GREATER" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pycarl.formula.Relation.LEQ">
+<span class="sig-name descname"><span class="pre">LEQ</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></span><a class="headerlink" href="#stormpy.pycarl.formula.Relation.LEQ" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pycarl.formula.Relation.LESS">
+<span class="sig-name descname"><span class="pre">LESS</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></span><a class="headerlink" href="#stormpy.pycarl.formula.Relation.LESS" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stormpy.pycarl.formula.Relation.NEQ">
+<span class="sig-name descname"><span class="pre">NEQ</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></span><a class="headerlink" href="#stormpy.pycarl.formula.Relation.NEQ" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.formula.Relation.friendly_name">
+<span class="sig-name descname"><span class="pre">friendly_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pycarl.formula.Relation" title="stormpy.pycarl.formula.Relation"><span class="pre">stormpy.pycarl.formula.Relation</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#stormpy.pycarl.formula.Relation.friendly_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-stormpy.pycarl.gmp.formula">
+<span id="number-dependent-types-gmp"></span><h2>Number dependent types (gmp)<a class="headerlink" href="#module-stormpy.pycarl.gmp.formula" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pycarl.gmp.formula.Constraint">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">Constraint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pycarl.gmp.formula.Constraint" title="Link to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>__init__(self: stormpy.pycarl.formula.Constraint, arg0: bool) -&gt; None</p></li>
+<li><p>__init__(self: stormpy.pycarl.formula.Constraint, var: stormpy.pycarl._pycarl_core.Variable, rel: stormpy.pycarl.formula.Relation, bound: stormpy.pycarl.gmp.Rational) -&gt; None</p></li>
+<li><p>__init__(self: stormpy.pycarl.formula.Constraint, arg0: stormpy.pycarl.gmp.Polynomial, arg1: stormpy.pycarl.formula.Relation) -&gt; None</p></li>
+</ol>
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.pycarl.gmp.formula.Constraint.lhs">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">lhs</span></span><a class="headerlink" href="#stormpy.pycarl.gmp.formula.Constraint.lhs" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.pycarl.gmp.formula.Constraint.relation">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">relation</span></span><a class="headerlink" href="#stormpy.pycarl.gmp.formula.Constraint.relation" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.gmp.formula.Constraint.to_smt2">
+<span class="sig-name descname"><span class="pre">to_smt2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pycarl.cln.formula.Constraint" title="stormpy.pycarl.formula.Constraint"><span class="pre">stormpy.pycarl.formula.Constraint</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#stormpy.pycarl.gmp.formula.Constraint.to_smt2" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pycarl.gmp.formula.Formula">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">Formula</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pycarl.gmp.formula.Formula" title="Link to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>__init__(self: stormpy.pycarl.formula.Formula, arg0: stormpy.pycarl._pycarl_core.Variable) -&gt; None</p></li>
+</ol>
+<p>Create Formula given Boolean variable</p>
+<ol class="arabic simple" start="2">
+<li><p>__init__(self: stormpy.pycarl.formula.Formula, arg0: stormpy.pycarl.formula.Constraint) -&gt; None</p></li>
+<li><p>__init__(self: stormpy.pycarl.formula.Formula, arg0: stormpy.pycarl.formula.FormulaType, arg1: stormpy.pycarl.formula.Formula) -&gt; None</p></li>
+<li><p>__init__(self: stormpy.pycarl.formula.Formula, arg0: stormpy.pycarl.formula.FormulaType, arg1: collections.abc.Sequence[stormpy.pycarl.formula.Formula]) -&gt; None</p></li>
+<li><p>__init__(self: stormpy.pycarl.formula.Formula, arg0: bool) -&gt; None</p></li>
+</ol>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.gmp.formula.Formula.get_constraint">
+<span class="sig-name descname"><span class="pre">get_constraint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula" title="stormpy.pycarl.formula.Formula"><span class="pre">stormpy.pycarl.formula.Formula</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.pycarl.cln.formula.Constraint" title="stormpy.pycarl.formula.Constraint"><span class="pre">stormpy.pycarl.formula.Constraint</span></a></span></span><a class="headerlink" href="#stormpy.pycarl.gmp.formula.Formula.get_constraint" title="Link to this definition">¶</a></dt>
+<dd><p>Get constraint of constraint formula</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.gmp.formula.Formula.get_implication_conclusion">
+<span class="sig-name descname"><span class="pre">get_implication_conclusion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula" title="stormpy.pycarl.formula.Formula"><span class="pre">stormpy.pycarl.formula.Formula</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula" title="stormpy.pycarl.formula.Formula"><span class="pre">stormpy.pycarl.formula.Formula</span></a></span></span><a class="headerlink" href="#stormpy.pycarl.gmp.formula.Formula.get_implication_conclusion" title="Link to this definition">¶</a></dt>
+<dd><p>Get conclusion of implication formula</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.gmp.formula.Formula.get_implication_premise">
+<span class="sig-name descname"><span class="pre">get_implication_premise</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula" title="stormpy.pycarl.formula.Formula"><span class="pre">stormpy.pycarl.formula.Formula</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula" title="stormpy.pycarl.formula.Formula"><span class="pre">stormpy.pycarl.formula.Formula</span></a></span></span><a class="headerlink" href="#stormpy.pycarl.gmp.formula.Formula.get_implication_premise" title="Link to this definition">¶</a></dt>
+<dd><p>Get premise of implication formula</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.gmp.formula.Formula.get_ite_condition">
+<span class="sig-name descname"><span class="pre">get_ite_condition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula" title="stormpy.pycarl.formula.Formula"><span class="pre">stormpy.pycarl.formula.Formula</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula" title="stormpy.pycarl.formula.Formula"><span class="pre">stormpy.pycarl.formula.Formula</span></a></span></span><a class="headerlink" href="#stormpy.pycarl.gmp.formula.Formula.get_ite_condition" title="Link to this definition">¶</a></dt>
+<dd><p>Get condition of ITE formula</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.gmp.formula.Formula.get_ite_first_case">
+<span class="sig-name descname"><span class="pre">get_ite_first_case</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula" title="stormpy.pycarl.formula.Formula"><span class="pre">stormpy.pycarl.formula.Formula</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula" title="stormpy.pycarl.formula.Formula"><span class="pre">stormpy.pycarl.formula.Formula</span></a></span></span><a class="headerlink" href="#stormpy.pycarl.gmp.formula.Formula.get_ite_first_case" title="Link to this definition">¶</a></dt>
+<dd><p>Get then case of ITE formula</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.gmp.formula.Formula.get_ite_second_case">
+<span class="sig-name descname"><span class="pre">get_ite_second_case</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula" title="stormpy.pycarl.formula.Formula"><span class="pre">stormpy.pycarl.formula.Formula</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula" title="stormpy.pycarl.formula.Formula"><span class="pre">stormpy.pycarl.formula.Formula</span></a></span></span><a class="headerlink" href="#stormpy.pycarl.gmp.formula.Formula.get_ite_second_case" title="Link to this definition">¶</a></dt>
+<dd><p>Get else case of ITE formula</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.gmp.formula.Formula.get_negation_subformula">
+<span class="sig-name descname"><span class="pre">get_negation_subformula</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula" title="stormpy.pycarl.formula.Formula"><span class="pre">stormpy.pycarl.formula.Formula</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula" title="stormpy.pycarl.formula.Formula"><span class="pre">stormpy.pycarl.formula.Formula</span></a></span></span><a class="headerlink" href="#stormpy.pycarl.gmp.formula.Formula.get_negation_subformula" title="Link to this definition">¶</a></dt>
+<dd><p>Get subformula of negation formula</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.gmp.formula.Formula.get_subformulas">
+<span class="sig-name descname"><span class="pre">get_subformulas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula" title="stormpy.pycarl.formula.Formula"><span class="pre">stormpy.pycarl.formula.Formula</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula" title="stormpy.pycarl.formula.Formula"><span class="pre">stormpy.pycarl.formula.Formula</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#stormpy.pycarl.gmp.formula.Formula.get_subformulas" title="Link to this definition">¶</a></dt>
+<dd><p>Get list of subformulas for n-ary formula</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.gmp.formula.Formula.to_smt2">
+<span class="sig-name descname"><span class="pre">to_smt2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula" title="stormpy.pycarl.formula.Formula"><span class="pre">stormpy.pycarl.formula.Formula</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#stormpy.pycarl.gmp.formula.Formula.to_smt2" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.pycarl.gmp.formula.Formula.type">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#stormpy.pycarl.gmp.formula.Formula.type" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pycarl.gmp.formula.SimpleConstraint">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">SimpleConstraint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pycarl.gmp.formula.SimpleConstraint" title="Link to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>__init__(self: stormpy.pycarl.formula.SimpleConstraint, arg0: bool) -&gt; None</p></li>
+<li><p>__init__(self: stormpy.pycarl.formula.SimpleConstraint, arg0: stormpy.pycarl.gmp.Polynomial, arg1: stormpy.pycarl.formula.Relation) -&gt; None</p></li>
+</ol>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.gmp.formula.SimpleConstraint.lhs">
+<span class="sig-name descname"><span class="pre">lhs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pycarl.cln.formula.SimpleConstraint" title="stormpy.pycarl.formula.SimpleConstraint"><span class="pre">stormpy.pycarl.formula.SimpleConstraint</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="core.html#stormpy.pycarl.gmp.Polynomial" title="stormpy.pycarl.gmp.Polynomial"><span class="pre">stormpy.pycarl.gmp.Polynomial</span></a></span></span><a class="headerlink" href="#stormpy.pycarl.gmp.formula.SimpleConstraint.lhs" title="Link to this definition">¶</a></dt>
+<dd><p>Get the left hand side of the constraint</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.gmp.formula.SimpleConstraint.rel">
+<span class="sig-name descname"><span class="pre">rel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pycarl.cln.formula.SimpleConstraint" title="stormpy.pycarl.formula.SimpleConstraint"><span class="pre">stormpy.pycarl.formula.SimpleConstraint</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.pycarl.formula.Relation" title="stormpy.pycarl.formula.Relation"><span class="pre">stormpy.pycarl.formula.Relation</span></a></span></span><a class="headerlink" href="#stormpy.pycarl.gmp.formula.SimpleConstraint.rel" title="Link to this definition">¶</a></dt>
+<dd><p>Get the relation of the constraint</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pycarl.gmp.formula.SimpleConstraintRatFunc">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">SimpleConstraintRatFunc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pycarl.gmp.formula.SimpleConstraintRatFunc" title="Link to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>__init__(self: stormpy.pycarl.formula.SimpleConstraintRatFunc, arg0: bool) -&gt; None</p></li>
+<li><p>__init__(self: stormpy.pycarl.formula.SimpleConstraintRatFunc, arg0: stormpy.pycarl.gmp.FactorizedRationalFunction, arg1: stormpy.pycarl.formula.Relation) -&gt; None</p></li>
+</ol>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.gmp.formula.SimpleConstraintRatFunc.lhs">
+<span class="sig-name descname"><span class="pre">lhs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pycarl.cln.formula.SimpleConstraintRatFunc" title="stormpy.pycarl.formula.SimpleConstraintRatFunc"><span class="pre">stormpy.pycarl.formula.SimpleConstraintRatFunc</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="core.html#stormpy.pycarl.gmp.FactorizedRationalFunction" title="stormpy.pycarl.gmp.FactorizedRationalFunction"><span class="pre">stormpy.pycarl.gmp.FactorizedRationalFunction</span></a></span></span><a class="headerlink" href="#stormpy.pycarl.gmp.formula.SimpleConstraintRatFunc.lhs" title="Link to this definition">¶</a></dt>
+<dd><p>Get the left hand side of the constraint</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.gmp.formula.SimpleConstraintRatFunc.rel">
+<span class="sig-name descname"><span class="pre">rel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pycarl.cln.formula.SimpleConstraintRatFunc" title="stormpy.pycarl.formula.SimpleConstraintRatFunc"><span class="pre">stormpy.pycarl.formula.SimpleConstraintRatFunc</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.pycarl.formula.Relation" title="stormpy.pycarl.formula.Relation"><span class="pre">stormpy.pycarl.formula.Relation</span></a></span></span><a class="headerlink" href="#stormpy.pycarl.gmp.formula.SimpleConstraintRatFunc.rel" title="Link to this definition">¶</a></dt>
+<dd><p>Get the relation of the constraint</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-stormpy.pycarl.cln.formula">
+<span id="number-dependent-types-cln"></span><h2>Number dependent types (cln)<a class="headerlink" href="#module-stormpy.pycarl.cln.formula" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pycarl.cln.formula.Constraint">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">Constraint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pycarl.cln.formula.Constraint" title="Link to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>__init__(self: stormpy.pycarl.formula.Constraint, arg0: bool) -&gt; None</p></li>
+<li><p>__init__(self: stormpy.pycarl.formula.Constraint, var: stormpy.pycarl._pycarl_core.Variable, rel: stormpy.pycarl.formula.Relation, bound: stormpy.pycarl.cln.Rational) -&gt; None</p></li>
+<li><p>__init__(self: stormpy.pycarl.formula.Constraint, arg0: stormpy.pycarl.cln.Polynomial, arg1: stormpy.pycarl.formula.Relation) -&gt; None</p></li>
+</ol>
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.pycarl.cln.formula.Constraint.lhs">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">lhs</span></span><a class="headerlink" href="#stormpy.pycarl.cln.formula.Constraint.lhs" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.pycarl.cln.formula.Constraint.relation">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">relation</span></span><a class="headerlink" href="#stormpy.pycarl.cln.formula.Constraint.relation" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.cln.formula.Constraint.to_smt2">
+<span class="sig-name descname"><span class="pre">to_smt2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pycarl.cln.formula.Constraint" title="stormpy.pycarl.formula.Constraint"><span class="pre">stormpy.pycarl.formula.Constraint</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#stormpy.pycarl.cln.formula.Constraint.to_smt2" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pycarl.cln.formula.Formula">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">Formula</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pycarl.cln.formula.Formula" title="Link to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>__init__(self: stormpy.pycarl.formula.Formula, arg0: stormpy.pycarl._pycarl_core.Variable) -&gt; None</p></li>
+</ol>
+<p>Create Formula given Boolean variable</p>
+<ol class="arabic simple" start="2">
+<li><p>__init__(self: stormpy.pycarl.formula.Formula, arg0: stormpy.pycarl.formula.Constraint) -&gt; None</p></li>
+<li><p>__init__(self: stormpy.pycarl.formula.Formula, arg0: stormpy.pycarl.formula.FormulaType, arg1: stormpy.pycarl.formula.Formula) -&gt; None</p></li>
+<li><p>__init__(self: stormpy.pycarl.formula.Formula, arg0: stormpy.pycarl.formula.FormulaType, arg1: collections.abc.Sequence[stormpy.pycarl.formula.Formula]) -&gt; None</p></li>
+<li><p>__init__(self: stormpy.pycarl.formula.Formula, arg0: bool) -&gt; None</p></li>
+</ol>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.cln.formula.Formula.get_constraint">
+<span class="sig-name descname"><span class="pre">get_constraint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula" title="stormpy.pycarl.formula.Formula"><span class="pre">stormpy.pycarl.formula.Formula</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.pycarl.cln.formula.Constraint" title="stormpy.pycarl.formula.Constraint"><span class="pre">stormpy.pycarl.formula.Constraint</span></a></span></span><a class="headerlink" href="#stormpy.pycarl.cln.formula.Formula.get_constraint" title="Link to this definition">¶</a></dt>
+<dd><p>Get constraint of constraint formula</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.cln.formula.Formula.get_implication_conclusion">
+<span class="sig-name descname"><span class="pre">get_implication_conclusion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula" title="stormpy.pycarl.formula.Formula"><span class="pre">stormpy.pycarl.formula.Formula</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula" title="stormpy.pycarl.formula.Formula"><span class="pre">stormpy.pycarl.formula.Formula</span></a></span></span><a class="headerlink" href="#stormpy.pycarl.cln.formula.Formula.get_implication_conclusion" title="Link to this definition">¶</a></dt>
+<dd><p>Get conclusion of implication formula</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.cln.formula.Formula.get_implication_premise">
+<span class="sig-name descname"><span class="pre">get_implication_premise</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula" title="stormpy.pycarl.formula.Formula"><span class="pre">stormpy.pycarl.formula.Formula</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula" title="stormpy.pycarl.formula.Formula"><span class="pre">stormpy.pycarl.formula.Formula</span></a></span></span><a class="headerlink" href="#stormpy.pycarl.cln.formula.Formula.get_implication_premise" title="Link to this definition">¶</a></dt>
+<dd><p>Get premise of implication formula</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.cln.formula.Formula.get_ite_condition">
+<span class="sig-name descname"><span class="pre">get_ite_condition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula" title="stormpy.pycarl.formula.Formula"><span class="pre">stormpy.pycarl.formula.Formula</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula" title="stormpy.pycarl.formula.Formula"><span class="pre">stormpy.pycarl.formula.Formula</span></a></span></span><a class="headerlink" href="#stormpy.pycarl.cln.formula.Formula.get_ite_condition" title="Link to this definition">¶</a></dt>
+<dd><p>Get condition of ITE formula</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.cln.formula.Formula.get_ite_first_case">
+<span class="sig-name descname"><span class="pre">get_ite_first_case</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula" title="stormpy.pycarl.formula.Formula"><span class="pre">stormpy.pycarl.formula.Formula</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula" title="stormpy.pycarl.formula.Formula"><span class="pre">stormpy.pycarl.formula.Formula</span></a></span></span><a class="headerlink" href="#stormpy.pycarl.cln.formula.Formula.get_ite_first_case" title="Link to this definition">¶</a></dt>
+<dd><p>Get then case of ITE formula</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.cln.formula.Formula.get_ite_second_case">
+<span class="sig-name descname"><span class="pre">get_ite_second_case</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula" title="stormpy.pycarl.formula.Formula"><span class="pre">stormpy.pycarl.formula.Formula</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula" title="stormpy.pycarl.formula.Formula"><span class="pre">stormpy.pycarl.formula.Formula</span></a></span></span><a class="headerlink" href="#stormpy.pycarl.cln.formula.Formula.get_ite_second_case" title="Link to this definition">¶</a></dt>
+<dd><p>Get else case of ITE formula</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.cln.formula.Formula.get_negation_subformula">
+<span class="sig-name descname"><span class="pre">get_negation_subformula</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula" title="stormpy.pycarl.formula.Formula"><span class="pre">stormpy.pycarl.formula.Formula</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula" title="stormpy.pycarl.formula.Formula"><span class="pre">stormpy.pycarl.formula.Formula</span></a></span></span><a class="headerlink" href="#stormpy.pycarl.cln.formula.Formula.get_negation_subformula" title="Link to this definition">¶</a></dt>
+<dd><p>Get subformula of negation formula</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.cln.formula.Formula.get_subformulas">
+<span class="sig-name descname"><span class="pre">get_subformulas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula" title="stormpy.pycarl.formula.Formula"><span class="pre">stormpy.pycarl.formula.Formula</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula" title="stormpy.pycarl.formula.Formula"><span class="pre">stormpy.pycarl.formula.Formula</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#stormpy.pycarl.cln.formula.Formula.get_subformulas" title="Link to this definition">¶</a></dt>
+<dd><p>Get list of subformulas for n-ary formula</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.cln.formula.Formula.to_smt2">
+<span class="sig-name descname"><span class="pre">to_smt2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula" title="stormpy.pycarl.formula.Formula"><span class="pre">stormpy.pycarl.formula.Formula</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#stormpy.pycarl.cln.formula.Formula.to_smt2" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.pycarl.cln.formula.Formula.type">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#stormpy.pycarl.cln.formula.Formula.type" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pycarl.cln.formula.SimpleConstraint">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">SimpleConstraint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pycarl.cln.formula.SimpleConstraint" title="Link to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>__init__(self: stormpy.pycarl.formula.SimpleConstraint, arg0: bool) -&gt; None</p></li>
+<li><p>__init__(self: stormpy.pycarl.formula.SimpleConstraint, arg0: stormpy.pycarl.cln.Polynomial, arg1: stormpy.pycarl.formula.Relation) -&gt; None</p></li>
+</ol>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.cln.formula.SimpleConstraint.lhs">
+<span class="sig-name descname"><span class="pre">lhs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pycarl.cln.formula.SimpleConstraint" title="stormpy.pycarl.formula.SimpleConstraint"><span class="pre">stormpy.pycarl.formula.SimpleConstraint</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="core.html#stormpy.pycarl.cln.Polynomial" title="stormpy.pycarl.cln.Polynomial"><span class="pre">stormpy.pycarl.cln.Polynomial</span></a></span></span><a class="headerlink" href="#stormpy.pycarl.cln.formula.SimpleConstraint.lhs" title="Link to this definition">¶</a></dt>
+<dd><p>Get the left hand side of the constraint</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.cln.formula.SimpleConstraint.rel">
+<span class="sig-name descname"><span class="pre">rel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pycarl.cln.formula.SimpleConstraint" title="stormpy.pycarl.formula.SimpleConstraint"><span class="pre">stormpy.pycarl.formula.SimpleConstraint</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.pycarl.formula.Relation" title="stormpy.pycarl.formula.Relation"><span class="pre">stormpy.pycarl.formula.Relation</span></a></span></span><a class="headerlink" href="#stormpy.pycarl.cln.formula.SimpleConstraint.rel" title="Link to this definition">¶</a></dt>
+<dd><p>Get the relation of the constraint</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.pycarl.cln.formula.SimpleConstraintRatFunc">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">SimpleConstraintRatFunc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.pycarl.cln.formula.SimpleConstraintRatFunc" title="Link to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>__init__(self: stormpy.pycarl.formula.SimpleConstraintRatFunc, arg0: bool) -&gt; None</p></li>
+<li><p>__init__(self: stormpy.pycarl.formula.SimpleConstraintRatFunc, arg0: stormpy.pycarl.cln.FactorizedRationalFunction, arg1: stormpy.pycarl.formula.Relation) -&gt; None</p></li>
+</ol>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.cln.formula.SimpleConstraintRatFunc.lhs">
+<span class="sig-name descname"><span class="pre">lhs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pycarl.cln.formula.SimpleConstraintRatFunc" title="stormpy.pycarl.formula.SimpleConstraintRatFunc"><span class="pre">stormpy.pycarl.formula.SimpleConstraintRatFunc</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="core.html#stormpy.pycarl.cln.FactorizedRationalFunction" title="stormpy.pycarl.cln.FactorizedRationalFunction"><span class="pre">stormpy.pycarl.cln.FactorizedRationalFunction</span></a></span></span><a class="headerlink" href="#stormpy.pycarl.cln.formula.SimpleConstraintRatFunc.lhs" title="Link to this definition">¶</a></dt>
+<dd><p>Get the left hand side of the constraint</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.pycarl.cln.formula.SimpleConstraintRatFunc.rel">
+<span class="sig-name descname"><span class="pre">rel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.pycarl.cln.formula.SimpleConstraintRatFunc" title="stormpy.pycarl.formula.SimpleConstraintRatFunc"><span class="pre">stormpy.pycarl.formula.SimpleConstraintRatFunc</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.pycarl.formula.Relation" title="stormpy.pycarl.formula.Relation"><span class="pre">stormpy.pycarl.formula.Relation</span></a></span></span><a class="headerlink" href="#stormpy.pycarl.cln.formula.SimpleConstraintRatFunc.rel" title="Link to this definition">¶</a></dt>
+<dd><p>Get the relation of the constraint</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+</div>
+        </article>
+        <aside class="nftt-toc">
+          
+          <div class="my-sm-1 my-lg-0 ps-xl-3 text-muted">
+            <button class="btn btn-link p-lg-0 mb-2 mb-lg-0 text-decoration-none nftt-toc-toggle d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#tocContents" aria-expanded="false" aria-controls="tocContents"
+            >On this page <i class="ms-2 bi bi-chevron-expand"></i></button>
+            <div class="title d-none d-lg-block">
+              <i class="bi bi-file-earmark-text"></i>&nbsp;&nbsp;<span class="small">On this page</span>
+            </div>
+            <div class="collapse nftt-toc-collapse" id="tocContents">
+              <nav id="TableOfContents">
+                <ul>
+<li><a class="reference internal" href="#">Pycarl formula</a><ul>
+<li><a class="reference internal" href="#module-stormpy.pycarl.formula">Number independent types</a><ul>
+<li><a class="reference internal" href="#stormpy.pycarl.formula.FormulaType"><code class="docutils literal notranslate"><span class="pre">FormulaType</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pycarl.formula.FormulaType.AND"><code class="docutils literal notranslate"><span class="pre">FormulaType.AND</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.formula.FormulaType.BITVECTOR"><code class="docutils literal notranslate"><span class="pre">FormulaType.BITVECTOR</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.formula.FormulaType.BOOL"><code class="docutils literal notranslate"><span class="pre">FormulaType.BOOL</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.formula.FormulaType.CONSTRAINT"><code class="docutils literal notranslate"><span class="pre">FormulaType.CONSTRAINT</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.formula.FormulaType.EXISTS"><code class="docutils literal notranslate"><span class="pre">FormulaType.EXISTS</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.formula.FormulaType.FALSE"><code class="docutils literal notranslate"><span class="pre">FormulaType.FALSE</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.formula.FormulaType.FORALL"><code class="docutils literal notranslate"><span class="pre">FormulaType.FORALL</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.formula.FormulaType.IFF"><code class="docutils literal notranslate"><span class="pre">FormulaType.IFF</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.formula.FormulaType.IMPLIES"><code class="docutils literal notranslate"><span class="pre">FormulaType.IMPLIES</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.formula.FormulaType.ITE"><code class="docutils literal notranslate"><span class="pre">FormulaType.ITE</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.formula.FormulaType.NOT"><code class="docutils literal notranslate"><span class="pre">FormulaType.NOT</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.formula.FormulaType.OR"><code class="docutils literal notranslate"><span class="pre">FormulaType.OR</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.formula.FormulaType.TRUE"><code class="docutils literal notranslate"><span class="pre">FormulaType.TRUE</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.formula.FormulaType.UEQ"><code class="docutils literal notranslate"><span class="pre">FormulaType.UEQ</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.formula.FormulaType.XOR"><code class="docutils literal notranslate"><span class="pre">FormulaType.XOR</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.pycarl.formula.Relation"><code class="docutils literal notranslate"><span class="pre">Relation</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pycarl.formula.Relation.EQ"><code class="docutils literal notranslate"><span class="pre">Relation.EQ</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.formula.Relation.GEQ"><code class="docutils literal notranslate"><span class="pre">Relation.GEQ</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.formula.Relation.GREATER"><code class="docutils literal notranslate"><span class="pre">Relation.GREATER</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.formula.Relation.LEQ"><code class="docutils literal notranslate"><span class="pre">Relation.LEQ</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.formula.Relation.LESS"><code class="docutils literal notranslate"><span class="pre">Relation.LESS</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.formula.Relation.NEQ"><code class="docutils literal notranslate"><span class="pre">Relation.NEQ</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.formula.Relation.friendly_name"><code class="docutils literal notranslate"><span class="pre">Relation.friendly_name()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-stormpy.pycarl.gmp.formula">Number dependent types (gmp)</a><ul>
+<li><a class="reference internal" href="#stormpy.pycarl.gmp.formula.Constraint"><code class="docutils literal notranslate"><span class="pre">Constraint</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pycarl.gmp.formula.Constraint.lhs"><code class="docutils literal notranslate"><span class="pre">Constraint.lhs</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.gmp.formula.Constraint.relation"><code class="docutils literal notranslate"><span class="pre">Constraint.relation</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.gmp.formula.Constraint.to_smt2"><code class="docutils literal notranslate"><span class="pre">Constraint.to_smt2()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.pycarl.gmp.formula.Formula"><code class="docutils literal notranslate"><span class="pre">Formula</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pycarl.gmp.formula.Formula.get_constraint"><code class="docutils literal notranslate"><span class="pre">Formula.get_constraint()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.gmp.formula.Formula.get_implication_conclusion"><code class="docutils literal notranslate"><span class="pre">Formula.get_implication_conclusion()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.gmp.formula.Formula.get_implication_premise"><code class="docutils literal notranslate"><span class="pre">Formula.get_implication_premise()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.gmp.formula.Formula.get_ite_condition"><code class="docutils literal notranslate"><span class="pre">Formula.get_ite_condition()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.gmp.formula.Formula.get_ite_first_case"><code class="docutils literal notranslate"><span class="pre">Formula.get_ite_first_case()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.gmp.formula.Formula.get_ite_second_case"><code class="docutils literal notranslate"><span class="pre">Formula.get_ite_second_case()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.gmp.formula.Formula.get_negation_subformula"><code class="docutils literal notranslate"><span class="pre">Formula.get_negation_subformula()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.gmp.formula.Formula.get_subformulas"><code class="docutils literal notranslate"><span class="pre">Formula.get_subformulas()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.gmp.formula.Formula.to_smt2"><code class="docutils literal notranslate"><span class="pre">Formula.to_smt2()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.gmp.formula.Formula.type"><code class="docutils literal notranslate"><span class="pre">Formula.type</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.pycarl.gmp.formula.SimpleConstraint"><code class="docutils literal notranslate"><span class="pre">SimpleConstraint</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pycarl.gmp.formula.SimpleConstraint.lhs"><code class="docutils literal notranslate"><span class="pre">SimpleConstraint.lhs()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.gmp.formula.SimpleConstraint.rel"><code class="docutils literal notranslate"><span class="pre">SimpleConstraint.rel()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.pycarl.gmp.formula.SimpleConstraintRatFunc"><code class="docutils literal notranslate"><span class="pre">SimpleConstraintRatFunc</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pycarl.gmp.formula.SimpleConstraintRatFunc.lhs"><code class="docutils literal notranslate"><span class="pre">SimpleConstraintRatFunc.lhs()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.gmp.formula.SimpleConstraintRatFunc.rel"><code class="docutils literal notranslate"><span class="pre">SimpleConstraintRatFunc.rel()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-stormpy.pycarl.cln.formula">Number dependent types (cln)</a><ul>
+<li><a class="reference internal" href="#stormpy.pycarl.cln.formula.Constraint"><code class="docutils literal notranslate"><span class="pre">Constraint</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pycarl.cln.formula.Constraint.lhs"><code class="docutils literal notranslate"><span class="pre">Constraint.lhs</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.cln.formula.Constraint.relation"><code class="docutils literal notranslate"><span class="pre">Constraint.relation</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.cln.formula.Constraint.to_smt2"><code class="docutils literal notranslate"><span class="pre">Constraint.to_smt2()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula"><code class="docutils literal notranslate"><span class="pre">Formula</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula.get_constraint"><code class="docutils literal notranslate"><span class="pre">Formula.get_constraint()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula.get_implication_conclusion"><code class="docutils literal notranslate"><span class="pre">Formula.get_implication_conclusion()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula.get_implication_premise"><code class="docutils literal notranslate"><span class="pre">Formula.get_implication_premise()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula.get_ite_condition"><code class="docutils literal notranslate"><span class="pre">Formula.get_ite_condition()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula.get_ite_first_case"><code class="docutils literal notranslate"><span class="pre">Formula.get_ite_first_case()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula.get_ite_second_case"><code class="docutils literal notranslate"><span class="pre">Formula.get_ite_second_case()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula.get_negation_subformula"><code class="docutils literal notranslate"><span class="pre">Formula.get_negation_subformula()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula.get_subformulas"><code class="docutils literal notranslate"><span class="pre">Formula.get_subformulas()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula.to_smt2"><code class="docutils literal notranslate"><span class="pre">Formula.to_smt2()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.cln.formula.Formula.type"><code class="docutils literal notranslate"><span class="pre">Formula.type</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.pycarl.cln.formula.SimpleConstraint"><code class="docutils literal notranslate"><span class="pre">SimpleConstraint</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pycarl.cln.formula.SimpleConstraint.lhs"><code class="docutils literal notranslate"><span class="pre">SimpleConstraint.lhs()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.cln.formula.SimpleConstraint.rel"><code class="docutils literal notranslate"><span class="pre">SimpleConstraint.rel()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.pycarl.cln.formula.SimpleConstraintRatFunc"><code class="docutils literal notranslate"><span class="pre">SimpleConstraintRatFunc</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.pycarl.cln.formula.SimpleConstraintRatFunc.lhs"><code class="docutils literal notranslate"><span class="pre">SimpleConstraintRatFunc.lhs()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.pycarl.cln.formula.SimpleConstraintRatFunc.rel"><code class="docutils literal notranslate"><span class="pre">SimpleConstraintRatFunc.rel()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </nav>
+            </div>
+          </div>
+          
+        </aside>
+      </div>
+    </div>
+
+    <footer class="nftt-footer">
+      <nav id="paginator" class="py-4" aria-label="Documentation navigation">
+    <div class="container">
+      <ul class="pagination justify-content-between mb-0"><li class="d-flex page-item">
+            <a href="convert.html" class="d-flex pe-5 px-lg-5 align-items-end" rel="prev" aria-label="Previous page: Pycarl convert">
+              <span class="prev-page"><i class="bi bi-caret-left"></i></span>
+              <div class="d-none d-sm-flex flex-column">
+                <span class="text-small text-start text-muted">Previous</span>
+                <span class="underline">Pycarl convert</span>
+              </div>
+            </a>
+          </li>
+        <li class="d-flex page-item ms-auto">
+            <a href="parse.html" class="d-flex ps-5 px-lg-5 align-items-end" rel="next" aria-label="Next page: Pycarl parse">
+              <div class="d-flex flex-column">
+                <span class="text-small text-end text-start text-muted">Next</span>
+                <span class="underline">Pycarl parse</span>
+              </div>
+              <span class="next-page"><i class="bi bi-caret-right"></i></span>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </nav>
+
+      <div class="py-5 px-4 px-md-3">
+  <div class="container">
+    
+    <div class="row">
+      <ul id="nftt-footer-links" class="list-unstyled list-separator col-lg-12 pb-2 text-center">
+        
+          <li class="d-inline">
+            <a href="https://stormchecker.github.io/stormpy/"  class="list-item">Documentation</a>
+          </li>
+        
+          <li class="d-inline">
+            <a href="https://pypi.org/project/stormpy/"  class="list-item">Package</a>
+          </li>
+        
+          <li class="d-inline">
+            <a href="https://github.com/stormchecker/stormpy/"  class="list-item">Repository</a>
+          </li>
+        
+          <li class="d-inline">
+            <a href="https://github.com/stormchecker/stormpy/issues"  class="list-item">Issues</a>
+          </li>
+        
+      </ul>
+    </div>
+    
+
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <a class="brand-text d-inline-flex align-items-center mb-2 text-decoration-none" href="/" aria-label="stormpy">
+          <span class="fs-6 fw-bold">stormpy</span>
+        </a>
+        
+          <ul class="list-unstyled small text-muted">
+            <li>2016-2026 Storm Developers</li>
+          </ul>
+        
+        <div class="built-with pt-2">
+          Built with <a href="http://sphinx-doc.org">Sphinx 9.1.0</a> and <a href="https://github.com/danirus/sphinx-nefertiti">Nefertiti 0.9.9</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    </footer>
+
+    <div class="modal modal-xl fade" id="nftt-modal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen-xxl-down modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="nftt-modal-title"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="nftt-modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+    <script src="../../_static/documentation_options.js?v=01009efc"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/docs-versions.js?v=08b0cbfb"></script>
+    <script src="../../_static/sphinx-nefertiti.min.js?v=af404e0e"></script>
+    <script src="../../_static/bootstrap.bundle.min.js?v=c066362f"></script>
+  </body>
+</html>

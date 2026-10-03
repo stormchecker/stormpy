@@ -1,0 +1,1359 @@
+
+<!DOCTYPE html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    
+    <meta name="docsearch:name" content="stormpy" />
+    <meta name="docsearch:package_type" content="" />
+    <meta name="docsearch:release" content="1.14.0" />
+    <meta name="docsearch:version" content="" />
+    
+      <meta name="theme-color" content="#0D6EFD" />
+    
+    
+      <title>Stormpy.gspn &mdash; stormpy 1.14.0 documentation</title>
+    
+    <link rel="canonical" href="api/gspn" />
+      <link rel="icon" href="../_static/favicon.png" />
+          <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8e8a900e" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/fonts/nunito/stylesheet.css?v=abf98f06" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/fonts/ubuntu-sans-mono/stylesheet.css?v=8616a587" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/pygments-dark.css?v=f21207c5" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/pygments-light.css?v=6c104457" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/bootstrap-icons.min.css?v=44730005" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/sphinx-nefertiti-blue.min.css?v=cbfc91e2" /><!-- add (1) -->
+          <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=6c103ecc" /><!-- add (1) -->
+        <link rel="index" title="Index" href="../genindex.html" />
+        <link rel="search" title="Search" href="../search.html" />
+        <link rel="top" title="stormpy 1.14.0 documentation" href="#" />
+        <link rel="up" title="Stormpy API Reference" href="../api.html" />
+        <link rel="next" title="Stormpy.pars" href="pars.html" />
+        <link rel="prev" title="Stormpy.dft" href="dft.html" />
+    <style>
+      :root {
+        --nftt-body-font-family: "Nunito", var(--nftt-font-sans-serif) !important;
+        --nftt-font-monospace: "Ubuntu Sans Mono", var(--nftt-font-family-monospace) !important;
+        --nftt-project-name-font: var(--nftt-body-font-family);
+        --nftt-documentation-font: var(--nftt-body-font-family);
+        --nftt-doc-headers-font: "Georgia", var(--nftt-documentation-font);}
+    </style>
+  </head>
+  <body>
+    <div id="back-to-top-container" class="position-fixed start-50 translate-middle-x">
+      <button id="back-to-top" type="button" class="d-none btn btn-neutral btn-sm shadow px-4" data-bs-toggle="button">Back to top</button>
+    </div>
+    <header id="snftt-nav-bar" class="navbar navbar-expand-xl navbar-dark nftt-navbar flex-column fixed-top">
+      <div class="skip-links container-fluid visually-hidden-focusable overflow-hidden justify-content-start flex-grow-1">
+        <div class="border-bottom mb-2 pb-2 w-100">
+          <a class="d-none d-md-inline-flex p-2 m-1" href="#sidebar-filter">Skip to index filter</a>
+          <a class="d-inline-flex p-2 m-1" href="#content">Skip to main content</a>
+        </div>
+      </div>
+      <nav class="container-xxl nftt-gutter flex-nowrap" aria-label="Main navigation">
+        <div class="nftt-navbar-toggler">
+          <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle documentation navigation">
+            <i class="bi bi-list"></i>
+          </button>
+        </div>
+          <a
+            href="../index.html"
+            class="navbar-brand"
+          >
+            <img src="../_static/storm_logo.png" width="36" height="36" alt="Storm logo"
+              class="project-logo"
+            />
+            <span class="brand-text">stormpy</span><span class="brand-short-text">stormpy</span>
+          </a>
+        
+        
+          <ul class="nftt-header-links-large navbar-nav">
+          
+            
+            
+            
+            
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="../getting_started.html" data-snftt-hl-id="1"  >Getting Started</a>
+    </li>
+  
+
+  
+    <li class="nav-item dropdown">
+      <a class="snftt-hl nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" href="#" data-snftt-hl-id="2" data-snftt-hl-regexps="doc/*">Documentation</a>
+      <ul class="dropdown-menu">
+        
+          
+          
+          
+          
+  
+    <li >
+      <a class="snftt-hl dropdown-item" href="../advanced_topics.html" data-snftt-hl-id="3"  >Advanced Examples</a>
+    </li>
+  
+
+  
+    <li><hr class="dropdown-divider"></li>
+  
+
+  
+    <li >
+      <a class="snftt-hl dropdown-item" href="../using_pycarl.html" data-snftt-hl-id="4"  >Getting Started with Pycarl</a>
+    </li>
+  
+
+        
+      </ul>
+    </li>
+  
+
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="../api.html" data-snftt-hl-id="5"  data-snftt-hl-id="" data-snftt-hl-regexps="api/*">API</a>
+    </li>
+  
+
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="https://www.stormchecker.org/" data-snftt-hl-id="6"  >Storm</a>
+    </li>
+  
+
+          
+          </ul>
+        
+        <div class="d-flex d-xl-none">
+          <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#nfttSearch" aria-controls="nfttSearch" aria-label="Search">
+            <i class="bi bi-search"></i>
+          </button>
+          <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#nfttNavbar" aria-controls="nfttNavbar" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+        </div>
+        
+<div class="offcanvas-xl offcanvas-end flex-grow-1" tabindex="-1" id="nfttSearch" aria-labelledby="nfttSearchOffcanvasLabel" data-bs-scroll="true">
+  <div class="offcanvas-header px-4 pb-0">
+    <h5 class="offcanvas-title fw-bold" id="nfttSearchOffcanvasLabel">Search the documentation</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#nfttSearch"></button>
+  </div>
+  <div class="offcanvas-body p-4 pt-0 p-xl-0 ps-xl-4">
+    <hr class="d-xl-none text-white-50">
+    <ul class="navbar-nav flex-row align-items-center flex-wrap ms-md-auto">
+      <li class="nav-item col-12 col-xl-auto">
+        <form id="nftt-search-form" action="../search.html" method="get">
+          <div class="input-group">
+            <input type="text" name="q" class="form-control search-input" placeholder="Search" aria-label="Search" aria-describedby="button-search">
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <button class="btn btn-primary" type="submit" id="button-search" aria-label="Search"><i class="bi bi-search"></i></button>
+          </div>
+        </form>
+      </li>
+    </ul>
+  </div>
+</div>
+
+        <div class="offcanvas-xl offcanvas-end" tabindex="-1" id="nfttNavbar" aria-labelledby="nfttNavbarOffcanvasLabel" data-bs-scroll="true">
+          <div class="offcanvas-header px-4 pb-0">
+            <div class="offcanvas-title navbar-brand" id="nfttNavbarOffcanvasLabel"><span class="brand-short-text">stormpy</span></div>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#nfttNavbar"></button>
+          </div>
+          <div class="offcanvas-body p-4 pt-0 p-xl-0 px-xl-3">
+            <hr class="d-xl-none text-white-50">
+            <ul class="navbar-nav flex-row align-items-center flex-wrap ms-lg-auto">
+              
+                <div class="nftt-header-links-small">
+                  
+                    
+                    
+                    
+                    <div class="d-inline-block">
+                      
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="../getting_started.html" data-snftt-hl-id="1"  >Getting Started</a>
+    </li>
+  
+
+  
+    <li class="nav-item dropdown">
+      <a class="snftt-hl nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" href="#" data-snftt-hl-id="2" data-snftt-hl-regexps="doc/*">Documentation</a>
+      <ul class="dropdown-menu">
+        
+          
+          
+          
+          
+  
+    <li >
+      <a class="snftt-hl dropdown-item" href="../advanced_topics.html" data-snftt-hl-id="3"  >Advanced Examples</a>
+    </li>
+  
+
+  
+    <li><hr class="dropdown-divider"></li>
+  
+
+  
+    <li >
+      <a class="snftt-hl dropdown-item" href="../using_pycarl.html" data-snftt-hl-id="4"  >Getting Started with Pycarl</a>
+    </li>
+  
+
+        
+      </ul>
+    </li>
+  
+
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="../api.html" data-snftt-hl-id="5"  data-snftt-hl-id="" data-snftt-hl-regexps="api/*">API</a>
+    </li>
+  
+
+  
+    <li class="nav-item">
+      <a class="snftt-hl nav-link" href="https://www.stormchecker.org/" data-snftt-hl-id="6"  >Storm</a>
+    </li>
+  
+
+                    </div>
+                  
+                  <li class="nav-item col-12 col-xl-auto h-100" aria-hidden="true">
+                    <div class="vr d-none d-xl-flex h-100 mx-xl-2 text-white-50"></div>
+                    <hr class="d-xl-none text-white-50">
+                  </li>
+                </div>
+              
+              
+              <li class="nav-item col-12 col-xl-auto">
+                <a class="nav-link py-2 py-xl-0 px-0 px-xl-2" href="https://github.com/stormchecker/stormpy" target="_blank" rel="noopener">
+                  <div class="d-flex align-items-center">
+                    <div class="me-2">
+                      <i class="bi bi-git size-24"></i>
+                    </div>
+                    <div class="repo d-flex flex-column align-items-center" data-snftt-repo-url="https://github.com/stormchecker/stormpy">
+                      stormpy
+                      <div class="d-flex justify-content-center" data-snftt-repo-metrics>
+                        <span class="pe-2 d-flex justify-content-center align-items-center">
+                          <i class="bi bi-tag size-14"></i>
+                          <span class="repo-metric" data-snftt-repo-tag></span>
+                        </span>
+                        <span class="pe-2 d-flex justify-content-center align-items-center">
+                          <i class="bi bi-star size-14"></i>
+                          <span class="repo-metric" data-snftt-repo-stars></span>
+                        </span>
+                        <span class="d-flex justify-content-center align-items-center">
+                          <i class="bi bi-diagram-2 size-14"></i>
+                          <span class="repo-metric" data-snftt-repo-forks></span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class="nav-item col-12 col-xl-auto h-100" aria-hidden="true">
+                <div class="vr d-none d-xl-flex h-100 mx-xl-2 text-white-50"></div>
+                <hr class="d-xl-none text-white-50">
+              </li>
+              
+              
+              
+              
+              <!-- lightdark-dropdown.html -->
+<li class="nav-item dropdown">
+  <a class="nav-link d-flex py-2 px-0 px-xl-2 dropdown-toggle align-items-center" id="snftt-luz" href="#" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" aria-label="Change appearance">
+    <i class="bi bi-circle-half" data-snftt-luz-icon-active></i>
+    <span id="snftt-luz-text" class="d-xl-none ms-2">Change appearance</span>
+  </a>
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="snftt-luz-text">
+    <li>
+      <h6 class="dropdown-header">Change appearance</h6>
+    </li>
+    <li>
+      <a class="dropdown-item d-flex align-items-center" data-snftt-luz="light" href="#" aria-pressed="false">
+        <span>
+          <i class="bi bi-sun" data-snftt-luz-icon="light"></i>
+        </span>
+        <span class="ms-3">Light</span>
+        <i class="bi bi-check ms-auto"></i>
+      </a>
+    </li>
+    <li>
+      <a class="dropdown-item d-flex align-items-center" data-snftt-luz="dark" href="#" aria-pressed="false">
+        <span>
+          <i class="bi bi-moon-stars" data-snftt-luz-icon="dark"></i>
+        </span>
+        <span class="ms-3">Dark</span>
+        <i class="bi bi-check ms-auto"></i>
+      </a>
+    </li>
+    <li>
+      <a class="dropdown-item current d-flex align-items-center" data-snftt-luz="default" href="#" aria-pressed="false">
+        <span>
+          <i class="bi bi-circle-half" data-snftt-luz-icon="default"></i>
+        </span>
+        <span class="ms-3">Automatic</span>
+        <i class="bi bi-check ms-auto"></i>
+      </a>
+    </li>
+  </ul>
+</li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      
+    </header>
+
+    <div class="container-fluid">
+      <div class="nftt-gutter nftt-page">
+        <aside class="nftt-sidebar ">
+          <div class="nftt-sidebar-content">
+            
+            <div class="title d-none d-xl-none">
+              <i class="bi bi-book"></i>&nbsp;&nbsp;<span>Index</span>
+            </div>
+            <div id="sidebar" tabindex="-1" class="offcanvas-xl offcanvas-start" aria-labelledby="nfttSidebarOffcanvasLabel">
+                <!-- sidebartemplate: "globaltoc.html" --><div class="offcanvas-header border-bottom">
+  <h5 class="offcanvas-title fw-bold" id="nfttSidebarOffcanvasLabel">
+    Index
+  </h5>
+  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#sidebar"></button>
+</div>
+
+<div class="offcanvas-body">
+  <nav class="toc" aria-label="Main menu">
+    <div class="mb-3 p-1 pb-4 border-bottom">
+      <input id="sidebar-filter" type="text" name="filter" class="form-control form-control-sm" placeholder="index filter" aria-label="index filter">
+    </div>
+    <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_topics.html">Advanced Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../doc/analysis.html">Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/building_models.html">Building Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/models/building_dtmcs.html">Discrete-time Markov chains (DTMCs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/models/building_mdps.html">Markov decision processes (MDPs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/models/building_ctmcs.html">Continuous-time Markov chains (CTMCs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/models/building_mas.html">Markov automata (MAs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/engines.html">Engines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/exploration.html">Exploring Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/simulator.html">Working with Simulators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/reward_models.html">Reward Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/schedulers.html">Working with Schedulers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/shortest_paths.html">Working with Shortest Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/parametric_models.html">Parametric Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/dfts.html">Dynamic Fault Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/gspns.html">Generalized Stochastic Petri Nets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../doc/info.html">Storm(py) Information</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../using_pycarl.html">Getting Started with Pycarl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development.html">Developer information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributors.html">Contributors</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">Stormpy API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="core.html">Stormpy.core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="info.html">Stormpy.info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html">Stormpy.exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logic.html">Stormpy.logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="storage.html">Stormpy.storage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utility.html">Stormpy.utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dft.html">Stormpy.dft</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Stormpy.gspn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pars.html">Stormpy.pars</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp.html">Stormpy.pomdp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycarl/core.html">Pycarl core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycarl/convert.html">Pycarl convert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycarl/formula.html">Pycarl formula</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycarl/parse.html">Pycarl parse</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav>
+  <template data-toggle-item-template>
+    <button class="btn btn-sm btn-link toctree-expand" type="button">
+      <i class="bi bi-caret-right"></i>
+      <span class="visually-hidden">Toggle menu contents</span>
+    </button>
+  </template>
+</div>
+            </div>
+            
+          </div>
+        </aside>
+        <article id="content" class="nftt-content" role="main">
+          <div><div class="d-flex flex-row justify-content-between">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="../index.html">Start</a></li>
+        <li class="breadcrumb-item"><a href="../api.html">Stormpy API Reference</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Stormpy.gspn</li>
+    </ol>
+  </nav>
+  
+    <div class="fs085">
+        <a href="../_sources/api/gspn.rst.txt"  rel="nofollow" aria-label="Show source of this document"><i class="bi bi-file-earmark-code"></i></a>
+    </div>
+  
+</div>
+            
+
+
+    <section id="module-stormpy.gspn">
+<span id="stormpy-gspn"></span><h1>Stormpy.gspn<a class="headerlink" href="#module-stormpy.gspn" title="Link to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPN">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">GSPN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">self:</span> <span class="pre">stormpy.gspn._gspn.GSPN,</span> <span class="pre">name:</span> <span class="pre">str,</span> <span class="pre">places:</span> <span class="pre">collections.abc.Sequence[storm::gspn::Place],</span> <span class="pre">immediate_transitions:</span> <span class="pre">collections.abc.Sequence[storm::gspn::ImmediateTransition&lt;double&gt;],</span> <span class="pre">timed_transitions:</span> <span class="pre">collections.abc.Sequence[storm::gspn::TimedTransition&lt;double&gt;],</span> <span class="pre">partitions:</span> <span class="pre">collections.abc.Sequence[storm::gspn::TransitionPartition],</span> <span class="pre">expression_manager:</span> <span class="pre">stormpy.storage._storage.ExpressionManager,</span> <span class="pre">constants_substitution:</span> <span class="pre">collections.abc.Mapping[stormpy.storage._storage.Variable,</span> <span class="pre">stormpy.storage._storage.Expression]</span> <span class="pre">=</span> <span class="pre">{}</span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.gspn.GSPN" title="Link to this definition">¶</a></dt>
+<dd><p>Generalized Stochastic Petri Net</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPN.export_gspn_pnml_file">
+<span class="sig-name descname"><span class="pre">export_gspn_pnml_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.GSPN" title="stormpy.gspn._gspn.GSPN"><span class="pre">stormpy.gspn._gspn.GSPN</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.gspn.GSPN.export_gspn_pnml_file" title="Link to this definition">¶</a></dt>
+<dd><p>Export GSPN to PNML file</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPN.export_gspn_pnpro_file">
+<span class="sig-name descname"><span class="pre">export_gspn_pnpro_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.GSPN" title="stormpy.gspn._gspn.GSPN"><span class="pre">stormpy.gspn._gspn.GSPN</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.gspn.GSPN.export_gspn_pnpro_file" title="Link to this definition">¶</a></dt>
+<dd><p>Export GSPN to PNPRO file</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPN.get_immediate_transition">
+<span class="sig-name descname"><span class="pre">get_immediate_transition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.GSPN" title="stormpy.gspn._gspn.GSPN"><span class="pre">stormpy.gspn._gspn.GSPN</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">storm::gspn::ImmediateTransition&lt;double&gt;</span></span></span><a class="headerlink" href="#stormpy.gspn.GSPN.get_immediate_transition" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the immediate transition with the corresponding name</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPN.get_immediate_transitions">
+<span class="sig-name descname"><span class="pre">get_immediate_transitions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.GSPN" title="stormpy.gspn._gspn.GSPN"><span class="pre">stormpy.gspn._gspn.GSPN</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list[storm::gspn::ImmediateTransition&lt;double&gt;]</span></span></span><a class="headerlink" href="#stormpy.gspn.GSPN.get_immediate_transitions" title="Link to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Returns the immediate transitions of this GSPN.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[stormpy.ImmediateTransition]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPN.get_initial_marking">
+<span class="sig-name descname"><span class="pre">get_initial_marking</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.GSPN" title="stormpy.gspn._gspn.GSPN"><span class="pre">stormpy.gspn._gspn.GSPN</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">collections.abc.Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">storm::gspn::Marking</span></span></span><a class="headerlink" href="#stormpy.gspn.GSPN.get_initial_marking" title="Link to this definition">¶</a></dt>
+<dd><p>Computes the initial marking of this GSPN</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPN.get_name">
+<span class="sig-name descname"><span class="pre">get_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.GSPN" title="stormpy.gspn._gspn.GSPN"><span class="pre">stormpy.gspn._gspn.GSPN</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#stormpy.gspn.GSPN.get_name" title="Link to this definition">¶</a></dt>
+<dd><p>Get name of GSPN</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPN.get_number_of_immediate_transitions">
+<span class="sig-name descname"><span class="pre">get_number_of_immediate_transitions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.GSPN" title="stormpy.gspn._gspn.GSPN"><span class="pre">stormpy.gspn._gspn.GSPN</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#stormpy.gspn.GSPN.get_number_of_immediate_transitions" title="Link to this definition">¶</a></dt>
+<dd><p>Get the number of immediate transitions in this GSPN</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPN.get_number_of_places">
+<span class="sig-name descname"><span class="pre">get_number_of_places</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.GSPN" title="stormpy.gspn._gspn.GSPN"><span class="pre">stormpy.gspn._gspn.GSPN</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#stormpy.gspn.GSPN.get_number_of_places" title="Link to this definition">¶</a></dt>
+<dd><p>Get the number of places in this GSPN</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPN.get_number_of_timed_transitions">
+<span class="sig-name descname"><span class="pre">get_number_of_timed_transitions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.GSPN" title="stormpy.gspn._gspn.GSPN"><span class="pre">stormpy.gspn._gspn.GSPN</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#stormpy.gspn.GSPN.get_number_of_timed_transitions" title="Link to this definition">¶</a></dt>
+<dd><p>Get the number of timed transitions in this GSPN</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPN.get_partitions">
+<span class="sig-name descname"><span class="pre">get_partitions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.GSPN" title="stormpy.gspn._gspn.GSPN"><span class="pre">stormpy.gspn._gspn.GSPN</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list[storm::gspn::TransitionPartition]</span></span></span><a class="headerlink" href="#stormpy.gspn.GSPN.get_partitions" title="Link to this definition">¶</a></dt>
+<dd><p>Get the partitions of this GSPN</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPN.get_place">
+<span class="sig-name descname"><span class="pre">get_place</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.gspn.GSPN.get_place" title="Link to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic">
+<li><p>get_place(self: stormpy.gspn._gspn.GSPN, id: typing.SupportsInt | typing.SupportsIndex) -&gt; storm::gspn::Place</p>
+<blockquote>
+<div><blockquote>
+<div><p>Returns the place with the corresponding id.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">param uint64_t id<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The ID of the place.</p>
+</dd>
+<dt class="field-even">rtype<span class="colon">:</span></dt>
+<dd class="field-even"><p>stormpy.Place</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p>get_place(self: stormpy.gspn._gspn.GSPN, name: str) -&gt; storm::gspn::Place</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPN.get_places">
+<span class="sig-name descname"><span class="pre">get_places</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.GSPN" title="stormpy.gspn._gspn.GSPN"><span class="pre">stormpy.gspn._gspn.GSPN</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list[storm::gspn::Place]</span></span></span><a class="headerlink" href="#stormpy.gspn.GSPN.get_places" title="Link to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Returns a vector of the places of this GSPN.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[stormpy.Place]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPN.get_timed_transition">
+<span class="sig-name descname"><span class="pre">get_timed_transition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.GSPN" title="stormpy.gspn._gspn.GSPN"><span class="pre">stormpy.gspn._gspn.GSPN</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">storm::gspn::TimedTransition&lt;double&gt;</span></span></span><a class="headerlink" href="#stormpy.gspn.GSPN.get_timed_transition" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the timed transition with the corresponding name</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPN.get_timed_transitions">
+<span class="sig-name descname"><span class="pre">get_timed_transitions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.GSPN" title="stormpy.gspn._gspn.GSPN"><span class="pre">stormpy.gspn._gspn.GSPN</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list[storm::gspn::TimedTransition&lt;double&gt;]</span></span></span><a class="headerlink" href="#stormpy.gspn.GSPN.get_timed_transitions" title="Link to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Returns a vector of the timed transitions of this GSPN.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[stormpy.TimedTransition]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPN.get_transition">
+<span class="sig-name descname"><span class="pre">get_transition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.GSPN" title="stormpy.gspn._gspn.GSPN"><span class="pre">stormpy.gspn._gspn.GSPN</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">storm::gspn::Transition</span></span></span><a class="headerlink" href="#stormpy.gspn.GSPN.get_transition" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the transition with the corresponding name</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPN.immediate_transition_id_to_transition_id">
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">immediate_transition_id_to_transition_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#stormpy.gspn.GSPN.immediate_transition_id_to_transition_id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPN.is_valid">
+<span class="sig-name descname"><span class="pre">is_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.GSPN" title="stormpy.gspn._gspn.GSPN"><span class="pre">stormpy.gspn._gspn.GSPN</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#stormpy.gspn.GSPN.is_valid" title="Link to this definition">¶</a></dt>
+<dd><p>Perform some checks</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPN.set_name">
+<span class="sig-name descname"><span class="pre">set_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.GSPN" title="stormpy.gspn._gspn.GSPN"><span class="pre">stormpy.gspn._gspn.GSPN</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.gspn.GSPN.set_name" title="Link to this definition">¶</a></dt>
+<dd><p>Set name of GSPN</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPN.timed_transition_id_to_transition_id">
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">timed_transition_id_to_transition_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#stormpy.gspn.GSPN.timed_transition_id_to_transition_id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPN.transition_id_to_immediate_transition_id">
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">transition_id_to_immediate_transition_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#stormpy.gspn.GSPN.transition_id_to_immediate_transition_id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPN.transition_id_to_timed_transition_id">
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">transition_id_to_timed_transition_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#stormpy.gspn.GSPN.transition_id_to_timed_transition_id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPNBuilder">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">GSPNBuilder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.GSPNBuilder" title="stormpy.gspn._gspn.GSPNBuilder"><span class="pre">stormpy.gspn._gspn.GSPNBuilder</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.gspn.GSPNBuilder" title="Link to this definition">¶</a></dt>
+<dd><p>Generalized Stochastic Petri Net Builder</p>
+<p>Constructor</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPNBuilder.add_immediate_transition">
+<span class="sig-name descname"><span class="pre">add_immediate_transition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.GSPNBuilder" title="stormpy.gspn._gspn.GSPNBuilder"><span class="pre">stormpy.gspn._gspn.GSPNBuilder</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">priority</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#stormpy.gspn.GSPNBuilder.add_immediate_transition" title="Link to this definition">¶</a></dt>
+<dd><p>Add an immediate transition to the GSPN</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPNBuilder.add_inhibition_arc">
+<span class="sig-name descname"><span class="pre">add_inhibition_arc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.gspn.GSPNBuilder.add_inhibition_arc" title="Link to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic">
+<li><p>add_inhibition_arc(self: stormpy.gspn._gspn.GSPNBuilder, from: typing.SupportsInt | typing.SupportsIndex, to: typing.SupportsInt | typing.SupportsIndex, multiplicity: typing.SupportsInt | typing.SupportsIndex = 1) -&gt; None</p>
+<blockquote>
+<div><blockquote>
+<div><p>Add an new inhibition arc from a place to a transition.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">param from<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The ID or name of the place from which the arc is originating.</p>
+</dd>
+<dt class="field-even">type from<span class="colon">:</span></dt>
+<dd class="field-even"><p>uint_64_t or str</p>
+</dd>
+<dt class="field-odd">param to<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The ID or name of the transition to which the arc goes to.</p>
+</dd>
+<dt class="field-even">type to<span class="colon">:</span></dt>
+<dd class="field-even"><p>uint_64_t or str</p>
+</dd>
+<dt class="field-odd">param uint64_t multiplicity<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The multiplicity of the arc, default = 1.</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p>add_inhibition_arc(self: stormpy.gspn._gspn.GSPNBuilder, from: str, to: str, multiplicity: typing.SupportsInt | typing.SupportsIndex = 1) -&gt; None</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPNBuilder.add_input_arc">
+<span class="sig-name descname"><span class="pre">add_input_arc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.gspn.GSPNBuilder.add_input_arc" title="Link to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic">
+<li><p>add_input_arc(self: stormpy.gspn._gspn.GSPNBuilder, from: typing.SupportsInt | typing.SupportsIndex, to: typing.SupportsInt | typing.SupportsIndex, multiplicity: typing.SupportsInt | typing.SupportsIndex = 1) -&gt; None</p>
+<blockquote>
+<div><blockquote>
+<div><p>Add a new input arc from a place to a transition</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">param from<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The ID or name of the place from which the arc is originating.</p>
+</dd>
+<dt class="field-even">type from<span class="colon">:</span></dt>
+<dd class="field-even"><p>uint_64_t or str</p>
+</dd>
+<dt class="field-odd">param uint_64_t to<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The ID or name of the transition to which the arc goes to.</p>
+</dd>
+<dt class="field-even">type from<span class="colon">:</span></dt>
+<dd class="field-even"><p>uint_64_t or str</p>
+</dd>
+<dt class="field-odd">param uint64_t multiplicity<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The multiplicity of the arc, default = 1.</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p>add_input_arc(self: stormpy.gspn._gspn.GSPNBuilder, from: str, to: str, multiplicity: typing.SupportsInt | typing.SupportsIndex = 1) -&gt; None</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPNBuilder.add_normal_arc">
+<span class="sig-name descname"><span class="pre">add_normal_arc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.GSPNBuilder" title="stormpy.gspn._gspn.GSPNBuilder"><span class="pre">stormpy.gspn._gspn.GSPNBuilder</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">from</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multiplicity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.gspn.GSPNBuilder.add_normal_arc" title="Link to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Add an arc from a named element to a named element.
+Can be both input or output arc, but not an inhibition arc.
+Convenience function for textual format parsers.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>from</strong> (<em>str</em>) – Source element in the GSPN from where this arc starts.</p></li>
+<li><p><strong>to</strong> (<em>str</em>) – Target element in the GSPN where this arc ends.</p></li>
+<li><p><strong>multiplicity</strong> (<em>uint64_t</em>) – Multiplicity of the arc, default = 1.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPNBuilder.add_output_arc">
+<span class="sig-name descname"><span class="pre">add_output_arc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.gspn.GSPNBuilder.add_output_arc" title="Link to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic">
+<li><p>add_output_arc(self: stormpy.gspn._gspn.GSPNBuilder, from: typing.SupportsInt | typing.SupportsIndex, to: typing.SupportsInt | typing.SupportsIndex, multiplicity: typing.SupportsInt | typing.SupportsIndex = 1) -&gt; None</p>
+<blockquote>
+<div><blockquote>
+<div><p>Add an new output arc from a transition to a place.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">param from<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The ID or name of the transition from which the arc is originating.</p>
+</dd>
+<dt class="field-even">type from<span class="colon">:</span></dt>
+<dd class="field-even"><p>uint_64_t or str</p>
+</dd>
+<dt class="field-odd">param to<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The ID or name of the place to which the arc goes to.</p>
+</dd>
+<dt class="field-even">type to<span class="colon">:</span></dt>
+<dd class="field-even"><p>uint_64_t or str</p>
+</dd>
+<dt class="field-odd">param uint64_t multiplicity<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The multiplicity of the arc, default = 1.</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p>add_output_arc(self: stormpy.gspn._gspn.GSPNBuilder, from: str, to: str, multiplicity: typing.SupportsInt | typing.SupportsIndex) -&gt; None</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPNBuilder.add_place">
+<span class="sig-name descname"><span class="pre">add_place</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.GSPNBuilder" title="stormpy.gspn._gspn.GSPNBuilder"><span class="pre">stormpy.gspn._gspn.GSPNBuilder</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">capacity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_tokens</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#stormpy.gspn.GSPNBuilder.add_place" title="Link to this definition">¶</a></dt>
+<dd><p>Add a place to the GSPN</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPNBuilder.add_timed_transition">
+<span class="sig-name descname"><span class="pre">add_timed_transition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.gspn.GSPNBuilder.add_timed_transition" title="Link to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>add_timed_transition(self: stormpy.gspn._gspn.GSPNBuilder, priority: typing.SupportsInt | typing.SupportsIndex, rate: typing.SupportsFloat | typing.SupportsIndex, name: str = ‘’) -&gt; int</p></li>
+</ol>
+<p>Add a timed transition to the GSPN</p>
+<ol class="arabic simple" start="2">
+<li><p>add_timed_transition(self: stormpy.gspn._gspn.GSPNBuilder, priority: typing.SupportsInt | typing.SupportsIndex, rate: typing.SupportsFloat | typing.SupportsIndex, num_servers: typing.SupportsInt | typing.SupportsIndex | None, name: str = ‘’) -&gt; int</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPNBuilder.build_gspn">
+<span class="sig-name descname"><span class="pre">build_gspn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.GSPNBuilder" title="stormpy.gspn._gspn.GSPNBuilder"><span class="pre">stormpy.gspn._gspn.GSPNBuilder</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">expression_manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="storage.html#stormpy.storage.ExpressionManager" title="stormpy.storage._storage.ExpressionManager"><span class="pre">stormpy.storage._storage.ExpressionManager</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constants_substitution</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">collections.abc.Mapping</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="storage.html#stormpy.storage.Variable" title="stormpy.storage._storage.Variable"><span class="pre">stormpy.storage._storage.Variable</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="storage.html#stormpy.storage.Expression" title="stormpy.storage._storage.Expression"><span class="pre">stormpy.storage._storage.Expression</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">storm::gspn::GSPN</span></span></span><a class="headerlink" href="#stormpy.gspn.GSPNBuilder.build_gspn" title="Link to this definition">¶</a></dt>
+<dd><p>Construct GSPN</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPNBuilder.set_name">
+<span class="sig-name descname"><span class="pre">set_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.GSPNBuilder" title="stormpy.gspn._gspn.GSPNBuilder"><span class="pre">stormpy.gspn._gspn.GSPNBuilder</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.gspn.GSPNBuilder.set_name" title="Link to this definition">¶</a></dt>
+<dd><p>Set name of GSPN</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPNBuilder.set_place_layout_info">
+<span class="sig-name descname"><span class="pre">set_place_layout_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.GSPNBuilder" title="stormpy.gspn._gspn.GSPNBuilder"><span class="pre">stormpy.gspn._gspn.GSPNBuilder</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">place_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout_info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">storm::gspn::LayoutInfo</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.gspn.GSPNBuilder.set_place_layout_info" title="Link to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Set place layout information.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>uint64_t</em>) – The ID of the place.</p></li>
+<li><p><strong>layout_info</strong> (<em>stormpy.LayoutInfo</em>) – The layout information.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPNBuilder.set_transition_layout_info">
+<span class="sig-name descname"><span class="pre">set_transition_layout_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.GSPNBuilder" title="stormpy.gspn._gspn.GSPNBuilder"><span class="pre">stormpy.gspn._gspn.GSPNBuilder</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">transition_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout_info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">storm::gspn::LayoutInfo</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.gspn.GSPNBuilder.set_transition_layout_info" title="Link to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Set transition layout information.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>uint64_t</em>) – The ID of the transition.</p></li>
+<li><p><strong>layout_info</strong> (<em>stormpy.LayoutInfo</em>) – The layout information.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPNParser">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">GSPNParser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.GSPNParser" title="stormpy.gspn._gspn.GSPNParser"><span class="pre">stormpy.gspn._gspn.GSPNParser</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.gspn.GSPNParser" title="Link to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPNParser.parse">
+<span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.GSPNParser" title="stormpy.gspn._gspn.GSPNParser"><span class="pre">stormpy.gspn._gspn.GSPNParser</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constant_definitions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stormpy.gspn.GSPN" title="stormpy.gspn._gspn.GSPN"><span class="pre">stormpy.gspn._gspn.GSPN</span></a></span></span><a class="headerlink" href="#stormpy.gspn.GSPNParser.parse" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPNToJaniBuilder">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">GSPNToJaniBuilder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.GSPNToJaniBuilder" title="stormpy.gspn._gspn.GSPNToJaniBuilder"><span class="pre">stormpy.gspn._gspn.GSPNToJaniBuilder</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">gspn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.GSPN" title="stormpy.gspn._gspn.GSPN"><span class="pre">stormpy.gspn._gspn.GSPN</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.gspn.GSPNToJaniBuilder" title="Link to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPNToJaniBuilder.build">
+<span class="sig-name descname"><span class="pre">build</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.GSPNToJaniBuilder" title="stormpy.gspn._gspn.GSPNToJaniBuilder"><span class="pre">stormpy.gspn._gspn.GSPNToJaniBuilder</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">automaton_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'gspn_automaton'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="storage.html#stormpy.storage.JaniModel" title="stormpy.storage._storage.JaniModel"><span class="pre">stormpy.storage._storage.JaniModel</span></a></span></span><a class="headerlink" href="#stormpy.gspn.GSPNToJaniBuilder.build" title="Link to this definition">¶</a></dt>
+<dd><p>Build Jani model from GSPN</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.GSPNToJaniBuilder.create_deadlock_properties">
+<span class="sig-name descname"><span class="pre">create_deadlock_properties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.GSPNToJaniBuilder" title="stormpy.gspn._gspn.GSPNToJaniBuilder"><span class="pre">stormpy.gspn._gspn.GSPNToJaniBuilder</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">jani_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="storage.html#stormpy.storage.JaniModel" title="stormpy.storage._storage.JaniModel"><span class="pre">stormpy.storage._storage.JaniModel</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="core.html#stormpy.Property" title="stormpy._core.Property"><span class="pre">stormpy._core.Property</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#stormpy.gspn.GSPNToJaniBuilder.create_deadlock_properties" title="Link to this definition">¶</a></dt>
+<dd><p>Create standard properties for deadlocks</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.gspn.ImmediateTransition">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ImmediateTransition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.ImmediateTransition" title="stormpy.gspn._gspn.ImmediateTransition"><span class="pre">stormpy.gspn._gspn.ImmediateTransition</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.gspn.ImmediateTransition" title="Link to this definition">¶</a></dt>
+<dd><p>ImmediateTransition in a GSPN</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.ImmediateTransition.get_weight">
+<span class="sig-name descname"><span class="pre">get_weight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.ImmediateTransition" title="stormpy.gspn._gspn.ImmediateTransition"><span class="pre">stormpy.gspn._gspn.ImmediateTransition</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#stormpy.gspn.ImmediateTransition.get_weight" title="Link to this definition">¶</a></dt>
+<dd><p>Get weight of this transition</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.ImmediateTransition.no_weight_attached">
+<span class="sig-name descname"><span class="pre">no_weight_attached</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.ImmediateTransition" title="stormpy.gspn._gspn.ImmediateTransition"><span class="pre">stormpy.gspn._gspn.ImmediateTransition</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#stormpy.gspn.ImmediateTransition.no_weight_attached" title="Link to this definition">¶</a></dt>
+<dd><p>True iff no weight is attached</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.ImmediateTransition.set_weight">
+<span class="sig-name descname"><span class="pre">set_weight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.ImmediateTransition" title="stormpy.gspn._gspn.ImmediateTransition"><span class="pre">stormpy.gspn._gspn.ImmediateTransition</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.gspn.ImmediateTransition.set_weight" title="Link to this definition">¶</a></dt>
+<dd><p>Set weight of this transition</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.gspn.LayoutInfo">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">LayoutInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.gspn.LayoutInfo" title="Link to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>__init__(self: stormpy.gspn._gspn.LayoutInfo) -&gt; None</p></li>
+<li><p>__init__(self: stormpy.gspn._gspn.LayoutInfo, x: typing.SupportsFloat | typing.SupportsIndex, y: typing.SupportsFloat | typing.SupportsIndex, rotation: typing.SupportsFloat | typing.SupportsIndex = 0.0) -&gt; None</p></li>
+</ol>
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.gspn.LayoutInfo.rotation">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">rotation</span></span><a class="headerlink" href="#stormpy.gspn.LayoutInfo.rotation" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.gspn.LayoutInfo.x">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">x</span></span><a class="headerlink" href="#stormpy.gspn.LayoutInfo.x" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.gspn.LayoutInfo.y">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">y</span></span><a class="headerlink" href="#stormpy.gspn.LayoutInfo.y" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.gspn.Place">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">Place</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Place" title="stormpy.gspn._gspn.Place"><span class="pre">stormpy.gspn._gspn.Place</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.gspn.Place" title="Link to this definition">¶</a></dt>
+<dd><p>Place in a GSPN</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.Place.get_capacity">
+<span class="sig-name descname"><span class="pre">get_capacity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Place" title="stormpy.gspn._gspn.Place"><span class="pre">stormpy.gspn._gspn.Place</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#stormpy.gspn.Place.get_capacity" title="Link to this definition">¶</a></dt>
+<dd><p>Get the capacity of tokens of this place</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.Place.get_id">
+<span class="sig-name descname"><span class="pre">get_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Place" title="stormpy.gspn._gspn.Place"><span class="pre">stormpy.gspn._gspn.Place</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#stormpy.gspn.Place.get_id" title="Link to this definition">¶</a></dt>
+<dd><p>Get the id of this place</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.Place.get_name">
+<span class="sig-name descname"><span class="pre">get_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Place" title="stormpy.gspn._gspn.Place"><span class="pre">stormpy.gspn._gspn.Place</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#stormpy.gspn.Place.get_name" title="Link to this definition">¶</a></dt>
+<dd><p>Get name of this place</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.Place.get_number_of_initial_tokens">
+<span class="sig-name descname"><span class="pre">get_number_of_initial_tokens</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Place" title="stormpy.gspn._gspn.Place"><span class="pre">stormpy.gspn._gspn.Place</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#stormpy.gspn.Place.get_number_of_initial_tokens" title="Link to this definition">¶</a></dt>
+<dd><p>Get the number of initial tokens of this place</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.Place.has_restricted_capacity">
+<span class="sig-name descname"><span class="pre">has_restricted_capacity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Place" title="stormpy.gspn._gspn.Place"><span class="pre">stormpy.gspn._gspn.Place</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#stormpy.gspn.Place.has_restricted_capacity" title="Link to this definition">¶</a></dt>
+<dd><p>Is capacity of this place restricted</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.Place.set_capacity">
+<span class="sig-name descname"><span class="pre">set_capacity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Place" title="stormpy.gspn._gspn.Place"><span class="pre">stormpy.gspn._gspn.Place</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cap</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.gspn.Place.set_capacity" title="Link to this definition">¶</a></dt>
+<dd><p>Set the capacity of tokens of this place</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.Place.set_name">
+<span class="sig-name descname"><span class="pre">set_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Place" title="stormpy.gspn._gspn.Place"><span class="pre">stormpy.gspn._gspn.Place</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.gspn.Place.set_name" title="Link to this definition">¶</a></dt>
+<dd><p>Set name of this place</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.Place.set_number_of_initial_tokens">
+<span class="sig-name descname"><span class="pre">set_number_of_initial_tokens</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Place" title="stormpy.gspn._gspn.Place"><span class="pre">stormpy.gspn._gspn.Place</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokens</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.gspn.Place.set_number_of_initial_tokens" title="Link to this definition">¶</a></dt>
+<dd><p>Set the number of initial tokens of this place</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.gspn.TimedTransition">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">TimedTransition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.TimedTransition" title="stormpy.gspn._gspn.TimedTransition"><span class="pre">stormpy.gspn._gspn.TimedTransition</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.gspn.TimedTransition" title="Link to this definition">¶</a></dt>
+<dd><p>TimedTransition in a GSPN</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.TimedTransition.get_number_of_servers">
+<span class="sig-name descname"><span class="pre">get_number_of_servers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.TimedTransition" title="stormpy.gspn._gspn.TimedTransition"><span class="pre">stormpy.gspn._gspn.TimedTransition</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#stormpy.gspn.TimedTransition.get_number_of_servers" title="Link to this definition">¶</a></dt>
+<dd><p>Get number of servers</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.TimedTransition.get_rate">
+<span class="sig-name descname"><span class="pre">get_rate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.TimedTransition" title="stormpy.gspn._gspn.TimedTransition"><span class="pre">stormpy.gspn._gspn.TimedTransition</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#stormpy.gspn.TimedTransition.get_rate" title="Link to this definition">¶</a></dt>
+<dd><p>Get rate of this transition</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.TimedTransition.has_infinite_server_semantics">
+<span class="sig-name descname"><span class="pre">has_infinite_server_semantics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.TimedTransition" title="stormpy.gspn._gspn.TimedTransition"><span class="pre">stormpy.gspn._gspn.TimedTransition</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#stormpy.gspn.TimedTransition.has_infinite_server_semantics" title="Link to this definition">¶</a></dt>
+<dd><p>Get semantics of this transition</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.TimedTransition.has_k_server_semantics">
+<span class="sig-name descname"><span class="pre">has_k_server_semantics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.TimedTransition" title="stormpy.gspn._gspn.TimedTransition"><span class="pre">stormpy.gspn._gspn.TimedTransition</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#stormpy.gspn.TimedTransition.has_k_server_semantics" title="Link to this definition">¶</a></dt>
+<dd><p>Get semantics of this transition</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.TimedTransition.has_single_server_semantics">
+<span class="sig-name descname"><span class="pre">has_single_server_semantics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.TimedTransition" title="stormpy.gspn._gspn.TimedTransition"><span class="pre">stormpy.gspn._gspn.TimedTransition</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#stormpy.gspn.TimedTransition.has_single_server_semantics" title="Link to this definition">¶</a></dt>
+<dd><p>Get semantics of this transition</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.TimedTransition.set_infinite_server_semantics">
+<span class="sig-name descname"><span class="pre">set_infinite_server_semantics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.TimedTransition" title="stormpy.gspn._gspn.TimedTransition"><span class="pre">stormpy.gspn._gspn.TimedTransition</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.gspn.TimedTransition.set_infinite_server_semantics" title="Link to this definition">¶</a></dt>
+<dd><p>Set semantics of this transition</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.TimedTransition.set_k_server_semantics">
+<span class="sig-name descname"><span class="pre">set_k_server_semantics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.TimedTransition" title="stormpy.gspn._gspn.TimedTransition"><span class="pre">stormpy.gspn._gspn.TimedTransition</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.gspn.TimedTransition.set_k_server_semantics" title="Link to this definition">¶</a></dt>
+<dd><p>Set semantics of this transition</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.TimedTransition.set_rate">
+<span class="sig-name descname"><span class="pre">set_rate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.TimedTransition" title="stormpy.gspn._gspn.TimedTransition"><span class="pre">stormpy.gspn._gspn.TimedTransition</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.gspn.TimedTransition.set_rate" title="Link to this definition">¶</a></dt>
+<dd><p>Set rate of this transition</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.TimedTransition.set_single_server_semantics">
+<span class="sig-name descname"><span class="pre">set_single_server_semantics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.TimedTransition" title="stormpy.gspn._gspn.TimedTransition"><span class="pre">stormpy.gspn._gspn.TimedTransition</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.gspn.TimedTransition.set_single_server_semantics" title="Link to this definition">¶</a></dt>
+<dd><p>Set semantics of this transition</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.gspn.Transition">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">Transition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Transition" title="stormpy.gspn._gspn.Transition"><span class="pre">stormpy.gspn._gspn.Transition</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.gspn.Transition" title="Link to this definition">¶</a></dt>
+<dd><p>Transition in a GSPN</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.Transition.exists_inhibition_arc">
+<span class="sig-name descname"><span class="pre">exists_inhibition_arc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Transition" title="stormpy.gspn._gspn.Transition"><span class="pre">stormpy.gspn._gspn.Transition</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">place</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Place" title="stormpy.gspn._gspn.Place"><span class="pre">stormpy.gspn._gspn.Place</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#stormpy.gspn.Transition.exists_inhibition_arc" title="Link to this definition">¶</a></dt>
+<dd><p>Check whether the given place is connected to this transition via an inhibition arc.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.Transition.exists_input_arc">
+<span class="sig-name descname"><span class="pre">exists_input_arc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Transition" title="stormpy.gspn._gspn.Transition"><span class="pre">stormpy.gspn._gspn.Transition</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">place</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Place" title="stormpy.gspn._gspn.Place"><span class="pre">stormpy.gspn._gspn.Place</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#stormpy.gspn.Transition.exists_input_arc" title="Link to this definition">¶</a></dt>
+<dd><p>Check whether the given place is connected to this transition via an input arc.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.Transition.exists_output_arc">
+<span class="sig-name descname"><span class="pre">exists_output_arc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Transition" title="stormpy.gspn._gspn.Transition"><span class="pre">stormpy.gspn._gspn.Transition</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">place</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Place" title="stormpy.gspn._gspn.Place"><span class="pre">stormpy.gspn._gspn.Place</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#stormpy.gspn.Transition.exists_output_arc" title="Link to this definition">¶</a></dt>
+<dd><p>Check whether the given place is connected to this transition via an output arc.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.Transition.fire">
+<span class="sig-name descname"><span class="pre">fire</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Transition" title="stormpy.gspn._gspn.Transition"><span class="pre">stormpy.gspn._gspn.Transition</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">marking</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">storm::gspn::Marking</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">storm::gspn::Marking</span></span></span><a class="headerlink" href="#stormpy.gspn.Transition.fire" title="Link to this definition">¶</a></dt>
+<dd><p>Fire the transition if possible.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.Transition.get_id">
+<span class="sig-name descname"><span class="pre">get_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Transition" title="stormpy.gspn._gspn.Transition"><span class="pre">stormpy.gspn._gspn.Transition</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#stormpy.gspn.Transition.get_id" title="Link to this definition">¶</a></dt>
+<dd><p>Get id of this transition</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.Transition.get_inhibition_arc_multiplicity">
+<span class="sig-name descname"><span class="pre">get_inhibition_arc_multiplicity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Transition" title="stormpy.gspn._gspn.Transition"><span class="pre">stormpy.gspn._gspn.Transition</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">place</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Place" title="stormpy.gspn._gspn.Place"><span class="pre">stormpy.gspn._gspn.Place</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#stormpy.gspn.Transition.get_inhibition_arc_multiplicity" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the corresponding multiplicity.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.Transition.get_inhibition_places">
+<span class="sig-name descname"><span class="pre">get_inhibition_places</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Transition" title="stormpy.gspn._gspn.Transition"><span class="pre">stormpy.gspn._gspn.Transition</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#stormpy.gspn.Transition.get_inhibition_places" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.Transition.get_input_arc_multiplicity">
+<span class="sig-name descname"><span class="pre">get_input_arc_multiplicity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Transition" title="stormpy.gspn._gspn.Transition"><span class="pre">stormpy.gspn._gspn.Transition</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">place</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Place" title="stormpy.gspn._gspn.Place"><span class="pre">stormpy.gspn._gspn.Place</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#stormpy.gspn.Transition.get_input_arc_multiplicity" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the corresponding multiplicity.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.Transition.get_input_places">
+<span class="sig-name descname"><span class="pre">get_input_places</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Transition" title="stormpy.gspn._gspn.Transition"><span class="pre">stormpy.gspn._gspn.Transition</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#stormpy.gspn.Transition.get_input_places" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.Transition.get_name">
+<span class="sig-name descname"><span class="pre">get_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Transition" title="stormpy.gspn._gspn.Transition"><span class="pre">stormpy.gspn._gspn.Transition</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#stormpy.gspn.Transition.get_name" title="Link to this definition">¶</a></dt>
+<dd><p>Get name of this transition</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.Transition.get_output_arc_multiplicity">
+<span class="sig-name descname"><span class="pre">get_output_arc_multiplicity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Transition" title="stormpy.gspn._gspn.Transition"><span class="pre">stormpy.gspn._gspn.Transition</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">place</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Place" title="stormpy.gspn._gspn.Place"><span class="pre">stormpy.gspn._gspn.Place</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#stormpy.gspn.Transition.get_output_arc_multiplicity" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the corresponding multiplicity.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.Transition.get_output_places">
+<span class="sig-name descname"><span class="pre">get_output_places</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Transition" title="stormpy.gspn._gspn.Transition"><span class="pre">stormpy.gspn._gspn.Transition</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#stormpy.gspn.Transition.get_output_places" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.Transition.get_priority">
+<span class="sig-name descname"><span class="pre">get_priority</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Transition" title="stormpy.gspn._gspn.Transition"><span class="pre">stormpy.gspn._gspn.Transition</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#stormpy.gspn.Transition.get_priority" title="Link to this definition">¶</a></dt>
+<dd><p>Get priority of this transition</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.Transition.is_enabled">
+<span class="sig-name descname"><span class="pre">is_enabled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Transition" title="stormpy.gspn._gspn.Transition"><span class="pre">stormpy.gspn._gspn.Transition</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">marking</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">storm::gspn::Marking</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#stormpy.gspn.Transition.is_enabled" title="Link to this definition">¶</a></dt>
+<dd><p>Check if the given marking enables the transition.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.Transition.remove_inhibition_arc">
+<span class="sig-name descname"><span class="pre">remove_inhibition_arc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Transition" title="stormpy.gspn._gspn.Transition"><span class="pre">stormpy.gspn._gspn.Transition</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">place</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Place" title="stormpy.gspn._gspn.Place"><span class="pre">stormpy.gspn._gspn.Place</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#stormpy.gspn.Transition.remove_inhibition_arc" title="Link to this definition">¶</a></dt>
+<dd><p>Remove an inhibition arc connected to a given place.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.Transition.remove_input_arc">
+<span class="sig-name descname"><span class="pre">remove_input_arc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Transition" title="stormpy.gspn._gspn.Transition"><span class="pre">stormpy.gspn._gspn.Transition</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">place</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Place" title="stormpy.gspn._gspn.Place"><span class="pre">stormpy.gspn._gspn.Place</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#stormpy.gspn.Transition.remove_input_arc" title="Link to this definition">¶</a></dt>
+<dd><p>Remove an input arc connected to a given place.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.Transition.remove_output_arc">
+<span class="sig-name descname"><span class="pre">remove_output_arc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Transition" title="stormpy.gspn._gspn.Transition"><span class="pre">stormpy.gspn._gspn.Transition</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">place</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Place" title="stormpy.gspn._gspn.Place"><span class="pre">stormpy.gspn._gspn.Place</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#stormpy.gspn.Transition.remove_output_arc" title="Link to this definition">¶</a></dt>
+<dd><p>Remove an output arc connected to a given place.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.Transition.set_inhibition_arc_multiplicity">
+<span class="sig-name descname"><span class="pre">set_inhibition_arc_multiplicity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Transition" title="stormpy.gspn._gspn.Transition"><span class="pre">stormpy.gspn._gspn.Transition</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">place</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Place" title="stormpy.gspn._gspn.Place"><span class="pre">stormpy.gspn._gspn.Place</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">multiplicity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.gspn.Transition.set_inhibition_arc_multiplicity" title="Link to this definition">¶</a></dt>
+<dd><p>Set the multiplicity of the inhibition arc originating from the place.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.Transition.set_input_arc_multiplicity">
+<span class="sig-name descname"><span class="pre">set_input_arc_multiplicity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Transition" title="stormpy.gspn._gspn.Transition"><span class="pre">stormpy.gspn._gspn.Transition</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">place</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Place" title="stormpy.gspn._gspn.Place"><span class="pre">stormpy.gspn._gspn.Place</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">multiplicity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.gspn.Transition.set_input_arc_multiplicity" title="Link to this definition">¶</a></dt>
+<dd><p>Set the multiplicity of the input arc originating from the place.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.Transition.set_name">
+<span class="sig-name descname"><span class="pre">set_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Transition" title="stormpy.gspn._gspn.Transition"><span class="pre">stormpy.gspn._gspn.Transition</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.gspn.Transition.set_name" title="Link to this definition">¶</a></dt>
+<dd><p>Set name of this transition</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.Transition.set_output_arc_multiplicity">
+<span class="sig-name descname"><span class="pre">set_output_arc_multiplicity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Transition" title="stormpy.gspn._gspn.Transition"><span class="pre">stormpy.gspn._gspn.Transition</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">place</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Place" title="stormpy.gspn._gspn.Place"><span class="pre">stormpy.gspn._gspn.Place</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">multiplicity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.gspn.Transition.set_output_arc_multiplicity" title="Link to this definition">¶</a></dt>
+<dd><p>Set the multiplicity of the output arc going to the place.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.Transition.set_priority">
+<span class="sig-name descname"><span class="pre">set_priority</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.Transition" title="stormpy.gspn._gspn.Transition"><span class="pre">stormpy.gspn._gspn.Transition</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">priority</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#stormpy.gspn.Transition.set_priority" title="Link to this definition">¶</a></dt>
+<dd><p>Set priority of this transition</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stormpy.gspn.TransitionPartition">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">TransitionPartition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.TransitionPartition" title="stormpy.gspn._gspn.TransitionPartition"><span class="pre">stormpy.gspn._gspn.TransitionPartition</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stormpy.gspn.TransitionPartition" title="Link to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="stormpy.gspn.TransitionPartition.nr_transitions">
+<span class="sig-name descname"><span class="pre">nr_transitions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stormpy.gspn.TransitionPartition" title="stormpy.gspn._gspn.TransitionPartition"><span class="pre">stormpy.gspn._gspn.TransitionPartition</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#stormpy.gspn.TransitionPartition.nr_transitions" title="Link to this definition">¶</a></dt>
+<dd><p>Get number of transitions</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.gspn.TransitionPartition.priority">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">priority</span></span><a class="headerlink" href="#stormpy.gspn.TransitionPartition.priority" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="stormpy.gspn.TransitionPartition.transitions">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">transitions</span></span><a class="headerlink" href="#stormpy.gspn.TransitionPartition.transitions" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+</div>
+        </article>
+        <aside class="nftt-toc">
+          
+          <div class="my-sm-1 my-lg-0 ps-xl-3 text-muted">
+            <button class="btn btn-link p-lg-0 mb-2 mb-lg-0 text-decoration-none nftt-toc-toggle d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#tocContents" aria-expanded="false" aria-controls="tocContents"
+            >On this page <i class="ms-2 bi bi-chevron-expand"></i></button>
+            <div class="title d-none d-lg-block">
+              <i class="bi bi-file-earmark-text"></i>&nbsp;&nbsp;<span class="small">On this page</span>
+            </div>
+            <div class="collapse nftt-toc-collapse" id="tocContents">
+              <nav id="TableOfContents">
+                <ul>
+<li><a class="reference internal" href="#">Stormpy.gspn</a><ul>
+<li><a class="reference internal" href="#stormpy.gspn.GSPN"><code class="docutils literal notranslate"><span class="pre">GSPN</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.gspn.GSPN.export_gspn_pnml_file"><code class="docutils literal notranslate"><span class="pre">GSPN.export_gspn_pnml_file()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.GSPN.export_gspn_pnpro_file"><code class="docutils literal notranslate"><span class="pre">GSPN.export_gspn_pnpro_file()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.GSPN.get_immediate_transition"><code class="docutils literal notranslate"><span class="pre">GSPN.get_immediate_transition()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.GSPN.get_immediate_transitions"><code class="docutils literal notranslate"><span class="pre">GSPN.get_immediate_transitions()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.GSPN.get_initial_marking"><code class="docutils literal notranslate"><span class="pre">GSPN.get_initial_marking()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.GSPN.get_name"><code class="docutils literal notranslate"><span class="pre">GSPN.get_name()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.GSPN.get_number_of_immediate_transitions"><code class="docutils literal notranslate"><span class="pre">GSPN.get_number_of_immediate_transitions()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.GSPN.get_number_of_places"><code class="docutils literal notranslate"><span class="pre">GSPN.get_number_of_places()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.GSPN.get_number_of_timed_transitions"><code class="docutils literal notranslate"><span class="pre">GSPN.get_number_of_timed_transitions()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.GSPN.get_partitions"><code class="docutils literal notranslate"><span class="pre">GSPN.get_partitions()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.GSPN.get_place"><code class="docutils literal notranslate"><span class="pre">GSPN.get_place()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.GSPN.get_places"><code class="docutils literal notranslate"><span class="pre">GSPN.get_places()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.GSPN.get_timed_transition"><code class="docutils literal notranslate"><span class="pre">GSPN.get_timed_transition()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.GSPN.get_timed_transitions"><code class="docutils literal notranslate"><span class="pre">GSPN.get_timed_transitions()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.GSPN.get_transition"><code class="docutils literal notranslate"><span class="pre">GSPN.get_transition()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.GSPN.immediate_transition_id_to_transition_id"><code class="docutils literal notranslate"><span class="pre">GSPN.immediate_transition_id_to_transition_id()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.GSPN.is_valid"><code class="docutils literal notranslate"><span class="pre">GSPN.is_valid()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.GSPN.set_name"><code class="docutils literal notranslate"><span class="pre">GSPN.set_name()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.GSPN.timed_transition_id_to_transition_id"><code class="docutils literal notranslate"><span class="pre">GSPN.timed_transition_id_to_transition_id()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.GSPN.transition_id_to_immediate_transition_id"><code class="docutils literal notranslate"><span class="pre">GSPN.transition_id_to_immediate_transition_id()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.GSPN.transition_id_to_timed_transition_id"><code class="docutils literal notranslate"><span class="pre">GSPN.transition_id_to_timed_transition_id()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.gspn.GSPNBuilder"><code class="docutils literal notranslate"><span class="pre">GSPNBuilder</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.gspn.GSPNBuilder.add_immediate_transition"><code class="docutils literal notranslate"><span class="pre">GSPNBuilder.add_immediate_transition()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.GSPNBuilder.add_inhibition_arc"><code class="docutils literal notranslate"><span class="pre">GSPNBuilder.add_inhibition_arc()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.GSPNBuilder.add_input_arc"><code class="docutils literal notranslate"><span class="pre">GSPNBuilder.add_input_arc()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.GSPNBuilder.add_normal_arc"><code class="docutils literal notranslate"><span class="pre">GSPNBuilder.add_normal_arc()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.GSPNBuilder.add_output_arc"><code class="docutils literal notranslate"><span class="pre">GSPNBuilder.add_output_arc()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.GSPNBuilder.add_place"><code class="docutils literal notranslate"><span class="pre">GSPNBuilder.add_place()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.GSPNBuilder.add_timed_transition"><code class="docutils literal notranslate"><span class="pre">GSPNBuilder.add_timed_transition()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.GSPNBuilder.build_gspn"><code class="docutils literal notranslate"><span class="pre">GSPNBuilder.build_gspn()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.GSPNBuilder.set_name"><code class="docutils literal notranslate"><span class="pre">GSPNBuilder.set_name()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.GSPNBuilder.set_place_layout_info"><code class="docutils literal notranslate"><span class="pre">GSPNBuilder.set_place_layout_info()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.GSPNBuilder.set_transition_layout_info"><code class="docutils literal notranslate"><span class="pre">GSPNBuilder.set_transition_layout_info()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.gspn.GSPNParser"><code class="docutils literal notranslate"><span class="pre">GSPNParser</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.gspn.GSPNParser.parse"><code class="docutils literal notranslate"><span class="pre">GSPNParser.parse()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.gspn.GSPNToJaniBuilder"><code class="docutils literal notranslate"><span class="pre">GSPNToJaniBuilder</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.gspn.GSPNToJaniBuilder.build"><code class="docutils literal notranslate"><span class="pre">GSPNToJaniBuilder.build()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.GSPNToJaniBuilder.create_deadlock_properties"><code class="docutils literal notranslate"><span class="pre">GSPNToJaniBuilder.create_deadlock_properties()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.gspn.ImmediateTransition"><code class="docutils literal notranslate"><span class="pre">ImmediateTransition</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.gspn.ImmediateTransition.get_weight"><code class="docutils literal notranslate"><span class="pre">ImmediateTransition.get_weight()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.ImmediateTransition.no_weight_attached"><code class="docutils literal notranslate"><span class="pre">ImmediateTransition.no_weight_attached()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.ImmediateTransition.set_weight"><code class="docutils literal notranslate"><span class="pre">ImmediateTransition.set_weight()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.gspn.LayoutInfo"><code class="docutils literal notranslate"><span class="pre">LayoutInfo</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.gspn.LayoutInfo.rotation"><code class="docutils literal notranslate"><span class="pre">LayoutInfo.rotation</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.LayoutInfo.x"><code class="docutils literal notranslate"><span class="pre">LayoutInfo.x</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.LayoutInfo.y"><code class="docutils literal notranslate"><span class="pre">LayoutInfo.y</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.gspn.Place"><code class="docutils literal notranslate"><span class="pre">Place</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.gspn.Place.get_capacity"><code class="docutils literal notranslate"><span class="pre">Place.get_capacity()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.Place.get_id"><code class="docutils literal notranslate"><span class="pre">Place.get_id()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.Place.get_name"><code class="docutils literal notranslate"><span class="pre">Place.get_name()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.Place.get_number_of_initial_tokens"><code class="docutils literal notranslate"><span class="pre">Place.get_number_of_initial_tokens()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.Place.has_restricted_capacity"><code class="docutils literal notranslate"><span class="pre">Place.has_restricted_capacity()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.Place.set_capacity"><code class="docutils literal notranslate"><span class="pre">Place.set_capacity()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.Place.set_name"><code class="docutils literal notranslate"><span class="pre">Place.set_name()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.Place.set_number_of_initial_tokens"><code class="docutils literal notranslate"><span class="pre">Place.set_number_of_initial_tokens()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.gspn.TimedTransition"><code class="docutils literal notranslate"><span class="pre">TimedTransition</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.gspn.TimedTransition.get_number_of_servers"><code class="docutils literal notranslate"><span class="pre">TimedTransition.get_number_of_servers()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.TimedTransition.get_rate"><code class="docutils literal notranslate"><span class="pre">TimedTransition.get_rate()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.TimedTransition.has_infinite_server_semantics"><code class="docutils literal notranslate"><span class="pre">TimedTransition.has_infinite_server_semantics()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.TimedTransition.has_k_server_semantics"><code class="docutils literal notranslate"><span class="pre">TimedTransition.has_k_server_semantics()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.TimedTransition.has_single_server_semantics"><code class="docutils literal notranslate"><span class="pre">TimedTransition.has_single_server_semantics()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.TimedTransition.set_infinite_server_semantics"><code class="docutils literal notranslate"><span class="pre">TimedTransition.set_infinite_server_semantics()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.TimedTransition.set_k_server_semantics"><code class="docutils literal notranslate"><span class="pre">TimedTransition.set_k_server_semantics()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.TimedTransition.set_rate"><code class="docutils literal notranslate"><span class="pre">TimedTransition.set_rate()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.TimedTransition.set_single_server_semantics"><code class="docutils literal notranslate"><span class="pre">TimedTransition.set_single_server_semantics()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.gspn.Transition"><code class="docutils literal notranslate"><span class="pre">Transition</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.gspn.Transition.exists_inhibition_arc"><code class="docutils literal notranslate"><span class="pre">Transition.exists_inhibition_arc()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.Transition.exists_input_arc"><code class="docutils literal notranslate"><span class="pre">Transition.exists_input_arc()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.Transition.exists_output_arc"><code class="docutils literal notranslate"><span class="pre">Transition.exists_output_arc()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.Transition.fire"><code class="docutils literal notranslate"><span class="pre">Transition.fire()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.Transition.get_id"><code class="docutils literal notranslate"><span class="pre">Transition.get_id()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.Transition.get_inhibition_arc_multiplicity"><code class="docutils literal notranslate"><span class="pre">Transition.get_inhibition_arc_multiplicity()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.Transition.get_inhibition_places"><code class="docutils literal notranslate"><span class="pre">Transition.get_inhibition_places()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.Transition.get_input_arc_multiplicity"><code class="docutils literal notranslate"><span class="pre">Transition.get_input_arc_multiplicity()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.Transition.get_input_places"><code class="docutils literal notranslate"><span class="pre">Transition.get_input_places()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.Transition.get_name"><code class="docutils literal notranslate"><span class="pre">Transition.get_name()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.Transition.get_output_arc_multiplicity"><code class="docutils literal notranslate"><span class="pre">Transition.get_output_arc_multiplicity()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.Transition.get_output_places"><code class="docutils literal notranslate"><span class="pre">Transition.get_output_places()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.Transition.get_priority"><code class="docutils literal notranslate"><span class="pre">Transition.get_priority()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.Transition.is_enabled"><code class="docutils literal notranslate"><span class="pre">Transition.is_enabled()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.Transition.remove_inhibition_arc"><code class="docutils literal notranslate"><span class="pre">Transition.remove_inhibition_arc()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.Transition.remove_input_arc"><code class="docutils literal notranslate"><span class="pre">Transition.remove_input_arc()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.Transition.remove_output_arc"><code class="docutils literal notranslate"><span class="pre">Transition.remove_output_arc()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.Transition.set_inhibition_arc_multiplicity"><code class="docutils literal notranslate"><span class="pre">Transition.set_inhibition_arc_multiplicity()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.Transition.set_input_arc_multiplicity"><code class="docutils literal notranslate"><span class="pre">Transition.set_input_arc_multiplicity()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.Transition.set_name"><code class="docutils literal notranslate"><span class="pre">Transition.set_name()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.Transition.set_output_arc_multiplicity"><code class="docutils literal notranslate"><span class="pre">Transition.set_output_arc_multiplicity()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.Transition.set_priority"><code class="docutils literal notranslate"><span class="pre">Transition.set_priority()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stormpy.gspn.TransitionPartition"><code class="docutils literal notranslate"><span class="pre">TransitionPartition</span></code></a><ul>
+<li><a class="reference internal" href="#stormpy.gspn.TransitionPartition.nr_transitions"><code class="docutils literal notranslate"><span class="pre">TransitionPartition.nr_transitions()</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.TransitionPartition.priority"><code class="docutils literal notranslate"><span class="pre">TransitionPartition.priority</span></code></a></li>
+<li><a class="reference internal" href="#stormpy.gspn.TransitionPartition.transitions"><code class="docutils literal notranslate"><span class="pre">TransitionPartition.transitions</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </nav>
+            </div>
+          </div>
+          
+        </aside>
+      </div>
+    </div>
+
+    <footer class="nftt-footer">
+      <nav id="paginator" class="py-4" aria-label="Documentation navigation">
+    <div class="container">
+      <ul class="pagination justify-content-between mb-0"><li class="d-flex page-item">
+            <a href="dft.html" class="d-flex pe-5 px-lg-5 align-items-end" rel="prev" aria-label="Previous page: Stormpy.dft">
+              <span class="prev-page"><i class="bi bi-caret-left"></i></span>
+              <div class="d-none d-sm-flex flex-column">
+                <span class="text-small text-start text-muted">Previous</span>
+                <span class="underline">Stormpy.dft</span>
+              </div>
+            </a>
+          </li>
+        <li class="d-flex page-item ms-auto">
+            <a href="pars.html" class="d-flex ps-5 px-lg-5 align-items-end" rel="next" aria-label="Next page: Stormpy.pars">
+              <div class="d-flex flex-column">
+                <span class="text-small text-end text-start text-muted">Next</span>
+                <span class="underline">Stormpy.pars</span>
+              </div>
+              <span class="next-page"><i class="bi bi-caret-right"></i></span>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </nav>
+
+      <div class="py-5 px-4 px-md-3">
+  <div class="container">
+    
+    <div class="row">
+      <ul id="nftt-footer-links" class="list-unstyled list-separator col-lg-12 pb-2 text-center">
+        
+          <li class="d-inline">
+            <a href="https://stormchecker.github.io/stormpy/"  class="list-item">Documentation</a>
+          </li>
+        
+          <li class="d-inline">
+            <a href="https://pypi.org/project/stormpy/"  class="list-item">Package</a>
+          </li>
+        
+          <li class="d-inline">
+            <a href="https://github.com/stormchecker/stormpy/"  class="list-item">Repository</a>
+          </li>
+        
+          <li class="d-inline">
+            <a href="https://github.com/stormchecker/stormpy/issues"  class="list-item">Issues</a>
+          </li>
+        
+      </ul>
+    </div>
+    
+
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <a class="brand-text d-inline-flex align-items-center mb-2 text-decoration-none" href="/" aria-label="stormpy">
+          <span class="fs-6 fw-bold">stormpy</span>
+        </a>
+        
+          <ul class="list-unstyled small text-muted">
+            <li>2016-2026 Storm Developers</li>
+          </ul>
+        
+        <div class="built-with pt-2">
+          Built with <a href="http://sphinx-doc.org">Sphinx 9.1.0</a> and <a href="https://github.com/danirus/sphinx-nefertiti">Nefertiti 0.9.9</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    </footer>
+
+    <div class="modal modal-xl fade" id="nftt-modal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen-xxl-down modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="nftt-modal-title"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="nftt-modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+    <script src="../_static/documentation_options.js?v=01009efc"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/docs-versions.js?v=08b0cbfb"></script>
+    <script src="../_static/sphinx-nefertiti.min.js?v=af404e0e"></script>
+    <script src="../_static/bootstrap.bundle.min.js?v=c066362f"></script>
+  </body>
+</html>

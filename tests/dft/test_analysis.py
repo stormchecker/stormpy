@@ -12,20 +12,20 @@ class TestAnalysis:
         dft = stormpy.dft.load_dft_json_file(get_example_path("dft", "and.json"))
         formulas = stormpy.parse_properties('T=? [ F "failed" ]')
         assert dft.nr_elements() == 3
-        results = stormpy.dft.analyze_dft(dft, [formulas[0].raw_formula])
+        results = stormpy.dft.analyze_dft(stormpy.dft.DftEnvironment(), dft, [formulas[0].raw_formula])
         assert math.isclose(results[0], 3)
 
     def test_analyze_hecs_mttf(self):
         dft = stormpy.dft.load_dft_galileo_file(get_example_path("dft", "hecs.dft"))
         formula_str = 'T=? [ F "failed" ]'
         formulas = stormpy.parse_properties(formula_str)
-        results = stormpy.dft.analyze_dft(dft, [formulas[0].raw_formula])
+        results = stormpy.dft.analyze_dft(stormpy.dft.DftEnvironment(), dft, [formulas[0].raw_formula])
         result = results[0]
         assert math.isclose(result, 363.8947965815, rel_tol=1e-6)
 
     def test_build_model(self):
         dft = stormpy.dft.load_dft_json_file(get_example_path("dft", "and.json"))
-        model = stormpy.dft.build_model(dft)
+        model = stormpy.dft.build_model(stormpy.dft.DftEnvironment(), dft)
         assert model.model_type == stormpy.ModelType.CTMC
         assert type(model) is stormpy.SparseCtmc[float]
         assert model.nr_states == 4
@@ -34,7 +34,7 @@ class TestAnalysis:
 
     def test_explicit_model_builder(self):
         dft = stormpy.dft.load_dft_json_file(get_example_path("dft", "and.json"))
-        builder = stormpy.dft.ExplicitDFTModelBuilder[float](dft)
+        builder = stormpy.dft.ExplicitDFTModelBuilder[float](stormpy.dft.DftEnvironment(), dft)
         builder.build(0)
         model = builder.get_model()
         assert model.model_type == stormpy.ModelType.CTMC
@@ -61,7 +61,7 @@ class TestAnalysis:
         assert not issue
         properties = stormpy.parse_properties('T=? [ F "failed" ]')
         prop = properties[0]
-        builder = stormpy.dft.ExplicitDFTModelBuilder(dft)
+        builder = stormpy.dft.ExplicitDFTModelBuilder(stormpy.dft.DftEnvironment(), dft)
 
         # Iteration 0
         builder.build(0, 1.0)
@@ -117,7 +117,7 @@ class TestAnalysis:
         dft = stormpy.dft.load_dft_galileo_file(get_example_path("dft", "rc.dft"))
         properties = stormpy.parse_properties('T=? [ F "failed" ]')
         prop = properties[0]
-        builder = stormpy.dft.ExplicitDFTModelBuilder(dft)
+        builder = stormpy.dft.ExplicitDFTModelBuilder(stormpy.dft.DftEnvironment(), dft)
 
         # Iteration 0
         builder.build(0, 1.0)
@@ -151,7 +151,7 @@ class TestAnalysis:
         assert relevant_events.is_relevant("A")
         assert not relevant_events.is_relevant("B")
         assert not relevant_events.is_relevant("C")
-        results = stormpy.dft.analyze_dft(dft, formulas, relevant_events=relevant_events)
+        results = stormpy.dft.analyze_dft(stormpy.dft.DftEnvironment(), dft, formulas, relevant_events=relevant_events)
         assert math.isclose(results[0], 0.1548181217)
 
     def test_relevant_events_additional(self):
@@ -162,7 +162,7 @@ class TestAnalysis:
         assert relevant_events.is_relevant("B")
         assert relevant_events.is_relevant("C")
         assert not relevant_events.is_relevant("A")
-        results = stormpy.dft.analyze_dft(dft, formulas, relevant_events=relevant_events)
+        results = stormpy.dft.analyze_dft(stormpy.dft.DftEnvironment(), dft, formulas, relevant_events=relevant_events)
         assert math.isclose(results[0], 0.1548181217)
 
     def test_transformation(self):
@@ -177,7 +177,7 @@ class TestAnalysis:
         issue, output = stormpy.dft.has_potential_modeling_issues(dft)
         assert issue
         formulas = stormpy.parse_properties('Tmin=? [ F "failed" ]')
-        results = stormpy.dft.analyze_dft(dft, [formulas[0].raw_formula])
+        results = stormpy.dft.analyze_dft(stormpy.dft.DftEnvironment(), dft, [formulas[0].raw_formula])
         assert math.isclose(results[0], 6.380930905)
 
     def test_fdep_conflicts(self):
@@ -186,5 +186,5 @@ class TestAnalysis:
         has_conflicts = stormpy.dft.compute_dependency_conflicts(dft, use_smt=False, solver_timeout=0)
         assert not has_conflicts
         formulas = stormpy.parse_properties('T=? [ F "failed" ]')
-        results = stormpy.dft.analyze_dft(dft, [formulas[0].raw_formula])
+        results = stormpy.dft.analyze_dft(stormpy.dft.DftEnvironment(), dft, [formulas[0].raw_formula])
         assert math.isclose(results[0], 6.380930905)

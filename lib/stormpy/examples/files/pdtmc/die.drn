@@ -8,7 +8,7 @@ coin_flips
 @nr_states
 13
 @model
-state 0 init [1]
+state 0 [1] init
 	action 0
 		1 : p
 		2 : (-1)*p+1

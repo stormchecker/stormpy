@@ -9,20 +9,20 @@ from . import developer
 from stormpy import Property
 from stormpy.exceptions import StormError
 
-# Import classes from developer.
-DFT = developer.DFT
-DFTElement = developer.DFTElement
-DFTBE = developer.DFTBE
-DFTDependency = developer.DFTDependency
-DFTState = developer.DFTState
-DftInstantiator = developer.DftInstantiator
-
+# Import classes from developer (and republish them under stormpy.dft.X.)
+DFT = developer.DFT.publish_as("stormpy.dft.DFT")
 # Extend DFT with a convenience method to collect its parameters
 for _dft_class in DFT.instantiations.values():
     _dft_class.get_parameters = lambda self: developer.get_parameters(self)
 del _dft_class
 
 DFTElementType = developer.DFTElementType
+DFTElement = developer.DFTElement.publish_as("stormpy.dft.DFTElement")
+DFTBE = developer.DFTBE.publish_as("stormpy.dft.DFTBE")
+DFTDependency = developer.DFTDependency.publish_as("stormpy.dft.DFTDependency")
+DFTState = developer.DFTState.publish_as("stormpy.dft.DFTState")
+
+DftInstantiator = developer.DftInstantiator.publish_as("stormpy.dft.DftInstantiator")
 
 DftEnvironment = developer.DftEnvironment
 AnalysisEnvironment = developer.AnalysisEnvironment

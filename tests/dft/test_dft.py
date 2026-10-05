@@ -17,10 +17,10 @@ class TestDft:
         assert concrete_type is stormpy.dft.developer._DFT_Double
 
         metadata = stormpy.dft.DFT.metadata
-        assert metadata.canonical_name == "stormpy.dft.developer.DFT"
+        assert metadata.canonical_name == "stormpy.dft.DFT"
         assert tuple(parameter.name for parameter in metadata.parameters) == ("ValueType",)
         assert metadata.instantiations[0].native_name == "stormpy.dft.developer._dft._DFT_Double"
-        assert repr(stormpy.dft.DFT) == "<template class stormpy.dft.developer.DFT>"
+        assert repr(stormpy.dft.DFT) == "<template class stormpy.dft.DFT>"
 
         explicit_copy = stormpy.dft.DFT[float](dft)
         inferred_copy = stormpy.dft.DFT(dft)

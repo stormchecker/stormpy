@@ -287,6 +287,32 @@ class TemplateClass:
         """Iterate over registered parameter tuples in registration order."""
         return iter(self._instantiations)
 
+    def publish_as(self, canonical_name: str) -> "TemplateClass":
+        """Return a new TemplateClass for the same registrations, under a different canonical name.
+
+        Can be used in a  public module to re-expose a template family declared against an internal/developer module under its own public name,
+        so ``canonical_name``, ``repr()``, and ``metadata`` reflect the public path instead of the internal one.
+        ``metadata.instantiations[...].native_name``, registrations and deduction guides remain as-is.
+
+        :param canonical_name: Fully qualified public family name for the republished class.
+        :raises ValueError: If the canonical name is invalid.
+        """
+        canonical_module, separator, name = canonical_name.rpartition(".")
+        if not separator or not canonical_module or not name.isidentifier():
+            raise ValueError("Canonical template name must be fully qualified")
+
+        published = TemplateClass.__new__(TemplateClass)
+        published.__name__ = name
+        published.__qualname__ = name
+        published.__module__ = canonical_module
+        published._canonical_name = canonical_name
+        published._parameters = self._parameters
+        published._arity = self._arity
+        published._deduction_guide = self._deduction_guide
+        published._instantiations = dict(self._instantiations)
+        published._parameters_by_type = dict(self._parameters_by_type)
+        return published
+
     def __repr__(self) -> str:
         """Return a concise template-family representation."""
         return f"<template class {self._canonical_name}>"

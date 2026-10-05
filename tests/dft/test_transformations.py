@@ -14,8 +14,8 @@ class TestTransformations:
         assert dft.nr_elements() == 7
         assert dft.nr_basic_elements() == 4
 
-        instantiator_type = stormpy.dft.DFTInstantiator[stormpy.RationalFunction, float]
-        instantiator = stormpy.dft.DFTInstantiator(dft)
+        instantiator_type = stormpy.dft.DftInstantiator[stormpy.RationalFunction, float]
+        instantiator = stormpy.dft.DftInstantiator(dft)
         assert type(instantiator) is instantiator_type
         assert instantiator_type is stormpy.dft.developer._DftInstantiator_RationalFunction_Double
         x = pycarl.variable_with_name("x")

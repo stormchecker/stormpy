@@ -21,7 +21,7 @@ def example_dfts_01():
     formula_str = 'T=? [ F "failed" ]'
     formulas = stormpy.parse_properties(formula_str)
     env = stormpy.dft.DftEnvironment()
-    results = stormpy.dft.analyze_dft(env, dft, [formulas[0].raw_formula])
+    results = stormpy.dft.analyze_dft(env, dft, formulas)
     result = results[0]
     print(result)
 

@@ -12,14 +12,14 @@ class TestAnalysis:
         dft = stormpy.dft.load_dft_json_file(get_example_path("dft", "and.json"))
         formulas = stormpy.parse_properties('T=? [ F "failed" ]')
         assert dft.nr_elements() == 3
-        results = stormpy.dft.analyze_dft(stormpy.dft.DftEnvironment(), dft, [formulas[0].raw_formula])
+        results = stormpy.dft.analyze_dft(stormpy.dft.DftEnvironment(), dft, formulas)
         assert math.isclose(results[0], 3)
 
     def test_analyze_hecs_mttf(self):
         dft = stormpy.dft.load_dft_galileo_file(get_example_path("dft", "hecs.dft"))
         formula_str = 'T=? [ F "failed" ]'
         formulas = stormpy.parse_properties(formula_str)
-        results = stormpy.dft.analyze_dft(stormpy.dft.DftEnvironment(), dft, [formulas[0].raw_formula])
+        results = stormpy.dft.analyze_dft(stormpy.dft.DftEnvironment(), dft, formulas)
         result = results[0]
         assert math.isclose(result, 363.8947965815, rel_tol=1e-6)
 
@@ -34,7 +34,7 @@ class TestAnalysis:
 
     def test_explicit_model_builder(self):
         dft = stormpy.dft.load_dft_json_file(get_example_path("dft", "and.json"))
-        builder = stormpy.dft.ExplicitDFTModelBuilder[float](stormpy.dft.DftEnvironment(), dft, stormpy.dft.DftSymmetries())
+        builder = stormpy.dft.developer.ExplicitDFTModelBuilder[float](stormpy.dft.DftEnvironment(), dft, stormpy.dft.developer.DftSymmetries())
         builder.build(0)
         model = builder.get_model()
         assert model.model_type == stormpy.ModelType.CTMC
@@ -46,22 +46,22 @@ class TestAnalysis:
     def test_explicit_model_builder_unsupported_value_type(self):
         double_dft = stormpy.dft.load_dft_json_file(get_example_path("dft", "and.json"))
         with pytest.raises(TypeError, match="ExplicitDFTModelBuilder has no instantiation"):
-            stormpy.dft.ExplicitDFTModelBuilder[stormpy.Rational](double_dft)
+            stormpy.dft.developer.ExplicitDFTModelBuilder[stormpy.Rational](double_dft)
 
     def test_explicit_model_builder_mismatched_dft_type(self):
         double_dft = stormpy.dft.load_dft_json_file(get_example_path("dft", "and.json"))
         with pytest.raises(TypeError, match="incompatible constructor arguments"):
-            stormpy.dft.ExplicitDFTModelBuilder[stormpy.RationalFunction](double_dft)
+            stormpy.dft.developer.ExplicitDFTModelBuilder[stormpy.RationalFunction](double_dft)
 
     def test_explicit_model_builder_approximation(self):
         dft = stormpy.dft.load_dft_galileo_file(get_example_path("dft", "rc.dft"))
-        valid, output = stormpy.dft.is_well_formed(dft)
+        valid, output = stormpy.dft.developer.is_well_formed(dft)
         assert valid
-        issue, output = stormpy.dft.has_potential_modeling_issues(dft)
+        issue, output = stormpy.dft.developer.has_potential_modeling_issues(dft)
         assert not issue
         properties = stormpy.parse_properties('T=? [ F "failed" ]')
         prop = properties[0]
-        builder = stormpy.dft.ExplicitDFTModelBuilder(stormpy.dft.DftEnvironment(), dft, stormpy.dft.DftSymmetries())
+        builder = stormpy.dft.developer.ExplicitDFTModelBuilder(stormpy.dft.DftEnvironment(), dft, stormpy.dft.developer.DftSymmetries())
 
         # Iteration 0
         builder.build(0, 1.0)
@@ -117,7 +117,7 @@ class TestAnalysis:
         dft = stormpy.dft.load_dft_galileo_file(get_example_path("dft", "rc.dft"))
         properties = stormpy.parse_properties('T=? [ F "failed" ]')
         prop = properties[0]
-        builder = stormpy.dft.ExplicitDFTModelBuilder(stormpy.dft.DftEnvironment(), dft, stormpy.dft.DftSymmetries())
+        builder = stormpy.dft.developer.ExplicitDFTModelBuilder(stormpy.dft.DftEnvironment(), dft, stormpy.dft.developer.DftSymmetries())
 
         # Iteration 0
         builder.build(0, 1.0)
@@ -146,45 +146,43 @@ class TestAnalysis:
     def test_relevant_events_property(self):
         dft = stormpy.dft.load_dft_json_file(get_example_path("dft", "and.json"))
         properties = stormpy.parse_properties('P=? [ F<=1 "A_failed" ]')
-        formulas = [p.raw_formula for p in properties]
-        relevant_events = stormpy.dft.compute_relevant_events(formulas)
+        relevant_events = stormpy.dft.developer.compute_relevant_events(properties)
         assert relevant_events.is_relevant("A")
         assert not relevant_events.is_relevant("B")
         assert not relevant_events.is_relevant("C")
-        results = stormpy.dft.analyze_dft(stormpy.dft.DftEnvironment(), dft, formulas, relevant_events=relevant_events)
+        results = stormpy.dft.analyze_dft(stormpy.dft.DftEnvironment(), dft, properties, relevant_events=relevant_events)
         assert math.isclose(results[0], 0.1548181217)
 
     def test_relevant_events_additional(self):
         dft = stormpy.dft.load_dft_json_file(get_example_path("dft", "and.json"))
         properties = stormpy.parse_properties('P=? [ F<=1 "failed" ]')
-        formulas = [p.raw_formula for p in properties]
-        relevant_events = stormpy.dft.compute_relevant_events(formulas, ["B", "C"])
+        relevant_events = stormpy.dft.developer.compute_relevant_events(properties, ["B", "C"])
         assert relevant_events.is_relevant("B")
         assert relevant_events.is_relevant("C")
         assert not relevant_events.is_relevant("A")
-        results = stormpy.dft.analyze_dft(stormpy.dft.DftEnvironment(), dft, formulas, relevant_events=relevant_events)
+        results = stormpy.dft.analyze_dft(stormpy.dft.DftEnvironment(), dft, properties, relevant_events=relevant_events)
         assert math.isclose(results[0], 0.1548181217)
 
     def test_transformation(self):
         dft = stormpy.dft.load_dft_galileo_file(get_example_path("dft", "rc2.dft"))
-        valid, output = stormpy.dft.is_well_formed(dft)
+        valid, output = stormpy.dft.developer.is_well_formed(dft)
         assert not valid
-        issue, output = stormpy.dft.has_potential_modeling_issues(dft)
+        issue, output = stormpy.dft.developer.has_potential_modeling_issues(dft)
         assert issue
-        dft = stormpy.dft.transform_dft(dft, unique_constant_be=True, binary_fdeps=True, exponential_distributions=True)
-        valid, output = stormpy.dft.is_well_formed(dft)
+        dft = stormpy.dft.prepare_for_analysis(dft)
+        valid, output = stormpy.dft.developer.is_well_formed(dft)
         assert valid
-        issue, output = stormpy.dft.has_potential_modeling_issues(dft)
+        issue, output = stormpy.dft.developer.has_potential_modeling_issues(dft)
         assert issue
-        formulas = stormpy.parse_properties('Tmin=? [ F "failed" ]')
-        results = stormpy.dft.analyze_dft(stormpy.dft.DftEnvironment(), dft, [formulas[0].raw_formula])
+        properties = stormpy.parse_properties('Tmin=? [ F "failed" ]')
+        results = stormpy.dft.analyze_dft(stormpy.dft.DftEnvironment(), dft, properties)
         assert math.isclose(results[0], 6.380930905)
 
     def test_fdep_conflicts(self):
         dft = stormpy.dft.load_dft_galileo_file(get_example_path("dft", "rc2.dft"))
-        dft = stormpy.dft.transform_dft(dft, unique_constant_be=True, binary_fdeps=True, exponential_distributions=True)
-        has_conflicts = stormpy.dft.compute_dependency_conflicts(dft, use_smt=False, solver_timeout=0)
+        dft = stormpy.dft.developer.transform_dft(dft, unique_constant_be=True, binary_fdeps=True, exponential_distributions=True)
+        has_conflicts = stormpy.dft.developer.compute_dependency_conflicts(dft, use_smt=False, solver_timeout=0)
         assert not has_conflicts
-        formulas = stormpy.parse_properties('T=? [ F "failed" ]')
-        results = stormpy.dft.analyze_dft(stormpy.dft.DftEnvironment(), dft, [formulas[0].raw_formula])
+        properties = stormpy.parse_properties('T=? [ F "failed" ]')
+        results = stormpy.dft.analyze_dft(stormpy.dft.DftEnvironment(), dft, properties)
         assert math.isclose(results[0], 6.380930905)

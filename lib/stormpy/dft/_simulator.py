@@ -1,6 +1,10 @@
-"""Public, ergonomic simulator for Dynamic Fault Trees."""
+"""Simulator for Dynamic Fault Trees."""
 
 from . import developer
+
+# Import classes from developer
+SimulationStepResult = developer.SimulationStepResult
+SimulationTraceResult = developer.SimulationTraceResult
 
 
 class DFTSimulator:

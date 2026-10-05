@@ -29,8 +29,8 @@ class TestDft:
         assert type(inferred_copy) is concrete_type
         assert type(keyword_inferred_copy) is concrete_type
 
-        builder = stormpy.dft.ExplicitDFTModelBuilder(stormpy.dft.DftEnvironment(), dft, stormpy.dft.DftSymmetries())
-        assert type(builder) is stormpy.dft.ExplicitDFTModelBuilder[float]
+        builder = stormpy.dft.developer.ExplicitDFTModelBuilder(stormpy.dft.DftEnvironment(), dft, stormpy.dft.developer.DftSymmetries())
+        assert type(builder) is stormpy.dft.developer.ExplicitDFTModelBuilder[float]
 
     def test_parametric_dft(self):
         from stormpy import pycarl
@@ -41,8 +41,8 @@ class TestDft:
         assert type(generic_dft) is stormpy.dft.DFT[stormpy.RationalFunction]
         assert stormpy.dft.DFT[stormpy.RationalFunction] is stormpy.dft.developer._DFT_RationalFunction
 
-        builder = stormpy.dft.ExplicitDFTModelBuilder(env, generic_dft, stormpy.dft.DftSymmetries())
-        assert type(builder) is stormpy.dft.ExplicitDFTModelBuilder[stormpy.RationalFunction]
+        builder = stormpy.dft.developer.ExplicitDFTModelBuilder(env, generic_dft, stormpy.dft.developer.DftSymmetries())
+        assert type(builder) is stormpy.dft.developer.ExplicitDFTModelBuilder[stormpy.RationalFunction]
 
         model = stormpy.dft.build_model(env, generic_dft)
         assert model.supports_parameters
@@ -51,7 +51,7 @@ class TestDft:
         assert dft.nr_elements() == 7
         assert dft.nr_basic_elements() == 4
         assert dft.nr_dynamic_elements() == 0
-        parameters = stormpy.dft.get_parameters(dft)
+        parameters = dft.get_parameters()
         param_names = [x.name for x in parameters]
         assert "x" in param_names
         assert "y" in param_names
@@ -82,7 +82,7 @@ class TestDftElement:
 @dft
 class TestDftSymmetries:
     def test_symmetries_none(self):
-        symmetries = stormpy.dft.DftSymmetries()
+        symmetries = stormpy.dft.developer.DftSymmetries()
         assert len(symmetries) == 0
 
     def test_symmetries_small(self):

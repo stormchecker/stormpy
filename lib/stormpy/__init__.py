@@ -8,10 +8,10 @@ from .logic import *
 from . import exceptions
 
 from ._template import (
-    TemplateClass as _TemplateClass,
-    TemplateParameter as _TemplateParameter,
-    deduce_default as _deduce_default,
-    deduce_from_object as _deduce_from_object,
+    _TemplateClass,
+    _TemplateParameter,
+    _deduce_default,
+    _deduce_from_object,
 )
 
 # src/core/core.cpp

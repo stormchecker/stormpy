@@ -1,7 +1,7 @@
 """Runtime representation and metadata for native C++ template families.
 
 C++ template specializations still need to be compiled and bound separately.
-``TemplateClass`` groups those concrete Python classes behind one public,
+``_TemplateClass`` groups those concrete Python classes behind one public,
 subscriptable object and exposes their structure to documentation and stub
 generation tools.
 """
@@ -13,11 +13,11 @@ from dataclasses import dataclass
 from types import MappingProxyType
 from typing import Any, Literal, TypeAlias
 
-TemplateParameterKind: TypeAlias = Literal["type", "value"]
+_TemplateParameterKind: TypeAlias = Literal["type", "value"]
 
 
 @dataclass(frozen=True)
-class TemplateParameter:
+class _TemplateParameter:
     """Description of one public template parameter.
 
     ``type`` parameters select a Python or native type. ``value`` parameters
@@ -25,11 +25,11 @@ class TemplateParameter:
     """
 
     name: str
-    kind: TemplateParameterKind = "type"
+    kind: _TemplateParameterKind = "type"
 
 
 @dataclass(frozen=True)
-class TemplateInstantiation:
+class _TemplateInstantiation:
     """Description of one concrete native template specialization."""
 
     arguments: tuple[object, ...]
@@ -38,23 +38,23 @@ class TemplateInstantiation:
 
 
 @dataclass(frozen=True)
-class TemplateMetadata:
+class _TemplateMetadata:
     """Tooling-oriented description of a complete template family."""
 
     name: str
     canonical_name: str
-    parameters: tuple[TemplateParameter, ...]
-    instantiations: tuple[TemplateInstantiation, ...]
+    parameters: tuple[_TemplateParameter, ...]
+    instantiations: tuple[_TemplateInstantiation, ...]
     deduction_guide: str | None
 
 
-DeductionGuide: TypeAlias = Callable[["TemplateClass", tuple[Any, ...], Mapping[str, Any]], object]
+_DeductionGuide: TypeAlias = Callable[["_TemplateClass", tuple[Any, ...], Mapping[str, Any]], object]
 
 
-def deduce_default(*parameters: object) -> DeductionGuide:
+def _deduce_default(*parameters: object) -> _DeductionGuide:
     """Create a guide that always selects the given template parameters."""
 
-    def deduction(_family: TemplateClass, _args: tuple[Any, ...], _kwargs: Mapping[str, Any]) -> object:
+    def deduction(_family: _TemplateClass, _args: tuple[Any, ...], _kwargs: Mapping[str, Any]) -> object:
         return parameters
 
     deduction.__name__ = "deduce_default"
@@ -62,9 +62,9 @@ def deduce_default(*parameters: object) -> DeductionGuide:
     return deduction
 
 
-def deduce_from_object(
+def _deduce_from_object(
     get_type: Callable[[Any], object], *, keyword: str | tuple[str, ...] = (), position: int = 0, default: tuple[object, ...] | None = None
-) -> DeductionGuide:
+) -> _DeductionGuide:
     """Create a guide that deduces template parameters from a constructor argument.
 
     The guide selects the positional argument at the zero-based ``position``,
@@ -78,7 +78,7 @@ def deduce_from_object(
     """
     keywords = (keyword,) if isinstance(keyword, str) else keyword
 
-    def deduction(_family: TemplateClass, args: tuple[Any, ...], kwargs: Mapping[str, Any]) -> object:
+    def deduction(_family: _TemplateClass, args: tuple[Any, ...], kwargs: Mapping[str, Any]) -> object:
         if len(args) > position:
             return get_type(args[position])
         for name in keywords:
@@ -93,7 +93,7 @@ def deduce_from_object(
     return deduction
 
 
-def deduce_from_first_argument(source: "TemplateClass | None" = None, *, keyword: str | None = None) -> DeductionGuide:
+def _deduce_from_first_argument(source: "_TemplateClass | None" = None, *, keyword: str | None = None) -> _DeductionGuide:
     """Create a guide that copies template arguments from an instance.
 
     The first positional constructor argument is used when present. ``keyword``
@@ -102,7 +102,7 @@ def deduce_from_first_argument(source: "TemplateClass | None" = None, *, keyword
     constructed; otherwise it is matched against ``source``.
     """
 
-    def deduction(family: TemplateClass, args: tuple[Any, ...], kwargs: Mapping[str, Any]) -> object:
+    def deduction(family: _TemplateClass, args: tuple[Any, ...], kwargs: Mapping[str, Any]) -> object:
         if args:
             instance = args[0]
         elif keyword is not None and keyword in kwargs:
@@ -117,7 +117,7 @@ def deduce_from_first_argument(source: "TemplateClass | None" = None, *, keyword
     return deduction
 
 
-class TemplateClass:
+class _TemplateClass:
     """Native C++ template family exposed as a subscriptable Python object.
 
     ``family[parameters]`` returns a registered concrete Python class.
@@ -130,8 +130,8 @@ class TemplateClass:
         canonical_name: str,
         module: object,
         *,
-        parameters: Sequence[str | TemplateParameter],
-        deduce: DeductionGuide | None = None,
+        parameters: Sequence[str | _TemplateParameter],
+        deduce: _DeductionGuide | None = None,
     ) -> None:
         """Load a native template family.
 
@@ -166,7 +166,7 @@ class TemplateClass:
         if len(arities) != 1:
             raise RuntimeError(f"Native module has inconsistent registrations for {name}")
 
-        parameter_metadata = tuple(parameter if isinstance(parameter, TemplateParameter) else TemplateParameter(parameter) for parameter in parameters)
+        parameter_metadata = tuple(parameter if isinstance(parameter, _TemplateParameter) else _TemplateParameter(parameter) for parameter in parameters)
         arity = arities.pop()
         if len(parameter_metadata) != arity:
             raise ValueError(f"{name} has {arity} native template parameters, but {len(parameter_metadata)} parameter names were provided")
@@ -263,16 +263,16 @@ class TemplateClass:
         return self._canonical_name
 
     @property
-    def metadata(self) -> TemplateMetadata:
+    def metadata(self) -> _TemplateMetadata:
         """Return an immutable, current description for documentation tools."""
         instantiations = tuple(
-            TemplateInstantiation(parameters, implementation, f"{implementation.__module__}.{implementation.__name__}")
+            _TemplateInstantiation(parameters, implementation, f"{implementation.__module__}.{implementation.__name__}")
             for parameters, implementation in self._instantiations.items()
         )
         guide = None
         if self._deduction_guide is not None:
             guide = getattr(self._deduction_guide, "__qualname__", type(self._deduction_guide).__qualname__)
-        return TemplateMetadata(self.__name__, self._canonical_name, self._parameters, instantiations, guide)
+        return _TemplateMetadata(self.__name__, self._canonical_name, self._parameters, instantiations, guide)
 
     @property
     def instantiations(self) -> Mapping[tuple[object, ...], type]:
@@ -287,8 +287,8 @@ class TemplateClass:
         """Iterate over registered parameter tuples in registration order."""
         return iter(self._instantiations)
 
-    def publish_as(self, canonical_name: str) -> "TemplateClass":
-        """Return a new TemplateClass for the same registrations, under a different canonical name.
+    def publish_as(self, canonical_name: str) -> "_TemplateClass":
+        """Return a new _TemplateClass for the same registrations, under a different canonical name.
 
         Can be used in a  public module to re-expose a template family declared against an internal/developer module under its own public name,
         so ``canonical_name``, ``repr()``, and ``metadata`` reflect the public path instead of the internal one.
@@ -301,7 +301,7 @@ class TemplateClass:
         if not separator or not canonical_module or not name.isidentifier():
             raise ValueError("Canonical template name must be fully qualified")
 
-        published = TemplateClass.__new__(TemplateClass)
+        published = _TemplateClass.__new__(_TemplateClass)
         published.__name__ = name
         published.__qualname__ = name
         published.__module__ = canonical_module

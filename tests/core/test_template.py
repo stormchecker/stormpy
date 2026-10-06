@@ -2,7 +2,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from stormpy._template import TemplateClass, deduce_default, deduce_from_first_argument, deduce_from_object
+from stormpy._template import _TemplateClass, _deduce_default, _deduce_from_first_argument, _deduce_from_object
 
 
 class BaseImplementation:
@@ -14,9 +14,9 @@ class DerivedImplementation(BaseImplementation):
     pass
 
 
-def make_family(*, deduce=None) -> TemplateClass:
+def make_family(*, deduce=None) -> _TemplateClass:
     module = SimpleNamespace(_template_instantiations={"Example": {("base",): BaseImplementation}})
-    return TemplateClass("test.Example", module, parameters=["kind"], deduce=deduce)
+    return _TemplateClass("test.Example", module, parameters=["kind"], deduce=deduce)
 
 
 def call_guide(guide, *args, **kwargs):
@@ -24,7 +24,7 @@ def call_guide(guide, *args, **kwargs):
 
 
 def test_deduction_selects_exact_registered_subclass():
-    family = make_family(deduce=deduce_from_first_argument())
+    family = make_family(deduce=_deduce_from_first_argument())
     family.register("derived", DerivedImplementation)
     source = DerivedImplementation()
 
@@ -35,7 +35,7 @@ def test_deduction_selects_exact_registered_subclass():
 
 
 def test_default_deduction_selects_configured_instantiation():
-    family = make_family(deduce=deduce_default("base"))
+    family = make_family(deduce=_deduce_default("base"))
 
     result = family()
 
@@ -43,7 +43,7 @@ def test_default_deduction_selects_configured_instantiation():
 
 
 def test_default_deduction_rejects_unregistered_instantiation():
-    family = make_family(deduce=deduce_default("missing"))
+    family = make_family(deduce=_deduce_default("missing"))
 
     with pytest.raises(TypeError, match=r"Example has no instantiation for \('missing',\)"):
         family()
@@ -53,7 +53,7 @@ def test_deduction_rejects_unregistered_subclass():
     class UnregisteredImplementation(BaseImplementation):
         pass
 
-    family = make_family(deduce=deduce_from_first_argument())
+    family = make_family(deduce=_deduce_from_first_argument())
     source = UnregisteredImplementation()
 
     with pytest.raises(TypeError, match="Cannot infer Example template parameters"):
@@ -72,7 +72,7 @@ def test_cannot_register_implementation_for_multiple_parameters():
 
 
 def test_object_deduction_transforms_argument():
-    family = make_family(deduce=deduce_from_object(lambda obj: obj.kind, keyword="source"))
+    family = make_family(deduce=_deduce_from_object(lambda obj: obj.kind, keyword="source"))
     family.register("derived", DerivedImplementation)
     source = SimpleNamespace(kind="derived")
 
@@ -82,7 +82,7 @@ def test_object_deduction_transforms_argument():
 
 
 def test_object_deduction_argument_selection():
-    guide = deduce_from_object(lambda obj: float if obj is None else obj.kind, keyword="model")
+    guide = _deduce_from_object(lambda obj: float if obj is None else obj.kind, keyword="model")
     source = SimpleNamespace(kind=int)
     alternate = SimpleNamespace(kind=str)
 
@@ -94,7 +94,7 @@ def test_object_deduction_argument_selection():
 
 
 def test_object_deduction_keyword_aliases():
-    guide = deduce_from_object(type, keyword=("components", "other_model"))
+    guide = _deduce_from_object(type, keyword=("components", "other_model"))
 
     assert call_guide(guide, other_model=1) is int
     assert call_guide(guide, components=1.0, other_model=1) is float
@@ -103,7 +103,7 @@ def test_object_deduction_keyword_aliases():
 
 
 def test_object_deduction_second_argument():
-    guide = deduce_from_object(type, keyword="model", position=1)
+    guide = _deduce_from_object(type, keyword="model", position=1)
 
     assert call_guide(guide, 2, 1.0, model=1) is float
     assert call_guide(guide, 2, model=1.0) is float
@@ -113,14 +113,14 @@ def test_object_deduction_second_argument():
 
 
 def test_object_deduction_rejects_misspelled_required_argument():
-    family = make_family(deduce=deduce_from_object(lambda obj: obj.kind, keyword="source"))
+    family = make_family(deduce=_deduce_from_object(lambda obj: obj.kind, keyword="source"))
 
     with pytest.raises(TypeError, match="Cannot deduce template parameters: missing argument.*source"):
         family(soruce=SimpleNamespace(kind="base"))
 
 
 def test_object_deduction_explicit_default_only_applies_to_missing_argument():
-    guide = deduce_from_object(type, keyword="source", default=(float,))
+    guide = _deduce_from_object(type, keyword="source", default=(float,))
 
     assert call_guide(guide) == (float,)
     assert call_guide(guide, source=1) is int

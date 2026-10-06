@@ -1,8 +1,8 @@
 from . import _utility
 from ._utility import *
-from stormpy._template import TemplateClass, deduce_default as _deduce_default
+from stormpy._template import _TemplateClass, _deduce_default
 
-JsonContainer = TemplateClass("stormpy.utility.JsonContainer", _utility, parameters=("ValueType",), deduce=_deduce_default(float))
+JsonContainer = _TemplateClass("stormpy.utility.JsonContainer", _utility, parameters=("ValueType",), deduce=_deduce_default(float))
 
 
 # Extend JSON containers for simplified access

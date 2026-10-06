@@ -9,12 +9,12 @@ from . import _pars
 from ._pars import *
 
 from stormpy import ModelType
-from stormpy._template import TemplateClass, TemplateParameter as _TemplateParameter
+from stormpy._template import _TemplateClass, _TemplateParameter
 
 _pars._set_up()
 
 
-def _deduce_model_and_double(_family: TemplateClass, args: tuple[object, ...], kwargs: _Mapping[str, object]) -> object:
+def _deduce_model_and_double(_family: _TemplateClass, args: tuple[object, ...], kwargs: _Mapping[str, object]) -> object:
     if args:
         model = args[0]
     else:
@@ -25,7 +25,7 @@ def _deduce_model_and_double(_family: TemplateClass, args: tuple[object, ...], k
     return model.model_type, float
 
 
-def _deduce_checker_model_and_double(_family: TemplateClass, args: tuple[object, ...], kwargs: _Mapping[str, object]) -> object:
+def _deduce_checker_model_and_double(_family: _TemplateClass, args: tuple[object, ...], kwargs: _Mapping[str, object]) -> object:
     if len(args) >= 2:
         model = args[1]
     else:
@@ -36,14 +36,14 @@ def _deduce_checker_model_and_double(_family: TemplateClass, args: tuple[object,
     return model.model_type, float
 
 
-ModelInstantiator = TemplateClass(
+ModelInstantiator = _TemplateClass(
     "stormpy.pars.ModelInstantiator",
     _pars,
     parameters=(_TemplateParameter("ModelType", kind="value"), "ValueType"),
     deduce=_deduce_model_and_double,
 )
 
-ModelInstantiationChecker = TemplateClass(
+ModelInstantiationChecker = _TemplateClass(
     "stormpy.pars.ModelInstantiationChecker",
     _pars,
     parameters=(_TemplateParameter("ModelType", kind="value"), "ResultType"),

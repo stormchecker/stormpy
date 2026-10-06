@@ -22,62 +22,62 @@ for _name, _value in vars(_dft).items():
         globals()[_name] = _value
 del _name, _value
 
-from stormpy._template import TemplateClass, deduce_from_first_argument, deduce_from_object
+from stormpy._template import _TemplateClass, _deduce_from_first_argument, _deduce_from_object
 
 # Define templated classes
-DFT = TemplateClass(
+DFT = _TemplateClass(
     "stormpy.dft.developer.DFT",
     _dft,
     parameters=("ValueType",),
-    deduce=deduce_from_first_argument(keyword="dft"),
+    deduce=_deduce_from_first_argument(keyword="dft"),
 )
 
-DFTElement = TemplateClass(
+DFTElement = _TemplateClass(
     "stormpy.dft.developer.DFTElement",
     _dft,
     parameters=("ValueType",),
 )
 
-DFTBE = TemplateClass(
+DFTBE = _TemplateClass(
     "stormpy.dft.developer.DFTBE",
     _dft,
     parameters=("ValueType",),
 )
 
-DFTDependency = TemplateClass(
+DFTDependency = _TemplateClass(
     "stormpy.dft.developer.DFTDependency",
     _dft,
     parameters=("ValueType",),
 )
 
-DFTState = TemplateClass(
+DFTState = _TemplateClass(
     "stormpy.dft.developer.DFTState",
     _dft,
     parameters=("ValueType",),
 )
 
-DFTTraceSimulator = TemplateClass(
+DFTTraceSimulator = _TemplateClass(
     "stormpy.dft.developer.DFTTraceSimulator",
     _dft,
     parameters=("ValueType",),
-    deduce=deduce_from_first_argument(DFT, keyword="dft"),
+    deduce=_deduce_from_first_argument(DFT, keyword="dft"),
 )
 
-ExplicitDFTModelBuilder = TemplateClass(
+ExplicitDFTModelBuilder = _TemplateClass(
     "stormpy.dft.developer.ExplicitDFTModelBuilder",
     _dft,
     parameters=("ValueType",),
-    deduce=deduce_from_object(DFT.parameters_of, position=1, keyword="dft"),
+    deduce=_deduce_from_object(DFT.parameters_of, position=1, keyword="dft"),
 )
 
-_deduce_dft_parameters = deduce_from_first_argument(DFT, keyword="dft")
+_deduce_dft_parameters = _deduce_from_first_argument(DFT, keyword="dft")
 
 
 def _deduce_dft_instantiator(family, args, kwargs):
     return (*_deduce_dft_parameters(family, args, kwargs), float)
 
 
-DftInstantiator = TemplateClass(
+DftInstantiator = _TemplateClass(
     "stormpy.dft.developer.DftInstantiator",
     _dft,
     parameters=("SourceValueType", "TargetValueType"),

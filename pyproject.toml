@@ -44,15 +44,15 @@ plot = [
 ]
 dev = [
     # Formatting
-    "black[jupyter]",
+    "black[jupyter]==26.10.0",
 ]
 doc = [
-    "Sphinx>=8.2.2",
-    "sphinx-nefertiti",
-    "sphinx-copybutton",
-    "jupytext",
-    "myst-nb",
-    "ipykernel",
+    "Sphinx==9.1.0",
+    "sphinx-nefertiti==0.9.9",
+    "sphinx-copybutton==0.5.2",
+    "jupytext==1.19.5",
+    "myst-nb==1.4.0",
+    "ipykernel==7.4.0",
 ]
 test = [
     "pytest",

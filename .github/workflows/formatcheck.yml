@@ -36,5 +36,8 @@ jobs:
     - uses: actions/setup-python@v7
       with:
         python-version: '3.x'
-    - run: pip install black[jupyter] jupytext
+    - run: |
+        JUPYTEXT_VERSION=$(sed -n 's/.*"jupytext==\([0-9.]*\)".*/\1/p' pyproject.toml)
+        BLACK_VERSION=$(sed -n 's/.*"black\[jupyter\]==\([0-9.]*\)".*/\1/p' pyproject.toml)
+        pip install "black[jupyter]==$BLACK_VERSION" "jupytext==$JUPYTEXT_VERSION"
     - run: make check-format-doc

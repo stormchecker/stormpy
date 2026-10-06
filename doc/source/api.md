@@ -14,6 +14,7 @@ api/storage
 api/utility
 
 api/dft
+api/dft_developer
 api/gspn
 api/pars
 api/pomdp

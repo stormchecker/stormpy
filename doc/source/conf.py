@@ -4,6 +4,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
 # Needed for version information
+import importlib
 import pathlib
 
 import stormpy
@@ -122,8 +123,32 @@ html_favicon = "_static/favicon.png"
 # Execute notebooks with missing cached outputs; reuse cached results when sources are unchanged
 myst_nb_execution_mode = "cache"
 
+# Allow header anchors for deeper level
+myst_heading_anchors = 3
+
 
 # Documentation pages that are paired jupytext notebooks (used for binder badges)
 _source_dir = pathlib.Path(__file__).parent
 notebook_docs = sorted(str(p.relative_to(_source_dir).with_suffix("")) for p in _source_dir.rglob("*.md") if "jupytext:" in p.read_text(errors="ignore")[:500])
 html_context = {"notebook_docs": notebook_docs}
+
+
+def _skip_members_republished_in_public_api(app, what, name, obj, skip, options):
+    """Skip documenting a member of an `X.developer` module if the same
+    object is already re-exported under the parent public module `X`.
+    """
+    modname = app.env.temp_data.get("autodoc:module")
+    if not modname or not modname.endswith(".developer"):
+        return skip
+    public_modname = modname[: -len(".developer")]
+    try:
+        public_module = importlib.import_module(public_modname)
+    except ImportError:
+        return skip
+    if getattr(public_module, name, None) is obj:
+        return True
+    return skip
+
+
+def setup(app):
+    app.connect("autodoc-skip-member", _skip_members_republished_in_public_api)

@@ -8,7 +8,7 @@ from collections.abc import Iterable
 
 from . import developer
 from stormpy import Property, RationalFunction
-from stormpy.exceptions import StormError
+from stormpy.exceptions import StormError, StormWarning
 from stormpy.storage import SparseCtmc, SparseMA
 
 # Import classes from developer (and republish them under stormpy.dft.X.)
@@ -48,23 +48,6 @@ export_dft_json_string = developer.export_dft_json_string
 # Require some of the public classes and need to be imported after them
 from ._module import DftIndependentModule, modules, modules_json
 from ._simulator import DFTSimulator, SimulationStepResult, SimulationTraceResult
-
-
-class StormWarning(Warning):
-    """
-    Base class for warnings in Storm.
-    """
-
-    def __init__(self, message: str):
-        """
-        Constructor.
-
-        :param message: Warning message.
-        :type message: str
-        """
-        self.message = "Storm warning: " + message
-        super().__init__(self.message)
-
 
 # Add additional functions
 

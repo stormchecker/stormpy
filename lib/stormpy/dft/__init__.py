@@ -31,6 +31,9 @@ TransformationEnvironment = developer.TransformationEnvironment
 
 ApproximationHeuristic = developer.ApproximationHeuristic
 
+RelevantEvents = developer.RelevantEvents
+DftSymmetries = developer.DftSymmetries
+
 # Import functions from developer
 load_dft_galileo_file = developer.load_dft_galileo_file
 load_parametric_dft_galileo_file = developer.load_parametric_dft_galileo_file
@@ -42,6 +45,7 @@ export_dft_json_file = developer.export_dft_json_file
 export_dft_json_string = developer.export_dft_json_string
 
 # Additional Python classes and functions
+# Require some of the public classes and need to be imported after them
 from ._module import DftIndependentModule, modules, modules_json
 from ._simulator import DFTSimulator, SimulationStepResult, SimulationTraceResult
 
@@ -88,7 +92,7 @@ def analyze_dft(
     env: DftEnvironment,
     dft: DFT,
     properties: Iterable[Property],
-    relevant_events: developer.RelevantEvents | None = None,
+    relevant_events: RelevantEvents | None = None,
 ) -> list[float] | list[RationalFunction]:
     """
     Analyze the DFT with respect to the given properties.
@@ -111,8 +115,8 @@ def analyze_dft(
 def build_model(
     env: DftEnvironment,
     dft: DFT,
-    symmetries: developer.DftSymmetries | None = None,
-    relevant_events: developer.RelevantEvents | None = None,
+    symmetries: DftSymmetries | None = None,
+    relevant_events: RelevantEvents | None = None,
 ) -> SparseCtmc | SparseMA:
     """
     Build state-space model (CTMC or MA) for the given DFT.

@@ -3,6 +3,7 @@
 from collections.abc import Iterable
 
 from . import developer
+from . import DFT, DFTElement
 
 # Import classes from developer
 SimulationStepResult = developer.SimulationStepResult
@@ -18,7 +19,7 @@ class DFTSimulator:
     resolves failable elements to their BE/dependency names.
     """
 
-    def __init__(self, dft: developer.DFT, seed: int = 42, relevant_events: Iterable[str] | None = None) -> None:
+    def __init__(self, dft: DFT, seed: int = 42, relevant_events: Iterable[str] | None = None) -> None:
         """
         Create simulator.
 
@@ -53,7 +54,7 @@ class DFTSimulator:
         self._failed = False
         self._update()
 
-    def status(self) -> tuple[str, dict[developer.DFTElement, str]]:
+    def status(self) -> tuple[str, dict[DFTElement, str]]:
         """
         Get current status of DFT elements.
 
@@ -170,7 +171,7 @@ class DFTSimulator:
         success = 0
         for i in range(nr_traces):
             res = self._simulator.simulate_trace(timebound)
-            if res == developer.SimulationTraceResult.SUCCESSFUL:
+            if res == SimulationTraceResult.SUCCESSFUL:
                 success += 1
         self.reset()
         return success

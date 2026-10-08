@@ -1,6 +1,7 @@
 """Public wrapper and JSON serialization for DFT module decomposition."""
 
 from . import developer
+from . import DFT, DFTElement
 
 
 class DftIndependentModule:
@@ -10,7 +11,7 @@ class DftIndependentModule:
     indices to their :class:`~stormpy.dft.DFTElement` objects.
     """
 
-    def __init__(self, native: developer.DftIndependentModule, dft: developer.DFT) -> None:
+    def __init__(self, native: developer.DftIndependentModule, dft: DFT) -> None:
         self._native = native
         self._dft = dft
 
@@ -30,12 +31,12 @@ class DftIndependentModule:
         return self._native.is_single_be()
 
     @property
-    def representative(self) -> developer.DFTElement:
+    def representative(self) -> DFTElement:
         """:return: The DFT element representing this module."""
         return self._dft.get_element(self._native.get_representative())
 
     @property
-    def elements(self) -> list[developer.DFTElement]:
+    def elements(self) -> list[DFTElement]:
         """:return: The elements directly contained in this module (excluding submodules)."""
         return [self._dft.get_element(index) for index in self._native.get_elements()]
 
@@ -44,12 +45,12 @@ class DftIndependentModule:
         """:return: The submodules nested within this module."""
         return [DftIndependentModule(submodule, self._dft) for submodule in self._native.get_submodules()]
 
-    def subtree(self) -> developer.DFT:
+    def subtree(self) -> DFT:
         """:return: The DFT restricted to this module's subtree."""
         return self._native.get_subtree(self._dft)
 
 
-def modules(dft: developer.DFT) -> DftIndependentModule:
+def modules(dft: DFT) -> DftIndependentModule:
     """Compute the independent-module decomposition of a DFT.
 
     :param dft: The DFT to decompose.
@@ -58,7 +59,7 @@ def modules(dft: developer.DFT) -> DftIndependentModule:
     return DftIndependentModule(dft.modules(), dft)
 
 
-def _element_json(element: developer.DFTElement) -> dict[str, str]:
+def _element_json(element: DFTElement) -> dict[str, str]:
     """
     Get JSON representation of an element.
 
@@ -82,7 +83,7 @@ def _module_json(module: DftIndependentModule) -> dict[str, object]:
     return data
 
 
-def modules_json(dft: developer.DFT) -> dict[str, object]:
+def modules_json(dft: DFT) -> dict[str, object]:
     """
     Create JSON representation of DFT modules.
 

@@ -13,10 +13,8 @@ from stormpy.storage import SparseCtmc, SparseMA
 
 # Import classes from developer (and republish them under stormpy.dft.X.)
 DFT = developer.DFT.publish_as("stormpy.dft.DFT")
-# Extend DFT with a convenience method to collect its parameters
-for _dft_class in DFT.instantiations.values():
-    _dft_class.get_parameters = lambda self: developer.get_parameters(self)
-del _dft_class
+# Extend parametric DFT with a convenience method to collect its parameters
+DFT.instantiations[(RationalFunction,)].get_parameters = lambda self: developer.get_parameters(self)
 
 DFTElementType = developer.DFTElementType
 DFTElement = developer.DFTElement.publish_as("stormpy.dft.DFTElement")

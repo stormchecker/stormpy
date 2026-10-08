@@ -14,7 +14,12 @@ from stormpy.storage import SparseCtmc, SparseMA
 # Import classes from developer (and republish them under stormpy.dft.X.)
 DFT = developer.DFT.publish_as("stormpy.dft.DFT")
 # Extend parametric DFT with a convenience method to collect its parameters
-DFT.instantiations[(RationalFunction,)].get_parameters = lambda self: developer.get_parameters(self)
+def _get_parameters(self):
+    """Return the parameters occurring in this parametric DFT."""
+    return developer.get_parameters(self)
+
+
+DFT.instantiations[(RationalFunction,)].get_parameters = _get_parameters
 
 DFTElementType = developer.DFTElementType
 DFTElement = developer.DFTElement.publish_as("stormpy.dft.DFTElement")
@@ -102,7 +107,7 @@ def build_model(
     dft: DFT,
     symmetries: DftSymmetries | None = None,
     relevant_events: RelevantEvents | None = None,
-) -> SparseCtmc | SparseMA:
+) -> SparseCtmc[float] | SparseCtmc[RationalFunction] | SparseMA[float] | SparseMA[RationalFunction]:
     """
     Build state-space model (CTMC or MA) for the given DFT.
 

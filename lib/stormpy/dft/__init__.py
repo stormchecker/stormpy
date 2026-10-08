@@ -4,10 +4,12 @@ Makes the functionality of ``storm::dft::`` available.
 """
 
 import warnings
+from collections.abc import Iterable
 
 from . import developer
-from stormpy import Property
+from stormpy import Property, RationalFunction
 from stormpy.exceptions import StormError
+from stormpy.storage import SparseCtmc, SparseMA
 
 # Import classes from developer (and republish them under stormpy.dft.X.)
 DFT = developer.DFT.publish_as("stormpy.dft.DFT")
@@ -66,7 +68,7 @@ class StormWarning(Warning):
 
 
 # Define helper functions
-def check_dft_validity(dft):
+def check_dft_validity(dft: DFT) -> bool:
     """
     Check validity of DFT.
     Checks whether the DFT is well-formed, can be analyzed via Markov model analysis and points out potential modeling issues.
@@ -84,7 +86,12 @@ def check_dft_validity(dft):
 
 
 # API functions
-def analyze_dft(env, dft, properties, relevant_events=None):
+def analyze_dft(
+    env: DftEnvironment,
+    dft: DFT,
+    properties: Iterable[Property],
+    relevant_events: developer.RelevantEvents | None = None,
+) -> list[float] | list[RationalFunction]:
     """
     Analyze the DFT with respect to the given properties.
 
@@ -103,7 +110,12 @@ def analyze_dft(env, dft, properties, relevant_events=None):
     )
 
 
-def build_model(env, dft, symmetries=None, relevant_events=None):
+def build_model(
+    env: DftEnvironment,
+    dft: DFT,
+    symmetries: developer.DftSymmetries | None = None,
+    relevant_events: developer.RelevantEvents | None = None,
+) -> SparseCtmc | SparseMA:
     """
     Build state-space model (CTMC or MA) for the given DFT.
 
@@ -121,7 +133,7 @@ def build_model(env, dft, symmetries=None, relevant_events=None):
     )
 
 
-def prepare_for_analysis(dft):
+def prepare_for_analysis(dft: DFT) -> DFT:
     """
     Prepare a DFT for analysis.
     Marks FDEP conflicts and applies the standard set of DFT-to-CTMC/MA transformations expected by the model builder.

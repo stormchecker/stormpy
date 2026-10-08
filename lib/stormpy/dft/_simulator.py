@@ -1,5 +1,7 @@
 """Simulator for Dynamic Fault Trees."""
 
+from collections.abc import Iterable
+
 from . import developer
 
 # Import classes from developer
@@ -16,7 +18,7 @@ class DFTSimulator:
     resolves failable elements to their BE/dependency names.
     """
 
-    def __init__(self, dft, seed=42, relevant_events=None):
+    def __init__(self, dft: developer.DFT, seed: int = 42, relevant_events: Iterable[str] | None = None) -> None:
         """
         Create simulator.
 
@@ -51,7 +53,7 @@ class DFTSimulator:
         self._failed = False
         self._update()
 
-    def status(self):
+    def status(self) -> tuple[str, dict[developer.DFTElement, str]]:
         """
         Get current status of DFT elements.
 
@@ -85,7 +87,7 @@ class DFTSimulator:
             element_states[elem] = status
         return dft_state, element_states
 
-    def nr_next_failures(self):
+    def nr_next_failures(self) -> int:
         """
         Returns the number of possible BEs which can fail next.
 
@@ -93,7 +95,7 @@ class DFTSimulator:
         """
         return len(self._fail_candidates)
 
-    def next_failures(self):
+    def next_failures(self) -> list[str]:
         """
         Returns the BEs which can fail next.
 
@@ -101,7 +103,7 @@ class DFTSimulator:
         """
         return list(self._fail_candidates.keys())
 
-    def is_next_dependency_failure(self):
+    def is_next_dependency_failure(self) -> bool:
         """
         Returns whether the next failure is due to a dependency (or the BE failing on its own).
 
@@ -109,7 +111,7 @@ class DFTSimulator:
         """
         return self._is_failable_dependency
 
-    def _update(self):
+    def _update(self) -> None:
         """
         Update the internal state.
         """
@@ -129,7 +131,7 @@ class DFTSimulator:
                 fail_be = self._as_be(f, self._dft)
                 self._fail_candidates[fail_be.name] = f
 
-    def let_fail(self, be, dependency_successful=True):
+    def let_fail(self, be: str, dependency_successful: bool = True) -> SimulationStepResult:
         """
         Let the given BE fail next.
         If the BE fails due to a probabilistic dependency, this failure forwarding can be either successful or unsuccessful.
@@ -145,7 +147,7 @@ class DFTSimulator:
         self._update()
         return res
 
-    def random_fail(self):
+    def random_fail(self) -> SimulationStepResult:
         """
         Let a random BE fail next.
         The next BE is chosen according their associated failure probability.
@@ -156,7 +158,7 @@ class DFTSimulator:
         self._update()
         return res
 
-    def simulate_traces(self, timebound, nr_traces):
+    def simulate_traces(self, timebound: float, nr_traces: int) -> int:
         """
         Simulate a number of traces via Monte Carlo simulation and check how many led to an overall failure within the given timebound.
 
@@ -173,14 +175,14 @@ class DFTSimulator:
         self.reset()
         return success
 
-    def reset(self):
+    def reset(self) -> None:
         """
         Reset the simulator to the initial state.
         """
         self._simulator.reset()
         self._update()
 
-    def is_failed(self):
+    def is_failed(self) -> bool:
         """
         Whether the DFT is failed.
 
@@ -188,7 +190,7 @@ class DFTSimulator:
         """
         return self._failed
 
-    def is_done(self):
+    def is_done(self) -> bool:
         """
         Whether the simulation has ended in a sink state.
         A sink state can either be that the DFT is failed, the state is invalid or no further failures are possible anymore.

@@ -10,46 +10,46 @@ class DftIndependentModule:
     indices to their :class:`~stormpy.dft.DFTElement` objects.
     """
 
-    def __init__(self, native, dft):
+    def __init__(self, native: developer.DftIndependentModule, dft: developer.DFT) -> None:
         self._native = native
         self._dft = dft
 
     @property
-    def is_static(self):
+    def is_static(self) -> bool:
         """:return: True iff the module contains only static elements (except in submodules)."""
         return self._native.is_static()
 
     @property
-    def is_fully_static(self):
+    def is_fully_static(self) -> bool:
         """:return: True iff the module contains only static elements (also in submodules)."""
         return self._native.is_fully_static()
 
     @property
-    def is_single_be(self):
+    def is_single_be(self) -> bool:
         """:return: True iff the module consists of a single BE (trivial module)."""
         return self._native.is_single_be()
 
     @property
-    def representative(self):
+    def representative(self) -> developer.DFTElement:
         """:return: The DFT element representing this module."""
         return self._dft.get_element(self._native.get_representative())
 
     @property
-    def elements(self):
+    def elements(self) -> list[developer.DFTElement]:
         """:return: The elements directly contained in this module (excluding submodules)."""
         return [self._dft.get_element(index) for index in self._native.get_elements()]
 
     @property
-    def submodules(self):
+    def submodules(self) -> list["DftIndependentModule"]:
         """:return: The submodules nested within this module."""
         return [DftIndependentModule(submodule, self._dft) for submodule in self._native.get_submodules()]
 
-    def subtree(self):
+    def subtree(self) -> developer.DFT:
         """:return: The DFT restricted to this module's subtree."""
         return self._native.get_subtree(self._dft)
 
 
-def modules(dft):
+def modules(dft: developer.DFT) -> DftIndependentModule:
     """Compute the independent-module decomposition of a DFT.
 
     :param dft: The DFT to decompose.
@@ -58,7 +58,7 @@ def modules(dft):
     return DftIndependentModule(dft.modules(), dft)
 
 
-def _element_json(element):
+def _element_json(element: developer.DFTElement) -> dict[str, str]:
     """
     Get JSON representation of an element.
 
@@ -68,7 +68,7 @@ def _element_json(element):
     return {"id": str(element.id), "name": element.name}
 
 
-def _module_json(module):
+def _module_json(module: DftIndependentModule) -> dict[str, object]:
     """
     Create JSON representation of a DFT module.
 
@@ -82,7 +82,7 @@ def _module_json(module):
     return data
 
 
-def modules_json(dft):
+def modules_json(dft: developer.DFT) -> dict[str, object]:
     """
     Create JSON representation of DFT modules.
 

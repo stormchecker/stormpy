@@ -3,7 +3,7 @@
 This module is only meant for developers.
 Use :mod:`stormpy.dft` for the public API.
 
-The naming of functions and classes of the bindings mirrors the corresponding ``storm::dft::`` C++ functions and classes.
+The naming of functions and classes of the bindings mirrors the corresponding ``storm::dft`` C++ functions and classes.
 """
 
 from stormpy.info import _config

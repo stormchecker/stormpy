@@ -2,7 +2,6 @@ import os
 
 import stormpy
 from helpers.helper import get_example_path
-
 from configurations import dft
 
 
@@ -34,6 +33,21 @@ class TestDftLoad:
         assert dft.nr_basic_elements() == 2
         assert dft.nr_dynamic_elements() == 1
         assert not dft.can_have_nondeterminism()
+
+    def test_load_parametric_dft_json_string(self):
+        json_node_a = '{"data": {"id":"0", "name":"A", "type":"be", "rate":"x", "dorm":"1", "label":"A (x)"}, "group":"nodes", "classes":"be"}'
+        json_node_b = '{"data": {"id":"1", "name":"B", "type":"be", "rate":"1", "dorm":"1", "label":"B (1)"}, "group":"nodes", "classes":"be"}'
+        json_node_c = '{"data": {"id":"6", "name":"Z", "type":"and", "children":["0", "1"], "label":"Z"}, "group":"nodes", "classes":"and"}'
+        json_string = '{"toplevel": "6", "parameters": ["x"], "nodes": [' + json_node_a + "," + json_node_b + "," + json_node_c + "]}"
+        # Load
+        dft = stormpy.dft.load_parametric_dft_json_string(json_string)
+        assert type(dft) is stormpy.dft.DFT[stormpy.RationalFunction]
+        assert dft.nr_elements() == 3
+        assert dft.nr_basic_elements() == 2
+        assert dft.nr_dynamic_elements() == 0
+        assert not dft.can_have_nondeterminism()
+        parameter_names = {parameter.name for parameter in dft.get_parameters()}
+        assert parameter_names == {"x"}
 
 
 @dft

@@ -9,15 +9,26 @@
 
 // Thin wrapper for DFT analysis
 template<typename ValueType>
-std::vector<ValueType> analyzeDFT(storm::dft::DftEnvironment const& env, storm::dft::storage::DFT<ValueType> const& dft,
-                                  std::vector<std::shared_ptr<storm::logic::Formula const>> const& properties,
-                                  storm::dft::utility::RelevantEvents const& relevantEvents) {
-    typename storm::dft::modelchecker::DFTModelChecker<ValueType>::dft_results dftResults = storm::dft::api::analyzeDFT(env, dft, properties, relevantEvents);
+std::vector<py::object> analyzeDFT(storm::dft::DftEnvironment const& env, storm::dft::storage::DFT<ValueType> const& dft,
+                                   std::vector<std::shared_ptr<storm::logic::Formula const>> const& properties,
+                                   storm::dft::utility::RelevantEvents const& relevantEvents) {
+    using Checker = storm::dft::modelchecker::DFTModelChecker<ValueType>;
+    typename Checker::dft_results dftResults = storm::dft::api::analyzeDFT(env, dft, properties, relevantEvents);
 
-    std::vector<ValueType> results;
+    std::vector<py::object> results;
+
+    class AnalysisResultVisitor : public boost::static_visitor<py::object> {
+       public:
+        py::object operator()(typename Checker::ExtendedValueType const& exact) const {
+            return py::cast(storm::utility::narrow<ValueType>(exact));
+        }
+
+        py::object operator()(typename Checker::approximation_result const& approx) const {
+            return py::cast(std::make_pair(storm::utility::narrow<ValueType>(approx.first), storm::utility::narrow<ValueType>(approx.second)));
+        }
+    } visitor;
     for (auto const& result : dftResults) {
-        results.push_back(
-            storm::utility::narrow<ValueType>(boost::get<typename storm::dft::modelchecker::DFTModelChecker<ValueType>::ExtendedValueType>(result)));
+        results.push_back(boost::apply_visitor(visitor, result));
     }
     return results;
 }

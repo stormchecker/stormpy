@@ -140,11 +140,20 @@ class DFTSimulator:
         :param be: Name of the BE which should fail next.
         :param dependency_successful: Whether the failure forwarding of the dependency was successful.
         :return: Result of the step (successful, unsuccessful, invalid).
+        :raises ValueError: If ``be`` cannot fail, or if ``dependency_successful=False`` is given for a
+            failure that is not due to a dependency or that is due to an FDEP.
         """
         if be not in self._fail_candidates:
             raise ValueError(f"BE {be} cannot fail.")
 
-        res = self._simulator.step(self._fail_candidates[be], dependency_success=dependency_successful)
+        failable = self._fail_candidates[be]
+        if not dependency_successful:
+            if not failable.is_due_dependency():
+                raise ValueError(f"BE {be} does not fail due to a dependency; 'dependency_successful' is not applicable.")
+            if self._as_dependency(failable, self._dft).is_fdep:
+                raise ValueError(f"BE {be} fails due to an FDEP, which always succeeds; 'dependency_successful=False' is not supported.")
+
+        res = self._simulator.step(failable, dependency_success=dependency_successful)
         self._update()
         return res
 

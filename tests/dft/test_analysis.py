@@ -1,8 +1,8 @@
+import math
 import pytest
+
 import stormpy
 from helpers.helper import get_example_path
-
-import math
 from configurations import dft
 
 
@@ -42,6 +42,14 @@ class TestAnalysis:
         assert model.nr_states == 4
         assert model.nr_transitions == 5
         assert not model.supports_parameters
+
+    def test_explicit_model_builder_symmetries(self):
+        dft = stormpy.dft.load_dft_json_file(get_example_path("dft", "and.json"))
+        symmetries = dft.symmetries()
+        model = stormpy.dft.build_model(stormpy.dft.DftEnvironment(), dft, symmetries=symmetries)
+        assert model.nr_states == 3
+        assert model.nr_transitions == 3
+        assert model.model_type == stormpy.ModelType.CTMC
 
     def test_explicit_model_builder_unsupported_value_type(self):
         double_dft = stormpy.dft.load_dft_json_file(get_example_path("dft", "and.json"))
@@ -142,6 +150,37 @@ class TestAnalysis:
         assert not model.supports_parameters
         result = stormpy.model_checking(model, prop)
         assert math.isclose(result.at(initial_state), 0.6471760795)
+
+    def _check_analyze_dft_with_approximation(self, heuristic):
+        # Approximate analysis returns a (lower, upper) bound pair per property instead of a
+        # single exact value.
+        dft = stormpy.dft.load_dft_galileo_file(get_example_path("dft", "rc.dft"))
+        formulas = stormpy.parse_properties('T=? [ F "failed" ]')
+        env = stormpy.dft.DftEnvironment()
+        env.analysis_environment.approximation_error = 0.1
+        env.analysis_environment.approximation_heuristic = heuristic
+        results = stormpy.dft.analyze_dft(env, dft, formulas)
+        assert len(results) == 1
+        lower, upper = results[0]
+        assert 0 <= lower <= upper
+
+    def test_analyze_dft_with_approximation_depth(self):
+        self._check_analyze_dft_with_approximation(stormpy.dft.ApproximationHeuristic.DEPTH)
+
+    @pytest.mark.skip(reason="Currently bug in approximation")
+    def test_analyze_dft_with_approximation_probability(self):
+        self._check_analyze_dft_with_approximation(stormpy.dft.ApproximationHeuristic.PROBABILITY)
+
+    @pytest.mark.skip(reason="Currently bug in approximation")
+    def test_analyze_dft_with_approximation_bound_difference(self):
+        self._check_analyze_dft_with_approximation(stormpy.dft.ApproximationHeuristic.BOUND_DIFFERENCE)
+
+    def test_analyze_relevant_events(self):
+        dft = stormpy.dft.load_dft_json_file(get_example_path("dft", "and.json"))
+        properties = stormpy.parse_properties('T=? [ F "failed" ]')
+        relevant_events = stormpy.dft.developer.compute_relevant_events(properties)
+        results = stormpy.dft.analyze_dft(stormpy.dft.DftEnvironment(), dft, properties, relevant_events=relevant_events)
+        assert math.isclose(results[0], 3)
 
     def test_relevant_events_property(self):
         dft = stormpy.dft.load_dft_json_file(get_example_path("dft", "and.json"))

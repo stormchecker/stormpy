@@ -1,0 +1,7 @@
+toplevel "Top";
+"Top" seq "First" "SecondAnd";
+"SecondAnd" and "Second1" "Second2";
+
+"First" lambda=0.5 dorm=0;
+"Second1" lambda=0.5 dorm=0;
+"Second2" lambda=0.5 dorm=0;

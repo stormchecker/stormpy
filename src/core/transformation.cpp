@@ -45,6 +45,7 @@ void define_transformation(py::module& m) {
     py::native_enum<storm::transformer::EliminationLabelBehavior>(m, "EliminationLabelBehavior", "enum.Enum",
                                                                   "Behavior of labels while eliminating non-Markovian chains")
         .value("KEEP_LABELS", storm::transformer::EliminationLabelBehavior::KeepLabels)
+        .value("EXTEND_LABELS", storm::transformer::EliminationLabelBehavior::ExtendLabels)
         .value("MERGE_LABELS", storm::transformer::EliminationLabelBehavior::MergeLabels)
         .value("DELETE_LABELS", storm::transformer::EliminationLabelBehavior::DeleteLabels)
         .finalize();

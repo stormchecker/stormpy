@@ -76,7 +76,7 @@ def analyze_dft(
     dft: DFT,
     properties: Iterable[Property],
     relevant_events: RelevantEvents | None = None,
-) -> list[float] | list[RationalFunction]:
+) -> list[float | tuple[float, float]] | list[RationalFunction | tuple[RationalFunction, RationalFunction]]:
     """
     Analyze the DFT with respect to the given properties.
 
@@ -84,7 +84,9 @@ def analyze_dft(
     :param dft: DFT.
     :param properties: Properties to check.
     :param relevant_events: (optional) relevant events which should be observed.
-    :return: Results.
+    :return: List of results corresponding to the given properties.
+        Each entry is a single value for exact analysis, or a tuple (lower, upper) for approximate analysis.
+        For approximate analysis, the difference between the bounds satisfies the (relative) error given by env.analysis_environment.approximation_error.
     """
     check_dft_validity(dft)
     return developer.analyze_dft(

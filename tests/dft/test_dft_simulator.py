@@ -1,6 +1,7 @@
+import pytest
+
 import stormpy
 from helpers.helper import get_example_path
-
 from configurations import dft
 
 
@@ -232,3 +233,93 @@ class TestSimulator:
         assert statuses_by_name["B"] in ("Failed", "Don't Care")
         assert statuses_by_name["B_Power"] in ("Failed", "Don't Care")
         assert statuses_by_name["System"] == "Failed"
+
+    def test_let_fail_fdep_unsuccessful_raises(self):
+        dft = stormpy.dft.load_dft_galileo_file(get_example_path("dft", "fdep.dft"))
+        dft = stormpy.dft.prepare_for_analysis(dft)
+        simulator = stormpy.dft.DFTSimulator(dft, seed=5)
+
+        simulator.let_fail("B_Power")
+        assert simulator.is_next_dependency_failure()
+        with pytest.raises(ValueError):
+            simulator.let_fail("B", dependency_successful=False)
+
+    def test_let_fail_dependency_unsuccessful(self):
+        dft = stormpy.dft.load_dft_galileo_file(get_example_path("dft", "pdep.dft"))
+        dft = stormpy.dft.prepare_for_analysis(dft)
+        simulator = stormpy.dft.DFTSimulator(dft, seed=5)
+
+        simulator.let_fail("B_Power")
+        assert simulator.is_next_dependency_failure()
+        candidates = simulator.next_failures()
+        assert len(candidates) == 1
+        dependent_be = candidates[0]
+
+        simulator.let_fail(dependent_be, dependency_successful=False)
+        assert not simulator.is_failed()
+        _, element_states = simulator.status()
+        statuses_by_name = {element.name: status for element, status in element_states.items()}
+        assert statuses_by_name[dependent_be] != "Failed"
+
+    def test_let_fail_unknown_be_raises(self):
+        dft = stormpy.dft.load_dft_json_file(get_example_path("dft", "and.json"))
+        simulator = stormpy.dft.DFTSimulator(dft, seed=5)
+        with pytest.raises(ValueError):
+            simulator.let_fail("NonExistentBE")
+
+    def test_nr_next_failures(self):
+        dft = stormpy.dft.load_dft_json_file(get_example_path("dft", "and.json"))
+        simulator = stormpy.dft.DFTSimulator(dft, seed=5)
+        assert simulator.nr_next_failures() == len(simulator.next_failures()) == 2
+
+        simulator.let_fail("C")
+        assert simulator.nr_next_failures() == len(simulator.next_failures()) == 1
+
+    def test_reset(self):
+        dft = stormpy.dft.load_dft_json_file(get_example_path("dft", "and.json"))
+        simulator = stormpy.dft.DFTSimulator(dft, seed=5)
+        initial_candidates = set(simulator.next_failures())
+
+        simulator.let_fail("C")
+        assert not simulator.is_failed()
+        assert set(simulator.next_failures()) != initial_candidates
+
+        simulator.reset()
+        assert not simulator.is_failed()
+        assert set(simulator.next_failures()) == initial_candidates
+
+    def test_constructor_relevant_events(self):
+        dft = stormpy.dft.load_dft_json_file(get_example_path("dft", "and.json"))
+        simulator = stormpy.dft.DFTSimulator(dft, seed=5, relevant_events=["B"])
+
+        simulator.let_fail("C")
+        simulator.let_fail("B")
+        assert simulator.is_failed()
+        _, element_states = simulator.status()
+        statuses_by_name = {element.name: status for element, status in element_states.items()}
+        # "B" was marked as an additional relevant event, so it must not be collapsed into "Don't Care"
+        assert statuses_by_name["B"] == "Failed"
+
+    def test_status_spare_usage(self):
+        dft = stormpy.dft.load_dft_galileo_file(get_example_path("dft", "hecs.dft"))
+        simulator = stormpy.dft.DFTSimulator(dft, seed=5, relevant_events=["n137", "n139", "n9"])
+
+        _, element_states = simulator.status()
+        statuses_by_name = {element.name: status for element, status in element_states.items()}
+        initial_status = statuses_by_name["n137"]
+        assert "not using anything" in initial_status or "currently using" in initial_status
+
+        # Fail the primary component of the spare pool, forcing a claim of the spare
+        simulator.let_fail("n139")
+        _, element_states = simulator.status()
+        statuses_by_name = {element.name: status for element, status in element_states.items()}
+        assert "currently using n9" in statuses_by_name["n137"]
+
+    def test_let_fail_seq_violation_invalid(self):
+        dft = stormpy.dft.load_dft_galileo_file(get_example_path("dft", "seq.dft"))
+        simulator = stormpy.dft.DFTSimulator(dft, seed=5)
+
+        res = simulator.let_fail("Second1")
+        assert res == stormpy.dft.SimulationStepResult.SUCCESSFUL
+        res = simulator.let_fail("Second2")
+        assert res == stormpy.dft.SimulationStepResult.INVALID

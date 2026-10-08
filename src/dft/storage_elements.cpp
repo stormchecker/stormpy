@@ -48,6 +48,7 @@ void define_storage_elements_typed(py::module& m) {
     auto dependency = stormpy::bindings::bindTemplateClass<Dependency<ValueType>>(m, "DFTDependency", index, "Dependency", element);
     dependency.def_property_readonly("trigger_event", &Dependency<ValueType>::triggerEvent, "Trigger event")
         .def_property_readonly("dependent_events", &Dependency<ValueType>::dependentEvents, "Dependent events")
+        .def_property_readonly("is_fdep", &Dependency<ValueType>::isFDEP, "Whether the dependency is an FDEP (represented as PDEP with probability 1)")
         .def("__str__", &Dependency<ValueType>::toString);
 }
 

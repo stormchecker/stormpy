@@ -1,9 +1,9 @@
+import math
 import os
 import pytest
 
 import stormpy
 from helpers.helper import get_example_path
-
 from configurations import dft
 
 
@@ -67,6 +67,7 @@ class TestDftElement:
         assert dft.nr_dynamic_elements() == 0
         assert tle.id == 2
         assert tle.name == "A"
+        assert tle.type == stormpy.dft.DFTElementType.AND
         b = dft.get_element(0)
         assert b.id == 0
         assert b.name == "B"
@@ -77,6 +78,11 @@ class TestDftElement:
         with pytest.raises(RuntimeError) as exception:
             d = dft.get_element_by_name("D")
         assert "InvalidArgumentException" in str(exception.value)
+
+    def test_element_type_spare(self):
+        dft = stormpy.dft.load_dft_galileo_file(get_example_path("dft", "hecs.dft"))
+        spare = dft.get_element_by_name("n137")
+        assert spare.type == stormpy.dft.DFTElementType.SPARE
 
 
 @dft

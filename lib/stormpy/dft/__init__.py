@@ -13,6 +13,8 @@ from stormpy.storage import SparseCtmc, SparseMA
 
 # Import classes from developer (and republish them under stormpy.dft.X.)
 DFT = developer.DFT.publish_as("stormpy.dft.DFT")
+
+
 # Extend parametric DFT with a convenience method to collect its parameters
 def _get_parameters(self):
     """Return the parameters occurring in this parametric DFT."""

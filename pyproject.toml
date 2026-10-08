@@ -123,6 +123,10 @@ repair-wheel-command = "delocate-listdeps -vv --depending --all {wheel} && DYLD_
 [tool.black]
 line-length = 160
 
+[tool.jupytext]
+# Do not record the jupytext version in the Markdown files
+notebook_metadata_filter = "-jupytext.text_representation.jupytext_version"
+
 [tool.pytest.ini_options]
 minversion = "6.0"
 testpaths = [

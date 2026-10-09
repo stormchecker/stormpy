@@ -4,6 +4,7 @@ from . import _core
 from ._core import *
 from . import storage
 from .storage import *
+from . import logic
 from .logic import *
 from . import exceptions
 

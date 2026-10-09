@@ -38,6 +38,14 @@ class _TemplateInstantiation:
 
 
 @dataclass(frozen=True)
+class DeductionSource:
+    """Constructor argument used by a built-in deduction guide."""
+
+    position: int
+    keywords: tuple[str, ...]
+
+
+@dataclass(frozen=True)
 class _TemplateMetadata:
     """Tooling-oriented description of a complete template family."""
 
@@ -46,6 +54,7 @@ class _TemplateMetadata:
     parameters: tuple[_TemplateParameter, ...]
     instantiations: tuple[_TemplateInstantiation, ...]
     deduction_guide: str | None
+    deduction_source: DeductionSource | None = None
 
 
 _DeductionGuide: TypeAlias = Callable[["_TemplateClass", tuple[Any, ...], Mapping[str, Any]], object]
@@ -90,6 +99,7 @@ def _deduce_from_object(
 
     deduction.__name__ = "deduce_from_object"
     deduction.__qualname__ = "deduce_from_object"
+    deduction.__stormpy_deduction_source__ = DeductionSource(position, keywords)
     return deduction
 
 
@@ -114,6 +124,7 @@ def _deduce_from_first_argument(source: "_TemplateClass | None" = None, *, keywo
 
     deduction.__name__ = "deduce_from_first_argument"
     deduction.__qualname__ = "deduce_from_first_argument"
+    deduction.__stormpy_deduction_source__ = DeductionSource(0, (keyword,) if keyword is not None else ())
     return deduction
 
 
@@ -272,7 +283,8 @@ class _TemplateClass:
         guide = None
         if self._deduction_guide is not None:
             guide = getattr(self._deduction_guide, "__qualname__", type(self._deduction_guide).__qualname__)
-        return _TemplateMetadata(self.__name__, self._canonical_name, self._parameters, instantiations, guide)
+        source = getattr(self._deduction_guide, "__stormpy_deduction_source__", None)
+        return _TemplateMetadata(self.__name__, self._canonical_name, self._parameters, instantiations, guide, source)
 
     @property
     def instantiations(self) -> Mapping[tuple[object, ...], type]:

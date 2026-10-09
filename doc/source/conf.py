@@ -6,8 +6,13 @@
 # Needed for version information
 import importlib
 import pathlib
+import re
+import sys
 
 import stormpy
+
+sys.path.insert(0, str(pathlib.Path(__file__).parent / "_ext"))
+from stormpy_templates import template_families, template_info
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
@@ -23,7 +28,9 @@ language = "en"
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
+    "stormpy_templates",
     "sphinx.ext.autodoc",
+    "sphinx.ext.autosummary",
     "sphinx.ext.autosectionlabel",
     #'sphinx.ext.intersphinx',
     "sphinx.ext.githubpages",
@@ -34,6 +41,56 @@ autosectionlabel_prefix_document = True
 
 # Autodoc options
 autoclass_content = "both"  # Add documentation for both the class and __init__
+
+# Autosummary options
+# Also list members that are re-exported (e.g. classes defined in the
+# compiled _logic module and imported into stormpy.logic)
+autosummary_imported_members = True
+
+# For modules that re-export members of other modules: the members that should
+# be listed on the module's autosummary page, identified by their __module__.
+# All other module pages list all their members.
+_MEMBER_MODULES = {
+    # The top-level stormpy package also re-exports the members of several
+    # submodules (e.g. storage and logic). Its page (the core API) only lists
+    # the members defined in stormpy itself or in the compiled _core extension.
+    "stormpy": {"stormpy", "stormpy._core"},
+    # The number-independent core types live in the compiled _pycarl_core module.
+    "stormpy.pycarl": {"stormpy.pycarl", "stormpy.pycarl._pycarl_core"},
+    # The number-dependent formula types are bound under the shared formula module.
+    "stormpy.pycarl.gmp.formula": {"stormpy.pycarl.formula"},
+    "stormpy.pycarl.cln.formula": {"stormpy.pycarl.formula"},
+    # Utility modules re-export pycarl helpers.
+    "stormpy.pycarl.convert": {"stormpy.pycarl.convert"},
+    "stormpy.pycarl.parse": {"stormpy.pycarl.parse"},
+}
+
+
+def _filter_api_members(module, members):
+    """
+    Filter the members listed on the autosummary page of a module.
+
+    To document every member only on the page of the module it belongs to,
+    the pages of the modules in _MEMBER_MODULES (which re-export members of
+    other modules) only list the members defined in the given modules.
+    """
+    members = [name for name in members if not name.startswith("_")]
+    accepted = _MEMBER_MODULES.get(module)
+    if accepted is None:
+        return members
+    module_obj = sys.modules[module]
+    return [name for name in members if getattr(getattr(module_obj, name, None), "__module__", None) in accepted]
+
+
+# Variables (and callables) available in autosummary templates
+autosummary_context = {
+    "filter_api_members": _filter_api_members,
+    "template_families": template_families,
+    "template_info": template_info,
+}
+
+# Wrap long signatures instead of scrolling them
+python_maximum_signature_line_length = 100
 
 templates_path = ["_templates"]
 exclude_patterns = []
@@ -148,6 +205,12 @@ def _skip_members_republished_in_public_api(app, what, name, obj, skip, options)
     if getattr(public_module, name, None) is obj:
         return True
     return skip
+
+
+# -- Myst options --
+myst_enable_extensions = [
+    "colon_fence",
+]
 
 
 def setup(app):

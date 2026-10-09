@@ -47,7 +47,8 @@ dev = [
     "black[jupyter]",
 ]
 doc = [
-    "Sphinx>=8.2.2",
+    "Sphinx>=8.1,<8.2; python_version < '3.11'",
+    "Sphinx>=8.2.2; python_version >= '3.11'",
     "sphinx-nefertiti",
     "sphinx-copybutton",
     "jupytext",

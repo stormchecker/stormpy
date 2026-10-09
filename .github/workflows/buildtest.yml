@@ -45,7 +45,7 @@ jobs:
           - {name: "no libraries",
              setup_args: "--config-settings=cmake.define.STORMPY_ALLOW_STORM_FETCH=OFF --config-settings=cmake.define.STORMPY_USE_STORM_DFT=OFF --config-settings=cmake.define.STORMPY_USE_STORM_GSPN=OFF --config-settings=cmake.define.STORMPY_USE_STORM_PARS=OFF --config-settings=cmake.define.STORMPY_USE_STORM_POMDP=OFF",
              optional_libs: "[test]",
-             test_opt: "tests"
+             test_opt: "--pyargs stormpy.tests"
           }
     steps:
       - name: Git clone
@@ -149,7 +149,7 @@ jobs:
              build_type: "Debug",
              setup_args: "--config-settings=cmake.define.STORMPY_ALLOW_STORM_SYSTEM=OFF --config-settings=cmake.define.STORM_GIT_TAG=master --config-settings=cmake.define.STORMPY_USE_STORM_DFT=OFF --config-settings=cmake.define.STORMPY_USE_STORM_GSPN=OFF --config-settings=cmake.define.STORMPY_USE_STORM_PARS=OFF --config-settings=cmake.define.STORMPY_USE_STORM_POMDP=OFF",
              optional_libs: "[test]",
-             test_opt: "tests"
+             test_opt: "--pyargs stormpy.tests"
           }
           - {name: "Ubuntu 24.04, Release",
              base_image: "movesrwth/storm-basesystem:ubuntu-24.04",

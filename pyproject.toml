@@ -15,7 +15,7 @@ authors = [
     { name = "S. Junges", email = "sebastian.junges@ru.nl" },
     { name = "M. Volk", email = "m.volk@tue.nl" }
 ]
-requires-python = ">=3.10"  # Python version should be synced with find_package(Python ...) in CMakeLists.txt
+requires-python = ">=3.11"  # Python version should be synced with find_package(Python ...) in CMakeLists.txt
 dependencies = [
     "Deprecated",
 ]
@@ -129,8 +129,9 @@ notebook_metadata_filter = "-jupytext.text_representation.jupytext_version"
 
 [tool.pytest.ini_options]
 minversion = "6.0"
+addopts = "--import-mode=importlib"
 testpaths = [
-    "tests",
+    "lib/stormpy/tests",
     "examples",
 ]
 python_files = [

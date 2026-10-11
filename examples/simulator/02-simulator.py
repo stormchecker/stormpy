@@ -38,7 +38,7 @@ def example_simulator_02():
     for path in paths:
         print(" ".join(path))
 
-    options = stormpy.BuilderOptions(True, True)
+    options = stormpy.BuilderOptions(build_all_reward_models=True, build_all_labels=True)
     options.set_build_state_valuations()
     options.set_build_choice_labels(True)
     model = stormpy.build_model(prism_program, options=options)

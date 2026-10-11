@@ -13,8 +13,7 @@ def example_analysis_02():
     properties = stormpy.parse_properties(formula_str, prism_program)
     model = stormpy.build_symbolic_model(prism_program, properties)
     result = stormpy.model_checking(model, properties[0])
-    filter = stormpy.create_filter_initial_states(model)
-    result.filter(filter)
+    stormpy.filter_initial_states(result, model)
     assert result.get_min() == result.get_max()
     print(result.get_min())
 

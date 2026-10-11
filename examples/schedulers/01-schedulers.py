@@ -11,7 +11,7 @@ def example_schedulers_01():
     program = stormpy.parse_prism_program(path)
     formulas = stormpy.parse_properties(formula_str, program)
 
-    options = stormpy.BuilderOptions(True, True)
+    options = stormpy.BuilderOptions(build_all_reward_models=True, build_all_labels=True)
     options.set_build_state_valuations()
     options.set_build_choice_labels()
     options.set_build_choice_origins()

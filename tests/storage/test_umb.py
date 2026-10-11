@@ -9,13 +9,13 @@ from helpers.helper import get_example_path
 @pytest.fixture
 def dtmc():
     program = stormpy.parse_prism_program(get_example_path("dtmc", "brp-16-2.pm"))
-    return stormpy.build_model(program, options=stormpy.BuilderOptions(True, True))
+    return stormpy.build_model(program, options=stormpy.BuilderOptions(build_all_reward_models=True, build_all_labels=True))
 
 
 @pytest.fixture
 def mdp():
     program = stormpy.parse_prism_program(get_example_path("mdp", "coin2-2.nm"))
-    return stormpy.build_model(program, options=stormpy.BuilderOptions(True, True))
+    return stormpy.build_model(program, options=stormpy.BuilderOptions(build_all_reward_models=True, build_all_labels=True))
 
 
 @pytest.fixture

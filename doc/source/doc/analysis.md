@@ -46,8 +46,7 @@ result = stormpy.model_checking(model, properties[0])
 To access the result, the result has to be filtered:
 
 ```{code-cell} python3
-filter = stormpy.create_filter_initial_states(model)
-result.filter(filter)
+stormpy.filter_initial_states(result, model)
 assert result.get_min() == result.get_max()
 ```
 

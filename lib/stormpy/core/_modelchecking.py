@@ -5,7 +5,7 @@ from __future__ import annotations
 from enum import Enum
 
 from stormpy import developer, storage
-from stormpy.core._common import _formula, _value_type_of_model
+from stormpy.core._common import _formula, _result_value_type_of_model, _value_type_of_model
 from stormpy._config import Interval, Rational, RationalInterval
 from stormpy.developer import (
     CheckResult,
@@ -111,8 +111,20 @@ def create_filter_initial_states(model) -> ExplicitQualitativeCheckResult | Symb
     :return: Qualitative check result containing the initial states.
     """
     if model.is_sparse_model:
-        return ExplicitQualitativeCheckResult[_value_type_of_model(model)](model.initial_states_as_bitvector)
+        return ExplicitQualitativeCheckResult[_result_value_type_of_model(model)](model.initial_states_as_bitvector)
     return SymbolicQualitativeCheckResult[storage.DdType.Sylvan](model.reachable_states, model.initial_states)
+
+
+def filter_initial_states(result: CheckResult, model) -> CheckResult:
+    """
+    Restrict the model checking result to the initial states of the model.
+
+    :param result: Model checking result (explicit, symbolic or hybrid).
+    :param model: The model (sparse or symbolic) the result was computed for.
+    :return: The filtered result (the same object as ``result``).
+    """
+    result.filter(create_filter_initial_states(model))
+    return result
 
 
 def create_filter(model, expression: storage.Expression) -> SymbolicQualitativeCheckResult:

@@ -18,6 +18,14 @@ using CheckResult = storm::modelchecker::CheckResult;
 using QualitativeCheckResult = storm::modelchecker::QualitativeCheckResult;
 constexpr auto Sylvan = storm::dd::DdType::Sylvan;
 
+// Storm only asserts (in debug builds) that a state has a value. Raise an IndexError instead of reading out of bounds.
+template<typename Result>
+void checkHasValueForState(Result const& result, storm::storage::sparse::state_type state) {
+    if (!result.hasValueForState(state)) {
+        throw py::index_error("State " + std::to_string(state) + " has no value in this result");
+    }
+}
+
 void define_modelchecker_results(py::module& m) {
     py::classh<CheckResult> checkResult(m, "CheckResult", "Base class for all model checking results");
     checkResult.def("is_explicit", &CheckResult::isExplicit, "Whether the result is explicit")
@@ -63,8 +71,14 @@ void define_modelchecker_results_typed(py::module& m) {
                                                                                       "Explicit qualitative model checking result")
         .def(py::init<storm::storage::BitVector const&>(), "Create result from truth values", py::arg("truth_values"))
         .def(
-            "__getitem__", [](ExplicitQualitative const& result, storm::storage::sparse::state_type state) { return result[state]; },
+            "__getitem__",
+            [](ExplicitQualitative const& result, storm::storage::sparse::state_type state) {
+                checkHasValueForState(result, state);
+                return result[state];
+            },
             "Get result for given state", py::arg("state"))
+        .def("has_value_for_state", &ExplicitQualitative::hasValueForState, "Check whether the result has a value for the given state", py::arg("state"))
+        .def("get_states", &ExplicitQualitative::getStates, "Get BitVector of the states for which the result has values", py::return_value_policy::copy)
         .def("get_truth_values_vector", &ExplicitQualitative::getTruthValuesVector, "Get BitVector representing the truth values")
         .def("get_scheduler", py::overload_cast<>(&ExplicitQualitative::getScheduler, py::const_), "Get scheduler",
              py::return_value_policy::reference_internal);
@@ -78,9 +92,19 @@ void define_modelchecker_results_typed(py::module& m) {
     stormpy::bindings::bindTemplateClass<ExplicitQuantitative>(m, "ExplicitQuantitativeCheckResult", index, "Explicit quantitative model checking result",
                                                                quantitativeCheckResult)
         .def(py::init<std::vector<ValueType>>(), "Create result from values", py::arg("values"))
-        .def("__getitem__", py::overload_cast<storm::storage::sparse::state_type>(&ExplicitQuantitative::operator[], py::const_), "Get result for given state",
-             py::arg("state"), py::return_value_policy::copy)
-        .def("get_finite_value_vector", &ExplicitQuantitative::getFiniteValueVector, "Get values for all states (infinite values are not supported)")
+        .def(
+            "__getitem__",
+            [](ExplicitQuantitative const& result, storm::storage::sparse::state_type state) {
+                checkHasValueForState(result, state);
+                return result[state];
+            },
+            "Get result for given state", py::arg("state"))
+        .def("has_value_for_state", &ExplicitQuantitative::hasValueForState, "Check whether the result has a value for the given state", py::arg("state"))
+        .def("get_states", &ExplicitQuantitative::getStates, "Get BitVector of the states for which the result has values", py::return_value_policy::copy)
+        .def("get_value_vector", py::overload_cast<>(&ExplicitQuantitative::getValueVector, py::const_),
+             "Get values (possibly infinite) of the states for which the result has values")
+        .def("get_finite_value_vector", &ExplicitQuantitative::getFiniteValueVector,
+             "Get values for all states as plain values (fails for infinite values which the value type cannot represent)")
         .def("get_scheduler", py::overload_cast<>(&ExplicitQuantitative::getScheduler, py::const_), "Get scheduler",
              py::return_value_policy::reference_internal);
 

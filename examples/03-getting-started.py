@@ -14,8 +14,8 @@ def example_getting_started_03():
     result = stormpy.model_checking(model, properties[0])
     print(result)
     assert result.is_result_for_all_states()
-    for x in result.get_finite_value_vector():
-        print(x)
+    for state in model.states:
+        print(result[state])
     initial_state = model.initial_states[0]
     print(result[initial_state])
 

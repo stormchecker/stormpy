@@ -141,13 +141,17 @@ result = stormpy.model_checking(model, properties[0])
 ```
 
 The result may contain information about all states.
-Instead, we can iterate over the results:
+We can access the value of each state via ``result[state]``:
 
 ```{code-cell} python3
 assert result.is_result_for_all_states()
-for x in result.get_finite_value_vector():
-    pass  # do something with x
+for state in model.states:
+    x = result[state]  # do something with x
 ```
+
+Alternatively, ``result.get_value_vector()`` returns the values of all states at once.
+Values can be infinite (e.g. for expected rewards), in which case they are given as ``float("inf")``.
+``result.get_finite_value_vector()`` returns the values as plain values of the value type instead; it raises an error if a value is infinite and the value type cannot represent infinity (e.g. ``stormpy.Rational``).
 
 #### Results for all states
 

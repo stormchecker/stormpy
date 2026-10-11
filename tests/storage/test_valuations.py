@@ -6,7 +6,7 @@ import pytest
 class TestValuationTransformer:
     def test_transform_die(self):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
-        options = stormpy.BuilderOptions(True, True)
+        options = stormpy.BuilderOptions(build_all_reward_models=True, build_all_labels=True)
         options.set_build_state_valuations()
         options.set_build_choice_labels(True)
         model = stormpy.build_model(program, options=options)

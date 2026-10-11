@@ -83,8 +83,9 @@ LogLevel = developer.LogLevel
 # Import public functions
 from .core._parsing import instantiate_constants, parse_jani_model, parse_jani_model_from_string, parse_prism_program, parse_properties
 from .core._building import BuilderOptions, build_model, build_model_from_drn, build_model_from_explicit, build_model_from_umb, build_symbolic_model
-from .core._modelchecking import Engine, create_filter, create_filter_initial_states, model_checking
+from .core._modelchecking import Engine, create_filter, create_filter_initial_states, filter_initial_states, model_checking
 from .core._analysis import (
+    compute_prob01_states,
     compute_expected_number_of_visits,
     compute_steady_state_distribution,
     create_weight_vector_checker,
@@ -167,11 +168,13 @@ __all__ = [
     "ExplicitParetoCurveCheckResult",
     "model_checking",
     "create_filter_initial_states",
+    "filter_initial_states",
     "create_filter",
     # Analysis
     "PcaaWeightVectorChecker",
     "ConstraintCollector",
     "topological_sort",
+    "compute_prob01_states",
     "compute_expected_number_of_visits",
     "compute_steady_state_distribution",
     "create_weight_vector_checker",

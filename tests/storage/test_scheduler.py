@@ -9,7 +9,7 @@ class TestScheduler:
     def test_scheduler_mdp(self):
         program = stormpy.parse_prism_program(get_example_path("mdp", "coin2-2.nm"))
         formulas = stormpy.parse_properties('Pmin=? [ F "finished" & "all_coins_equal_1"]', program)
-        options = stormpy.BuilderOptions(True, True)
+        options = stormpy.BuilderOptions(build_all_reward_models=True, build_all_labels=True)
         options.set_build_state_valuations()
         options.set_build_choice_labels()
         options.set_build_choice_origins()

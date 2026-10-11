@@ -71,8 +71,7 @@ print(symbolic_result)
 We can also filter the computed results and only consider the initial states:
 
 ```{code-cell} python3
-filter = stormpy.create_filter_initial_states(symbolic_model)
-symbolic_result.filter(filter)
+stormpy.filter_initial_states(symbolic_result, symbolic_model)
 print(symbolic_result.get_min())
 ```
 
@@ -99,7 +98,6 @@ print(type(symbolic_model))
 
 ```{code-cell} python3
 hybrid_result = stormpy.model_checking(symbolic_model, properties[0], engine=stormpy.Engine.HYBRID)
-filter = stormpy.create_filter_initial_states(symbolic_model)
-hybrid_result.filter(filter)
+stormpy.filter_initial_states(hybrid_result, symbolic_model)
 print(hybrid_result)
 ```

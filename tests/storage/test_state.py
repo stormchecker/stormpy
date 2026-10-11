@@ -21,7 +21,7 @@ class TestState:
 
     def test_state_valuations(self):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
-        options = stormpy.BuilderOptions(True, True)
+        options = stormpy.BuilderOptions(build_all_reward_models=True, build_all_labels=True)
         options.set_build_state_valuations()
         model = stormpy.build_model(program, options=options)
         assert model.has_state_valuations()

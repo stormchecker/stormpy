@@ -49,7 +49,7 @@ class TestSparseModelSimulator:
     def test_simulate_die_steps_vals(self):
         path = stormpy.examples.files.prism_dtmc_die
         prism_program = stormpy.parse_prism_program(path)
-        options = stormpy.BuilderOptions(True, True)
+        options = stormpy.BuilderOptions(build_all_reward_models=True, build_all_labels=True)
         options.set_build_state_valuations()
         model = stormpy.build_model(prism_program, options=options)
         simulator = stormpy.simulator.create_simulator(model, seed=42)
@@ -64,7 +64,7 @@ class TestSparseModelSimulator:
     def test_simulate_die_vals(self):
         path = stormpy.examples.files.prism_dtmc_die
         prism_program = stormpy.parse_prism_program(path)
-        options = stormpy.BuilderOptions(True, True)
+        options = stormpy.BuilderOptions(build_all_reward_models=True, build_all_labels=True)
         options.set_build_state_valuations()
         model = stormpy.build_model(prism_program, options=options)
         simulator = stormpy.simulator.create_simulator(model, seed=42)
@@ -124,7 +124,7 @@ class TestSparseModelSimulator:
         rng = random.Random(23)
         path = stormpy.examples.files.prism_mdp_slipgrid
         prism_program = stormpy.parse_prism_program(path)
-        options = stormpy.BuilderOptions(True, True)
+        options = stormpy.BuilderOptions(build_all_reward_models=True, build_all_labels=True)
         options.set_build_choice_labels()
         options.set_build_state_valuations()
         model = stormpy.build_model(prism_program, options=options)

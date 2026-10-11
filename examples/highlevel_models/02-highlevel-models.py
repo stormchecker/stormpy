@@ -34,16 +34,14 @@ def example_highlevel_models():
     sparse_model = stormpy.build_model(all_in_one_program, options=build_options)
     print(sparse_model)
     result = stormpy.model_checking(sparse_model, properties[0], extract_scheduler=True, only_initial_states=True)
-    filter_sparse = stormpy.create_filter_initial_states(sparse_model)
-    result.filter(filter_sparse)
+    stormpy.filter_initial_states(result, sparse_model)
     result_for_vvar = {int(sparse_model.state_valuations.get_value(x, Vvar.expression_variable)): result[x] for x in sparse_model.initial_states}
     print(result_for_vvar)
 
     dd_model = stormpy.build_symbolic_model(all_in_one_program)
     print(dd_model)
-    filter_dd = stormpy.create_filter_initial_states(dd_model)
     result = stormpy.model_checking(dd_model, properties[0], only_initial_states=True, engine=stormpy.Engine.DD)
-    result.filter(filter_dd)
+    stormpy.filter_initial_states(result, dd_model)
 
     resultvalues = result.get_value_vector()
     # Notice that the manager seems to be different than the manager for the prism program. So we solve it like this

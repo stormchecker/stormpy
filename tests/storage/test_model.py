@@ -240,7 +240,7 @@ class TestSparseModel:
         program, _ = stormpy.parse_jani_model(get_example_path("dtmc", "die.jani"))
         a = stormpy.developer.FlatSet()
 
-        options = stormpy.BuilderOptions(True, True)
+        options = stormpy.BuilderOptions(build_all_reward_models=True, build_all_labels=True)
         options.set_build_choice_origins()
         model = stormpy.build_model(program, options=options)
         a = model.choice_origins.get_edge_index_set(3)

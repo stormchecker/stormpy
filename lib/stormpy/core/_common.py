@@ -7,7 +7,7 @@ from collections.abc import Iterable
 from typing import TypeAlias
 
 from stormpy import storage
-from stormpy._config import Rational, RationalFunction
+from stormpy._config import Interval, Rational, RationalFunction, RationalInterval
 from stormpy.developer import Property
 from stormpy.exceptions import StormError
 
@@ -31,6 +31,16 @@ def _value_type_of_model(model) -> type:
     if model.is_exact:
         return Rational
     return float
+
+
+def _result_value_type_of_model(model) -> type:
+    """Get the value type of model checking results for a sparse or symbolic model."""
+    value_type = _value_type_of_model(model)
+    if value_type is Interval:
+        return float
+    if value_type is RationalInterval:
+        return Rational
+    return value_type
 
 
 def _formula(property: Property | object):

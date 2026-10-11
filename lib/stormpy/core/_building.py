@@ -24,15 +24,34 @@ class BuilderOptions(developer.BuilderOptions):
 
     The options can be created preserving the given properties via e.g. ``BuilderOptions(properties)``,
     or they can be created without properties via e.g. ``BuilderOptions(build_all_reward_models=True, build_all_labels=True)``.
+
+    :param properties: (optional) Properties (or formulas) whose labels and reward models are preserved.
+    :param model_description: (optional) Symbolic model description used to resolve the properties.
+    :param build_all_reward_models: Whether all reward models are built.
+    :param build_all_labels: Whether all labels are built.
     """
 
-    def __init__(self, *args, **kwargs) -> None:
-        if args and not isinstance(args[0], bool):
-            # Properties (or formulas) to preserve, optionally followed by the model description
-            args = (_formulas(args[0]), *args[1:])
-        elif "formulas" in kwargs:
-            kwargs["formulas"] = _formulas(kwargs["formulas"])
-        super().__init__(*args, **kwargs)
+    def __init__(
+        self,
+        properties: Iterable[Property] | None = None,
+        model_description: SymbolicModelDescription | None = None,
+        *,
+        build_all_reward_models: bool = False,
+        build_all_labels: bool = False,
+    ) -> None:
+        if isinstance(properties, bool):
+            raise TypeError("The flags of BuilderOptions are keyword-only, use BuilderOptions(build_all_reward_models=..., build_all_labels=...).")
+        if properties is None:
+            super().__init__(build_all_reward_models, build_all_labels)
+            return
+        if model_description is None:
+            super().__init__(_formulas(properties))
+        else:
+            super().__init__(_formulas(properties), model_description)
+        if build_all_reward_models:
+            self.set_build_all_reward_models()
+        if build_all_labels:
+            self.set_build_all_labels()
 
 
 def _check_constants(model) -> None:

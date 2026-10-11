@@ -40,6 +40,44 @@ def test_infinite_quantitative_values(value_type, tmp_path):
     assert isinstance(result[1], value_type)
     assert result.get_max() == math.inf
     assert result.get_min() == 0
+    assert result.get_value_vector() == [result[state] for state in range(model.nr_states)]
+    assert math.inf in result.get_value_vector()
+    if value_type is float:
+        # Infinity can be represented by float
+        assert result.get_finite_value_vector() == result.get_value_vector()
+    else:
+        with pytest.raises(RuntimeError, match="narrow inf"):
+            result.get_finite_value_vector()
+
+
+def test_result_index_error():
+    program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
+    properties = stormpy.parse_properties('P=? [ F "one" ]', program)
+    model = stormpy.build_model(program, properties)
+    # Quantitative result for all states
+    result = stormpy.model_checking(model, properties[0])
+    assert result.get_states() == stormpy.BitVector(model.nr_states, True)
+    assert result.has_value_for_state(model.nr_states - 1)
+    assert not result.has_value_for_state(model.nr_states)
+    with pytest.raises(IndexError):
+        result[model.nr_states]
+    assert result.get_value_vector() == [result[state] for state in model.states]
+    # Iteration stops at the end of the result
+    assert list(result) == result.get_value_vector()
+    # Qualitative result
+    filter = stormpy.create_filter_initial_states(model)
+    assert filter[0]
+    assert not filter[1]
+    with pytest.raises(IndexError):
+        filter[model.nr_states]
+    # Result only for the initial states
+    stormpy.filter_initial_states(result, model)
+    assert result.has_value_for_state(0)
+    assert not result.has_value_for_state(1)
+    assert math.isclose(result[0], 1 / 6)
+    with pytest.raises(IndexError):
+        result[1]
+    assert result.get_value_vector() == [result[0]]
 
 
 class TestModelChecking:
@@ -376,6 +414,34 @@ class TestModelChecking:
         result.filter(filter)
         assert result.get_min() == result.get_max()
         assert math.isclose(result.get_min(), 1 / 6)
+
+    @pytest.mark.parametrize("engine", [stormpy.Engine.SPARSE, stormpy.Engine.DD, stormpy.Engine.HYBRID])
+    def test_filter_initial_states(self, engine):
+        program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
+        formulas = stormpy.parse_properties('P=? [ F "one" ]', program)
+        if engine == stormpy.Engine.SPARSE:
+            model = stormpy.build_model(program, formulas)
+        else:
+            model = stormpy.build_symbolic_model(program, formulas)
+        result = stormpy.model_checking(model, formulas[0], engine=engine)
+        assert stormpy.filter_initial_states(result, model) is result
+        assert result.get_min() == result.get_max()
+        assert math.isclose(result.get_min(), 1 / 6, rel_tol=1e-6)
+
+    @pytest.mark.parametrize("value_type", [stormpy.Interval, stormpy.RationalInterval])
+    def test_filter_initial_states_interval(self, value_type):
+        program = stormpy.parse_prism_program(get_example_path("idtmc", "die-intervals.pm"))
+        formulas = stormpy.parse_properties('P=? [ F "one"]')
+        model = stormpy.build_model[value_type](program, formulas)
+        env = stormpy.Environment()
+        env.solver().min_max().method = stormpy.MinMaxMethod.VALUE_ITERATION
+        result = stormpy.model_checking(model, formulas[0], uncertainty_resolution_mode=stormpy.UncertaintyResolutionMode.MAXIMIZE, environment=env)
+        # Results of interval models contain values of the underlying number type
+        result_type = float if value_type is stormpy.Interval else stormpy.Rational
+        assert type(stormpy.create_filter_initial_states(model)) is stormpy.ExplicitQualitativeCheckResult[result_type]
+        stormpy.filter_initial_states(result, model)
+        assert result.get_min() == result.get_max()
+        assert math.isclose(float(result.get_min()), 72.0 / 189.0, rel_tol=1e-4)
 
     def test_model_checking_prism_dd_dtmc(self):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))

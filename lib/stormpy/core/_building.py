@@ -6,6 +6,7 @@ from collections.abc import Iterable
 
 from stormpy import developer, storage
 from stormpy.core._common import PathLike, _formulas, _path
+from stormpy.core._modelchecking import Engine
 from stormpy._config import Interval, Rational, RationalFunction, RationalInterval
 from stormpy._template import _deduce_default, _template_function
 from stormpy.developer import (
@@ -72,21 +73,37 @@ def build_model(
     properties: Iterable[Property] | None = None,
     *,
     options: BuilderOptions | None = None,
+    engine: Engine = Engine.SPARSE,
+    environment: Environment | None = None,
 ):
     """
-    Build a model in sparse (explicit) representation from a symbolic model.
+    Build a model from a symbolic model description.
+
+    The engine determines the representation of the model and should match the engine later used for :func:`model_checking`:
+    ``Engine.SPARSE`` (default) builds a sparse (explicit) model, ``Engine.DD`` and ``Engine.HYBRID`` build a symbolic model
+    (using decision diagrams, see also :func:`build_symbolic_model`).
 
     The value type of the model is selected via subscript, e.g. ``build_model[stormpy.Rational](program)``:
     float (default), Rational (exact), RationalFunction (parametric), Interval or RationalInterval (exact interval).
+    Symbolic models do not support the interval value types.
 
     :param model: Symbolic model (Prism program, Jani model or symbolic model description).
     :param properties: (optional) Properties which should be checkable on the built model.
         Only the labels and reward models required by the properties are built.
         If None or empty (and no options are given), all labels and reward models are built.
     :param options: (optional) Builder options for full control of the building process. Cannot be combined with properties.
-    :return: The model in sparse representation, e.g. a sparse DTMC.
+        Only supported for ``Engine.SPARSE``.
+    :param engine: Engine for which the model is built.
+    :param environment: (optional) Environment configuring the decision diagram libraries. Only supported for ``Engine.DD`` and ``Engine.HYBRID``.
+    :return: The model in sparse representation (e.g. a sparse DTMC) or in symbolic representation (e.g. a symbolic DTMC).
     :raises TypeError: If the value type is not supported.
     """
+    if engine != Engine.SPARSE:
+        if options is not None:
+            raise StormError("Builder options are only supported for sparse models (Engine.SPARSE).")
+        return build_symbolic_model[value_type](model, properties, environment=environment)
+    if environment is not None:
+        raise StormError("An environment is only used for building symbolic models (Engine.DD or Engine.HYBRID).")
     build = developer.build_sparse_model[value_type]
     if value_type is not RationalFunction:
         _check_constants(model)

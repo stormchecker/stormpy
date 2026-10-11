@@ -48,10 +48,10 @@ print(sparse_result[initial_state])
 ## Symbolic engine
 
 Instead of using the sparse engine, one can also use a symbolic representation in terms of binary decision diagrams (BDDs).
-To use the symbolic (dd) engine, we use the symbolic versions for the building and model checking:
+To use the symbolic (dd) engine, we pass the engine to the building and model checking:
 
 ```{code-cell} python3
-symbolic_model = stormpy.build_symbolic_model(prism_program, properties)
+symbolic_model = stormpy.build_model(prism_program, properties, engine=stormpy.Engine.DD)
 print(type(symbolic_model))
 ```
 

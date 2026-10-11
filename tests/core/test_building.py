@@ -1,3 +1,4 @@
+import math
 import pathlib
 import pytest
 import stormpy
@@ -77,6 +78,35 @@ class TestBuilding:
         properties = stormpy.parse_properties('P=? [F "one"]', program)
         with pytest.raises(StormError):
             stormpy.build_model(program, properties, options=options)
+
+    @pytest.mark.parametrize("engine", [stormpy.Engine.SPARSE, stormpy.Engine.DD, stormpy.Engine.HYBRID])
+    def test_build_model_engine(self, engine):
+        program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
+        properties = stormpy.parse_properties('P=? [F "one"]', program)
+        model = stormpy.build_model(program, properties, engine=engine)
+        if engine == stormpy.Engine.SPARSE:
+            assert type(model) is stormpy.SparseDtmc[float]
+        else:
+            assert type(model) is stormpy.SymbolicDtmc[stormpy.DdType.Sylvan, float]
+        assert model.nr_states == 13
+        result = stormpy.model_checking(model, properties[0], engine=engine)
+        stormpy.filter_initial_states(result, model)
+        assert math.isclose(result.get_min(), 1 / 6, rel_tol=1e-6)
+
+    def test_build_model_engine_value_types(self):
+        program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
+        model = stormpy.build_model[stormpy.Rational](program, engine=stormpy.Engine.DD)
+        assert type(model) is stormpy.SymbolicDtmc[stormpy.DdType.Sylvan, stormpy.Rational]
+        # Interval value types are not supported by symbolic models
+        with pytest.raises(TypeError, match="Supported are"):
+            stormpy.build_model[stormpy.Interval](program, engine=stormpy.Engine.DD)
+
+    def test_build_model_engine_errors(self):
+        program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
+        with pytest.raises(StormError, match="Builder options"):
+            stormpy.build_model(program, options=stormpy.BuilderOptions(), engine=stormpy.Engine.DD)
+        with pytest.raises(StormError, match="environment"):
+            stormpy.build_model(program, environment=stormpy.Environment())
 
     def test_builder_options_defaults(self):
         options = stormpy.BuilderOptions()

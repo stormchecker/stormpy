@@ -21,7 +21,7 @@ from stormpy.exceptions import StormError
 
 
 class Engine(Enum):
-    """Engine used for model checking."""
+    """Engine used for building models and model checking."""
 
     SPARSE = "sparse"
     """Explicit (sparse) engine. Requires a sparse model."""

@@ -19,8 +19,8 @@ def example_analysis_03():
     result = stormpy.model_checking(model, properties[0], environment=env)
     print(result[model.initial_states[0]])
 
-    dd_model = stormpy.build_symbolic_model(prism_program, properties)
-    result = stormpy.model_checking(dd_model, properties[0], environment=env)
+    dd_model = stormpy.build_model(prism_program, properties, engine=stormpy.Engine.DD)
+    result = stormpy.model_checking(dd_model, properties[0], engine=stormpy.Engine.DD, environment=env)
     stormpy.filter_initial_states(result, dd_model)
     assert result.get_min() == result.get_max()
     print(result.get_min())

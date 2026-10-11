@@ -7,6 +7,7 @@
 #include <storm/io/DirectEncodingExporter.h>
 #include <storm/io/file.h>
 #include <storm/models/symbolic/StandardRewardModel.h>
+#include <storm/settings/SettingsManager.h>
 #include <storm/settings/modules/CounterexampleGeneratorSettings.h>
 #include <storm/solver/OptimizationDirection.h>
 #include <storm/solver/UncertaintyResolutionMode.h>

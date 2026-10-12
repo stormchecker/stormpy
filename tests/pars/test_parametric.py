@@ -129,12 +129,6 @@ class TestParametric:
         assert len(model.get_parameters()) == 2
 
     def test_constraints_collector(self):
-        from stormpy.pycarl.formula import FormulaType, Relation
-
-        if stormpy.info.storm_ratfunc_use_cln():
-            from stormpy.pycarl.cln import formula
-        else:
-            from stormpy.pycarl.gmp import formula
         program = stormpy.parse_prism_program(get_example_path("pdtmc", "brp16_2.pm"))
         prop = "P=? [F s=5]"
         formulas = stormpy.parse_properties_for_prism_program(prop, program)
@@ -142,16 +136,12 @@ class TestParametric:
         collector = stormpy.ConstraintCollector(model)
         constraints_well_formed = collector.wellformed_constraints
         assert len(constraints_well_formed) == 4
-        for formula in constraints_well_formed:
-            assert formula.type == FormulaType.CONSTRAINT
-            constraint = formula.get_constraint()
-            assert constraint.relation == Relation.LEQ
+        for constraint in constraints_well_formed:
+            assert constraint.operator == stormpy.OperatorType.LessOrEqual
         constraints_graph_preserving = collector.graph_preserving_constraints
         assert len(constraints_graph_preserving) == 4
-        for formula in constraints_graph_preserving:
-            assert formula.type == FormulaType.CONSTRAINT
-            constraint = formula.get_constraint()
-            assert constraint.relation == Relation.NEQ
+        for constraint in constraints_graph_preserving:
+            assert constraint.operator == stormpy.OperatorType.NotEqual
 
     def test_derivatives(self):
         program = stormpy.parse_prism_program(get_example_path("pdtmc", "brp16_2.pm"))

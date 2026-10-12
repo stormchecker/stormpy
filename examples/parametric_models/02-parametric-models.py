@@ -26,11 +26,11 @@ def example_parametric_models_02():
 
     collector = stormpy.ConstraintCollector(model)
     print("Well formed constraints:")
-    for formula in collector.wellformed_constraints:
-        print(formula.get_constraint())
+    for constraint in collector.wellformed_constraints:
+        print(constraint)
     print("Graph preserving constraints:")
-    for formula in collector.graph_preserving_constraints:
-        print(formula.get_constraint())
+    for constraint in collector.graph_preserving_constraints:
+        print(constraint)
 
 
 if __name__ == "__main__":

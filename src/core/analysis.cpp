@@ -5,10 +5,10 @@
 // Define python bindings
 void define_graph_constraints(py::module& m) {
     // ConstraintCollector
-    py::classh<storm::analysis::ConstraintCollector<storm::RationalFunction>>(m, "ConstraintCollector", "Collector for constraints on parametric Markov chains")
+    py::classh<storm::analysis::ConstraintCollector>(m, "ConstraintCollector", "Collector for constraints on parametric Markov chains")
         .def(py::init<storm::models::sparse::Model<storm::RationalFunction> const&>(), py::arg("model"))
-        .def_property_readonly("wellformed_constraints", &storm::analysis::ConstraintCollector<storm::RationalFunction>::getWellformedConstraints,
+        .def_property_readonly("wellformed_constraints", &storm::analysis::ConstraintCollector::getWellformedConstraints,
                                "Get the constraints ensuring a wellformed model")
-        .def_property_readonly("graph_preserving_constraints", &storm::analysis::ConstraintCollector<storm::RationalFunction>::getGraphPreservingConstraints,
+        .def_property_readonly("graph_preserving_constraints", &storm::analysis::ConstraintCollector::getGraphPreservingConstraints,
                                "Get the constraints ensuring the graph is preserved");
 }

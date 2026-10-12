@@ -73,17 +73,11 @@ print(func)
 We collect the constraints ensuring that underlying model is well-formed and the graph structure does not change:
 
 ```{code-cell} python3
-import stormpy.info
-
-if stormpy.info.storm_ratfunc_use_cln():
-    import stormpy.pycarl.cln.formula
-else:
-    import stormpy.pycarl.gmp.formula
 collector = stormpy.ConstraintCollector(model)
-for formula in collector.wellformed_constraints:
-    print(formula)
-for formula in collector.graph_preserving_constraints:
-    print(formula)
+for constraint in collector.wellformed_constraints:
+    print(constraint)
+for constraint in collector.graph_preserving_constraints:
+    print(constraint)
 ```
 
 ## Collecting information about the parametric models

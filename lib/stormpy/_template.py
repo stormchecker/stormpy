@@ -360,6 +360,9 @@ class _TemplateFunction(_TemplateClass):
     e.g. because the value type only occurs in the return type.
     ``family[parameters](*args, **kwargs)`` calls the registered instantiation.
     ``family(*args, **kwargs)`` calls the instantiation selected by a configured deduction guide.
+
+    Note that deducing the template has a performance impact. If performance is critical,
+    directly access the instantiated function instead.
     """
 
     def _check_implementation(self, implementation: object) -> None:

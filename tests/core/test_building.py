@@ -71,10 +71,14 @@ class TestBuilding:
 
     def test_build_model_with_options(self):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
-        options = stormpy.BuilderOptions(build_all_reward_models=True, build_all_labels=True)
-        options.set_build_state_valuations()
+        options = stormpy.BuilderOptions(build_full=True)
         model = stormpy.build_model(program, options=options)
         assert model.has_state_valuations()
+        assert model.has_choice_labeling()
+        assert model.has_choice_origins()
+        # Without options, no additional information is built
+        model = stormpy.build_model(program)
+        assert not model.has_state_valuations()
         properties = stormpy.parse_properties('P=? [F "one"]', program)
         with pytest.raises(StormError):
             stormpy.build_model(program, properties, options=options)
@@ -121,23 +125,28 @@ class TestBuilding:
         assert isinstance(options, stormpy.developer.BuilderOptions)
         assert options.get_label_names() == raw_options.get_label_names() == {"one"}
         assert stormpy.BuilderOptions(properties=properties).get_label_names() == {"one"}
-        options_all_labels = stormpy.BuilderOptions(properties, build_all_labels=True)
-        assert options_all_labels.is_build_all_labels_set() and not options_all_labels.is_build_all_reward_models_set()
+        options_full = stormpy.BuilderOptions(properties, build_full=True)
+        assert options_full.is_build_all_labels_set() and options_full.is_build_all_reward_models_set()
+        assert options_full.is_build_state_valuations_set() and options_full.is_build_choice_labels_set() and options_full.is_build_choice_origins_set()
+        assert options_full.get_label_names() == {"one"}
         assert stormpy.BuilderOptions(properties, stormpy.SymbolicModelDescription(program)).get_label_names() == {"one"}
         # Options are accepted by the developer bindings
         model = stormpy.developer.build_sparse_model(program, options)
         assert model.labeling.get_labels() == {"init", "deadlock", "one"}
 
     def test_builder_options_without_properties(self):
-        options = stormpy.BuilderOptions(build_all_reward_models=True, build_all_labels=True)
+        options = stormpy.BuilderOptions(build_full=True)
         assert options.is_build_all_labels_set() and options.is_build_all_reward_models_set()
-        options = stormpy.BuilderOptions(build_all_reward_models=True)
-        assert options.is_build_all_reward_models_set() and not options.is_build_all_labels_set()
+        assert options.is_build_state_valuations_set() and options.is_build_choice_labels_set() and options.is_build_choice_origins_set()
         options = stormpy.BuilderOptions()
         assert not options.is_build_all_reward_models_set() and not options.is_build_all_labels_set()
+        assert not options.is_build_state_valuations_set() and not options.is_build_choice_labels_set() and not options.is_build_choice_origins_set()
         # Flags are keyword-only
         with pytest.raises(TypeError, match="keyword-only"):
-            stormpy.BuilderOptions(True, True)
+            stormpy.BuilderOptions(True)
+        # The separate flags are only available in the developer bindings
+        with pytest.raises(TypeError):
+            stormpy.BuilderOptions(build_all_labels=True)
 
     def test_build_model_undefined_constants(self):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "brp.pm"))

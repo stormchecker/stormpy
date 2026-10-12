@@ -14,10 +14,7 @@ def example_building_models_04():
     path = stormpy.examples.files.prism_mdp_firewire
     prism_program = stormpy.parse_prism_program(path)
     prism_program = stormpy.instantiate_constants(prism_program, "delay=10,fast=0.8")[0]
-    options = stormpy.BuilderOptions(build_all_reward_models=True, build_all_labels=True)
-    options.set_build_state_valuations()
-    options.set_build_all_reward_models(True)
-    options.set_build_choice_labels(True)
+    options = stormpy.BuilderOptions(build_full=True)
 
     def permissive_policy(state_valuation, action_index):
         """

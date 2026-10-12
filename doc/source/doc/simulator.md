@@ -106,8 +106,7 @@ final_outcomes
 We can run the same simulator but represent states symbolically, referring to the high-level description of the state rather than on its internal index. The advantage of this is that the process becomes independent of the underlying representation of the model. We first need to build the model with the required annotations.
 
 ```{code-cell} python3
-options = stormpy.BuilderOptions(build_all_reward_models=True, build_all_labels=True)
-options.set_build_state_valuations()
+options = stormpy.BuilderOptions(build_full=True)
 model = stormpy.build_model(prism_program, options=options)
 ```
 
@@ -180,9 +179,7 @@ for path in paths:
 In the example above, the actions are internal numbers. Often, a program gives semantically meaningful names, such as moving `north`, `east`, `west` and `south` in a grid with program variables reflecting the `x` and `y` location.
 
 ```{code-cell} python3
-options = stormpy.BuilderOptions(build_all_reward_models=True, build_all_labels=True)
-options.set_build_choice_labels()
-options.set_build_state_valuations()
+options = stormpy.BuilderOptions(build_full=True)
 model = stormpy.build_model(prism_program, options=options)
 simulator = stormpy.simulator.create_simulator(model, seed=42)
 simulator.set_action_mode(stormpy.simulator.SimulatorActionMode.GLOBAL_NAMES)

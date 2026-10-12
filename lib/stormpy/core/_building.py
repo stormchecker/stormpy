@@ -24,12 +24,13 @@ class BuilderOptions(developer.BuilderOptions):
     Options for building a model from a symbolic description.
 
     The options can be created preserving the given properties via e.g. ``BuilderOptions(properties)``,
-    or they can be created without properties via e.g. ``BuilderOptions(build_all_reward_models=True, build_all_labels=True)``.
+    or they can be created for the full model via ``BuilderOptions(build_full=True)``.
+    Single flags can be set afterwards, e.g. ``options.set_build_all_labels()`` or ``options.set_build_state_valuations()``.
 
     :param properties: (optional) Properties (or formulas) whose labels and reward models are preserved.
     :param model_description: (optional) Symbolic model description used to resolve the properties.
-    :param build_all_reward_models: Whether all reward models are built.
-    :param build_all_labels: Whether all labels are built.
+    :param build_full: Whether the full model is built, i.e., all reward models, all labels, state valuations, choice labels
+        and choice origins (in addition to the labels and reward models required by the properties).
     """
 
     def __init__(
@@ -37,22 +38,22 @@ class BuilderOptions(developer.BuilderOptions):
         properties: Iterable[Property] | None = None,
         model_description: SymbolicModelDescription | None = None,
         *,
-        build_all_reward_models: bool = False,
-        build_all_labels: bool = False,
+        build_full: bool = False,
     ) -> None:
         if isinstance(properties, bool):
-            raise TypeError("The flags of BuilderOptions are keyword-only, use BuilderOptions(build_all_reward_models=..., build_all_labels=...).")
+            raise TypeError("The flag build_full of BuilderOptions is keyword-only, use BuilderOptions(build_full=True).")
         if properties is None:
-            super().__init__(build_all_reward_models, build_all_labels)
-            return
-        if model_description is None:
+            super().__init__()
+        elif model_description is None:
             super().__init__(_formulas(properties))
         else:
             super().__init__(_formulas(properties), model_description)
-        if build_all_reward_models:
+        if build_full:
             self.set_build_all_reward_models()
-        if build_all_labels:
             self.set_build_all_labels()
+            self.set_build_state_valuations()
+            self.set_build_choice_labels()
+            self.set_build_choice_origins()
 
 
 def _check_constants(model) -> None:
@@ -114,7 +115,8 @@ def build_model(
     if properties:
         # Storm derives the builder options from the formulas and the model (e.g., choice labels for POMDPs)
         return build(model, _formulas(properties))
-    return build(model, BuilderOptions(build_all_reward_models=True, build_all_labels=True))
+    # Only all labels and reward models are built, but no additional information such as state valuations
+    return build(model, developer.BuilderOptions(build_all_reward_models=True, build_all_labels=True))
 
 
 @_template_function(

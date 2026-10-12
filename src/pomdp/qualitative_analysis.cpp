@@ -3,6 +3,7 @@
 #include <storm-pomdp/analysis/IterativePolicySearch.h>
 #include <storm-pomdp/analysis/QualitativeAnalysisOnGraphs.h>
 #include <storm-pomdp/analysis/WinningRegionQueryInterface.h>
+#include <storm/environment/Environment.h>
 #include <storm/logic/Formula.h>
 
 #include "src/helpers.h"
@@ -22,7 +23,8 @@ std::shared_ptr<storm::pomdp::IterativePolicySearch<ValueType>> createWinningReg
     storm::storage::BitVector surelyNotAlmostSurelyReachTarget = qualitativeAnalysis.analyseProbSmaller1(formula.asProbabilityOperatorFormula());
     storm::expressions::ExpressionManager expressionManager;
     std::shared_ptr<storm::utility::solver::SmtSolverFactory> smtSolverFactory = std::make_shared<storm::utility::solver::Z3SmtSolverFactory>();
-    return std::make_shared<storm::pomdp::IterativePolicySearch<ValueType>>(pomdp, targetStates, surelyNotAlmostSurelyReachTarget, smtSolverFactory, options);
+    return std::make_shared<storm::pomdp::IterativePolicySearch<ValueType>>(storm::Environment(), pomdp, targetStates, surelyNotAlmostSurelyReachTarget,
+                                                                            smtSolverFactory, options);
 }
 
 template<typename ValueType>

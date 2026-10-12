@@ -1,3 +1,5 @@
+import pytest
+
 import stormpy
 
 from configurations import pomdp
@@ -8,6 +10,7 @@ import math
 
 
 @pomdp
+@pytest.mark.skip(reason="Belief exploration bindings removed after revision in Storm (#1004); new bindings pending")
 class TestPomdpQuantitative:
     def test_underapprox_mc_maze_pmax(self):
         program = stormpy.parse_prism_program(get_example_path("pomdp", "maze_2.prism"))

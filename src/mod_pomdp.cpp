@@ -7,7 +7,6 @@
 #include "src/pomdp/generator.h"
 #include "src/pomdp/memory.h"
 #include "src/pomdp/qualitative_analysis.h"
-#include "src/pomdp/quantitative_analysis.h"
 #include "src/pomdp/tracker.h"
 #include "src/pomdp/transformations.h"
 
@@ -35,7 +34,6 @@ PYBIND11_MODULE(_pomdp, m) {
     define_transformations_int<storm::Interval>(m, "Interval");
     define_transformations_int<storm::RationalInterval>(m, "RationalInterval");
 
-    define_belief_exploration<double>(m, "Double");
     define_verimon_generator<double>(m, "Double");
     define_verimon_generator<storm::RationalNumber>(m, "Exact");
 }

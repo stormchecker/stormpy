@@ -7,7 +7,7 @@ from configurations import plotting, numpy_avail
 
 
 class TestMultiObjectiveModelChecking:
-    def naive_api_double_no_plotting_test(self):
+    def test_naive_api_double_no_plotting(self):
         program = stormpy.parse_prism_program(get_example_path("mdp", "multiobjective1.nm"))
         properties = stormpy.parse_properties('multi(Pmax=? [ F<=3 s=2 ],R{"rew"}max=? [ F s=2 ])', program)
         model = stormpy.build_model(program, properties)
@@ -23,7 +23,7 @@ class TestMultiObjectiveModelChecking:
 
     @plotting
     @numpy_avail
-    def naive_api_double_with_plotting_test(self):
+    def test_naive_api_double_with_plotting(self):
         import matplotlib.pyplot as plt
         from stormpy.utility.multiobjective_plotting import prepare_multiobjective_result_for_plotting, plot_convex_pareto_curve_demo
 

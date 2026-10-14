@@ -15,9 +15,7 @@ from stormpy.developer import storage as _storage_bindings
 
 
 # src/utility/shortestPaths.cpp
-def _parameters_of_model_or_matrix(model_or_matrix):
-    """Return the value-type parameter of a sparse model or sparse matrix."""
-
+def _parameters_of_model_or_matrix(model_or_matrix: object) -> object:
     if hasattr(model_or_matrix, "transition_matrix"):
         return _storage_bindings.parameters_of_model(model_or_matrix)
     return _storage_bindings.SparseMatrix.parameters_of(model_or_matrix)

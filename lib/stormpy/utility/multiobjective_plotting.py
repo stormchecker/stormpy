@@ -1,8 +1,20 @@
+"""Helpers for plotting Pareto curves of two-dimensional multi-objective queries."""
+
+from __future__ import annotations
+
+from collections.abc import Callable, Sequence
+from typing import TYPE_CHECKING
+
 import numpy as np
 import stormpy
 
+if TYPE_CHECKING:
+    from matplotlib.axes import Axes
 
-def plot_convex_pareto_curve_demo(ax, underapprox_points, overapprox_points, lowerleft, upperright):
+
+def plot_convex_pareto_curve_demo(
+    ax: Axes, underapprox_points: np.ndarray, overapprox_points: np.ndarray, lowerleft: Sequence[float], upperright: Sequence[float]
+) -> None:
     """
 
     :param ax: The matplotlib axis to plot onto.
@@ -24,7 +36,12 @@ def plot_convex_pareto_curve_demo(ax, underapprox_points, overapprox_points, low
     ax.fill(underapprox_points[under_hull.vertices, 0], underapprox_points[under_hull.vertices, 1], "g", 1)
 
 
-def _prepare_points_for_convex_pareto_plotting(points, lower_corner, upper_corner, multi_obj_formula):
+def _prepare_points_for_convex_pareto_plotting(
+    points: Sequence[Sequence[float]],
+    lower_corner: Sequence[float],
+    upper_corner: Sequence[float],
+    multi_obj_formula: stormpy.logic.MultiObjectiveFormula,
+) -> np.ndarray:
     """
 
     :param points:
@@ -34,7 +51,7 @@ def _prepare_points_for_convex_pareto_plotting(points, lower_corner, upper_corne
     :return:
     """
 
-    def direction_as_operation(dir: stormpy.OptimizationDirection):
+    def direction_as_operation(dir: stormpy.OptimizationDirection) -> Callable[[Sequence[float]], float]:
         return max if dir == stormpy.OptimizationDirection.MAXIMIZE else min
 
     if multi_obj_formula.nr_subformulas != 2:
@@ -53,15 +70,20 @@ def _prepare_points_for_convex_pareto_plotting(points, lower_corner, upper_corne
     return points
 
 
-def prepare_multiobjective_result_for_plotting(result, lower_corner, upper_corner, formula):
+def prepare_multiobjective_result_for_plotting(
+    result: stormpy.ExplicitParetoCurveCheckResult,
+    lower_corner: Sequence[float],
+    upper_corner: Sequence[float],
+    formula: stormpy.logic.MultiObjectiveFormula,
+) -> list[np.ndarray]:
     """
     Takes a multiobjective model checking results and prepares it for plotting.
 
-    :param result: The multiobjective model checkign result for a two-dimensional model checkign result.
+    :param result: The multiobjective model checking result for a two-dimensional query.
     :param lower_corner: The lower left corner used for plotting
     :param upper_corner: The upper right corner used for plotting
     :param formula: The multiobjective formula
-    :return: A tuple with two sets of points representing an under- and overapproximation of the vertices
+    :return: A list with two arrays of points representing an under- and overapproximation of the vertices
     """
     results = [result.get_under_approximation(), result.get_over_approximation()]
     return [_prepare_points_for_convex_pareto_plotting(h.vertices, lower_corner, upper_corner, formula) for h in results]

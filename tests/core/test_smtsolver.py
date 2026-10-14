@@ -29,18 +29,7 @@ class TestSmtSolver:
         solver.add(c2)
         assert solver.check() == stormpy.developer.SmtCheckResult.UNSAT
 
-    def test_smtsolver_arithmetic_unsat(self):
-        manager = stormpy.expressions.ExpressionManager()
-        x = manager.declare_integer_variable("x")
-        xe = x.get_expression()
-        c1 = stormpy.expressions.Expression.Geq(xe, manager.integer(1))
-        c2 = stormpy.expressions.Expression.Less(xe, manager.integer(0))
-        solver = stormpy.developer.Z3SmtSolver(manager)
-        solver.add(c1)
-        solver.add(c2)
-        assert solver.check() == stormpy.developer.SmtCheckResult.UNSAT
-
-    def test_smtsolver_arithmetic_unsat(self):
+    def test_smtsolver_arithmetic_sat(self):
         manager = stormpy.expressions.ExpressionManager()
         x = manager.declare_integer_variable("x")
         xe = x.get_expression()

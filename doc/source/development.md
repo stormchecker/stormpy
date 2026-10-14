@@ -11,9 +11,14 @@ The following contains some general guidelines for developers.
 
 ``stormpy.developer.storage`` contains the raw native module and template families.
 The public objects are selected explicitly in ``stormpy.models`` (models and components),
-``stormpy.datastructures`` (matrices, labels, schedulers and valuations),
+``stormpy.datastructures`` (matrices, labels, schedulers, valuations and JSON containers),
 ``stormpy.expressions`` (expressions and variables) and ``stormpy.io`` (model descriptions and UMB archives).
 Advanced DD and transformation helpers remain in ``stormpy.developer.storage``.
+
+### Utility packages
+
+``stormpy.utility`` selects the public objects: logging, timeouts and shortest paths.
+``stormpy.developer.utility`` contains the raw native module, including the Kwek-Mehlhorn algorithm.
 
 
 ## Public API and developer bindings

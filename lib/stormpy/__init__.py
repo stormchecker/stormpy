@@ -15,6 +15,7 @@ from . import developer
 from . import exceptions
 from . import logic
 from . import expressions, datastructures, models, io
+from . import utility
 
 try:
     from ._version import __version__
@@ -65,8 +66,6 @@ SubsystemBuilderOptions = developer.SubsystemBuilderOptions
 SubsystemBuilderReturnType = developer.SubsystemBuilderReturnType.publish_as("stormpy.SubsystemBuilderReturnType")
 ConstraintCollector = developer.ConstraintCollector
 
-LogLevel = developer.LogLevel
-
 # Import public functions
 from .core._parsing import instantiate_constants, parse_jani_model, parse_jani_model_from_string, parse_prism_program, parse_properties
 from .core._building import BuilderOptions, build_model, build_model_from_drn, build_model_from_explicit, build_model_from_umb, build_symbolic_model
@@ -88,7 +87,6 @@ from .core._transformation import (
     transform_to_sparse_model,
 )
 from .core._io import export_to_drn, export_to_umb
-from .core._settings import reset_timeout, set_log_level, set_timeout
 
 __all__ = [
     # Value types (re-exported from stormpy.numbers)
@@ -170,9 +168,4 @@ __all__ = [
     "DirectEncodingExporterOptions",
     "export_to_drn",
     "export_to_umb",
-    # Settings
-    "LogLevel",
-    "set_log_level",
-    "set_timeout",
-    "reset_timeout",
 ]

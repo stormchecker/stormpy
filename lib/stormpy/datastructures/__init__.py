@@ -1,4 +1,4 @@
-"""Matrices, labels, schedulers, valuations and memory structures."""
+"""Matrices, labels, schedulers, valuations, memory structures and JSON containers."""
 
 import stormpy as _stormpy
 from stormpy.developer import storage as _bindings
@@ -25,6 +25,7 @@ JaniChoiceOrigins = _bindings.JaniChoiceOrigins
 PrismChoiceOrigins = _bindings.PrismChoiceOrigins
 MaximalEndComponent = _bindings.MaximalEndComponent
 MaximalEndComponentDecomposition = _bindings.MaximalEndComponentDecomposition.publish_as("stormpy.datastructures.MaximalEndComponentDecomposition")
+JsonContainer = _bindings.JsonContainer.publish_as("stormpy.datastructures.JsonContainer")
 
 __all__ = [
     "BitVector",
@@ -49,11 +50,12 @@ __all__ = [
     "PrismChoiceOrigins",
     "MaximalEndComponent",
     "MaximalEndComponentDecomposition",
+    "JsonContainer",
     "build_sparse_matrix",
     "get_maximal_end_components",
 ]
 
-from . import _scheduler, _valuations
+from . import _json, _scheduler, _valuations
 from ._matrix import build_sparse_matrix
 
 

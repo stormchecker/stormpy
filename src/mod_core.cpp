@@ -33,6 +33,7 @@ PYBIND11_MODULE(_core, m) {
     py::module::import("stormpy.developer.storage._storage");
     // Solver enums and storage classes are used as default arguments by other classes
     define_solver(m);
+    define_smt_solver(m);
     define_storage(m);
 
     define_analysis(m);

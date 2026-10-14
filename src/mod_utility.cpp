@@ -2,10 +2,8 @@
 
 #include "src/common.h"
 #include "src/utility/chrono.h"
-#include "src/utility/json.h"
 #include "src/utility/kwekMehlhorn.h"
 #include "src/utility/shortestPaths.h"
-#include "src/utility/smtsolver.h"
 
 PYBIND11_MODULE(_utility, m) {
     m.doc() = "Utilities for Storm";
@@ -16,9 +14,8 @@ PYBIND11_MODULE(_utility, m) {
 #endif
 
     define_ksp(m);
-    define_smt(m);
+    define_ksp_typed<double>(m);
+    define_ksp_typed<storm::RationalNumber>(m);
     define_chrono(m);
-    define_json<double>(m);
-    define_json<storm::RationalNumber>(m);
     define_kwek_mehlhorn<storm::RationalNumber>(m);
 }

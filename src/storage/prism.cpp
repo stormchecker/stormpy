@@ -83,8 +83,12 @@ void define_prism(py::module& m) {
         .def("get_module_indices_by_action_index", &Program::getModuleIndicesByActionIndex, py::arg("action_index"),
              "get all modules that have a particular action index")
         .def_property_readonly("number_of_unlabeled_commands", &Program::getNumberOfUnlabeledCommands, "Gets the number of commands that are not labelled")
-        .def("flatten_modules", &Program::flattenModules, "Put program into a single module",
-             py::arg("smt_factory") = std::shared_ptr<storm::utility::solver::SmtSolverFactory>(new storm::utility::solver::SmtSolverFactory()))
+        .def(
+            "flatten_modules",
+            [](Program const& program, std::shared_ptr<storm::utility::solver::SmtSolverFactory> const& smtFactory) {
+                return smtFactory ? program.flattenModules(smtFactory) : program.flattenModules();
+            },
+            "Put program into a single module", py::arg("smt_factory") = py::none())
         .def(
             "to_jani",
             [](storm::prism::Program const& program, std::vector<storm::jani::Property> const& properties, bool allVariablesGlobal, std::string suffix) {

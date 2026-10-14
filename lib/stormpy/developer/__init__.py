@@ -7,6 +7,7 @@ The naming of functions and classes of the bindings mirrors the corresponding ``
 """
 
 from . import storage
+from . import utility
 from . import _core
 
 # Mirror _core's entire namespace (including private underscored classes) directly onto this package.

@@ -5,7 +5,6 @@ This module is intended for developers. Use :mod:`stormpy.models`,
 for the documented public API.
 """
 
-import stormpy.utility
 from . import _storage
 
 # Include private native classes and overloads in the developer namespace.
@@ -20,6 +19,9 @@ from stormpy._template import (
     _deduce_default,
     _deduce_from_object,
 )
+
+# src/storage/json.cpp
+JsonContainer = _TemplateClass("stormpy.developer.storage.JsonContainer", _storage, parameters=("ValueType",), deduce=_deduce_default(float))
 
 # src/storage/matrix.cpp
 SparseMatrixEntry = _TemplateClass("stormpy.developer.storage.SparseMatrixEntry", _storage, parameters=("ValueType",), deduce=_deduce_default(float))

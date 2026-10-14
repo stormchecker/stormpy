@@ -57,7 +57,12 @@ void define_jani(py::module& m) {
         .def_static("decode_automaton_and_edge_index", &Model::decodeAutomatonAndEdgeIndices, "get edge and automaton from edge/automaton index")
         .def("make_standard_jani_compliant", &Model::makeStandardJaniCompliant, "make standard JANI compliant")
         .def("has_standard_composition", &Model::hasStandardComposition, "is the composition the standard composition")
-        .def("flatten_composition", &Model::flattenComposition, py::arg("smt_solver_factory") = std::make_shared<storm::utility::solver::SmtSolverFactory>())
+        .def(
+            "flatten_composition",
+            [](Model const& model, std::shared_ptr<storm::utility::solver::SmtSolverFactory> const& smtSolverFactory) {
+                return smtSolverFactory ? model.flattenComposition(smtSolverFactory) : model.flattenComposition();
+            },
+            py::arg("smt_solver_factory") = py::none())
         .def("finalize", &Model::finalize, "finalizes the model. After this action, be careful changing the data structure.")
         .def("to_dot", [](Model& model) {
             std::stringstream ss;

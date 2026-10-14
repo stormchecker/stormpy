@@ -1,12 +1,26 @@
-from . import _utility
-from ._utility import *
-from stormpy._template import _TemplateClass, _deduce_default
+"""Utilities of Storm: logging, timeouts and shortest paths.
 
-JsonContainer = _TemplateClass("stormpy.utility.JsonContainer", _utility, parameters=("ValueType",), deduce=_deduce_default(float))
+Helpers for plotting Pareto curves of multi-objective queries are available in
+:mod:`stormpy.utility.multiobjective_plotting` (requires the ``plot`` extra).
+"""
 
+from stormpy import developer as _developer
+from stormpy.developer import utility as _bindings
+from ._settings import reset_timeout, set_log_level, set_timeout
 
-# Extend JSON containers for simplified access
-for _json_class in JsonContainer.instantiations.values():
-    _json_class.__eq__ = lambda s, o: str(s) == str(o)
-    _json_class.__int__ = lambda s: int(str(s))
-    _json_class.__hash__ = lambda s: str(s).__hash__()
+LogLevel = _developer.LogLevel
+ShortestPathsGenerator = _bindings.ShortestPathsGenerator.publish_as("stormpy.utility.ShortestPathsGenerator")
+Path = _bindings.Path.publish_as("stormpy.utility.Path")
+MatrixFormat = _bindings.MatrixFormat
+
+__all__ = [
+    # Settings
+    "LogLevel",
+    "set_log_level",
+    "set_timeout",
+    "reset_timeout",
+    # Shortest paths
+    "ShortestPathsGenerator",
+    "Path",
+    "MatrixFormat",
+]

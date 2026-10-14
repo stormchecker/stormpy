@@ -41,3 +41,9 @@ class TestPrism:
         for module in program.modules:
             assert len(module.integer_variables) == 5
             assert len(module.boolean_variables) == 0
+
+    def test_flatten_modules(self):
+        program = stormpy.parse_prism_program(get_example_path("dtmc", "brp-16-2.pm"))
+        assert program.nr_modules > 1
+        assert program.flatten_modules().nr_modules == 1
+        assert program.flatten_modules(smt_factory=stormpy.developer.Z3SmtSolverFactory()).nr_modules == 1

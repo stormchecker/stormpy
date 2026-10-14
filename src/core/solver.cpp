@@ -1,8 +1,12 @@
 #include "solver.h"
 
 #include <storm/solver/OptimizationDirection.h>
+#include <storm/solver/SmtSolver.h>
 #include <storm/solver/SolverSelectionOptions.h>
 #include <storm/solver/UncertaintyResolutionMode.h>
+#include <storm/solver/Z3SmtSolver.h>
+#include <storm/storage/expressions/ExpressionManager.h>
+#include <storm/utility/solver.h>
 
 namespace stormpy {
 
@@ -52,6 +56,38 @@ void define_solver(py::module& m) {
         .value("SOUND_VALUE_ITERATION", storm::solver::MinMaxMethod::SoundValueIteration)
         .value("OPTIMISTIC_VALUE_ITERATION", storm::solver::MinMaxMethod::OptimisticValueIteration)
         .finalize();
+}
+
+void define_smt_solver(py::module& m) {
+    using SmtSolver = storm::solver::SmtSolver;
+    using Z3SmtSolver = storm::solver::Z3SmtSolver;
+    using ModelReference = storm::solver::SmtSolver::ModelReference;
+
+    py::native_enum<SmtSolver::CheckResult>(m, "SmtCheckResult", "enum.Enum", "Result type")
+        .value("SAT", SmtSolver::CheckResult::Sat)
+        .value("UNSAT", SmtSolver::CheckResult::Unsat)
+        .value("UNKNOWN", SmtSolver::CheckResult::Unknown)
+        .finalize();
+
+    py::classh<ModelReference> modelref(m, "ModelReference", "Lightweight Wrapper around results");
+    modelref.def("get_boolean_value", &ModelReference::getBooleanValue, "Get a value for a boolean variable", py::arg("variable"))
+        .def("get_integer_value", &ModelReference::getIntegerValue, "Get a value for an integer variable", py::arg("variable"))
+        .def("get_rational_value", &ModelReference::getRationalValue, "Get a value (as double) for an rational variable", py::arg("variable"));
+
+    py::classh<SmtSolver> smtsolver(m, "SmtSolver", "Generic Storm SmtSolver Wrapper");
+    smtsolver.def("push", &SmtSolver::push, "Push")
+        .def("pop", py::overload_cast<uint_fast64_t>(&SmtSolver::pop), "Pop", py::arg("n"))
+        .def("reset", &SmtSolver::reset, "Reset")
+        .def("add", py::overload_cast<storm::expressions::Expression const&>(&SmtSolver::add), "Add constraint", py::arg("assertion"))
+        .def("check", &SmtSolver::check, "Check")
+        .def("get_model", &SmtSolver::getModel, "Get the model");
+
+    py::classh<Z3SmtSolver> z3solver(m, "Z3SmtSolver", "z3 API for storm smtsolver wrapper", smtsolver);
+    z3solver.def(pybind11::init<storm::expressions::ExpressionManager&>(), py::arg("manager"));
+
+    py::classh<storm::utility::solver::SmtSolverFactory> smtfactory(m, "SmtSolverFactory", "Factory for creating SMT Solvers");
+    py::classh<storm::utility::solver::Z3SmtSolverFactory> z3factory(m, "Z3SmtSolverFactory", "Factory for creating z3 based SMT solvers", smtfactory);
+    z3factory.def(py::init<>());
 }
 
 }  // namespace stormpy

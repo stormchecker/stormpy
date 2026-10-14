@@ -3,6 +3,10 @@ Stormpy.utility
 
 .. automodule:: stormpy.utility
    :members:
-   :undoc-members:
    :imported-members:
-   :exclude-members: deprecated
+
+Stormpy.utility.multiobjective_plotting
+=======================================
+
+.. automodule:: stormpy.utility.multiobjective_plotting
+   :members:

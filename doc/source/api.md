@@ -19,6 +19,7 @@ api/expressions
 api/io
 api/storage_developer
 api/utility
+api/utility_developer
 
 api/dft
 api/dft_developer

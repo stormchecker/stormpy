@@ -10,6 +10,7 @@
 #include "src/storage/expressions.h"
 #include "src/storage/geometry.h"
 #include "src/storage/jani.h"
+#include "src/storage/json.h"
 #include "src/storage/labeling.h"
 #include "src/storage/matrix.h"
 #include "src/storage/memorystructure.h"
@@ -30,6 +31,8 @@ PYBIND11_MODULE(_storage, m) {
 #endif
 
     define_bitvector(m);
+    define_json<double>(m);
+    define_json<storm::RationalNumber>(m);
     define_dd_nt(m);
     auto ddSylvan = define_dd<storm::dd::DdType::Sylvan>(m);
     define_dd_typed<storm::dd::DdType::Sylvan, double>(m, ddSylvan);

@@ -1,4 +1,6 @@
-from ._info import *
+"""Information about Storm and this installation of stormpy, e.g. versions and build settings."""
+
+from stormpy.developer.info import StormVersion as _StormVersion
 from . import _config
 
 
@@ -23,6 +25,24 @@ def storm_from_system() -> bool:
     return _config.STORM_FROM_SYSTEM
 
 
+def storm_long_version() -> str:
+    """
+    Get the long version string of Storm, including the git revision it was built from.
+
+    :return: Long version string.
+    """
+    return _StormVersion.long_version_string()
+
+
+def storm_build_info() -> str:
+    """
+    Get build information of Storm, e.g. the compiler and the build date.
+
+    :return: Build information
+    """
+    return _StormVersion.build_info()
+
+
 def storm_development_version() -> bool:
     """
     Is true, if the version of Storm was marked as modified since release.
@@ -42,7 +62,7 @@ def storm_build_type() -> str:
     return _config.STORM_BUILD_TYPE
 
 
-def storm_origin_info() -> [str | None, str | None]:
+def storm_origin_info() -> tuple[str | None, str | None, str]:
     """
     Information about the source of Storm: the repo path, the repo tag and commit hash.
 
@@ -60,7 +80,7 @@ def storm_origin_info() -> [str | None, str | None]:
 
     :return: A tuple with the repo path, the repo tag and the commit hash.
     """
-    return _config.STORM_ORIGIN_REPO, _config.STORM_ORIGIN_TAG, Version.git_hash
+    return _config.STORM_ORIGIN_REPO, _config.STORM_ORIGIN_TAG, _StormVersion.git_revision_hash
 
 
 def storm_directory() -> str | None:
@@ -93,3 +113,17 @@ def storm_ratfunc_use_cln() -> bool:
     :rtype: bool
     """
     return _config.STORM_CLN_RF
+
+
+__all__ = [
+    "storm_version",
+    "storm_long_version",
+    "storm_build_info",
+    "storm_development_version",
+    "storm_build_type",
+    "storm_from_system",
+    "storm_origin_info",
+    "storm_directory",
+    "storm_exact_use_cln",
+    "storm_ratfunc_use_cln",
+]

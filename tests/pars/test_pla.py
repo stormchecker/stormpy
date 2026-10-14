@@ -152,7 +152,7 @@ class TestPLA:
 
         refinement_checker = stormpy.pars.create_region_refinement_checker(env, model, formulas[0].get_raw_formula())
         precision = stormpy.RationalFunctionCoefficient(1e-6)
-        value, point = refinement_checker.compute_extremum(env, region, stormpy.OptimizationDirection.MAXIMIZE, precision, False)
+        value, point = refinement_checker.compute_extremum(env, region, stormpy.logic.OptimizationDirection.MAXIMIZE, precision, False)
         assert isinstance(value, stormpy.RationalFunctionCoefficient)
         assert isinstance(point, dict)
         assert len(point) == 2

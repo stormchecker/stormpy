@@ -7,14 +7,14 @@
 #include <storm/storage/expressions/Variable.h>
 
 void define_formulae(py::module& m) {
-    py::native_enum<storm::logic::ComparisonType>(m, "ComparisonType", "enum.Enum")
+    py::native_enum<storm::logic::ComparisonType>(m, "ComparisonType", "enum.Enum", "Comparison of a bound, e.g. < or >=")
         .value("LESS", storm::logic::ComparisonType::Less)
         .value("LEQ", storm::logic::ComparisonType::LessEqual)
         .value("GREATER", storm::logic::ComparisonType::Greater)
         .value("GEQ", storm::logic::ComparisonType::GreaterEqual)
         .finalize();
 
-    py::native_enum<storm::logic::BinaryBooleanOperatorType>(m, "BinaryBooleanOperatorType", "enum.Enum")
+    py::native_enum<storm::logic::BinaryBooleanOperatorType>(m, "BinaryBooleanOperatorType", "enum.Enum", "Operator of a binary Boolean state formula")
         .value("AND", storm::logic::BinaryBooleanOperatorType::And)
         .value("OR", storm::logic::BinaryBooleanOperatorType::Or)
         .finalize();
@@ -37,8 +37,8 @@ void define_formulae(py::module& m) {
                 return lsv.substitute(f);
             },
             "substitute label occurences", py::arg("replacements"))
-        .def_property_readonly("is_probability_operator", &storm::logic::Formula::isProbabilityOperatorFormula, "is it a probability operator")
-        .def_property_readonly("is_reward_operator", &storm::logic::Formula::isRewardOperatorFormula, "is it a reward operator")
+        .def_property_readonly("is_probability_operator_formula", &storm::logic::Formula::isProbabilityOperatorFormula, "Whether it is a probability operator")
+        .def_property_readonly("is_reward_operator_formula", &storm::logic::Formula::isRewardOperatorFormula, "Wheter it is a reward operator")
         .def_property_readonly("is_eventually_formula", &storm::logic::Formula::isEventuallyFormula)
         .def_property_readonly("is_bounded_until_formula", &storm::logic::Formula::isBoundedUntilFormula)
         .def_property_readonly("is_until_formula", &storm::logic::Formula::isUntilFormula)
@@ -59,7 +59,7 @@ void define_formulae(py::module& m) {
     binaryPathFormula.def_property_readonly("left_subformula", &storm::logic::BinaryPathFormula::getLeftSubformula);
     binaryPathFormula.def_property_readonly("right_subformula", &storm::logic::BinaryPathFormula::getRightSubformula);
     py::classh<storm::logic::BoundedUntilFormula>(m, "BoundedUntilFormula", "Until Formula with either a step or a time bound.", binaryPathFormula)
-        .def_property_readonly("is_multidimensional", &storm::logic::BoundedUntilFormula::isMultiDimensional, "Is the bound multi-dimensional")
+        .def_property_readonly("is_multi_dimensional", &storm::logic::BoundedUntilFormula::isMultiDimensional, "Is the bound multi-dimensional")
         .def_property_readonly("has_lower_bound", [](storm::logic::BoundedUntilFormula const& form) { return form.hasLowerBound(); })
         .def_property_readonly("upper_bound_expression", [](storm::logic::BoundedUntilFormula const& form) { return form.getUpperBound(); })
         .def_property_readonly(
@@ -97,7 +97,7 @@ void define_formulae(py::module& m) {
     py::classh<storm::logic::AtomicLabelFormula>(m, "AtomicLabelFormula", "Formula with an atomic label", stateFormula)
         .def_property_readonly("label", &storm::logic::AtomicLabelFormula::getLabel, "label in the formula");
     py::classh<storm::logic::BooleanLiteralFormula>(m, "BooleanLiteralFormula", "Formula with a boolean literal", stateFormula)
-        .def(py::init<bool>(), "truth value"_a);
+        .def(py::init<bool>(), "value"_a);
     py::classh<storm::logic::UnaryStateFormula> unaryStateFormula(m, "UnaryStateFormula", "State formula with one operand", stateFormula);
     unaryStateFormula.def_property_readonly("subformula", &storm::logic::UnaryStateFormula::getSubformula, "the subformula");
     py::classh<storm::logic::UnaryBooleanStateFormula>(m, "UnaryBooleanStateFormula", "Unary boolean state formula", unaryStateFormula);
@@ -135,16 +135,16 @@ void define_formulae(py::module& m) {
         .def("remove_optimality_type", &storm::logic::OperatorFormula::removeOptimalityType, "remove the optimality type")
 
         ;
-    py::classh<storm::logic::TimeOperatorFormula>(m, "TimeOperator", "The time operator", operatorFormula);
-    py::classh<storm::logic::LongRunAverageOperatorFormula>(m, "LongRunAvarageOperator", "Long run average operator", operatorFormula);
-    py::classh<storm::logic::ProbabilityOperatorFormula>(m, "ProbabilityOperator", "Probability operator", operatorFormula)
+    py::classh<storm::logic::TimeOperatorFormula>(m, "TimeOperatorFormula", "The time operator", operatorFormula);
+    py::classh<storm::logic::LongRunAverageOperatorFormula>(m, "LongRunAverageOperatorFormula", "Long run average operator", operatorFormula);
+    py::classh<storm::logic::ProbabilityOperatorFormula>(m, "ProbabilityOperatorFormula", "Probability operator", operatorFormula)
         .def(py::init<std::shared_ptr<storm::logic::Formula>>(), "construct probability operator formula", py::arg("subformula"));
 
-    py::classh<storm::logic::RewardOperatorFormula>(m, "RewardOperator", "Reward operator", operatorFormula)
-        .def("has_reward_name", &storm::logic::RewardOperatorFormula::hasRewardModelName)
+    py::classh<storm::logic::RewardOperatorFormula>(m, "RewardOperatorFormula", "Reward operator", operatorFormula)
+        .def("has_reward_model_name", &storm::logic::RewardOperatorFormula::hasRewardModelName)
         .def_property_readonly("reward_name", &storm::logic::RewardOperatorFormula::getRewardModelName);
     py::classh<storm::logic::BinaryStateFormula> binaryStateFormula(m, "BinaryStateFormula", "State formula with two operands", stateFormula);
-    py::classh<storm::logic::BinaryBooleanStateFormula>(m, "BooleanBinaryStateFormula", "Boolean binary state formula", binaryStateFormula);
+    py::classh<storm::logic::BinaryBooleanStateFormula>(m, "BinaryBooleanStateFormula", "Boolean binary state formula", binaryStateFormula);
 
     py::classh<storm::logic::MultiObjectiveFormula>(m, "MultiObjectiveFormula", "Multi objective formula", formula)
         .def_property_readonly("subformulas", &storm::logic::MultiObjectiveFormula::getSubformulas, "Get vector of subformulas")

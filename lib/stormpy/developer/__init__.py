@@ -7,6 +7,8 @@ The naming of functions and classes of the bindings mirrors the corresponding ``
 """
 
 from . import storage
+from . import logic
+from . import info
 from . import utility
 from . import _core
 

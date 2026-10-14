@@ -109,7 +109,7 @@ class TestTransformation:
         # Only the probability formula is preserved by the elimination of non-Markovian chains
         _, elim_formulas = stormpy.eliminate_non_markovian_chains(model=ma, properties=properties, label_behavior=stormpy.EliminationLabelBehavior.KEEP_LABELS)
         assert len(elim_formulas) == 1
-        assert elim_formulas[0].is_probability_operator
+        assert elim_formulas[0].is_probability_operator_formula
 
     def test_eliminate_non_markovian_chains(self):
         program = stormpy.parse_prism_program(get_example_path("ma", "stream2.ma"))

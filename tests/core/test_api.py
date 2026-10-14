@@ -39,6 +39,9 @@ class TestPublicApi:
             "parse_properties_for_prism_program",
             "SparseMatrixBuilder",
             "EventuallyFormula",
+            # Moved to stormpy.logic
+            "Property",
+            "OptimizationDirection",
         ],
     )
     def test_removed_names(self, name):
@@ -98,7 +101,7 @@ class TestDeveloperBindings:
         assert hasattr(stormpy.developer, name)
 
     def test_public_classes_are_developer_classes(self):
-        assert stormpy.Property is stormpy.developer.Property
+        assert stormpy.logic.Property is stormpy.developer.Property
         assert stormpy.Environment is stormpy.developer.Environment
         assert issubclass(stormpy.BuilderOptions, stormpy.developer.BuilderOptions)
 

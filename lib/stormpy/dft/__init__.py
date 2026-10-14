@@ -7,7 +7,8 @@ import warnings
 from collections.abc import Iterable
 
 from . import developer
-from stormpy import Property, RationalFunction
+from stormpy import RationalFunction
+from stormpy.logic import Property
 from stormpy.core._common import PathLike, _formulas, _path
 from stormpy._template import _deduce_default, _template_function
 from stormpy.exceptions import StormError, StormWarning

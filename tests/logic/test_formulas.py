@@ -8,7 +8,7 @@ class TestFormulas:
         formula_str = 'P=? [F "one"]'
         properties = stormpy.parse_properties(formula_str)
         formula = properties[0].get_raw_formula()
-        assert type(formula) == stormpy.logic.ProbabilityOperator
+        assert type(formula) == stormpy.logic.ProbabilityOperatorFormula
         assert len(properties) == 1
         assert str(formula) == formula_str
 
@@ -16,7 +16,7 @@ class TestFormulas:
         formula_str = 'R=? [F "one"]'
         properties = stormpy.parse_properties(formula_str)
         formula = properties[0].get_raw_formula()
-        assert type(formula) == stormpy.logic.RewardOperator
+        assert type(formula) == stormpy.logic.RewardOperatorFormula
         assert len(properties) == 1
         assert str(formula) == 'R=? [F "one"]'
 
@@ -35,10 +35,10 @@ class TestFormulas:
         _, properties = stormpy.parse_jani_model(get_example_path("dtmc", "die.jani"))
         assert len(properties) == 2
         prop = properties[0]
-        assert isinstance(prop, stormpy.Property)
+        assert isinstance(prop, stormpy.logic.Property)
         assert prop.get_name() == "Probability to throw a six"
         prop = properties[1]
-        assert isinstance(prop, stormpy.Property)
+        assert isinstance(prop, stormpy.logic.Property)
         assert prop.get_name() == "Expected number of coin flips"
 
     def test_bounds(self):
@@ -65,12 +65,12 @@ class TestFormulas:
     def test_subformula(self):
         prop = 'P=? [F "one"]'
         formula = stormpy.parse_properties(prop)[0].get_raw_formula()
-        assert type(formula) == stormpy.logic.ProbabilityOperator
+        assert type(formula) == stormpy.logic.ProbabilityOperatorFormula
         pathform = formula.subformula
         assert type(pathform) == stormpy.logic.EventuallyFormula
         labelform = pathform.subformula
         assert type(labelform) == stormpy.logic.AtomicLabelFormula
-        prop = stormpy.Property("label-formula", labelform, set())
+        prop = stormpy.logic.Property("label-formula", labelform, set())
         assert prop.get_raw_formula() == labelform
 
     def test_game_formula(self):
@@ -81,7 +81,7 @@ class TestFormulas:
         assert str(formula) == formula_str
         assert len(properties) == 1
         formula = formula.subformula
-        assert type(formula) == stormpy.logic.ProbabilityOperator
+        assert type(formula) == stormpy.logic.ProbabilityOperatorFormula
         assert str(formula) == 'Pmax=? [F "goal"]'
 
     def test_discounted_total_reward_formula(self):
@@ -89,7 +89,7 @@ class TestFormulas:
         properties = stormpy.parse_properties(formula_str)
         assert len(properties) == 1
         formula = properties[0].get_raw_formula()
-        assert type(formula) == stormpy.logic.RewardOperator
+        assert type(formula) == stormpy.logic.RewardOperatorFormula
         subformula = formula.subformula
         assert type(subformula) == stormpy.logic.DiscountedTotalRewardFormula
         assert subformula.is_discounted_total_reward_formula

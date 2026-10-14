@@ -9,9 +9,11 @@ Work in progress!
 api/core
 api/core_developer
 api/info
+api/info_developer
 api/numbers
 api/exceptions
 api/logic
+api/logic_developer
 api/simulator
 api/models
 api/datastructures

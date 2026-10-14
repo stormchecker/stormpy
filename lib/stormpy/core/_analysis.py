@@ -43,7 +43,7 @@ def compute_prob01_states(model, property: Property) -> tuple[storage.BitVector,
         raise StormError("Prob0/1 computation is only supported for sparse models.")
     formula = _formula(property)
     optimality_type = None
-    if formula.is_probability_operator:
+    if formula.is_probability_operator_formula:
         if formula.has_optimality_type:
             optimality_type = formula.optimality_type
         formula = formula.subformula

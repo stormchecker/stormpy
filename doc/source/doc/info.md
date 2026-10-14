@@ -38,15 +38,15 @@ The flag `storm_development_version()` tells whether the linked Storm is a devel
 stormpy.info.storm_development_version()
 ```
 
-Further information about the Storm build is available through `Version.long` and `Version.build_info`.
+Further information about the Storm build is available through `storm_long_version()` and `storm_build_info()`.
 These are particularly useful when reporting issues, as they also list the compiler and the build date:
 
 ```{code-cell} python3
-stormpy.info.Version.long
+stormpy.info.storm_long_version()
 ```
 
 ```{code-cell} python3
-stormpy.info.Version.build_info
+stormpy.info.storm_build_info()
 ```
 
 ## Build Configuration

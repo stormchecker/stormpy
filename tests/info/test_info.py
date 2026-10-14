@@ -3,23 +3,24 @@ import stormpy.info
 
 class TestInfo:
     def test_version(self):
+        raw = stormpy.developer.info.StormVersion
         # Short version
-        assert isinstance(stormpy.info.Version.short, str)
-        assert "." in stormpy.info.Version.short
+        assert isinstance(raw.short_version_string(), str)
+        assert "." in raw.short_version_string()
         # Long version
-        assert isinstance(stormpy.info.Version.long, str)
-        assert stormpy.info.Version.long.startswith("Version ")
-        assert stormpy.info.Version.short in stormpy.info.Version.long
+        assert isinstance(stormpy.info.storm_long_version(), str)
+        assert stormpy.info.storm_long_version().startswith("Version ")
+        assert raw.short_version_string() in stormpy.info.storm_long_version()
         # storm_version()
-        assert stormpy.info.storm_version() in stormpy.info.Version.short
+        assert stormpy.info.storm_version() in raw.short_version_string()
         assert "." in stormpy.info.storm_version()
         # Development version
-        assert stormpy.info.storm_development_version() == stormpy.info.Version.development
-        assert (stormpy.info.Version.development and stormpy.info.Version.short.endswith(" (dev)")) or not stormpy.info.Version.development
+        assert stormpy.info.storm_development_version() == raw.version_dev
+        assert (raw.version_dev and raw.short_version_string().endswith(" (dev)")) or not raw.version_dev
 
     def test_build_info(self):
-        assert isinstance(stormpy.info.Version.build_info, str)
-        assert "Compiled" in stormpy.info.Version.build_info
+        assert isinstance(stormpy.info.storm_build_info(), str)
+        assert "Compiled" in stormpy.info.storm_build_info()
         assert stormpy.info.storm_build_type() in ("Debug", "Release")
 
     def test_origin_info(self):
@@ -33,7 +34,7 @@ class TestInfo:
         else:
             assert isinstance(repo, str) and isinstance(tag, str)
         assert isinstance(hsh, str)
-        assert hsh == stormpy.info.Version.git_hash
+        assert hsh == stormpy.developer.info.StormVersion.git_revision_hash
 
     def test_number_representations(self):
         assert isinstance(stormpy.info.storm_exact_use_cln(), bool)

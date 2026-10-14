@@ -37,6 +37,8 @@ _PUBLIC_MODULES = {
     "stormpy.expressions": (True, _not_documented_elsewhere),
     "stormpy.io": (True, _not_documented_elsewhere),
     "stormpy.utility": (True, _not_documented_elsewhere),
+    "stormpy.logic": (True, _not_documented_elsewhere),
+    "stormpy.info": (True, _not_documented_elsewhere),
 }
 
 _UNAVAILABLE = pytest.mark.skip(reason="Module not available in this build of Storm")

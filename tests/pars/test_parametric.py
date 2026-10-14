@@ -186,7 +186,7 @@ class TestParametric:
         model = stormpy.build_model[stormpy.RationalFunction](program, properties)
         simplified, formula = stormpy.pars.simplify_model(model, properties[0])
         assert simplified.nr_states == 17
-        assert formula.is_probability_operator
+        assert formula.is_probability_operator_formula
 
     def test_region(self):
         program = stormpy.parse_prism_program(get_example_path("pdtmc", "brp16_2.pm"))

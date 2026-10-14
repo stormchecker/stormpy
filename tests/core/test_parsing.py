@@ -13,10 +13,21 @@ class TestParseProperties:
         assert len(properties) == 1
         assert str(properties[0].get_raw_formula()) == formula
 
+    def test_parse_properties(self):
+        properties = stormpy.parse_properties('P=? [F "one"]; R{"coin_flips"}min=? [F "done"]')
+        assert all(isinstance(prop, stormpy.logic.Property) for prop in properties)
+        probability, reward = (prop.get_raw_formula() for prop in properties)
+        assert isinstance(probability, stormpy.logic.ProbabilityOperatorFormula)
+        assert probability.is_probability_operator_formula
+        assert isinstance(reward, stormpy.logic.RewardOperatorFormula)
+        assert reward.is_reward_operator_formula
+        assert reward.has_reward_model_name()
+        assert reward.optimality_type == stormpy.logic.OptimizationDirection.MINIMIZE
+
     def test_parse_properties_without_context(self):
         properties = stormpy.parse_properties('P=? [F "one"]; R=? [F "done"]')
         assert len(properties) == 2
-        assert properties[0].get_raw_formula().is_probability_operator
+        assert properties[0].get_raw_formula().is_probability_operator_formula
 
     def test_parse_properties_filters(self):
         properties = stormpy.parse_properties('"a": P=? [F "one"]; "b": P=? [F "two"]', property_filter=["b"])

@@ -7,19 +7,22 @@ The following contains some general guidelines for developers.
 - Tests are given in ``tests``.
 - The Sphinx documentation can be found in ``doc/source``.
 
-### Storage packages
+### Info packages
+``stormpy.info`` provides functions with information about Storm and the build; ``stormpy.developer.info`` contains the raw ``StormVersion``.
 
-``stormpy.developer.storage`` contains the raw native module and template families.
+### Logic packages
+``stormpy.logic`` selects the public objects: properties, formulas, comparison types and optimization directions.
+``stormpy.developer.logic`` contains the raw native module.
+
+### Storage packages
 The public objects are selected explicitly in ``stormpy.models`` (models and components),
 ``stormpy.datastructures`` (matrices, labels, schedulers, valuations and JSON containers),
 ``stormpy.expressions`` (expressions and variables) and ``stormpy.io`` (model descriptions and UMB archives).
-Advanced DD and transformation helpers remain in ``stormpy.developer.storage``.
+``stormpy.developer.storage`` contains the raw native module and template families such as advanced DD and transformation helpers.
 
 ### Utility packages
-
 ``stormpy.utility`` selects the public objects: logging, timeouts and shortest paths.
 ``stormpy.developer.utility`` contains the raw native module, including the Kwek-Mehlhorn algorithm.
-
 
 ## Public API and developer bindings
 Each library ``xy`` of Storm (e.g. core or DFTs) is split into two layers:

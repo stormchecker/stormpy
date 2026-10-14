@@ -13,8 +13,7 @@ from .numbers import Interval, Polynomial, Rational, RationalFunction, RationalF
 
 from . import developer
 from . import exceptions
-from . import logic
-from . import expressions, datastructures, models, io
+from . import expressions, datastructures, models, io, logic
 from . import utility
 
 try:
@@ -26,7 +25,6 @@ except ImportError:
 developer._set_up("")
 
 # Import classes from developer (and republish templated classes under stormpy.X)
-Property = developer.Property
 SymbolicModelDescription = developer.SymbolicModelDescription
 JaniModelType = developer.JaniModelType
 
@@ -42,7 +40,6 @@ MultiObjectiveMethod = developer.MultiObjectiveMethod
 SteadyStateDistributionAlgorithm = developer.SteadyStateDistributionAlgorithm
 PrecomputationType = developer.PrecomputationType
 NextStateHeuristic = developer.NextStateHeuristic
-OptimizationDirection = developer.OptimizationDirection
 UncertaintyResolutionMode = developer.UncertaintyResolutionMode
 ModelCheckerHint = developer.ModelCheckerHint
 ExplicitModelCheckerHint = developer.ExplicitModelCheckerHint.publish_as("stormpy.ExplicitModelCheckerHint")
@@ -98,7 +95,6 @@ __all__ = [
     "RationalInterval",
     "RawPolynomial",
     # Parsing
-    "Property",
     "SymbolicModelDescription",
     "JaniModelType",
     "parse_prism_program",
@@ -125,7 +121,6 @@ __all__ = [
     "SteadyStateDistributionAlgorithm",
     "PrecomputationType",
     "NextStateHeuristic",
-    "OptimizationDirection",
     "UncertaintyResolutionMode",
     "ModelCheckerHint",
     "ExplicitModelCheckerHint",

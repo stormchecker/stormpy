@@ -20,5 +20,6 @@ void define_memory(py::module& m) {
 
     py::classh<storm::storage::PomdpMemoryBuilder> memorybuilder(m, "PomdpMemoryBuilder", "MemoryBuilder for POMDP policies");
     memorybuilder.def(py::init<>());
-    memorybuilder.def("build", &storm::storage::PomdpMemoryBuilder::build, py::arg("pattern"), py::arg("nr_states"));
+    memorybuilder.def("build", &storm::storage::PomdpMemoryBuilder::build, "Build a memory structure with the given pattern and number of states",
+                      py::arg("pattern"), py::arg("num_states"));
 }

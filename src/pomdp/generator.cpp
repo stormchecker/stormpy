@@ -6,44 +6,45 @@
 #include <storm/storage/expressions/ExpressionManager.h>
 #include <string>
 
-template<typename ValueType>
-using GenerateMonitorVerifier = storm::generator::GenerateMonitorVerifier<ValueType>;
+#include "src/binding_type_index.h"
+
 template<typename ValueType>
 using SparseDtmc = storm::models::sparse::Dtmc<ValueType>;
 template<typename ValueType>
 using SparseMdp = storm::models::sparse::Mdp<ValueType>;
 template<typename ValueType>
 using SparsePomdp = storm::models::sparse::Pomdp<ValueType>;
-template<typename ValueType>
-using GenerateMonitorVerifierOptions = typename storm::generator::GenerateMonitorVerifier<ValueType>::Options;
 
 template<typename ValueType>
-void define_verimon_generator(py::module &m, std::string const &vtSuffix) {
-    py::classh<storm::generator::MonitorVerifier<ValueType>> mv(m, ("MonitorVerifier" + vtSuffix).c_str(),
-                                                                "Container for monitor verifier POMDP with associated objects");
-    mv.def(py::init<const SparsePomdp<ValueType> &, const std::map<std::pair<uint32_t, bool>, uint32_t> &, const std::map<uint32_t, std::string> &>(),
-           py::arg("product"), py::arg("observation_map"), py::arg("default_action_map"));
-    mv.def("get_product", &storm::generator::MonitorVerifier<ValueType>::getProduct, py::return_value_policy::reference_internal);
-    mv.def_property_readonly("observation_map", &storm::generator::MonitorVerifier<ValueType>::getObservationMap, py::return_value_policy::reference_internal);
-    mv.def_property_readonly("default_action_map", &storm::generator::MonitorVerifier<ValueType>::getObservationDefaultAction,
-                             py::return_value_policy::reference_internal);
+void define_verimon_generator(py::module& m) {
+    auto index = stormpy::bindings::typeIndex<ValueType>();
 
-    py::classh<storm::generator::GenerateMonitorVerifier<ValueType>> gmv(m, ("GenerateMonitorVerifier" + vtSuffix).c_str(),
-                                                                         "Generator of POMDP used in verifying monitors against markov chains");
-    gmv.def(py::init<SparseDtmc<ValueType> const &, SparseMdp<ValueType> const &, std::shared_ptr<storm::expressions::ExpressionManager> &,
-                     GenerateMonitorVerifierOptions<ValueType> const &>(),
-            py::arg("mc"), py::arg("monitor"), py::arg("expr_manager"), py::arg("options"));
-    gmv.def("create_product", &storm::generator::GenerateMonitorVerifier<ValueType>::createProduct, "Create the verification POMDP");
-    gmv.def("set_risk", &storm::generator::GenerateMonitorVerifier<ValueType>::setRisk, py::arg("risk"));
+    using MonitorVerifier = storm::generator::MonitorVerifier<ValueType>;
+    stormpy::bindings::bindTemplateClass<MonitorVerifier>(m, "MonitorVerifier", index, "Container for monitor verifier POMDP with associated objects")
+        .def(py::init<SparsePomdp<ValueType> const&, std::map<std::pair<uint32_t, bool>, uint32_t> const&, std::map<uint32_t, std::string> const&>(),
+             "product"_a, "observation_map"_a, "observation_default_action"_a)
+        .def("get_product", &MonitorVerifier::getProduct, "Product POMDP", py::return_value_policy::reference_internal)
+        .def_property_readonly("observation_map", &MonitorVerifier::getObservationMap, "Mapping from (monitor state, accepting) to observations of the product",
+                               py::return_value_policy::reference_internal)
+        .def_property_readonly("observation_default_action", &MonitorVerifier::getObservationDefaultAction, "Default action label for each observation",
+                               py::return_value_policy::reference_internal);
 
-    py::classh<GenerateMonitorVerifierOptions<ValueType>> gmvopts(m, ("GenerateMonitorVerifier" + vtSuffix + "Options").c_str(),
-                                                                  "Options for corresponding generator");
-    gmvopts.def(py::init<>());
-    gmvopts.def_readwrite("accepting_label", &GenerateMonitorVerifierOptions<ValueType>::acceptingLabel);
-    gmvopts.def_readwrite("step_prefix", &GenerateMonitorVerifierOptions<ValueType>::stepPrefix);
-    gmvopts.def_readwrite("horizon_label", &GenerateMonitorVerifierOptions<ValueType>::horizonLabel);
-    gmvopts.def_readwrite("use_restart_semantics", &GenerateMonitorVerifierOptions<ValueType>::useRestartSemantics);
+    using Generator = storm::generator::GenerateMonitorVerifier<ValueType>;
+    stormpy::bindings::bindTemplateClass<typename Generator::Options>(m, "GenerateMonitorVerifierOptions", index,
+                                                                      "Options for generating the monitor verifier POMDP")
+        .def(py::init<>())
+        .def_readwrite("accepting_label", &Generator::Options::acceptingLabel, "Label of accepting monitor states")
+        .def_readwrite("step_prefix", &Generator::Options::stepPrefix, "Prefix of the labels of monitor steps")
+        .def_readwrite("horizon_label", &Generator::Options::horizonLabel, "Label of monitor states reaching the horizon")
+        .def_readwrite("use_restart_semantics", &Generator::Options::useRestartSemantics, "Use restart semantics instead of a sink state");
+
+    stormpy::bindings::bindTemplateClass<Generator>(m, "GenerateMonitorVerifier", index, "Generator of POMDP used in verifying monitors against Markov chains")
+        .def(py::init<SparseDtmc<ValueType> const&, SparseMdp<ValueType> const&, std::shared_ptr<storm::expressions::ExpressionManager>&,
+                      typename Generator::Options const&>(),
+             "mc"_a, "monitor"_a, "expr_manager"_a, "options"_a, py::keep_alive<1, 2>(), py::keep_alive<1, 3>())
+        .def("create_product", &Generator::createProduct, "Create the verification POMDP")
+        .def("set_risk", &Generator::setRisk, "Set the risk of each state of the Markov chain", "risk"_a);
 }
 
-template void define_verimon_generator<double>(py::module &m, std::string const &vtSuffix);
-template void define_verimon_generator<storm::RationalNumber>(py::module &m, std::string const &vtSuffix);
+template void define_verimon_generator<double>(py::module& m);
+template void define_verimon_generator<storm::RationalNumber>(py::module& m);

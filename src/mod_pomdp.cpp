@@ -17,23 +17,23 @@ PYBIND11_MODULE(_pomdp, m) {
     py::options options;
     options.disable_function_signatures();
 #endif
-    define_tracker<double>(m, "Double");
-    define_tracker<storm::RationalNumber>(m, "Exact");
-    define_qualitative_policy_search<double>(m, "Double");
+    define_tracker<double>(m);
+    define_tracker<storm::RationalNumber>(m);
     define_qualitative_policy_search_nt(m);
+    define_qualitative_policy_search<double>(m);
     define_memory(m);
     define_transformations_nt(m);
 
-    define_transformations<double>(m, "Double");
-    define_transformations<storm::RationalNumber>(m, "Exact");
-    define_transformations<storm::RationalFunction>(m, "Rf");
+    define_transformations<double>(m);
+    define_transformations<storm::RationalNumber>(m);
+    define_transformations<storm::RationalFunction>(m);
 
-    define_transformations_int<double>(m, "Double");
-    define_transformations_int<storm::RationalNumber>(m, "Exact");
-    define_transformations_int<storm::RationalFunction>(m, "Parametric");
-    define_transformations_int<storm::Interval>(m, "Interval");
-    define_transformations_int<storm::RationalInterval>(m, "RationalInterval");
+    define_observation_trace_unfolder<double>(m);
+    define_observation_trace_unfolder<storm::RationalNumber>(m);
+    define_observation_trace_unfolder<storm::RationalFunction>(m);
+    define_observation_trace_unfolder<storm::Interval>(m);
+    define_observation_trace_unfolder<storm::RationalInterval>(m);
 
-    define_verimon_generator<double>(m, "Double");
-    define_verimon_generator<storm::RationalNumber>(m, "Exact");
+    define_verimon_generator<double>(m);
+    define_verimon_generator<storm::RationalNumber>(m);
 }

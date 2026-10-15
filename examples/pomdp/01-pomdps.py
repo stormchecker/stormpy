@@ -24,8 +24,7 @@ def example_pomdps_01():
     # pomdp = stormpy.pomdp.make_simple(pomdp)
     # # construct the memory for the FSC
     # # in this case, a selective counter with two states
-    # memory_builder = stormpy.pomdp.PomdpMemoryBuilder()
-    # memory = memory_builder.build(stormpy.pomdp.PomdpMemoryPattern.SELECTIVE_COUNTER, 2)
+    # memory = stormpy.pomdp.create_memory(stormpy.pomdp.PomdpMemoryPattern.SELECTIVE_COUNTER, 2)
     # # apply the memory onto the POMDP to get the cartesian product
     # pomdp = stormpy.pomdp.unfold_memory(pomdp, memory)
     # # apply the memory onto the POMDP to get the cartesian product
@@ -48,8 +47,7 @@ def example_pomdps_01():
 
     # construct the memory for the FSC
     # in this case, a selective counter with two states
-    memory_builder = stormpy.pomdp.PomdpMemoryBuilder()
-    memory = memory_builder.build(stormpy.pomdp.PomdpMemoryPattern.SELECTIVE_COUNTER, 3)
+    memory = stormpy.pomdp.create_memory(stormpy.pomdp.PomdpMemoryPattern.SELECTIVE_COUNTER, 3)
     # apply the memory onto the POMDP to get the cartesian product
     pomdp = stormpy.pomdp.unfold_memory(pomdp, memory, add_memory_labels=True, keep_state_valuations=True)
     # make the POMDP simple. This step is optional but often beneficial

@@ -352,7 +352,7 @@ stormpy_module(utility "developer/utility" "" "")
 stormpy_optional_module(dft "dft/developer" "DFT" )
 stormpy_optional_module(gspn "gspn/developer" "GSPN")
 stormpy_optional_module(pars "pars" "parametric models")
-stormpy_optional_module(pomdp "pomdp" "POMDP")
+stormpy_optional_module(pomdp "pomdp/developer" "POMDP")
 
 # Build pycarl modules
 ######

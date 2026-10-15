@@ -195,7 +195,7 @@ class TestParametric:
         model = stormpy.build_model[stormpy.RationalFunction](program, formula)
         parameters = model.collect_all_parameters()
         assert len(parameters) == 2
-        region = stormpy.pars.ParameterRegion.create_from_string("0.7<=pL<=0.9,0.75<=pK<=0.95", parameters)
+        region = stormpy.pars.parse_region("0.7<=pL<=0.9,0.75<=pK<=0.95", parameters)
         assert region.area == stormpy.RationalFunctionCoefficient(1) / stormpy.RationalFunctionCoefficient(25)
         for par in parameters:
             if par.name == "pL":
@@ -209,5 +209,5 @@ class TestParametric:
             pL: (stormpy.RationalFunctionCoefficient(70) / dec, stormpy.RationalFunctionCoefficient(90) / dec),
             pK: (stormpy.RationalFunctionCoefficient(75) / dec, stormpy.RationalFunctionCoefficient(95) / dec),
         }
-        region = stormpy.pars.ParameterRegion(region_valuation)
+        region = stormpy.pars.create_region(region_valuation)
         assert region.area == stormpy.RationalFunctionCoefficient(1) / stormpy.RationalFunctionCoefficient(25)

@@ -72,10 +72,10 @@ class TestModelInstantiator:
 
         parameters = model.collect_all_parameters()
         env = stormpy.environments.default(model)
-        inst_checker = stormpy.pars.ModelInstantiationChecker(env, model)
-        assert type(inst_checker) is stormpy.pars.ModelInstantiationChecker[stormpy.models.ModelType.DTMC, float]
+        inst_checker = stormpy.pars.SparseInstantiationModelChecker(env, model)
+        assert type(inst_checker) is stormpy.pars.SparseInstantiationModelChecker[stormpy.models.ModelType.DTMC, float]
         inst_checker.specify_formula(stormpy.developer.CheckTask[stormpy.RationalFunction](formula.get_raw_formula(), True))
-        inst_checker.set_graph_preserving(True)
+        inst_checker.set_instantiations_are_graph_preserving(True)
 
         point = {p: stormpy.RationalFunctionCoefficient(1 / 2) for p in parameters}
         result = inst_checker.check(env, point)
@@ -92,9 +92,9 @@ class TestModelInstantiator:
 
         parameters = model.collect_all_parameters()
         env = stormpy.environments.default(model)
-        inst_checker = stormpy.pars.ModelInstantiationChecker[stormpy.models.ModelType.DTMC, stormpy.Rational](env, model)
+        inst_checker = stormpy.pars.SparseInstantiationModelChecker[stormpy.models.ModelType.DTMC, stormpy.Rational](env, model)
         inst_checker.specify_formula(stormpy.developer.CheckTask[stormpy.RationalFunction](formula.get_raw_formula(), True))
-        inst_checker.set_graph_preserving(True)
+        inst_checker.set_instantiations_are_graph_preserving(True)
 
         point = {p: stormpy.RationalFunctionCoefficient("1/2") for p in parameters}
         result = inst_checker.check(env, point)
@@ -111,9 +111,9 @@ class TestModelInstantiator:
 
         parameters = model.collect_all_parameters()
         env = stormpy.environments.default(model)
-        inst_checker = stormpy.pars.ModelInstantiationChecker[stormpy.models.ModelType.DTMC, stormpy.Rational](env, model)
+        inst_checker = stormpy.pars.SparseInstantiationModelChecker[stormpy.models.ModelType.DTMC, stormpy.Rational](env, model)
         inst_checker.specify_formula(stormpy.developer.CheckTask[stormpy.RationalFunction](formula.get_raw_formula(), True))
-        inst_checker.set_graph_preserving(True)
+        inst_checker.set_instantiations_are_graph_preserving(True)
 
         point = {p: stormpy.RationalFunctionCoefficient("2/5") for p in parameters}
         result = inst_checker.check(env, point)

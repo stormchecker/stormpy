@@ -13,3 +13,9 @@ class TestJson:
         assert int(state["s"]) == 0
         assert state == simulator.get_state_as_json()
         assert hash(state) == hash(simulator.get_state_as_json())
+        assert state != str(state)
+        assert state["s"] == 0
+        assert state["s"] != 1
+        assert state["s"] != "0"
+        simulator.step(0)
+        assert state != simulator.get_state_as_json()

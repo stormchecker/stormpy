@@ -38,7 +38,7 @@ void define_formulae(py::module& m) {
             },
             "substitute label occurences", py::arg("replacements"))
         .def_property_readonly("is_probability_operator_formula", &storm::logic::Formula::isProbabilityOperatorFormula, "Whether it is a probability operator")
-        .def_property_readonly("is_reward_operator_formula", &storm::logic::Formula::isRewardOperatorFormula, "Wheter it is a reward operator")
+        .def_property_readonly("is_reward_operator_formula", &storm::logic::Formula::isRewardOperatorFormula, "Whether it is a reward operator")
         .def_property_readonly("is_eventually_formula", &storm::logic::Formula::isEventuallyFormula)
         .def_property_readonly("is_bounded_until_formula", &storm::logic::Formula::isBoundedUntilFormula)
         .def_property_readonly("is_until_formula", &storm::logic::Formula::isUntilFormula)

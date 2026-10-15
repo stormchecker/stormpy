@@ -40,14 +40,14 @@ void define_ksp_typed(py::module& m) {
     stormpy::bindings::bindTemplateClass<ShortestPathsGenerator<ValueType>>(
         m, "ShortestPathsGenerator", stormpy::bindings::typeIndex<ValueType>(),
         "Computes the k most probable paths from the initial states to a set of target states")
-        .def(py::init<typename ShortestPathsGenerator<ValueType>::Model const&, BitVector>(), "model"_a, "target_bv"_a)
+        .def(py::init<typename ShortestPathsGenerator<ValueType>::Model const&, storm::storage::BitVector>(), "model"_a, "target_bv"_a)
         .def(py::init<typename ShortestPathsGenerator<ValueType>::Model const&, state_t>(), "model"_a, "single_target"_a)
         .def(py::init<typename ShortestPathsGenerator<ValueType>::Model const&, std::vector<state_t> const&>(), "model"_a, "target_list"_a)
         .def(py::init<typename ShortestPathsGenerator<ValueType>::Model const&, std::string>(), "model"_a, "target_label"_a = "target")
-        .def(py::init<typename ShortestPathsGenerator<ValueType>::Matrix const&, std::vector<ValueType> const&, BitVector const&, MatrixFormat>(),
+        .def(py::init<typename ShortestPathsGenerator<ValueType>::Matrix const&, std::vector<ValueType> const&, storm::storage::BitVector const&, MatrixFormat>(),
              "transition_matrix"_a, "target_prob_vector"_a, "initial_states"_a, "matrix_format"_a)
         .def(py::init<typename ShortestPathsGenerator<ValueType>::Matrix const&, typename ShortestPathsGenerator<ValueType>::StateProbMap const&,
-                      BitVector const&, MatrixFormat>(),
+                      storm::storage::BitVector const&, MatrixFormat>(),
              "maybe_transition_matrix"_a, "target_prob_map"_a, "initial_states"_a, "matrix_format"_a)
 
         .def("get_distance", &ShortestPathsGenerator<ValueType>::getDistance, "k"_a, "Get the probability of the k-th shortest path")

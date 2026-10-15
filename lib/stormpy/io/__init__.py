@@ -111,7 +111,7 @@ def umb_to_archive(umb_model: UmbModel, path: str | _os.PathLike[str], options: 
 def export_jani_to_file(
     filename: str | _os.PathLike[str],
     model: JaniModel,
-    properties: "_Iterable[_stormpy.Property] | None" = None,
+    properties: "_Iterable[_stormpy.logic.Property] | None" = None,
     *,
     check_valid: bool = True,
     compact: bool = False,

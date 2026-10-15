@@ -1,3 +1,5 @@
+import typing
+
 import stormpy
 from helpers.helper import get_example_path
 import pytest
@@ -25,3 +27,7 @@ class TestJani:
         # Flattening declares a new variable in the expression manager, so use a fresh model
         model, properties = stormpy.parse_jani_model(get_example_path("dtmc", "brp.jani"))
         assert len(model.flatten_composition(smt_solver_factory=stormpy.developer.Z3SmtSolverFactory()).automata) == 1
+
+    def test_export_annotations(self):
+        hints = typing.get_type_hints(stormpy.io.export_jani_to_file)
+        assert stormpy.logic.Property in typing.get_args(typing.get_args(hints["properties"])[0])

@@ -12,7 +12,7 @@ from stormpy.developer import Property
 from stormpy.exceptions import StormError
 
 # File paths can be given as strings or path-like objects (e.g. pathlib.Path)
-PathLike: TypeAlias = "str | os.PathLike[str]"
+PathLike: TypeAlias = str | os.PathLike[str]
 
 
 def _path(path: PathLike) -> str:

@@ -44,7 +44,8 @@ void define_ksp_typed(py::module& m) {
         .def(py::init<typename ShortestPathsGenerator<ValueType>::Model const&, state_t>(), "model"_a, "single_target"_a)
         .def(py::init<typename ShortestPathsGenerator<ValueType>::Model const&, std::vector<state_t> const&>(), "model"_a, "target_list"_a)
         .def(py::init<typename ShortestPathsGenerator<ValueType>::Model const&, std::string>(), "model"_a, "target_label"_a = "target")
-        .def(py::init<typename ShortestPathsGenerator<ValueType>::Matrix const&, std::vector<ValueType> const&, storm::storage::BitVector const&, MatrixFormat>(),
+        .def(py::init<typename ShortestPathsGenerator<ValueType>::Matrix const&, std::vector<ValueType> const&, storm::storage::BitVector const&,
+                      MatrixFormat>(),
              "transition_matrix"_a, "target_prob_vector"_a, "initial_states"_a, "matrix_format"_a)
         .def(py::init<typename ShortestPathsGenerator<ValueType>::Matrix const&, typename ShortestPathsGenerator<ValueType>::StateProbMap const&,
                       storm::storage::BitVector const&, MatrixFormat>(),

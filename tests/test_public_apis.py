@@ -6,6 +6,7 @@ Each public module declares its API via ``__all__``. These tests check that the 
 import importlib
 import inspect
 import types
+import typing
 
 import pytest
 import stormpy
@@ -92,6 +93,13 @@ def test_functions_documented(module_name, name):
     # Each parameter must be documented
     for parameter in inspect.signature(function).parameters:
         assert f":param {parameter}:" in doc, f"Parameter {parameter} of {name} is not documented"
+
+
+@pytest.mark.parametrize("module_name, name", _public_names(functions=True))
+def test_function_annotations_resolve(module_name, name):
+    # String annotations must refer to existing names
+    function = getattr(importlib.import_module(module_name), name)
+    typing.get_type_hints(function)
 
 
 @pytest.mark.parametrize("module_name, name", _public_names(functions=False))

@@ -15,6 +15,7 @@ from stormpy.developer import (
     ExplicitQualitativeCheckResult,
     ModelCheckerHint,
     Property,
+    QualitativeCheckResult,
     SymbolicQualitativeCheckResult,
     UncertaintyResolutionMode,
 )
@@ -102,7 +103,7 @@ def model_checking(
     return developer.verify_with_hybrid_engine(environment, model, task)
 
 
-def create_filter_initial_states(model) -> ExplicitQualitativeCheckResult | SymbolicQualitativeCheckResult:
+def create_filter_initial_states(model) -> QualitativeCheckResult:
     """
     Create a filter selecting the initial states of the model.
 

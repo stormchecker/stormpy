@@ -25,8 +25,8 @@ class TestPublicParsApi:
             assert not hasattr(stormpy.pars.developer, name)
         assert not hasattr(stormpy.pars.ParameterRegion, "create_from_string")
         for name in ["check_region", "get_bound", "get_split_suggestion"]:
-            assert not hasattr(stormpy.pars.RegionModelChecker, name)
-        assert not hasattr(stormpy.pars.RegionRefinementChecker, "compute_extremum")
+            assert not hasattr(stormpy.pars.developer.RegionModelChecker, name)
+        assert not hasattr(stormpy.pars.developer.RegionRefinementChecker, "compute_extremum")
 
     def test_developer_bindings(self):
         import stormpy.pars

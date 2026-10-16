@@ -86,6 +86,7 @@ void define_model_instantiation_checker(py::module& m) {
 }
 
 template void define_model_instantiator<double>(py::module&);
+template void define_model_instantiator<storm::RationalNumber>(py::module&);
 template void define_model_instantiator<storm::RationalFunction>(py::module&);
 template void define_model_instantiation_checker<double>(py::module&);
 template void define_model_instantiation_checker<storm::RationalNumber>(py::module&);

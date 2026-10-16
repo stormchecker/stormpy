@@ -143,7 +143,7 @@ class TestParametric:
         for constraint in constraints_graph_preserving:
             assert constraint.operator == stormpy.expressions.OperatorType.NOT_EQUAL
 
-    def test_derivatives(self):
+    def test_derivatives_ignore_constants(self):
         program = stormpy.parse_prism_program(get_example_path("pdtmc", "brp16_2.pm"))
         prop = "P<=0.84 [F s=5 ]"
         formula = stormpy.parse_property(prop, program)
@@ -154,8 +154,28 @@ class TestParametric:
         assert model.has_parameters
         parameters = model.collect_all_parameters()
         assert len(parameters) == 2
-        derivatives = stormpy.pars.gather_derivatives(model, list(parameters)[0])
-        assert len(derivatives) == 0
+        # Transitions use pL, 1-pL, pK, and 1-pK; all derivatives are constant and filtered out.
+        for parameter in parameters:
+            assert stormpy.pars.gather_derivatives(model, parameter) == set()
+
+    def test_nonlinear_derivatives(self, tmp_path):
+        path = tmp_path / "nonlinear.pm"
+        path.write_text("""dtmc
+const double p;
+module simple
+ s : [0..2] init 0;
+ [] s=0 -> p*p : (s'=1) + (1-p*p) : (s'=2);
+ [] s=1 -> (s'=1);
+ [] s=2 -> (s'=2);
+endmodule
+""")
+        program = stormpy.parse_prism_program(path)
+        model = stormpy.build_model[stormpy.RationalFunction](program)
+        parameter = next(iter(model.collect_all_parameters()))
+        derivatives = stormpy.pars.gather_derivatives(model, parameter)
+        # The nonconstant derivatives are 2*p and -2*p.
+        expected = stormpy.RawPolynomial(parameter) * stormpy.RationalFunctionCoefficient(2)
+        assert {derivative.polynomial() for derivative in derivatives} == {expected, -expected}
 
     def test_dtmc_simplification(self):
         program = stormpy.parse_prism_program(get_example_path("pdtmc", "brp16_2.pm"))
@@ -165,7 +185,9 @@ class TestParametric:
         model = stormpy.build_model[stormpy.RationalFunction](program, parsed_property)
         assert model.nr_states == 613
         assert model.nr_transitions == 803
-        model, formula = stormpy.pars.simplify_model(model, formula)
+        simplifier = stormpy.pars.developer.SparseParametricModelSimplifier(model)
+        assert simplifier.simplify(formula)
+        model, formula = simplifier.simplified_model, simplifier.simplified_formula
         assert model.nr_states == 193
         assert model.nr_transitions == 383
 
@@ -176,15 +198,19 @@ class TestParametric:
         model = stormpy.build_model[stormpy.RationalFunction](program, prop)
         assert model.nr_states == 169
         assert model.nr_transitions == 435
-        model, formula = stormpy.pars.simplify_model(model, formula)
+        simplifier = stormpy.pars.developer.SparseParametricModelSimplifier(model)
+        assert simplifier.simplify(formula)
+        model, formula = simplifier.simplified_model, simplifier.simplified_formula
         assert model.nr_states == 17
         assert model.nr_transitions == 50
 
-    def test_simplification_with_property(self):
+    def test_simplifier_formula(self):
         program = stormpy.parse_prism_program(get_example_path("pmdp", "two_dice.nm"))
         prop = stormpy.parse_property('Pmin=? [ F "two" ]', program)
         model = stormpy.build_model[stormpy.RationalFunction](program, prop)
-        simplified, formula = stormpy.pars.simplify_model(model, prop)
+        simplifier = stormpy.pars.developer.SparseParametricModelSimplifier(model)
+        assert simplifier.simplify(prop.get_raw_formula())
+        simplified, formula = simplifier.simplified_model, simplifier.simplified_formula
         assert simplified.nr_states == 17
         assert formula.is_probability_operator_formula
 

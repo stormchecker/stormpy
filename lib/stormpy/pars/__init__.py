@@ -1,36 +1,28 @@
-"""API for the analysis of parametric models.
+"""Parameter synthesis and model instantiation for sparse parametric models.
 
-Makes the functionality of ``storm::pars::`` available, e.g., model instantiation, model simplification and region checking via parameter lifting.
+Create parameter regions, verify properties throughout a region, or search for
+satisfying parameter valuations. Instantiate models with concrete parameter values
+using :class:`ModelInstantiator`. Lower-level tools are in :mod:`stormpy.pars.developer`.
 """
 
 from collections.abc import Iterable, Mapping
+from math import isfinite as _isfinite
 
 from . import developer
-from stormpy import Environment, RationalFunction, RationalFunctionCoefficient
-from stormpy import developer as _core_developer
+from stormpy import Environment, RationalFunctionCoefficient
+from stormpy import environments as _environments
 from stormpy.numbers import Polynomial, Variable
 from stormpy.logic import Formula, Property
 from stormpy.models import SparseModel
 from stormpy.core._common import _formula
-from stormpy.exceptions import StormError
 
-# Import classes from developer (and republish templated classes under stormpy.pars.X)
 ParameterRegion = developer.ParameterRegion
 RegionResult = developer.RegionResult
-RegionResultHypothesis = developer.RegionResultHypothesis
-RegionModelChecker = developer.RegionModelChecker
-RegionRefinementChecker = developer.RegionRefinementChecker
+RegionCheckEngine = developer.RegionCheckEngine
+FeasibilityMethod = developer.FeasibilityMethod
+FeasibilityResult = developer.FeasibilityResult
+FeasibilitySynthesisResult = developer.FeasibilitySynthesisResult
 ModelInstantiator = developer.ModelInstantiator.publish_as("stormpy.pars.ModelInstantiator")
-SparseInstantiationModelChecker = developer.SparseInstantiationModelChecker.publish_as("stormpy.pars.SparseInstantiationModelChecker")
-
-
-def _check_task(property: Property | Formula):
-    """Create a check task for the given property where only the initial states are relevant."""
-    return _core_developer.CheckTask[RationalFunction](_formula(property), only_initial_states_relevant=True)
-
-
-def _graph_preservation_status(graph_preserving: bool):
-    return developer.GraphPreservationStatus.GRAPH_PRESERVING if graph_preserving else developer.GraphPreservationStatus.NONE
 
 
 def parse_region(region_string: str, parameters: Iterable[Variable]) -> ParameterRegion:
@@ -56,95 +48,120 @@ def create_region(bounds: Mapping[Variable, tuple[RationalFunctionCoefficient, R
     return ParameterRegion(lower, upper)
 
 
-def create_region_checker(
-    model, property: Property | Formula, *, environment: Environment | None = None, allow_model_simplification: bool = True, graph_preserving: bool = True
-) -> RegionModelChecker:
-    """
-    Create a region model checker based on parameter lifting.
+def _region_argument(region: ParameterRegion | None, region_bound: RationalFunctionCoefficient | float | int | None):
+    if (region is None) == (region_bound is None):
+        raise ValueError("Provide exactly one of region or region_bound.")
+    if region is not None:
+        return region
+    if isinstance(region_bound, float):
+        if not _isfinite(region_bound):
+            raise ValueError("region_bound must be finite.")
+        return RationalFunctionCoefficient(repr(region_bound))
+    if isinstance(region_bound, int):
+        return RationalFunctionCoefficient(region_bound)
+    return region_bound
 
-    :param model: Parametric sparse model (DTMC or MDP).
-    :param property: Property or formula to check.
-    :param environment: (optional) Environment configuring the model checking.
-    :param allow_model_simplification: Whether the model may be simplified before the analysis.
-    :param graph_preserving: Whether the graph structure of the model is preserved for all parameter values in the analyzed regions.
-    :return: The region model checker.
+
+def verify(
+    model: SparseModel,
+    property: Property | Formula,
+    region: ParameterRegion | None = None,
+    *,
+    region_bound: RationalFunctionCoefficient | float | int | None = None,
+    engine: RegionCheckEngine = RegionCheckEngine.PARAMETER_LIFTING,
+    environment: Environment | None = None,
+) -> bool:
     """
-    return developer.initialize_region_model_checker(
-        environment if environment is not None else Environment(),
-        model,
-        _check_task(property),
-        allow_model_simplification=allow_model_simplification,
-        graph_preservation_status=_graph_preservation_status(graph_preserving),
+    Verify a bounded probability or reward property for all well-defined valuations in a region.
+
+    Requires a sparse parametric DTMC or MDP with exactly one initial state.
+    Provide exactly one of ``region`` or ``region_bound``. The region must cover
+    all model parameters. Standard parameter lifting requires a well-defined,
+    graph-preserving region; endpoints are not removed automatically. Robust
+    parameter lifting supports DTMCs and can include graph-changing valuations.
+    Unsupported inputs raise an exception.
+
+    :param model: Parametric sparse DTMC or MDP.
+    :param property: Bounded probability or reward property or formula.
+    :param region: Explicit parameter region.
+    :param region_bound: Use [region_bound, 1-region_bound] for every parameter; must be in [0, 1/2].
+        Accepts rational coefficients, floats, or integers. Floats use their decimal representation, e.g. 0.2 means exactly 1/5.
+    :param engine: Region checking engine.
+    :param environment: (optional) Environment configuring the analysis.
+    :return: Whether every well-defined valuation in the region satisfies the property.
+    """
+    return developer.verify(
+        environment if environment is not None else _environments.default(model), model, _formula(property), _region_argument(region, region_bound), engine
     )
 
 
-def create_region_refinement_checker(
-    model, property: Property | Formula, *, environment: Environment | None = None, allow_model_simplification: bool = True, graph_preserving: bool = True
-) -> RegionRefinementChecker:
+def check_feasibility(
+    model: SparseModel,
+    property: Property | Formula,
+    region: ParameterRegion | None = None,
+    *,
+    region_bound: RationalFunctionCoefficient | float | int | None = None,
+    method: FeasibilityMethod = FeasibilityMethod.PLA,
+    region_engine: RegionCheckEngine = RegionCheckEngine.PARAMETER_LIFTING,
+    environment: Environment | None = None,
+) -> FeasibilitySynthesisResult:
     """
-    Create a region refinement checker based on parameter lifting, e.g., to compute extremal values within a region.
+    Search for a well-defined parameter valuation satisfying a bounded probability or reward property.
 
-    :param model: Parametric sparse model (DTMC or MDP).
-    :param property: Property or formula to check.
-    :param environment: (optional) Environment configuring the model checking.
-    :param allow_model_simplification: Whether the model may be simplified before the analysis.
-    :param graph_preserving: Whether the graph structure of the model is preserved for all parameter values in the analyzed regions.
-    :return: The region refinement checker.
+    Requires a sparse parametric DTMC or MDP with exactly one initial state.
+    Provide exactly one of ``region`` or ``region_bound``. The region must cover
+    all model parameters and satisfy the method's and engine's requirements.
+    Standard parameter lifting, GD, and SCP require a well-defined, graph-preserving
+    region. GD supports DTMCs only. Robust parameter lifting supports DTMCs and
+    can include graph-changing valuations. Unsupported inputs raise an exception.
+
+    For MDPs, bounds without min/max apply to every scheduler. For example,
+    ``Pmax>=0.8 [F "target"]`` asks for some scheduler (PLA only), while
+    ``Pmin>=0.8 [F "target"]`` requires every scheduler. SCP requires universal
+    scheduler quantification.
+
+    :param model: Parametric sparse DTMC or MDP.
+    :param property: Bounded probability or reward property or formula.
+    :param region: Explicit parameter region.
+    :param region_bound: Use [region_bound, 1-region_bound] for every parameter; must be in [0, 1/2].
+        Accepts rational coefficients, floats, or integers. Floats use their decimal representation, e.g. 0.2 means exactly 1/5.
+    :param method: Feasibility method: parameter lifting (PLA), gradient descent (GD), or sequential convex programming (SCP).
+    :param region_engine: Region checking engine, used only for PLA.
+    :param environment: (optional) Environment configuring the analysis.
+    :return: Result with status EXISTS_SAT, ALL_VIOLATED, or UNKNOWN. A witness is present only for EXISTS_SAT.
     """
-    return developer.initialize_region_refinement_checker(
-        environment if environment is not None else Environment(),
+    return developer.check_feasibility(
+        environment if environment is not None else _environments.default(model),
         model,
-        _check_task(property),
-        allow_model_simplification=allow_model_simplification,
-        graph_preservation_status=_graph_preservation_status(graph_preserving),
+        _formula(property),
+        _region_argument(region, region_bound),
+        method,
+        region_engine,
     )
 
 
-def simplify_model(model: SparseModel, property: Property | Formula) -> tuple[SparseModel, Formula]:
+def gather_derivatives(model: SparseModel, parameter: Variable) -> set[Polynomial]:
     """
-    Simplify a parametric model preserving the given property by eliminating states with constant outgoing probabilities.
-
-    :param model: Parametric sparse model (DTMC or MDP).
-    :param property: Property or formula to preserve.
-    :return: Tuple of simplified model and simplified formula.
-    """
-    if (model.model_type,) not in developer.SparseParametricModelSimplifier.instantiations:
-        raise StormError("Model type {} cannot be simplified.".format(model.model_type))
-    simplifier = developer.SparseParametricModelSimplifier(model)
-    if not simplifier.simplify(_formula(property)):
-        raise StormError("Model could not be simplified")
-    return simplifier.simplified_model, simplifier.simplified_formula
-
-
-def gather_derivatives(model, parameter: Variable) -> set[Polynomial]:
-    """
-    Gather the derivatives of all transition probabilities with respect to the given parameter.
-
-    Only non-constant derivatives are returned.
+    Gather the nonconstant numerators of transition-probability derivatives with respect to a parameter.
 
     :param model: Parametric sparse model.
-    :param parameter: Parameter to derive by.
-    :return: Set of numerators of the derivatives.
+    :param parameter: Parameter to differentiate by.
+    :return: Set of nonconstant derivative numerators.
     """
     return developer.gather_derivatives(model, parameter)
 
 
 __all__ = [
-    # Regions
     "ParameterRegion",
     "parse_region",
     "create_region",
-    # Region checking
+    "verify",
+    "check_feasibility",
+    "RegionCheckEngine",
     "RegionResult",
-    "RegionResultHypothesis",
-    "RegionModelChecker",
-    "RegionRefinementChecker",
-    "create_region_checker",
-    "create_region_refinement_checker",
-    # Instantiation
+    "FeasibilityMethod",
+    "FeasibilityResult",
+    "FeasibilitySynthesisResult",
     "ModelInstantiator",
-    "SparseInstantiationModelChecker",
-    # Transformations
-    "simplify_model",
     "gather_derivatives",
 ]

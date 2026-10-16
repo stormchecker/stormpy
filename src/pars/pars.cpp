@@ -34,8 +34,8 @@ void define_synthesis_functions(py::module& m, char const* regionArgument) {
     m.def("check_feasibility",
           py::overload_cast<storm::Environment const&, Model const&, Formula const&, RegionOrBound const&, storm::pars::FeasibilityMethod, Engine>(
               &storm::api::checkFeasibility),
-          "Find a well-defined valuation satisfying a bounded probability or reward formula", "environment"_a, "model"_a, "formula"_a,
-          py::arg(regionArgument), "method"_a = storm::pars::FeasibilityMethod::PLA, "region_engine"_a = Engine::ParameterLifting);
+          "Find a well-defined valuation satisfying a bounded probability or reward formula", "environment"_a, "model"_a, "formula"_a, py::arg(regionArgument),
+          "method"_a = storm::pars::FeasibilityMethod::PLA, "region_engine"_a = Engine::ParameterLifting);
 }
 
 void define_synthesis(py::module& m) {

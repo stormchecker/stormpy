@@ -10,84 +10,34 @@
 #include "src/numbers.h"
 
 typedef storm::modelchecker::SparseDtmcParameterLiftingModelChecker<storm::models::sparse::Dtmc<storm::RationalFunction>, double>
-    DtmcParameterLiftingModelChecker;
-typedef storm::modelchecker::SparseMdpParameterLiftingModelChecker<storm::models::sparse::Mdp<storm::RationalFunction>, double> MdpParameterLiftingModelChecker;
+    SparseDtmcParameterLiftingModelChecker;
+typedef storm::modelchecker::SparseMdpParameterLiftingModelChecker<storm::models::sparse::Mdp<storm::RationalFunction>, double>
+    SparseMdpParameterLiftingModelChecker;
 
 typedef storm::modelchecker::RegionModelChecker<storm::RationalFunction> RegionModelChecker;
 typedef storm::modelchecker::RegionRefinementChecker<storm::RationalFunction> RegionRefinementChecker;
 typedef storm::storage::ParameterRegion<storm::RationalFunction> Region;
 typedef storm::modelchecker::AnnotatedRegion<storm::RationalFunction> AnnotatedRegion;
 
-storm::pars::analysis::GraphPreservationStatus toGraphPreservationStatus(bool graphPreserving) {
-    return graphPreserving ? storm::pars::analysis::GraphPreservationStatus::GraphPreserving : storm::pars::analysis::GraphPreservationStatus::None;
-}
+typedef storm::modelchecker::CheckTask<storm::logic::Formula, storm::RationalFunction> CheckTask;
+typedef std::shared_ptr<storm::models::sparse::Model<storm::RationalFunction>> ParametricModel;
+using storm::modelchecker::RegionCheckEngine;
+using storm::modelchecker::RegionResult;
+using storm::modelchecker::RegionResultHypothesis;
+using storm::modelchecker::RegionSplitEstimateKind;
+using storm::pars::analysis::GraphPreservationStatus;
 
 // Thin wrappers
-std::shared_ptr<RegionModelChecker> createRegionChecker(storm::Environment const& env,
-                                                        std::shared_ptr<storm::models::sparse::Model<storm::RationalFunction>> const& model,
-                                                        std::shared_ptr<storm::logic::Formula> const& formula, bool allowModelSimplifications,
-                                                        bool graphPreserving, bool preconditionsValidatedManually) {
-    auto task = storm::api::createTask<storm::RationalFunction>(formula, true);
-    auto regionChecker = storm::api::initializeRegionModelChecker<storm::RationalFunction, double>(
-        env, model, task, storm::modelchecker::RegionCheckEngine::ParameterLifting, allowModelSimplifications, toGraphPreservationStatus(graphPreserving),
-        preconditionsValidatedManually);
-    return regionChecker;
-}
-
-std::shared_ptr<RegionRefinementChecker> createRegionRefinementChecker(storm::Environment const& env,
-                                                                       std::shared_ptr<storm::models::sparse::Model<storm::RationalFunction>> const& model,
-                                                                       std::shared_ptr<storm::logic::Formula> const& formula, bool allowModelSimplifications,
-                                                                       bool graphPreserving, bool preconditionsValidatedManually) {
-    auto task = storm::api::createTask<storm::RationalFunction>(formula, true);
+std::unique_ptr<RegionRefinementChecker> initializeRegionRefinementChecker(storm::Environment const& env, ParametricModel const& model, CheckTask const& task,
+                                                                           RegionCheckEngine engine, bool allowModelSimplification,
+                                                                           GraphPreservationStatus graphPreservationStatus, bool preconditionsValidated) {
+    // Default splitting strategy, monotonicity settings and no discrete variables
     storm::modelchecker::RegionSplittingStrategy strategy;
     storm::pars::modelchecker::MonotonicityOptions monotonicityOptions;
-    std::set<storm::storage::ParameterRegion<storm::RationalFunction>::VariableType> discreteVars;
+    std::set<Region::VariableType> discreteVars;
     storm::pars::modelchecker::RegionRefinementOptions<storm::RationalFunction> settings(
-        model, task, storm::modelchecker::RegionCheckEngine::ParameterLifting, strategy, monotonicityOptions, discreteVars, allowModelSimplifications,
-        toGraphPreservationStatus(graphPreserving), preconditionsValidatedManually);
+        model, task, engine, strategy, monotonicityOptions, discreteVars, allowModelSimplification, graphPreservationStatus, preconditionsValidated);
     return storm::api::initializeRegionRefinementChecker<storm::RationalFunction, double>(env, settings);
-}
-
-void specifyRegionChecker(std::shared_ptr<RegionModelChecker>& checker, storm::Environment const& env,
-                          std::shared_ptr<storm::models::sparse::Model<storm::RationalFunction>> const& model,
-                          std::shared_ptr<storm::logic::Formula> const& formula, std::optional<storm::modelchecker::RegionSplitEstimateKind> splittingEstimate,
-                          bool allowModelSimplifications, bool graphPreserving) {
-    return checker->specify(env, model, storm::api::createTask<storm::RationalFunction>(formula, true), splittingEstimate, nullptr, allowModelSimplifications,
-                            toGraphPreservationStatus(graphPreserving));
-}
-
-void specifyRefinementChecker(std::shared_ptr<RegionRefinementChecker>& checker, storm::Environment const& env,
-                              std::shared_ptr<storm::models::sparse::Model<storm::RationalFunction>> const& model,
-                              std::shared_ptr<storm::logic::Formula> const& formula, bool allowModelSimplifications, bool graphPreserving) {
-    storm::modelchecker::RegionSplittingStrategy strategy;
-    std::set<storm::storage::ParameterRegion<storm::RationalFunction>::VariableType> discreteVars;
-    return checker->specify(env, model, storm::api::createTask<storm::RationalFunction>(formula, true), strategy, discreteVars, nullptr,
-                            allowModelSimplifications, toGraphPreservationStatus(graphPreserving));
-}
-
-storm::modelchecker::RegionResult checkRegion(std::shared_ptr<RegionModelChecker>& checker, storm::Environment const& env, Region const& region,
-                                              storm::modelchecker::RegionResultHypothesis const& hypothesis, bool sampleVertices) {
-    return checker->analyzeRegion(env, region, hypothesis, sampleVertices);
-}
-
-RegionModelChecker::ExtendedCoefficientType getBoundAtInit(std::shared_ptr<RegionModelChecker>& checker, storm::Environment const& env, Region const& region,
-                                                           bool maximise) {
-    return checker->getBoundAtInitState(env, region,
-                                        maximise ? storm::solver::OptimizationDirection::Maximize : storm::solver::OptimizationDirection::Minimize);
-}
-
-storm::modelchecker::ExplicitQuantitativeCheckResult<double> getBound_dtmc(std::shared_ptr<DtmcParameterLiftingModelChecker>& checker,
-                                                                           storm::Environment const& env, Region const& region, bool maximise) {
-    AnnotatedRegion annotatedRegion(region);
-    return checker->getBound(env, annotatedRegion, maximise ? storm::solver::OptimizationDirection::Maximize : storm::solver::OptimizationDirection::Minimize)
-        ->asExplicitQuantitativeCheckResult<double>();
-}
-
-storm::modelchecker::ExplicitQuantitativeCheckResult<double> getBound_mdp(std::shared_ptr<MdpParameterLiftingModelChecker>& checker,
-                                                                          storm::Environment const& env, Region const& region, bool maximise) {
-    AnnotatedRegion annotatedRegion(region);
-    return checker->getBound(env, annotatedRegion, maximise ? storm::solver::OptimizationDirection::Maximize : storm::solver::OptimizationDirection::Minimize)
-        ->asExplicitQuantitativeCheckResult<double>();
 }
 
 std::set<storm::Polynomial> gatherDerivatives(storm::models::sparse::Model<storm::RationalFunction> const& model, carl::Variable const& var) {
@@ -104,84 +54,138 @@ std::set<storm::Polynomial> gatherDerivatives(storm::models::sparse::Model<storm
 // Define python bindings
 void define_pla(py::module& m) {
     // RegionResult
-    py::native_enum<storm::modelchecker::RegionResult>(m, "RegionResult", "enum.Enum", "Types of region check results")
-        .value("EXISTS_SAT", storm::modelchecker::RegionResult::ExistsSat)
-        .value("EXISTS_VIOLATED", storm::modelchecker::RegionResult::ExistsViolated)
-        .value("EXISTS_BOTH", storm::modelchecker::RegionResult::ExistsBoth)
-        .value("CENTER_SAT", storm::modelchecker::RegionResult::CenterSat)
-        .value("CENTER_VIOLATED", storm::modelchecker::RegionResult::CenterViolated)
-        .value("ALL_SAT", storm::modelchecker::RegionResult::AllSat)
-        .value("ALL_VIOLATED", storm::modelchecker::RegionResult::AllViolated)
-        .value("UNKNOWN", storm::modelchecker::RegionResult::Unknown)
+    py::native_enum<RegionResult>(m, "RegionResult", "enum.Enum", "Types of region check results")
+        .value("EXISTS_SAT", RegionResult::ExistsSat)
+        .value("EXISTS_VIOLATED", RegionResult::ExistsViolated)
+        .value("EXISTS_BOTH", RegionResult::ExistsBoth)
+        .value("CENTER_SAT", RegionResult::CenterSat)
+        .value("CENTER_VIOLATED", RegionResult::CenterViolated)
+        .value("ALL_SAT", RegionResult::AllSat)
+        .value("ALL_VIOLATED", RegionResult::AllViolated)
+        .value("UNKNOWN", RegionResult::Unknown)
         .finalize();
     m.attr("RegionResult").attr("friendly_name") =
-        py::cpp_function(&streamToString<storm::modelchecker::RegionResult>, py::name("friendly_name"), py::is_method(m.attr("RegionResult")));
+        py::cpp_function(&streamToString<RegionResult>, py::name("friendly_name"), py::is_method(m.attr("RegionResult")));
 
     // RegionResultHypothesis
-    py::native_enum<storm::modelchecker::RegionResultHypothesis>(m, "RegionResultHypothesis", "enum.Enum", "Hypothesis for the result of a parameter region")
-        .value("UNKNOWN", storm::modelchecker::RegionResultHypothesis::Unknown)
-        .value("ALL_SAT", storm::modelchecker::RegionResultHypothesis::AllSat)
-        .value("ALL_VIOLATED", storm::modelchecker::RegionResultHypothesis::AllViolated)
+    py::native_enum<RegionResultHypothesis>(m, "RegionResultHypothesis", "enum.Enum", "Hypothesis for the result of a parameter region")
+        .value("UNKNOWN", RegionResultHypothesis::Unknown)
+        .value("ALL_SAT", RegionResultHypothesis::AllSat)
+        .value("ALL_VIOLATED", RegionResultHypothesis::AllViolated)
         .finalize();
-    m.attr("RegionResultHypothesis").attr("friendly_name") = py::cpp_function(&streamToString<storm::modelchecker::RegionResultHypothesis>,
-                                                                              py::name("friendly_name"), py::is_method(m.attr("RegionResultHypothesis")));
+    m.attr("RegionResultHypothesis").attr("friendly_name") =
+        py::cpp_function(&streamToString<RegionResultHypothesis>, py::name("friendly_name"), py::is_method(m.attr("RegionResultHypothesis")));
+
+    // RegionCheckEngine
+    py::native_enum<RegionCheckEngine>(m, "RegionCheckEngine", "enum.Enum", "Engines for region checking")
+        .value("PARAMETER_LIFTING", RegionCheckEngine::ParameterLifting)
+        .value("EXACT_PARAMETER_LIFTING", RegionCheckEngine::ExactParameterLifting)
+        .value("VALIDATING_PARAMETER_LIFTING", RegionCheckEngine::ValidatingParameterLifting)
+        .value("ROBUST_PARAMETER_LIFTING", RegionCheckEngine::RobustParameterLifting)
+        .finalize();
+
+    // RegionSplitEstimateKind
+    py::native_enum<RegionSplitEstimateKind>(m, "RegionSplitEstimateKind", "enum.Enum", "Kinds of estimates for splitting regions")
+        .value("DISTANCE", RegionSplitEstimateKind::Distance)
+        .value("STATE_VALUE_DELTA", RegionSplitEstimateKind::StateValueDelta)
+        .value("STATE_VALUE_DELTA_WEIGHTED", RegionSplitEstimateKind::StateValueDeltaWeighted)
+        .value("DERIVATIVE", RegionSplitEstimateKind::Derivative)
+        .finalize();
+
+    // GraphPreservationStatus
+    py::native_enum<GraphPreservationStatus>(m, "GraphPreservationStatus", "enum.Enum", "Guarantee whether the graph structure is preserved within a region")
+        .value("NONE", GraphPreservationStatus::None)
+        .value("WELL_DEFINED", GraphPreservationStatus::WellDefined)
+        .value("GRAPH_PRESERVING", GraphPreservationStatus::GraphPreserving)
+        .value("UNKNOWN", GraphPreservationStatus::Unknown)
+        .finalize();
 
     // Region
-    py::classh<Region>(m, "ParameterRegion", "Parameter region")
-        .def(py::init([](std::map<Region::VariableType, std::pair<Region::CoefficientType, Region::CoefficientType>> valuation) {
-                 Region::Valuation lowerValuation;
-                 Region::Valuation upperValuation;
-                 for (auto const& val : valuation) {
-                     lowerValuation[val.first] = val.second.first;
-                     upperValuation[val.first] = val.second.second;
-                 }
-                 return Region(lowerValuation, upperValuation);
-             }),
-             "Create region from valuation of var -> (lower_bound, upper_bound)", py::arg("valuation"))
-        .def_static(
-            "create_from_string",
-            [](std::string const& regionString, std::set<Region::VariableType> const& variables) -> Region {
-                return storm::api::parseRegion<storm::RationalFunction>(regionString, variables);
-            },
-            "Create region from string", py::arg("region_string"), py::arg("variables"))
+    py::classh<Region>(m, "ParameterRegion", "Parameter region given by lower and upper bounds for each parameter")
+        .def(py::init<Region::Valuation const&, Region::Valuation const&>(), "lower_boundaries"_a, "upper_boundaries"_a)
         .def_property_readonly("area", &Region::area, "Get area")
         .def("__str__", &streamToString<Region>);
+    m.def(
+        "parse_region",
+        [](std::string const& inputString, std::set<Region::VariableType> const& consideredVariables) {
+            return storm::api::parseRegion<storm::RationalFunction>(inputString, consideredVariables);
+        },
+        "input_string"_a, "considered_variables"_a, "Parse region from string, e.g. 0.3<=p<=0.5,0.1<=q<=0.4");
 
     // RegionModelChecker
-    py::classh<RegionModelChecker> regionModelChecker(m, "RegionModelChecker", "Region model checker via paramater lifting");
+    py::classh<RegionModelChecker> regionModelChecker(m, "RegionModelChecker", "Region model checker via parameter lifting");
     regionModelChecker
-        .def("check_region", &checkRegion, "Check region", py::arg("environment"), py::arg("region"),
-             py::arg("hypothesis") = storm::modelchecker::RegionResultHypothesis::Unknown, py::arg("sampleVertices") = false)
-        .def("get_bound", &getBoundAtInit, "Get bound", py::arg("environment"), py::arg("region"), py::arg("maximise") = true)
-        .def("get_split_suggestion", &RegionModelChecker::obtainRegionSplitEstimates, "Get region split estimates", py::arg("relevant_parameters"))
-        .def("specify", &specifyRegionChecker, "specify arguments", py::arg("environment"), py::arg("model"), py::arg("formula"),
-             py::arg("splitting_estimate") = std::nullopt, py::arg("allow_model_simplification") = true, py::arg("graph_preserving") = true);
+        .def("analyze_region",
+             py::overload_cast<storm::Environment const&, Region const&, RegionResultHypothesis const&, bool>(&RegionModelChecker::analyzeRegion),
+             "Analyze region", "environment"_a, "region"_a, "hypothesis"_a = RegionResultHypothesis::Unknown, "sample_vertices_of_region"_a = false)
+        .def("get_bound_at_init_state",
+             py::overload_cast<storm::Environment const&, Region const&, storm::solver::OptimizationDirection const&>(&RegionModelChecker::getBoundAtInitState),
+             "Get bound at the initial state", "environment"_a, "region"_a, "dir_for_parameters"_a)
+        .def("obtain_region_split_estimates", &RegionModelChecker::obtainRegionSplitEstimates, "Get region split estimates", "relevant_parameters"_a)
+        .def(
+            "specify",
+            [](RegionModelChecker& checker, storm::Environment const& env, ParametricModel const& model, CheckTask const& task,
+               std::optional<RegionSplitEstimateKind> generateRegionSplitEstimates, bool allowModelSimplifications,
+               GraphPreservationStatus graphPreservationStatus) {
+                checker.specify(env, model, task, generateRegionSplitEstimates, nullptr, allowModelSimplifications, graphPreservationStatus);
+            },
+            "Specify model and check task", "environment"_a, "model"_a, "check_task"_a, "generate_region_split_estimates"_a = std::nullopt,
+            "allow_model_simplifications"_a = true, "graph_preservation_status"_a = GraphPreservationStatus::GraphPreserving);
 
     // RegionRefinementChecker
     py::classh<RegionRefinementChecker>(m, "RegionRefinementChecker", "Region refinement checker")
-        .def("specify", &specifyRefinementChecker, "specify arguments", py::arg("environment"), py::arg("model"), py::arg("formula"),
-             py::arg("allow_model_simplification") = true, py::arg("graph_preserving") = true)
         .def(
-            "compute_extremum",
-            [](RegionRefinementChecker& r, storm::Environment const& env, Region const& region, storm::solver::OptimizationDirection const& dirForParameters,
-               storm::RationalFunctionCoefficient const& precision, bool absolutePrecision) {
-                return r.computeExtremalValue(env, region, dirForParameters, storm::utility::one<storm::RationalFunction>() * precision, absolutePrecision,
-                                              std::nullopt);
+            "specify",
+            [](RegionRefinementChecker& checker, storm::Environment const& env, ParametricModel const& model, CheckTask const& task,
+               bool allowModelSimplifications, GraphPreservationStatus graphPreservationStatus) {
+                // Default splitting strategy and no discrete variables
+                storm::modelchecker::RegionSplittingStrategy strategy;
+                std::set<Region::VariableType> discreteVars;
+                checker.specify(env, model, task, strategy, discreteVars, nullptr, allowModelSimplifications, graphPreservationStatus);
             },
-            "Compute extremum value and point with precision", py::arg("environment"), py::arg("region"), py::arg("extremum_direction"), py::arg("precision"),
-            py::arg("precision_absolute") = false);
+            "Specify model and check task", "environment"_a, "model"_a, "check_task"_a, "allow_model_simplifications"_a = true,
+            "graph_preservation_status"_a = GraphPreservationStatus::GraphPreserving)
+        .def(
+            "compute_extremal_value",
+            [](RegionRefinementChecker& checker, storm::Environment const& env, Region const& region, storm::solver::OptimizationDirection const& dir,
+               storm::RationalFunctionCoefficient const& precision, bool absolutePrecision) {
+                return checker.computeExtremalValue(env, region, dir, storm::utility::one<storm::RationalFunction>() * precision, absolutePrecision,
+                                                    std::nullopt);
+            },
+            "Compute extremal value and point with the given precision", "environment"_a, "region"_a, "dir"_a, "precision"_a, "absolute_precision"_a = false);
 
-    py::classh<DtmcParameterLiftingModelChecker>(m, "DtmcParameterLiftingModelChecker", "Region model checker for DTMCs", regionModelChecker)
+    py::classh<SparseDtmcParameterLiftingModelChecker>(m, "SparseDtmcParameterLiftingModelChecker", "Region model checker for DTMCs", regionModelChecker)
         .def(py::init<>())
-        .def("get_bound_all_states", &getBound_dtmc, "Get bound", py::arg("environment"), py::arg("region"), py::arg("maximise") = true);
-    py::classh<MdpParameterLiftingModelChecker>(m, "MdpParameterLiftingModelChecker", "Region model checker for MPDs", regionModelChecker)
+        .def(
+            "get_bound",
+            [](SparseDtmcParameterLiftingModelChecker& checker, storm::Environment const& env, Region const& region,
+               storm::solver::OptimizationDirection const& dirForParameters) {
+                AnnotatedRegion annotatedRegion(region);
+                return checker.getBound(env, annotatedRegion, dirForParameters)->asExplicitQuantitativeCheckResult<double>();
+            },
+            "Get bounds for all states", "environment"_a, "region"_a, "dir_for_parameters"_a);
+    py::classh<SparseMdpParameterLiftingModelChecker>(m, "SparseMdpParameterLiftingModelChecker", "Region model checker for MDPs", regionModelChecker)
         .def(py::init<>())
-        .def("get_bound_all_states", &getBound_mdp, "Get bound", py::arg("environment"), py::arg("region"), py::arg("maximise") = true);
+        .def(
+            "get_bound",
+            [](SparseMdpParameterLiftingModelChecker& checker, storm::Environment const& env, Region const& region,
+               storm::solver::OptimizationDirection const& dirForParameters) {
+                AnnotatedRegion annotatedRegion(region);
+                return checker.getBound(env, annotatedRegion, dirForParameters)->asExplicitQuantitativeCheckResult<double>();
+            },
+            "Get bounds for all states", "environment"_a, "region"_a, "dir_for_parameters"_a);
 
-    m.def("create_region_checker", &createRegionChecker, "Create region checker", py::arg("environment"), py::arg("model"), py::arg("formula"),
-          py::arg("allow_model_simplification") = true, py::arg("graph_preserving") = true, py::arg("preconditions_validated_manually") = false);
-    m.def("create_region_refinement_checker", &createRegionRefinementChecker, "Create region refinement checker", py::arg("environment"), py::arg("model"),
-          py::arg("formula"), py::arg("allow_model_simplification") = true, py::arg("graph_preserving") = true,
-          py::arg("preconditions_validated_manually") = false);
-    m.def("gather_derivatives", &gatherDerivatives, "Gather all derivatives of transition probabilities", py::arg("model"), py::arg("var"));
+    m.def(
+        "initialize_region_model_checker",
+        [](storm::Environment const& env, ParametricModel const& model, CheckTask const& task, RegionCheckEngine engine, bool allowModelSimplification,
+           GraphPreservationStatus graphPreservationStatus, bool preconditionsValidated) -> std::shared_ptr<RegionModelChecker> {
+            return storm::api::initializeRegionModelChecker<storm::RationalFunction, double>(env, model, task, engine, allowModelSimplification,
+                                                                                             graphPreservationStatus, preconditionsValidated);
+        },
+        "Create and specify a region model checker", "environment"_a, "model"_a, "task"_a, "engine"_a = RegionCheckEngine::ParameterLifting,
+        "allow_model_simplification"_a = true, "graph_preservation_status"_a = GraphPreservationStatus::GraphPreserving, "preconditions_validated"_a = false);
+    m.def("initialize_region_refinement_checker", &initializeRegionRefinementChecker, "Create and specify a region refinement checker", "environment"_a,
+          "model"_a, "task"_a, "engine"_a = RegionCheckEngine::ParameterLifting, "allow_model_simplification"_a = true,
+          "graph_preservation_status"_a = GraphPreservationStatus::GraphPreserving, "preconditions_validated"_a = false);
+    m.def("gather_derivatives", &gatherDerivatives, "Gather all derivatives of transition probabilities", "model"_a, "var"_a);
 }

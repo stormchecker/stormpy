@@ -75,7 +75,8 @@ autosummary_context = {
 python_maximum_signature_line_length = 100
 
 templates_path = ["_templates"]
-exclude_patterns = []
+# The MyST Markdown files are the sources, Jupyter notebooks generated from them are ignored
+exclude_patterns = ["**.ipynb"]
 
 add_module_names = False
 

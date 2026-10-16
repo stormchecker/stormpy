@@ -28,7 +28,7 @@ class BuilderOptions(developer.BuilderOptions):
     or they can be created for the full model via ``BuilderOptions(build_full=True)``.
     Single flags can be set afterwards, e.g. ``options.set_build_all_labels()`` or ``options.set_build_state_valuations()``.
 
-    :param properties: (optional) Properties (or formulas) whose labels and reward models are preserved.
+    :param properties: (optional) Property or properties (or formulas) whose labels and reward models are preserved.
     :param model_description: (optional) Symbolic model description used to resolve the properties.
     :param build_full: Whether the full model is built, i.e., all reward models, all labels, state valuations, choice labels
         and choice origins (in addition to the labels and reward models required by the properties).
@@ -36,7 +36,7 @@ class BuilderOptions(developer.BuilderOptions):
 
     def __init__(
         self,
-        properties: Iterable[Property] | None = None,
+        properties: Property | Iterable[Property] | None = None,
         model_description: SymbolicModelDescription | None = None,
         *,
         build_full: bool = False,
@@ -72,7 +72,7 @@ _VALUE_TYPES = (float, Rational, RationalFunction, Interval, RationalInterval)
 def build_model(
     value_type: type,
     model: storage.PrismProgram | storage.JaniModel | SymbolicModelDescription,
-    properties: Iterable[Property] | None = None,
+    properties: Property | Iterable[Property] | None = None,
     *,
     options: BuilderOptions | None = None,
     engine: Engine = Engine.SPARSE,
@@ -90,7 +90,7 @@ def build_model(
     Symbolic models do not support the interval value types.
 
     :param model: Symbolic model (Prism program, Jani model or symbolic model description).
-    :param properties: (optional) Properties which should be checkable on the built model.
+    :param properties: (optional) Property or properties which should be checkable on the built model.
         Only the labels and reward models required by the properties are built.
         If None or empty (and no options are given), all labels and reward models are built.
     :param options: (optional) Builder options for full control of the building process. Cannot be combined with properties.
@@ -126,7 +126,7 @@ def build_model(
 def build_symbolic_model(
     value_type: type,
     model: storage.PrismProgram | storage.JaniModel | SymbolicModelDescription,
-    properties: Iterable[Property] | None = None,
+    properties: Property | Iterable[Property] | None = None,
     *,
     environment: Environment | None = None,
 ):
@@ -137,7 +137,7 @@ def build_symbolic_model(
     float (default), Rational (exact) or RationalFunction (parametric). Interval value types are not supported.
 
     :param model: Symbolic model (Prism program, Jani model or symbolic model description).
-    :param properties: (optional) Properties which should be checkable on the built model. If None, the full model is built.
+    :param properties: (optional) Property or properties which should be checkable on the built model. If None, the full model is built.
     :param environment: (optional) Environment configuring the decision diagram libraries.
     :return: The model in symbolic representation, e.g. a symbolic DTMC.
     :raises TypeError: If the value type is not supported.

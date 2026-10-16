@@ -24,7 +24,7 @@ from stormpy.exceptions import StormError
 
 def perform_bisimulation(
     model,
-    properties: Iterable[Property],
+    properties: Property | Iterable[Property],
     *,
     bisimulation_type: BisimulationType = BisimulationType.STRONG,
     options: BisimulationOptions | None = None,
@@ -34,7 +34,7 @@ def perform_bisimulation(
     Minimize a model via bisimulation while preserving the given properties.
 
     :param model: The model (sparse or symbolic).
-    :param properties: Properties which are preserved by the minimization.
+    :param properties: Property or properties which are preserved by the minimization.
     :param bisimulation_type: Type of bisimulation (strong or weak).
     :param options: (optional) Further options for the bisimulation of sparse models.
         If given, its bisimulation type takes precedence over the bisimulation_type argument.
@@ -55,39 +55,39 @@ def perform_bisimulation(
     return quotient
 
 
-def transform_to_sparse_model(model, properties: Iterable[Property] | None = None):
+def transform_to_sparse_model(model, properties: Property | Iterable[Property] | None = None):
     """
     Transform a model in symbolic representation into a model in sparse representation.
 
     :param model: Symbolic model.
-    :param properties: (optional) Properties which should be preserved. If None, all labels and reward models are preserved.
+    :param properties: (optional) Property or properties which should be preserved. If None, all labels and reward models are preserved.
     :return: The model in sparse representation.
     """
     return developer.transform_symbolic_to_sparse_model(model, _formulas(properties))
 
 
-def transform_to_discrete_time_model(model, properties: Iterable[Property]) -> tuple:
+def transform_to_discrete_time_model(model, properties: Property | Iterable[Property]) -> tuple:
     """
     Transform a continuous-time model (CTMC or MA) into a discrete-time model (DTMC or MDP).
 
     Formulas which are not preserved by the transformation are dropped (with a warning).
 
     :param model: Sparse continuous-time model.
-    :param properties: Properties which are transformed accordingly.
+    :param properties: Property or properties which are transformed accordingly.
     :return: Tuple of the discrete-time model and the transformed formulas.
     """
     discrete_model, formulas = developer.transform_continuous_to_discrete_time_sparse_model(model, _formulas(properties))
     return discrete_model, formulas
 
 
-def eliminate_non_markovian_chains(model, properties: Iterable[Property], label_behavior: EliminationLabelBehavior) -> tuple:
+def eliminate_non_markovian_chains(model, properties: Property | Iterable[Property], label_behavior: EliminationLabelBehavior) -> tuple:
     """
     Eliminate chains of non-Markovian states in a Markov automaton if possible.
 
     Formulas which are not preserved by the elimination are dropped (with a warning).
 
     :param model: Sparse Markov automaton.
-    :param properties: Properties which are transformed accordingly.
+    :param properties: Property or properties which are transformed accordingly.
     :param label_behavior: How labels of eliminated states are handled.
     :return: Tuple of the resulting model (an MA or a CTMC) and the transformed formulas.
     """

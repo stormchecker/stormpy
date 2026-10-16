@@ -9,6 +9,7 @@ from typing import TypeAlias
 from stormpy.developer import storage
 from stormpy import Interval, Rational, RationalFunction, RationalInterval
 from stormpy.developer import Property
+from stormpy.developer.logic import Formula
 from stormpy.exceptions import StormError
 
 # File paths can be given as strings or path-like objects (e.g. pathlib.Path)
@@ -48,8 +49,10 @@ def _formula(property: Property | object):
     return property.get_raw_formula() if isinstance(property, Property) else property
 
 
-def _formulas(properties: Iterable[Property | object] | None) -> list:
-    """Get the raw formulas of the given properties (formulas are passed through)."""
+def _formulas(properties: Property | object | Iterable[Property | object] | None) -> list:
+    """Get the raw formulas of the given property or properties (formulas are passed through)."""
     if properties is None:
         return []
+    if isinstance(properties, (Property, Formula)):
+        return [_formula(properties)]
     return [_formula(prop) for prop in properties]

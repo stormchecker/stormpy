@@ -57,6 +57,7 @@ def parse_properties(
     Parse properties given in the Prism property format.
 
     Multiple properties are separated by semicolons or newlines.
+    Use :func:`parse_property` to parse a single property.
 
     :param properties: String containing the properties.
     :param context: (optional) Symbolic model (Prism program or Jani model) defining the variables, constants and labels referenced in the properties.
@@ -73,6 +74,24 @@ def parse_properties(
     if isinstance(context, SymbolicModelDescription):
         return developer.parse_properties_for_symbolic_model_description(properties, context, property_filter)
     raise StormError(f"Unsupported context of type {type(context)} for parsing properties. Use a Prism program or a Jani model.")
+
+
+def parse_property(property: str, context: PrismProgram | JaniModel | SymbolicModelDescription | None = None) -> Property:
+    """
+    Parse a single property given in the Prism property format.
+
+    Use :func:`parse_properties` to parse several properties at once.
+
+    :param property: String containing exactly one property.
+    :param context: (optional) Symbolic model (Prism program or Jani model) defining the variables, constants and labels referenced in the property.
+    :return: The parsed property.
+    :raises StormError: If the string does not contain exactly one property.
+    """
+    properties = parse_properties(property, context)
+    if len(properties) != 1:
+        hint = " Use parse_properties for several properties." if len(properties) > 1 else ""
+        raise StormError(f"Expected exactly one property, but {len(properties)} were given.{hint}")
+    return properties[0]
 
 
 def _constant_definitions(
@@ -115,7 +134,7 @@ def _constant_definitions(
 def instantiate_constants(
     model: PrismProgram | JaniModel | SymbolicModelDescription,
     constants: str | Mapping[str | storage.Variable, bool | int | float | Rational | storage.Expression],
-    properties: Iterable[Property] | None = None,
+    properties: Property | Iterable[Property] | None = None,
 ) -> tuple[PrismProgram | JaniModel | SymbolicModelDescription, list[Property]]:
     """
     Instantiate undefined constants in a symbolic model and the corresponding properties.
@@ -124,12 +143,14 @@ def instantiate_constants(
     :param constants: Constant definitions, either as comma-separated string, e.g. ``"N=3,p=0.5"``,
         or as mapping from constants (given by name or variable) to values, e.g. ``{"N": 3, "p": 0.5}``.
         Values can be Booleans, integers, floats, rationals or expressions.
-    :param properties: (optional) Properties in which the constants are instantiated as well.
+    :param properties: (optional) Property or properties in which the constants are instantiated as well.
     :return: Tuple of the instantiated model (of the same kind as the given model) and the list of instantiated properties.
     """
     description = model if isinstance(model, SymbolicModelDescription) else SymbolicModelDescription(model)
     definitions = _constant_definitions(description, constants)
     instantiated = description.preprocess(definitions)
+    if isinstance(properties, Property):
+        properties = [properties]
     instantiated_properties = developer.substitute_constants_in_properties(list(properties), definitions) if properties else []
     if isinstance(model, PrismProgram):
         return instantiated.as_prism_program(), instantiated_properties

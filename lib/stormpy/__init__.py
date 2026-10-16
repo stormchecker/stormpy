@@ -64,7 +64,7 @@ SubsystemBuilderReturnType = developer.SubsystemBuilderReturnType.publish_as("st
 ConstraintCollector = developer.ConstraintCollector
 
 # Import public functions
-from .core._parsing import instantiate_constants, parse_jani_model, parse_jani_model_from_string, parse_prism_program, parse_properties
+from .core._parsing import instantiate_constants, parse_jani_model, parse_jani_model_from_string, parse_prism_program, parse_properties, parse_property
 from .core._building import BuilderOptions, build_model, build_model_from_drn, build_model_from_explicit, build_model_from_umb, build_symbolic_model
 from .core._modelchecking import Engine, create_filter, create_filter_initial_states, filter_initial_states, model_checking
 from .core._analysis import (
@@ -101,6 +101,7 @@ __all__ = [
     "parse_jani_model",
     "parse_jani_model_from_string",
     "parse_properties",
+    "parse_property",
     "instantiate_constants",
     # Building
     "BuilderOptions",

@@ -118,7 +118,7 @@ def check_dft_validity(dft: DFT) -> bool:
 
 # API functions
 def compute_relevant_events(
-    properties: Iterable[Property], *, additional_relevant_names: Iterable[str] = (), add_labels_claiming: bool = False
+    properties: Property | Iterable[Property], *, additional_relevant_names: Iterable[str] = (), add_labels_claiming: bool = False
 ) -> RelevantEvents:
     """
     Compute the relevant events for the analysis of a DFT.
@@ -126,7 +126,7 @@ def compute_relevant_events(
     All events occurring in the properties (via labels such as ``"A_failed"``) are relevant.
     The top-level event is always relevant.
 
-    :param properties: Properties whose events are relevant.
+    :param properties: Property or properties whose events are relevant.
     :param additional_relevant_names: (optional) Names of further elements which should be relevant.
     :param add_labels_claiming: Whether labels representing claiming operations are added to the model.
     :return: The relevant events.
@@ -136,7 +136,7 @@ def compute_relevant_events(
 
 def analyze_dft(
     dft: DFT,
-    properties: Iterable[Property],
+    properties: Property | Iterable[Property],
     *,
     relevant_events: RelevantEvents | None = None,
     environment: DftEnvironment | None = None,
@@ -145,10 +145,10 @@ def analyze_dft(
     Analyze the DFT with respect to the given properties.
 
     :param dft: DFT.
-    :param properties: Properties to check.
+    :param properties: Property or properties to check.
     :param relevant_events: (optional) relevant events which should be observed, see :func:`compute_relevant_events`.
     :param environment: (optional) Environment configuring the analysis.
-    :return: List of results corresponding to the given properties.
+    :return: List of results corresponding to the given properties (also for a single property).
         Each entry is a single value for exact analysis, or a tuple (lower, upper) for approximate analysis.
         For approximate analysis, the difference between the bounds satisfies the (relative) error given by environment.analysis_environment.approximation_error.
     """

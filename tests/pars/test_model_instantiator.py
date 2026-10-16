@@ -102,7 +102,7 @@ class TestModelInstantiator:
         res = result[model.initial_states[0]]
         assert isinstance(res.value, stormpy.Rational)
         assert res == stormpy.Rational("29/15")
-        assert res.is_exact
+        assert res.lower == res.upper == res.value
 
     def test_pdtmc_exact_instantiation_checker_die(self):
         program = stormpy.parse_prism_program(get_example_path("pdtmc", "parametric_die.pm"))
@@ -121,4 +121,4 @@ class TestModelInstantiator:
         res = result[model.initial_states[0]]
         assert isinstance(res.value, stormpy.Rational)
         assert res == stormpy.Rational("4/35")
-        assert res.is_exact
+        assert res.lower == res.upper == res.value

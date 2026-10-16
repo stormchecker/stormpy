@@ -129,11 +129,6 @@ class BoundedValue:
         """Whether an upper bound is known."""
         return self._upper is not None
 
-    @property
-    def is_exact(self) -> bool:
-        """Whether both bounds are known and coincide, i.e., the actual value is known exactly."""
-        return self.has_lower and self.has_upper and self._lower == self._upper
-
     def __float__(self) -> float:
         return float(self._value)
 
@@ -206,10 +201,10 @@ class BoundedValue:
             # Both factors are non-negative: the product is monotone in both factors, so lower and upper bounds can be multiplied separately
             upper = None if self._upper is None or other._upper is None else _mul(self._upper, other._upper)
             return BoundedValue(value, _mul(self._lower, other._lower), upper)
-        for exact, factor in ((other, self), (self, other)):
-            if exact.is_exact:
-                # Scaling with a known constant: a negative constant swaps the bounds
-                constant = exact._lower
+        for point, factor in ((other, self), (self, other)):
+            if point._lower is not None and point._lower == point._upper:
+                # Scaling with a known constant (both bounds coincide): a negative constant swaps the bounds
+                constant = point._lower
                 if _sign(constant) == 0:
                     return BoundedValue(value, 0, 0)
                 lower = None if factor._lower is None else _mul(constant, factor._lower)
@@ -234,8 +229,8 @@ class BoundedValue:
     def __truediv__(self, other: object) -> BoundedValue:
         other = self._bounded(other)
         value = _value(_div(self._value, other._value))
-        if other.is_exact and _sign(other._lower) != 0:
-            # Division by a known constant: divide the bounds directly (one rounding step for floats), a negative constant swaps them
+        if other._lower is not None and other._lower == other._upper and _sign(other._lower) != 0:
+            # Division by a known constant (both bounds coincide): divide the bounds directly (one rounding step for floats), a negative constant swaps them
             constant = other._lower
             lower = None if self._lower is None else _div(self._lower, constant)
             upper = None if self._upper is None else _div(self._upper, constant)

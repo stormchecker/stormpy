@@ -613,7 +613,7 @@ class TestSolutionBounds:
     def test_bounded_value(self):
         value = stormpy.BoundedValue(0.5, 0.25, 0.75)
         assert value.has_lower and value.has_upper
-        assert not value.is_exact
+        assert value.lower != value.upper
         assert value == 0.5
         assert value == stormpy.BoundedValue(0.5, 0.25, 0.75)
         assert value != stormpy.BoundedValue(0.5, 0.25, None)
@@ -632,7 +632,6 @@ class TestSolutionBounds:
         third = stormpy.Rational("1/3")
         assert str(stormpy.BoundedValue(third, third, third)) == "1/3 [1/3, 1/3]"
         assert f"{stormpy.BoundedValue(third, third, third):.3f}" == "0.333 [0.333, 0.333]"
-        assert stormpy.BoundedValue(1, 1, 1).is_exact
 
     def test_bounded_value_addition(self):
         value = stormpy.BoundedValue(0.5, 0.25, 0.75)
@@ -644,8 +643,8 @@ class TestSolutionBounds:
         assert value + stormpy.BoundedValue(1.0, None, 1.0) == stormpy.BoundedValue(1.5, None, 1.75)
         assert sum([value, value, value]) == stormpy.BoundedValue(1.5, 0.75, 2.25)
         exact = stormpy.BoundedValue(stormpy.Rational("1/3"), stormpy.Rational("1/3"), stormpy.Rational("1/3"))
-        assert (exact + exact).is_exact
-        assert (exact + exact).value == stormpy.Rational("2/3")
+        two_thirds = stormpy.Rational("2/3")
+        assert exact + exact == stormpy.BoundedValue(two_thirds, two_thirds, two_thirds)
 
     def test_bounded_value_subtraction(self):
         value = stormpy.BoundedValue(0.5, 0.25, 0.75)
@@ -656,8 +655,8 @@ class TestSolutionBounds:
         assert 1 - value == stormpy.BoundedValue(0.5, 0.25, 0.75)
         assert value - stormpy.BoundedValue(1.0, 0.5, None) == stormpy.BoundedValue(-0.5, None, 0.25)
         exact = stormpy.BoundedValue(stormpy.Rational("1/3"), stormpy.Rational("1/3"), stormpy.Rational("1/3"))
-        assert (1 - exact).is_exact
-        assert (1 - exact).value == stormpy.Rational("2/3")
+        two_thirds = stormpy.Rational("2/3")
+        assert 1 - exact == stormpy.BoundedValue(two_thirds, two_thirds, two_thirds)
 
     def test_bounded_value_multiplication(self):
         value = stormpy.BoundedValue(0.5, 0.25, 0.75)
@@ -673,7 +672,8 @@ class TestSolutionBounds:
         assert stormpy.BoundedValue(-0.5, -1.0, None) * stormpy.BoundedValue(2.0, 1.0, None) == stormpy.BoundedValue(-1.0)
         assert 2 * stormpy.BoundedValue(1.0, None, 1.5) == stormpy.BoundedValue(2.0, None, 3.0)
         exact = stormpy.BoundedValue(stormpy.Rational("1/3"), stormpy.Rational("1/3"), stormpy.Rational("1/3"))
-        assert (exact * exact).is_exact
+        ninth = stormpy.Rational("1/9")
+        assert exact * exact == stormpy.BoundedValue(ninth, ninth, ninth)
         assert (exact * 3).value == 1
 
     def test_bounded_value_division(self):
@@ -695,7 +695,8 @@ class TestSolutionBounds:
             value / 0
         third = stormpy.Rational("1/3")
         exact = stormpy.BoundedValue(third, third, third)
-        assert (exact / 2).is_exact
+        sixth = stormpy.Rational("1/6")
+        assert exact / 2 == stormpy.BoundedValue(sixth, sixth, sixth)
         assert (exact / exact).value == 1
         with pytest.raises(ZeroDivisionError):
             exact / stormpy.Rational(0)
@@ -788,7 +789,7 @@ class TestSolutionBounds:
         value = result[model.initial_states[0]]
         assert isinstance(value.value, stormpy.Rational)
         assert value == stormpy.Rational("1/6")
-        assert value.is_exact
+        assert value.lower == value.upper == value.value
         bounds = result.get_solution_bounds()
         assert bounds.is_exact
         assert bounds.is_within_precision(result.get_value_vector(), stormpy.Rational(0), False)
@@ -816,7 +817,7 @@ class TestSolutionBounds:
         assert result[1] == stormpy.BoundedValue(1.0, 1.0, math.inf)
         assert stormpy.numbers.is_infinity(result.aggregate(stormpy.FilterType.SUM).upper)
         result.set_values_exact()
-        assert result[0].is_exact
+        assert result[0].lower == result[0].upper == result[0].value
         result.clear_bounds()
         assert not result.get_solution_bounds().has_any
 

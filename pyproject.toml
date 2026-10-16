@@ -38,6 +38,8 @@ plot = [
     "scipy",
 ]
 dev = [
+    # Task runner
+    "nox",
     # Formatting
     "black[jupyter]",
     # Testing, documentation and all optional features

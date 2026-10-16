@@ -265,5 +265,7 @@ runs:
       shell: bash
     - name: Check documentation notebooks
       if: steps.build.outputs.run_tests == 'true' && env.CHECK_DOCS == 'true'
-      run: make check-doc
+      run: |
+        pip install nox
+        nox -s check_doc
       shell: bash

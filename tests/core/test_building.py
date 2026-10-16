@@ -15,7 +15,7 @@ class TestBuilding:
         path = stormpy.examples.files.prism_dtmc_die
         prism_program = stormpy.parse_prism_program(path)
         formula_str = "P=? [F s=7 & d=2]"
-        properties = stormpy.parse_properties(formula_str, prism_program)
+        prop = stormpy.parse_property(formula_str, prism_program)
 
         # Fix variables in the program.
         module = prism_program.modules[0]
@@ -23,7 +23,7 @@ class TestBuilding:
         d_var = module.get_integer_variable("d").expression_variable
 
         # Construct the model
-        options = stormpy.BuilderOptions(properties)
+        options = stormpy.BuilderOptions(prop)
         options.set_build_state_valuations()
         model_builder = stormpy.developer.make_explicit_model_builder(prism_program, options)
         model = model_builder.build()
@@ -63,8 +63,8 @@ class TestBuilding:
         model = stormpy.build_model(program)
         assert "one" in model.labeling.get_labels()
         assert "coin_flips" in model.reward_models
-        properties = stormpy.parse_properties('P=? [F "one"]', program)
-        model = stormpy.build_model(program, properties)
+        prop = stormpy.parse_property('P=? [F "one"]', program)
+        model = stormpy.build_model(program, prop)
         assert "one" in model.labeling.get_labels()
         assert "two" not in model.labeling.get_labels()
         assert len(model.reward_models) == 0
@@ -79,21 +79,21 @@ class TestBuilding:
         # Without options, no additional information is built
         model = stormpy.build_model(program)
         assert not model.has_state_valuations()
-        properties = stormpy.parse_properties('P=? [F "one"]', program)
+        prop = stormpy.parse_property('P=? [F "one"]', program)
         with pytest.raises(StormError):
-            stormpy.build_model(program, properties, options=options)
+            stormpy.build_model(program, prop, options=options)
 
     @pytest.mark.parametrize("engine", [stormpy.Engine.SPARSE, stormpy.Engine.DD, stormpy.Engine.HYBRID])
     def test_build_model_engine(self, engine):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
-        properties = stormpy.parse_properties('P=? [F "one"]', program)
-        model = stormpy.build_model(program, properties, engine=engine)
+        prop = stormpy.parse_property('P=? [F "one"]', program)
+        model = stormpy.build_model(program, prop, engine=engine)
         if engine == stormpy.Engine.SPARSE:
             assert type(model) is stormpy.models.SparseDtmc[float]
         else:
             assert type(model) is stormpy.models.SymbolicDtmc[stormpy.models.DdType.Sylvan, float]
         assert model.nr_states == 13
-        result = stormpy.model_checking(model, properties[0], engine=engine)
+        result = stormpy.model_checking(model, prop, engine=engine)
         stormpy.filter_initial_states(result, model)
         assert math.isclose(result.get_min(), 1 / 6, rel_tol=1e-6)
 

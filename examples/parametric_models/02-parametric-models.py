@@ -16,11 +16,11 @@ def example_parametric_models_02():
     prism_program = stormpy.parse_prism_program(path)
 
     formula_str = "P=? [F s=7 & d=2]"
-    properties = stormpy.parse_properties(formula_str, prism_program)
-    model = stormpy.build_model[stormpy.RationalFunction](prism_program, properties)
+    prop = stormpy.parse_property(formula_str, prism_program)
+    model = stormpy.build_model[stormpy.RationalFunction](prism_program, prop)
 
     initial_state = model.initial_states[0]
-    result = stormpy.model_checking(model, properties[0])
+    result = stormpy.model_checking(model, prop)
     print("Result: {}".format(result[initial_state]))
 
     collector = stormpy.ConstraintCollector(model)

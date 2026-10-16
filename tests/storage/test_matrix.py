@@ -95,8 +95,8 @@ class TestMatrix:
         for e in matrix:
             assert e.value == 0.5 or e.value == 0 or e.value == 1
         # First model checking
-        formulas = stormpy.parse_properties('P=? [ F "one" ]')
-        result = stormpy.model_checking(model, formulas[0])
+        formula = stormpy.parse_property('P=? [ F "one" ]')
+        result = stormpy.model_checking(model, formula)
         resValue = result[model.initial_states[0]]
         assert math.isclose(resValue, 0.16666666666666663)
 
@@ -112,7 +112,7 @@ class TestMatrix:
         for e in matrix:
             assert e.value == 0.3 or e.value == 0.7 or e.value == 1 or e.value == 0
         # Second model checking
-        result = stormpy.model_checking(model, formulas[0])
+        result = stormpy.model_checking(model, formula)
         resValue = result[model.initial_states[0]]
         assert math.isclose(resValue, 0.06923076923076932)
 
@@ -125,14 +125,14 @@ class TestMatrix:
                     elif transition.value == 0.7:
                         transition.value = 0.2
         # Third model checking
-        result = stormpy.model_checking(model, formulas[0])
+        result = stormpy.model_checking(model, formula)
         resValue = result[model.initial_states[0]]
         assert math.isclose(resValue, 0.3555555555555556)
 
     def test_change_parametric_matrix_modelchecking(self):
         program = stormpy.parse_prism_program(get_example_path("pdtmc", "brp16_2.pm"))
-        formulas = stormpy.parse_properties("P=? [ F s=5 ]", program)
-        model = stormpy.build_model[stormpy.RationalFunction](program, formulas)
+        formula = stormpy.parse_property("P=? [ F s=5 ]", program)
+        model = stormpy.build_model[stormpy.RationalFunction](program, formula)
         initial_state = model.initial_states[0]
         assert initial_state == 0
         matrix = model.transition_matrix
@@ -143,7 +143,7 @@ class TestMatrix:
         for e in matrix:
             assert e.value == one or len(e.value.gather_variables()) > 0
         # First model checking
-        result = stormpy.model_checking(model, formulas[0])
+        result = stormpy.model_checking(model, formula)
         ratFunc = result[initial_state]
         assert len(ratFunc.gather_variables()) > 0
 
@@ -157,7 +157,7 @@ class TestMatrix:
         for e in matrix:
             assert e.value == new_val or e.value == one
         # Second model checking
-        result = stormpy.model_checking(model, formulas[0])
+        result = stormpy.model_checking(model, formula)
         ratFunc = result[initial_state]
         assert len(ratFunc.gather_variables()) == 0
 

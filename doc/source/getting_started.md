@@ -95,17 +95,18 @@ Stormpy can be used to parse this. As the variables in the property refer to a p
 
 ```{code-cell} python3
 formula_str = "P=? [F s=2]"
-properties = stormpy.parse_properties(formula_str, prism_program)
+prop = stormpy.parse_property(formula_str, prism_program)
 ```
 
-Notice that properties is now a list of properties containing a single element.
+``stormpy.parse_property`` parses exactly one property.
+Several properties (separated by ``;``) can be parsed at once with ``stormpy.parse_properties``, which returns a list of properties.
 
 However, if we build the model as before, then the appropriate information that the variable `s=2` in some states is not present.
 In order to label the states accordingly, we should notify Storm upon building the model that we would like to preserve given properties.
 Storm will then add the labels accordingly:
 
 ```{code-cell} python3
-model = stormpy.build_model(prism_program, properties)
+model = stormpy.build_model(prism_program, prop)
 print("Labels in the model: {}".format(sorted(model.labeling.get_labels())))
 ```
 
@@ -135,9 +136,9 @@ The last lesson taught us to construct properties and models with matching state
 Now default checking routines are just a simple command away:
 
 ```{code-cell} python3
-properties = stormpy.parse_properties(formula_str, prism_program)
-model = stormpy.build_model(prism_program, properties)
-result = stormpy.model_checking(model, properties[0])
+prop = stormpy.parse_property(formula_str, prism_program)
+model = stormpy.build_model(prism_program, prop)
+result = stormpy.model_checking(model, prop)
 ```
 
 The result may contain information about all states.

@@ -9,9 +9,9 @@ def example_getting_started_03():
     prism_program = stormpy.parse_prism_program(path)
 
     formula_str = "P=? [F s=7 & d=2]"
-    properties = stormpy.parse_properties(formula_str, prism_program)
-    model = stormpy.build_model(prism_program, properties)
-    result = stormpy.model_checking(model, properties[0])
+    prop = stormpy.parse_property(formula_str, prism_program)
+    model = stormpy.build_model(prism_program, prop)
+    result = stormpy.model_checking(model, prop)
     print(result)
     assert result.is_result_for_all_states()
     for state in model.states:

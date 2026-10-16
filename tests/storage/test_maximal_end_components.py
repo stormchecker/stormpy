@@ -68,8 +68,8 @@ class TestMaximalEndComponents:
 class TestECElimination:
     def test_elimination_interval(self):
         program = stormpy.parse_prism_program(get_example_path("mdp", "two_dice.nm"))
-        formulas = stormpy.parse_properties('P=? [ F "two" ]', program)
-        model = stormpy.build_model(program, formulas)
+        formula = stormpy.parse_property('P=? [ F "two" ]', program)
+        model = stormpy.build_model(program, formula)
         transformer = stormpy.developer.AddUncertainty[float](model)
         interval_model = transformer.transform(0.01)
         assert type(interval_model) is stormpy.models.SparseMdp[stormpy.Interval]
@@ -85,8 +85,8 @@ class TestECElimination:
 
     def test_elimination_exact_interval(self):
         program = stormpy.parse_prism_program(get_example_path("mdp", "two_dice.nm"))
-        formulas = stormpy.parse_properties('P=? [ F "two" ]', program)
-        model = stormpy.build_model[stormpy.Rational](program, formulas)
+        formula = stormpy.parse_property('P=? [ F "two" ]', program)
+        model = stormpy.build_model[stormpy.Rational](program, formula)
         transformer = stormpy.developer.AddUncertainty[stormpy.Rational](model)
         exact_interval_model = transformer.transform(stormpy.Rational("1/100"))
         assert type(exact_interval_model) is stormpy.models.SparseMdp[stormpy.RationalInterval]

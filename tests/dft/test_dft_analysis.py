@@ -10,16 +10,16 @@ from configurations import dft
 class TestAnalysis:
     def test_analyze_and_mttf(self):
         dft = stormpy.dft.load_dft_json_file(get_example_path("dft", "and.json"))
-        formulas = stormpy.parse_properties('T=? [ F "failed" ]')
+        formula = stormpy.parse_property('T=? [ F "failed" ]')
         assert dft.nr_elements() == 3
-        results = stormpy.dft.analyze_dft(dft, formulas)
+        results = stormpy.dft.analyze_dft(dft, formula)
         assert math.isclose(results[0], 3)
 
     def test_analyze_hecs_mttf(self):
         dft = stormpy.dft.load_dft_galileo_file(get_example_path("dft", "hecs.dft"))
         formula_str = 'T=? [ F "failed" ]'
-        formulas = stormpy.parse_properties(formula_str)
-        results = stormpy.dft.analyze_dft(dft, formulas)
+        formula = stormpy.parse_property(formula_str)
+        results = stormpy.dft.analyze_dft(dft, formula)
         result = results[0]
         assert math.isclose(result, 363.8947965815, rel_tol=1e-6)
 
@@ -67,8 +67,8 @@ class TestAnalysis:
         assert valid
         issue, output = stormpy.dft.developer.has_potential_modeling_issues(dft)
         assert not issue
-        properties = stormpy.parse_properties('T=? [ F "failed" ]')
-        prop = properties[0]
+        formula = stormpy.parse_property('T=? [ F "failed" ]')
+        prop = formula
         builder = stormpy.dft.developer.ExplicitDFTModelBuilder(stormpy.dft.DftEnvironment(), dft, stormpy.dft.developer.DftSymmetries())
 
         # Iteration 0
@@ -123,8 +123,8 @@ class TestAnalysis:
 
     def test_explicit_model_builder_approximation_complete(self):
         dft = stormpy.dft.load_dft_galileo_file(get_example_path("dft", "rc.dft"))
-        properties = stormpy.parse_properties('T=? [ F "failed" ]')
-        prop = properties[0]
+        formula = stormpy.parse_property('T=? [ F "failed" ]')
+        prop = formula
         builder = stormpy.dft.developer.ExplicitDFTModelBuilder(stormpy.dft.DftEnvironment(), dft, stormpy.dft.developer.DftSymmetries())
 
         # Iteration 0
@@ -155,11 +155,11 @@ class TestAnalysis:
         # Approximate analysis returns a (lower, upper) bound pair per property instead of a
         # single exact value.
         dft = stormpy.dft.load_dft_galileo_file(get_example_path("dft", "rc.dft"))
-        formulas = stormpy.parse_properties('T=? [ F "failed" ]')
+        formula = stormpy.parse_property('T=? [ F "failed" ]')
         env = stormpy.dft.DftEnvironment()
         env.analysis_environment.approximation_error = 0.1
         env.analysis_environment.approximation_heuristic = heuristic
-        results = stormpy.dft.analyze_dft(dft, formulas, environment=env)
+        results = stormpy.dft.analyze_dft(dft, formula, environment=env)
         assert len(results) == 1
         lower, upper = results[0]
         assert 0 <= lower <= upper
@@ -177,29 +177,29 @@ class TestAnalysis:
 
     def test_analyze_relevant_events(self):
         dft = stormpy.dft.load_dft_json_file(get_example_path("dft", "and.json"))
-        properties = stormpy.parse_properties('T=? [ F "failed" ]')
-        relevant_events = stormpy.dft.compute_relevant_events(properties)
-        results = stormpy.dft.analyze_dft(dft, properties, relevant_events=relevant_events)
+        prop = stormpy.parse_property('T=? [ F "failed" ]')
+        relevant_events = stormpy.dft.compute_relevant_events(prop)
+        results = stormpy.dft.analyze_dft(dft, prop, relevant_events=relevant_events)
         assert math.isclose(results[0], 3)
 
     def test_relevant_events_property(self):
         dft = stormpy.dft.load_dft_json_file(get_example_path("dft", "and.json"))
-        properties = stormpy.parse_properties('P=? [ F<=1 "A_failed" ]')
-        relevant_events = stormpy.dft.compute_relevant_events(properties)
+        prop = stormpy.parse_property('P=? [ F<=1 "A_failed" ]')
+        relevant_events = stormpy.dft.compute_relevant_events(prop)
         assert relevant_events.is_relevant("A")
         assert not relevant_events.is_relevant("B")
         assert not relevant_events.is_relevant("C")
-        results = stormpy.dft.analyze_dft(dft, properties, relevant_events=relevant_events)
+        results = stormpy.dft.analyze_dft(dft, prop, relevant_events=relevant_events)
         assert math.isclose(results[0], 0.1548181217)
 
     def test_relevant_events_additional(self):
         dft = stormpy.dft.load_dft_json_file(get_example_path("dft", "and.json"))
-        properties = stormpy.parse_properties('P=? [ F<=1 "failed" ]')
-        relevant_events = stormpy.dft.compute_relevant_events(properties, additional_relevant_names=["B", "C"])
+        prop = stormpy.parse_property('P=? [ F<=1 "failed" ]')
+        relevant_events = stormpy.dft.compute_relevant_events(prop, additional_relevant_names=["B", "C"])
         assert relevant_events.is_relevant("B")
         assert relevant_events.is_relevant("C")
         assert not relevant_events.is_relevant("A")
-        results = stormpy.dft.analyze_dft(dft, properties, relevant_events=relevant_events)
+        results = stormpy.dft.analyze_dft(dft, prop, relevant_events=relevant_events)
         assert math.isclose(results[0], 0.1548181217)
 
     def test_relevant_events_developer(self):
@@ -220,8 +220,8 @@ class TestAnalysis:
         assert valid
         issue, output = stormpy.dft.developer.has_potential_modeling_issues(dft)
         assert issue
-        properties = stormpy.parse_properties('Tmin=? [ F "failed" ]')
-        results = stormpy.dft.analyze_dft(dft, properties)
+        prop = stormpy.parse_property('Tmin=? [ F "failed" ]')
+        results = stormpy.dft.analyze_dft(dft, prop)
         assert math.isclose(results[0], 6.380930905)
 
     def test_fdep_conflicts(self):
@@ -229,6 +229,6 @@ class TestAnalysis:
         dft = stormpy.dft.developer.transform_dft(dft, unique_constant_be=True, binary_fdeps=True, exponential_distributions=True)
         has_conflicts = stormpy.dft.developer.compute_dependency_conflicts(dft, use_smt=False, solver_timeout=0)
         assert not has_conflicts
-        properties = stormpy.parse_properties('T=? [ F "failed" ]')
-        results = stormpy.dft.analyze_dft(dft, properties)
+        prop = stormpy.parse_property('T=? [ F "failed" ]')
+        results = stormpy.dft.analyze_dft(dft, prop)
         assert math.isclose(results[0], 6.380930905)

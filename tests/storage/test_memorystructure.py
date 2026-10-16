@@ -14,8 +14,8 @@ class TestMemoryStructure:
 
     def test_memory_structure_builder(self):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
-        formulas = stormpy.parse_properties('P=? [ F "one" ]', program)
-        model = stormpy.build_model(program, formulas)
+        formula = stormpy.parse_property('P=? [ F "one" ]', program)
+        model = stormpy.build_model(program, formula)
         goalstates = model.labeling.get_states("one")
         memorystructure = self._build_memory_structure(model, goalstates)
         assert memorystructure.nr_states == 2
@@ -34,8 +34,8 @@ class TestMemoryStructure:
 
     def test_product_memorystructure(self):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
-        formulas = stormpy.parse_properties('P=? [ F "one"|"two" ]', program)
-        model = stormpy.build_model(program, formulas)
+        formula = stormpy.parse_property('P=? [ F "one"|"two" ]', program)
+        model = stormpy.build_model(program, formula)
         goalstates = model.labeling.get_states("one")
         memorystructure_one = self._build_memory_structure(model, goalstates)
         goalstates = model.labeling.get_states("two")
@@ -46,8 +46,8 @@ class TestMemoryStructure:
     @pytest.mark.parametrize("keyword", [False, True])
     def test_product_model(self, keyword):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
-        formulas = stormpy.parse_properties('P=? [ F "one" ]', program)
-        model = stormpy.build_model(program, formulas)
+        formula = stormpy.parse_property('P=? [ F "one" ]', program)
+        model = stormpy.build_model(program, formula)
         goalstates = model.labeling.get_states("one")
         memorystructure_one = self._build_memory_structure(model, goalstates)
         product_type = memorystructure_one.product_model(model=model) if keyword else memorystructure_one.product_model(model)

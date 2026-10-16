@@ -9,8 +9,8 @@ from configurations import pars
 class TestSparseParametricModel:
     def test_build_parametric_dtmc(self):
         program = stormpy.parse_prism_program(get_example_path("pdtmc", "brp16_2.pm"))
-        formulas = stormpy.parse_properties("P=? [ F s=5 ]", program)
-        model = stormpy.build_model[stormpy.RationalFunction](program, formulas)
+        formula = stormpy.parse_property("P=? [ F s=5 ]", program)
+        model = stormpy.build_model[stormpy.RationalFunction](program, formula)
         assert model.nr_states == 613
         assert model.nr_transitions == 803
         assert model.model_type == stormpy.models.ModelType.DTMC
@@ -34,8 +34,8 @@ class TestSparseParametricModel:
 
     def test_build_dtmc_supporting_parameters(self):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
-        formulas = stormpy.parse_properties('P=? [ F "one" ]', program)
-        model = stormpy.build_model[stormpy.RationalFunction](program, formulas)
+        formula = stormpy.parse_property('P=? [ F "one" ]', program)
+        model = stormpy.build_model[stormpy.RationalFunction](program, formula)
         assert model.nr_states == 13
         assert model.nr_transitions == 20
         assert model.model_type == stormpy.models.ModelType.DTMC
@@ -46,8 +46,8 @@ class TestSparseParametricModel:
 
     def test_build_parametric_mdp(self):
         program = stormpy.parse_prism_program(get_example_path("pmdp", "two_dice.nm"))
-        formulas = stormpy.parse_properties('P=? [ F "two" ]', program)
-        model = stormpy.build_model[stormpy.RationalFunction](program, formulas)
+        formula = stormpy.parse_property('P=? [ F "two" ]', program)
+        model = stormpy.build_model[stormpy.RationalFunction](program, formula)
         assert model.nr_states == 169
         assert model.nr_transitions == 435
         assert model.model_type == stormpy.models.ModelType.MDP
@@ -60,8 +60,8 @@ class TestSparseParametricModel:
 class TestSymbolicParametricModel:
     def test_build_parametric_dtmc(self):
         program = stormpy.parse_prism_program(get_example_path("pdtmc", "brp16_2.pm"))
-        formulas = stormpy.parse_properties("P=? [ F s=5 ]", program)
-        model = stormpy.build_symbolic_model[stormpy.RationalFunction](program, formulas)
+        formula = stormpy.parse_property("P=? [ F s=5 ]", program)
+        model = stormpy.build_symbolic_model[stormpy.RationalFunction](program, formula)
         assert model.nr_states == 613
         assert model.nr_transitions == 803
         assert model.model_type == stormpy.models.ModelType.DTMC
@@ -83,8 +83,8 @@ class TestSymbolicParametricModel:
 
     def test_build_dtmc_supporting_parameters(self):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
-        formulas = stormpy.parse_properties('P=? [ F "one" ]', program)
-        model = stormpy.build_symbolic_model[stormpy.RationalFunction](program, formulas)
+        formula = stormpy.parse_property('P=? [ F "one" ]', program)
+        model = stormpy.build_symbolic_model[stormpy.RationalFunction](program, formula)
         assert model.nr_states == 13
         assert model.nr_transitions == 20
         assert model.model_type == stormpy.models.ModelType.DTMC
@@ -94,8 +94,8 @@ class TestSymbolicParametricModel:
 
     def test_build_parametric_mdp(self):
         program = stormpy.parse_prism_program(get_example_path("pmdp", "two_dice.nm"))
-        formulas = stormpy.parse_properties('P=? [ F "two" ]', program)
-        model = stormpy.build_symbolic_model[stormpy.RationalFunction](program, formulas)
+        formula = stormpy.parse_property('P=? [ F "two" ]', program)
+        model = stormpy.build_symbolic_model[stormpy.RationalFunction](program, formula)
         assert model.nr_states == 169
         assert model.nr_transitions == 435
         assert model.model_type == stormpy.models.ModelType.MDP

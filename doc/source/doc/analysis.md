@@ -27,7 +27,7 @@ import stormpy.examples.files
 path = stormpy.examples.files.prism_dtmc_die
 prism_program = stormpy.parse_prism_program(path)
 formula_str = "P=? [F s=7 & d=2]"
-properties = stormpy.parse_properties(formula_str, prism_program)
+prop = stormpy.parse_property(formula_str, prism_program)
 ```
 
 ## Qualitative Analysis
@@ -39,8 +39,8 @@ properties = stormpy.parse_properties(formula_str, prism_program)
 Instead of using the sparse representation, models can also be built symbolically:
 
 ```{code-cell} python3
-model = stormpy.build_symbolic_model(prism_program, properties)
-result = stormpy.model_checking(model, properties[0])
+model = stormpy.build_symbolic_model(prism_program, prop)
+result = stormpy.model_checking(model, prop)
 ```
 
 To access the result, the result has to be filtered:
@@ -62,8 +62,8 @@ Stormpy does support them, but we have not yet documented them.
 Reconsider the model checking example from the getting started guide:
 
 ```{code-cell} python3
-model = stormpy.build_model(prism_program, properties)
-result = stormpy.model_checking(model, properties[0])
+model = stormpy.build_model(prism_program, prop)
+result = stormpy.model_checking(model, prop)
 ```
 
 We can also vary the model checking algorithm:
@@ -72,7 +72,7 @@ We can also vary the model checking algorithm:
 env = stormpy.Environment()
 env.solver().set_linear_equation_solver_type(stormpy.EquationSolverType.NATIVE)
 env.solver().native().method = stormpy.NativeLinearEquationSolverMethod.POWER
-result = stormpy.model_checking(model, properties[0], environment=env)
+result = stormpy.model_checking(model, prop, environment=env)
 ```
 
 Finally, we allow to change some parameters of the algorithms. E.g., in iterative approaches,
@@ -80,7 +80,7 @@ we allow to change the number of iterations:
 
 ```{code-cell} python3
 env.solver().native().maximal_number_of_iterations = 3
-result = stormpy.model_checking(model, properties[0])
+result = stormpy.model_checking(model, prop)
 ```
 
 Notice that by setting such parameters, the result may be off from the actual model checking algorithm.

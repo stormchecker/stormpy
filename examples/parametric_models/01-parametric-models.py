@@ -10,8 +10,8 @@ def example_parametric_models_01():
     prism_program = stormpy.parse_prism_program(path)
 
     formula_str = "P=? [F s=7 & d=2]"
-    properties = stormpy.parse_properties(formula_str, prism_program)
-    model = stormpy.build_model[stormpy.RationalFunction](prism_program, properties)
+    prop = stormpy.parse_property(formula_str, prism_program)
+    model = stormpy.build_model[stormpy.RationalFunction](prism_program, prop)
     print("Model supports parameters: {}".format(model.supports_parameters))
     parameters = model.collect_all_parameters()
     assert len(parameters) == 2
@@ -22,7 +22,7 @@ def example_parametric_models_01():
         print(x.name)
         point[x] = stormpy.RationalFunctionCoefficient(0.4)
     instantiated_model = instantiator.instantiate(point)
-    result = stormpy.model_checking(instantiated_model, properties[0])
+    result = stormpy.model_checking(instantiated_model, prop)
     print(result)
 
 

@@ -32,7 +32,7 @@ import stormpy.examples.files
 path = stormpy.examples.files.prism_mdp_coin_2_2
 formula_str = 'Pmin=? [F "finished" & "all_coins_equal_1"]'
 program = stormpy.parse_prism_program(path)
-formulas = stormpy.parse_properties(formula_str, program)
+formula = stormpy.parse_property(formula_str, program)
 options = stormpy.BuilderOptions(build_full=True)
 model = stormpy.build_model(program, options=options)
 ```
@@ -40,7 +40,7 @@ model = stormpy.build_model(program, options=options)
 Next we check the model and make sure to extract the scheduler:
 
 ```{code-cell} python3
-result = stormpy.model_checking(model, formulas[0], extract_scheduler=True)
+result = stormpy.model_checking(model, formula, extract_scheduler=True)
 ```
 
 The result then contains the scheduler we want:
@@ -78,15 +78,15 @@ path = stormpy.examples.files.prism_ma_simple
 formula_str = "Tmin=? [ F s=4 ]"
 
 program = stormpy.parse_prism_program(path)
-formulas = stormpy.parse_properties(formula_str, program)
-ma = stormpy.build_model(program, formulas)
+formula = stormpy.parse_property(formula_str, program)
+ma = stormpy.build_model(program, formula)
 ```
 
 Next we transform the continuous-time model into a discrete-time model.
 Note that all timing information is lost at this point:
 
 ```{code-cell} python3
-mdp, mdp_formulas = stormpy.transform_to_discrete_time_model(ma, formulas)
+mdp, mdp_formulas = stormpy.transform_to_discrete_time_model(ma, formula)
 assert mdp.model_type == stormpy.models.ModelType.MDP
 ```
 

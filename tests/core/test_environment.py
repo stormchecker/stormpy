@@ -41,9 +41,9 @@ class TestEnvironment:
         assert env.solver().get_linear_equation_solver_type() == stormpy.EquationSolverType.NATIVE
         assert env.solver().native().method == stormpy.NativeLinearEquationSolverMethod.POWER
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
-        properties = stormpy.parse_properties('P=? [F "one"]', program)
-        model = stormpy.build_model(program, properties)
-        result = stormpy.model_checking(model, properties[0], environment=env)
+        prop = stormpy.parse_property('P=? [F "one"]', program)
+        model = stormpy.build_model(program, prop)
+        result = stormpy.model_checking(model, prop, environment=env)
         assert math.isclose(result[model.initial_states[0]], 1 / 6, rel_tol=1e-4)
 
     def test_multi_objective_method(self):

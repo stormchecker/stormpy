@@ -10,9 +10,9 @@ def example_building_models_03():
     path = stormpy.examples.files.prism_pdtmc_brp
     prism_program = stormpy.parse_prism_program(path)
     formula_str = "P=? [F s=5]"
-    properties = stormpy.parse_properties(formula_str, prism_program)
+    prop = stormpy.parse_property(formula_str, prism_program)
 
-    options = stormpy.BuilderOptions(properties)
+    options = stormpy.BuilderOptions(prop)
     options.set_build_state_valuations()
     model = stormpy.build_model[stormpy.RationalFunction](prism_program, options=options)
 

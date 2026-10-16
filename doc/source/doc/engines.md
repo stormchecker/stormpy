@@ -26,8 +26,8 @@ import stormpy.examples
 import stormpy.examples.files
 
 prism_program = stormpy.parse_prism_program(stormpy.examples.files.prism_dtmc_die)
-properties = stormpy.parse_properties('P=? [F "one"]', prism_program)
-sparse_model = stormpy.build_model(prism_program, properties)
+prop = stormpy.parse_property('P=? [F "one"]', prism_program)
+sparse_model = stormpy.build_model(prism_program, prop)
 print(type(sparse_model))
 ```
 
@@ -40,7 +40,7 @@ print("Number of transitions: {}".format(sparse_model.nr_transitions))
 ```
 
 ```{code-cell} python3
-sparse_result = stormpy.model_checking(sparse_model, properties[0])
+sparse_result = stormpy.model_checking(sparse_model, prop)
 initial_state = sparse_model.initial_states[0]
 print(sparse_result[initial_state])
 ```
@@ -51,7 +51,7 @@ Instead of using the sparse engine, one can also use a symbolic representation i
 To use the symbolic (dd) engine, we pass the engine to the building and model checking:
 
 ```{code-cell} python3
-symbolic_model = stormpy.build_model(prism_program, properties, engine=stormpy.Engine.DD)
+symbolic_model = stormpy.build_model(prism_program, prop, engine=stormpy.Engine.DD)
 print(type(symbolic_model))
 ```
 
@@ -64,7 +64,7 @@ print("Number of transitions: {}".format(symbolic_model.nr_transitions))
 ```
 
 ```{code-cell} python3
-symbolic_result = stormpy.model_checking(symbolic_model, properties[0], engine=stormpy.Engine.DD)
+symbolic_result = stormpy.model_checking(symbolic_model, prop, engine=stormpy.Engine.DD)
 print(symbolic_result)
 ```
 
@@ -97,7 +97,7 @@ print(type(symbolic_model))
 ```
 
 ```{code-cell} python3
-hybrid_result = stormpy.model_checking(symbolic_model, properties[0], engine=stormpy.Engine.HYBRID)
+hybrid_result = stormpy.model_checking(symbolic_model, prop, engine=stormpy.Engine.HYBRID)
 stormpy.filter_initial_states(hybrid_result, symbolic_model)
 print(hybrid_result)
 ```

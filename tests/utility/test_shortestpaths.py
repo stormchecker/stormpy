@@ -19,9 +19,9 @@ class ModelWithKnownShortestPaths:
         program_path = get_example_path("dtmc", "die.pm")
         raw_formula = 'P=? [ F "' + self.target_label + '" ]'
         program = stormpy.parse_prism_program(program_path)
-        formulas = stormpy.parse_properties(raw_formula, program)
+        formula = stormpy.parse_property(raw_formula, program)
 
-        self.model = stormpy.build_model(program, formulas)
+        self.model = stormpy.build_model(program, formula)
 
     def probability(self, k):
         return (1 / 2) ** ((2 * k) + 1)
@@ -170,7 +170,7 @@ def test_path_keyword_arguments():
 
 def test_shortest_paths_default_target_label():
     program = stormpy.parse_prism_program(get_example_path("dtmc", "brp-16-2.pm"))
-    prop = stormpy.parse_properties('P=? [F "target"]', program)
+    prop = stormpy.parse_property('P=? [F "target"]', program)
     model = stormpy.build_model(program, prop)
     spg = stormpy.utility.ShortestPathsGenerator(model=model)
     assert 0 < spg.get_distance(k=1) <= 1

@@ -51,6 +51,32 @@ class TestParseProperties:
         with pytest.raises(StormError):
             stormpy.parse_properties("P=? [F s=7]", 42)
 
+    def test_parse_property(self):
+        prop = stormpy.parse_property('P=? [F "one"]')
+        assert isinstance(prop, stormpy.logic.Property)
+        assert prop.get_raw_formula().is_probability_operator_formula
+        program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
+        prop = stormpy.parse_property('"name": P=? [F s=7]', program)
+        assert prop.get_name() == "name"
+
+    def test_parse_property_not_single(self):
+        with pytest.raises(StormError, match="exactly one property, but 2"):
+            stormpy.parse_property('P=? [F "one"]; P=? [F "two"]')
+        with pytest.raises(StormError, match="exactly one property, but 0"):
+            stormpy.parse_property("")
+
+    def test_single_property_for_building(self):
+        program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
+        prop = stormpy.parse_property("P=? [F s=7 & d=2]", program)
+        model = stormpy.build_model(program, prop)
+        model_from_list = stormpy.build_model(program, [prop])
+        assert model.nr_states == model_from_list.nr_states
+        assert model.labeling.get_labels() == model_from_list.labeling.get_labels()
+        model_from_options = stormpy.build_model(program, options=stormpy.BuilderOptions(prop))
+        assert model_from_options.nr_states == model.nr_states
+        _, instantiated = stormpy.instantiate_constants(program, "", prop)
+        assert len(instantiated) == 1
+
     def test_parse_jani_model_property_filter(self):
         _, properties = stormpy.parse_jani_model(get_example_path("dtmc", "die.jani"), property_filter=["Probability to throw a six"])
         assert len(properties) == 1

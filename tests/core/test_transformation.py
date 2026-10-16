@@ -57,16 +57,16 @@ class TestTransformation:
 
     def test_transform_continuous_to_discrete_time_model_ctmc(self):
         ctmc = stormpy.build_model_from_drn(get_example_path("ctmc", "dft.drn"))
-        formulas = stormpy.parse_properties('T=? [ F "failed" ]')
+        formula = stormpy.parse_property('T=? [ F "failed" ]')
         assert ctmc.nr_states == 16
         assert ctmc.nr_transitions == 33
         assert len(ctmc.initial_states) == 1
         initial_state = ctmc.initial_states[0]
         assert initial_state == 1
-        result = stormpy.model_checking(ctmc, formulas[0])
+        result = stormpy.model_checking(ctmc, formula)
         assert math.isclose(result[initial_state], 4.166666667)
 
-        dtmc, dtmc_formulas = stormpy.transform_to_discrete_time_model(ctmc, formulas)
+        dtmc, dtmc_formulas = stormpy.transform_to_discrete_time_model(ctmc, formula)
         assert dtmc.nr_states == 16
         assert dtmc.nr_transitions == 33
         assert len(dtmc.initial_states) == 1
@@ -77,18 +77,18 @@ class TestTransformation:
 
     def test_transform_continuous_to_discrete_time_model_ma(self):
         program = stormpy.parse_prism_program(get_example_path("ma", "simple.ma"))
-        formulas = stormpy.parse_properties("Tmin=? [ F s=4 ]", program)
-        ma = stormpy.build_model(program, formulas)
+        formula = stormpy.parse_property("Tmin=? [ F s=4 ]", program)
+        ma = stormpy.build_model(program, formula)
         assert ma.nr_states == 5
         assert ma.nr_transitions == 8
         assert ma.model_type == stormpy.models.ModelType.MA
         assert len(ma.initial_states) == 1
         initial_state = ma.initial_states[0]
         assert initial_state == 0
-        result = stormpy.model_checking(ma, formulas[0])
+        result = stormpy.model_checking(ma, formula)
         assert math.isclose(result[initial_state], 0.08333333333)
 
-        mdp, mdp_formulas = stormpy.transform_to_discrete_time_model(ma, formulas)
+        mdp, mdp_formulas = stormpy.transform_to_discrete_time_model(ma, formula)
         assert mdp.nr_states == 5
         assert mdp.nr_transitions == 8
         assert mdp.model_type == stormpy.models.ModelType.MDP
@@ -176,8 +176,8 @@ class TestTransformation:
 class TestECElimination:
     def test_elimination_on_two_dice(self):
         program = stormpy.parse_prism_program(get_example_path("mdp", "two_dice.nm"))
-        formulas = stormpy.parse_properties('P=? [ F "two" ]', program)
-        model = stormpy.build_model(program, formulas)
+        formula = stormpy.parse_property('P=? [ F "two" ]', program)
+        model = stormpy.build_model(program, formula)
         subsystem = stormpy.datastructures.BitVector(model.nr_states, True)
         possible_ec_rows = stormpy.datastructures.BitVector(model.nr_choices, True)
         add_sink_rows = subsystem
@@ -261,8 +261,8 @@ class TestSubsystemCreation:
 
     def test_for_ctmc(self):
         program = stormpy.parse_prism_program(get_example_path("ctmc", "polling2.sm"), prism_compatibility=True)
-        formulas = stormpy.parse_properties('P=? [ F<=3 "target" ]', program)
-        model = stormpy.build_model(program, formulas)
+        formula = stormpy.parse_property('P=? [ F<=3 "target" ]', program)
+        model = stormpy.build_model(program, formula)
         assert model.nr_states == 12
         selected_outgoing_transitions = stormpy.datastructures.BitVector(model.nr_states, True)
         selected_outgoing_transitions.set(3, False)

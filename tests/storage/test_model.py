@@ -26,8 +26,8 @@ class TestSparseModel:
     def test_build_dtmc_from_prism_program_formulas_label(self):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
         prop = 'P=? [F "one"]'
-        properties = stormpy.parse_properties(prop, program)
-        model = stormpy.build_model(program, properties)
+        formula = stormpy.parse_property(prop, program)
+        model = stormpy.build_model(program, formula)
         assert model.nr_states == 13
         assert model.nr_transitions == 20
         assert model.model_type == stormpy.models.ModelType.DTMC
@@ -39,8 +39,8 @@ class TestSparseModel:
     def test_build_dtmc_from_prism_program_formulas_ap(self):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
         prop = "P=? [F s=2]"
-        properties = stormpy.parse_properties(prop, program)
-        model = stormpy.build_model(program, properties)
+        formula = stormpy.parse_property(prop, program)
+        model = stormpy.build_model(program, formula)
         assert model.nr_states == 8
         assert model.nr_transitions == 12
         assert model.model_type == stormpy.models.ModelType.DTMC
@@ -52,8 +52,8 @@ class TestSparseModel:
     def test_build_dtmc_from_prism_program_reward_formulas(self):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
         prop = 'R=? [F "done"]'
-        properties = stormpy.parse_properties(prop, program)
-        model = stormpy.build_model(program, properties)
+        formula = stormpy.parse_property(prop, program)
+        model = stormpy.build_model(program, formula)
         assert model.nr_states == 13
         assert model.nr_transitions == 20
         assert model.model_type == stormpy.models.ModelType.DTMC
@@ -72,8 +72,8 @@ class TestSparseModel:
     def test_reduce_to_state_based_rewards(self):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
         prop = 'R=? [F "done"]'
-        properties = stormpy.parse_properties(prop, program)
-        model = stormpy.build_model(program, properties)
+        formula = stormpy.parse_property(prop, program)
+        model = stormpy.build_model(program, formula)
         model.reduce_to_state_based_rewards()
         assert len(model.reward_models) == 1
         assert model.reward_models["coin_flips"].has_state_rewards
@@ -128,8 +128,8 @@ class TestSparseModel:
 
     def test_build_mdp(self):
         program = stormpy.parse_prism_program(get_example_path("mdp", "two_dice.nm"))
-        formulas = stormpy.parse_properties('P=? [ F "two" ]', program)
-        model = stormpy.build_model(program, formulas)
+        formula = stormpy.parse_property('P=? [ F "two" ]', program)
+        model = stormpy.build_model(program, formula)
         assert model.nr_states == 169
         assert model.nr_transitions == 435
         assert model.model_type == stormpy.models.ModelType.MDP
@@ -138,14 +138,14 @@ class TestSparseModel:
 
     def test_build_ctmc(self):
         program = stormpy.parse_prism_program(get_example_path("ctmc", "polling2.sm"), prism_compatibility=True)
-        formulas = stormpy.parse_properties('P=? [ F<=3 "target" ]', program)
+        formula = stormpy.parse_property('P=? [ F<=3 "target" ]', program)
         model = stormpy.build_model(program)
         assert model.nr_states == 12
         assert model.nr_transitions == 22
         assert model.model_type == stormpy.models.ModelType.CTMC
         assert not model.supports_parameters
         assert type(model) is stormpy.models.SparseCtmc[float]
-        model_for_formula = stormpy.build_model(program, formulas)
+        model_for_formula = stormpy.build_model(program, formula)
         assert model_for_formula.nr_states == 12
         assert model_for_formula.nr_transitions == 21
         assert model_for_formula.model_type == stormpy.models.ModelType.CTMC
@@ -154,15 +154,15 @@ class TestSparseModel:
 
     def test_build_pomdp(self):
         program = stormpy.parse_prism_program(get_example_path("pomdp", "maze_2.prism"))
-        formulas = stormpy.parse_properties('P=? [F "goal"]', program)
-        model = stormpy.build_model(program, formulas)
+        formula = stormpy.parse_property('P=? [F "goal"]', program)
+        model = stormpy.build_model(program, formula)
         assert model.nr_states == 15
         assert model.nr_observations == 8
 
     def test_build_ma(self):
         program = stormpy.parse_prism_program(get_example_path("ma", "simple.ma"))
-        formulas = stormpy.parse_properties("Pmax=? [ F<=2 s=2 ]", program)
-        model = stormpy.build_model(program, formulas)
+        prop = stormpy.parse_property("Pmax=? [ F<=2 s=2 ]", program)
+        model = stormpy.build_model(program, prop)
         assert model.nr_states == 4
         assert model.nr_transitions == 7
         assert model.model_type == stormpy.models.ModelType.MA
@@ -191,8 +191,8 @@ class TestSparseModel:
         assert model.has_zeno_cycle
         # Building MA with hybrid states and formula already applies close
         program = stormpy.parse_prism_program(get_example_path("ma", "hybrid_states.ma"))
-        formulas = stormpy.parse_properties("Pmax=? [ F<=2 s=4 ]", program)
-        model = stormpy.build_model(program, formulas)
+        formula = stormpy.parse_property("Pmax=? [ F<=2 s=4 ]", program)
+        model = stormpy.build_model(program, formula)
         assert model.nr_states == 5
         assert model.nr_transitions == 9
         assert model.model_type == stormpy.models.ModelType.MA
@@ -203,8 +203,8 @@ class TestSparseModel:
 
     def test_build_smg(self):
         program = stormpy.parse_prism_program(get_example_path("smg", "example_smg.nm"))
-        formulas = stormpy.parse_properties("<<maxP>> Pmax=? [ F s=2 ]", program)
-        model = stormpy.build_model(program, formulas)
+        formula = stormpy.parse_property("<<maxP>> Pmax=? [ F s=2 ]", program)
+        model = stormpy.build_model(program, formula)
         assert model.nr_states == 4
         assert model.nr_choices == 5
         assert model.nr_transitions == 7
@@ -214,8 +214,8 @@ class TestSparseModel:
 
     def test_convert_ma_to_ctmc(self):
         program = stormpy.parse_prism_program(get_example_path("ma", "ctmc.ma"), prism_compatibility=True)
-        formulas = stormpy.parse_properties("P=? [ F<=3 s=2 ]", program)
-        model = stormpy.build_model(program, formulas)
+        formula = stormpy.parse_property("P=? [ F<=3 s=2 ]", program)
+        model = stormpy.build_model(program, formula)
         assert model.nr_states == 4
         assert model.nr_transitions == 6
         assert model.model_type == stormpy.models.ModelType.MA
@@ -230,8 +230,8 @@ class TestSparseModel:
 
     def test_initial_states(self):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
-        formulas = stormpy.parse_properties('P=? [ F "one" ]', program)
-        model = stormpy.build_model(program, formulas)
+        formula = stormpy.parse_property('P=? [ F "one" ]', program)
+        model = stormpy.build_model(program, formula)
         initial_states = model.initial_states
         assert len(initial_states) == 1
         assert 0 in initial_states
@@ -258,8 +258,8 @@ class TestSymbolicSylvanModel:
     def test_build_dtmc_from_prism_program_formulas(self):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
         prop = 'P=? [F "one"]'
-        properties = stormpy.parse_properties(prop, program)
-        model = stormpy.build_symbolic_model(program, properties)
+        formula = stormpy.parse_property(prop, program)
+        model = stormpy.build_symbolic_model(program, formula)
         assert model.nr_states == 13
         assert model.nr_transitions == 20
         assert model.model_type == stormpy.models.ModelType.DTMC
@@ -270,8 +270,8 @@ class TestSymbolicSylvanModel:
     def test_build_dtmc_from_prism_program_reward_formulas(self):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
         prop = 'R=? [F "done"]'
-        properties = stormpy.parse_properties(prop, program)
-        model = stormpy.build_symbolic_model(program, properties)
+        formula = stormpy.parse_property(prop, program)
+        model = stormpy.build_symbolic_model(program, formula)
         assert model.nr_states == 13
         assert model.nr_transitions == 20
         assert model.model_type == stormpy.models.ModelType.DTMC
@@ -285,8 +285,8 @@ class TestSymbolicSylvanModel:
     def test_reduce_to_state_based_rewards(self):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
         prop = 'R=? [F "done"]'
-        properties = stormpy.parse_properties(prop, program)
-        model = stormpy.build_symbolic_model(program, properties)
+        formula = stormpy.parse_property(prop, program)
+        model = stormpy.build_symbolic_model(program, formula)
         model.reduce_to_state_based_rewards()
         assert len(model.reward_models) == 1
         assert model.reward_models["coin_flips"].has_state_rewards
@@ -307,8 +307,8 @@ class TestSymbolicSylvanModel:
 
     def test_build_mdp(self):
         program = stormpy.parse_prism_program(get_example_path("mdp", "two_dice.nm"))
-        formulas = stormpy.parse_properties('P=? [ F "two" ]', program)
-        model = stormpy.build_symbolic_model(program, formulas)
+        formula = stormpy.parse_property('P=? [ F "two" ]', program)
+        model = stormpy.build_symbolic_model(program, formula)
         assert model.nr_states == 169
         assert model.nr_transitions == 435
         assert model.model_type == stormpy.models.ModelType.MDP
@@ -317,8 +317,8 @@ class TestSymbolicSylvanModel:
 
     def test_build_ctmc(self):
         program = stormpy.parse_prism_program(get_example_path("ctmc", "polling2.sm"), prism_compatibility=True)
-        formulas = stormpy.parse_properties('P=? [ F<=3 "target" ]', program)
-        model = stormpy.build_symbolic_model(program, formulas)
+        formula = stormpy.parse_property('P=? [ F<=3 "target" ]', program)
+        model = stormpy.build_symbolic_model(program, formula)
         assert model.nr_states == 12
         assert model.nr_transitions == 21
         assert model.model_type == stormpy.models.ModelType.CTMC
@@ -327,9 +327,9 @@ class TestSymbolicSylvanModel:
 
     def test_build_ma(self):
         program = stormpy.parse_prism_program(get_example_path("ma", "simple.ma"))
-        formulas = stormpy.parse_properties("P=? [ F<=2 s=2 ]", program)
+        formula = stormpy.parse_property("P=? [ F<=2 s=2 ]", program)
         with pytest.raises(Exception):
-            model = stormpy.build_symbolic_model(program, formulas)
+            model = stormpy.build_symbolic_model(program, formula)
 
     def test_build_ipomdp(self):
         model = stormpy.build_model_from_drn[stormpy.Interval](get_example_path("ipomdp", "tiny-01.drn"))

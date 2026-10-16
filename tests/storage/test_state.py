@@ -189,8 +189,8 @@ class TestState:
 
     def test_states_mdp_maze(self):
         program = stormpy.parse_prism_program(get_example_path("mdp", "maze_2.nm"))
-        properties = stormpy.parse_properties('R=? [F "goal"]', program)
-        model = stormpy.build_model(program, properties)
+        prop = stormpy.parse_property('R=? [F "goal"]', program)
+        model = stormpy.build_model(program, prop)
         assert model.nr_states == 15
         assert model.nr_transitions == 66
         assert len(model.initial_states) == 1

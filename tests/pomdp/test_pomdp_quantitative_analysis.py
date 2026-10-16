@@ -14,15 +14,15 @@ import math
 class TestPomdpQuantitative:
     def test_underapprox_mc_maze_pmax(self):
         program = stormpy.parse_prism_program(get_example_path("pomdp", "maze_2.prism"))
-        formulas = stormpy.parse_properties('Pmax=? [ !"bad" U "goal" ]', program)
-        model = stormpy.build_model(program, formulas)
+        formula = stormpy.parse_property('Pmax=? [ !"bad" U "goal" ]', program)
+        model = stormpy.build_model(program, formula)
         model = stormpy.pomdp.make_canonic(model)
         options = stormpy.pomdp.BeliefExplorationModelCheckerOptionsDouble(False, True)
         options.use_state_elimination_cutoff = False
         options.size_threshold_init = 10
         options.use_clipping = False
         belmc = stormpy.pomdp.BeliefExplorationModelCheckerDouble(model, options)
-        result = belmc.check(formulas[0].get_raw_formula(), [])
+        result = belmc.check(formula.get_raw_formula(), [])
         assert math.isclose(result.lower_bound, 0.35198, abs_tol=10**-4)
         assert math.isinf(result.upper_bound)
         assert result.induced_mc_from_scheduler.nr_states == 10
@@ -30,15 +30,15 @@ class TestPomdpQuantitative:
 
     def test_underapprox_mc_maze_rmin(self):
         program = stormpy.parse_prism_program(get_example_path("pomdp", "maze_2.prism"))
-        formulas = stormpy.parse_properties('Rmin=? [ F "goal" ]', program)
-        model = stormpy.build_model(program, formulas)
+        formula = stormpy.parse_property('Rmin=? [ F "goal" ]', program)
+        model = stormpy.build_model(program, formula)
         model = stormpy.pomdp.make_canonic(model)
         options = stormpy.pomdp.BeliefExplorationModelCheckerOptionsDouble(False, True)
         options.use_state_elimination_cutoff = False
         options.size_threshold_init = 10
         options.use_clipping = False
         belmc = stormpy.pomdp.BeliefExplorationModelCheckerDouble(model, options)
-        result = belmc.check(formulas[0].get_raw_formula(), [])
+        result = belmc.check(formula.get_raw_formula(), [])
         assert math.isinf(result.lower_bound)
         assert math.isclose(result.upper_bound, 12.27043, abs_tol=10**-4)
         assert result.induced_mc_from_scheduler.nr_states == 9
@@ -46,15 +46,15 @@ class TestPomdpQuantitative:
 
     def test_underapprox_mc_cmaze_rmin(self):
         program = stormpy.parse_prism_program(get_example_path("pomdp", "maze-concise.prism"))
-        formulas = stormpy.parse_properties('R{"steps"}min=? [F ((x = 2) & (y = 0))]', program)
-        model = stormpy.build_model(program, formulas)
+        formula = stormpy.parse_property('R{"steps"}min=? [F ((x = 2) & (y = 0))]', program)
+        model = stormpy.build_model(program, formula)
         model = stormpy.pomdp.make_canonic(model)
         options = stormpy.pomdp.BeliefExplorationModelCheckerOptionsDouble(False, True)
         options.use_state_elimination_cutoff = False
         options.size_threshold_init = 10
         options.use_clipping = False
         belmc = stormpy.pomdp.BeliefExplorationModelCheckerDouble(model, options)
-        result = belmc.check(formulas[0].get_raw_formula(), [])
+        result = belmc.check(formula.get_raw_formula(), [])
         assert math.isinf(result.lower_bound)
         assert math.isclose(result.upper_bound, 19.78127, abs_tol=10**-4)
         assert result.induced_mc_from_scheduler.nr_states == 9

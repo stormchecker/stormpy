@@ -35,8 +35,8 @@ import stormpy.examples.files
 program = stormpy.parse_prism_program(stormpy.examples.files.prism_mdp_maze)
 prop = 'R=? [F "goal"]'
 
-properties = stormpy.parse_properties(prop, program)
-model = stormpy.build_model(program, properties)
+formula = stormpy.parse_property(prop, program)
+model = stormpy.build_model(program, formula)
 ```
 
 The iteration over the model is as before, but now, for every action, we can have several transitions:
@@ -68,8 +68,8 @@ import stormpy.examples.files
 
 program = stormpy.parse_prism_program(stormpy.examples.files.prism_pomdp_maze)
 prop = 'R=? [F "goal"]'
-properties = stormpy.parse_properties(prop, program)
-model = stormpy.build_model(program, properties)
+formula = stormpy.parse_property(prop, program)
+model = stormpy.build_model(program, formula)
 ```
 
 Indeed, all that changed in the code above is the example we use.

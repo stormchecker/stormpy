@@ -11,8 +11,8 @@ def example_exploration_02():
     """
     program = stormpy.parse_prism_program(stormpy.examples.files.prism_pomdp_maze)
     prop = 'R=? [F "goal"]'
-    properties = stormpy.parse_properties(prop, program)
-    model = stormpy.build_model(program, properties)
+    formula = stormpy.parse_property(prop, program)
+    model = stormpy.build_model(program, formula)
     print(model.model_type)
     # Internally, POMDPs are just MDPs with additional observation information.
     # Thus, data structure exploration for MDPs can be applied as before.

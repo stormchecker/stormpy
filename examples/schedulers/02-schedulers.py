@@ -9,15 +9,15 @@ def example_schedulers_02():
     formula_str = "Tmin=? [ F s=4 ]"
 
     program = stormpy.parse_prism_program(path)
-    formulas = stormpy.parse_properties(formula_str, program)
-    options = stormpy.BuilderOptions(formulas)
+    formula = stormpy.parse_property(formula_str, program)
+    options = stormpy.BuilderOptions(formula)
     options.set_build_choice_labels()
     options.set_build_choice_origins()
     ma = stormpy.build_model(program, options=options)
     assert ma.model_type == stormpy.models.ModelType.MA
 
     # Convert MA to MDP
-    mdp, mdp_formulas = stormpy.transform_to_discrete_time_model(ma, formulas)
+    mdp, mdp_formulas = stormpy.transform_to_discrete_time_model(ma, formula)
     assert mdp.model_type == stormpy.models.ModelType.MDP
     initial_state = mdp.initial_states[0]
     assert initial_state == 0

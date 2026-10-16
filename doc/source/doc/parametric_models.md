@@ -28,8 +28,8 @@ import stormpy.examples.files
 path = stormpy.examples.files.prism_pdtmc_die
 prism_program = stormpy.parse_prism_program(path)
 formula_str = "P=? [F s=7 & d=2]"
-properties = stormpy.parse_properties(formula_str, prism_program)
-model = stormpy.build_model[stormpy.RationalFunction](prism_program, properties)
+prop = stormpy.parse_property(formula_str, prism_program)
+model = stormpy.build_model[stormpy.RationalFunction](prism_program, prop)
 parameters = model.collect_all_parameters()
 for x in parameters:
     print(x)
@@ -51,7 +51,7 @@ for x in parameters:
     print(x.name)
     point[x] = stormpy.RationalFunctionCoefficient(0.4)
 instantiated_model = instantiator.instantiate(point)
-result = stormpy.model_checking(instantiated_model, properties[0])
+result = stormpy.model_checking(instantiated_model, prop)
 print(result[model.initial_states[0]])
 ```
 
@@ -64,7 +64,7 @@ Initial states and labels are set as for the parameter-free case.
 It is also possible to check the parametric model directly, similar as before in [Checking properties](../getting_started.md#checking-properties):
 
 ```{code-cell} python3
-result = stormpy.model_checking(model, properties[0])
+result = stormpy.model_checking(model, prop)
 initial_state = model.initial_states[0]
 func = result[initial_state]
 print(func)

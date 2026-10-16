@@ -31,15 +31,15 @@ class TestGSPNJani:
         jani_program = jani_builder.build()
 
         # Set properties
-        properties = stormpy.parse_properties("P=? [F<=10 eating1=1]", jani_program)
+        prop = stormpy.parse_property("P=? [F<=10 eating1=1]", jani_program)
 
         # Build model
-        model = stormpy.build_model(jani_program, properties)
+        model = stormpy.build_model(jani_program, prop)
 
         # Model checking
         initial_state = model.initial_states[0]
         assert initial_state == 0
-        result = stormpy.model_checking(model, properties[0])
+        result = stormpy.model_checking(model, prop)
         assert math.isclose(result[initial_state], 0.4372171069840004)
 
     @xml

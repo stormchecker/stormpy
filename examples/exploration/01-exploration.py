@@ -11,8 +11,8 @@ def example_exploration_01():
     """
     program = stormpy.parse_prism_program(stormpy.examples.files.prism_pomdp_maze)
     prop = 'R=? [F "goal"]'
-    properties = stormpy.parse_properties(prop, program)
-    model = stormpy.build_model(program, properties)
+    formula = stormpy.parse_property(prop, program)
+    model = stormpy.build_model(program, formula)
     print(model.model_type)
 
     for state in model.states:

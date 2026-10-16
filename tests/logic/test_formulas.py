@@ -6,27 +6,25 @@ from helpers.helper import get_example_path
 class TestFormulas:
     def test_probability_formula(self):
         formula_str = 'P=? [F "one"]'
-        properties = stormpy.parse_properties(formula_str)
-        formula = properties[0].get_raw_formula()
+        prop = stormpy.parse_property(formula_str)
+        formula = prop.get_raw_formula()
         assert type(formula) == stormpy.logic.ProbabilityOperatorFormula
-        assert len(properties) == 1
         assert str(formula) == formula_str
 
     def test_reward_formula(self):
         formula_str = 'R=? [F "one"]'
-        properties = stormpy.parse_properties(formula_str)
-        formula = properties[0].get_raw_formula()
+        prop = stormpy.parse_property(formula_str)
+        formula = prop.get_raw_formula()
         assert type(formula) == stormpy.logic.RewardOperatorFormula
-        assert len(properties) == 1
         assert str(formula) == 'R=? [F "one"]'
 
     def test_formula_list(self):
         formulas = []
         prop = '=? [F "one"]'
-        forms = stormpy.parse_properties("P" + prop)
-        formulas.append(forms[0].get_raw_formula())
-        forms = stormpy.parse_properties("R" + prop)
-        formulas.append(forms[0].get_raw_formula())
+        form = stormpy.parse_property("P" + prop)
+        formulas.append(form.get_raw_formula())
+        form = stormpy.parse_property("R" + prop)
+        formulas.append(form.get_raw_formula())
         assert len(formulas) == 2
         assert str(formulas[0]) == "P" + prop
         assert str(formulas[1]) == "R" + prop
@@ -43,17 +41,17 @@ class TestFormulas:
 
     def test_bounds(self):
         prop = 'P=? [F "one"]'
-        formula = stormpy.parse_properties(prop)[0].get_raw_formula()
+        formula = stormpy.parse_property(prop).get_raw_formula()
         assert not formula.has_bound
         prop = 'P<0.4 [F "one"]'
-        formula = stormpy.parse_properties(prop)[0].get_raw_formula()
+        formula = stormpy.parse_property(prop).get_raw_formula()
         assert formula.has_bound
         assert formula.threshold == stormpy.Rational("0.4")
         assert formula.comparison_type == stormpy.logic.ComparisonType.LESS
 
     def test_set_bounds(self):
         prop = 'P<0.4 [F "one"]'
-        formula = stormpy.parse_properties(prop)[0].get_raw_formula()
+        formula = stormpy.parse_property(prop).get_raw_formula()
         expression_manager = stormpy.expressions.ExpressionManager()
         rational = stormpy.Rational("0.2")
         expression = expression_manager.rational(rational)
@@ -64,7 +62,7 @@ class TestFormulas:
 
     def test_subformula(self):
         prop = 'P=? [F "one"]'
-        formula = stormpy.parse_properties(prop)[0].get_raw_formula()
+        formula = stormpy.parse_property(prop).get_raw_formula()
         assert type(formula) == stormpy.logic.ProbabilityOperatorFormula
         pathform = formula.subformula
         assert type(pathform) == stormpy.logic.EventuallyFormula
@@ -75,20 +73,18 @@ class TestFormulas:
 
     def test_game_formula(self):
         formula_str = '<<0>> Pmax=? [F "goal"]'
-        properties = stormpy.parse_properties(formula_str)
-        formula = properties[0].get_raw_formula()
+        prop = stormpy.parse_property(formula_str)
+        formula = prop.get_raw_formula()
         assert type(formula) == stormpy.logic.GameFormula
         assert str(formula) == formula_str
-        assert len(properties) == 1
         formula = formula.subformula
         assert type(formula) == stormpy.logic.ProbabilityOperatorFormula
         assert str(formula) == 'Pmax=? [F "goal"]'
 
     def test_discounted_total_reward_formula(self):
         formula_str = 'R{"reward"}max=? [Cdiscount=0.9]'
-        properties = stormpy.parse_properties(formula_str)
-        assert len(properties) == 1
-        formula = properties[0].get_raw_formula()
+        prop = stormpy.parse_property(formula_str)
+        formula = prop.get_raw_formula()
         assert type(formula) == stormpy.logic.RewardOperatorFormula
         subformula = formula.subformula
         assert type(subformula) == stormpy.logic.DiscountedTotalRewardFormula
@@ -98,9 +94,8 @@ class TestFormulas:
 
     def test_discounted_cumulative_reward_formula(self):
         formula_str = 'R{"reward"}max=? [C<=10 discount=0.9]'
-        properties = stormpy.parse_properties(formula_str)
-        assert len(properties) == 1
-        formula = properties[0].get_raw_formula()
+        prop = stormpy.parse_property(formula_str)
+        formula = prop.get_raw_formula()
         subformula = formula.subformula
         assert type(subformula) == stormpy.logic.DiscountedCumulativeRewardFormula
         assert subformula.is_discounted_cumulative_reward_formula

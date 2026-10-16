@@ -106,9 +106,9 @@ def test_public_umb_accepts_pathlike_and_allocates_default_options(tmp_path):
 
 def test_scheduler_conversion_uses_one_template_family():
     program = stormpy.parse_prism_program(get_example_path("mdp", "coin2-2.nm"))
-    properties = stormpy.parse_properties('Pmin=? [ F "finished" & "all_coins_equal_1"]', program)
-    model = stormpy.build_model(program, properties)
-    scheduler = stormpy.model_checking(model, properties[0], extract_scheduler=True).get_scheduler()
+    prop = stormpy.parse_property('Pmin=? [ F "finished" & "all_coins_equal_1"]', program)
+    model = stormpy.build_model(program, prop)
+    scheduler = stormpy.model_checking(model, prop, extract_scheduler=True).get_scheduler()
     raw = stormpy.developer.storage
     exact = raw.to_value_type[stormpy.Rational](scheduler=scheduler)
     assert type(exact) is stormpy.datastructures.Scheduler[stormpy.Rational]

@@ -30,8 +30,8 @@ import stormpy.examples.files
 program = stormpy.parse_prism_program(stormpy.examples.files.prism_dtmc_die)
 prop = 'R=? [F "done"]'
 
-properties = stormpy.parse_properties(prop, program)
-model = stormpy.build_model(program, properties)
+formula = stormpy.parse_property(prop, program)
+model = stormpy.build_model(program, formula)
 assert len(model.reward_models) == 1
 ```
 
@@ -41,7 +41,7 @@ We can do model checking analogous to probabilities:
 
 ```{code-cell} python3
 initial_state = model.initial_states[0]
-result = stormpy.model_checking(model, properties[0])
+result = stormpy.model_checking(model, formula)
 print("Result: {}".format(round(result[initial_state], 6)))
 ```
 

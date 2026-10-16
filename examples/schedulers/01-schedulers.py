@@ -9,14 +9,14 @@ def example_schedulers_01():
     formula_str = 'Pmin=? [F "finished" & "all_coins_equal_1"]'
 
     program = stormpy.parse_prism_program(path)
-    formulas = stormpy.parse_properties(formula_str, program)
+    formula = stormpy.parse_property(formula_str, program)
 
     options = stormpy.BuilderOptions(build_full=True)
     model = stormpy.build_model(program, options=options)
 
     initial_state = model.initial_states[0]
     assert initial_state == 0
-    result = stormpy.model_checking(model, formulas[0], extract_scheduler=True)
+    result = stormpy.model_checking(model, formula, extract_scheduler=True)
     assert result.has_scheduler
     scheduler = result.get_scheduler()
     print(scheduler)

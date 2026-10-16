@@ -9,13 +9,13 @@ def example_analysis_04():
     prism_program = stormpy.parse_prism_program(path)
 
     formula_str = "P=? [F s=7 & d=2]"
-    properties = stormpy.parse_properties(formula_str, prism_program)
+    prop = stormpy.parse_property(formula_str, prism_program)
 
-    options = stormpy.BuilderOptions(properties)
+    options = stormpy.BuilderOptions(prop)
     options.set_build_state_valuations()
     model = stormpy.build_model(prism_program, options=options)
 
-    result = stormpy.model_checking(model, properties[0])
+    result = stormpy.model_checking(model, prop)
 
     # Print the model checking result for all states
 

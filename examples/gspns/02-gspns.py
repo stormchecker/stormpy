@@ -6,9 +6,9 @@ import stormpy.examples.files
 
 
 def example_gspns_02():
-    # Use GSPNBuilder to construct a GSPN
-    builder = stormpy.gspn.GSPNBuilder()
-    builder.set_name("my_gspn")
+    # Use GspnBuilder to construct a GSPN
+    builder = stormpy.gspn.GspnBuilder()
+    builder.set_gspn_name("my_gspn")
 
     # Add immediate transition
     it_1 = builder.add_immediate_transition(1, 0.0, "it_1")
@@ -45,7 +45,7 @@ def example_gspns_02():
 
     # Export to file (PNPRO format)
     export_path = stormpy.examples.files.gspn_pnpro_simple
-    gspn.export_gspn_pnpro_file(export_path)
+    stormpy.gspn.export_gspn_pnpro_file(gspn, export_path)
 
 
 if __name__ == "__main__":

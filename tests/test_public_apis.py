@@ -10,7 +10,7 @@ import typing
 
 import pytest
 import stormpy
-from configurations import has_dft
+from configurations import has_dft, has_gspn
 
 
 def _core_documented_elsewhere(name):
@@ -32,6 +32,7 @@ def _not_documented_elsewhere(_name):
 _PUBLIC_MODULES = {
     "stormpy": (True, _core_documented_elsewhere),
     "stormpy.dft": (has_dft, _not_documented_elsewhere),
+    "stormpy.gspn": (has_gspn, _not_documented_elsewhere),
     "stormpy.numbers": (True, _numbers_documented_elsewhere),
     "stormpy.models": (True, _not_documented_elsewhere),
     "stormpy.datastructures": (True, _not_documented_elsewhere),

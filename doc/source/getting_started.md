@@ -163,7 +163,7 @@ Sound methods yield tight bounds, exact methods are tailored to exact number rep
 ```{code-cell} python3
 env = stormpy.Environment()
 env.solver().force_soundness = True
-sound_result = stormpy.model_checking(model, properties[0], environment=env)
+sound_result = stormpy.model_checking(model, prop, environment=env)
 x = sound_result[model.initial_states[0]]
 print(x.value, x.lower, x.upper)
 ```

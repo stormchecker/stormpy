@@ -27,8 +27,7 @@ import stormpy.examples
 import stormpy.examples.files
 
 import_path = stormpy.examples.files.gspn_pnml_simple
-gspn_parser = stormpy.gspn.GSPNParser()
-gspn = gspn_parser.parse(import_path)
+gspn = stormpy.gspn.load_gspn_file(import_path)
 ```
 
 After loading, we can display some properties of the GSPN:
@@ -53,12 +52,12 @@ print("Number of timed transitions: {}.".format(gspn.get_number_of_timed_transit
 
 [02-gspns.py](https://github.com/stormchecker/stormpy/blob/master/examples/gspns/02-gspns.py)
 
-In the following, we describe how to construct GSPNs via the `GSPNBuilder`.
-First, we create an instance of the `GSPNBuilder` and set the name of the GSPN:
+In the following, we describe how to construct GSPNs via the `GspnBuilder`.
+First, we create an instance of the `GspnBuilder` and set the name of the GSPN:
 
 ```{code-cell} python3
-builder = stormpy.gspn.GSPNBuilder()
-builder.set_name("my_gspn")
+builder = stormpy.gspn.GspnBuilder()
+builder.set_gspn_name("my_gspn")
 ```
 
 In the next step, we add an immediate transition to the GSPN.
@@ -107,10 +106,10 @@ gspn = builder.build_gspn()
 ```
 
 After building, we export the GSPN.
-GSPNs can be saved in the PNPRO format via `export_gspn_pnpro_file(path)` and in the PNML format via `export_gspn_pnml_file(path)`.
+GSPNs can be saved in the PNPRO format via `stormpy.gspn.export_gspn_pnpro_file(gspn, path)` and in the PNML format via `stormpy.gspn.export_gspn_pnml_file(gspn, path)`.
 We export the GSPN into the PNPRO format:
 
 ```{code-cell} python3
 export_path = stormpy.examples.files.gspn_pnpro_simple
-gspn.export_gspn_pnpro_file(export_path)
+stormpy.gspn.export_gspn_pnpro_file(gspn, export_path)
 ```

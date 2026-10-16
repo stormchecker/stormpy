@@ -11,5 +11,6 @@ PYBIND11_MODULE(_gspn, m) {
 #endif
 
     define_gspn(m);
+    define_gspn_export(m);
     define_gspn_io(m);
 }

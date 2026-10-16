@@ -20,8 +20,15 @@ def _sign(x: Any) -> int:
     return _infinity_sign(x) or (x > 0) - (x < 0)
 
 
+def _is_nan(*xs: Any) -> bool:
+    """Whether one of the values is not a number, e.g., the result of an undefined operation such as infinity minus infinity."""
+    return any(isinstance(x, float) and math.isnan(x) for x in xs)
+
+
 def _add(a: Any, b: Any) -> Any:
-    """Sum, or None if undefined (infinity minus infinity)."""
+    """Sum, or None if undefined (infinity minus infinity, or an operand is not a number)."""
+    if _is_nan(a, b):
+        return None
     sign_a, sign_b = _infinity_sign(a), _infinity_sign(b)
     if sign_a and sign_b and sign_a != sign_b:
         return None
@@ -33,7 +40,9 @@ def _add(a: Any, b: Any) -> Any:
 
 
 def _mul(a: Any, b: Any) -> Any:
-    """Product, with the convention 0 * infinity = 0."""
+    """Product with the convention 0 * infinity = 0, or None if an operand is not a number."""
+    if _is_nan(a, b):
+        return None
     if not _infinity_sign(a) and not _infinity_sign(b):
         return a * b
     sign = _sign(a) * _sign(b)
@@ -41,7 +50,9 @@ def _mul(a: Any, b: Any) -> Any:
 
 
 def _div(a: Any, b: Any) -> Any:
-    """Quotient, or None if undefined (infinity divided by infinity). Raises ZeroDivisionError for b = 0."""
+    """Quotient, or None if undefined (infinity divided by infinity, or an operand is not a number). Raises ZeroDivisionError for b = 0."""
+    if _is_nan(a, b):
+        return None
     if _sign(b) == 0:
         raise ZeroDivisionError("division by zero")
     sign_a, sign_b = _infinity_sign(a), _infinity_sign(b)
@@ -89,8 +100,9 @@ class BoundedValue:
         :param upper: Sound upper bound on the actual value (None if not known).
         """
         self._value = value
-        self._lower = lower
-        self._upper = upper
+        # A bound which is not a number does not bound anything
+        self._lower = None if _is_nan(lower) else lower
+        self._upper = None if _is_nan(upper) else upper
 
     @property
     def value(self) -> Any:

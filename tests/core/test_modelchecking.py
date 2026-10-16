@@ -700,6 +700,21 @@ class TestSolutionBounds:
         with pytest.raises(ZeroDivisionError):
             exact / stormpy.Rational(0)
 
+    def test_bounded_value_arithmetic_with_nan(self):
+        # An undefined value (not a number) stays undefined
+        undefined = stormpy.BoundedValue(math.inf) - stormpy.BoundedValue(math.inf)
+        assert math.isnan(undefined.value)
+        assert math.isnan((undefined * math.inf).value)
+        assert math.isnan((undefined * 0).value)
+        assert math.isnan((undefined + math.inf).value)
+        assert math.isnan((undefined / math.inf).value)
+        assert math.isnan((stormpy.BoundedValue(1.0) / undefined).value)
+        assert math.isnan((stormpy.BoundedValue(stormpy.Rational(1)) + undefined).value)
+        # Bounds which are not a number are unknown
+        assert stormpy.BoundedValue(1.0, math.nan, math.nan) == stormpy.BoundedValue(1.0)
+        value = stormpy.BoundedValue(0.5, 0.25, 0.75)
+        assert value * stormpy.BoundedValue(2.0, math.nan, 3.0) == stormpy.BoundedValue(1.0)
+
     def test_bounded_value_arithmetic_with_infinity(self):
         third = stormpy.Rational("1/3")
         infinite = stormpy.BoundedValue(math.inf, stormpy.Rational(2), math.inf)

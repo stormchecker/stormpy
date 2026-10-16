@@ -80,7 +80,7 @@ class BoundedValue:
     """
     Value of a single state in a model checking result, together with sound lower and upper bounds on the actual value.
 
-    The bounds are given if the solution method could establish them, e.g., for sound or exact methods.
+    The bounds are given if the solution method could establish them, e.g., for sound methods.
     An unknown bound is ``None``. An infinite bound means the method tried but could not establish a finite bound.
 
     The object behaves like its value in comparisons with numbers and when converting to ``float``.

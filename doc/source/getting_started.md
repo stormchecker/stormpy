@@ -157,7 +157,7 @@ A {class}`stormpy.BoundedValue` can be compared to numbers and converted via ``f
 ``result.get_value(state)`` returns only the value.
 
 Which bounds are available depends on the solution method.
-Sound methods yield tight bounds, exact methods yield bounds coinciding with the value:
+Sound methods yield tight bounds, exact methods are tailored to exact number representations:
 
 ```{code-cell} python3
 env = stormpy.Environment()

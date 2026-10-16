@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from enum import Enum
 
-from stormpy import developer
+from stormpy import developer, environments
 from stormpy.developer import storage
 from stormpy.core._common import _formula, _result_value_type_of_model, _value_type_of_model
 from stormpy import Interval, Rational, RationalInterval
@@ -58,11 +58,11 @@ def model_checking(
     :param hint: (optional) Hint that may speed up the computation. Only supported by the sparse engine.
     :param uncertainty_resolution_mode: How uncertainty is resolved. Required for interval models, not allowed otherwise.
     :param engine: (optional) Engine to use. Defaults to the sparse engine for sparse models and the DD engine for symbolic models.
-    :param environment: (optional) Environment configuring the solvers.
+    :param environment: (optional) Environment configuring the solvers. Defaults to :func:`stormpy.environments.default`.
     :return: The model checking result, e.g. an :class:`ExplicitQuantitativeCheckResult`. Use ``result[state]`` to get the value for a state together with its sound bounds as a :class:`BoundedValue`, or ``result.get_value(state)`` to get the value only.
     """
     formula = _formula(property)
-    environment = environment if environment is not None else Environment()
+    environment = environment if environment is not None else environments.default(model)
     if engine is None:
         engine = Engine.SPARSE if model.is_sparse_model else Engine.DD
     if engine == Engine.SPARSE:

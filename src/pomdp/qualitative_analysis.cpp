@@ -13,7 +13,7 @@ template<typename ValueType>
 using SparsePomdp = storm::models::sparse::Pomdp<ValueType>;
 
 template<typename ValueType>
-std::shared_ptr<storm::pomdp::IterativePolicySearch<ValueType>> createWinningRegionSolver(SparsePomdp<ValueType> const& pomdp,
+std::shared_ptr<storm::pomdp::IterativePolicySearch<ValueType>> createWinningRegionSolver(storm::Environment const& env, SparsePomdp<ValueType> const& pomdp,
                                                                                           storm::logic::Formula const& formula,
                                                                                           storm::pomdp::MemlessSearchOptions const& options) {
     STORM_LOG_TRACE("Run qualitative preprocessing...");
@@ -23,8 +23,8 @@ std::shared_ptr<storm::pomdp::IterativePolicySearch<ValueType>> createWinningReg
     storm::storage::BitVector surelyNotAlmostSurelyReachTarget = qualitativeAnalysis.analyseProbSmaller1(formula.asProbabilityOperatorFormula());
     storm::expressions::ExpressionManager expressionManager;
     std::shared_ptr<storm::utility::solver::SmtSolverFactory> smtSolverFactory = std::make_shared<storm::utility::solver::Z3SmtSolverFactory>();
-    return std::make_shared<storm::pomdp::IterativePolicySearch<ValueType>>(storm::Environment(), pomdp, targetStates, surelyNotAlmostSurelyReachTarget,
-                                                                            smtSolverFactory, options);
+    return std::make_shared<storm::pomdp::IterativePolicySearch<ValueType>>(env, pomdp, targetStates, surelyNotAlmostSurelyReachTarget, smtSolverFactory,
+                                                                            options);
 }
 
 template<typename ValueType>
@@ -39,8 +39,8 @@ SparsePomdp<ValueType> preparePOMDPForQualitativeSearch(SparsePomdp<ValueType> c
 
 template<typename ValueType>
 void define_qualitative_policy_search(py::module& m, std::string const& vtSuffix) {
-    m.def(("create_iterative_qualitative_search_solver_" + vtSuffix).c_str(), &createWinningRegionSolver<ValueType>, "Create solver ", py::arg("pomdp"),
-          py::arg("formula"), py::arg("options"));
+    m.def(("create_iterative_qualitative_search_solver_" + vtSuffix).c_str(), &createWinningRegionSolver<ValueType>, "Create solver ", py::arg("env"),
+          py::arg("pomdp"), py::arg("formula"), py::arg("options"));
     m.def(("prepare_pomdp_for_qualitative_search_" + vtSuffix).c_str(), &preparePOMDPForQualitativeSearch<ValueType>, "Preprocess POMDP", py::arg("pomdp"),
           py::arg("formula"));
     py::classh<storm::pomdp::IterativePolicySearch<ValueType>> mssq(m, ("IterativeQualitativeSearchSolver" + vtSuffix).c_str(),

@@ -12,6 +12,7 @@ and POMDPs, and the [Developer API](developer_api.md) for internal bindings.
 
    stormpy
    stormpy.datastructures
+   stormpy.environments
    stormpy.exceptions
    stormpy.expressions
    stormpy.info

@@ -158,15 +158,14 @@ A {class}`stormpy.BoundedValue` can be compared to numbers and converted via ``f
 ``result.get_value(state)`` returns only the value.
 
 Which bounds are available depends on the solution method.
-Sound methods yield tight bounds, exact methods are tailored to exact number representations:
+By default, model checking uses sound methods which yield tight bounds (see {func}`stormpy.environments.default`):
 
 ```{code-cell} python3
-env = stormpy.Environment()
-env.solver().force_soundness = True
-sound_result = stormpy.model_checking(model, properties[0], environment=env)
-x = sound_result[model.initial_states[0]]
+x = result[model.initial_states[0]]
 print(x.value, x.lower, x.upper)
 ```
+
+For exact models (e.g. ``stormpy.build_model[stormpy.Rational]``), exact methods are used and the bounds coincide with the value.
 
 A different environment can be passed via ``model_checking(..., environment=env)``.
 For example, ``stormpy.Environment()`` uses Storm's default methods without soundness guarantees, which are typically faster.

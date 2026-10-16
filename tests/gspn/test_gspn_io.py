@@ -74,4 +74,4 @@ class TestGSPNJani:
         result = stormpy.model_checking(model, properties[1])
         assert math.isclose(result[initial_state], 0.09123940783)
         result = stormpy.model_checking(model, properties[2])
-        assert math.isclose(result[initial_state], 5.445544554455446)
+        assert math.isclose(result[initial_state], 5.445544554455446, rel_tol=1e-6)

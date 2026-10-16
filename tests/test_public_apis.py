@@ -39,6 +39,7 @@ _PUBLIC_MODULES = {
     "stormpy.io": (True, _not_documented_elsewhere),
     "stormpy.utility": (True, _not_documented_elsewhere),
     "stormpy.logic": (True, _not_documented_elsewhere),
+    "stormpy.environments": (True, _not_documented_elsewhere),
     "stormpy.info": (True, _not_documented_elsewhere),
 }
 

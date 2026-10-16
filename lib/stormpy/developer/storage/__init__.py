@@ -43,6 +43,7 @@ SchedulerChoice = _TemplateClass("stormpy.developer.storage.SchedulerChoice", _s
 Distribution = _TemplateClass("stormpy.developer.storage.Distribution", _storage, parameters=("ValueType",), deduce=_deduce_default(float))
 
 # src/storage/geometry.cpp
+Halfspace = _TemplateClass("stormpy.developer.storage.Halfspace", _storage, parameters=("ValueType",), deduce=_deduce_default(float))
 Polytope = _TemplateClass("stormpy.developer.storage.Polytope", _storage, parameters=("ValueType",), deduce=_deduce_default(float))
 
 # src/storage/dd.cpp

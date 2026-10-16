@@ -15,6 +15,7 @@ from . import developer
 from . import exceptions
 from . import expressions, datastructures, models, io, logic
 from . import utility
+from . import environments
 
 try:
     from ._version import __version__
@@ -33,13 +34,6 @@ ExplicitModelParserOptions = developer.ExplicitModelParserOptions
 DirectEncodingExporterOptions = developer.DirectEncodingExporterOptions
 
 Environment = developer.Environment
-EquationSolverType = developer.EquationSolverType
-NativeLinearEquationSolverMethod = developer.NativeLinearEquationSolverMethod
-MinMaxMethod = developer.MinMaxMethod
-MultiObjectiveMethod = developer.MultiObjectiveMethod
-SteadyStateDistributionAlgorithm = developer.SteadyStateDistributionAlgorithm
-PrecomputationType = developer.PrecomputationType
-NextStateHeuristic = developer.NextStateHeuristic
 UncertaintyResolutionMode = developer.UncertaintyResolutionMode
 ModelCheckerHint = developer.ModelCheckerHint
 ExplicitModelCheckerHint = developer.ExplicitModelCheckerHint.publish_as("stormpy.ExplicitModelCheckerHint")
@@ -119,13 +113,6 @@ __all__ = [
     # Model checking
     "Engine",
     "Environment",
-    "EquationSolverType",
-    "NativeLinearEquationSolverMethod",
-    "MinMaxMethod",
-    "MultiObjectiveMethod",
-    "SteadyStateDistributionAlgorithm",
-    "PrecomputationType",
-    "NextStateHeuristic",
     "UncertaintyResolutionMode",
     "ModelCheckerHint",
     "ExplicitModelCheckerHint",

@@ -3,9 +3,9 @@
 import importlib
 import inspect
 
-import numpy as np
 import pytest
 import stormpy
+from configurations import numpy_avail
 from helpers.helper import get_example_path
 from stormpy._template import _TemplateClass, _TemplateFunction
 
@@ -55,8 +55,11 @@ def test_storm_method_names_and_keyword_arguments():
     assert matrix.get_submatrix(use_groups=True, row_constraint=selected, column_constraint=selected).nr_rows == 1
 
 
+@numpy_avail
 @pytest.mark.parametrize("value_type", [float, stormpy.Rational, stormpy.RationalFunction, stormpy.Interval, stormpy.RationalInterval])
 def test_build_matrix_selects_value_type(value_type):
+    import numpy as np
+
     if value_type is stormpy.RationalFunction:
         values = [stormpy.RationalFunction(stormpy.numbers.Polynomial(stormpy.numbers.RationalFunctionCoefficient(value))) for value in (1, 2)]
     elif value_type is stormpy.RationalInterval:

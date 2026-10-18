@@ -1,6 +1,22 @@
 # Developer information
 The following contains some general guidelines for developers.
 
+## Development setup
+For development, install stormpy together with all optional features and all tools for testing, formatting and building the documentation:
+```bash
+pip install -v .[dev]
+```
+The extra ``dev`` installs:
+- the formatter [black](https://black.readthedocs.io)
+- all ``test`` dependencies such as [pytest](https://docs.pytest.org)
+- all ``doc`` dependencies such as [Sphinx](https://www.sphinx-doc.org) and [jupytext](https://jupytext.readthedocs.io)
+- the optional extras ``parser`` ([lark](https://lark-parser.readthedocs.io)) and ``plot`` ([matplotlib](https://matplotlib.org), [SciPy](https://scipy.org)), so that all tests can be run.
+
+The ``Makefile`` provides helpers for common tasks:
+- ``make format`` formats all Python code, C++ code and the code in the documentation.
+- ``make check`` checks the formatting of the documentation, executes the documentation and runs all tests.
+- ``make doc`` builds the documentation.
+
 ## Structure
 - C++ bindings are defined in ``src``.
 - Python methods are defined in ``lib/stormpy``.
@@ -97,3 +113,4 @@ belong to the tests of that module, e.g. ``tests/core/test_api.py``.
   The pybind11 version is set in ``pyproject.toml`` through ``requires``, and in ``CMakeLists.txt`` through ``find_package(pybind11 ...)``.
 - The minimal Python version is set in ``pyproject.toml`` through ``requires-python``, and in ``CMakeLists.txt`` through ``find_package(Python ...)``.
 - The [Storm](https://www.stormchecker.org) version is set in ``pyproject.toml`` through ``STORM_GIT_TAG``, and in ``CMakeLists.txt`` through ``STORM_MIN_VERSION``.
+- The optional Python dependencies are defined in ``pyproject.toml`` in ``[project.optional-dependencies]``.

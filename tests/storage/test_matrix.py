@@ -98,7 +98,7 @@ class TestMatrix:
         formula = stormpy.parse_property('P=? [ F "one" ]')
         result = stormpy.model_checking(model, formula)
         resValue = result[model.initial_states[0]]
-        assert math.isclose(resValue, 0.16666666666666663)
+        assert math.isclose(resValue, 0.16666666666666663, rel_tol=1e-6)
 
         # Change probabilities
         i = 0
@@ -114,7 +114,7 @@ class TestMatrix:
         # Second model checking
         result = stormpy.model_checking(model, formula)
         resValue = result[model.initial_states[0]]
-        assert math.isclose(resValue, 0.06923076923076932)
+        assert math.isclose(resValue, 0.06923076923076932, rel_tol=1e-6)
 
         # Change probabilities again
         for state in model.states:
@@ -127,7 +127,7 @@ class TestMatrix:
         # Third model checking
         result = stormpy.model_checking(model, formula)
         resValue = result[model.initial_states[0]]
-        assert math.isclose(resValue, 0.3555555555555556)
+        assert math.isclose(resValue, 0.3555555555555556, rel_tol=1e-6)
 
     def test_change_parametric_matrix_modelchecking(self):
         program = stormpy.parse_prism_program(get_example_path("pdtmc", "brp16_2.pm"))

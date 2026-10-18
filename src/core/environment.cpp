@@ -9,6 +9,7 @@
 #include <storm/storage/SchedulerClass.h>
 #include <storm/storage/dd/cudd/CuddReorderingTechnique.h>
 #include <storm/utility/constants.h>
+#include <storm/utility/environment.h>
 
 namespace stormpy {
 
@@ -298,6 +299,20 @@ void define_environment(py::module& m) {
                       "Whether reordering is enabled")
         .def_property("reordering_technique", &storm::CuddDdManagerEnvironment::getReorderingTechnique,
                       &storm::CuddDdManagerEnvironment::setReorderingTechnique, "Reordering technique");
+
+    // Factories for environments
+    using EnvironmentFactory = storm::utility::environment::EnvironmentFactory;
+    py::classh<EnvironmentFactory>(m, "EnvironmentFactory", "Factory creating environments with default values")
+        .def(py::init<>(), "Construct factory")
+        .def("create", &EnvironmentFactory::create, "Create a new environment");
+    py::classh<storm::utility::environment::SoundEnvironmentFactory, EnvironmentFactory>(m, "SoundEnvironmentFactory",
+                                                                                         "Factory creating environments which enforce sound computations")
+        .def(py::init<>(), "Construct factory");
+    py::classh<storm::utility::environment::ExactEnvironmentFactory, EnvironmentFactory>(m, "ExactEnvironmentFactory",
+                                                                                         "Factory creating environments which enforce exact computations")
+        .def(py::init<>(), "Construct factory");
+    m.def("get_sound_environment", &storm::utility::environment::getSoundEnvironment, "Create a new environment which enforces sound computations");
+    m.def("get_exact_environment", &storm::utility::environment::getExactEnvironment, "Create a new environment which enforces exact computations");
 }
 
 }  // namespace stormpy

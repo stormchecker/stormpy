@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Iterable
 
-from stormpy import developer
+from stormpy import developer, environments
 from stormpy.developer import storage
 from stormpy.core._common import PathLike, _formulas, _path
 from stormpy.core._modelchecking import Engine
@@ -138,7 +138,7 @@ def build_symbolic_model(
 
     :param model: Symbolic model (Prism program, Jani model or symbolic model description).
     :param properties: (optional) Property or properties which should be checkable on the built model. If None, the full model is built.
-    :param environment: (optional) Environment configuring the decision diagram libraries.
+    :param environment: (optional) Environment configuring the decision diagram libraries. Defaults to :func:`stormpy.environments.default`.
     :return: The model in symbolic representation, e.g. a symbolic DTMC.
     :raises TypeError: If the value type is not supported.
     """
@@ -146,7 +146,7 @@ def build_symbolic_model(
     if value_type is not RationalFunction:
         _check_constants(model)
     formulas = _formulas(properties)
-    environment = environment if environment is not None else Environment()
+    environment = environment if environment is not None else environments._default_for_value_type(value_type)
     return build(environment, model, formulas, build_full_model=not formulas)
 
 

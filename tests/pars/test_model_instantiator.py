@@ -45,7 +45,7 @@ class TestModelInstantiator:
         result = stormpy.model_checking(instantiated_model, formula)
         initial_state = instantiated_model.initial_states[0]
         assert initial_state == 0
-        assert math.isclose(result[initial_state], 4 / 35)
+        assert math.isclose(result[initial_state], 4 / 35, rel_tol=1e-6)
 
     def test_sample_pdtmc(self):
         program = stormpy.parse_prism_program(get_example_path("pdtmc", "brp16_2.pm"))
@@ -71,7 +71,7 @@ class TestModelInstantiator:
         model = stormpy.build_model[stormpy.RationalFunction](program, formula)
 
         parameters = model.collect_all_parameters()
-        env = stormpy.Environment()
+        env = stormpy.environments.default(model)
         inst_checker = stormpy.pars.ModelInstantiationChecker(env, model)
         assert type(inst_checker) is stormpy.pars.ModelInstantiationChecker[stormpy.models.ModelType.DTMC, float]
         inst_checker.specify_formula(stormpy.developer.CheckTask[stormpy.RationalFunction](formula.get_raw_formula(), True))
@@ -91,7 +91,7 @@ class TestModelInstantiator:
         model = stormpy.build_model[stormpy.RationalFunction](program, formula)
 
         parameters = model.collect_all_parameters()
-        env = stormpy.Environment()
+        env = stormpy.environments.default(model)
         inst_checker = stormpy.pars.ModelInstantiationChecker[stormpy.models.ModelType.DTMC, stormpy.Rational](env, model)
         inst_checker.specify_formula(stormpy.developer.CheckTask[stormpy.RationalFunction](formula.get_raw_formula(), True))
         inst_checker.set_graph_preserving(True)
@@ -110,7 +110,7 @@ class TestModelInstantiator:
         model = stormpy.build_model[stormpy.RationalFunction](program, formula)
 
         parameters = model.collect_all_parameters()
-        env = stormpy.Environment()
+        env = stormpy.environments.default(model)
         inst_checker = stormpy.pars.ModelInstantiationChecker[stormpy.models.ModelType.DTMC, stormpy.Rational](env, model)
         inst_checker.specify_formula(stormpy.developer.CheckTask[stormpy.RationalFunction](formula.get_raw_formula(), True))
         inst_checker.set_graph_preserving(True)

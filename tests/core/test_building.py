@@ -110,7 +110,7 @@ class TestBuilding:
         with pytest.raises(StormError, match="Builder options"):
             stormpy.build_model(program, options=stormpy.BuilderOptions(), engine=stormpy.Engine.DD)
         with pytest.raises(StormError, match="environment"):
-            stormpy.build_model(program, environment=stormpy.Environment())
+            stormpy.build_model(program, environment=stormpy.environments.sound())
 
     def test_builder_options_defaults(self):
         options = stormpy.BuilderOptions()

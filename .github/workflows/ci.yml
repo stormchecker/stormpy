@@ -45,6 +45,8 @@ jobs:
 
   linuxTests:
     needs: prepare
+    # Skip if no configuration is selected for this mode
+    if: needs.prepare.outputs.linuxTests != '[]'
     name: ${{ matrix.config.name }} (${{ matrix.config.buildType }})
     runs-on: ubuntu-latest
     container: ${{ matrix.config.baseImg }}
@@ -91,6 +93,8 @@ jobs:
 
   macTests:
     needs: prepare
+    # Skip if no configuration is selected for this mode
+    if: needs.prepare.outputs.macTests != '[]'
     name: ${{ matrix.config.name }} (${{ matrix.config.buildType }})
     runs-on: ${{ matrix.config.distro }}
     strategy:

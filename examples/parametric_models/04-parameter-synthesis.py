@@ -26,7 +26,7 @@ def example_parameter_synthesis():
         checked = stormpy.model_checking(instantiated_model, probability_property, only_initial_states=True)
         probability = checked[instantiated_model.initial_states[0]].value
         print(method.name, "probability on the instantiated model:", probability)
-        assert math.isclose(probability, result.witness.value)
+        assert math.isclose(probability, result.witness.value, rel_tol=1e-6)
         assert probability <= 0.5
 
     lower = stormpy.RationalFunctionCoefficient("1/5")

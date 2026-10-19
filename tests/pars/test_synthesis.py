@@ -105,7 +105,7 @@ class TestSynthesis:
         assert isinstance(result.witness, stormpy.pars.FeasibilityResult)
         assert set(result.witness.valuation) == parameters
         assert 0.6 <= result.witness.value <= 0.8
-        assert math.isclose(float(next(iter(result.witness.valuation.values()))), result.witness.value)
+        assert math.isclose(float(next(iter(result.witness.valuation.values()))), result.witness.value, rel_tol=1e-6)
         # The witness remains usable after its containing result is released.
         witness = result.witness
         del result

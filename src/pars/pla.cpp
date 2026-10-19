@@ -187,5 +187,6 @@ void define_pla(py::module& m) {
     m.def("initialize_region_refinement_checker", &initializeRegionRefinementChecker, "Create and specify a region refinement checker", "environment"_a,
           "model"_a, "task"_a, "engine"_a = RegionCheckEngine::ParameterLifting, "allow_model_simplification"_a = true,
           "graph_preservation_status"_a = GraphPreservationStatus::GraphPreserving, "preconditions_validated"_a = false);
-    m.def("gather_derivatives", &gatherDerivatives, "Gather all derivatives of transition probabilities", "model"_a, "var"_a);
+    m.def("gather_derivatives", &gatherDerivatives,
+          "Gather the nonconstant numerators of transition-probability derivatives with respect to a parameter", "model"_a, "parameter"_a);
 }

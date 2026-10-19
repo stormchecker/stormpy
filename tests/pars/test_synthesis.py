@@ -4,8 +4,10 @@ import math
 
 import pytest
 import stormpy
-import stormpy.pars
-from configurations import pars
+from configurations import has_pars, pars
+
+if not has_pars:
+    pytest.skip("No support for parametric model checking", allow_module_level=True)
 
 
 def _build_model(tmp_path, *, mdp=False, rewards=False):

@@ -9,9 +9,10 @@ from collections.abc import Iterable, Mapping
 from math import isfinite as _isfinite
 
 from . import developer
+from .developer import gather_derivatives
 from stormpy import Environment, RationalFunctionCoefficient
 from stormpy import environments as _environments
-from stormpy.numbers import Polynomial, Variable
+from stormpy.numbers import Variable
 from stormpy.logic import Formula, Property
 from stormpy.models import SparseModel
 from stormpy.core._common import _formula
@@ -138,17 +139,6 @@ def check_feasibility(
         method,
         region_engine,
     )
-
-
-def gather_derivatives(model: SparseModel, parameter: Variable) -> set[Polynomial]:
-    """
-    Gather the nonconstant numerators of transition-probability derivatives with respect to a parameter.
-
-    :param model: Parametric sparse model.
-    :param parameter: Parameter to differentiate by.
-    :return: Set of nonconstant derivative numerators.
-    """
-    return developer.gather_derivatives(model, parameter)
 
 
 __all__ = [

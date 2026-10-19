@@ -42,6 +42,10 @@ jobs:
             echo "::error::Entry 'defaults' in ci-configs.json must be an object"
             exit 1
           fi
+          if [ "$(jq -r '.defaults.cache | type' .github/workflows/ci-configs.json)" != "boolean" ]; then
+            echo "::error::Field 'cache' in the defaults of ci-configs.json must be true or false"
+            exit 1
+          fi
           DEFAULT_KEYS=$(jq -c '.defaults | keys' .github/workflows/ci-configs.json)
           # Allowed fields of a config: the fields with a default value (keys of "defaults")
           # plus the category-specific fields without default listed here.
@@ -74,6 +78,14 @@ jobs:
             ' .github/workflows/ci-configs.json)
             if [ "$invalid" != "[]" ]; then
               echo "::error::Field 'buildTypes' in ci-configs.json category '$cat' must map quick/normal/extensive to a non-empty list of Debug/Release for: $invalid"
+              exit 1
+            fi
+            # Field cache must be a boolean
+            invalid=$(jq -c --arg cat "$cat" '
+              [ .[$cat][] | select(has("cache") and (.cache | type) != "boolean") | .name ]
+            ' .github/workflows/ci-configs.json)
+            if [ "$invalid" != "[]" ]; then
+              echo "::error::Field 'cache' in ci-configs.json category '$cat' must be true or false for: $invalid"
               exit 1
             fi
             # Field stormSource must be one of the allowed sources
@@ -113,6 +125,7 @@ jobs:
           DEFAULTS=$(jq -c '.defaults' .github/workflows/ci-configs.json)
           # A config runs in a mode if the mode is a key of its "buildTypes".
           # It is expanded into one entry per build type given for the mode (field "buildType").
+          # The field "cache" enables ccache (restore, save on master) in quick/normal; caching is never used in extensive.
           # A base image given per build type is resolved for the build type.
           # The expected configuration is turned into full lists of STORM_WITH_* flags (expectHave, expectNotHave).
           for cat in linuxTests macTests; do
@@ -121,6 +134,7 @@ jobs:
               '.[$cat] | map(($defaults + .) | select(.buildTypes | has($scope))
                              | . as $c | $c.buildTypes[$scope][] | $c + {buildType: .}
                              | del(.buildTypes)
+                             | .cache = (.cache and $scope != "extensive")
                              | if (.baseImg | type) == "object" then .baseImg = .baseImg[.buildType] else . end
                              | .expectHave = ($libs - .expectNotHave | map("STORM_WITH_" + .))
                              | .expectNotHave = (.expectNotHave | map("STORM_WITH_" + .)))' \

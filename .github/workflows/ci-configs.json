@@ -1,5 +1,6 @@
 {
   "defaults": {
+    "cache": false,
     "stormSource": "system",
     "storm_tag": "master",
     "carl_tag": "master",
@@ -83,6 +84,7 @@
     },
     {
       "name": "Ubuntu 24.04 (fetch)",
+      "cache": true,
       "buildTypes": {
         "normal": [
           "Debug"
@@ -159,6 +161,7 @@
     },
     {
       "name": "Mac 26 ARM (fetch)",
+      "cache": true,
       "buildTypes": {
         "normal": [
           "Debug"
@@ -185,6 +188,7 @@
     },
     {
       "name": "Mac 26 ARM (Storm installed)",
+      "cache": true,
       "buildTypes": {
         "normal": [
           "Release"
@@ -200,6 +204,7 @@
     },
     {
       "name": "Mac 27 ARM (fetch)",
+      "cache": true,
       "buildTypes": {
         "normal": [
           "Release"

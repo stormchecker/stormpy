@@ -7,6 +7,7 @@ name: CI
 # on a manual run: run the configs of the selected mode
 # Configurations are defined in ci-configs.json.
 # This CI then calls the tests in build-test-action and test-deploy with the given configurations.
+# Cache is restored everywhere (ccache not for extensive) but only saved on master pushes.
 
 on:
   pull_request:
@@ -80,6 +81,13 @@ jobs:
           nr_jobs: "4"
           name: ${{ matrix.config.name }}
           config: ${{ toJson(matrix.config) }}
+          # ccache is only used for configs with "cache" set
+          # and only saved on pushes to "master"
+          restore_cache: ${{ matrix.config.cache }}
+          save_cache: ${{ matrix.config.cache && github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+          # 3rdparty sources are only needed when Storm is compiled
+          restore_3rdparty_cache: ${{ matrix.config.stormSource != 'system' }}
+          save_3rdparty_cache: ${{ matrix.config.stormSource != 'system' && github.event_name == 'push' && github.ref == 'refs/heads/master' }}
 
   macTests:
     needs: prepare
@@ -98,15 +106,28 @@ jobs:
           xcode-version: ${{ matrix.config.xcode }}
       - name: Install dependencies
         # cmake, gmp and python3 are already installed
+        env:
+          USE_CCACHE: ${{ matrix.config.cache }}
         run: |
           brew update
-          brew install automake boost cln ginac glpk highs hwloc libarchive xerces-c z3
+          PACKAGES=(automake boost cln ginac glpk highs hwloc libarchive xerces-c z3)
+          if [ "$USE_CCACHE" = "true" ]; then
+            PACKAGES+=(ccache)
+          fi
+          brew install "${PACKAGES[@]}"
       - name: Build and test stormpy
         uses: ./.github/actions/build-test-action
         with:
           nr_jobs: "4"
           name: ${{ matrix.config.name }}
           config: ${{ toJson(matrix.config) }}
+          # ccache is only used for configs with "cache" set
+          # and only saved on pushes to "master"
+          restore_cache: ${{ matrix.config.cache }}
+          save_cache: ${{ matrix.config.cache && github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+          # 3rdparty sources are only needed when Storm is compiled
+          restore_3rdparty_cache: ${{ matrix.config.stormSource != 'system' }}
+          save_3rdparty_cache: ${{ matrix.config.stormSource != 'system' && github.event_name == 'push' && github.ref == 'refs/heads/master' }}
 
   # Need to split deploy into two jobs
   # Otherwise the name is not correctly displayed when the job is skipped.

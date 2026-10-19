@@ -13,10 +13,10 @@ on:
         type: string
         default: 'x.y.z'
       version:
-        description: 'Version to use for stormpy (e.g. 1.1.0 or 1.1.0.dev1)'
-        required: true
+        description: 'Version to use for stormpy (e.g. 1.1.0 or 1.1.0.dev1). If empty, the version from the source is kept.'
+        required: false
         type: string
-        default: 'x.y.z'
+        default: ''
       full_build:
         description: 'Build for all Python versions (if false, 3.13 and 3.14 only)'
         required: true
@@ -115,6 +115,7 @@ jobs:
         with:
           xcode-version: ${{ matrix.xcode }}
       - name: Prepare version
+        if: ${{ inputs.version != '' }}
         run: perl -i -pe 's/__version__ = "[^"]+"/__version__ = "'"${{ inputs.version }}"'"/' lib/stormpy/_version.py
       - name: Build wheels (development)
         if: ${{ !inputs.full_build }}
@@ -164,6 +165,7 @@ jobs:
           repository: ${{ inputs.repo }}
           ref: ${{ inputs.ref }}
       - name: Prepare version
+        if: ${{ inputs.version != '' }}
         run: perl -i -pe 's/__version__ = "[^"]+"/__version__ = "'"${{ inputs.version }}"'"/' lib/stormpy/_version.py
       - name: Build sdist
         run: pipx run build --sdist

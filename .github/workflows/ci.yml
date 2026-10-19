@@ -2,7 +2,9 @@ name: CI
 # Build stormpy and perform checks (check configuration, run tests, check documentation)
 
 # on every pull request commit: run "quick" configs
-# for every PR when labeled "ready for review" (other labels are ignored), on every master push: run "normal" configs
+# for every PR when labeled "ready for review", on every master push: run "normal" configs
+# for every PR when labeled "test wheels": only build and test the wheels (once, not on later pushes)
+# other labels are ignored
 # every week: run "extensive" configs (not fail-fast, including deploy)
 # on a manual run: run the configs of the selected mode
 # Configurations are defined in ci-configs.json.
@@ -26,7 +28,7 @@ on:
 
 # On PRs a newer run cancels the running one.
 # On master pushes each run is its own group (via run_id) so CI is never canceled.
-# Adding other labels than "ready for review" also uses its own group so it does not cancel the running CI.
+# Adding other labels than "ready for review" (e.g. "test wheels") also uses its own group so it does not cancel the running CI.
 concurrency:
   group: ${{ github.workflow }}-${{ (github.event.action == 'labeled' && github.event.label.name != 'ready for review') && github.run_id || github.event.pull_request.number || github.run_id }}
   cancel-in-progress: true
@@ -166,6 +168,17 @@ jobs:
       stormBase: "movesrwth/storm:ci"
       deployDocs: true
     secrets: inherit
+
+  # Build and test wheels once when the label "test wheels" is added to a PR
+  wheels:
+    name: Wheels
+    if: github.event.action == 'labeled' && github.event.label.name == 'test wheels'
+    uses: ./.github/workflows/create_wheel.yml
+    with:
+      storm_version: master
+      # Only build for the latest Python versions
+      full_build: false
+      build_type: Release
 
   notify:
     name: Email notification

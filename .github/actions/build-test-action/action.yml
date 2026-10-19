@@ -242,12 +242,17 @@ runs:
         fi
 
         status=0
-        pip install -v "${ARGS[@]}" ".${EXTRAS}" || status=$?
+        pip install -v "${ARGS[@]}" ".${EXTRAS}" 2>&1 | tee "${RUNNER_TEMP}/build-stormpy.log" || status=$?
         if [ "${status}" -ne 0 ] && [ "${ALLOW_INCOMPATIBLE}" = "true" ]; then
-          # Warn about possible incompatibility but do not handle as failure
-          echo "::warning file=CMakeLists.txt::Stormpy might be incompatible with Storm used in configuration '${{ inputs.name }}'"
-          echo "run_tests=false" >> "$GITHUB_OUTPUT"
-          exit 0
+          # Only compiler errors or an unsupported Storm version indicate an incompatibility with Storm.
+          # Other failures (e.g. dependencies, configuration, packaging) are still handled as failures.
+          if grep -qE ':[0-9]+:[0-9]+: (fatal )?error:|Storm version .* is not supported anymore' "${RUNNER_TEMP}/build-stormpy.log"; then
+            # Warn about possible incompatibility but do not handle as failure
+            echo "::warning file=CMakeLists.txt::Stormpy might be incompatible with Storm used in configuration '${{ inputs.name }}'"
+            echo "run_tests=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "::error::Building stormpy failed for a reason other than an incompatibility with Storm"
         fi
         echo "run_tests=true" >> "$GITHUB_OUTPUT"
         exit ${status}

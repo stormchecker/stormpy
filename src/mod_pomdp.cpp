@@ -4,6 +4,7 @@
 #include <storm/adapters/RationalNumberAdapter.h>
 
 #include "src/common.h"
+#include "src/pomdp/belief_verification.h"
 #include "src/pomdp/generator.h"
 #include "src/pomdp/memory.h"
 #include "src/pomdp/qualitative_analysis.h"
@@ -21,6 +22,9 @@ PYBIND11_MODULE(_pomdp, m) {
     define_tracker<storm::RationalNumber>(m);
     define_qualitative_policy_search_nt(m);
     define_qualitative_policy_search<double>(m);
+    define_belief_verification_nt(m);
+    define_belief_verification<double>(m);
+    define_belief_verification<storm::RationalNumber>(m);
     define_memory(m);
     define_transformations_nt(m);
 

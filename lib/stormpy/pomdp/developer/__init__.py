@@ -112,6 +112,27 @@ WinningRegionQueryInterface = _TemplateClass(
 )
 
 
+# Quantitative analysis
+BeliefBasedModelCheckerOptions = _TemplateClass(
+    "stormpy.pomdp.developer.BeliefBasedModelCheckerOptions",
+    _pomdp,
+    parameters=("ValueType",),
+    deduce=_deduce_default(float),
+)
+
+BeliefBasedModelCheckerResult = _TemplateClass(
+    "stormpy.pomdp.developer.BeliefBasedModelCheckerResult",
+    _pomdp,
+    parameters=("ValueType",),
+)
+
+ObservationBasedFiniteStateController = _TemplateClass(
+    "stormpy.pomdp.developer.ObservationBasedFiniteStateController",
+    _pomdp,
+    parameters=("ValueType",),
+)
+
+
 # Monitor verification
 MonitorVerifier = _TemplateClass(
     "stormpy.pomdp.developer.MonitorVerifier",

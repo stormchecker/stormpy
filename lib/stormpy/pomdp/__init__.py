@@ -1,6 +1,6 @@
 """API for the analysis of partially observable models (POMDPs).
 
-Makes the functionality of ``storm::pomdp::`` available, e.g., transformations of POMDPs, belief tracking, qualitative analysis and monitor verification.
+Makes the functionality of ``storm::pomdp::`` available, e.g., transformations of POMDPs, belief tracking, qualitative analysis, quantitative analysis and monitor verification.
 """
 
 from collections.abc import Sequence
@@ -26,6 +26,10 @@ MonitorVerifier = developer.MonitorVerifier.publish_as("stormpy.pomdp.MonitorVer
 IterativePolicySearch = developer.IterativePolicySearch.publish_as("stormpy.pomdp.IterativePolicySearch")
 WinningRegion = developer.WinningRegion
 WinningRegionQueryInterface = developer.WinningRegionQueryInterface.publish_as("stormpy.pomdp.WinningRegionQueryInterface")
+ExplorationQueueOrder = developer.ExplorationQueueOrder
+BeliefBasedModelCheckerStatistics = developer.BeliefBasedModelCheckerStatistics
+BeliefBasedModelCheckerResult = developer.BeliefBasedModelCheckerResult.publish_as("stormpy.pomdp.BeliefBasedModelCheckerResult")
+ObservationBasedFiniteStateController = developer.ObservationBasedFiniteStateController.publish_as("stormpy.pomdp.ObservationBasedFiniteStateController")
 
 
 def make_canonic(model: SparsePomdp) -> SparsePomdp:
@@ -180,6 +184,91 @@ def create_iterative_policy_search(model: SparsePomdp, property: Property | Form
     return developer.create_iterative_policy_search(environment, model, _formula(property), developer.MemlessSearchOptions())
 
 
+def verify_with_belief_unfolding(
+    model: SparsePomdp,
+    property: Property | Formula,
+    *,
+    max_exploration_size: int | None = None,
+    max_exploration_time: int | None = None,
+    use_clipping: bool = False,
+    clipping_resolutions: Sequence[int] | None = None,
+    cut_zero_gap: bool = False,
+    exploration_queue_order: ExplorationQueueOrder = ExplorationQueueOrder.FIFO,
+    build_choice_labeling: bool = True,
+    generate_policy: bool = False,
+    environment: Environment | None = None,
+) -> BeliefBasedModelCheckerResult:
+    """
+    Approximate an unbounded reachability probability or expected reachability reward by unfolding the belief MDP.
+
+    The POMDP is prepared automatically (made canonic, target observations refined, failure states made absorbing).
+    The POMDP must have exactly one initial state and the property must be non-nested, without threshold and with an explicit optimization direction.
+    The value is a lower bound for maximization and an upper bound for minimization.
+    Without clipping and with completed exploration, the value is the value of the belief MDP.
+
+    :param model: POMDP.
+    :param property: Unbounded reachability probability or expected reachability reward property or formula, e.g., ``Pmax=? [F "goal"]``.
+    :param max_exploration_size: (optional) Maximal number of discovered beliefs. Defaults to no limit.
+    :param max_exploration_time: (optional) Maximal exploration time in seconds. Defaults to no limit.
+    :param use_clipping: Whether belief clipping is used.
+    :param clipping_resolutions: Clipping resolution (positive) for each observation of the POMDP. Required for clipping.
+    :param cut_zero_gap: Whether non-target beliefs are cut whose preprocessing bounds coincide. Incompatible with ``generate_policy``.
+    :param exploration_queue_order: Order in which discovered beliefs are explored.
+    :param build_choice_labeling: Whether choice labels are built for the belief MDP. Requires choice labels in the POMDP.
+    :param generate_policy: Whether a finite-state controller is generated, see :attr:`BeliefBasedModelCheckerResult.policy`.
+        The controller refers to the prepared POMDP, i.e., actions are ordered as in the canonic POMDP and observations include the refined target observations.
+    :param environment: (optional) Environment configuring the solvers. Defaults to :func:`stormpy.environments.default`.
+    :return: The result containing the bound, whether the exploration was completed, statistics and the optional policy.
+    """
+    options = developer.BeliefBasedModelCheckerOptions[_parameters_of_model(model)]()
+    options.max_exploration_size = max_exploration_size
+    options.max_exploration_time = max_exploration_time
+    options.use_clipping = use_clipping
+    options.clipping_resolutions = list(clipping_resolutions) if clipping_resolutions is not None else None
+    options.cut_zero_gap = cut_zero_gap
+    options.exploration_queue_order = exploration_queue_order
+    options.build_choice_labeling = build_choice_labeling
+    options.generate_policy = generate_policy
+    environment = environment if environment is not None else environments.default(model)
+    return developer.verify_with_belief_unfolding(environment, model, _formula(property), options)
+
+
+def verify_with_belief_discretization(
+    model: SparsePomdp,
+    property: Property | Formula,
+    resolution: int = 2,
+    *,
+    use_dynamic: bool = False,
+    cut_zero_gap: bool = False,
+    exploration_queue_order: ExplorationQueueOrder = ExplorationQueueOrder.FIFO,
+    build_choice_labeling: bool = True,
+    environment: Environment | None = None,
+) -> BeliefBasedModelCheckerResult:
+    """
+    Approximate an unbounded reachability probability or expected reachability reward by discretizing the belief space (Freudenthal triangulation).
+
+    The POMDP is prepared as for :func:`verify_with_belief_unfolding`.
+    The value is an upper bound for maximization and a lower bound for minimization.
+    Completed exploration refers to the discretized MDP and does not imply that the value is exact.
+
+    :param model: POMDP.
+    :param property: Unbounded reachability probability or expected reachability reward property or formula, e.g., ``Pmax=? [F "goal"]``.
+    :param resolution: Resolution (positive) of the discretization. Higher resolutions give tighter bounds.
+    :param use_dynamic: Whether the resolution is selected per belief using dynamic triangulation.
+    :param cut_zero_gap: Whether non-target beliefs are cut whose preprocessing bounds coincide.
+    :param exploration_queue_order: Order in which discovered beliefs are explored.
+    :param build_choice_labeling: Whether choice labels are built for the belief MDP. Requires choice labels in the POMDP.
+    :param environment: (optional) Environment configuring the solvers. Defaults to :func:`stormpy.environments.default`.
+    :return: The result containing the bound, whether the exploration was completed and statistics.
+    """
+    options = developer.BeliefBasedModelCheckerOptions[_parameters_of_model(model)]()
+    options.cut_zero_gap = cut_zero_gap
+    options.exploration_queue_order = exploration_queue_order
+    options.build_choice_labeling = build_choice_labeling
+    environment = environment if environment is not None else environments.default(model)
+    return developer.verify_with_belief_discretization(environment, model, _formula(property), resolution, use_dynamic, options)
+
+
 __all__ = [
     # Transformations
     "make_canonic",
@@ -203,6 +292,13 @@ __all__ = [
     "WinningRegionQueryInterface",
     "prepare_for_qualitative_search",
     "create_iterative_policy_search",
+    # Quantitative analysis
+    "ExplorationQueueOrder",
+    "BeliefBasedModelCheckerStatistics",
+    "BeliefBasedModelCheckerResult",
+    "ObservationBasedFiniteStateController",
+    "verify_with_belief_unfolding",
+    "verify_with_belief_discretization",
     # Monitor verification
     "MonitorVerifier",
     "create_monitor_verifier",

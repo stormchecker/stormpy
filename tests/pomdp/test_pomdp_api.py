@@ -36,6 +36,8 @@ class TestPublicPomdpApi:
             "_unfold_memory_Double",
             "_make_simple_Double",
             "_apply_unknown_fsc_Rf",
+            "BeliefExplorationModelCheckerDouble",
+            "BeliefExplorationModelCheckerOptionsDouble",
         ]:
             assert not hasattr(stormpy.pomdp, name)
             assert not hasattr(stormpy.pomdp.developer, name)
@@ -57,8 +59,13 @@ class TestPublicPomdpApi:
             "GenerateMonitorVerifierOptions",
             "create_iterative_policy_search",
             "prepare_pomdp_for_qualitative_search",
+            "BeliefBasedModelCheckerOptions",
+            "verify_with_belief_unfolding",
+            "verify_with_belief_discretization",
         ]:
             assert hasattr(stormpy.pomdp.developer, name)
         assert stormpy.pomdp.PomdpMemory is stormpy.pomdp.developer.PomdpMemory
         assert stormpy.pomdp.BeliefSupportTracker[float] is stormpy.pomdp.developer.BeliefSupportTracker[float]
+        assert stormpy.pomdp.BeliefBasedModelCheckerResult[float] is stormpy.pomdp.developer.BeliefBasedModelCheckerResult[float]
+        assert set(stormpy.pomdp.developer.BeliefBasedModelCheckerOptions.instantiations) == {(float,), (stormpy.Rational,)}
         assert set(stormpy.pomdp.developer.MakePOMDPCanonic.instantiations) == {(float,), (stormpy.Rational,), (stormpy.RationalFunction,)}

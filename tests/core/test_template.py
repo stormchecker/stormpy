@@ -173,11 +173,18 @@ def test_python_template_function():
     assert isinstance(scale_by, _TemplateFunction)
     assert scale_by[3](2, offset=1) == 7
     assert scale_by(2) == 4
+    assert str(inspect.signature(scale_by)) == "(value, *, offset=0)"
+    assert inspect.signature(scale_by) == inspect.signature(scale_by[3])
     assert list(inspect.signature(scale_by[3]).parameters) == ["value", "offset"]
     assert scale_by[3].__name__ == "scale_by"
     assert inspect.getdoc(scale_by[3]) == "Scale the value."
     with pytest.raises(TypeError, match="Supported are: 2, 3"):
         scale_by[4]
+
+    published = scale_by.publish_as("public.scale_by")
+    assert inspect.signature(published) == inspect.signature(scale_by)
+    assert published(2, offset=1) == 5
+    assert published[3](2, offset=1) == 7
 
 
 def test_builtin_deduction_sources_are_exposed_as_metadata():

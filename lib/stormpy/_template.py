@@ -358,6 +358,8 @@ class _TemplateClass:
         published._deduction_guide = self._deduction_guide
         published._instantiations = dict(self._instantiations)
         published._parameters_by_type = dict(self._parameters_by_type)
+        if hasattr(self, "__signature__"):
+            published.__signature__ = self.__signature__
         return published
 
     def __repr__(self) -> str:
@@ -426,6 +428,8 @@ def _template_function(
 
         name = canonical_name.rpartition(".")[2]
         module = SimpleNamespace(_template_instantiations={name: implementations})
-        return _TemplateFunction(canonical_name, module, parameters=parameters, deduce=deduce)
+        family = _TemplateFunction(canonical_name, module, parameters=parameters, deduce=deduce)
+        family.__signature__ = instantiation_signature
+        return family
 
     return decorator

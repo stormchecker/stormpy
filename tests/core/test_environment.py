@@ -59,8 +59,8 @@ class TestEnvironment:
         assert env.modelchecker().steady_state_distribution_algorithm == stormpy.environments.SteadyStateDistributionAlgorithm.EXPECTED_VISITING_TIMES
         env.modelchecker().steady_state_distribution_algorithm = stormpy.environments.SteadyStateDistributionAlgorithm.CLASSIC
         assert env.modelchecker().steady_state_distribution_algorithm == stormpy.environments.SteadyStateDistributionAlgorithm.CLASSIC
-        default_result = stormpy.compute_steady_state_distribution(model).get_finite_value_vector()
-        classic_result = stormpy.compute_steady_state_distribution(model, environment=env).get_finite_value_vector()
+        default_result = stormpy.analysis.compute_steady_state_distribution(model).get_finite_value_vector()
+        classic_result = stormpy.analysis.compute_steady_state_distribution(model, environment=env).get_finite_value_vector()
         assert all(math.isclose(a, b, abs_tol=1e-6) for a, b in zip(default_result, classic_result))
 
 

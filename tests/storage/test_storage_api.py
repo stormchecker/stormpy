@@ -32,7 +32,7 @@ def test_public_classes_share_native_types(package):
             assert internal.canonical_name == f"stormpy.developer.storage.{name}"
             assert public.instantiations == internal.instantiations
         elif inspect.isclass(public):
-            assert public is getattr(stormpy.developer.storage, name)
+            assert public is getattr(stormpy.developer.storage, name, None) or public is getattr(stormpy.developer, name)
 
 
 def test_native_module_location():
@@ -58,7 +58,7 @@ def test_storm_method_names_and_keyword_arguments():
 @pytest.mark.parametrize("value_type", [float, stormpy.Rational, stormpy.RationalFunction, stormpy.Interval, stormpy.RationalInterval])
 def test_build_matrix_selects_value_type(value_type):
     if value_type is stormpy.RationalFunction:
-        values = [stormpy.RationalFunction(stormpy.Polynomial(stormpy.RationalFunctionCoefficient(value))) for value in (1, 2)]
+        values = [stormpy.RationalFunction(stormpy.numbers.Polynomial(stormpy.numbers.RationalFunctionCoefficient(value))) for value in (1, 2)]
     elif value_type is stormpy.RationalInterval:
         values = [stormpy.RationalInterval(stormpy.Rational(value)) for value in (1, 2)]
     else:
@@ -74,9 +74,9 @@ def test_build_matrix_selects_value_type(value_type):
 def test_public_valuations_convert_boolean_bitvector_to_list():
     manager = stormpy.expressions.ExpressionManager()
     flag = manager.declare_boolean_variable("flag")
-    builder = stormpy.datastructures.ValuationDescriptionBuilder(manager)
+    builder = stormpy.models.ValuationDescriptionBuilder(manager)
     builder.add_boolean_variable(flag)
-    values = stormpy.datastructures.Valuations(builder.build_class_description(), manager, 3)
+    values = stormpy.models.Valuations(builder.build_class_description(), manager, 3)
     values.write_value(1, flag, True)
     assert list(values.get_boolean_values(flag)) == [1]
     assert values.get_values_states(flag) == [False, True, False]
@@ -111,11 +111,11 @@ def test_scheduler_conversion_uses_one_template_family():
     scheduler = stormpy.model_checking(model, prop, extract_scheduler=True).get_scheduler()
     raw = stormpy.developer.storage
     exact = raw.to_value_type[stormpy.Rational](scheduler=scheduler)
-    assert type(exact) is stormpy.datastructures.Scheduler[stormpy.Rational]
+    assert type(exact) is stormpy.models.Scheduler[stormpy.Rational]
     assert exact.deterministic
     floating = raw.to_value_type[float](exact)
-    assert type(floating) is stormpy.datastructures.Scheduler[float]
-    assert type(scheduler.to_value_type(stormpy.RationalInterval)) is stormpy.datastructures.Scheduler[stormpy.RationalInterval]
+    assert type(floating) is stormpy.models.Scheduler[float]
+    assert type(scheduler.to_value_type(stormpy.RationalInterval)) is stormpy.models.Scheduler[stormpy.RationalInterval]
     with pytest.raises(TypeError):
         raw.to_value_type[float](scheduler.to_value_type(stormpy.Interval))
 

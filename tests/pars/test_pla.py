@@ -63,19 +63,19 @@ class TestPLA:
             else:
                 assert False
         region_valuation = dict()
-        region_valuation[pL] = (stormpy.RationalFunctionCoefficient(0.7), stormpy.RationalFunctionCoefficient(0.9))
-        region_valuation[pK] = (stormpy.RationalFunctionCoefficient(0.75), stormpy.RationalFunctionCoefficient(0.95))
+        region_valuation[pL] = (stormpy.numbers.RationalFunctionCoefficient(0.7), stormpy.numbers.RationalFunctionCoefficient(0.9))
+        region_valuation[pK] = (stormpy.numbers.RationalFunctionCoefficient(0.75), stormpy.numbers.RationalFunctionCoefficient(0.95))
         region = stormpy.pars.create_region(region_valuation)
         assert stormpy.pars.verify(model, formula, region=region, environment=env)
-        region_valuation[pL] = (stormpy.RationalFunctionCoefficient(0.4), stormpy.RationalFunctionCoefficient(0.65))
+        region_valuation[pL] = (stormpy.numbers.RationalFunctionCoefficient(0.4), stormpy.numbers.RationalFunctionCoefficient(0.65))
         region = stormpy.pars.create_region(region_valuation)
         assert not stormpy.pars.verify(model, formula, region=region, environment=env)
         for property in [formula, complement]:
             result = stormpy.pars.check_feasibility(model, property, region=region, method=stormpy.pars.FeasibilityMethod.PLA, environment=env)
             assert result.status == stormpy.pars.RegionResult.EXISTS_SAT
             assert result.witness is not None
-        region_valuation[pK] = (stormpy.RationalFunctionCoefficient(0.2), stormpy.RationalFunctionCoefficient(0.715))
-        region_valuation[pL] = (stormpy.RationalFunctionCoefficient(0.1), stormpy.RationalFunctionCoefficient(0.73))
+        region_valuation[pK] = (stormpy.numbers.RationalFunctionCoefficient(0.2), stormpy.numbers.RationalFunctionCoefficient(0.715))
+        region_valuation[pL] = (stormpy.numbers.RationalFunctionCoefficient(0.1), stormpy.numbers.RationalFunctionCoefficient(0.73))
         region = stormpy.pars.create_region(region_valuation)
         assert not stormpy.pars.verify(model, formula, region=region, environment=env)
         result = stormpy.pars.check_feasibility(model, formula, region=region, method=stormpy.pars.FeasibilityMethod.PLA, environment=env)

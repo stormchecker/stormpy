@@ -6,9 +6,9 @@ from collections.abc import Iterable
 
 from stormpy import developer, environments
 from stormpy.developer import storage
-from stormpy.core._common import _formula, _value_type_of_model
+from stormpy.core._common import _formula
 from stormpy.core._modelchecking import model_checking
-from stormpy.developer import CheckResult, CheckTask, Environment, OptimizationDirection, PcaaWeightVectorChecker, Property
+from stormpy.developer import CheckResult, Environment, OptimizationDirection, Property
 from stormpy.exceptions import StormError
 
 
@@ -92,24 +92,3 @@ def compute_steady_state_distribution(model, *, environment: Environment | None 
     if model.supports_parameters:
         raise StormError("The steady-state distribution is not supported for parametric models.")
     return developer.compute_steady_state_distribution_with_sparse_engine(environment if environment is not None else environments.default(model), model)
-
-
-def create_weight_vector_checker(
-    model, property: Property, *, produce_scheduler: bool = False, environment: Environment | None = None
-) -> tuple[PcaaWeightVectorChecker, storage.SparseModelMemoryProductReverseData | None]:
-    """
-    Create a checker for weighted sums of the objectives of a multi-objective property.
-
-    The checker optimizes the weighted sum for a given weight vector via ``checker.check(env, weights)``.
-
-    :param model: Sparse MDP (with float or Rational values).
-    :param property: Multi-objective property (or formula).
-    :param produce_scheduler: If True, the checker can compute optimal schedulers.
-    :param environment: (optional) Environment configuring the preprocessing. Defaults to :func:`stormpy.environments.default`.
-    :return: Tuple of the checker and the data mapping schedulers of the checker back to the original model (None if not required).
-    """
-    if model.supports_parameters or model.supports_uncertainty:
-        raise StormError("Parametric and interval models are not supported.")
-    return developer.create_weight_vector_checker(
-        environment if environment is not None else environments.default(model), model, _formula(property), produce_scheduler
-    )

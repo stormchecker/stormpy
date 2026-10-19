@@ -479,14 +479,14 @@ class TestModelChecking:
     def test_compute_expected_number_of_visits(self):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
         model = stormpy.build_model(program)
-        result = stormpy.compute_expected_number_of_visits(model)
+        result = stormpy.analysis.compute_expected_number_of_visits(model)
         assert result[0] == 1
         assert math.isclose(result[1], 2.0 / 3, rel_tol=1e-6)
 
     def test_compute_steady_state_distribution(self):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
         model = stormpy.build_model(program)
-        result = stormpy.compute_steady_state_distribution(model)
+        result = stormpy.analysis.compute_steady_state_distribution(model)
         values = result.get_finite_value_vector()
         assert len(values) == 13
         sorted(values)

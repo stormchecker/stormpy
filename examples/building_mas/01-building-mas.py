@@ -22,7 +22,7 @@ def example_building_mas_01():
     print(transition_matrix)
 
     # StateLabeling
-    state_labeling = stormpy.datastructures.StateLabeling(5)
+    state_labeling = stormpy.models.StateLabeling(5)
     # Add labels
     state_labels = {"init", "deadlock"}
     # Set labeling of states
@@ -31,7 +31,7 @@ def example_building_mas_01():
     state_labeling.add_label_to_state("init", 0)
 
     # Choice labeling
-    choice_labeling = stormpy.datastructures.ChoiceLabeling(6)
+    choice_labeling = stormpy.models.ChoiceLabeling(6)
     # Add labels
     choice_labels = {"alpha", "beta"}
     # Set labeling of choices

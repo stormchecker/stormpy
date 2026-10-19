@@ -27,7 +27,7 @@ def argument_name(argument, namespaces=None):
         if namespaces is None:
             namespaces = public_api_modules()
         aliases = (f"{module.__name__}.{key}" for module in namespaces for key in module.__all__ if getattr(module, key) is cls)
-        name = min(aliases, key=lambda s: (s.count("."), len(s), s), default=f"{cls.__module__}.{cls.__qualname__}")
+        name = min(aliases, key=lambda s: (s.rpartition(".")[0] == "stormpy", s.count("."), len(s), s), default=f"{cls.__module__}.{cls.__qualname__}")
     return name if isinstance(argument, type) else f"{name}.{argument.name}" if hasattr(argument, "name") else repr(argument)
 
 

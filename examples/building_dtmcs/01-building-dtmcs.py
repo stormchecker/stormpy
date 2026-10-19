@@ -30,7 +30,7 @@ def example_building_dtmcs_01():
     print(transition_matrix)
 
     # State labeling
-    state_labeling = stormpy.datastructures.StateLabeling(13)
+    state_labeling = stormpy.models.StateLabeling(13)
 
     # Add labels
     labels = {"init", "one", "two", "three", "four", "five", "six", "done", "deadlock"}

@@ -42,7 +42,7 @@ model = stormpy.build_model(prism_program)
 We also import the `ShortestPathsGenerator`:
 
 ```{code-cell} python3
-from stormpy.utility import ShortestPathsGenerator
+from stormpy.analysis import ShortestPathsGenerator
 ```
 
 and choose a target state (by its ID) to which we want to compute the shortest paths:

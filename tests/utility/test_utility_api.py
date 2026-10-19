@@ -29,7 +29,7 @@ def test_public_classes_share_native_types():
 def test_native_module_location():
     native = stormpy.developer.utility._utility
     assert native.__name__ == "stormpy.developer.utility._utility"
-    assert stormpy.utility.ShortestPathsGenerator[float].__module__ == native.__name__
+    assert stormpy.analysis.ShortestPathsGenerator[float].__module__ == native.__name__
 
 
 def test_settings_removed_from_top_level():

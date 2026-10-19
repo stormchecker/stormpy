@@ -1,7 +1,7 @@
 import stormpy
 from stormpy.datastructures import BitVector
-from stormpy.utility import ShortestPathsGenerator
-from stormpy.utility import MatrixFormat
+from stormpy.analysis import ShortestPathsGenerator
+from stormpy.analysis import MatrixFormat
 from helpers.helper import get_example_path
 
 import pytest
@@ -161,18 +161,18 @@ def test_shortest_paths_die():
 
 
 def test_path_keyword_arguments():
-    path = stormpy.utility.Path(predecessor_node=1, predecessor_k=2, distance=0.5)
+    path = stormpy.analysis.Path(predecessor_node=1, predecessor_k=2, distance=0.5)
     assert path.predecessor_k == 2
     assert path.distance == 0.5
     assert str(path) == "Path with predecessorNode: 1 predecessorK: 2 distance: 0.5"
-    assert str(stormpy.utility.Path(predecessor_k=2, distance=0.5)) == "Path with predecessorNode: None predecessorK: 2 distance: 0.5"
+    assert str(stormpy.analysis.Path(predecessor_k=2, distance=0.5)) == "Path with predecessorNode: None predecessorK: 2 distance: 0.5"
 
 
 def test_shortest_paths_default_target_label():
     program = stormpy.parse_prism_program(get_example_path("dtmc", "brp-16-2.pm"))
     prop = stormpy.parse_property('P=? [F "target"]', program)
     model = stormpy.build_model(program, prop)
-    spg = stormpy.utility.ShortestPathsGenerator(model=model)
+    spg = stormpy.analysis.ShortestPathsGenerator(model=model)
     assert 0 < spg.get_distance(k=1) <= 1
 
 
@@ -180,20 +180,20 @@ def test_shortest_paths_deduce_value_type():
     program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
     model = stormpy.build_model(program)
     exact_model = stormpy.build_model[stormpy.Rational](program)
-    spg = stormpy.utility.ShortestPathsGenerator(model, 8)
-    exact_spg = stormpy.utility.ShortestPathsGenerator(exact_model, 8)
-    assert isinstance(spg, stormpy.utility.ShortestPathsGenerator[float])
-    assert isinstance(exact_spg, stormpy.utility.ShortestPathsGenerator[stormpy.Rational])
+    spg = stormpy.analysis.ShortestPathsGenerator(model, 8)
+    exact_spg = stormpy.analysis.ShortestPathsGenerator(exact_model, 8)
+    assert isinstance(spg, stormpy.analysis.ShortestPathsGenerator[float])
+    assert isinstance(exact_spg, stormpy.analysis.ShortestPathsGenerator[stormpy.Rational])
     assert exact_spg.get_distance(1) == stormpy.Rational("1/8")
     assert exact_spg.get_path_as_list(2) == spg.get_path_as_list(2)
     # Matrix-based construction deduces the value type from the transition matrix
-    matrix_spg = stormpy.utility.ShortestPathsGenerator(
+    matrix_spg = stormpy.analysis.ShortestPathsGenerator(
         exact_model.transition_matrix,
         {7: stormpy.Rational(1)},
         exact_model.initial_states_as_bitvector,
-        stormpy.utility.MatrixFormat.STRAIGHT,
+        stormpy.analysis.MatrixFormat.STRAIGHT,
     )
-    assert isinstance(matrix_spg, stormpy.utility.ShortestPathsGenerator[stormpy.Rational])
+    assert isinstance(matrix_spg, stormpy.analysis.ShortestPathsGenerator[stormpy.Rational])
 
-    exact_path = stormpy.utility.Path[stormpy.Rational](predecessor_k=1, distance=stormpy.Rational("1/2"))
+    exact_path = stormpy.analysis.Path[stormpy.Rational](predecessor_k=1, distance=stormpy.Rational("1/2"))
     assert exact_path.distance == stormpy.Rational("1/2")

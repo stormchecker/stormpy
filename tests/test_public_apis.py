@@ -31,6 +31,8 @@ def _not_documented_elsewhere(_name):
 # Public modules: name -> (available, predicate for names documented in other modules)
 _PUBLIC_MODULES = {
     "stormpy": (True, _core_documented_elsewhere),
+    "stormpy.analysis": (True, _not_documented_elsewhere),
+    "stormpy.transformations": (True, _not_documented_elsewhere),
     "stormpy.dft": (has_dft, _not_documented_elsewhere),
     "stormpy.gspn": (has_gspn, _not_documented_elsewhere),
     "stormpy.pars": (has_pars, _not_documented_elsewhere),

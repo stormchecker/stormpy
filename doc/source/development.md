@@ -15,13 +15,19 @@ The following contains some general guidelines for developers.
 ``stormpy.developer.logic`` contains the raw native module.
 
 ### Storage packages
-The public objects are selected explicitly in ``stormpy.models`` (models and components),
-``stormpy.datastructures`` (matrices, labels, schedulers, valuations and JSON containers),
-``stormpy.expressions`` (expressions and variables) and ``stormpy.io`` (model descriptions and UMB archives).
+The public objects are selected explicitly in ``stormpy.models`` (models, components,
+rewards, state/action views, labels, valuations, schedulers and memory structures),
+``stormpy.datastructures`` (bit vectors, matrices, distributions and JSON containers),
+``stormpy.expressions`` (expressions and variables) and ``stormpy.io`` (format-specific
+descriptions, parsing, exporting and their options).
 ``stormpy.developer.storage`` contains the raw native module and template families such as advanced DD and transformation helpers.
 
 ### Utility packages
-``stormpy.utility`` selects the public objects: logging, timeouts and shortest paths.
+``stormpy.utility`` selects the public objects: logging and timeouts.
+Shortest paths, graph decompositions and numerical analyses belong to ``stormpy.analysis``.
+Model-checking results, bounds, aggregation and filters belong directly to ``stormpy``.
+Model transformations and their options, policies and mapping results belong to
+``stormpy.transformations``. Only ``add_uncertainty`` has a top-level shortcut.
 ``stormpy.developer.utility`` contains the raw native module, including the Kwek-Mehlhorn algorithm.
 
 ## Public API and developer bindings
@@ -29,7 +35,8 @@ Each library ``xy`` of Storm (e.g. core or DFTs) is split into two layers:
 - ``stormpy.xy.developer`` contains the raw pybind11 bindings defined in ``src/xy``.
   They mirror the C++ API of Storm (naming, arguments and default values).
 - ``stormpy.xy`` is the public API built on top of ``stormpy.xy.developer``.
-  It contains only the strictly necessary functions and classes, and each of them is documented.
+  Each public object supports a documented user task and has a supported interface,
+  including the objects returned from public methods.
   The public names are declared in ``__all__`` of the module.
   Only names listed in ``__all__`` are part of the public API and appear in the API documentation.
   Python conveniences are implemented in this public layer.

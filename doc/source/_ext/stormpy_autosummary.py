@@ -24,6 +24,18 @@ def public_api_modules():
     )
 
 
+def canonical_api_alias(fullname):
+    """Find the domain owner of a top-level convenience export."""
+    module, _, name = fullname.rpartition(".")
+    if module != "stormpy" or name not in stormpy.__all__:
+        return None
+    obj = getattr(stormpy, name)
+    for namespace in public_api_modules():
+        if namespace is not stormpy and name in namespace.__all__ and getattr(namespace, name) is obj:
+            return f"{namespace.__name__}.{name}"
+    return None
+
+
 def _export_key(obj):
     # publish_as() creates a new wrapper around the same native registrations.
     if isinstance(obj, _TemplateClass):

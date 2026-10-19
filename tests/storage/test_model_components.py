@@ -43,7 +43,7 @@ class TestSparseModelComponents:
         transition_matrix = builder.build(nr_states, nr_states)
 
         # state labeling
-        state_labeling = stormpy.datastructures.StateLabeling(nr_states)
+        state_labeling = stormpy.models.StateLabeling(nr_states)
         state_labels = {"init", "one", "two", "three", "four", "five", "six", "done", "deadlock"}
         for label in state_labels:
             state_labeling.add_label(label)
@@ -68,11 +68,11 @@ class TestSparseModelComponents:
         manager = stormpy.expressions.ExpressionManager()
         var_s = manager.declare_integer_variable(name="s")
         var_d = manager.declare_integer_variable(name="d")
-        desc_builder = stormpy.datastructures.ValuationDescriptionBuilder(manager)
+        desc_builder = stormpy.models.ValuationDescriptionBuilder(manager)
         desc_builder.add_integer_variable(var_s, 0, 7)
         desc_builder.add_integer_variable(var_d, 0, 6)
         desc = desc_builder.build_class_description()
-        state_valuations = stormpy.datastructures.Valuations(desc, manager, 13)
+        state_valuations = stormpy.models.Valuations(desc, manager, 13)
         for s in range(7):
             state_valuations.write_int64_value(s, var_s, s)
             state_valuations.write_int64_value(s, var_d, 0)
@@ -87,7 +87,7 @@ class TestSparseModelComponents:
         for i in range(1, 8):  # 0: no origin
             id_to_command_set_mapping[i].insert(i - 1)
         id_to_command_set_mapping[8].insert(7)
-        choice_origins = stormpy.datastructures.PrismChoiceOrigins(prism_program, index_to_identifier_mapping, id_to_command_set_mapping)
+        choice_origins = stormpy.models.PrismChoiceOrigins(prism_program, index_to_identifier_mapping, id_to_command_set_mapping)
 
         # Construct components
         components = stormpy.models.SparseModelComponents(transition_matrix=transition_matrix, state_labeling=state_labeling, reward_models=reward_models)
@@ -198,7 +198,7 @@ class TestSparseModelComponents:
         transition_matrix = builder.build(nr_choices, nr_states)
 
         # state labeling
-        state_labeling = stormpy.datastructures.StateLabeling(nr_states)
+        state_labeling = stormpy.models.StateLabeling(nr_states)
         labels = {"init", "one", "two", "three", "four", "five", "six", "done", "deadlock"}
         for label in labels:
             state_labeling.add_label(label)
@@ -219,7 +219,7 @@ class TestSparseModelComponents:
         reward_models["coin_flips"] = stormpy.models.SparseRewardModel(optional_state_action_reward_vector=action_reward)
 
         # choice labeling
-        choice_labeling = stormpy.datastructures.ChoiceLabeling(nr_choices)
+        choice_labeling = stormpy.models.ChoiceLabeling(nr_choices)
         choice_labels = {"a", "b"}
         for label in choice_labels:
             choice_labeling.add_label(label)
@@ -230,11 +230,11 @@ class TestSparseModelComponents:
         manager = stormpy.expressions.ExpressionManager()
         var_s = manager.declare_integer_variable(name="s")
         var_d = manager.declare_integer_variable(name="d")
-        desc_builder = stormpy.datastructures.ValuationDescriptionBuilder(manager)
+        desc_builder = stormpy.models.ValuationDescriptionBuilder(manager)
         desc_builder.add_integer_variable(var_s, 0, 7)
         desc_builder.add_integer_variable(var_d, 0, 6)
         desc = desc_builder.build_class_description()
-        state_valuations = stormpy.datastructures.Valuations(desc, manager, 13)
+        state_valuations = stormpy.models.Valuations(desc, manager, 13)
         for s in range(7):
             state_valuations.write_int64_value(s, var_s, s)
             state_valuations.write_int64_value(s, var_d, 0)
@@ -251,7 +251,7 @@ class TestSparseModelComponents:
             # 0: no origin
             id_to_command_set_mapping[i].insert(i - 1)
         id_to_command_set_mapping[9].insert(8)
-        choice_origins = stormpy.datastructures.PrismChoiceOrigins(prism_program, index_to_identifier_mapping, id_to_command_set_mapping)
+        choice_origins = stormpy.models.PrismChoiceOrigins(prism_program, index_to_identifier_mapping, id_to_command_set_mapping)
 
         # Construct Components
         components = stormpy.models.SparseModelComponents(
@@ -339,7 +339,7 @@ class TestSparseModelComponents:
         transition_matrix = stormpy.datastructures.build_sparse_matrix(transitions)
 
         # state labeling
-        state_labeling = stormpy.datastructures.StateLabeling(nr_states)
+        state_labeling = stormpy.models.StateLabeling(nr_states)
         # Add labels
         state_labels = {"init", "deadlock", "target"}
         for label in state_labels:
@@ -360,7 +360,7 @@ class TestSparseModelComponents:
         reward_models["waiting"] = stormpy.models.SparseRewardModel(optional_state_reward_vector=state_reward)
 
         # choice labeling
-        choice_labeling = stormpy.datastructures.ChoiceLabeling(nr_choices)
+        choice_labeling = stormpy.models.ChoiceLabeling(nr_choices)
         choice_labels = {"loop1a", "loop1b", "serve1", "loop2a", "loop2b", "serve2"}
         # Add labels
         for label in choice_labels:
@@ -379,7 +379,7 @@ class TestSparseModelComponents:
         var_a = manager.declare_integer_variable(name="a")
         var_s1 = manager.declare_integer_variable(name="s1")
         var_s2 = manager.declare_integer_variable(name="s2")
-        desc_builder = stormpy.datastructures.ValuationDescriptionBuilder(manager)
+        desc_builder = stormpy.models.ValuationDescriptionBuilder(manager)
         desc_builder.add_integer_variable(var_s, 1, 2)
         desc_builder.add_integer_variable(var_a, 0, 1)
         desc_builder.add_integer_variable(var_s1, 0, 1)
@@ -399,7 +399,7 @@ class TestSparseModelComponents:
             [2, 1, 0, 1],
             [2, 1, 1, 1],
         ]
-        state_valuations = stormpy.datastructures.Valuations(desc, manager, 12)
+        state_valuations = stormpy.models.Valuations(desc, manager, 12)
         for state, (sv, sa, ss1, ss2) in enumerate(state_vals):
             state_valuations.write_int64_value(state, var_s, sv)
             state_valuations.write_int64_value(state, var_a, sa)
@@ -516,7 +516,7 @@ class TestSparseModelComponents:
         transition_matrix = builder.build(nr_choices, nr_states)
 
         # state labeling
-        state_labeling = stormpy.datastructures.StateLabeling(nr_states)
+        state_labeling = stormpy.models.StateLabeling(nr_states)
         # Add labels
         state_labels = {"init", "deadlock"}
         for label in state_labels:
@@ -528,10 +528,10 @@ class TestSparseModelComponents:
         # state valuations
         manager = stormpy.expressions.ExpressionManager()
         var_s = manager.declare_integer_variable(name="s")
-        desc_builder = stormpy.datastructures.ValuationDescriptionBuilder(manager)
+        desc_builder = stormpy.models.ValuationDescriptionBuilder(manager)
         desc_builder.add_integer_variable(var_s, 0, 4)
         desc = desc_builder.build_class_description()
-        state_valuations = stormpy.datastructures.Valuations(desc, manager, 5)
+        state_valuations = stormpy.models.Valuations(desc, manager, 5)
         for state, val in enumerate([0, 2, 1, 4, 3]):
             state_valuations.write_int64_value(state, var_s, val)
 
@@ -551,7 +551,7 @@ class TestSparseModelComponents:
         id_to_command_set_mapping[9].insert(6)
         id_to_command_set_mapping[10].insert(5)
 
-        choice_origins = stormpy.datastructures.PrismChoiceOrigins(prism_program, index_to_identifier_mapping, id_to_command_set_mapping)
+        choice_origins = stormpy.models.PrismChoiceOrigins(prism_program, index_to_identifier_mapping, id_to_command_set_mapping)
 
         exit_rates = [3.0, 12.0, 10.0, 3.0, 4.0]
 
@@ -672,7 +672,7 @@ class TestSparseModelComponents:
         transition_matrix = stormpy.datastructures.build_sparse_matrix(transitions, row_group_indices=[0, 1, 5, 9, 13, 17, 21, 25, 29, 33])
 
         # state labeling
-        state_labeling = stormpy.datastructures.StateLabeling(nr_states)
+        state_labeling = stormpy.models.StateLabeling(nr_states)
         labels = {"deadlock", "goal", "init"}
         for label in labels:
             state_labeling.add_label(label)
@@ -721,7 +721,7 @@ class TestSparseModelComponents:
         reward_models[""] = stormpy.models.SparseRewardModel(optional_state_action_reward_vector=action_reward)
 
         # choice labeling
-        choice_labeling = stormpy.datastructures.ChoiceLabeling(nr_choices)
+        choice_labeling = stormpy.models.ChoiceLabeling(nr_choices)
         choice_labels = {"south", "north", "west", "east", "done"}
         for label in choice_labels:
             choice_labeling.add_label(label)
@@ -736,13 +736,13 @@ class TestSparseModelComponents:
         var_x = manager.declare_integer_variable(name="x")
         var_y = manager.declare_integer_variable(name="y")
         var_o = manager.declare_integer_variable(name="o")
-        desc_builder = stormpy.datastructures.ValuationDescriptionBuilder(manager)
+        desc_builder = stormpy.models.ValuationDescriptionBuilder(manager)
         desc_builder.add_integer_variable(var_x, 0, 2)
         desc_builder.add_integer_variable(var_y, 0, 2)
         desc_builder.add_integer_variable(var_o, 0, 2)
         desc = desc_builder.build_class_description()
         state_vals = [[0, 0, 0], [0, 0, 1], [0, 1, 1], [0, 2, 1], [1, 0, 1], [1, 1, 1], [1, 2, 1], [2, 1, 1], [2, 2, 1], [2, 0, 2]]
-        state_valuations = stormpy.datastructures.Valuations(desc, manager, 10)
+        state_valuations = stormpy.models.Valuations(desc, manager, 10)
         for state, (vx, vy, vo) in enumerate(state_vals):
             state_valuations.write_int64_value(state, var_x, vx)
             state_valuations.write_int64_value(state, var_y, vy)
@@ -818,11 +818,11 @@ class TestSparseModelComponents:
             from stormpy.numbers.developer import gmp as pc
 
         def create_polynomial(pol):
-            num = pc.create_factorized_polynomial(stormpy.RawPolynomial(pol))
+            num = pc.create_factorized_polynomial(stormpy.numbers.RawPolynomial(pol))
             return stormpy.RationalFunction(num)
 
         def create_number(num):
-            num = stormpy.Polynomial(stormpy.RationalFunctionCoefficient(num))
+            num = stormpy.numbers.Polynomial(stormpy.numbers.RationalFunctionCoefficient(num))
             return stormpy.RationalFunction(num)
 
         from stormpy.numbers.developer import Variable
@@ -862,7 +862,7 @@ class TestSparseModelComponents:
         transition_matrix = builder.build(nr_states, nr_states)
 
         # state labeling
-        state_labeling = stormpy.datastructures.StateLabeling(nr_states)
+        state_labeling = stormpy.models.StateLabeling(nr_states)
         state_labels = {"init", "one", "two", "three", "four", "five", "six", "done", "deadlock"}
         for label in state_labels:
             state_labeling.add_label(label)
@@ -957,7 +957,7 @@ class TestSparseModelComponents:
         transition_matrix = builder.build(nr_choices, nr_states)
 
         # State labeling
-        state_labeling = stormpy.datastructures.StateLabeling(nr_states)
+        state_labeling = stormpy.models.StateLabeling(nr_states)
         labels = {"init_p1", "bad", "done"}
         for label in labels:
             state_labeling.add_label(label)
@@ -966,7 +966,7 @@ class TestSparseModelComponents:
         state_labeling.add_label_to_state("bad", 6)
 
         # Choice labeling
-        choice_labeling = stormpy.datastructures.ChoiceLabeling(nr_choices)
+        choice_labeling = stormpy.models.ChoiceLabeling(nr_choices)
         choice_labels = {"a", "b", "c", "d"}
         for label in choice_labels:
             choice_labeling.add_label(label)

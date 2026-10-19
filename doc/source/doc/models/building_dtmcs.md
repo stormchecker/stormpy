@@ -90,7 +90,7 @@ States can be labeled with sets of propositions, for example state 0 can be labe
 In order to specify the state labeling we create an empty labeling for the given number of states and add the labels to the labeling:
 
 ```{code-cell} python3
-state_labeling = stormpy.datastructures.StateLabeling(13)
+state_labeling = stormpy.models.StateLabeling(13)
 
 labels = {"init", "one", "two", "three", "four", "five", "six", "done", "deadlock"}
 for label in labels:

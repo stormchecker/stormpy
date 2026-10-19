@@ -59,9 +59,9 @@ def example_pomdps_01():
 
     export_pmc = False  # Set to True to export the pMC as drn.
     if export_pmc:
-        export_options = stormpy.DirectEncodingExporterOptions()
+        export_options = stormpy.io.DirectEncodingExporterOptions()
         export_options.allow_placeholders = False
-        stormpy.export_to_drn(pmc, "test.out", options=export_options)
+        stormpy.io.export_to_drn(pmc, "test.out", options=export_options)
 
 
 if __name__ == "__main__":

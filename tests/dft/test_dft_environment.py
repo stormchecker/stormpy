@@ -63,10 +63,10 @@ class TestDftEnvironment:
         assert transformation_env.eliminate_chains
 
         for label_behavior in (
-            stormpy.EliminationLabelBehavior.KEEP_LABELS,
-            stormpy.EliminationLabelBehavior.EXTEND_LABELS,
-            stormpy.EliminationLabelBehavior.MERGE_LABELS,
-            stormpy.EliminationLabelBehavior.DELETE_LABELS,
+            stormpy.transformations.EliminationLabelBehavior.KEEP_LABELS,
+            stormpy.transformations.EliminationLabelBehavior.EXTEND_LABELS,
+            stormpy.transformations.EliminationLabelBehavior.MERGE_LABELS,
+            stormpy.transformations.EliminationLabelBehavior.DELETE_LABELS,
         ):
             transformation_env.label_behavior = label_behavior
             assert transformation_env.label_behavior == label_behavior

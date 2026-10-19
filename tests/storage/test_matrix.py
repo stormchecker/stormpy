@@ -11,7 +11,7 @@ class TestMatrix:
     @pytest.mark.parametrize("value_type", [float, stormpy.Rational, stormpy.RationalFunction, stormpy.Interval, stormpy.RationalInterval])
     def test_entry_value_property(self, value_type):
         if value_type is stormpy.RationalFunction:
-            first, second = [stormpy.RationalFunction(stormpy.Polynomial(stormpy.RationalFunctionCoefficient(value))) for value in (1, 2)]
+            first, second = [stormpy.RationalFunction(stormpy.numbers.Polynomial(stormpy.numbers.RationalFunctionCoefficient(value))) for value in (1, 2)]
         elif value_type is stormpy.RationalInterval:
             first, second = [stormpy.RationalInterval(stormpy.Rational(value)) for value in (1, 2)]
         else:
@@ -137,8 +137,8 @@ class TestMatrix:
         assert initial_state == 0
         matrix = model.transition_matrix
         # Check matrix
-        one_pol = stormpy.RationalFunctionCoefficient(1)
-        one_pol = stormpy.Polynomial(one_pol)
+        one_pol = stormpy.numbers.RationalFunctionCoefficient(1)
+        one_pol = stormpy.numbers.Polynomial(one_pol)
         one = stormpy.RationalFunction(one_pol, one_pol)
         for e in matrix:
             assert e.value == one or len(e.value.gather_variables()) > 0
@@ -148,8 +148,8 @@ class TestMatrix:
         assert len(ratFunc.gather_variables()) > 0
 
         # Change probabilities
-        two_pol = stormpy.RationalFunctionCoefficient(2)
-        two_pol = stormpy.Polynomial(two_pol)
+        two_pol = stormpy.numbers.RationalFunctionCoefficient(2)
+        two_pol = stormpy.numbers.Polynomial(two_pol)
         new_val = stormpy.RationalFunction(one_pol, two_pol)
         for e in matrix:
             if len(e.value.gather_variables()) > 0:

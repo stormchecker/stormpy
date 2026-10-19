@@ -12,8 +12,8 @@ from .developer.infinity import Infinity
 
 
 def _plain_value(value: Any) -> Any:
-    # BoundedValue is defined in the higher-level stormpy.core which is loaded after stormpy.numbers
-    from stormpy.core._results import BoundedValue
+    # Results are loaded after stormpy.numbers; defer this import.
+    from stormpy import BoundedValue
 
     return BoundedValue._plain(value)
 

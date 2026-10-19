@@ -1,5 +1,5 @@
 import stormpy
-from stormpy.utility import ShortestPathsGenerator
+from stormpy.analysis import ShortestPathsGenerator
 
 import stormpy.examples
 import stormpy.examples.files

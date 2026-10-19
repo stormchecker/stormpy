@@ -1,6 +1,6 @@
 """Python bindings for the probabilistic model checker Storm.
 
-This module provides the public API for the core functionality of Storm:
+This module provides convenience entry points for the core functionality of Storm:
 parsing symbolic models and properties, building models, model checking and transforming models.
 """
 
@@ -16,6 +16,7 @@ from . import exceptions
 from . import expressions, datastructures, models, io, logic
 from . import utility
 from . import environments
+from . import analysis, transformations
 
 try:
     from ._version import __version__
@@ -25,18 +26,8 @@ except ImportError:
 
 developer._set_up("")
 
-# Import classes from developer (and republish templated classes under stormpy.X)
-SymbolicModelDescription = developer.SymbolicModelDescription
-JaniModelType = developer.JaniModelType
-
-DirectEncodingParserOptions = developer.DirectEncodingParserOptions
-ExplicitModelParserOptions = developer.ExplicitModelParserOptions
-DirectEncodingExporterOptions = developer.DirectEncodingExporterOptions
-
-Environment = developer.Environment
-UncertaintyResolutionMode = developer.UncertaintyResolutionMode
-ModelCheckerHint = developer.ModelCheckerHint
-ExplicitModelCheckerHint = developer.ExplicitModelCheckerHint.publish_as("stormpy.ExplicitModelCheckerHint")
+# Model checking configuration and results.
+from .environments import Environment
 
 CheckResult = developer.CheckResult
 QualitativeCheckResult = developer.QualitativeCheckResult
@@ -49,41 +40,25 @@ ExplicitParetoCurveCheckResult = developer.ExplicitParetoCurveCheckResult.publis
 SolutionBounds = developer.SolutionBounds.publish_as("stormpy.SolutionBounds")
 AggregatedValue = developer.AggregatedValue.publish_as("stormpy.AggregatedValue")
 FilterType = developer.FilterType
-PcaaWeightVectorChecker = developer.PcaaWeightVectorChecker.publish_as("stormpy.PcaaWeightVectorChecker")
 
-BisimulationType = developer.BisimulationType
-BisimulationOptions = developer.BisimulationOptions
-StateLabelPreservation = developer.StateLabelPreservation
-QuotientFormat = developer.QuotientFormat
-EliminationLabelBehavior = developer.EliminationLabelBehavior
-SubsystemBuilderOptions = developer.SubsystemBuilderOptions
-SubsystemBuilderReturnType = developer.SubsystemBuilderReturnType.publish_as("stormpy.SubsystemBuilderReturnType")
+from .core._results import BoundedValue
+from .core._filters import create_filter, create_filter_initial_states, filter_initial_states
+
+UncertaintyResolutionMode = developer.UncertaintyResolutionMode
+ModelCheckerHint = developer.ModelCheckerHint
+ExplicitModelCheckerHint = developer.ExplicitModelCheckerHint.publish_as("stormpy.ExplicitModelCheckerHint")
+
 
 # Import public functions
-from .core._parsing import instantiate_constants, parse_jani_model, parse_jani_model_from_string, parse_prism_program, parse_properties, parse_property
+from .io import instantiate_constants, parse_jani_model, parse_jani_model_from_string, parse_prism_program
+from .logic import parse_properties, parse_property
+from .analysis import compute_expected_number_of_visits
 from .core._building import BuilderOptions, build_model, build_model_from_drn, build_model_from_explicit, build_model_from_umb, build_symbolic_model
-from .core._results import BoundedValue
-from .core._modelchecking import Engine, create_filter, create_filter_initial_states, filter_initial_states, model_checking
-from .core._analysis import (
-    compute_prob01_states,
-    compute_expected_number_of_visits,
-    compute_steady_state_distribution,
-    create_weight_vector_checker,
-    topological_sort,
-)
-from .core._transformation import (
-    add_uncertainty,
-    build_submodel,
-    eliminate_non_markovian_chains,
-    perform_bisimulation,
-    set_state_valuations,
-    transform_to_discrete_time_model,
-    transform_to_sparse_model,
-)
-from .core._io import export_to_drn, export_to_umb
+from .core._modelchecking import Engine, model_checking
+from .transformations import add_uncertainty
 
 __all__ = [
-    # Value types (re-exported from stormpy.numbers)
+    # Numeric types (canonical namespace: stormpy.numbers)
     "Interval",
     "Polynomial",
     "Rational",
@@ -91,9 +66,7 @@ __all__ = [
     "RationalFunctionCoefficient",
     "RationalInterval",
     "RawPolynomial",
-    # Parsing
-    "SymbolicModelDescription",
-    "JaniModelType",
+    # Parsing shortcuts (canonical namespaces: stormpy.io and stormpy.logic)
     "parse_prism_program",
     "parse_jani_model",
     "parse_jani_model_from_string",
@@ -102,14 +75,12 @@ __all__ = [
     "instantiate_constants",
     # Building
     "BuilderOptions",
-    "DirectEncodingParserOptions",
-    "ExplicitModelParserOptions",
     "build_model",
     "build_symbolic_model",
     "build_model_from_drn",
     "build_model_from_explicit",
     "build_model_from_umb",
-    # Model checking
+    # Model checking and results
     "Engine",
     "Environment",
     "UncertaintyResolutionMode",
@@ -123,38 +94,16 @@ __all__ = [
     "SymbolicQuantitativeCheckResult",
     "HybridQuantitativeCheckResult",
     "ExplicitParetoCurveCheckResult",
-    "BoundedValue",
     "SolutionBounds",
     "AggregatedValue",
     "FilterType",
-    "model_checking",
+    "BoundedValue",
+    "create_filter",
     "create_filter_initial_states",
     "filter_initial_states",
-    "create_filter",
-    # Analysis
-    "PcaaWeightVectorChecker",
-    "topological_sort",
-    "compute_prob01_states",
+    "model_checking",
+    # Analysis shortcut (canonical namespace: stormpy.analysis)
     "compute_expected_number_of_visits",
-    "compute_steady_state_distribution",
-    "create_weight_vector_checker",
-    # Transformations
-    "BisimulationType",
-    "BisimulationOptions",
-    "StateLabelPreservation",
-    "QuotientFormat",
-    "EliminationLabelBehavior",
-    "SubsystemBuilderOptions",
-    "SubsystemBuilderReturnType",
-    "perform_bisimulation",
-    "transform_to_sparse_model",
-    "transform_to_discrete_time_model",
-    "eliminate_non_markovian_chains",
-    "build_submodel",
+    # Transformation shortcut (canonical namespace: stormpy.transformations)
     "add_uncertainty",
-    "set_state_valuations",
-    # Export
-    "DirectEncodingExporterOptions",
-    "export_to_drn",
-    "export_to_umb",
 ]

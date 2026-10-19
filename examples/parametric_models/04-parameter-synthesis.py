@@ -30,8 +30,8 @@ def example_parameter_synthesis():
         assert math.isclose(probability, result.witness.value, rel_tol=1e-6)
         assert probability <= 0.5
 
-    lower = stormpy.RationalFunctionCoefficient("1/5")
-    upper = stormpy.RationalFunctionCoefficient("3/5")
+    lower = stormpy.numbers.RationalFunctionCoefficient("1/5")
+    upper = stormpy.numbers.RationalFunctionCoefficient("3/5")
     smaller_region = stormpy.pars.create_region({parameter: (lower, upper) for parameter in model.collect_all_parameters()})
     assert stormpy.pars.verify(model, property, region=smaller_region)
 

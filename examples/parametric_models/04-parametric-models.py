@@ -23,8 +23,8 @@ def example_parametric_models_04():
                 if len(transition.value.gather_variables()) > 0:
                     new_var = stormpy.numbers.Variable("p{}".format(i))
                     i += 1
-                    new_pol = stormpy.RawPolynomial(new_var)
-                    pol_in_right_format = stormpy.Polynomial(new_pol, transition.value.numerator.cache())
+                    new_pol = stormpy.numbers.RawPolynomial(new_var)
+                    pol_in_right_format = stormpy.numbers.Polynomial(new_pol, transition.value.numerator.cache())
 
                     new_factorized_ratfunc = stormpy.RationalFunction(pol_in_right_format)
                     transition.value = new_factorized_ratfunc

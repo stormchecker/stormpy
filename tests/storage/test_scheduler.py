@@ -50,7 +50,7 @@ class TestScheduler:
         assert ma.model_type == stormpy.models.ModelType.MA
 
         # Convert MA to MDP
-        mdp, mdp_formulas = stormpy.transform_to_discrete_time_model(ma, formula)
+        mdp, mdp_formulas = stormpy.transformations.transform_to_discrete_time_model(ma, formula)
         assert mdp.nr_states == 5
         assert mdp.nr_transitions == 8
         assert mdp.model_type == stormpy.models.ModelType.MDP

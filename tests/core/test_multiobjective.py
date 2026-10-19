@@ -58,7 +58,7 @@ class TestMultiObjectiveModelChecking:
 class TestWeightedObjectiveModelChecking:
     def _check_maze_weighted_objective(self, model, prop):
         env = stormpy.environments.default(model)
-        weighted_model_checker, inverter = stormpy.create_weight_vector_checker(model, prop, produce_scheduler=True, environment=env)
+        weighted_model_checker, inverter = stormpy.developer.create_weight_vector_checker(env, model, prop.get_raw_formula(), produce_scheduler=True)
         precision = 0 if model.is_exact else 1e-4
         weighted_model_checker.set_weighted_precision(precision)
         weighted_model_checker.check(env, [1, 1])

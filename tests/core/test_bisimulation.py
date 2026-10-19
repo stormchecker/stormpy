@@ -20,7 +20,7 @@ class TestBisimulation:
         initial_state = model.initial_states[0]
         assert initial_state == 0
         result = stormpy.model_checking(model, formula)
-        model_bisim = stormpy.perform_bisimulation(model, formula)
+        model_bisim = stormpy.transformations.perform_bisimulation(model, formula)
         assert model_bisim.nr_states == 65
         assert model_bisim.nr_transitions == 105
         assert model_bisim.model_type == stormpy.models.ModelType.DTMC
@@ -39,7 +39,7 @@ class TestBisimulation:
         assert model.nr_transitions == 13041
         assert model.model_type == stormpy.models.ModelType.DTMC
         assert not model.supports_parameters
-        model_bisim = stormpy.perform_bisimulation(model, formula)
+        model_bisim = stormpy.transformations.perform_bisimulation(model, formula)
         assert model_bisim.nr_states == 65
         assert model_bisim.nr_transitions == 105
         assert model_bisim.model_type == stormpy.models.ModelType.DTMC
@@ -64,7 +64,7 @@ class TestBisimulation:
         result = stormpy.model_checking(model, formula)
         ratFunc = result[initial_state]
 
-        model_bisim = stormpy.perform_bisimulation(model, formula)
+        model_bisim = stormpy.transformations.perform_bisimulation(model, formula)
         assert model_bisim.nr_states == 326
         assert model_bisim.nr_transitions == 454
         assert model_bisim.model_type == stormpy.models.ModelType.DTMC
@@ -76,10 +76,10 @@ class TestBisimulation:
         ratFunc_bisim = result_bisim[initial_state_bisim]
         assert ratFunc == ratFunc_bisim
 
-        options = stormpy.BisimulationOptions()
-        options.state_label_preservation = stormpy.StateLabelPreservation.ALL
+        options = stormpy.transformations.BisimulationOptions()
+        options.state_label_preservation = stormpy.transformations.StateLabelPreservation.ALL
         options.preserve_all_rewards = True
-        model_bisim = stormpy.perform_bisimulation(model, formula, options=options)
+        model_bisim = stormpy.transformations.perform_bisimulation(model, formula, options=options)
         assert model_bisim.nr_states == 328
         assert model_bisim.nr_transitions == 456
         assert model_bisim.model_type == stormpy.models.ModelType.DTMC
@@ -100,7 +100,7 @@ class TestBisimulation:
         assert model.nr_transitions == 803
         assert model.model_type == stormpy.models.ModelType.DTMC
         assert model.has_parameters
-        model_bisim = stormpy.perform_bisimulation(model, formula)
+        model_bisim = stormpy.transformations.perform_bisimulation(model, formula)
         assert model_bisim.nr_states == 326
         assert model_bisim.nr_transitions == 454
         assert model_bisim.model_type == stormpy.models.ModelType.DTMC
@@ -110,10 +110,10 @@ class TestBisimulation:
         program = stormpy.parse_prism_program(get_example_path("dtmc", "crowds5_5.pm"))
         prop = stormpy.parse_property('P=? [F "observe0Greater1"]', program)
         model = stormpy.build_symbolic_model(program, prop)
-        quotient = stormpy.perform_bisimulation(model, prop, quotient_format=stormpy.QuotientFormat.SPARSE)
+        quotient = stormpy.transformations.perform_bisimulation(model, prop, quotient_format=stormpy.transformations.QuotientFormat.SPARSE)
         assert quotient.is_sparse_model
         assert type(quotient) is stormpy.models.SparseDtmc[float]
-        dd_quotient = stormpy.perform_bisimulation(model, prop)
+        dd_quotient = stormpy.transformations.perform_bisimulation(model, prop)
         assert dd_quotient.is_symbolic_model
         assert quotient.nr_states == dd_quotient.nr_states
         assert quotient.nr_states < model.nr_states
@@ -122,5 +122,5 @@ class TestBisimulation:
         program = stormpy.parse_prism_program(get_example_path("dtmc", "crowds5_5.pm"))
         prop = stormpy.parse_property('P=? [F "observe0Greater1"]', program)
         model = stormpy.build_model(program, prop)
-        quotient = stormpy.perform_bisimulation(model, prop, bisimulation_type=stormpy.BisimulationType.WEAK)
+        quotient = stormpy.transformations.perform_bisimulation(model, prop, bisimulation_type=stormpy.transformations.BisimulationType.WEAK)
         assert quotient.nr_states < model.nr_states

@@ -39,6 +39,7 @@ void define_storage(py::module& m) {
                       std::string const&>(),
              "Construct property from formula", py::arg("name"), py::arg("formula"), py::arg("undefined_constants"), py::arg("comment") = "")
         .def(py::init<storm::jani::Property>(), "Copy property", py::arg("other"))
+        .def("clone", &storm::jani::Property::clone, "Return a deep copy of the property, preserving its name, comment, filter, and undefined constants")
         .def("get_name", &storm::jani::Property::getName, "Get the name of the property")
         .def("get_comment", &storm::jani::Property::getComment, "Get the comment of the property")
         .def("get_raw_formula", &storm::jani::Property::getRawFormula, "Get the formula of the property")

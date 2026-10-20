@@ -23,7 +23,7 @@ def example_parametric_models_02():
     result = stormpy.model_checking(model, prop)
     print("Result: {}".format(result[initial_state]))
 
-    collector = stormpy.ConstraintCollector(model)
+    collector = stormpy.pars.ConstraintCollector(model)
     print("Well formed constraints:")
     for constraint in collector.get_wellformed_constraints():
         print(constraint)

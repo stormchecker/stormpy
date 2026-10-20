@@ -1,3 +1,4 @@
+import pytest
 import stormpy
 from helpers.helper import get_example_path
 
@@ -120,3 +121,48 @@ class TestModelInstantiator:
         assert isinstance(res.value, stormpy.Rational)
         assert res == stormpy.Rational("4/35")
         assert res.lower == res.upper == res.value
+
+
+@pars
+class TestInstantiationCheckerDeveloper:
+    @pytest.mark.parametrize("result_type", [float, stormpy.Rational], ids=["float", "rational"])
+    @pytest.mark.parametrize(
+        "model_file, property_text, valuations_and_results",
+        [
+            pytest.param(
+                "herman5.pm",
+                'R=? [F "stable"]',
+                [("1/2", "29/15"), ("2/5", "38525/19456"), ("1/2", "29/15")],
+                id="rewards",
+            ),
+            pytest.param(
+                "parametric_die.pm",
+                "P=? [F s=7 & d=2]",
+                [("1/2", "1/6"), ("2/5", "4/35"), ("1/2", "1/6")],
+                id="probabilities",
+            ),
+        ],
+    )
+    def test_repeated_valuations(self, result_type, model_file, property_text, valuations_and_results):
+        program = stormpy.parse_prism_program(get_example_path("pdtmc", model_file))
+        prop = stormpy.parse_property(property_text, program)
+        model = stormpy.build_model[stormpy.RationalFunction](program, prop)
+        env = stormpy.environments.sound() if result_type is float else stormpy.environments.exact()
+        family = stormpy.pars.developer.SparseInstantiationModelChecker
+        checker_type = family[stormpy.models.ModelType.DTMC, result_type]
+        checker = family(environment=env, model=model) if result_type is float else checker_type(env, model)
+        assert type(checker) is checker_type
+        checker.specify_formula(stormpy.developer.CheckTask[stormpy.RationalFunction](prop.get_raw_formula(), True))
+        checker.set_instantiations_are_graph_preserving(True)
+
+        for parameter_value, expected_value in valuations_and_results:
+            valuation = {parameter: stormpy.RationalFunctionCoefficient(parameter_value) for parameter in model.collect_all_parameters()}
+            result = checker.check(env, valuation)
+            assert isinstance(result, stormpy.ExplicitQuantitativeCheckResult[result_type])
+            value = result[model.initial_states[0]]
+            assert isinstance(value, stormpy.BoundedValue)
+            assert isinstance(value.value, result_type)
+            if result_type is float:
+                assert math.isclose(value.value, float(stormpy.Rational(expected_value)), rel_tol=1e-6)
+            else:
+                assert value.lower == value.upper == value.value == stormpy.Rational(expected_value)

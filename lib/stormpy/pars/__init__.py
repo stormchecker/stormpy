@@ -43,7 +43,7 @@ def create_region(bounds: Mapping[Variable, tuple[RationalFunctionCoefficient, R
     """
     Create a parameter region from bounds for each parameter.
 
-    :param bounds: Mapping from each parameter to its (lower bound, upper bound).
+    :param bounds: Mapping from each parameter to its inclusive tuple representing [lower bound, upper bound].
     :return: The parameter region.
     """
     lower = {parameter: bound[0] for parameter, bound in bounds.items()}
@@ -85,7 +85,7 @@ def verify(
     Requires a sparse parametric DTMC or MDP with exactly one initial state.
     Provide exactly one of ``region`` or ``region_bound``. The region must cover
     all model parameters. Standard parameter lifting requires a well-defined,
-    graph-preserving region; endpoints are not removed automatically. Robust
+    graph-preserving region. Robust
     parameter lifting supports DTMCs and can include graph-changing valuations.
     Unsupported inputs raise an exception.
 

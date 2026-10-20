@@ -29,16 +29,16 @@ class TestPLA:
         parameters = model.collect_all_parameters()
         assert len(parameters) == 2
         region = stormpy.pars.parse_region("0.7<=pL<=0.9,0.75<=pK<=0.95", parameters)
-        assert stormpy.pars.verify(model, formula, region, environment=env)
+        assert stormpy.pars.verify(model, formula, region=region, environment=env)
         region = stormpy.pars.parse_region("0.4<=pL<=0.65,0.75<=pK<=0.95", parameters)
-        assert not stormpy.pars.verify(model, formula, region, environment=env)
+        assert not stormpy.pars.verify(model, formula, region=region, environment=env)
         for property in [formula, complement]:
-            result = stormpy.pars.check_feasibility(model, property, region, method=stormpy.pars.FeasibilityMethod.PLA, environment=env)
+            result = stormpy.pars.check_feasibility(model, property, region=region, method=stormpy.pars.FeasibilityMethod.PLA, environment=env)
             assert result.status == stormpy.pars.RegionResult.EXISTS_SAT
             assert result.witness is not None
         region = stormpy.pars.parse_region("0.1<=pL<=0.73,0.2<=pK<=0.715", parameters)
-        assert not stormpy.pars.verify(model, formula, region, environment=env)
-        result = stormpy.pars.check_feasibility(model, formula, region, method=stormpy.pars.FeasibilityMethod.PLA, environment=env)
+        assert not stormpy.pars.verify(model, formula, region=region, environment=env)
+        result = stormpy.pars.check_feasibility(model, formula, region=region, method=stormpy.pars.FeasibilityMethod.PLA, environment=env)
         assert result.status == stormpy.pars.RegionResult.ALL_VIOLATED
         assert result.witness is None
 
@@ -66,18 +66,18 @@ class TestPLA:
         region_valuation[pL] = (stormpy.RationalFunctionCoefficient(0.7), stormpy.RationalFunctionCoefficient(0.9))
         region_valuation[pK] = (stormpy.RationalFunctionCoefficient(0.75), stormpy.RationalFunctionCoefficient(0.95))
         region = stormpy.pars.create_region(region_valuation)
-        assert stormpy.pars.verify(model, formula, region, environment=env)
+        assert stormpy.pars.verify(model, formula, region=region, environment=env)
         region_valuation[pL] = (stormpy.RationalFunctionCoefficient(0.4), stormpy.RationalFunctionCoefficient(0.65))
         region = stormpy.pars.create_region(region_valuation)
-        assert not stormpy.pars.verify(model, formula, region, environment=env)
+        assert not stormpy.pars.verify(model, formula, region=region, environment=env)
         for property in [formula, complement]:
-            result = stormpy.pars.check_feasibility(model, property, region, method=stormpy.pars.FeasibilityMethod.PLA, environment=env)
+            result = stormpy.pars.check_feasibility(model, property, region=region, method=stormpy.pars.FeasibilityMethod.PLA, environment=env)
             assert result.status == stormpy.pars.RegionResult.EXISTS_SAT
             assert result.witness is not None
         region_valuation[pK] = (stormpy.RationalFunctionCoefficient(0.2), stormpy.RationalFunctionCoefficient(0.715))
         region_valuation[pL] = (stormpy.RationalFunctionCoefficient(0.1), stormpy.RationalFunctionCoefficient(0.73))
         region = stormpy.pars.create_region(region_valuation)
-        assert not stormpy.pars.verify(model, formula, region, environment=env)
-        result = stormpy.pars.check_feasibility(model, formula, region, method=stormpy.pars.FeasibilityMethod.PLA, environment=env)
+        assert not stormpy.pars.verify(model, formula, region=region, environment=env)
+        result = stormpy.pars.check_feasibility(model, formula, region=region, method=stormpy.pars.FeasibilityMethod.PLA, environment=env)
         assert result.status == stormpy.pars.RegionResult.ALL_VIOLATED
         assert result.witness is None

@@ -73,8 +73,8 @@ def _region_argument(region: ParameterRegion | None, region_bound: RationalFunct
 def verify(
     model: SparseModel,
     property: Property | Formula,
-    region: ParameterRegion | None = None,
     *,
+    region: ParameterRegion | None = None,
     region_bound: RationalFunctionCoefficient | float | int | None = None,
     engine: RegionCheckEngine = RegionCheckEngine.PARAMETER_LIFTING,
     environment: Environment | None = None,
@@ -93,7 +93,7 @@ def verify(
     :param property: Bounded probability or reward property or formula.
     :param region: Explicit parameter region.
     :param region_bound: Use [region_bound, 1-region_bound] for every parameter; must be in [0, 1/2].
-        Accepts rational coefficients, floats, or integers. Floats use their decimal representation, e.g. 0.2 means exactly 1/5.
+        Floats use their decimal representation, e.g. 0.2 means exactly 1/5.
     :param engine: Region checking engine.
     :param environment: (optional) Environment configuring the analysis.
     :return: Whether every well-defined valuation in the region satisfies the property.
@@ -106,8 +106,8 @@ def verify(
 def check_feasibility(
     model: SparseModel,
     property: Property | Formula,
-    region: ParameterRegion | None = None,
     *,
+    region: ParameterRegion | None = None,
     region_bound: RationalFunctionCoefficient | float | int | None = None,
     method: FeasibilityMethod = FeasibilityMethod.PLA,
     region_engine: RegionCheckEngine = RegionCheckEngine.PARAMETER_LIFTING,
@@ -132,7 +132,7 @@ def check_feasibility(
     :param property: Bounded probability or reward property or formula.
     :param region: Explicit parameter region.
     :param region_bound: Use [region_bound, 1-region_bound] for every parameter; must be in [0, 1/2].
-        Accepts rational coefficients, floats, or integers. Floats use their decimal representation, e.g. 0.2 means exactly 1/5.
+        Floats use their decimal representation, e.g. 0.2 means exactly 1/5.
     :param method: Feasibility method: parameter lifting (PLA), gradient descent (GD), or sequential convex programming (SCP).
     :param region_engine: Region checking engine, used only for PLA.
     :param environment: (optional) Environment configuring the analysis.
@@ -151,8 +151,8 @@ def check_feasibility(
 def compute_extremal_value(
     model: SparseModel,
     property: Property | Formula,
-    region: ParameterRegion,
     *,
+    region: ParameterRegion,
     direction: OptimizationDirection,
     precision: RationalFunctionCoefficient | float | int,
     absolute_precision: bool = False,
@@ -172,7 +172,7 @@ def compute_extremal_value(
     :param property: Quantitative probability or reward property or formula.
     :param region: Parameter region satisfying the selected engine's requirements.
     :param direction: Whether to minimize or maximize over parameter valuations.
-    :param precision: Required precision as a rational coefficient, float, or integer.
+    :param precision: Required precision.
         Floats must be finite and use their decimal representation, e.g. 1e-6 means exactly 1/1000000.
     :param absolute_precision: Whether precision is absolute (True) or relative (False).
     :param engine: Region checking engine.

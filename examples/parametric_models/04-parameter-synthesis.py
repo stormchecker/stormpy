@@ -11,12 +11,12 @@ def example_parameter_synthesis():
     model = stormpy.build_model[stormpy.RationalFunction](program, property)
     region = stormpy.pars.parse_region("0.2<=p<=0.8,0.2<=q<=0.8", model.collect_all_parameters())
 
-    print("Property holds throughout the region:", stormpy.pars.verify(model, property, region))
+    print("Property holds throughout the region:", stormpy.pars.verify(model, property, region=region))
     instantiator = stormpy.pars.ModelInstantiator(model)
     probability_property = stormpy.parse_property("P=? [F s=7 & d=2]", program)
     methods = [stormpy.pars.FeasibilityMethod.PLA, stormpy.pars.FeasibilityMethod.GD, stormpy.pars.FeasibilityMethod.SCP]
     for method in methods:
-        result = stormpy.pars.check_feasibility(model, property, region, method=method)
+        result = stormpy.pars.check_feasibility(model, property, region=region, method=method)
         print(method.name, "feasibility:", result.status)
         assert result.status == stormpy.pars.RegionResult.EXISTS_SAT
         assert result.witness is not None
@@ -32,10 +32,10 @@ def example_parameter_synthesis():
     lower = stormpy.RationalFunctionCoefficient("1/5")
     upper = stormpy.RationalFunctionCoefficient("3/5")
     smaller_region = stormpy.pars.create_region({parameter: (lower, upper) for parameter in model.collect_all_parameters()})
-    assert stormpy.pars.verify(model, property, smaller_region)
+    assert stormpy.pars.verify(model, property, region=smaller_region)
 
     stronger_property = stormpy.parse_property("P>=0.9 [F s=7 & d=2]", program)
-    infeasible = stormpy.pars.check_feasibility(model, stronger_property, region, method=stormpy.pars.FeasibilityMethod.PLA)
+    infeasible = stormpy.pars.check_feasibility(model, stronger_property, region=region, method=stormpy.pars.FeasibilityMethod.PLA)
     print("Feasibility of the stronger property:", infeasible.status)
     assert infeasible.status == stormpy.pars.RegionResult.ALL_VIOLATED
     assert infeasible.witness is None

@@ -45,7 +45,7 @@ holds for **every** well-defined valuation in this region:
 
 ```{code-cell} python3
 region = stormpy.pars.parse_region("0.2<=p<=0.8,0.2<=q<=0.8", parameters)
-holds_everywhere = stormpy.pars.verify(model, property, region)
+holds_everywhere = stormpy.pars.verify(model, property, region=region)
 print("Property holds throughout the region:", holds_everywhere)
 assert not holds_everywhere
 ```
@@ -58,7 +58,7 @@ This time, we construct the region from a dictionary of exact rational bounds:
 lower = stormpy.RationalFunctionCoefficient("1/5")
 upper = stormpy.RationalFunctionCoefficient("3/5")
 smaller_region = stormpy.pars.create_region({parameter: (lower, upper) for parameter in parameters})
-assert stormpy.pars.verify(model, property, smaller_region)
+assert stormpy.pars.verify(model, property, region=smaller_region)
 ```
 
 ### Finding and checking a satisfying valuation
@@ -81,7 +81,7 @@ methods = [
 ]
 results = {}
 for method in methods:
-    result = stormpy.pars.check_feasibility(model, property, region, method=method)
+    result = stormpy.pars.check_feasibility(model, property, region=region, method=method)
     results[method] = result
     print(method.name, "feasibility:", result.status)
     assert result.status == stormpy.pars.RegionResult.EXISTS_SAT
@@ -119,7 +119,7 @@ is `ALL_VIOLATED` and has no witness:
 
 ```{code-cell} python3
 stronger_property = stormpy.parse_property("P>=0.9 [F s=7 & d=2]", program)
-infeasible = stormpy.pars.check_feasibility(model, stronger_property, region, method=stormpy.pars.FeasibilityMethod.PLA)
+infeasible = stormpy.pars.check_feasibility(model, stronger_property, region=region, method=stormpy.pars.FeasibilityMethod.PLA)
 print("Feasibility of the stronger property:", infeasible.status)
 assert infeasible.status == stormpy.pars.RegionResult.ALL_VIOLATED
 assert infeasible.witness is None
@@ -156,16 +156,16 @@ For MDPs, bounds without `min` or `max` apply to every scheduler. For example,
 
 `compute_extremal_value` minimizes or maximizes a quantitative probability or reward
 over an explicit region. It returns the value and a parameter valuation achieving it,
-within the requested precision. Precision accepts rational coefficients, floats, and
-integers. Floats must be finite and are interpreted using their decimal representation,
-so `1e-4` means exactly `1/10000`. The wrapper handles the conversion required by Storm:
+within the requested precision. Floats must be finite and are interpreted using their
+decimal representation, so `1e-4` means exactly `1/10000`. The wrapper handles the
+conversion required by Storm:
 
 ```{code-cell} python3
 probability_property = stormpy.parse_property("P=? [F s=7 & d=2]", program)
 value, valuation = stormpy.pars.compute_extremal_value(
     model,
     probability_property,
-    region,
+    region=region,
     direction=stormpy.logic.OptimizationDirection.MAXIMIZE,
     precision=1e-4,
     absolute_precision=True,

@@ -59,7 +59,7 @@ class TestSynthesis:
             else {}
         )
         precision = stormpy.RationalFunctionCoefficient("1/1000000")
-        value, valuation = stormpy.pars.compute_extremal_value(model, prop, region, direction=direction, precision=precision, engine=engine, **options)
+        value, valuation = stormpy.pars.compute_extremal_value(model, prop, region=region, direction=direction, precision=precision, engine=engine, **options)
         expected = 0.8 if direction == stormpy.logic.OptimizationDirection.MAXIMIZE else 0.2
         assert math.isclose(float(value), expected, abs_tol=float(precision))
         assert set(valuation) == model.collect_all_parameters()
@@ -73,8 +73,8 @@ class TestSynthesis:
         prop = _property('P=? [F "target"]')
         region = stormpy.pars.parse_region("0.2<=p<=0.8", model.collect_all_parameters())
         options = {"direction": stormpy.logic.OptimizationDirection.MAXIMIZE, "absolute_precision": True}
-        result = stormpy.pars.compute_extremal_value(model, prop, region, precision=precision, **options)
-        expected = stormpy.pars.compute_extremal_value(model, prop, region, precision=stormpy.RationalFunctionCoefficient(coefficient), **options)
+        result = stormpy.pars.compute_extremal_value(model, prop, region=region, precision=precision, **options)
+        expected = stormpy.pars.compute_extremal_value(model, prop, region=region, precision=stormpy.RationalFunctionCoefficient(coefficient), **options)
         assert result == expected
 
     @pytest.mark.parametrize("precision", [math.nan, math.inf, -math.inf])
@@ -83,7 +83,7 @@ class TestSynthesis:
         prop = _property('P=? [F "target"]')
         region = stormpy.pars.parse_region("0.2<=p<=0.8", model.collect_all_parameters())
         with pytest.raises(ValueError, match="precision must be finite"):
-            stormpy.pars.compute_extremal_value(model, prop, region, direction=stormpy.logic.OptimizationDirection.MAXIMIZE, precision=precision)
+            stormpy.pars.compute_extremal_value(model, prop, region=region, direction=stormpy.logic.OptimizationDirection.MAXIMIZE, precision=precision)
 
     def test_float_region_bound(self, synthesis_model):
         model = synthesis_model
@@ -100,18 +100,18 @@ class TestSynthesis:
         region = stormpy.pars.parse_region("0.2<=p<=0.8", model.collect_all_parameters())
         universal = _property('P>=0.6 [F "target"]')
         existential = _property('Pmax>=0.6 [F "target"]')
-        assert not stormpy.pars.verify(model, universal, region)
-        assert stormpy.pars.verify(model, existential, region)
-        assert stormpy.pars.check_feasibility(model, universal, region).status == stormpy.pars.RegionResult.ALL_VIOLATED
-        assert stormpy.pars.check_feasibility(model, existential, region).status == stormpy.pars.RegionResult.EXISTS_SAT
+        assert not stormpy.pars.verify(model, universal, region=region)
+        assert stormpy.pars.verify(model, existential, region=region)
+        assert stormpy.pars.check_feasibility(model, universal, region=region).status == stormpy.pars.RegionResult.ALL_VIOLATED
+        assert stormpy.pars.check_feasibility(model, existential, region=region).status == stormpy.pars.RegionResult.EXISTS_SAT
         with pytest.raises(RuntimeError, match="universal scheduler"):
-            stormpy.pars.check_feasibility(model, existential, region, method=stormpy.pars.FeasibilityMethod.SCP)
+            stormpy.pars.check_feasibility(model, existential, region=region, method=stormpy.pars.FeasibilityMethod.SCP)
 
     def test_reward_property(self, tmp_path):
         model = _build_model(tmp_path, rewards=True)
         region = stormpy.pars.parse_region("0.5<=p<=0.5,2<=r<=4", model.collect_all_parameters())
-        assert stormpy.pars.verify(model, _property('R{"cost"}<=4 [F !"init"]'), region)
-        result = stormpy.pars.check_feasibility(model, _property('R{"cost"}>=3 [F !"init"]'), region)
+        assert stormpy.pars.verify(model, _property('R{"cost"}<=4 [F !"init"]'), region=region)
+        result = stormpy.pars.check_feasibility(model, _property('R{"cost"}>=3 [F !"init"]'), region=region)
         assert result.status == stormpy.pars.RegionResult.EXISTS_SAT
         assert result.witness.value >= 3.0
         assert set(result.witness.valuation) == model.collect_all_parameters()
@@ -124,9 +124,9 @@ class TestSynthesis:
         if raw_formula:
             prop = prop.get_raw_formula()
         region = stormpy.pars.parse_region("0.2<=p<=0.8", model.collect_all_parameters())
-        assert stormpy.pars.verify(model, prop, region, engine=engine)
+        assert stormpy.pars.verify(model, prop, region=region, engine=engine)
         assert stormpy.pars.verify(model, prop, region_bound=stormpy.RationalFunctionCoefficient("1/5"), engine=engine)
-        assert not stormpy.pars.verify(model, _property('P>=0.6 [F "target"]'), region, engine=engine, environment=stormpy.Environment())
+        assert not stormpy.pars.verify(model, _property('P>=0.6 [F "target"]'), region=region, engine=engine, environment=stormpy.Environment())
 
     @pytest.mark.parametrize(
         "method, engine",
@@ -140,7 +140,7 @@ class TestSynthesis:
         model = synthesis_model
         parameters = model.collect_all_parameters()
         region = stormpy.pars.create_region({p: (stormpy.RationalFunctionCoefficient("1/5"), stormpy.RationalFunctionCoefficient("4/5")) for p in parameters})
-        result = stormpy.pars.check_feasibility(model, _property('P>=0.6 [F "target"]'), region, method=method, region_engine=engine)
+        result = stormpy.pars.check_feasibility(model, _property('P>=0.6 [F "target"]'), region=region, method=method, region_engine=engine)
         assert isinstance(result, stormpy.pars.FeasibilitySynthesisResult)
         assert result.status == stormpy.pars.RegionResult.EXISTS_SAT
         assert isinstance(result.witness, stormpy.pars.FeasibilityResult)
@@ -187,8 +187,10 @@ class TestSynthesis:
         with pytest.raises(ValueError, match="exactly one"):
             function(synthesis_model, prop)
         region = stormpy.pars.parse_region("0.2<=p<=0.8", synthesis_model.collect_all_parameters())
+        with pytest.raises(TypeError, match="positional"):
+            function(synthesis_model, prop, region)
         with pytest.raises(ValueError, match="exactly one"):
-            function(synthesis_model, prop, region, region_bound=stormpy.RationalFunctionCoefficient("1/5"))
+            function(synthesis_model, prop, region=region, region_bound=stormpy.RationalFunctionCoefficient("1/5"))
         for invalid in ["-1", "1"]:
             with pytest.raises(RuntimeError, match="region bound"):
                 function(synthesis_model, prop, region_bound=stormpy.RationalFunctionCoefficient(invalid))
@@ -196,9 +198,9 @@ class TestSynthesis:
             with pytest.raises(ValueError, match="finite"):
                 function(synthesis_model, prop, region_bound=invalid)
         with pytest.raises(RuntimeError, match="bounded"):
-            function(synthesis_model, _property('P=? [F "target"]'), region)
+            function(synthesis_model, _property('P=? [F "target"]'), region=region)
         with pytest.raises(RuntimeError, match="cover"):
-            function(synthesis_model, prop, stormpy.pars.create_region({}))
+            function(synthesis_model, prop, region=stormpy.pars.create_region({}))
 
     @pytest.mark.parametrize("function", [stormpy.pars.verify, stormpy.pars.check_feasibility])
     @pytest.mark.parametrize("zero", [0, 0.0, stormpy.RationalFunctionCoefficient(0)])

@@ -108,17 +108,7 @@ def verify(
     :param region: Explicit parameter region.
     :param region_bound: Use [region_bound, 1-region_bound] for every parameter; must be in [0, 1/2].
         Floats use their decimal representation, e.g. 0.2 means exactly 1/5.
-    :param region_engine: Region checking engine, controlling the arithmetic and supported regions:
-
-        * ``PARAMETER_LIFTING`` (default): floating-point computations on the lifted model.
-        * ``EXACT_PARAMETER_LIFTING``: exact rational computations on the lifted model.
-        * ``VALIDATING_PARAMETER_LIFTING``: floating-point computations followed by
-          exact validation of the results.
-        * ``ROBUST_PARAMETER_LIFTING``: floating-point computations using robust models.
-          Supports DTMCs only and allows graph-changing and ill-defined regions.
-
-        All engines except ``ROBUST_PARAMETER_LIFTING`` require a well-defined,
-        graph-preserving region.
+    :param region_engine: Region checking engine. See :class:`RegionCheckEngine` for arithmetic choices and region requirements.
     :param environment: (optional) Environment configuring the analysis.
     :return: Whether every well-defined valuation in the region satisfies the property.
     """
@@ -171,7 +161,7 @@ def check_feasibility(
         Floats use their decimal representation, e.g. 0.2 means exactly 1/5.
     :param method: Feasibility method: parameter lifting (PLA), gradient descent (GD), or sequential convex programming (SCP).
     :param region_engine: Region checking engine, used only for PLA and ignored by GD and SCP.
-        The arithmetic choices and region requirements are described in :func:`verify`.
+        See :class:`RegionCheckEngine` for arithmetic choices and region requirements.
     :param environment: (optional) Environment configuring the analysis.
     :return: Result with status EXISTS_SAT, ALL_VIOLATED, or UNKNOWN. A witness is present only for EXISTS_SAT.
     """
@@ -212,7 +202,7 @@ def compute_extremal_value(
     :param precision: Required precision.
         Floats must be finite and use their decimal representation, e.g. 1e-6 means exactly 1/1000000.
     :param absolute_precision: Whether precision is absolute (True) or relative (False).
-    :param engine: Region checking engine. The arithmetic choices are described in :func:`verify`.
+    :param engine: Region checking engine. See :class:`RegionCheckEngine` for arithmetic choices and region requirements.
     :param discrete_variables: Parameters treated as discrete when splitting regions.
     :param environment: (optional) Environment configuring the analysis. Defaults to :func:`stormpy.environments.default`.
     :return: The value at the returned parameter valuation and that valuation. The value

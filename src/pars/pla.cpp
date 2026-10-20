@@ -77,7 +77,19 @@ void define_pla(py::module& m) {
         py::cpp_function(&streamToString<RegionResultHypothesis>, py::name("friendly_name"), py::is_method(m.attr("RegionResultHypothesis")));
 
     // RegionCheckEngine
-    py::native_enum<RegionCheckEngine>(m, "RegionCheckEngine", "enum.Enum", "Engines for region checking")
+    py::native_enum<RegionCheckEngine>(m, "RegionCheckEngine", "enum.Enum", R"doc(
+Region checking engines, controlling the arithmetic and supported regions.
+
+* ``PARAMETER_LIFTING`` (default): floating-point computations on the lifted model.
+* ``EXACT_PARAMETER_LIFTING``: exact rational computations on the lifted model.
+* ``VALIDATING_PARAMETER_LIFTING``: floating-point computations followed by
+  exact validation of the results.
+* ``ROBUST_PARAMETER_LIFTING``: floating-point computations using robust models.
+  Supports DTMCs only and allows graph-changing and ill-defined regions.
+
+All engines except ``ROBUST_PARAMETER_LIFTING`` require a well-defined,
+graph-preserving region.
+)doc")
         .value("PARAMETER_LIFTING", RegionCheckEngine::ParameterLifting)
         .value("EXACT_PARAMETER_LIFTING", RegionCheckEngine::ExactParameterLifting)
         .value("VALIDATING_PARAMETER_LIFTING", RegionCheckEngine::ValidatingParameterLifting)

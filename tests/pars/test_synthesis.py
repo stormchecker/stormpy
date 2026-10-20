@@ -53,11 +53,7 @@ class TestSynthesis:
         if raw_formula:
             prop = prop.get_raw_formula()
         region = stormpy.pars.parse_region("0.2<=p<=0.8", model.collect_all_parameters())
-        options = (
-            {"environment": stormpy.environments.exact(), "absolute_precision": True, "discrete_variables": iter(model.collect_all_parameters())}
-            if raw_formula
-            else {}
-        )
+        options = {"environment": stormpy.environments.exact(), "absolute_precision": True} if raw_formula else {}
         precision = stormpy.RationalFunctionCoefficient("1/1000000")
         value, valuation = stormpy.pars.compute_extremal_value(model, prop, region=region, direction=direction, precision=precision, engine=engine, **options)
         expected = 0.8 if direction == stormpy.logic.OptimizationDirection.MAXIMIZE else 0.2
@@ -66,6 +62,40 @@ class TestSynthesis:
         instantiated = stormpy.pars.ModelInstantiator[stormpy.models.ModelType.DTMC, stormpy.Rational](model).instantiate(valuation)
         checked = stormpy.model_checking(instantiated, prop, only_initial_states=True)
         assert math.isclose(float(checked[instantiated.initial_states[0]].value), float(value), abs_tol=float(precision))
+
+    @pytest.mark.parametrize("discrete", [False, True])
+    @pytest.mark.parametrize("engine", [stormpy.pars.RegionCheckEngine.PARAMETER_LIFTING, stormpy.pars.RegionCheckEngine.EXACT_PARAMETER_LIFTING])
+    def test_discrete_variables(self, tmp_path, discrete, engine):
+        path = tmp_path / "discrete.pm"
+        path.write_text("""dtmc
+const double p;
+module simple
+ s : [0..3] init 0;
+ [] s=0 -> (0.1+0.5*p) : (s'=1) + (0.9-0.5*p) : (s'=3);
+ [] s=1 -> (0.9-0.5*p) : (s'=2) + (0.1+0.5*p) : (s'=3);
+ [] s=2 -> (s'=2);
+ [] s=3 -> (s'=3);
+endmodule
+label "target" = s=2;
+""")
+        program = stormpy.parse_prism_program(path)
+        prop = stormpy.parse_property('P=? [F "target"]', program)
+        model = stormpy.build_model[stormpy.RationalFunction](program, prop)
+        parameters = model.collect_all_parameters()
+        region = stormpy.pars.parse_region("0<=p<=1", parameters)
+        options = {"discrete_variables": iter(parameters)} if discrete else {}
+        value, valuation = stormpy.pars.compute_extremal_value(
+            model,
+            prop,
+            region=region,
+            direction=stormpy.logic.OptimizationDirection.MAXIMIZE,
+            precision=1e-6,
+            absolute_precision=True,
+            engine=engine,
+            **options,
+        )
+        assert math.isclose(float(value), 0.24 if discrete else 0.25, abs_tol=1e-6)
+        assert math.isclose(float(valuation[next(iter(parameters))]), 1.0 if discrete else 0.8, abs_tol=1e-3)
 
     @pytest.mark.parametrize("precision, coefficient", [(1e-6, "1/1000000"), (0.1, "1/10"), (1, "1")])
     def test_numeric_precision(self, synthesis_model, precision, coefficient):

@@ -111,8 +111,8 @@ class TestPLADeveloper:
 const double p;
 module simple
  s : [0..3] init 0;
- [] s=0 -> p : (s'=1) + (1-p) : (s'=3);
- [] s=1 -> (1-p) : (s'=2) + p : (s'=3);
+ [] s=0 -> (0.1+0.5*p) : (s'=1) + (0.9-0.5*p) : (s'=3);
+ [] s=1 -> (0.9-0.5*p) : (s'=2) + (0.1+0.5*p) : (s'=3);
  [] s=2 -> (s'=2);
  [] s=3 -> (s'=3);
 endmodule
@@ -128,8 +128,8 @@ label "target" = s=2;
         checker = stormpy.pars.developer.initialize_region_refinement_checker(env, model, task, **({} if respecify else options))
         if respecify:
             checker.specify(env, model, task, **options)
-        region = stormpy.pars.parse_region("0.1<=p<=0.6", parameters)
+        region = stormpy.pars.parse_region("0<=p<=1", parameters)
         precision = stormpy.RationalFunction(stormpy.Polynomial(stormpy.RationalFunctionCoefficient("1/1000000")))
         value, point = checker.compute_extremal_value(env, region, stormpy.logic.OptimizationDirection.MAXIMIZE, precision, True)
         assert math.isclose(float(value), 0.24 if discrete else 0.25, abs_tol=1e-6)
-        assert math.isclose(float(point[next(iter(parameters))]), 0.6 if discrete else 0.5, abs_tol=1e-3)
+        assert math.isclose(float(point[next(iter(parameters))]), 1.0 if discrete else 0.8, abs_tol=1e-3)

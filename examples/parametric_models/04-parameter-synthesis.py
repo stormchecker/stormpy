@@ -13,7 +13,8 @@ def example_parameter_synthesis():
 
     print("Property holds throughout the region:", stormpy.pars.verify(model, property, region=region))
     instantiator = stormpy.pars.ModelInstantiator(model)
-    probability_property = stormpy.parse_property("P=? [F s=7 & d=2]", program)
+    probability_formula = property.get_raw_formula().clone()
+    probability_formula.remove_bound()
     methods = [stormpy.pars.FeasibilityMethod.PLA, stormpy.pars.FeasibilityMethod.GD, stormpy.pars.FeasibilityMethod.SCP]
     for method in methods:
         result = stormpy.pars.check_feasibility(model, property, region=region, method=method)
@@ -23,7 +24,7 @@ def example_parameter_synthesis():
         print("Parameter valuation:", result.witness.valuation)
         print("Value at the initial state:", result.witness.value)
         instantiated_model = instantiator.instantiate(result.witness.valuation)
-        checked = stormpy.model_checking(instantiated_model, probability_property, only_initial_states=True)
+        checked = stormpy.model_checking(instantiated_model, probability_formula, only_initial_states=True)
         probability = checked[instantiated_model.initial_states[0]].value
         print(method.name, "probability on the instantiated model:", probability)
         assert math.isclose(probability, result.witness.value, rel_tol=1e-6)

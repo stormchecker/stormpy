@@ -13,11 +13,10 @@ kernelspec:
 
 # Parametric Models
 
-## Verification and feasibility
+Parametric models support unknown probabilities. In this notebook, we show how to do the following with a parametric model:
 
-The public `stormpy.pars` API provides model instantiation, region creation, verification, and feasibility synthesis
-for sparse parametric DTMCs and MDPs with one initial state. Both analyses require a bounded
-probability or reward property.
+- _Verification:_ verify that a property is true for all parameter instantiations in a region.
+- _Feasibility:_ find a parameter instantiation in the region for which the property is true.
 
 [04-parameter-synthesis.py](https://github.com/stormchecker/stormpy/blob/master/examples/parametric_models/04-parameter-synthesis.py)
 
@@ -94,17 +93,19 @@ for method in methods:
 All three methods find a satisfying valuation in this example. Their witnesses can differ;
 for reference, `p=q=0.5` gives probability `1/6`, satisfying our bound.
 To check each returned witness independently, instantiate the original model using
-`ModelInstantiator` and compute the probability on the resulting DTMC:
+`ModelInstantiator` and compute the probability on the resulting DTMC. Clone the
+original property's formula and remove its bound to obtain the quantitative formula:
 
 ```{code-cell} python3
 import math
 
 instantiator = stormpy.pars.ModelInstantiator(model)
-probability_property = stormpy.parse_property("P=? [F s=7 & d=2]", program)
+probability_formula = property.get_raw_formula().clone()
+probability_formula.remove_bound()
 for method, result in results.items():
     witness = result.witness
     instantiated_model = instantiator.instantiate(witness.valuation)
-    checked = stormpy.model_checking(instantiated_model, probability_property, only_initial_states=True)
+    checked = stormpy.model_checking(instantiated_model, probability_formula, only_initial_states=True)
     probability = checked[instantiated_model.initial_states[0]].value
     print(method.name, "probability on the instantiated model:", probability)
     assert math.isclose(probability, witness.value, rel_tol=1e-6)
@@ -153,17 +154,6 @@ feasibility (`PLA` only). The choice affects arithmetic and which regions are su
 | `VALIDATING_PARAMETER_LIFTING` | Floating point followed by exact validation | Well-defined and graph-preserving |
 | `ROBUST_PARAMETER_LIFTING` | Floating point using robust models | Can include graph-changing valuations; DTMCs only |
 
-For MDPs, properties have the following semantics:
-
-| Property | Schedulers that must satisfy the bound |
-| --- | --- |
-| `P>=0.8 [F "target"]` | Every scheduler |
-| `Pmin>=0.8 [F "target"]` | Every scheduler |
-| `Pmax>=0.8 [F "target"]` | At least one scheduler (PLA only) |
-| `P<=0.8 [F "target"]` | Every scheduler |
-| `Pmin<=0.8 [F "target"]` | At least one scheduler (PLA only) |
-| `Pmax<=0.8 [F "target"]` | Every scheduler |
-
 ### Computing extremal values
 
 `compute_extremal_value` minimizes or maximizes a quantitative probability or reward
@@ -173,10 +163,9 @@ decimal representation, so `1e-4` means exactly `1/10000`. The wrapper handles t
 conversion required by Storm:
 
 ```{code-cell} python3
-probability_property = stormpy.parse_property("P=? [F s=7 & d=2]", program)
 value, valuation = stormpy.pars.compute_extremal_value(
     model,
-    probability_property,
+    probability_formula,
     region=region,
     direction=stormpy.logic.OptimizationDirection.MAXIMIZE,
     precision=1e-4,

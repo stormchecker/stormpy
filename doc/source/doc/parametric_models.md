@@ -13,20 +13,23 @@ kernelspec:
 
 # Parametric Models
 
-Parametric models support unknown probabilities. In this notebook, we show how to do the following with a parametric model:
+Parametric models contain parameters in their transition probabilities, rates, or rewards.
+Stormpy can instantiate these parameters, compute property values as rational functions
+of the parameters, verify properties throughout a parameter region, or search for
+satisfying parameter values.
 
-- _Verification:_ verify that a property is true for all parameter instantiations in a region.
-- _Feasibility:_ find a parameter instantiation in the region for which the property is true.
+## Building parametric models
 
-[04-parameter-synthesis.py](https://github.com/stormchecker/stormpy/blob/master/examples/parametric_models/04-parameter-synthesis.py)
+[01-parametric-models.py](https://github.com/stormchecker/stormpy/blob/master/examples/parametric_models/01-parametric-models.py)
 
-### Building the parametric model
-
+Parameters are undefined constants in a PRISM program. Constants that determine the
+model's structure, such as variable bounds, must be defined before building.
 We use the parametric die model, whose transition probabilities depend on `p` and `q`.
-The property asks whether the probability of eventually rolling a two is at most `0.5`.
-Leaving the parameters undefined and selecting `RationalFunction` builds a parametric DTMC:
+Selecting `RationalFunction` in `build_model` builds a parametric DTMC:
 
 ```{code-cell} python3
+import math
+
 import stormpy
 import stormpy.pars
 import stormpy.examples.files
@@ -35,35 +38,177 @@ program = stormpy.parse_prism_program(stormpy.examples.files.prism_pdtmc_die)
 property = stormpy.parse_property("P<=0.5 [F s=7 & d=2]", program)
 model = stormpy.build_model[stormpy.RationalFunction](program, property)
 parameters = model.collect_all_parameters()
+for parameter in parameters:
+    print(parameter.name)
 ```
 
-### Verifying a region
+The property asks whether the probability of eventually rolling a two is at most `0.5`.
+`collect_all_parameters()` returns the parameters occurring in the model.
 
-First, let both parameters range from `0.2` to `0.8`. `verify` checks whether the property
-holds for **every** well-defined valuation in this region:
+[03-parametric-models.py](https://github.com/stormchecker/stormpy/blob/master/examples/parametric_models/03-parametric-models.py)
+shows three ways to inspect the model's transitions and count those with probability one.
+
+## Instantiating parametric models
+
+Use `ModelInstantiator` to replace the parameters with concrete values and obtain a
+model that can be checked numerically. Here, we set both parameters to `2/5`.
+To compute the resulting probability, clone the property's formula and remove its bound:
+
+```{code-cell} python3
+instantiator = stormpy.pars.ModelInstantiator(model)
+point = {parameter: stormpy.RationalFunctionCoefficient("2/5") for parameter in parameters}
+instantiated_model = instantiator.instantiate(point)
+
+probability_formula = property.get_raw_formula().clone()
+probability_formula.remove_bound()
+result = stormpy.model_checking(instantiated_model, probability_formula)
+probability = result[instantiated_model.initial_states[0]].value
+print("Probability of rolling a two:", probability)
+assert math.isclose(probability, 4 / 35, rel_tol=1e-6)
+```
+
+Use `ModelInstantiator[stormpy.models.ModelType.DTMC, stormpy.Rational](model)`
+to instantiate with exact rational values. The resulting model can be checked with
+`stormpy.model_checking` in the same way.
+
+## Model checking parametric models
+
+[02-parametric-models.py](https://github.com/stormchecker/stormpy/blob/master/examples/parametric_models/02-parametric-models.py)
+
+Model checking a parametric model directly computes a rational function of the
+parameters, rather than a probability for one valuation:
+
+```{code-cell} python3
+result = stormpy.model_checking(model, probability_formula)
+probability_function = result[model.initial_states[0]]
+print("Probability as a function of the parameters:", probability_function)
+```
+
+The rational functions can grow rapidly with the number of states and parameters. 
+
+## Regions
+
+A parameter region assigns an inclusive lower and upper bound to each parameter.
+For example, let both `p` and `q` range from `0.2` to `0.8`:
 
 ```{code-cell} python3
 region = stormpy.pars.parse_region("0.2<=p<=0.8,0.2<=q<=0.8", parameters)
-holds_everywhere = stormpy.pars.verify(model, property, region=region)
-print("Property holds throughout the region:", holds_everywhere)
-assert not holds_everywhere
 ```
 
-The result is `False`: some valuations exceed the probability bound. We can restrict the
-region to `[0.2, 0.6]` for both parameters, where the property does hold everywhere.
-This time, we construct the region from a dictionary of exact rational bounds:
+Alternatively, construct a region from a dictionary of bounds. We will also use this
+smaller region, where both parameters range from `0.2` to `0.6`:
 
 ```{code-cell} python3
 lower = stormpy.RationalFunctionCoefficient("1/5")
 upper = stormpy.RationalFunctionCoefficient("3/5")
 smaller_region = stormpy.pars.create_region({parameter: (lower, upper) for parameter in parameters})
+```
+
+### Region requirements
+
+A region is:
+
+- **Well-defined** if, for every valuation and each state and enabled action, the
+  instantiated outgoing transition values lie in `[0, 1]` and sum to `1`.
+- **Graph-preserving** if it is well-defined and every valuation preserves the
+  parametric model's existing transition graph.
+
+For example, outgoing probabilities `p` and `1-p` form a valid distribution for
+`p` in `[0, 1]`, but one transition disappears at either endpoint. The region
+`0.2 <= p <= 0.8` preserves both transitions.
+
+`ConstraintCollector` exposes the constraints for well-definedness and graph preservation:
+
+```{code-cell} python3
+collector = stormpy.ConstraintCollector(model)
+print("Well-definedness constraints:")
+for constraint in collector.get_wellformed_constraints():
+    print(constraint)
+print("Graph-preservation constraints:")
+for constraint in collector.get_graph_preserving_constraints():
+    print(constraint)
+```
+
+### Region bounds and engines
+
+Verification and feasibility also accept `region_bound` instead of an explicit region.
+This uses `[region_bound, 1-region_bound]` for every parameter. Floats are interpreted
+using their decimal representation, so `0.2` means exactly `1/5`.
+Provide exactly one of the keyword arguments `region` or `region_bound`.
+
+Select a `RegionCheckEngine` using `region_engine` for verification and
+feasibility (`PLA` only). The choice affects arithmetic and which regions are supported:
+
+| Engine | Arithmetic | Region requirements |
+| --- | --- | --- |
+| `PARAMETER_LIFTING` (default) | Floating point | Well-defined and graph-preserving |
+| `EXACT_PARAMETER_LIFTING` | Exact rational, potentially more expensive | Well-defined and graph-preserving |
+| `VALIDATING_PARAMETER_LIFTING` | Floating point followed by exact validation | Well-defined and graph-preserving |
+| `ROBUST_PARAMETER_LIFTING` | Floating point using robust models | Can include graph-changing valuations; DTMCs only |
+
+## Verifying parametric models
+
+[04-parameter-synthesis.py](https://github.com/stormchecker/stormpy/blob/master/examples/parametric_models/04-parameter-synthesis.py)
+
+`verify` checks whether a bounded probability or reward property holds for **every**
+well-defined parameter valuation in a region. It supports sparse parametric DTMCs and
+MDPs with one initial state.
+
+For our die model, the property asks whether the probability of rolling a two is at
+most `0.5`. This does not hold throughout the original region:
+
+```{code-cell} python3
+holds_everywhere = stormpy.pars.verify(model, property, region=region)
+print("Property holds throughout the region:", holds_everywhere)
+assert not holds_everywhere
+```
+
+Some valuations exceed the bound. Restricting both parameters to `[0.2, 0.6]` makes
+the property hold everywhere:
+
+```{code-cell} python3
 assert stormpy.pars.verify(model, property, region=smaller_region)
 ```
 
-### Finding and checking a satisfying valuation
+We can also use uniform bounds. Here, `region_bound=0.4` restricts both parameters to
+`[0.4, 0.6]`:
 
-Verification failed on the original region, but some valuations still satisfy the property.
-`check_feasibility` searches for one and returns its valuation and probability as a witness.
+```{code-cell} python3
+assert stormpy.pars.verify(model, property, region_bound=0.4)
+```
+
+### Computing extremal values
+
+`compute_extremal_value` minimizes or maximizes a quantitative probability or reward
+over an explicit region. It returns the value and a parameter valuation achieving it,
+within the requested precision. Floats must be finite and are interpreted using their
+decimal representation, so `1e-4` means exactly `1/10000`. The wrapper handles the
+conversion required by Storm:
+
+```{code-cell} python3
+value, valuation = stormpy.pars.compute_extremal_value(
+    model,
+    probability_formula,
+    region=region,
+    direction=stormpy.logic.OptimizationDirection.MAXIMIZE,
+    precision=1e-4,
+    absolute_precision=True,
+)
+print("Maximum probability:", value)
+print("Parameter valuation:", valuation)
+```
+
+For MDPs, the property's `min` or `max` selects the scheduler optimization, while
+`direction` selects the optimization over parameters.
+
+## Feasibility
+
+`check_feasibility` searches for a well-defined parameter valuation satisfying a
+bounded probability or reward property. It supports sparse parametric DTMCs and MDPs
+with one initial state.
+
+The original region failed verification, but contains satisfying valuations.
+The result includes a valuation and its probability as a witness.
 Select the search method with the `method` argument:
 
 - `FeasibilityMethod.PLA`: parameter lifting, the default, for DTMCs and MDPs.
@@ -92,16 +237,9 @@ for method in methods:
 
 All three methods find a satisfying valuation in this example. Their witnesses can differ;
 for reference, `p=q=0.5` gives probability `1/6`, satisfying our bound.
-To check each returned witness independently, instantiate the original model using
-`ModelInstantiator` and compute the probability on the resulting DTMC. Clone the
-original property's formula and remove its bound to obtain the quantitative formula:
+Check each witness by instantiating the original model and computing its probability:
 
 ```{code-cell} python3
-import math
-
-instantiator = stormpy.pars.ModelInstantiator(model)
-probability_formula = property.get_raw_formula().clone()
-probability_formula.remove_bound()
 for method, result in results.items():
     witness = result.witness
     instantiated_model = instantiator.instantiate(witness.valuation)
@@ -131,127 +269,5 @@ SCP can return this status when it fails to find a satisfying valuation. GD can 
 searching on an infeasible region, so use PLA when you need to establish infeasibility.
 Only `EXISTS_SAT` includes a witness.
 
-### Uniform bounds and analysis options
-
-Both analysis functions also accept `region_bound` instead of an explicit region. This
-uses `[region_bound, 1-region_bound]` for every parameter. Floats are interpreted using
-their decimal representation, so `0.2` means exactly `1/5`. For example, `0.4` restricts
-both parameters to `[0.4, 0.6]`, where our original property holds everywhere:
-
-```{code-cell} python3
-assert stormpy.pars.verify(model, property, region_bound=0.4)
-```
-
-Provide exactly one of `region` or `region_bound`.
-
-Select a `RegionCheckEngine` using `region_engine` for verification and
-feasibility (`PLA` only). The choice affects arithmetic and which regions are supported:
-
-| Engine | Arithmetic | Region requirements |
-| --- | --- | --- |
-| `PARAMETER_LIFTING` (default) | Floating point | Well-defined and graph-preserving |
-| `EXACT_PARAMETER_LIFTING` | Exact rational, potentially more expensive | Well-defined and graph-preserving |
-| `VALIDATING_PARAMETER_LIFTING` | Floating point followed by exact validation | Well-defined and graph-preserving |
-| `ROBUST_PARAMETER_LIFTING` | Floating point using robust models | Can include graph-changing valuations; DTMCs only |
-
-### Computing extremal values
-
-`compute_extremal_value` minimizes or maximizes a quantitative probability or reward
-over an explicit region. It returns the value and a parameter valuation achieving it,
-within the requested precision. Floats must be finite and are interpreted using their
-decimal representation, so `1e-4` means exactly `1/10000`. The wrapper handles the
-conversion required by Storm:
-
-```{code-cell} python3
-value, valuation = stormpy.pars.compute_extremal_value(
-    model,
-    probability_formula,
-    region=region,
-    direction=stormpy.logic.OptimizationDirection.MAXIMIZE,
-    precision=1e-4,
-    absolute_precision=True,
-)
-print("Maximum probability:", value)
-print("Parameter valuation:", valuation)
-```
-
-For MDPs, the property's `min` or `max` selects the scheduler optimization, while
-`direction` selects the optimization over parameters. The lower-level checkers and
-model simplifiers are available through `stormpy.pars.developer`.
-
-## Instantiating parametric models
-
-[01-parametric-models.py](https://github.com/stormchecker/stormpy/blob/master/examples//parametric_models/01-parametric-models.py)
-
-Input formats such as prism allow to specify programs with open constants. We refer to these open constants as parameters.
-If the constants only influence the probabilities or rates, but not the topology of the underlying model, we can build these models as parametric models:
-
-```{code-cell} python3
-import stormpy
-import stormpy.examples
-import stormpy.examples.files
-
-path = stormpy.examples.files.prism_pdtmc_die
-prism_program = stormpy.parse_prism_program(path)
-formula_str = "P=? [F s=7 & d=2]"
-prop = stormpy.parse_property(formula_str, prism_program)
-model = stormpy.build_model[stormpy.RationalFunction](prism_program, prop)
-parameters = model.collect_all_parameters()
-for x in parameters:
-    print(x)
-```
-
-To obtain a standard DTMC, MDP or other Markov model, use the public model instantiator:
-
-```{code-cell} python3
-import stormpy.pars
-
-instantiator = stormpy.pars.ModelInstantiator[stormpy.models.ModelType.DTMC, float](model)
-```
-
-Use `ModelInstantiator[stormpy.models.ModelType.DTMC, stormpy.Rational](model)`
-to instantiate with exact rational values. The resulting model can be checked with
-`stormpy.model_checking` in the same way.
-
-Before we obtain an instantiated model, we need to map parameters to values: We build such a dictionary as follows:
-
-```{code-cell} python3
-point = dict()
-for x in parameters:
-    print(x.name)
-    point[x] = stormpy.RationalFunctionCoefficient(0.4)
-instantiated_model = instantiator.instantiate(point)
-result = stormpy.model_checking(instantiated_model, prop)
-print(result[model.initial_states[0]])
-```
-
-Initial states and labels are set as for the parameter-free case.
-
-## Checking parametric models
-
-[02-parametric-models.py](https://github.com/stormchecker/stormpy/blob/master/examples//parametric_models/02-parametric-models.py)
-
-It is also possible to check the parametric model directly, similar as before in [Checking properties](../getting_started.md#checking-properties):
-
-```{code-cell} python3
-result = stormpy.model_checking(model, prop)
-initial_state = model.initial_states[0]
-func = result[initial_state]
-print(func)
-```
-
-We collect the constraints ensuring that underlying model is well-formed and the graph structure does not change:
-
-```{code-cell} python3
-collector = stormpy.ConstraintCollector(model)
-for constraint in collector.get_wellformed_constraints():
-    print(constraint)
-for constraint in collector.get_graph_preserving_constraints():
-    print(constraint)
-```
-
-## Collecting information about the parametric models
-
-[03-parametric-models.py](https://github.com/stormchecker/stormpy/blob/master/examples//parametric_models/03-parametric-models.py)
-
-This example shows three implementations to obtain the number of transitions with probability one in a parametric model.
+The lower-level checkers and model simplifiers are available through
+`stormpy.pars.developer`.

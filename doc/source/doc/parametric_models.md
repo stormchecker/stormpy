@@ -152,8 +152,31 @@ For MDPs, bounds without `min` or `max` apply to every scheduler. For example,
 `Pmin>=0.8 [F "target"]` requires the bound for every scheduler, while
 `Pmax>=0.8 [F "target"]` asks for some scheduler. SCP requires universal scheduler quantification.
 
-The lower-level checkers and model simplifiers are available through
-`stormpy.pars.developer`.
+### Computing extremal values
+
+`compute_extremal_value` minimizes or maximizes a quantitative probability or reward
+over an explicit region. It returns the value and a parameter valuation achieving it,
+within the requested precision. Precision accepts rational coefficients, floats, and
+integers. Floats must be finite and are interpreted using their decimal representation,
+so `1e-4` means exactly `1/10000`. The wrapper handles the conversion required by Storm:
+
+```{code-cell} python3
+probability_property = stormpy.parse_property("P=? [F s=7 & d=2]", program)
+value, valuation = stormpy.pars.compute_extremal_value(
+    model,
+    probability_property,
+    region,
+    direction=stormpy.logic.OptimizationDirection.MAXIMIZE,
+    precision=1e-4,
+    absolute_precision=True,
+)
+print("Maximum probability:", value)
+print("Parameter valuation:", valuation)
+```
+
+For MDPs, the property's `min` or `max` selects the scheduler optimization, while
+`direction` selects the optimization over parameters. The lower-level checkers and
+model simplifiers are available through `stormpy.pars.developer`.
 
 ## Instantiating parametric models
 

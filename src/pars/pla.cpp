@@ -144,14 +144,8 @@ void define_pla(py::module& m) {
             },
             "Specify model and check task", "environment"_a, "model"_a, "check_task"_a, "allow_model_simplifications"_a = true,
             "graph_preservation_status"_a = GraphPreservationStatus::GraphPreserving, "discrete_variables"_a = std::set<Region::VariableType>{})
-        .def(
-            "compute_extremal_value",
-            [](RegionRefinementChecker& checker, storm::Environment const& env, Region const& region, storm::solver::OptimizationDirection const& dir,
-               storm::RationalFunctionCoefficient const& precision, bool absolutePrecision) {
-                return checker.computeExtremalValue(env, region, dir, storm::utility::one<storm::RationalFunction>() * precision, absolutePrecision,
-                                                    std::nullopt);
-            },
-            "Compute extremal value and point with the given precision", "environment"_a, "region"_a, "dir"_a, "precision"_a, "absolute_precision"_a = false);
+        .def("compute_extremal_value", &RegionRefinementChecker::computeExtremalValue, "Compute extremal value and point with the given precision",
+             "environment"_a, "region"_a, "dir"_a, "precision"_a, "absolute_precision"_a = false, "bound_invariant"_a = std::nullopt);
 
     py::classh<SparseDtmcParameterLiftingModelChecker>(m, "SparseDtmcParameterLiftingModelChecker", "Region model checker for DTMCs", regionModelChecker)
         .def(py::init<>())

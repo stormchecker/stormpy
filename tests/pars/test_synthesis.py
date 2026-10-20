@@ -44,6 +44,47 @@ def _property(text):
 
 @pars
 class TestSynthesis:
+    @pytest.mark.parametrize("direction", list(stormpy.logic.OptimizationDirection))
+    @pytest.mark.parametrize("raw_formula", [False, True])
+    @pytest.mark.parametrize("engine", [stormpy.pars.RegionCheckEngine.PARAMETER_LIFTING, stormpy.pars.RegionCheckEngine.EXACT_PARAMETER_LIFTING])
+    def test_compute_extremal_value(self, synthesis_model, direction, raw_formula, engine):
+        model = synthesis_model
+        prop = _property('P=? [F "target"]')
+        if raw_formula:
+            prop = prop.get_raw_formula()
+        region = stormpy.pars.parse_region("0.2<=p<=0.8", model.collect_all_parameters())
+        options = (
+            {"environment": stormpy.environments.exact(), "absolute_precision": True, "discrete_variables": iter(model.collect_all_parameters())}
+            if raw_formula
+            else {}
+        )
+        precision = stormpy.RationalFunctionCoefficient("1/1000000")
+        value, valuation = stormpy.pars.compute_extremal_value(model, prop, region, direction=direction, precision=precision, engine=engine, **options)
+        expected = 0.8 if direction == stormpy.logic.OptimizationDirection.MAXIMIZE else 0.2
+        assert math.isclose(float(value), expected, abs_tol=float(precision))
+        assert set(valuation) == model.collect_all_parameters()
+        instantiated = stormpy.pars.ModelInstantiator[stormpy.models.ModelType.DTMC, stormpy.Rational](model).instantiate(valuation)
+        checked = stormpy.model_checking(instantiated, prop, only_initial_states=True)
+        assert math.isclose(float(checked[instantiated.initial_states[0]].value), float(value), abs_tol=float(precision))
+
+    @pytest.mark.parametrize("precision, coefficient", [(1e-6, "1/1000000"), (0.1, "1/10"), (1, "1")])
+    def test_numeric_precision(self, synthesis_model, precision, coefficient):
+        model = synthesis_model
+        prop = _property('P=? [F "target"]')
+        region = stormpy.pars.parse_region("0.2<=p<=0.8", model.collect_all_parameters())
+        options = {"direction": stormpy.logic.OptimizationDirection.MAXIMIZE, "absolute_precision": True}
+        result = stormpy.pars.compute_extremal_value(model, prop, region, precision=precision, **options)
+        expected = stormpy.pars.compute_extremal_value(model, prop, region, precision=stormpy.RationalFunctionCoefficient(coefficient), **options)
+        assert result == expected
+
+    @pytest.mark.parametrize("precision", [math.nan, math.inf, -math.inf])
+    def test_nonfinite_precision(self, synthesis_model, precision):
+        model = synthesis_model
+        prop = _property('P=? [F "target"]')
+        region = stormpy.pars.parse_region("0.2<=p<=0.8", model.collect_all_parameters())
+        with pytest.raises(ValueError, match="precision must be finite"):
+            stormpy.pars.compute_extremal_value(model, prop, region, direction=stormpy.logic.OptimizationDirection.MAXIMIZE, precision=precision)
+
     def test_float_region_bound(self, synthesis_model):
         model = synthesis_model
         assert stormpy.pars.verify(model, _property('P>=0.1 [F "target"]'), region_bound=0.2)

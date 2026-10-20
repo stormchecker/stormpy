@@ -1,8 +1,9 @@
 """Parameter synthesis and model instantiation for sparse parametric models.
 
-Create parameter regions, verify properties throughout a region, or search for
-satisfying parameter valuations. Instantiate models with concrete parameter values
-using :class:`ModelInstantiator`. Lower-level tools are in :mod:`stormpy.pars.developer`.
+Create parameter regions, verify properties throughout a region, compute extremal
+values, or search for satisfying parameter valuations. Instantiate models with
+concrete parameter values using :class:`ModelInstantiator`. Lower-level tools are
+in :mod:`stormpy.pars.developer`.
 """
 
 from collections.abc import Iterable, Mapping
@@ -10,10 +11,11 @@ from math import isfinite as _isfinite
 
 from . import developer
 from .developer import gather_derivatives
-from stormpy import Environment, RationalFunctionCoefficient
+from stormpy import Environment, Polynomial, RationalFunction, RationalFunctionCoefficient
+from stormpy import developer as _developer
 from stormpy import environments as _environments
 from stormpy.numbers import Variable
-from stormpy.logic import Formula, Property
+from stormpy.logic import Formula, OptimizationDirection, Property
 from stormpy.models import SparseModel
 from stormpy.core._common import _formula
 
@@ -49,18 +51,23 @@ def create_region(bounds: Mapping[Variable, tuple[RationalFunctionCoefficient, R
     return ParameterRegion(lower, upper)
 
 
+def _coefficient_argument(value: RationalFunctionCoefficient | float | int, name: str) -> RationalFunctionCoefficient:
+    """Convert numeric arguments to coefficients, interpreting floats as decimals."""
+    if isinstance(value, float):
+        if not _isfinite(value):
+            raise ValueError(f"{name} must be finite.")
+        return RationalFunctionCoefficient(repr(value))
+    if isinstance(value, int):
+        return RationalFunctionCoefficient(value)
+    return value
+
+
 def _region_argument(region: ParameterRegion | None, region_bound: RationalFunctionCoefficient | float | int | None):
     if (region is None) == (region_bound is None):
         raise ValueError("Provide exactly one of region or region_bound.")
     if region is not None:
         return region
-    if isinstance(region_bound, float):
-        if not _isfinite(region_bound):
-            raise ValueError("region_bound must be finite.")
-        return RationalFunctionCoefficient(repr(region_bound))
-    if isinstance(region_bound, int):
-        return RationalFunctionCoefficient(region_bound)
-    return region_bound
+    return _coefficient_argument(region_bound, "region_bound")
 
 
 def verify(
@@ -141,12 +148,53 @@ def check_feasibility(
     )
 
 
+def compute_extremal_value(
+    model: SparseModel,
+    property: Property | Formula,
+    region: ParameterRegion,
+    *,
+    direction: OptimizationDirection,
+    precision: RationalFunctionCoefficient | float | int,
+    absolute_precision: bool = False,
+    engine: RegionCheckEngine = RegionCheckEngine.PARAMETER_LIFTING,
+    discrete_variables: Iterable[Variable] = (),
+    environment: Environment | None = None,
+) -> tuple[RationalFunctionCoefficient | float, dict[Variable, RationalFunctionCoefficient]]:
+    """
+    Compute an extremal probability or expected reward over a parameter region.
+
+    Requires a sparse parametric DTMC or MDP with exactly one initial state and a
+    quantitative property, e.g. ``P=? [F "target"]``. For MDPs, the property's
+    min/max determines the scheduler optimization; ``direction`` determines the
+    optimization over parameter valuations.
+
+    :param model: Parametric sparse DTMC or MDP.
+    :param property: Quantitative probability or reward property or formula.
+    :param region: Parameter region satisfying the selected engine's requirements.
+    :param direction: Whether to minimize or maximize over parameter valuations.
+    :param precision: Required precision as a rational coefficient, float, or integer.
+        Floats must be finite and use their decimal representation, e.g. 1e-6 means exactly 1/1000000.
+    :param absolute_precision: Whether precision is absolute (True) or relative (False).
+    :param engine: Region checking engine.
+    :param discrete_variables: Parameters treated as discrete when splitting regions.
+    :param environment: (optional) Environment configuring the analysis. Defaults to :func:`stormpy.environments.default`.
+    :return: The value at the returned parameter valuation and that valuation. The value
+        approximates the extremum within the requested precision and can be infinite for rewards.
+    """
+    precision = _coefficient_argument(precision, "precision")
+    environment = environment if environment is not None else _environments.default(model)
+    task = _developer.CheckTask[RationalFunction](_formula(property), True)
+    checker = developer.initialize_region_refinement_checker(environment, model, task, engine=engine, discrete_variables=set(discrete_variables))
+    return checker.compute_extremal_value(environment, region, direction, RationalFunction(Polynomial(precision)), absolute_precision)
+
+
 __all__ = [
     "ParameterRegion",
     "parse_region",
     "create_region",
     "verify",
     "check_feasibility",
+    "compute_extremal_value",
     "RegionCheckEngine",
     "RegionResult",
     "FeasibilityMethod",

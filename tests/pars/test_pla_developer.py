@@ -2,6 +2,7 @@
 
 import math
 
+import pytest
 import stormpy
 from helpers.helper import get_example_path
 
@@ -101,3 +102,35 @@ class TestPLADeveloper:
         assert isinstance(point, dict)
         assert len(point) == 2
         assert 0.83 <= float(value) <= 0.84
+
+    @pytest.mark.parametrize("respecify", [False, True])
+    @pytest.mark.parametrize("discrete", [False, True])
+    def test_discrete_variables(self, tmp_path, respecify, discrete):
+        path = tmp_path / "discrete.pm"
+        path.write_text("""dtmc
+const double p;
+module simple
+ s : [0..3] init 0;
+ [] s=0 -> p : (s'=1) + (1-p) : (s'=3);
+ [] s=1 -> (1-p) : (s'=2) + p : (s'=3);
+ [] s=2 -> (s'=2);
+ [] s=3 -> (s'=3);
+endmodule
+label "target" = s=2;
+""")
+        program = stormpy.parse_prism_program(path)
+        prop = stormpy.parse_property('P=? [F "target"]', program)
+        model = stormpy.build_model[stormpy.RationalFunction](program, prop)
+        env = stormpy.environments.default(model)
+        task = stormpy.developer.CheckTask[stormpy.RationalFunction](prop.get_raw_formula(), True)
+        parameters = model.collect_all_parameters()
+        options = {"discrete_variables": parameters} if discrete else {}
+        checker = stormpy.pars.developer.initialize_region_refinement_checker(env, model, task, **({} if respecify else options))
+        if respecify:
+            checker.specify(env, model, task, **options)
+        region = stormpy.pars.parse_region("0.1<=p<=0.6", parameters)
+        value, point = checker.compute_extremal_value(
+            env, region, stormpy.logic.OptimizationDirection.MAXIMIZE, stormpy.RationalFunctionCoefficient("1/1000000"), True
+        )
+        assert math.isclose(float(value), 0.24 if discrete else 0.25, abs_tol=1e-6)
+        assert math.isclose(float(point[next(iter(parameters))]), 0.6 if discrete else 0.5, abs_tol=1e-3)

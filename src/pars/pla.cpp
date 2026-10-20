@@ -30,11 +30,11 @@ using storm::pars::analysis::GraphPreservationStatus;
 // Thin wrappers
 std::unique_ptr<RegionRefinementChecker> initializeRegionRefinementChecker(storm::Environment const& env, ParametricModel const& model, CheckTask const& task,
                                                                            RegionCheckEngine engine, bool allowModelSimplification,
-                                                                           GraphPreservationStatus graphPreservationStatus, bool preconditionsValidated) {
-    // Default splitting strategy, monotonicity settings and no discrete variables
+                                                                           GraphPreservationStatus graphPreservationStatus, bool preconditionsValidated,
+                                                                           std::set<Region::VariableType> const& discreteVars) {
+    // Default splitting strategy and monotonicity settings
     storm::modelchecker::RegionSplittingStrategy strategy;
     storm::pars::modelchecker::MonotonicityOptions monotonicityOptions;
-    std::set<Region::VariableType> discreteVars;
     storm::pars::modelchecker::RegionRefinementOptions<storm::RationalFunction> settings(
         model, task, engine, strategy, monotonicityOptions, discreteVars, allowModelSimplification, graphPreservationStatus, preconditionsValidated);
     return storm::api::initializeRegionRefinementChecker<storm::RationalFunction, double>(env, settings);
@@ -137,14 +137,13 @@ void define_pla(py::module& m) {
         .def(
             "specify",
             [](RegionRefinementChecker& checker, storm::Environment const& env, ParametricModel const& model, CheckTask const& task,
-               bool allowModelSimplifications, GraphPreservationStatus graphPreservationStatus) {
-                // Default splitting strategy and no discrete variables
+               bool allowModelSimplifications, GraphPreservationStatus graphPreservationStatus, std::set<Region::VariableType> const& discreteVars) {
+                // Default splitting strategy
                 storm::modelchecker::RegionSplittingStrategy strategy;
-                std::set<Region::VariableType> discreteVars;
                 checker.specify(env, model, task, strategy, discreteVars, nullptr, allowModelSimplifications, graphPreservationStatus);
             },
             "Specify model and check task", "environment"_a, "model"_a, "check_task"_a, "allow_model_simplifications"_a = true,
-            "graph_preservation_status"_a = GraphPreservationStatus::GraphPreserving)
+            "graph_preservation_status"_a = GraphPreservationStatus::GraphPreserving, "discrete_variables"_a = std::set<Region::VariableType>{})
         .def(
             "compute_extremal_value",
             [](RegionRefinementChecker& checker, storm::Environment const& env, Region const& region, storm::solver::OptimizationDirection const& dir,
@@ -186,7 +185,8 @@ void define_pla(py::module& m) {
         "allow_model_simplification"_a = true, "graph_preservation_status"_a = GraphPreservationStatus::GraphPreserving, "preconditions_validated"_a = false);
     m.def("initialize_region_refinement_checker", &initializeRegionRefinementChecker, "Create and specify a region refinement checker", "environment"_a,
           "model"_a, "task"_a, "engine"_a = RegionCheckEngine::ParameterLifting, "allow_model_simplification"_a = true,
-          "graph_preservation_status"_a = GraphPreservationStatus::GraphPreserving, "preconditions_validated"_a = false);
+          "graph_preservation_status"_a = GraphPreservationStatus::GraphPreserving, "preconditions_validated"_a = false,
+          "discrete_variables"_a = std::set<Region::VariableType>{});
     m.def("gather_derivatives", &gatherDerivatives, "Gather the nonconstant numerators of transition-probability derivatives with respect to a parameter",
           "model"_a, "parameter"_a);
 }

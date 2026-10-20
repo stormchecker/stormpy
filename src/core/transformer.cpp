@@ -2,18 +2,18 @@
 
 #include <storm/adapters/IntervalAdapter.h>
 #include <storm/adapters/RationalFunctionAdapter.h>
-#include <storm/storage/dd/bisimulation/BisimulationOptions.h>
-#include <storm/storage/dd/bisimulation/InitialPartitionMode.h>
-#include <storm/storage/dd/bisimulation/QuotientFormat.h>
-#include <storm/storage/dd/bisimulation/RefinementMode.h>
-#include <storm/storage/dd/bisimulation/ReuseMode.h>
-#include <storm/storage/dd/bisimulation/SignatureMode.h>
 #include <storm/transformer/AddUncertainty.h>
 #include <storm/transformer/EndComponentEliminator.h>
 #include <storm/transformer/NonMarkovianChainTransformer.h>
 #include <storm/transformer/SubsystemBuilder.h>
 #include <storm/transformer/bisimulation/BisimulationType.h>
-#include <storm/transformer/bisimulation/Options.h>
+#include <storm/transformer/bisimulation/dd/BisimulationOptions.h>
+#include <storm/transformer/bisimulation/dd/InitialPartitionMode.h>
+#include <storm/transformer/bisimulation/dd/QuotientFormat.h>
+#include <storm/transformer/bisimulation/dd/RefinementMode.h>
+#include <storm/transformer/bisimulation/dd/ReuseMode.h>
+#include <storm/transformer/bisimulation/dd/SignatureMode.h>
+#include <storm/transformer/bisimulation/sparse/Options.h>
 
 #include "src/binding_type_index.h"
 

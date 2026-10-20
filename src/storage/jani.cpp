@@ -1,13 +1,13 @@
 #include "jani.h"
 
+#include <storm/expressions/ExpressionManager.h>
+#include <storm/languages/jani/JaniLocationExpander.h>
+#include <storm/languages/jani/JaniScopeChanger.h>
+#include <storm/languages/jani/Model.h>
+#include <storm/languages/jani/traverser/InformationCollector.h>
+#include <storm/languages/jani/types/AllJaniTypes.h>
+#include <storm/languages/jani/visitor/JSONExporter.h>
 #include <storm/logic/RewardAccumulationEliminationVisitor.h>
-#include <storm/storage/expressions/ExpressionManager.h>
-#include <storm/storage/jani/JaniLocationExpander.h>
-#include <storm/storage/jani/JaniScopeChanger.h>
-#include <storm/storage/jani/Model.h>
-#include <storm/storage/jani/traverser/InformationCollector.h>
-#include <storm/storage/jani/types/AllJaniTypes.h>
-#include <storm/storage/jani/visitor/JSONExporter.h>
 
 #include "src/helpers.h"
 

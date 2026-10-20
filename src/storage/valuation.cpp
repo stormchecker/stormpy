@@ -3,13 +3,13 @@
 #include <stdexcept>
 #include <storm/adapters/JsonAdapter.h>
 #include <storm/adapters/RationalNumberAdapter.h>
+#include <storm/expressions/ExpressionManager.h>
+#include <storm/expressions/SimpleValuation.h>
+#include <storm/expressions/Variable.h>
 #include <storm/storage/BitVector.h>
-#include <storm/storage/expressions/ExpressionManager.h>
-#include <storm/storage/expressions/SimpleValuation.h>
-#include <storm/storage/expressions/Variable.h>
-#include <storm/storage/sparse/ValuationTransformer.h>
 #include <storm/storage/valuations/ValuationDescription.h>
 #include <storm/storage/valuations/ValuationDescriptionBuilder.h>
+#include <storm/storage/valuations/ValuationTransformer.h>
 #include <storm/storage/valuations/Valuations.h>
 #include <storm/storage/valuations/ValuationsStorage.h>
 

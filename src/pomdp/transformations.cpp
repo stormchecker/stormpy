@@ -5,7 +5,7 @@
 #include <storm-pomdp/transformer/ObservationTraceUnfolder.h>
 #include <storm-pomdp/transformer/PomdpMemoryUnfolder.h>
 #include <storm/adapters/RationalFunctionAdapter.h>
-#include <storm/storage/expressions/ExpressionManager.h>
+#include <storm/expressions/ExpressionManager.h>
 #include <storm/transformer/MakePOMDPCanonic.h>
 
 template<typename ValueType>

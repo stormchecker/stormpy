@@ -1,13 +1,13 @@
 #include "environment.h"
 
 #include <pybind11/pytypes.h>
+#include <storm/dd/cudd/CuddReorderingTechnique.h>
 #include <storm/environment/Environment.h>
 #include <storm/environment/dd/AllDdEnvironments.h>
 #include <storm/environment/exploration/ExplorationEnvironment.h>
 #include <storm/environment/modelchecker/AllModelCheckerEnvironments.h>
 #include <storm/environment/solver/AllSolverEnvironments.h>
-#include <storm/storage/SchedulerClass.h>
-#include <storm/storage/dd/cudd/CuddReorderingTechnique.h>
+#include <storm/storage/scheduler/SchedulerClass.h>
 #include <storm/utility/constants.h>
 #include <storm/utility/environment.h>
 

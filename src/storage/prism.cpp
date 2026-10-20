@@ -9,18 +9,18 @@
 #include <storm/exceptions/InvalidTypeException.h>
 #include <storm/exceptions/NotImplementedException.h>
 #include <storm/exceptions/NotSupportedException.h>
+#include <storm/expressions/ExpressionEvaluator.h>
+#include <storm/expressions/ExpressionManager.h>
+#include <storm/expressions/SimpleValuation.h>
 #include <storm/generator/Choice.h>
 #include <storm/generator/NextStateGenerator.h>
 #include <storm/generator/PrismNextStateGenerator.h>
 #include <storm/generator/StateBehavior.h>
+#include <storm/languages/jani/Model.h>
+#include <storm/languages/jani/Property.h>
+#include <storm/languages/prism/OverlappingGuardAnalyser.h>
+#include <storm/languages/prism/Program.h>
 #include <storm/solver/SmtSolver.h>
-#include <storm/storage/expressions/ExpressionEvaluator.h>
-#include <storm/storage/expressions/ExpressionManager.h>
-#include <storm/storage/expressions/SimpleValuation.h>
-#include <storm/storage/jani/Model.h>
-#include <storm/storage/jani/Property.h>
-#include <storm/storage/prism/OverlappingGuardAnalyser.h>
-#include <storm/storage/prism/Program.h>
 #include <storm/utility/solver.h>
 
 #include "src/helpers.h"

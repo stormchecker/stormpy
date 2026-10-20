@@ -4,6 +4,7 @@
 #include <sstream>
 #include <storm/adapters/IntervalAdapter.h>
 #include <storm/adapters/RationalFunctionAdapter.h>
+#include <storm/dd/DdManager.h>
 #include <storm/models/ModelBase.h>
 #include <storm/models/sparse/Ctmc.h>
 #include <storm/models/sparse/Dtmc.h>
@@ -19,8 +20,7 @@
 #include <storm/models/symbolic/Mdp.h>
 #include <storm/models/symbolic/Model.h>
 #include <storm/models/symbolic/StandardRewardModel.h>
-#include <storm/storage/Scheduler.h>
-#include <storm/storage/dd/DdManager.h>
+#include <storm/storage/scheduler/Scheduler.h>
 #include <storm/utility/dd.h>
 #include <string>
 

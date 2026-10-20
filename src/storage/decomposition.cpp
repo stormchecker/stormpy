@@ -1,8 +1,8 @@
 #include "decomposition.h"
 
 #include <storm/adapters/IntervalAdapter.h>
-#include <storm/storage/MaximalEndComponent.h>
-#include <storm/storage/MaximalEndComponentDecomposition.h>
+#include <storm/storage/decomposition/MaximalEndComponent.h>
+#include <storm/storage/decomposition/MaximalEndComponentDecomposition.h>
 
 #include "src/binding_type_index.h"
 

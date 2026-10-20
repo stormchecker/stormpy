@@ -1,7 +1,7 @@
 #pragma once
 
-#include <storm/storage/dd/Dd.h>
-#include <storm/storage/dd/DdType.h>
+#include <storm/dd/Dd.h>
+#include <storm/dd/DdType.h>
 
 #include "src/common.h"
 

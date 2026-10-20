@@ -2,7 +2,7 @@
 
 #include <storm/adapters/IntervalAdapter.h>
 #include <storm/adapters/RationalFunctionAdapter.h>
-#include <storm/storage/Scheduler.h>
+#include <storm/storage/scheduler/Scheduler.h>
 
 #include "src/binding_type_index.h"
 #include "src/helpers.h"

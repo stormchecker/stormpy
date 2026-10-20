@@ -1,7 +1,6 @@
 #include <storm/adapters/IntervalAdapter.h>
 
 #include "src/common.h"
-#include "src/core/analysis.h"
 #include "src/core/api.h"
 #include "src/core/builder.h"
 #include "src/core/counterexamples.h"
@@ -36,7 +35,6 @@ PYBIND11_MODULE(_core, m) {
     define_smt_solver(m);
     define_storage(m);
 
-    define_analysis(m);
     define_builder(m);
     define_builder_typed<double>(m);
     define_builder_typed<storm::RationalNumber>(m);

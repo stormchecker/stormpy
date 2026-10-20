@@ -19,6 +19,7 @@ by the GMP and CLN backends with their respective formula modules.
    stormpy.developer.storage
    stormpy.developer.utility
    stormpy.dft.developer
+   stormpy.pars.developer
 ```
 
 ```{eval-rst}

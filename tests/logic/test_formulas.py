@@ -39,6 +39,30 @@ class TestFormulas:
         assert isinstance(prop, stormpy.logic.Property)
         assert prop.get_name() == "Expected number of coin flips"
 
+    @pytest.mark.parametrize("operator", ["P", "R"])
+    def test_clone_property(self, operator):
+        formula = stormpy.parse_property(f'{operator}<=0.5 [F "one"]').get_raw_formula()
+        manager = stormpy.expressions.ExpressionManager()
+        constant = manager.declare_rational_variable("threshold")
+        formula.set_bound(stormpy.logic.ComparisonType.LEQ, constant.get_expression())
+        prop = stormpy.logic.Property("named-property", formula, {constant}, "Property comment")
+
+        cloned = prop.clone()
+        assert isinstance(cloned, stormpy.logic.Property)
+        assert cloned is not prop
+        assert cloned.get_name() == prop.get_name()
+        assert cloned.get_comment() == prop.get_comment()
+        assert cloned.get_undefined_constants() == prop.get_undefined_constants()
+        assert str(cloned) == str(prop)
+
+        cloned_formula = cloned.get_raw_formula()
+        assert cloned_formula is not formula
+        assert cloned_formula.subformula is not formula.subformula
+        cloned_formula.remove_bound()
+        assert not cloned_formula.has_bound
+        assert formula.has_bound
+        assert str(formula.threshold_expr) == "threshold"
+
     def test_bounds(self):
         prop = 'P=? [F "one"]'
         formula = stormpy.parse_property(prop).get_raw_formula()

@@ -8,8 +8,7 @@ import stormpy.examples.files
 def example_gspns_01():
     # Load a GSPN from file (PNML format)
     import_path = stormpy.examples.files.gspn_pnml_simple
-    gspn_parser = stormpy.gspn.GSPNParser()
-    gspn = gspn_parser.parse(import_path)
+    gspn = stormpy.gspn.load_gspn_file(import_path)
 
     print("Name of GSPN: {}.".format(gspn.get_name()))
     print("Number of places: {}.".format(gspn.get_number_of_places()))

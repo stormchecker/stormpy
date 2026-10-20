@@ -6,7 +6,7 @@ from configurations import gspn, xml
 
 
 @gspn
-class TestGSPNBuilder:
+class TestGspnBuilder:
     def test_layout_info(self):
         layout = stormpy.gspn.LayoutInfo()
         assert layout.x == 0
@@ -28,7 +28,7 @@ class TestGSPNBuilder:
         assert p_id == place.get_id()
 
         assert not place.has_restricted_capacity()
-        place.set_capacity(cap=5)
+        place.set_capacity(capacity=5)
         assert place.has_restricted_capacity()
         assert place.get_capacity() == 5
 
@@ -87,7 +87,7 @@ class TestGSPNBuilder:
 
     def test_build_gspn(self):
         gspn_name = "gspn_test"
-        builder = stormpy.gspn.GSPNBuilder()
+        builder = stormpy.gspn.GspnBuilder()
 
         id_p_0 = builder.add_place()
         id_p_1 = builder.add_place(initial_tokens=1)
@@ -119,7 +119,7 @@ class TestGSPNBuilder:
         builder.add_normal_arc("tt_0", "place_3", multiplicity=2)
 
         # test gspn composition
-        builder.set_name(gspn_name)
+        builder.set_gspn_name(gspn_name)
         gspn = builder.build_gspn()
 
         assert gspn.get_name() == gspn_name
@@ -172,8 +172,8 @@ class TestGSPNBuilder:
 
     @xml
     def test_export_to_pnpro(self, tmpdir):
-        builder = stormpy.gspn.GSPNBuilder()
-        builder.set_name("gspn_test")
+        builder = stormpy.gspn.GspnBuilder()
+        builder.set_gspn_name("gspn_test")
 
         # add places and transitions
         id_p_0 = builder.add_place()
@@ -186,12 +186,11 @@ class TestGSPNBuilder:
         export_file = os.path.join(str(tmpdir), "gspn.pnpro")
 
         # export gspn to pnml
-        gspn.export_gspn_pnpro_file(export_file)
+        stormpy.gspn.export_gspn_pnpro_file(gspn, export_file)
         assert os.path.exists(export_file)
 
         # import gspn
-        gspn_parser = stormpy.gspn.GSPNParser()
-        gspn_import = gspn_parser.parse(export_file)
+        gspn_import = stormpy.gspn.load_gspn_file(export_file)
 
         # test imported gspn
         assert gspn_import.get_name() == gspn.get_name()
@@ -215,8 +214,8 @@ class TestGSPNBuilder:
 
     @xml
     def test_export_to_pnml(self, tmpdir):
-        builder = stormpy.gspn.GSPNBuilder()
-        builder.set_name("gspn_test")
+        builder = stormpy.gspn.GspnBuilder()
+        builder.set_gspn_name("gspn_test")
 
         # add places and transitions
         id_p_0 = builder.add_place()
@@ -229,12 +228,11 @@ class TestGSPNBuilder:
         export_file = os.path.join(str(tmpdir), "gspn.pnml")
 
         # export gspn to pnml
-        gspn.export_gspn_pnml_file(export_file)
+        stormpy.gspn.export_gspn_pnml_file(gspn, export_file)
         assert os.path.exists(export_file)
 
         # import gspn
-        gspn_parser = stormpy.gspn.GSPNParser()
-        gspn_import = gspn_parser.parse(export_file)
+        gspn_import = stormpy.gspn.load_gspn_file(export_file)
 
         # test imported gspn
         assert gspn_import.get_name() == gspn.get_name()

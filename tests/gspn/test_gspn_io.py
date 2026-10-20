@@ -10,8 +10,7 @@ from configurations import gspn, xml
 @gspn
 class TestGSPNJani:
     def test_simple_pnml(self):
-        gspn_parser = stormpy.gspn.GSPNParser()
-        gspn = gspn_parser.parse(get_example_path("gspn", "gspn_simple.pnml"))
+        gspn = stormpy.gspn.load_gspn_file(get_example_path("gspn", "gspn_simple.pnml"))
         assert gspn.get_name() == "simple_gspn"
         assert gspn.get_number_of_places() == 4
         assert gspn.get_number_of_immediate_transitions() == 3
@@ -19,16 +18,14 @@ class TestGSPNJani:
 
     @xml
     def test_custom_property(self):
-        gspn_parser = stormpy.gspn.GSPNParser()
-        gspn = gspn_parser.parse(get_example_path("gspn", "philosophers_4.pnpro"))
+        gspn = stormpy.gspn.load_gspn_file(get_example_path("gspn", "philosophers_4.pnpro"))
         assert gspn.get_name() == "Philosophers4"
         assert gspn.get_number_of_timed_transitions() == 12
         assert gspn.get_number_of_immediate_transitions() == 0
         assert gspn.get_number_of_places() == 16
 
         # Build jani program
-        jani_builder = stormpy.gspn.GSPNToJaniBuilder(gspn)
-        jani_program = jani_builder.build()
+        jani_program, _ = stormpy.gspn.build_jani_model(gspn)
 
         # Set properties
         prop = stormpy.parse_property("P=? [F<=10 eating1=1]", jani_program)
@@ -44,19 +41,14 @@ class TestGSPNJani:
 
     @xml
     def test_standard_properties(self):
-        gspn_parser = stormpy.gspn.GSPNParser()
-        gspn = gspn_parser.parse(get_example_path("gspn", "philosophers_4.pnpro"))
+        gspn = stormpy.gspn.load_gspn_file(get_example_path("gspn", "philosophers_4.pnpro"))
         assert gspn.get_name() == "Philosophers4"
         assert gspn.get_number_of_timed_transitions() == 12
         assert gspn.get_number_of_immediate_transitions() == 0
         assert gspn.get_number_of_places() == 16
 
-        # Build jani program
-        jani_builder = stormpy.gspn.GSPNToJaniBuilder(gspn)
-        jani_program = jani_builder.build()
-
-        # Use standard properties
-        properties = jani_builder.create_deadlock_properties(jani_program)
+        # Build jani program with standard properties
+        jani_program, properties = stormpy.gspn.build_jani_model(gspn, add_deadlock_properties=True)
 
         # Instantiate constants
         jani_program, properties = stormpy.instantiate_constants(jani_program, "TIME_BOUND=1", properties)

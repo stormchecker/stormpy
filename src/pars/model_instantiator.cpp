@@ -42,7 +42,8 @@ void define_typed_instantiator(py::module& m) {
 
     auto implementation = stormpy::bindings::bindTemplateClass<Instantiator>(m, "ModelInstantiator", stormpy::bindings::typeIndex<ModelKind, ValueType>(),
                                                                              "Instantiate a parametric model");
-    implementation.def(py::init<ParametricModel>(), "model"_a).def("instantiate", &Instantiator::instantiate, "Instantiate model with given parameter values");
+    implementation.def(py::init<ParametricModel>(), "model"_a)
+        .def("instantiate", &Instantiator::instantiate, "valuation"_a, "Instantiate model with given parameter values");
 }
 
 template<typename ValueType>
@@ -61,19 +62,20 @@ void define_typed_checker(py::module& m) {
     using BaseChecker = SparseInstantiationModelChecker<ParametricModel, ResultType>;
     auto const index = stormpy::bindings::typeIndex<ModelKind, ResultType>();
 
-    auto base = stormpy::bindings::bindInternalClass<BaseChecker>(m, stormpy::bindings::templateClassName("ModelInstantiationCheckerBase", index),
+    auto base = stormpy::bindings::bindInternalClass<BaseChecker>(m, stormpy::bindings::templateClassName("SparseInstantiationModelCheckerBase", index),
                                                                   "Instantiation checker base");
-    base.def("specify_formula", &BaseChecker::specifyFormula, "check_task"_a);
+    base.def("specify_formula", &BaseChecker::specifyFormula, "check_task"_a, "Specify the formula to check");
 
     auto implementation =
-        stormpy::bindings::bindTemplateClass<CheckerType>(m, "ModelInstantiationChecker", index, "Instantiate and check a parametric model", base);
+        stormpy::bindings::bindTemplateClass<CheckerType>(m, "SparseInstantiationModelChecker", index, "Instantiate and check a parametric model", base);
     implementation.def(py::init<storm::Environment, ParametricModel>(), "environment"_a, "model"_a)
         .def(
             "check",
             [](CheckerType& c, storm::Environment const& env,
                storm::utility::parametric::Valuation<storm::RationalFunction> const& val) -> std::shared_ptr<CheckResult> { return c.check(env, val); },
-            "env"_a, "instantiation"_a)
-        .def("set_graph_preserving", &CheckerType::setInstantiationsAreGraphPreserving, "value"_a);
+            "environment"_a, "valuation"_a, "Check the model instantiated with the given valuation")
+        .def("set_instantiations_are_graph_preserving", &CheckerType::setInstantiationsAreGraphPreserving, "value"_a,
+             "Set whether all instantiations preserve the graph structure");
 }
 
 template<typename ValueType>
@@ -84,6 +86,7 @@ void define_model_instantiation_checker(py::module& m) {
 }
 
 template void define_model_instantiator<double>(py::module&);
+template void define_model_instantiator<storm::RationalNumber>(py::module&);
 template void define_model_instantiator<storm::RationalFunction>(py::module&);
 template void define_model_instantiation_checker<double>(py::module&);
 template void define_model_instantiation_checker<storm::RationalNumber>(py::module&);

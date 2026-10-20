@@ -153,9 +153,16 @@ feasibility (`PLA` only). The choice affects arithmetic and which regions are su
 | `VALIDATING_PARAMETER_LIFTING` | Floating point followed by exact validation | Well-defined and graph-preserving |
 | `ROBUST_PARAMETER_LIFTING` | Floating point using robust models | Can include graph-changing valuations; DTMCs only |
 
-For MDPs, bounds without `min` or `max` apply to every scheduler. For example,
-`Pmin>=0.8 [F "target"]` requires the bound for every scheduler, while
-`Pmax>=0.8 [F "target"]` asks for some scheduler. SCP requires universal scheduler quantification.
+For MDPs, properties have the following semantics:
+
+| Property | Schedulers that must satisfy the bound |
+| --- | --- |
+| `P>=0.8 [F "target"]` | Every scheduler |
+| `Pmin>=0.8 [F "target"]` | Every scheduler |
+| `Pmax>=0.8 [F "target"]` | At least one scheduler (PLA only) |
+| `P<=0.8 [F "target"]` | Every scheduler |
+| `Pmin<=0.8 [F "target"]` | At least one scheduler (PLA only) |
+| `Pmax<=0.8 [F "target"]` | Every scheduler |
 
 ### Computing extremal values
 

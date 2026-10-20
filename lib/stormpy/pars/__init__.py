@@ -89,6 +89,19 @@ def verify(
     graph-changing valuations.
     Unsupported inputs raise an exception.
 
+    For MDPs, properties have the following semantics:
+
+    ==========================  ======================================
+    Property                    Schedulers that must satisfy the bound
+    ==========================  ======================================
+    ``P>=0.8 [F "target"]``     Every scheduler
+    ``Pmin>=0.8 [F "target"]``  Every scheduler
+    ``Pmax>=0.8 [F "target"]``  At least one scheduler (PLA only)
+    ``P<=0.8 [F "target"]``     Every scheduler
+    ``Pmin<=0.8 [F "target"]``  At least one scheduler (PLA only)
+    ``Pmax<=0.8 [F "target"]``  Every scheduler
+    ==========================  ======================================
+
     :param model: Parametric sparse DTMC or MDP.
     :param property: Bounded probability or reward property or formula.
     :param region: Explicit parameter region.
@@ -137,10 +150,18 @@ def check_feasibility(
     region. GD supports DTMCs only. Robust parameter lifting supports DTMCs and
     can include graph-changing valuations. Unsupported inputs raise an exception.
 
-    For MDPs, bounds without min/max apply to every scheduler. For example,
-    ``Pmax>=0.8 [F "target"]`` asks for some scheduler (PLA only), while
-    ``Pmin>=0.8 [F "target"]`` requires every scheduler. SCP requires universal
-    scheduler quantification.
+    For MDPs, properties have the following semantics:
+
+    ==========================  ======================================
+    Property                    Schedulers that must satisfy the bound
+    ==========================  ======================================
+    ``P>=0.8 [F "target"]``     Every scheduler
+    ``Pmin>=0.8 [F "target"]``  Every scheduler
+    ``Pmax>=0.8 [F "target"]``  At least one scheduler (PLA only)
+    ``P<=0.8 [F "target"]``     Every scheduler
+    ``Pmin<=0.8 [F "target"]``  At least one scheduler (PLA only)
+    ``Pmax<=0.8 [F "target"]``  Every scheduler
+    ==========================  ======================================
 
     :param model: Parametric sparse DTMC or MDP.
     :param property: Bounded probability or reward property or formula.

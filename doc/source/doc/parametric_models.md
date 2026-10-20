@@ -120,7 +120,7 @@ For example, outgoing probabilities `p` and `1-p` form a valid distribution for
 `ConstraintCollector` exposes the constraints for well-definedness and graph preservation:
 
 ```{code-cell} python3
-collector = stormpy.ConstraintCollector(model)
+collector = stormpy.pars.ConstraintCollector(model)
 print("Well-definedness constraints:")
 for constraint in collector.get_wellformed_constraints():
     print(constraint)

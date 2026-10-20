@@ -1,5 +1,6 @@
 #include "pars.h"
 
+#include <storm-pars/analysis/ConstraintCollector.h>
 #include <storm-pars/api/synthesis.h>
 #include <storm-pars/transformer/SparseParametricModelSimplifier.h>
 
@@ -19,6 +20,12 @@ void define_simplifier(py::module& m, std::string const& modelName) {
 }
 
 void define_pars(py::module& m) {
+    using storm::pars::analysis::ConstraintCollector;
+    py::classh<ConstraintCollector>(m, "ConstraintCollector", "Collector for constraints on parametric Markov chains")
+        .def(py::init<storm::models::sparse::Model<storm::RationalFunction> const&>(), "Collect constraints of the model", py::arg("model"))
+        .def("get_wellformed_constraints", &ConstraintCollector::getWellformedConstraints, "Get the constraints ensuring a well-formed model")
+        .def("get_graph_preserving_constraints", &ConstraintCollector::getGraphPreservingConstraints, "Get the constraints ensuring the graph is preserved");
+
     define_simplifier<storm::models::ModelType::Dtmc, storm::models::sparse::Dtmc<storm::RationalFunction>>(m, "DTMCs");
     define_simplifier<storm::models::ModelType::Mdp, storm::models::sparse::Mdp<storm::RationalFunction>>(m, "MDPs");
 }

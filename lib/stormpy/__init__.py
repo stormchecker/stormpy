@@ -58,7 +58,6 @@ QuotientFormat = developer.QuotientFormat
 EliminationLabelBehavior = developer.EliminationLabelBehavior
 SubsystemBuilderOptions = developer.SubsystemBuilderOptions
 SubsystemBuilderReturnType = developer.SubsystemBuilderReturnType.publish_as("stormpy.SubsystemBuilderReturnType")
-ConstraintCollector = developer.ConstraintCollector
 
 # Import public functions
 from .core._parsing import instantiate_constants, parse_jani_model, parse_jani_model_from_string, parse_prism_program, parse_properties, parse_property
@@ -134,7 +133,6 @@ __all__ = [
     "create_filter",
     # Analysis
     "PcaaWeightVectorChecker",
-    "ConstraintCollector",
     "topological_sort",
     "compute_prob01_states",
     "compute_expected_number_of_visits",

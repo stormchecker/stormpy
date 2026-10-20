@@ -20,6 +20,7 @@ from stormpy.models import SparseModel
 from stormpy.core._common import _formula
 
 ParameterRegion = developer.ParameterRegion
+ConstraintCollector = developer.ConstraintCollector
 RegionResult = developer.RegionResult
 RegionCheckEngine = developer.RegionCheckEngine
 FeasibilityMethod = developer.FeasibilityMethod
@@ -225,6 +226,7 @@ def compute_extremal_value(
 
 
 __all__ = [
+    "ConstraintCollector",
     "ParameterRegion",
     "parse_region",
     "create_region",

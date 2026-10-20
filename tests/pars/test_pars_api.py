@@ -32,6 +32,7 @@ class TestPublicParsApi:
         import stormpy.pars
 
         for name in [
+            "ConstraintCollector",
             "SparseDtmcParameterLiftingModelChecker",
             "SparseMdpParameterLiftingModelChecker",
             "SparseParametricModelSimplifier",
@@ -44,6 +45,7 @@ class TestPublicParsApi:
         ]:
             assert hasattr(stormpy.pars.developer, name)
         assert stormpy.pars.ParameterRegion is stormpy.pars.developer.ParameterRegion
+        assert stormpy.pars.ConstraintCollector is stormpy.pars.developer.ConstraintCollector
         assert (
             stormpy.pars.ModelInstantiator[stormpy.models.ModelType.DTMC, float]
             is stormpy.pars.developer.ModelInstantiator[stormpy.models.ModelType.DTMC, float]

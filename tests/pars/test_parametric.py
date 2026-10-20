@@ -133,7 +133,7 @@ class TestParametric:
         prop = "P=? [F s=5]"
         formula = stormpy.parse_property(prop, program)
         model = stormpy.build_model[stormpy.RationalFunction](program, formula)
-        collector = stormpy.ConstraintCollector(model)
+        collector = stormpy.pars.ConstraintCollector(model)
         constraints_well_formed = collector.get_wellformed_constraints()
         assert len(constraints_well_formed) == 4
         for constraint in constraints_well_formed:

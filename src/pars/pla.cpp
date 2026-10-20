@@ -37,7 +37,7 @@ std::unique_ptr<RegionRefinementChecker> initializeRegionRefinementChecker(storm
     storm::pars::modelchecker::MonotonicityOptions monotonicityOptions;
     storm::pars::modelchecker::RegionRefinementOptions<storm::RationalFunction> settings(
         model, task, engine, strategy, monotonicityOptions, discreteVars, allowModelSimplification, graphPreservationStatus, preconditionsValidated);
-    return storm::api::initializeRegionRefinementChecker<storm::RationalFunction, double>(env, settings);
+    return storm::api::initializeRegionRefinementChecker<storm::RationalFunction>(env, settings);
 }
 
 std::set<storm::Polynomial> gatherDerivatives(storm::models::sparse::Model<storm::RationalFunction> const& model, carl::Variable const& var) {
@@ -172,8 +172,8 @@ void define_pla(py::module& m) {
         "initialize_region_model_checker",
         [](storm::Environment const& env, ParametricModel const& model, CheckTask const& task, RegionCheckEngine engine, bool allowModelSimplification,
            GraphPreservationStatus graphPreservationStatus, bool preconditionsValidated) -> std::shared_ptr<RegionModelChecker> {
-            return storm::api::initializeRegionModelChecker<storm::RationalFunction, double>(env, model, task, engine, allowModelSimplification,
-                                                                                             graphPreservationStatus, preconditionsValidated);
+            return storm::api::initializeRegionModelChecker<storm::RationalFunction>(env, model, task, engine, allowModelSimplification,
+                                                                                     graphPreservationStatus, preconditionsValidated);
         },
         "Create and specify a region model checker", "environment"_a, "model"_a, "task"_a, "engine"_a = RegionCheckEngine::ParameterLifting,
         "allow_model_simplification"_a = true, "graph_preservation_status"_a = GraphPreservationStatus::GraphPreserving, "preconditions_validated"_a = false);

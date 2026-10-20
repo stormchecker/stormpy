@@ -124,9 +124,9 @@ class TestSynthesis:
         if raw_formula:
             prop = prop.get_raw_formula()
         region = stormpy.pars.parse_region("0.2<=p<=0.8", model.collect_all_parameters())
-        assert stormpy.pars.verify(model, prop, region=region, engine=engine)
-        assert stormpy.pars.verify(model, prop, region_bound=stormpy.RationalFunctionCoefficient("1/5"), engine=engine)
-        assert not stormpy.pars.verify(model, _property('P>=0.6 [F "target"]'), region=region, engine=engine, environment=stormpy.Environment())
+        assert stormpy.pars.verify(model, prop, region=region, region_engine=engine)
+        assert stormpy.pars.verify(model, prop, region_bound=stormpy.RationalFunctionCoefficient("1/5"), region_engine=engine)
+        assert not stormpy.pars.verify(model, _property('P>=0.6 [F "target"]'), region=region, region_engine=engine, environment=stormpy.Environment())
 
     @pytest.mark.parametrize(
         "method, engine",
@@ -208,8 +208,7 @@ class TestSynthesis:
         prop = _property('P<=1 [F "target"]')
         with pytest.raises(RuntimeError, match="graph-preserving"):
             function(synthesis_model, prop, region_bound=zero)
-        keyword = "engine" if function is stormpy.pars.verify else "region_engine"
-        result = function(synthesis_model, prop, region_bound=zero, **{keyword: stormpy.pars.RegionCheckEngine.ROBUST_PARAMETER_LIFTING})
+        result = function(synthesis_model, prop, region_bound=zero, region_engine=stormpy.pars.RegionCheckEngine.ROBUST_PARAMETER_LIFTING)
         if function is stormpy.pars.verify:
             assert result
         else:

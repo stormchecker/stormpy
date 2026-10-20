@@ -30,7 +30,7 @@ void define_synthesis_functions(py::module& m, char const* regionArgument) {
     using Engine = storm::modelchecker::RegionCheckEngine;
     m.def("verify", py::overload_cast<storm::Environment const&, Model const&, Formula const&, RegionOrBound const&, Engine>(&storm::api::verify),
           "Verify a bounded probability or reward formula for all well-defined valuations in the region", "environment"_a, "model"_a, "formula"_a,
-          py::arg(regionArgument), "engine"_a = Engine::ParameterLifting);
+          py::arg(regionArgument), "region_engine"_a = Engine::ParameterLifting);
     m.def("check_feasibility",
           py::overload_cast<storm::Environment const&, Model const&, Formula const&, RegionOrBound const&, storm::pars::FeasibilityMethod, Engine>(
               &storm::api::checkFeasibility),

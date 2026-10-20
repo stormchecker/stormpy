@@ -143,10 +143,15 @@ assert stormpy.pars.verify(model, property, region_bound=0.4)
 
 Provide exactly one of `region` or `region_bound`.
 
-The default engine requires a well-defined, graph-preserving region and validates this
-requirement. To include graph-changing valuations in a DTMC, select
-`RegionCheckEngine.ROBUST_PARAMETER_LIFTING` using `engine` for verification or `region_engine`
-for feasibility. The `region_engine` argument applies only to the `PLA` method.
+Select a `RegionCheckEngine` using `region_engine` for verification and
+feasibility (`PLA` only). The choice affects arithmetic and which regions are supported:
+
+| Engine | Arithmetic | Region requirements |
+| --- | --- | --- |
+| `PARAMETER_LIFTING` (default) | Floating point | Well-defined and graph-preserving |
+| `EXACT_PARAMETER_LIFTING` | Exact rational, potentially more expensive | Well-defined and graph-preserving |
+| `VALIDATING_PARAMETER_LIFTING` | Floating point followed by exact validation | Well-defined and graph-preserving |
+| `ROBUST_PARAMETER_LIFTING` | Floating point using robust models | Can include graph-changing valuations; DTMCs only |
 
 For MDPs, bounds without `min` or `max` apply to every scheduler. For example,
 `Pmin>=0.8 [F "target"]` requires the bound for every scheduler, while

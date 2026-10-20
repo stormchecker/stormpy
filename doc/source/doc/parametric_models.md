@@ -84,7 +84,7 @@ probability_function = result[model.initial_states[0]]
 print("Probability as a function of the parameters:", probability_function)
 ```
 
-The rational functions can grow rapidly with the number of states and parameters. 
+The rational functions can grow rapidly with the number of states and parameters.
 
 ## Regions
 
@@ -150,7 +150,7 @@ feasibility (`PLA` only). The choice affects arithmetic and which regions are su
 
 [04-parameter-synthesis.py](https://github.com/stormchecker/stormpy/blob/master/examples/parametric_models/04-parameter-synthesis.py)
 
-`verify` checks whether a bounded probability or reward property holds for **every**
+Function `verify` checks whether a bounded probability or reward property holds for **every**
 well-defined parameter valuation in a region. It supports sparse parametric DTMCs and
 MDPs with one initial state.
 
@@ -203,12 +203,12 @@ For MDPs, the property's `min` or `max` selects the scheduler optimization, whil
 
 ## Feasibility
 
-`check_feasibility` searches for a well-defined parameter valuation satisfying a
+Function `check_feasibility` searches for a well-defined parameter valuation satisfying a
 bounded probability or reward property. It supports sparse parametric DTMCs and MDPs
 with one initial state.
 
-The original region failed verification, but contains satisfying valuations.
-The result includes a valuation and its probability as a witness.
+Verification failed on the original region, but some valuations still satisfy the property.
+The result includes a satisfying valuation and the corresponding probability as a witness.
 Select the search method with the `method` argument:
 
 - `FeasibilityMethod.PLA`: parameter lifting, the default, for DTMCs and MDPs.

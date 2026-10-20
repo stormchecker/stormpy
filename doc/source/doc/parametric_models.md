@@ -52,16 +52,16 @@ shows three ways to inspect the model's transitions and count those with probabi
 
 Use `ModelInstantiator` to replace the parameters with concrete values and obtain a
 model that can be checked numerically. Here, we set both parameters to `2/5`.
-To compute the resulting probability, clone the property's formula and remove its bound:
+To compute the resulting probability, clone the property and remove the bound from its formula:
 
 ```{code-cell} python3
 instantiator = stormpy.pars.ModelInstantiator(model)
 point = {parameter: stormpy.RationalFunctionCoefficient("2/5") for parameter in parameters}
 instantiated_model = instantiator.instantiate(point)
 
-probability_formula = property.get_raw_formula().clone()
-probability_formula.remove_bound()
-result = stormpy.model_checking(instantiated_model, probability_formula)
+probability_property = property.clone()
+probability_property.get_raw_formula().remove_bound()
+result = stormpy.model_checking(instantiated_model, probability_property)
 probability = result[instantiated_model.initial_states[0]].value
 print("Probability of rolling a two:", probability)
 assert math.isclose(probability, 4 / 35, rel_tol=1e-6)
@@ -79,7 +79,7 @@ Model checking a parametric model directly computes a rational function of the
 parameters, rather than a probability for one valuation:
 
 ```{code-cell} python3
-result = stormpy.model_checking(model, probability_formula)
+result = stormpy.model_checking(model, probability_property)
 probability_function = result[model.initial_states[0]]
 print("Probability as a function of the parameters:", probability_function)
 ```
@@ -188,7 +188,7 @@ conversion required by Storm:
 ```{code-cell} python3
 value, valuation = stormpy.pars.compute_extremal_value(
     model,
-    probability_formula,
+    probability_property,
     region=region,
     direction=stormpy.logic.OptimizationDirection.MAXIMIZE,
     precision=1e-4,
@@ -243,7 +243,7 @@ Check each witness by instantiating the original model and computing its probabi
 for method, result in results.items():
     witness = result.witness
     instantiated_model = instantiator.instantiate(witness.valuation)
-    checked = stormpy.model_checking(instantiated_model, probability_formula, only_initial_states=True)
+    checked = stormpy.model_checking(instantiated_model, probability_property, only_initial_states=True)
     probability = checked[instantiated_model.initial_states[0]].value
     print(method.name, "probability on the instantiated model:", probability)
     assert math.isclose(probability, witness.value, rel_tol=1e-6)

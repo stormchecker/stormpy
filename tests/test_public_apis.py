@@ -31,21 +31,22 @@ def _not_documented_elsewhere(_name):
 # Public modules: name -> (available, predicate for names documented in other modules)
 _PUBLIC_MODULES = {
     "stormpy": (True, _core_documented_elsewhere),
-    "stormpy.results": (True, _not_documented_elsewhere),
     "stormpy.analysis": (True, _not_documented_elsewhere),
+    "stormpy.datastructures": (True, _not_documented_elsewhere),
+    "stormpy.environments": (True, _not_documented_elsewhere),
+    "stormpy.expressions": (True, _not_documented_elsewhere),
+    "stormpy.info": (True, _not_documented_elsewhere),
+    "stormpy.io": (True, _not_documented_elsewhere),
+    "stormpy.logic": (True, _not_documented_elsewhere),
+    "stormpy.models": (True, _not_documented_elsewhere),
+    "stormpy.numbers": (True, _numbers_documented_elsewhere),
+    "stormpy.plotting": (has_package("numpy") and has_package("matplotlib"), _not_documented_elsewhere),
+    "stormpy.results": (True, _not_documented_elsewhere),
     "stormpy.transformations": (True, _not_documented_elsewhere),
+    # Extensions
     "stormpy.dft": (has_dft, _not_documented_elsewhere),
     "stormpy.gspn": (has_gspn, _not_documented_elsewhere),
     "stormpy.pars": (has_pars, _not_documented_elsewhere),
-    "stormpy.numbers": (True, _numbers_documented_elsewhere),
-    "stormpy.models": (True, _not_documented_elsewhere),
-    "stormpy.datastructures": (True, _not_documented_elsewhere),
-    "stormpy.expressions": (True, _not_documented_elsewhere),
-    "stormpy.io": (True, _not_documented_elsewhere),
-    "stormpy.plotting": (has_package("numpy") and has_package("matplotlib"), _not_documented_elsewhere),
-    "stormpy.logic": (True, _not_documented_elsewhere),
-    "stormpy.environments": (True, _not_documented_elsewhere),
-    "stormpy.info": (True, _not_documented_elsewhere),
 }
 
 _UNAVAILABLE = pytest.mark.skip(reason="Module not available in this build of Storm")

@@ -8,14 +8,13 @@ from __future__ import annotations
 import math
 from typing import Any
 
+import stormpy as _stormpy
+
 from .developer.infinity import Infinity
 
 
 def _plain_value(value: Any) -> Any:
-    # Results are loaded after stormpy.numbers; defer this import.
-    from stormpy.results import BoundedValue
-
-    return BoundedValue._plain(value)
+    return _stormpy.results.BoundedValue._plain(value)
 
 
 def is_infinity(value: Any) -> bool:

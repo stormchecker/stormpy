@@ -188,16 +188,6 @@ def test_path_keyword_arguments():
     assert str(stormpy.analysis.Path(predecessor_k=2, distance=0.5)) == "Path with predecessorNode: None predecessorK: 2 distance: 0.5"
 
 
-def test_shortest_paths_default_target_label():
-    program = stormpy.parse_prism_program(get_example_path("dtmc", "brp-16-2.pm"))
-    prop = stormpy.parse_property('P=? [F "target"]', program)
-    model = stormpy.build_model(program, prop)
-    states, probability = stormpy.analysis.shortest_path(model)
-    assert states[0] in model.initial_states
-    assert model.labeling.get_states("target")[states[-1]]
-    assert 0 < probability <= 1
-
-
 def test_developer_shortest_paths_deduce_value_type():
     program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
     model = stormpy.build_model(program)

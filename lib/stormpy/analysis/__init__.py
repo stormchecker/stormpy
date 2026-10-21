@@ -26,7 +26,7 @@ def get_maximal_end_components(model: "_stormpy.models.SparseModel") -> MaximalE
 
 def shortest_path(
     model: _stormpy.models.SparseModel,
-    target: int | str | list[int] | _stormpy.datastructures.BitVector = "target",
+    target: int | str | list[int] | _stormpy.datastructures.BitVector,
     *,
     k: int = 1,
 ) -> tuple[list[int], float | _stormpy.Rational]:
@@ -36,7 +36,7 @@ def shortest_path(
     ranked by decreasing probability, rather than by the number of transitions.
 
     :param model: Sparse DTMC with floating-point or rational probabilities.
-    :param target: Target state ID, list of state IDs, bitvector or state label. Defaults to the label ``"target"``.
+    :param target: Target state ID, list of state IDs, bitvector or state label.
     :param k: One-based path rank; defaults to the most probable path.
     :return: Tuple (states, probability), with states ordered from initial state to target.
     :raises ValueError: If k is not positive.

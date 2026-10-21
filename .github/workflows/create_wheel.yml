@@ -96,9 +96,9 @@ jobs:
             xcode: latest-stable
             deploy_target: 15.0
           - os: macos-arm
-            runs-on: macos-14 # macos-14+ (including latest) are ARM64 runners
-            xcode: 15.4
-            deploy_target: 14.0
+            runs-on: macos-15 # ARM64 runners
+            xcode: latest-stable
+            deploy_target: 15.0
       fail-fast: false
     steps:
       - name: Git clone (default current repo)
@@ -271,19 +271,29 @@ jobs:
       fail-fast: false
       matrix:
         distro:
-          - {name: "XCode 15.4, ARM",
-             os: macos-arm,
-             distro: "macos-14",
-             xcode: "15.4"
-          }
-          - {name: "XCode Latest, ARM",
+          - {name: "macOS 15, XCode 16.4, ARM",
              os: macos-arm,
              distro: "macos-15",
+             xcode: "16.4"
+          }
+          - {name: "macOS 26, XCode Latest, ARM",
+             os: macos-arm,
+             distro: "macos-26",
              xcode: "latest-stable"
           }
-          - {name: "XCode Latest, Intel",
+          - {name: "macOS 27, XCode Latest, ARM",
+             os: macos-arm,
+             distro: "xcode-27",
+             xcode: "latest"
+          }
+          - {name: "macOS 15, XCode Latest, Intel",
              os: macos-intel,
              distro: "macos-15-intel",
+             xcode: "latest-stable"
+          }
+          - {name: "macOS 26, XCode Latest, Intel",
+             os: macos-intel,
+             distro: "macos-26-intel",
              xcode: "latest-stable"
           }
     steps:

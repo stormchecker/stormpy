@@ -39,7 +39,7 @@ jobs:
         config:
           - {name: "all libraries",
              setup_args: "--config-settings=cmake.define.STORMPY_ALLOW_STORM_FETCH=OFF",
-             optional_libs: "[numpy,parser,plot,test]",
+             optional_libs: "[test,parser,plot]",
              test_opt: ""
           }
           - {name: "no libraries",
@@ -301,14 +301,14 @@ jobs:
              storm_base: "ci-debug",
              build_type: "Debug",
              setup_args: "--config-settings=cmake.define.STORMPY_ALLOW_STORM_FETCH=OFF",
-             optional_libs: "[test,parser,plot,doc]"
+             optional_libs: "[test,plot,doc]"
           }
           - {name: "Release",
              docker_tag: "ci",
              storm_base: "ci",
              build_type: "Release",
              setup_args: "--config-settings=cmake.define.STORMPY_ALLOW_STORM_FETCH=OFF",
-             optional_libs: "[test,parser,plot,doc]"
+             optional_libs: "[test,plot,doc]"
           }
     steps:
       - name: Git clone

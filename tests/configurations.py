@@ -23,6 +23,7 @@ pomdp = pytest.mark.skipif(not has_pomdp, reason="No support for POMDPs")
 spot = pytest.mark.skipif(not config.STORM_WITH_SPOT, reason="No support for LTL via spot")
 xml = pytest.mark.skipif(not config.STORM_WITH_XERCES, reason="No support for XML via xerces")
 numpy_avail = pytest.mark.skipif(not has_package("numpy"), reason="Numpy not available")
+sphinx_avail = pytest.mark.skipif(not has_package("sphinx"), reason="Sphinx not available")
 plotting = pytest.mark.skipif(not has_package("matplotlib") or not has_package("scipy"), reason="Libraries for plotting not available")
 pycarl_parser = pytest.mark.skipif(not has_pycarl_parser, reason="No support for parsing")
 

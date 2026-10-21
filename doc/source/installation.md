@@ -126,7 +126,7 @@ To get started, continue with our [Getting Started](getting_started), consult th
 To build this documentation, you need a local installation of stormpy and additional Python libraries.
 You can install the required Python dependencies automatically with:
 ```bash
-pip install .[doc,numpy]
+pip install .[doc]
 ```
 Then build the documentation:
 ```bash

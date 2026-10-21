@@ -16,9 +16,7 @@ authors = [
     { name = "M. Volk", email = "m.volk@tue.nl" }
 ]
 requires-python = ">=3.11"  # Python version should be synced with find_package(Python ...) in CMakeLists.txt
-dependencies = [
-    "Deprecated",
-]
+dependencies = []
 classifiers = [
     'Intended Audience :: Science/Research',
     'Topic :: Scientific/Engineering',
@@ -31,9 +29,6 @@ Documentation = "https://stormchecker.github.io/stormpy"
 "Bug Tracker" = "https://github.com/stormchecker/stormpy/issues"
 
 [project.optional-dependencies]
-numpy = [
-    "numpy"
-]
 parser = [
     "lark"
 ]
@@ -45,6 +40,8 @@ plot = [
 dev = [
     # Formatting
     "black[jupyter]",
+    # Testing and documentation
+    "stormpy[test,doc]",
 ]
 doc = [
     "Sphinx>=8.2.2",
@@ -54,10 +51,10 @@ doc = [
     "myst-nb",
     "ipykernel",
     "numpy",
+    "stormpy[parser]",
 ]
 test = [
     "pytest",
-    "numpy",
 ]
 
 [tool.scikit-build]

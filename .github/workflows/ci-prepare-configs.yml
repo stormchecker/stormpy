@@ -117,6 +117,12 @@ jobs:
             echo "::error::Field 'baseImg' in ci-configs.json category 'linuxTests' must be a string or an object with an image for each used build type for: $invalid"
             exit 1
           fi
+          # Field setup is required and must be a non-empty string (installs the dependencies in the base image)
+          invalid=$(jq -c '[ .linuxTests[] | select((.setup | type) != "string" or .setup == "") | .name ]' .github/workflows/ci-configs.json)
+          if [ "$invalid" != "[]" ]; then
+            echo "::error::Field 'setup' in ci-configs.json category 'linuxTests' must be a non-empty string for: $invalid"
+            exit 1
+          fi
       - name: Resolve defaults and filter configs by mode
         id: filter
         env:

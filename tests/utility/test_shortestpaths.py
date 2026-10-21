@@ -1,7 +1,6 @@
 import stormpy
 from stormpy.datastructures import BitVector
-from stormpy.analysis import ShortestPathsGenerator
-from stormpy.analysis import MatrixFormat
+from stormpy.analysis import ShortestPathsGenerator, MatrixFormat
 from helpers.helper import get_example_path
 
 import pytest

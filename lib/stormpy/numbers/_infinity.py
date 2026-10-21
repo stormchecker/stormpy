@@ -13,7 +13,7 @@ from .developer.infinity import Infinity
 
 def _plain_value(value: Any) -> Any:
     # Results are loaded after stormpy.numbers; defer this import.
-    from stormpy import BoundedValue
+    from stormpy.results import BoundedValue
 
     return BoundedValue._plain(value)
 
@@ -25,7 +25,7 @@ def is_infinity(value: Any) -> bool:
     In contrast to :func:`math.isinf`, values of exact types such as :class:`Rational` are never converted to ``float``
     and are therefore never infinite.
 
-    :param value: Value, e.g., ``float``, :class:`Rational` or :class:`stormpy.BoundedValue` (checks its value).
+    :param value: Value, e.g., ``float``, :class:`Rational` or :class:`stormpy.results.BoundedValue` (checks its value).
     :return: True iff the value is positive infinity.
     """
     value = _plain_value(value)
@@ -40,7 +40,7 @@ def is_negative_infinity(value: Any) -> bool:
     """
     Check whether the value is negative infinity.
 
-    :param value: Value, e.g., ``float``, :class:`Rational` or :class:`stormpy.BoundedValue` (checks its value).
+    :param value: Value, e.g., ``float``, :class:`Rational` or :class:`stormpy.results.BoundedValue` (checks its value).
     :return: True iff the value is negative infinity.
     """
     value = _plain_value(value)

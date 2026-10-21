@@ -15,8 +15,8 @@ import stormpy
 for module in ("stormpy.dft", "stormpy.gspn", "stormpy.pars", "stormpy.pomdp"):
     try:
         import_module(module)
-    except ImportError:
-        pass
+    except ImportError as error:
+        print(f"Could not import optional module {module}: {error}", file=sys.stderr)
 
 sys.path.insert(0, str(pathlib.Path(__file__).parent / "_ext"))
 from stormpy_autosummary import _filter_api_members, canonical_api_alias

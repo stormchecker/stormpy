@@ -14,8 +14,8 @@ from configurations import has_dft, has_gspn, has_pars
 
 
 def _core_documented_elsewhere(name):
-    # Value types are documented in stormpy.numbers.
-    return name in stormpy.numbers.__all__
+    # Value types and CheckResult are documented in their canonical namespaces.
+    return name in stormpy.numbers.__all__ or name == "CheckResult"
 
 
 def _numbers_documented_elsewhere(name):
@@ -31,6 +31,7 @@ def _not_documented_elsewhere(_name):
 # Public modules: name -> (available, predicate for names documented in other modules)
 _PUBLIC_MODULES = {
     "stormpy": (True, _core_documented_elsewhere),
+    "stormpy.results": (True, _not_documented_elsewhere),
     "stormpy.analysis": (True, _not_documented_elsewhere),
     "stormpy.transformations": (True, _not_documented_elsewhere),
     "stormpy.dft": (has_dft, _not_documented_elsewhere),

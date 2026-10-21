@@ -231,13 +231,13 @@ class TestAddUncertainty:
     def test_add_uncertainty_api(self):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
         model = stormpy.build_model(program)
-        interval_model = stormpy.add_uncertainty(model, 0.1)
+        interval_model = stormpy.transformations.add_uncertainty(model, 0.1)
         assert type(interval_model) is stormpy.models.SparseDtmc[stormpy.Interval]
         exact_model = stormpy.build_model[stormpy.Rational](program)
-        exact_interval_model = stormpy.add_uncertainty(exact_model, stormpy.Rational("1/10"))
+        exact_interval_model = stormpy.transformations.add_uncertainty(exact_model, stormpy.Rational("1/10"))
         assert type(exact_interval_model) is stormpy.models.SparseDtmc[stormpy.RationalInterval]
         with pytest.raises(StormError):
-            stormpy.add_uncertainty(interval_model, 0.1)
+            stormpy.transformations.add_uncertainty(interval_model, 0.1)
 
 
 class TestSubsystemCreation:

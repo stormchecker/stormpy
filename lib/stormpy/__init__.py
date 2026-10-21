@@ -1,7 +1,7 @@
 """Python bindings for the probabilistic model checker Storm.
 
 This module provides convenience entry points for the core functionality of Storm:
-parsing symbolic models and properties, building models, model checking and transforming models.
+parsing symbolic models and properties, building models and model checking.
 """
 
 # Number types (needed by the native modules and therefore imported first)
@@ -16,6 +16,7 @@ from . import exceptions
 from . import expressions, datastructures, models, io, logic
 from . import utility
 from . import environments
+from . import results
 from . import analysis, transformations
 
 try:
@@ -26,22 +27,8 @@ except ImportError:
 
 developer._set_up("")
 
-# Model checking configuration and results.
 from .environments import Environment
-
-CheckResult = developer.CheckResult
-QualitativeCheckResult = developer.QualitativeCheckResult
-ExplicitQualitativeCheckResult = developer.ExplicitQualitativeCheckResult.publish_as("stormpy.ExplicitQualitativeCheckResult")
-ExplicitQuantitativeCheckResult = developer.ExplicitQuantitativeCheckResult.publish_as("stormpy.ExplicitQuantitativeCheckResult")
-SymbolicQualitativeCheckResult = developer.SymbolicQualitativeCheckResult.publish_as("stormpy.SymbolicQualitativeCheckResult")
-SymbolicQuantitativeCheckResult = developer.SymbolicQuantitativeCheckResult.publish_as("stormpy.SymbolicQuantitativeCheckResult")
-HybridQuantitativeCheckResult = developer.HybridQuantitativeCheckResult.publish_as("stormpy.HybridQuantitativeCheckResult")
-ExplicitParetoCurveCheckResult = developer.ExplicitParetoCurveCheckResult.publish_as("stormpy.ExplicitParetoCurveCheckResult")
-SolutionBounds = developer.SolutionBounds.publish_as("stormpy.SolutionBounds")
-AggregatedValue = developer.AggregatedValue.publish_as("stormpy.AggregatedValue")
-FilterType = developer.FilterType
-
-from .core._results import BoundedValue
+from .results import CheckResult
 from .core._filters import create_filter, create_filter_initial_states, filter_initial_states
 
 UncertaintyResolutionMode = developer.UncertaintyResolutionMode
@@ -52,10 +39,8 @@ ExplicitModelCheckerHint = developer.ExplicitModelCheckerHint.publish_as("stormp
 # Import public functions
 from .io import instantiate_constants, parse_jani_model, parse_jani_model_from_string, parse_prism_program
 from .logic import parse_properties, parse_property
-from .analysis import compute_expected_number_of_visits
 from .core._building import BuilderOptions, build_model, build_model_from_drn, build_model_from_explicit, build_model_from_umb, build_symbolic_model
 from .core._modelchecking import Engine, model_checking
-from .transformations import add_uncertainty
 
 __all__ = [
     # Numeric types (canonical namespace: stormpy.numbers)
@@ -87,23 +72,8 @@ __all__ = [
     "ModelCheckerHint",
     "ExplicitModelCheckerHint",
     "CheckResult",
-    "QualitativeCheckResult",
-    "ExplicitQualitativeCheckResult",
-    "ExplicitQuantitativeCheckResult",
-    "SymbolicQualitativeCheckResult",
-    "SymbolicQuantitativeCheckResult",
-    "HybridQuantitativeCheckResult",
-    "ExplicitParetoCurveCheckResult",
-    "SolutionBounds",
-    "AggregatedValue",
-    "FilterType",
-    "BoundedValue",
     "create_filter",
     "create_filter_initial_states",
     "filter_initial_states",
     "model_checking",
-    # Analysis shortcut (canonical namespace: stormpy.analysis)
-    "compute_expected_number_of_visits",
-    # Transformation shortcut (canonical namespace: stormpy.transformations)
-    "add_uncertainty",
 ]

@@ -73,7 +73,7 @@ def _prepare_points_for_convex_pareto_plotting(
 
 
 def prepare_multiobjective_result_for_plotting(
-    result: stormpy.ExplicitParetoCurveCheckResult,
+    result: stormpy.results.ExplicitParetoCurveCheckResult,
     lower_corner: Sequence[float],
     upper_corner: Sequence[float],
     formula: stormpy.logic.MultiObjectiveFormula,

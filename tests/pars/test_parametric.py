@@ -66,7 +66,7 @@ class TestParametric:
         assert model.model_type == stormpy.models.ModelType.DTMC
         assert model.has_parameters
         result = stormpy.model_checking(model, formula, engine=stormpy.Engine.DD)
-        assert type(result) is stormpy.SymbolicQuantitativeCheckResult[stormpy.models.DdType.Sylvan, stormpy.RationalFunction]
+        assert type(result) is stormpy.results.SymbolicQuantitativeCheckResult[stormpy.models.DdType.Sylvan, stormpy.RationalFunction]
 
     def test_parametric_model_checking_hybrid(self):
         program = stormpy.parse_prism_program(get_example_path("pdtmc", "parametric_die.pm"))
@@ -78,7 +78,7 @@ class TestParametric:
         assert model.model_type == stormpy.models.ModelType.DTMC
         assert model.has_parameters
         result = stormpy.model_checking(model, formula, engine=stormpy.Engine.HYBRID)
-        assert type(result) is stormpy.HybridQuantitativeCheckResult[stormpy.models.DdType.Sylvan, stormpy.RationalFunction]
+        assert type(result) is stormpy.results.HybridQuantitativeCheckResult[stormpy.models.DdType.Sylvan, stormpy.RationalFunction]
         values = result.get_explicit_value_vector()
         assert len(values) == 3
 

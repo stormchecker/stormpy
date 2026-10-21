@@ -78,9 +78,9 @@ class TestModelInstantiator:
         point = {p: stormpy.numbers.RationalFunctionCoefficient("1/2") for p in parameters}
         instantiated_model = instantiator.instantiate(point)
         result = stormpy.model_checking(instantiated_model, formula, only_initial_states=True, environment=env)
-        assert isinstance(result, stormpy.ExplicitQuantitativeCheckResult[float])
+        assert isinstance(result, stormpy.results.ExplicitQuantitativeCheckResult[float])
         res = result[instantiated_model.initial_states[0]]
-        assert isinstance(res, stormpy.BoundedValue)
+        assert isinstance(res, stormpy.results.BoundedValue)
         assert isinstance(res.value, float)
         assert math.isclose(res, 29 / 15)
 
@@ -97,7 +97,7 @@ class TestModelInstantiator:
         instantiated_model = instantiator.instantiate(point)
         assert not instantiated_model.has_parameters
         result = stormpy.model_checking(instantiated_model, formula, only_initial_states=True, environment=env)
-        assert isinstance(result, stormpy.ExplicitQuantitativeCheckResult[stormpy.Rational])
+        assert isinstance(result, stormpy.results.ExplicitQuantitativeCheckResult[stormpy.Rational])
         res = result[instantiated_model.initial_states[0]]
         assert isinstance(res.value, stormpy.Rational)
         assert res == stormpy.Rational("29/15")
@@ -116,7 +116,7 @@ class TestModelInstantiator:
         instantiated_model = instantiator.instantiate(point)
         assert not instantiated_model.has_parameters
         result = stormpy.model_checking(instantiated_model, formula, only_initial_states=True, environment=env)
-        assert isinstance(result, stormpy.ExplicitQuantitativeCheckResult[stormpy.Rational])
+        assert isinstance(result, stormpy.results.ExplicitQuantitativeCheckResult[stormpy.Rational])
         res = result[instantiated_model.initial_states[0]]
         assert isinstance(res.value, stormpy.Rational)
         assert res == stormpy.Rational("4/35")
@@ -158,9 +158,9 @@ class TestInstantiationCheckerDeveloper:
         for parameter_value, expected_value in valuations_and_results:
             valuation = {parameter: stormpy.RationalFunctionCoefficient(parameter_value) for parameter in model.collect_all_parameters()}
             result = checker.check(env, valuation)
-            assert isinstance(result, stormpy.ExplicitQuantitativeCheckResult[result_type])
+            assert isinstance(result, stormpy.results.ExplicitQuantitativeCheckResult[result_type])
             value = result[model.initial_states[0]]
-            assert isinstance(value, stormpy.BoundedValue)
+            assert isinstance(value, stormpy.results.BoundedValue)
             assert isinstance(value.value, result_type)
             if result_type is float:
                 assert math.isclose(value.value, float(stormpy.Rational(expected_value)), rel_tol=1e-6)

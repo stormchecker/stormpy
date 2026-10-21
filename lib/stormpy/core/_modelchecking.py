@@ -55,7 +55,7 @@ def model_checking(
     :param uncertainty_resolution_mode: How uncertainty is resolved. Required for interval models, not allowed otherwise.
     :param engine: (optional) Engine to use. Defaults to the sparse engine for sparse models and the DD engine for symbolic models.
     :param environment: (optional) Environment configuring the solvers. Defaults to :func:`stormpy.environments.default`.
-    :return: The model checking result, e.g. an :class:`ExplicitQuantitativeCheckResult`. Use ``result[state]`` to get the value for a state together with its sound bounds as a :class:`BoundedValue`, or ``result.get_value(state)`` to get the value only.
+    :return: The model checking result, e.g. an :class:`stormpy.results.ExplicitQuantitativeCheckResult`. Use ``result[state]`` to get the value for a state together with its sound bounds as a :class:`stormpy.results.BoundedValue`, or ``result.get_value(state)`` to get the value only.
     """
     formula = _formula(property)
     environment = environment if environment is not None else environments.default(model)

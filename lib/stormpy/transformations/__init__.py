@@ -1,7 +1,7 @@
 """Model transformations and their options, policies and mapping results.
 
 Includes bisimulation minimization, submodel construction, representation changes
-and the addition of uncertainty. Only ``add_uncertainty`` also has a top-level shortcut.
+and the addition of uncertainty.
 """
 
 from stormpy import developer as _bindings

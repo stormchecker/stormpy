@@ -56,7 +56,7 @@ print(transition_matrix)
 The state labeling is created analogously to the previous example in [building DTMCs](building_dtmcs.md#labeling):
 
 ```{code-cell} python3
-state_labeling = stormpy.datastructures.StateLabeling(4)
+state_labeling = stormpy.models.StateLabeling(4)
 state_labels = {"empty", "init", "deadlock", "full"}
 for label in state_labels:
     state_labeling.add_label(label)

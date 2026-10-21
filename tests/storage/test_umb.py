@@ -100,14 +100,14 @@ class TestUmbModel:
 
     def test_export_and_build_from_path(self, dtmc, tmp_path):
         path = tmp_path / "model.umb"
-        stormpy.export_to_umb(dtmc, path)
+        stormpy.io.export_to_umb(dtmc, path)
         model2 = stormpy.build_model_from_umb(path)
         assert model2.nr_states == dtmc.nr_states
 
 
 class TestUmbConvenienceFunctions:
     def test_export_and_build_dtmc(self, dtmc, tmp_umb):
-        stormpy.export_to_umb(dtmc, tmp_umb)
+        stormpy.io.export_to_umb(dtmc, tmp_umb)
         assert os.path.isfile(tmp_umb)
         model2 = stormpy.build_model_from_umb(tmp_umb)
         assert type(dtmc) == type(model2)
@@ -115,7 +115,7 @@ class TestUmbConvenienceFunctions:
         assert dtmc.nr_transitions == model2.nr_transitions
 
     def test_export_and_build_mdp(self, mdp, tmp_umb):
-        stormpy.export_to_umb(mdp, tmp_umb)
+        stormpy.io.export_to_umb(mdp, tmp_umb)
         model2 = stormpy.build_model_from_umb(tmp_umb)
         assert type(mdp) == type(model2)
         assert mdp.nr_states == model2.nr_states
@@ -124,7 +124,7 @@ class TestUmbConvenienceFunctions:
     def test_export_with_gzip(self, dtmc, tmp_umb):
         opts = stormpy.io.UmbExportOptions()
         opts.compression = stormpy.io.CompressionMode.GZIP
-        stormpy.export_to_umb(dtmc, tmp_umb, options=opts)
+        stormpy.io.export_to_umb(dtmc, tmp_umb, options=opts)
         model2 = stormpy.build_model_from_umb(tmp_umb)
         assert type(dtmc) == type(model2)
         assert dtmc.nr_states == model2.nr_states

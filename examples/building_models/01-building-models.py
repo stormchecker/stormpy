@@ -25,7 +25,7 @@ def example_building_models_01():
 
     # POMDPs should be constructed with choice labels
     path = stormpy.examples.files.drn_pomdp_maze
-    opts = stormpy.DirectEncodingParserOptions()
+    opts = stormpy.io.DirectEncodingParserOptions()
     opts.build_choice_labeling = True
     pomdp = stormpy.build_model_from_drn(stormpy.examples.files.drn_pomdp_maze, options=opts)
     # POMDPs need to be in a canonic representation

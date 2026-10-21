@@ -3,8 +3,8 @@
 #include <storm/adapters/IntervalAdapter.h>
 #include <storm/adapters/RationalFunctionAdapter.h>
 #include <storm/adapters/RationalNumberAdapter.h>
+#include <storm/dd/DdType.h>
 #include <storm/models/ModelType.h>
-#include <storm/storage/dd/DdType.h>
 
 #include "src/template_binding.h"
 

@@ -17,7 +17,7 @@ def example_schedulers_02():
     assert ma.model_type == stormpy.models.ModelType.MA
 
     # Convert MA to MDP
-    mdp, mdp_formulas = stormpy.transform_to_discrete_time_model(ma, formula)
+    mdp, mdp_formulas = stormpy.transformations.transform_to_discrete_time_model(ma, formula)
     assert mdp.model_type == stormpy.models.ModelType.MDP
     initial_state = mdp.initial_states[0]
     assert initial_state == 0

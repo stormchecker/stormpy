@@ -1,17 +1,17 @@
-"""Helpers for plotting Pareto curves of two-dimensional multi-objective queries."""
+"""Helpers for plotting Pareto curves of two-dimensional multi-objective queries.
+
+Requires the ``plot`` extra: ``pip install stormpy[plot]``.
+"""
 
 from __future__ import annotations
 
 from collections.abc import Callable, Sequence
-from typing import TYPE_CHECKING
 
 import numpy as np
+from matplotlib.axes import Axes
 import stormpy
 
 __all__ = ["plot_convex_pareto_curve_demo", "prepare_multiobjective_result_for_plotting"]
-
-if TYPE_CHECKING:
-    from matplotlib.axes import Axes
 
 
 def plot_convex_pareto_curve_demo(
@@ -73,7 +73,7 @@ def _prepare_points_for_convex_pareto_plotting(
 
 
 def prepare_multiobjective_result_for_plotting(
-    result: stormpy.ExplicitParetoCurveCheckResult,
+    result: stormpy.results.ExplicitParetoCurveCheckResult,
     lower_corner: Sequence[float],
     upper_corner: Sequence[float],
     formula: stormpy.logic.MultiObjectiveFormula,

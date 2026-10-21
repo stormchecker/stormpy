@@ -53,13 +53,13 @@ print(transition_matrix)
 The labeling is similar the ones already covered in the previous examples.
 
 ```{code-cell} python3
-state_labeling = stormpy.datastructures.StateLabeling(5)
+state_labeling = stormpy.models.StateLabeling(5)
 state_labels = {"init", "deadlock"}
 for label in state_labels:
     state_labeling.add_label(label)
 state_labeling.add_label_to_state("init", 0)
 
-choice_labeling = stormpy.datastructures.ChoiceLabeling(6)
+choice_labeling = stormpy.models.ChoiceLabeling(6)
 choice_labels = {"alpha", "beta"}
 for label in choice_labels:
     choice_labeling.add_label(label)

@@ -9,7 +9,7 @@ class TestValuationTransformer:
         options = stormpy.BuilderOptions(build_full=True)
         model = stormpy.build_model(program, options=options)
         assert model.has_state_valuations
-        vt = stormpy.datastructures.ValuationTransformer(model.state_valuations)
+        vt = stormpy.models.ValuationTransformer(model.state_valuations)
         manager = program.expression_manager
         vt.add_expression(
             manager.declare_boolean_variable("s_exceeds_three"),
@@ -21,7 +21,7 @@ class TestValuationTransformer:
         )
         new_sv = vt.build(True)
         assert new_sv.get_number_of_entities() == model.state_valuations.get_number_of_entities()
-        new_model = stormpy.set_state_valuations(model, new_sv)
+        new_model = stormpy.transformations.set_state_valuations(model, new_sv)
         assert new_model.nr_states == model.nr_states
 
 
@@ -31,11 +31,11 @@ class TestValuationsExtendedTypes:
         var_s = manager.declare_string_variable(name="s")
         assert var_s.has_string_type()
 
-        builder = stormpy.datastructures.ValuationDescriptionBuilder(manager)
+        builder = stormpy.models.ValuationDescriptionBuilder(manager)
         builder.add_string_variable(var_s)
         desc = builder.build_class_description()
 
-        vals = stormpy.datastructures.Valuations(desc, manager, 3)
+        vals = stormpy.models.Valuations(desc, manager, 3)
         vals.write_value(0, var_s, "hello")
         vals.write_value(1, var_s, "world")
         vals.write_value(2, var_s, "")
@@ -52,11 +52,11 @@ class TestValuationsExtendedTypes:
 
         lower = stormpy.numbers.Integer(str(-(10**30)))
         upper = stormpy.numbers.Integer(str(10**30))
-        builder = stormpy.datastructures.ValuationDescriptionBuilder(manager)
+        builder = stormpy.models.ValuationDescriptionBuilder(manager)
         builder.add_integer_variable(var_big, lower, upper)
         desc = builder.build_class_description()
 
-        vals = stormpy.datastructures.Valuations(desc, manager, 2)
+        vals = stormpy.models.Valuations(desc, manager, 2)
         value = stormpy.numbers.Integer(str(10**25))
         vals.write_integer_bigint_value(0, var_big, value)
 
@@ -67,10 +67,10 @@ class TestValuationsExtendedTypes:
     def test_bigint_value_wrong_variable_type_raises(self):
         manager = stormpy.expressions.ExpressionManager()
         var_b = manager.declare_boolean_variable(name="b")
-        builder = stormpy.datastructures.ValuationDescriptionBuilder(manager)
+        builder = stormpy.models.ValuationDescriptionBuilder(manager)
         builder.add_boolean_variable(var_b)
         desc = builder.build_class_description()
-        vals = stormpy.datastructures.Valuations(desc, manager, 1)
+        vals = stormpy.models.Valuations(desc, manager, 1)
         vals.write_value(0, var_b, True)
 
         with pytest.raises(ValueError):
@@ -83,11 +83,11 @@ class TestValuationsExtendedTypes:
         var_r = manager.declare_rational_variable(name="r")
         assert var_r.has_rational_type()
 
-        builder = stormpy.datastructures.ValuationDescriptionBuilder(manager)
+        builder = stormpy.models.ValuationDescriptionBuilder(manager)
         builder.add_double_variable(var_r)
         desc = builder.build_class_description()
 
-        vals = stormpy.datastructures.Valuations(desc, manager, 2)
+        vals = stormpy.models.Valuations(desc, manager, 2)
         vals.write_double_value(0, var_r, 1.0 / 3.0)
         vals.write_double_value(1, var_r, -2.5)
 
@@ -97,10 +97,10 @@ class TestValuationsExtendedTypes:
     def test_double_encoding_wrong_variable_type_raises(self):
         manager = stormpy.expressions.ExpressionManager()
         var_b = manager.declare_boolean_variable(name="b")
-        builder = stormpy.datastructures.ValuationDescriptionBuilder(manager)
+        builder = stormpy.models.ValuationDescriptionBuilder(manager)
         builder.add_boolean_variable(var_b)
         desc = builder.build_class_description()
-        vals = stormpy.datastructures.Valuations(desc, manager, 1)
+        vals = stormpy.models.Valuations(desc, manager, 1)
         vals.write_value(0, var_b, True)
 
         with pytest.raises(ValueError):
@@ -111,10 +111,10 @@ class TestValuationsExtendedTypes:
     def test_get_value_raises_on_double_encoded_variable(self):
         manager = stormpy.expressions.ExpressionManager()
         var_r = manager.declare_rational_variable(name="r")
-        builder = stormpy.datastructures.ValuationDescriptionBuilder(manager)
+        builder = stormpy.models.ValuationDescriptionBuilder(manager)
         builder.add_double_variable(var_r)
         desc = builder.build_class_description()
-        vals = stormpy.datastructures.Valuations(desc, manager, 1)
+        vals = stormpy.models.Valuations(desc, manager, 1)
         vals.write_double_value(0, var_r, 0.5)
 
         with pytest.raises(RuntimeError):
@@ -128,7 +128,7 @@ class TestValuationsExtendedTypes:
         var_s = manager.declare_string_variable(name="s")
         var_big = manager.declare_integer_variable(name="big")
 
-        builder = stormpy.datastructures.ValuationDescriptionBuilder(manager)
+        builder = stormpy.models.ValuationDescriptionBuilder(manager)
         builder.add_boolean_variable(var_b)
         builder.add_integer_variable(var_i, 0, 10)
         builder.add_rational_variable(var_r, 64)
@@ -136,7 +136,7 @@ class TestValuationsExtendedTypes:
         builder.add_integer_variable(var_big, stormpy.numbers.Integer(str(-(10**30))), stormpy.numbers.Integer(str(10**30)))
         desc = builder.build_class_description()
 
-        vals = stormpy.datastructures.Valuations(desc, manager, 1)
+        vals = stormpy.models.Valuations(desc, manager, 1)
         vals.write_value(0, var_b, True)
         vals.write_value(0, var_i, 7)
         vals.write_value(0, var_r, stormpy.Rational("3/4"))
@@ -157,7 +157,7 @@ class TestSimpleValuation:
         simulator = stormpy.developer.DiscreteTimePrismProgramSimulator(program, stormpy.BuilderOptions())
         simulator.reset_to_initial()
         valuation = simulator.get_current_state_as_valuation()
-        assert isinstance(valuation, stormpy.datastructures.SimpleValuation)
+        assert isinstance(valuation, stormpy.models.SimpleValuation)
 
         manager = program.expression_manager
         assert valuation.get_value(manager.get_variable("s")) == 0

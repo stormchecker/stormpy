@@ -19,7 +19,7 @@ class TestTransformations:
         assert instantiator_type is stormpy.dft.developer._DftInstantiator_RationalFunction_Double
         x = stormpy.numbers.variable_with_name("x")
         y = stormpy.numbers.variable_with_name("y")
-        valuation = {x: stormpy.RationalFunctionCoefficient("5"), y: stormpy.RationalFunctionCoefficient("0.01")}
+        valuation = {x: stormpy.numbers.RationalFunctionCoefficient("5"), y: stormpy.numbers.RationalFunctionCoefficient("0.01")}
         inst_dft = instantiator.instantiate(valuation)
         assert inst_dft.nr_elements() == 7
         assert inst_dft.nr_basic_elements() == 4

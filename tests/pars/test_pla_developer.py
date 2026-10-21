@@ -96,9 +96,9 @@ class TestPLADeveloper:
         refinement_checker = stormpy.pars.developer.initialize_region_refinement_checker(
             env, model, stormpy.developer.CheckTask[stormpy.RationalFunction](formula.get_raw_formula(), True)
         )
-        precision = stormpy.RationalFunction(stormpy.Polynomial(stormpy.RationalFunctionCoefficient("1/1000000")))
+        precision = stormpy.RationalFunction(stormpy.Polynomial(stormpy.numbers.RationalFunctionCoefficient("1/1000000")))
         value, point = refinement_checker.compute_extremal_value(env, region, stormpy.logic.OptimizationDirection.MAXIMIZE, precision, bound_invariant=None)
-        assert isinstance(value, stormpy.RationalFunctionCoefficient)
+        assert isinstance(value, stormpy.numbers.RationalFunctionCoefficient)
         assert isinstance(point, dict)
         assert len(point) == 2
         assert 0.83 <= float(value) <= 0.84
@@ -129,7 +129,7 @@ label "target" = s=2;
         if respecify:
             checker.specify(env, model, task, **options)
         region = stormpy.pars.parse_region("0<=p<=1", parameters)
-        precision = stormpy.RationalFunction(stormpy.Polynomial(stormpy.RationalFunctionCoefficient("1/1000000")))
+        precision = stormpy.RationalFunction(stormpy.Polynomial(stormpy.numbers.RationalFunctionCoefficient("1/1000000")))
         value, point = checker.compute_extremal_value(env, region, stormpy.logic.OptimizationDirection.MAXIMIZE, precision, True)
         assert math.isclose(float(value), 0.24 if discrete else 0.25, abs_tol=1e-6)
         assert math.isclose(float(point[next(iter(parameters))]), 1.0 if discrete else 0.8, abs_tol=1e-3)

@@ -6,7 +6,7 @@
 #include <storm-pomdp/transformer/PomdpMemoryUnfolder.h>
 #include <storm/adapters/IntervalAdapter.h>
 #include <storm/adapters/RationalFunctionAdapter.h>
-#include <storm/storage/expressions/ExpressionManager.h>
+#include <storm/expressions/ExpressionManager.h>
 #include <storm/transformer/MakePOMDPCanonic.h>
 
 #include "src/binding_type_index.h"

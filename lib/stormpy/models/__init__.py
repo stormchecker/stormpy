@@ -1,4 +1,8 @@
-"""Probabilistic models in sparse and decision diagram representations."""
+"""Probabilistic models, their states, actions, rewards, labels and schedulers.
+
+Sparse model states and actions are views obtained through ``model.states``
+and ``state.actions``. They expose identifiers, labels and outgoing transitions.
+"""
 
 from stormpy.developer import storage as _bindings
 
@@ -20,6 +24,25 @@ SymbolicCtmc = _bindings.SymbolicCtmc.publish_as("stormpy.models.SymbolicCtmc")
 SymbolicMA = _bindings.SymbolicMA.publish_as("stormpy.models.SymbolicMA")
 SymbolicRewardModel = _bindings.SymbolicRewardModel.publish_as("stormpy.models.SymbolicRewardModel")
 
+StateLabeling = _bindings.StateLabeling
+ChoiceLabeling = _bindings.ChoiceLabeling
+Scheduler = _bindings.Scheduler.publish_as("stormpy.models.Scheduler")
+SchedulerChoice = _bindings.SchedulerChoice.publish_as("stormpy.models.SchedulerChoice")
+Valuations = _bindings.Valuations
+ValuationClassDescription = _bindings.ValuationClassDescription
+ValuationDescriptionBuilder = _bindings.ValuationDescriptionBuilder
+ValuationTransformer = _bindings.ValuationTransformer
+SimpleValuation = _bindings.SimpleValuation
+MemoryStructure = _bindings.MemoryStructure
+MemoryStructureBuilder = _bindings.MemoryStructureBuilder.publish_as("stormpy.models.MemoryStructureBuilder")
+ChoiceOrigins = _bindings.ChoiceOrigins
+JaniChoiceOrigins = _bindings.JaniChoiceOrigins
+PrismChoiceOrigins = _bindings.PrismChoiceOrigins
+SparseModelStates = _bindings.SparseModelStates.publish_as("stormpy.models.SparseModelStates")
+SparseModelState = _bindings.SparseModelState.publish_as("stormpy.models.SparseModelState")
+SparseModelActions = _bindings.SparseModelActions.publish_as("stormpy.models.SparseModelActions")
+SparseModelAction = _bindings.SparseModelAction.publish_as("stormpy.models.SparseModelAction")
+
 __all__ = [
     "ModelType",
     "DdType",
@@ -38,4 +61,24 @@ __all__ = [
     "SymbolicCtmc",
     "SymbolicMA",
     "SymbolicRewardModel",
+    "StateLabeling",
+    "ChoiceLabeling",
+    "Scheduler",
+    "SchedulerChoice",
+    "Valuations",
+    "ValuationClassDescription",
+    "ValuationDescriptionBuilder",
+    "ValuationTransformer",
+    "SimpleValuation",
+    "MemoryStructure",
+    "MemoryStructureBuilder",
+    "ChoiceOrigins",
+    "JaniChoiceOrigins",
+    "PrismChoiceOrigins",
+    "SparseModelStates",
+    "SparseModelState",
+    "SparseModelActions",
+    "SparseModelAction",
 ]
+
+from . import _scheduler, _valuations

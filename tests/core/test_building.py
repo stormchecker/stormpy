@@ -129,7 +129,7 @@ class TestBuilding:
         assert options_full.is_build_all_labels_set() and options_full.is_build_all_reward_models_set()
         assert options_full.is_build_state_valuations_set() and options_full.is_build_choice_labels_set() and options_full.is_build_choice_origins_set()
         assert options_full.get_label_names() == {"one"}
-        assert stormpy.BuilderOptions(properties, stormpy.SymbolicModelDescription(program)).get_label_names() == {"one"}
+        assert stormpy.BuilderOptions(properties, stormpy.io.SymbolicModelDescription(program)).get_label_names() == {"one"}
         # Options are accepted by the developer bindings
         model = stormpy.developer.build_sparse_model(program, options)
         assert model.labeling.get_labels() == {"init", "deadlock", "one"}
@@ -178,13 +178,13 @@ class TestBuilding:
 
     def test_direct_encoding_parser_options(self):
         assert not stormpy.build_model_from_drn(stormpy.examples.files.drn_pomdp_maze).has_choice_labeling()
-        options = stormpy.DirectEncodingParserOptions()
+        options = stormpy.io.DirectEncodingParserOptions()
         assert not options.build_choice_labeling
         options.build_choice_labeling = True
         assert stormpy.build_model_from_drn(stormpy.examples.files.drn_pomdp_maze, options=options).has_choice_labeling()
 
     def test_explicit_model_parser_options(self):
-        options = stormpy.ExplicitModelParserOptions()
+        options = stormpy.io.ExplicitModelParserOptions()
         assert options.fix_deadlocks and not options.build_choice_labels
         options.fix_deadlocks = False
         options.build_choice_labels = True

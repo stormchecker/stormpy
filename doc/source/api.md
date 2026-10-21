@@ -11,6 +11,7 @@ and POMDPs, and the [Developer API](developer_api.md) for internal bindings.
    :caption: Core modules:
 
    stormpy
+   stormpy.analysis
    stormpy.datastructures
    stormpy.environments
    stormpy.exceptions
@@ -20,6 +21,8 @@ and POMDPs, and the [Developer API](developer_api.md) for internal bindings.
    stormpy.logic
    stormpy.models
    stormpy.numbers
+   stormpy.plotting
+   stormpy.results
    stormpy.simulator
-   stormpy.utility
+   stormpy.transformations
 ```

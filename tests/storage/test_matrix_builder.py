@@ -76,12 +76,12 @@ class TestMatrixBuilder:
 
         builder_5x5 = stormpy.datastructures.SparseMatrixBuilder[stormpy.RationalFunction](5, 5, force_dimensions=False)
 
-        one_pol = stormpy.RationalFunctionCoefficient(1)
-        one_pol = stormpy.Polynomial(one_pol)
+        one_pol = stormpy.numbers.RationalFunctionCoefficient(1)
+        one_pol = stormpy.numbers.Polynomial(one_pol)
         first_val = stormpy.RationalFunction(one_pol)
 
-        two_pol = stormpy.RationalFunctionCoefficient(2)
-        two_pol = stormpy.Polynomial(two_pol)
+        two_pol = stormpy.numbers.RationalFunctionCoefficient(2)
+        two_pol = stormpy.numbers.Polynomial(two_pol)
         sec_val = stormpy.RationalFunction(two_pol)
 
         builder_5x5.add_next_value(0, 0, first_val)
@@ -134,11 +134,11 @@ class TestMatrixBuilder:
     def test_parametric_matrix_replace_columns(self):
         builder = stormpy.datastructures.SparseMatrixBuilder[stormpy.RationalFunction](3, 4, force_dimensions=False)
 
-        one_pol = stormpy.RationalFunctionCoefficient(1)
-        one_pol = stormpy.Polynomial(one_pol)
+        one_pol = stormpy.numbers.RationalFunctionCoefficient(1)
+        one_pol = stormpy.numbers.Polynomial(one_pol)
         first_val = stormpy.RationalFunction(one_pol, one_pol)
-        two_pol = stormpy.RationalFunctionCoefficient(2)
-        two_pol = stormpy.Polynomial(two_pol)
+        two_pol = stormpy.numbers.RationalFunctionCoefficient(2)
+        two_pol = stormpy.numbers.Polynomial(two_pol)
         sec_val = stormpy.RationalFunction(two_pol, two_pol)
         third_val = stormpy.RationalFunction(one_pol, two_pol)
 
@@ -240,11 +240,11 @@ class TestMatrixBuilder:
     def test_parametric_matrix_from_numpy(self):
         import numpy as np
 
-        one_pol = stormpy.RationalFunctionCoefficient(1)
-        one_pol = stormpy.Polynomial(one_pol)
+        one_pol = stormpy.numbers.RationalFunctionCoefficient(1)
+        one_pol = stormpy.numbers.Polynomial(one_pol)
         first_val = stormpy.RationalFunction(one_pol, one_pol)
-        two_pol = stormpy.RationalFunctionCoefficient(2)
-        two_pol = stormpy.Polynomial(two_pol)
+        two_pol = stormpy.numbers.RationalFunctionCoefficient(2)
+        two_pol = stormpy.numbers.Polynomial(two_pol)
         sec_val = stormpy.RationalFunction(two_pol, two_pol)
         third_val = stormpy.RationalFunction(one_pol, two_pol)
 
@@ -293,11 +293,11 @@ class TestMatrixBuilder:
     def test_parametric_matrix_from_numpy_row_grouping(self):
         import numpy as np
 
-        one_pol = stormpy.RationalFunctionCoefficient(1)
-        one_pol = stormpy.Polynomial(one_pol)
+        one_pol = stormpy.numbers.RationalFunctionCoefficient(1)
+        one_pol = stormpy.numbers.Polynomial(one_pol)
         first_val = stormpy.RationalFunction(one_pol, one_pol)
-        two_pol = stormpy.RationalFunctionCoefficient(2)
-        two_pol = stormpy.Polynomial(two_pol)
+        two_pol = stormpy.numbers.RationalFunctionCoefficient(2)
+        two_pol = stormpy.numbers.Polynomial(two_pol)
         sec_val = stormpy.RationalFunction(two_pol, two_pol)
         third_val = stormpy.RationalFunction(one_pol, two_pol)
 

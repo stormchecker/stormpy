@@ -88,7 +88,7 @@ transition_matrix = builder.build()
 The state labeling is similar to the one in the previous example for [building a DTMC](building_dtmcs.md).
 
 ```{code-cell} python3
-state_labeling = stormpy.datastructures.StateLabeling(13)
+state_labeling = stormpy.models.StateLabeling(13)
 labels = {"init", "one", "two", "three", "four", "five", "six", "done", "deadlock"}
 for label in labels:
     state_labeling.add_label(label)
@@ -109,7 +109,7 @@ Since in state 0 a nondeterministic choice over two actions is available, the to
 To distinguish those we can define a choice labeling:
 
 ```{code-cell} python3
-choice_labeling = stormpy.datastructures.ChoiceLabeling(14)
+choice_labeling = stormpy.models.ChoiceLabeling(14)
 choice_labels = {"a", "b"}
 
 for label in choice_labels:

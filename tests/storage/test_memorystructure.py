@@ -5,7 +5,7 @@ import pytest
 
 class TestMemoryStructure:
     def _build_memory_structure(self, model, goalstates):
-        builder = stormpy.datastructures.MemoryStructureBuilder(2, model, False)
+        builder = stormpy.models.MemoryStructureBuilder(2, model, False)
         builder.set_transition(0, 0, ~goalstates)
         builder.set_transition(0, 1, goalstates)
         builder.set_transition(1, 1, stormpy.datastructures.BitVector(model.nr_states, True))
@@ -24,11 +24,11 @@ class TestMemoryStructure:
     def test_memory_structure_builder_exact_interval(self, keyword):
         model = stormpy.build_model_from_drn[stormpy.RationalInterval](get_example_path("imdp", "tiny-01.drn"))
         if keyword:
-            builder = stormpy.datastructures.MemoryStructureBuilder(nr_memory_states=1, model=model)
+            builder = stormpy.models.MemoryStructureBuilder(nr_memory_states=1, model=model)
         else:
-            builder = stormpy.datastructures.MemoryStructureBuilder(1, model)
+            builder = stormpy.models.MemoryStructureBuilder(1, model)
 
-        assert type(builder) is stormpy.datastructures.MemoryStructureBuilder[stormpy.RationalInterval]
+        assert type(builder) is stormpy.models.MemoryStructureBuilder[stormpy.RationalInterval]
         builder.set_transition(0, 0, stormpy.datastructures.BitVector(model.nr_states, True))
         assert builder.build().nr_states == 1
 

@@ -102,7 +102,7 @@ class TestSparseModel:
         program = stormpy.parse_prism_program(get_example_path("dtmc", "brp.pm"))
         assert program.has_undefined_constants
         assert not program.undefined_constants_are_graph_preserving
-        description = stormpy.SymbolicModelDescription(program)
+        description = stormpy.io.SymbolicModelDescription(program)
         constant_definitions = description.parse_constant_definitions("N=16, MAX=2")
         instantiated_program = description.preprocess(constant_definitions).as_prism_program()
         model = stormpy.build_model(instantiated_program)
@@ -116,7 +116,7 @@ class TestSparseModel:
         jani_model, properties = stormpy.parse_jani_model(get_example_path("dtmc", "brp.jani"))
         assert jani_model.has_undefined_constants
         assert not jani_model.undefined_constants_are_graph_preserving
-        description = stormpy.SymbolicModelDescription(jani_model)
+        description = stormpy.io.SymbolicModelDescription(jani_model)
         constant_definitions = description.parse_constant_definitions("N=16, MAX=2")
         instantiated_jani_model = description.preprocess(constant_definitions).as_jani_model()
         model = stormpy.build_model(instantiated_jani_model)
@@ -295,7 +295,7 @@ class TestSymbolicSylvanModel:
 
     def test_build_dtmc_from_jani_model(self):
         jani_model, properties = stormpy.parse_jani_model(get_example_path("dtmc", "brp.jani"))
-        description = stormpy.SymbolicModelDescription(jani_model)
+        description = stormpy.io.SymbolicModelDescription(jani_model)
         constant_definitions = description.parse_constant_definitions("N=16, MAX=2")
         instantiated_jani_model = description.preprocess(constant_definitions).as_jani_model()
         model = stormpy.build_symbolic_model(instantiated_jani_model)

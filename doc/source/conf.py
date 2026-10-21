@@ -7,11 +7,19 @@
 import pathlib
 import sys
 from functools import partial
+from importlib import import_module
 
 import stormpy
 
+# Load optional public owners before selecting the remaining developer bindings.
+for module in ("stormpy.dft", "stormpy.gspn", "stormpy.pars", "stormpy.pomdp"):
+    try:
+        import_module(module)
+    except ImportError as error:
+        print(f"Could not import optional module {module}: {error}", file=sys.stderr)
+
 sys.path.insert(0, str(pathlib.Path(__file__).parent / "_ext"))
-from stormpy_autosummary import _filter_api_members
+from stormpy_autosummary import _filter_api_members, canonical_api_alias
 from stormpy_templates import template_families, template_functions, template_info, template_function_info
 
 # -- Project information -----------------------------------------------------
@@ -55,13 +63,13 @@ autosummary_context = {
     name: partial(function)
     for name, function in {
         "filter_api_members": _filter_api_members,
+        "canonical_api_alias": canonical_api_alias,
         "template_families": template_families,
         "template_functions": template_functions,
         "template_info": template_info,
         "template_function_info": template_function_info,
     }.items()
 }
-autosummary_context["api_submodules"] = {"stormpy.utility": ("multiobjective_plotting",)}
 
 # Wrap long signatures instead of scrolling them
 python_maximum_signature_line_length = 100

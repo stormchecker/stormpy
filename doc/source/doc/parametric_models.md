@@ -99,8 +99,8 @@ Alternatively, construct a region from a dictionary of bounds. We will also use 
 smaller region, where both parameters range from `0.2` to `0.6`:
 
 ```{code-cell} python3
-lower = stormpy.RationalFunctionCoefficient("1/5")
-upper = stormpy.RationalFunctionCoefficient("3/5")
+lower = stormpy.numbers.RationalFunctionCoefficient("1/5")
+upper = stormpy.numbers.RationalFunctionCoefficient("3/5")
 smaller_region = stormpy.pars.create_region({parameter: (lower, upper) for parameter in parameters})
 ```
 

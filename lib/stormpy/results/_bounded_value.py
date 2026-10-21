@@ -1,4 +1,4 @@
-"""Python conveniences for model checking results."""
+"""Values with sound bounds in model checking results."""
 
 from __future__ import annotations
 

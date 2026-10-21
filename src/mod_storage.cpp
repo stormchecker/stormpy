@@ -1,5 +1,5 @@
 #include <storm/adapters/IntervalAdapter.h>
-#include <storm/storage/dd/DdType.h>
+#include <storm/dd/DdType.h>
 
 #include "src/common.h"
 #include "src/storage/bitvector.h"

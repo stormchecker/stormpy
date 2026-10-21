@@ -54,7 +54,7 @@ class TestSynthesis:
             prop = prop.get_raw_formula()
         region = stormpy.pars.parse_region("0.2<=p<=0.8", model.collect_all_parameters())
         options = {"environment": stormpy.environments.exact(), "absolute_precision": True} if raw_formula else {}
-        precision = stormpy.RationalFunctionCoefficient("1/1000000")
+        precision = stormpy.numbers.RationalFunctionCoefficient("1/1000000")
         value, valuation = stormpy.pars.compute_extremal_value(model, prop, region=region, direction=direction, precision=precision, engine=engine, **options)
         expected = 0.8 if direction == stormpy.logic.OptimizationDirection.MAXIMIZE else 0.2
         assert math.isclose(float(value), expected, abs_tol=float(precision))
@@ -104,7 +104,9 @@ label "target" = s=2;
         region = stormpy.pars.parse_region("0.2<=p<=0.8", model.collect_all_parameters())
         options = {"direction": stormpy.logic.OptimizationDirection.MAXIMIZE, "absolute_precision": True}
         result = stormpy.pars.compute_extremal_value(model, prop, region=region, precision=precision, **options)
-        expected = stormpy.pars.compute_extremal_value(model, prop, region=region, precision=stormpy.RationalFunctionCoefficient(coefficient), **options)
+        expected = stormpy.pars.compute_extremal_value(
+            model, prop, region=region, precision=stormpy.numbers.RationalFunctionCoefficient(coefficient), **options
+        )
         assert result == expected
 
     @pytest.mark.parametrize("precision", [math.nan, math.inf, -math.inf])
@@ -120,7 +122,7 @@ label "target" = s=2;
         assert stormpy.pars.verify(model, _property('P>=0.1 [F "target"]'), region_bound=0.2)
         prop = _property('P<=0.3 [F "target"]')
         result = stormpy.pars.check_feasibility(model, prop, region_bound=0.2)
-        expected = stormpy.pars.check_feasibility(model, prop, region_bound=stormpy.RationalFunctionCoefficient("1/5"))
+        expected = stormpy.pars.check_feasibility(model, prop, region_bound=stormpy.numbers.RationalFunctionCoefficient("1/5"))
         assert result.status == stormpy.pars.RegionResult.EXISTS_SAT
         assert result.witness.valuation == expected.witness.valuation
         assert result.witness.value == expected.witness.value
@@ -155,7 +157,7 @@ label "target" = s=2;
             prop = prop.get_raw_formula()
         region = stormpy.pars.parse_region("0.2<=p<=0.8", model.collect_all_parameters())
         assert stormpy.pars.verify(model, prop, region=region, region_engine=engine)
-        assert stormpy.pars.verify(model, prop, region_bound=stormpy.RationalFunctionCoefficient("1/5"), region_engine=engine)
+        assert stormpy.pars.verify(model, prop, region_bound=stormpy.numbers.RationalFunctionCoefficient("1/5"), region_engine=engine)
         assert not stormpy.pars.verify(model, _property('P>=0.6 [F "target"]'), region=region, region_engine=engine, environment=stormpy.Environment())
 
     @pytest.mark.parametrize(
@@ -169,7 +171,9 @@ label "target" = s=2;
     def test_feasibility(self, synthesis_model, method, engine):
         model = synthesis_model
         parameters = model.collect_all_parameters()
-        region = stormpy.pars.create_region({p: (stormpy.RationalFunctionCoefficient("1/5"), stormpy.RationalFunctionCoefficient("4/5")) for p in parameters})
+        region = stormpy.pars.create_region(
+            {p: (stormpy.numbers.RationalFunctionCoefficient("1/5"), stormpy.numbers.RationalFunctionCoefficient("4/5")) for p in parameters}
+        )
         result = stormpy.pars.check_feasibility(model, _property('P>=0.6 [F "target"]'), region=region, method=method, region_engine=engine)
         assert isinstance(result, stormpy.pars.FeasibilitySynthesisResult)
         assert result.status == stormpy.pars.RegionResult.EXISTS_SAT
@@ -204,7 +208,7 @@ label "target" = s=2;
     @pytest.mark.parametrize("satisfiable", [False, True])
     def test_singleton(self, synthesis_model, method, satisfiable):
         prop = _property('P>=0.5 [F "target"]' if satisfiable else 'P>0.5 [F "target"]')
-        result = stormpy.pars.check_feasibility(synthesis_model, prop, region_bound=stormpy.RationalFunctionCoefficient("1/2"), method=method)
+        result = stormpy.pars.check_feasibility(synthesis_model, prop, region_bound=stormpy.numbers.RationalFunctionCoefficient("1/2"), method=method)
         assert result.status == (stormpy.pars.RegionResult.EXISTS_SAT if satisfiable else stormpy.pars.RegionResult.ALL_VIOLATED)
         if satisfiable:
             assert result.witness.value == 0.5
@@ -220,10 +224,10 @@ label "target" = s=2;
         with pytest.raises(TypeError, match="positional"):
             function(synthesis_model, prop, region)
         with pytest.raises(ValueError, match="exactly one"):
-            function(synthesis_model, prop, region=region, region_bound=stormpy.RationalFunctionCoefficient("1/5"))
+            function(synthesis_model, prop, region=region, region_bound=stormpy.numbers.RationalFunctionCoefficient("1/5"))
         for invalid in ["-1", "1"]:
             with pytest.raises(RuntimeError, match="region bound"):
-                function(synthesis_model, prop, region_bound=stormpy.RationalFunctionCoefficient(invalid))
+                function(synthesis_model, prop, region_bound=stormpy.numbers.RationalFunctionCoefficient(invalid))
         for invalid in [math.nan, math.inf, -math.inf]:
             with pytest.raises(ValueError, match="finite"):
                 function(synthesis_model, prop, region_bound=invalid)
@@ -233,7 +237,7 @@ label "target" = s=2;
             function(synthesis_model, prop, region=stormpy.pars.create_region({}))
 
     @pytest.mark.parametrize("function", [stormpy.pars.verify, stormpy.pars.check_feasibility])
-    @pytest.mark.parametrize("zero", [0, 0.0, stormpy.RationalFunctionCoefficient(0)])
+    @pytest.mark.parametrize("zero", [0, 0.0, stormpy.numbers.RationalFunctionCoefficient(0)])
     def test_graph_preservation(self, synthesis_model, function, zero):
         prop = _property('P<=1 [F "target"]')
         with pytest.raises(RuntimeError, match="graph-preserving"):

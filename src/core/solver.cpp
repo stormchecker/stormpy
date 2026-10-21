@@ -1,11 +1,11 @@
 #include "solver.h"
 
+#include <storm/expressions/ExpressionManager.h>
 #include <storm/solver/OptimizationDirection.h>
 #include <storm/solver/SmtSolver.h>
 #include <storm/solver/SolverSelectionOptions.h>
 #include <storm/solver/UncertaintyResolutionMode.h>
 #include <storm/solver/Z3SmtSolver.h>
-#include <storm/storage/expressions/ExpressionManager.h>
 #include <storm/utility/solver.h>
 
 namespace stormpy {

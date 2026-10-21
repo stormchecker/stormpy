@@ -17,9 +17,9 @@ def example_exploration_03():
     prop = stormpy.parse_property(formula_str, prism_program)
     model = stormpy.build_model(prism_program, prop)
 
-    sorted = stormpy.topological_sort(model)
+    sorted = stormpy.analysis.topological_sort(model)
     print(sorted)
-    sorted = stormpy.topological_sort(model, forward=False)
+    sorted = stormpy.analysis.topological_sort(model, forward=False)
     print(sorted)
 
 

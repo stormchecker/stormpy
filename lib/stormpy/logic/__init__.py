@@ -3,6 +3,8 @@
 from stormpy import developer as _developer
 from stormpy.developer import logic as _bindings
 
+from stormpy.core._parsing import parse_property, parse_properties
+
 # Properties and optimization directions are bound with the core library of Storm
 Property = _developer.Property
 OptimizationDirection = _developer.OptimizationDirection
@@ -81,4 +83,6 @@ __all__ = [
     "LongRunAverageOperatorFormula",
     "MultiObjectiveFormula",
     "GameFormula",
+    "parse_property",
+    "parse_properties",
 ]

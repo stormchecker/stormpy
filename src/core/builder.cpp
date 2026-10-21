@@ -5,8 +5,8 @@
 #include <storm/builder/BuilderOptions.h>
 #include <storm/builder/ExplicitModelBuilder.h>
 #include <storm/builder/ExplorationOrder.h>
+#include <storm/languages/SymbolicModelDescription.h>
 #include <storm/logic/Formula.h>
-#include <storm/storage/SymbolicModelDescription.h>
 
 #include "src/binding_type_index.h"
 
@@ -21,8 +21,8 @@ void define_builder(py::module& m) {
         .finalize();
 
     py::classh<BuilderOptions>(m, "BuilderOptions", "Options for building process")
-        .def(py::init<std::vector<std::shared_ptr<storm::logic::Formula const>> const&, storm::storage::SymbolicModelDescription const&>(),
-             "Create options preserving the given formulas", py::arg("formulas"), py::arg("model_description") = storm::storage::SymbolicModelDescription())
+        .def(py::init<std::vector<std::shared_ptr<storm::logic::Formula const>> const&, storm::languages::SymbolicModelDescription const&>(),
+             "Create options preserving the given formulas", py::arg("formulas"), py::arg("model_description") = storm::languages::SymbolicModelDescription())
         .def(py::init<bool, bool>(), "Create options without formulas", py::arg("build_all_reward_models") = false, py::arg("build_all_labels") = false)
         .def("get_label_names", &BuilderOptions::getLabelNames, "Get the names of the labels to build")
         .def("is_build_all_reward_models_set", &BuilderOptions::isBuildAllRewardModelsSet, "Whether all reward models are built")

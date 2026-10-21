@@ -18,13 +18,13 @@ class TestModelInstantiator:
         assert type(instantiator) is stormpy.pars.ModelInstantiator[stormpy.models.ModelType.DTMC, float]
         assert tuple(parameter.kind for parameter in stormpy.pars.ModelInstantiator.metadata.parameters) == ("value", "type")
 
-        point = {p: stormpy.RationalFunctionCoefficient("0.4") for p in parameters}
+        point = {p: stormpy.numbers.RationalFunctionCoefficient("0.4") for p in parameters}
         instantiated_model = instantiator.instantiate(point)
         assert instantiated_model.nr_states == model.nr_states
         assert not instantiated_model.has_parameters
         assert "0.4" in str(instantiated_model.transition_matrix[1])
 
-        point = {p: stormpy.RationalFunctionCoefficient("0.5") for p in parameters}
+        point = {p: stormpy.numbers.RationalFunctionCoefficient("0.5") for p in parameters}
         instantiated_model2 = instantiator.instantiate(point)
         assert "0.5" in str(instantiated_model2.transition_matrix[1])
 
@@ -38,7 +38,7 @@ class TestModelInstantiator:
         point = dict()
         for x in parameters:
             assert x.name in {"p", "q"}
-            point[x] = stormpy.RationalFunctionCoefficient(0.4)
+            point[x] = stormpy.numbers.RationalFunctionCoefficient(0.4)
         instantiated_model = instantiator.instantiate(point)
         assert instantiated_model.nr_states == model.nr_states
         assert not instantiated_model.has_parameters
@@ -56,13 +56,13 @@ class TestModelInstantiator:
         parameters = model.collect_all_parameters()
         instantiator = stormpy.pars.ModelInstantiator[stormpy.models.ModelType.DTMC, float](model)
 
-        point = {p: stormpy.RationalFunctionCoefficient("0.4") for p in parameters}
+        point = {p: stormpy.numbers.RationalFunctionCoefficient("0.4") for p in parameters}
         instantiated_model = instantiator.instantiate(point)
         assert instantiated_model.nr_states == model.nr_states
         assert not instantiated_model.has_parameters
         assert "0.4" in str(instantiated_model.transition_matrix[1])
 
-        point = {p: stormpy.RationalFunctionCoefficient("0.5") for p in parameters}
+        point = {p: stormpy.numbers.RationalFunctionCoefficient("0.5") for p in parameters}
         instantiated_model2 = instantiator.instantiate(point)
         assert "0.5" in str(instantiated_model2.transition_matrix[1])
 
@@ -75,12 +75,12 @@ class TestModelInstantiator:
         env = stormpy.environments.default(model)
         instantiator = stormpy.pars.ModelInstantiator(model)
 
-        point = {p: stormpy.RationalFunctionCoefficient("1/2") for p in parameters}
+        point = {p: stormpy.numbers.RationalFunctionCoefficient("1/2") for p in parameters}
         instantiated_model = instantiator.instantiate(point)
         result = stormpy.model_checking(instantiated_model, formula, only_initial_states=True, environment=env)
-        assert isinstance(result, stormpy.ExplicitQuantitativeCheckResult[float])
+        assert isinstance(result, stormpy.results.ExplicitQuantitativeCheckResult[float])
         res = result[instantiated_model.initial_states[0]]
-        assert isinstance(res, stormpy.BoundedValue)
+        assert isinstance(res, stormpy.results.BoundedValue)
         assert isinstance(res.value, float)
         assert math.isclose(res, 29 / 15)
 
@@ -93,11 +93,11 @@ class TestModelInstantiator:
         env = stormpy.environments.default(model)
         instantiator = stormpy.pars.ModelInstantiator[stormpy.models.ModelType.DTMC, stormpy.Rational](model)
 
-        point = {p: stormpy.RationalFunctionCoefficient("1/2") for p in parameters}
+        point = {p: stormpy.numbers.RationalFunctionCoefficient("1/2") for p in parameters}
         instantiated_model = instantiator.instantiate(point)
         assert not instantiated_model.has_parameters
         result = stormpy.model_checking(instantiated_model, formula, only_initial_states=True, environment=env)
-        assert isinstance(result, stormpy.ExplicitQuantitativeCheckResult[stormpy.Rational])
+        assert isinstance(result, stormpy.results.ExplicitQuantitativeCheckResult[stormpy.Rational])
         res = result[instantiated_model.initial_states[0]]
         assert isinstance(res.value, stormpy.Rational)
         assert res == stormpy.Rational("29/15")
@@ -112,11 +112,11 @@ class TestModelInstantiator:
         env = stormpy.environments.default(model)
         instantiator = stormpy.pars.ModelInstantiator[stormpy.models.ModelType.DTMC, stormpy.Rational](model)
 
-        point = {p: stormpy.RationalFunctionCoefficient("2/5") for p in parameters}
+        point = {p: stormpy.numbers.RationalFunctionCoefficient("2/5") for p in parameters}
         instantiated_model = instantiator.instantiate(point)
         assert not instantiated_model.has_parameters
         result = stormpy.model_checking(instantiated_model, formula, only_initial_states=True, environment=env)
-        assert isinstance(result, stormpy.ExplicitQuantitativeCheckResult[stormpy.Rational])
+        assert isinstance(result, stormpy.results.ExplicitQuantitativeCheckResult[stormpy.Rational])
         res = result[instantiated_model.initial_states[0]]
         assert isinstance(res.value, stormpy.Rational)
         assert res == stormpy.Rational("4/35")
@@ -158,9 +158,9 @@ class TestInstantiationCheckerDeveloper:
         for parameter_value, expected_value in valuations_and_results:
             valuation = {parameter: stormpy.RationalFunctionCoefficient(parameter_value) for parameter in model.collect_all_parameters()}
             result = checker.check(env, valuation)
-            assert isinstance(result, stormpy.ExplicitQuantitativeCheckResult[result_type])
+            assert isinstance(result, stormpy.results.ExplicitQuantitativeCheckResult[result_type])
             value = result[model.initial_states[0]]
-            assert isinstance(value, stormpy.BoundedValue)
+            assert isinstance(value, stormpy.results.BoundedValue)
             assert isinstance(value.value, result_type)
             if result_type is float:
                 assert math.isclose(value.value, float(stormpy.Rational(expected_value)), rel_tol=1e-6)

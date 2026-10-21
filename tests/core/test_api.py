@@ -10,9 +10,23 @@ from helpers.helper import get_example_path
 
 
 class TestPublicApi:
+    def test_result_shortcut(self):
+        assert stormpy.CheckResult is stormpy.results.CheckResult
+        assert stormpy.CheckResult is stormpy.developer.CheckResult
+
+    @pytest.mark.parametrize("name", stormpy.results.__all__)
+    def test_results_namespace(self, name):
+        result_type = getattr(stormpy.results, name)
+        if isinstance(result_type, stormpy._template._TemplateClass):
+            assert result_type.canonical_name == f"stormpy.results.{name}"
+            assert result_type.instantiations == getattr(stormpy.developer, name).instantiations
+        if name != "CheckResult":
+            assert not hasattr(stormpy, name)
+            assert name not in stormpy.__all__
+
     def test_templates_published(self):
-        assert stormpy.ExplicitQuantitativeCheckResult.canonical_name == "stormpy.ExplicitQuantitativeCheckResult"
-        assert stormpy.ExplicitQuantitativeCheckResult[float] is stormpy.developer.ExplicitQuantitativeCheckResult[float]
+        assert stormpy.results.ExplicitQuantitativeCheckResult.canonical_name == "stormpy.results.ExplicitQuantitativeCheckResult"
+        assert stormpy.results.ExplicitQuantitativeCheckResult[float] is stormpy.developer.ExplicitQuantitativeCheckResult[float]
 
     @pytest.mark.parametrize(
         "name",
@@ -42,6 +56,9 @@ class TestPublicApi:
             # Moved to stormpy.logic
             "Property",
             "OptimizationDirection",
+            # Canonical namespaces: stormpy.analysis and stormpy.transformations
+            "compute_expected_number_of_visits",
+            "add_uncertainty",
         ],
     )
     def test_removed_names(self, name):

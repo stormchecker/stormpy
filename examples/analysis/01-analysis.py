@@ -12,7 +12,7 @@ def example_analysis_01():
     prop = stormpy.parse_property(formula_str, prism_program)
     model = stormpy.build_model(prism_program, prop)
     # States reaching the target with probability 0 and with probability 1
-    prob0, prob1 = stormpy.compute_prob01_states(model, prop)
+    prob0, prob1 = stormpy.analysis.compute_prob01_states(model, prop)
     print(prob0)
     print(prob1)
 

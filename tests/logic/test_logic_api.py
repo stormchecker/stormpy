@@ -13,6 +13,8 @@ def test_public_exports_are_explicit():
 def test_public_classes_share_native_types():
     for name in stormpy.logic.__all__:
         public = getattr(stormpy.logic, name)
+        if inspect.isfunction(public):
+            continue
         assert inspect.isclass(public)
         # Property and OptimizationDirection are bound with the core library
         assert public is getattr(stormpy.developer.logic, name, None) or public is getattr(stormpy.developer, name)

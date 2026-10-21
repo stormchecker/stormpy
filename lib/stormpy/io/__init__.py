@@ -1,4 +1,4 @@
-"""Prism and JANI descriptions and UMB archive input/output."""
+"""Format-specific model descriptions, parsing, exporting and their options."""
 
 import os as _os
 from collections.abc import Iterable as _Iterable
@@ -6,6 +6,15 @@ from collections.abc import Iterable as _Iterable
 import stormpy as _stormpy
 from stormpy.core._common import _path
 from stormpy.developer import storage as _bindings
+from stormpy import developer as _developer
+from stormpy.core._parsing import parse_prism_program, parse_jani_model, parse_jani_model_from_string, instantiate_constants
+from stormpy.core._io import export_to_drn, export_to_umb
+
+SymbolicModelDescription = _developer.SymbolicModelDescription
+JaniModelType = _developer.JaniModelType
+DirectEncodingParserOptions = _developer.DirectEncodingParserOptions
+ExplicitModelParserOptions = _developer.ExplicitModelParserOptions
+DirectEncodingExporterOptions = _developer.DirectEncodingExporterOptions
 
 PrismProgram = _bindings.PrismProgram
 PrismModule = _bindings.PrismModule
@@ -85,6 +94,17 @@ __all__ = [
     "umb_to_archive",
     "export_jani_to_file",
     "sparse_model_to_umb",
+    "SymbolicModelDescription",
+    "JaniModelType",
+    "DirectEncodingParserOptions",
+    "ExplicitModelParserOptions",
+    "DirectEncodingExporterOptions",
+    "parse_prism_program",
+    "parse_jani_model",
+    "parse_jani_model_from_string",
+    "instantiate_constants",
+    "export_to_drn",
+    "export_to_umb",
 ]
 
 

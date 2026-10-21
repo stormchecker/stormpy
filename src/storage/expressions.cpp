@@ -2,11 +2,11 @@
 
 #include <storm-parsers/parser/ExpressionParser.h>
 #include <storm/adapters/IntervalAdapter.h>
-#include <storm/storage/expressions/Expression.h>
-#include <storm/storage/expressions/ExpressionManager.h>
-#include <storm/storage/expressions/OperatorType.h>
-#include <storm/storage/expressions/ToDiceStringVisitor.h>
-#include <storm/storage/expressions/Valuation.h>
+#include <storm/expressions/Expression.h>
+#include <storm/expressions/ExpressionManager.h>
+#include <storm/expressions/OperatorType.h>
+#include <storm/expressions/ToDiceStringVisitor.h>
+#include <storm/expressions/Valuation.h>
 #include <vector>
 
 #include "src/helpers.h"

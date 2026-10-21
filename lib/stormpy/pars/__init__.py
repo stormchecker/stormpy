@@ -11,7 +11,8 @@ from math import isfinite as _isfinite
 
 from . import developer
 from .developer import gather_derivatives
-from stormpy import Environment, Polynomial, RationalFunction, RationalFunctionCoefficient
+from stormpy import Environment
+from stormpy.numbers import Polynomial, RationalFunction, RationalFunctionCoefficient
 from stormpy import developer as _developer
 from stormpy import environments as _environments
 from stormpy.numbers import Variable

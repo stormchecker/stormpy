@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <storm-pomdp/generator/GenerateMonitorVerifier.h>
 #include <storm/adapters/RationalNumberAdapter.h>
-#include <storm/storage/expressions/ExpressionManager.h>
+#include <storm/expressions/ExpressionManager.h>
 #include <string>
 
 template<typename ValueType>

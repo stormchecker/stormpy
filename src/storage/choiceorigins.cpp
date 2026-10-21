@@ -1,7 +1,7 @@
 #include "choiceorigins.h"
 
 #include <storm/adapters/JsonAdapter.h>
-#include <storm/storage/jani/Model.h>
+#include <storm/languages/jani/Model.h>
 #include <storm/storage/sparse/JaniChoiceOrigins.h>
 #include <storm/storage/sparse/PrismChoiceOrigins.h>
 

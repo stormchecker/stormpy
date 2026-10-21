@@ -20,7 +20,7 @@ def build_sparse_model(path, value_type):
         model = stormpy.build_model(program)
     # The following are hardcoded interval values for testing purposes
     if value_type is stormpy.Interval:
-        model = stormpy.add_uncertainty(model, 0.01)
+        model = stormpy.transformations.add_uncertainty(model, 0.01)
     elif value_type is stormpy.RationalInterval:
-        model = stormpy.add_uncertainty(model, stormpy.Rational("1/100"))
+        model = stormpy.transformations.add_uncertainty(model, stormpy.Rational("1/100"))
     return model

@@ -86,7 +86,7 @@ Next we transform the continuous-time model into a discrete-time model.
 Note that all timing information is lost at this point:
 
 ```{code-cell} python3
-mdp, mdp_formulas = stormpy.transform_to_discrete_time_model(ma, formula)
+mdp, mdp_formulas = stormpy.transformations.transform_to_discrete_time_model(ma, formula)
 assert mdp.model_type == stormpy.models.ModelType.MDP
 ```
 

@@ -82,7 +82,7 @@ print(type(symbolic_model))
 ```
 
 ```{code-cell} python3
-transformed_model = stormpy.transform_to_sparse_model(symbolic_model)
+transformed_model = stormpy.transformations.transform_to_sparse_model(symbolic_model)
 print(type(transformed_model))
 ```
 

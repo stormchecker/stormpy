@@ -150,11 +150,11 @@ for state in model.states:
     x = result[state]  # do something with x
 ```
 
-Each ``result[state]`` is typically a {class}`stormpy.BoundedValue`.
+Each ``result[state]`` is typically a {class}`stormpy.results.BoundedValue`.
 It contains the computed value (``x.value``).
 It also contains sound lower (``x.lower``) and upper bounds (``x.upper``) on the actual value.
 If the solution method could not establish bounds, the corresponding bound is ``None``.
-A {class}`stormpy.BoundedValue` can be compared to numbers and converted via ``float(x)``.
+A {class}`stormpy.results.BoundedValue` can be compared to numbers and converted via ``float(x)``.
 ``result.get_value(state)`` returns only the value.
 
 Which bounds are available depends on the solution method.
@@ -170,7 +170,7 @@ For exact models (e.g. ``stormpy.build_model[stormpy.Rational]``), exact methods
 A different environment can be passed via ``model_checking(..., environment=env)``.
 For example, ``stormpy.Environment()`` uses Storm's default methods without soundness guarantees, which are typically faster.
 
-Printing a {class}`stormpy.BoundedValue` shows the value followed by its bounds, where an unknown bound is shown as ``-``.
+Printing a {class}`stormpy.results.BoundedValue` shows the value followed by its bounds, where an unknown bound is shown as ``-``.
 A format specification applies to the value and the bounds:
 
 ```{code-cell} python3

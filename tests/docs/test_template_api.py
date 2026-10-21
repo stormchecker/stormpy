@@ -58,14 +58,14 @@ def test_published_template_names_take_precedence():
 
 def test_class_signatures_preserve_public_non_template_types():
     family = make_family()
-    labeling = stormpy.datastructures.StateLabeling
+    labeling = stormpy.models.StateLabeling
     native_name = f"{labeling.__module__}.{labeling.__qualname__}"
     for inst in family.metadata.instantiations:
         inst.implementation.shared.__doc__ = f"shared(self: {inst.native_name}, labeling: {native_name}) -> {native_name}"
     output = docs.render_members(family, [family])
-    assert "labeling: stormpy.datastructures.StateLabeling) -> stormpy.datastructures.StateLabeling" in output
+    assert "labeling: stormpy.models.StateLabeling) -> stormpy.models.StateLabeling" in output
     signatures, _ = docs.constructors(stormpy.models.SparseModelComponents, docs._loaded_template_classes())
-    assert any("state_labeling: stormpy.datastructures.StateLabeling = ..." in signature for signature in signatures)
+    assert any("state_labeling: stormpy.models.StateLabeling = ..." in signature for signature in signatures)
 
 
 def test_python_specialization_methods_preserve_descriptors_and_defaults():
@@ -174,7 +174,7 @@ def test_real_native_function_uses_public_generic_types():
     info = docs.template_function_info("stormpy.developer.build_sparse_model")
     assert len(info["signatures"]) == 2
     signature = info["signatures"][0]
-    assert "model: stormpy.SymbolicModelDescription" in signature
+    assert "model: stormpy.io.SymbolicModelDescription" in signature
     assert "stormpy.developer.ExplicitModelBuilderOptions[ValueType] = ..." in signature
     assert "-> stormpy.models.SparseModel[ValueType]" in signature
     assert all(not docs._unresolved(overload["signature"]) for overload in info["overloads"])
@@ -211,17 +211,16 @@ def test_sphinx_renders_public_and_developer_apis(monkeypatch, tmp_path):
     module.developer.Example = module.Example.publish_as("test.developer.Example")
     monkeypatch.setitem(sys.modules, "test", module)
     monkeypatch.setitem(sys.modules, "test.developer", module.developer)
-    monkeypatch.setitem(sys.modules, "test.plotting", ModuleType("test.plotting"))
     monkeypatch.setitem(sys.modules, "test.extension", ModuleType("test.extension"))
     source = Path(__file__).parents[2] / "doc/source"
     config = runpy.run_path(str(source / "conf.py"))
-    config["autosummary_context"]["api_submodules"]["test"] = ("plotting",)
     (tmp_path / "conf.py").write_text("")
     (tmp_path / "index.rst").write_text("Documentation\n=============\n\n.. toctree::\n\n   api\n   extensions_api\n   developer_api\n")
     (tmp_path / "api.rst").write_text(
         "API Documentation\n=================\n\n.. autosummary::\n   :toctree: api/generated\n   :template: autosummary/module.rst\n\n   test\n"
         "\n.. autosummary::\n   :toctree: api/generated\n   :template: autosummary/class.rst\n\n   stormpy.io.JaniModel\n   stormpy.datastructures.BitVector\n"
-        "\n.. autosummary::\n   :toctree: api/generated\n   :template: autosummary/apiclass.rst\n\n   stormpy.datastructures.SparseMatrixBuilder\n   stormpy.datastructures.Scheduler\n   stormpy.models.SparseModelComponents\n"
+        "\n.. autosummary::\n   :toctree: api/generated\n   :template: autosummary/apiclass.rst\n\n   stormpy.datastructures.SparseMatrixBuilder\n   stormpy.models.Scheduler\n   stormpy.models.SparseModelComponents\n   stormpy.Environment\n   stormpy.environments.Environment\n"
+        "\n.. autosummary::\n   :toctree: api/generated\n   :template: autosummary/apifunction.rst\n\n   stormpy.parse_property\n   stormpy.logic.parse_property\n"
         "\nSee :class:`Custom label <stormpy.developer.storage._storage.JaniModel>`.\n"
     )
     (tmp_path / "developer_api.rst").write_text(
@@ -255,14 +254,16 @@ def test_sphinx_renders_public_and_developer_apis(monkeypatch, tmp_path):
     assert warnings.getvalue() == ""
     extension_api = (tmp_path / "html/extensions_api.html").read_text()
     assert "extensions_api/generated/test.extension.html" in extension_api
-    public_module = (tmp_path / "html/api/generated/test.html").read_text()
-    assert "test.plotting.html" in public_module
-    assert (tmp_path / "html/api/generated/test.plotting.html").exists()
     developer_api = (tmp_path / "html/developer_api.html").read_text()
     assert 'href="api/generated/stormpy.io.JaniModel.html#stormpy.io.JaniModel"' in developer_api
     cached_env = pickle.loads((tmp_path / "doctrees/environment.pickle").read_bytes())
     assert cached_env.config.autosummary_context["template_families"]("test") == ["Example"]
     assert app.env.domains["py"].objects["test.compute"].objtype == "function"
+    alias = (tmp_path / "html/api/generated/stormpy.Environment.html").read_text()
+    assert "Alias of" in alias
+    assert 'href="stormpy.environments.Environment.html#stormpy.environments.Environment"' in alias
+    alias = (tmp_path / "html/api/generated/stormpy.parse_property.html").read_text()
+    assert 'href="stormpy.logic.parse_property.html#stormpy.logic.parse_property"' in alias
     function = (tmp_path / "html/api/generated/test.compute.html").read_text()
     assert "field-list" in function
     assert ":param" not in function
@@ -278,12 +279,12 @@ def test_sphinx_renders_public_and_developer_apis(monkeypatch, tmp_path):
     assert "field-list" in matrix_builder
     assert ":param" not in matrix_builder
     assert "offset+i -&gt; value of i" in matrix_builder
-    scheduler = app.env.get_doctree("api/generated/stormpy.datastructures.Scheduler")
+    scheduler = app.env.get_doctree("api/generated/stormpy.models.Scheduler")
     conversion = next(sig for sig in scheduler.findall(desc_signature) if sig.get("fullname") == "Scheduler.to_value_type")
     assert "value_type: type = float" in conversion.astext()
     components = app.env.get_doctree("api/generated/stormpy.models.SparseModelComponents")
     constructor = next(sig for sig in components.findall(desc_signature) if sig.get("fullname") == "SparseModelComponents")
-    assert "state_labeling: stormpy.datastructures.StateLabeling" in constructor.astext()
+    assert "state_labeling: stormpy.models.StateLabeling" in constructor.astext()
     api = (tmp_path / "html/api.html").read_text()
     assert 'href="api/generated/stormpy.io.JaniModel.html#stormpy.io.JaniModel"' in api
     assert "Custom label" in re.sub(r"<[^>]*>", "", api)
@@ -393,7 +394,7 @@ def test_constructor_deduction_descriptions():
     assert "first positional constructor argument" in inferred
     assert "``components`` or ``other_model``" in inferred
     assert "[float]" not in inferred
-    second = docs.deduction_description(stormpy.datastructures.MemoryStructureBuilder)
+    second = docs.deduction_description(stormpy.models.MemoryStructureBuilder)
     assert "second positional constructor argument" in second
     assert "``model``" in second
     fallback = docs.deduction_description(stormpy.models.SparseModelComponents)

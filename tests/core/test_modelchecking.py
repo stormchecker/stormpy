@@ -13,7 +13,7 @@ def test_symbolic_filter_template_and_shared_dd_type():
     result = stormpy.create_filter_initial_states(model)
 
     assert stormpy.models.DdType is stormpy.developer.storage.DdType
-    assert type(result) is stormpy.SymbolicQualitativeCheckResult[stormpy.models.DdType.Sylvan]
+    assert type(result) is stormpy.results.SymbolicQualitativeCheckResult[stormpy.models.DdType.Sylvan]
     assert stormpy.developer.storage.Bdd.parameters_of(result.get_truth_values_vector()) == (stormpy.models.DdType.Sylvan,)
 
 
@@ -22,7 +22,7 @@ def test_initial_state_filter_overloads(value_type):
     model = build_sparse_model(get_example_path("dtmc", "die.pm"), value_type)
     result = stormpy.create_filter_initial_states(model)
 
-    assert type(result) is stormpy.ExplicitQualitativeCheckResult[value_type]
+    assert type(result) is stormpy.results.ExplicitQualitativeCheckResult[value_type]
     assert result.get_truth_values_vector() == model.initial_states_as_bitvector
 
 
@@ -36,7 +36,7 @@ def test_infinite_quantitative_values(value_type, tmp_path):
     assert result[0] == math.inf
     assert stormpy.numbers.is_infinity(result[2])
     assert result[1] == 0
-    assert isinstance(result[1], stormpy.BoundedValue)
+    assert isinstance(result[1], stormpy.results.BoundedValue)
     assert isinstance(result.get_value(1), value_type)
     assert stormpy.numbers.is_infinity(result.get_max())
     assert result.get_min() == 0
@@ -438,7 +438,7 @@ class TestModelChecking:
         result = stormpy.model_checking(model, formula, uncertainty_resolution_mode=stormpy.UncertaintyResolutionMode.MAXIMIZE, environment=env)
         # Results of interval models contain values of the underlying number type
         result_type = float if value_type is stormpy.Interval else stormpy.Rational
-        assert type(stormpy.create_filter_initial_states(model)) is stormpy.ExplicitQualitativeCheckResult[result_type]
+        assert type(stormpy.create_filter_initial_states(model)) is stormpy.results.ExplicitQualitativeCheckResult[result_type]
         stormpy.filter_initial_states(result, model)
         assert result.get_min() == result.get_max()
         assert math.isclose(float(result.get_min()), 72.0 / 189.0, rel_tol=1e-4)
@@ -451,7 +451,7 @@ class TestModelChecking:
         assert model.nr_states == 13
         assert model.nr_transitions == 20
         result = stormpy.model_checking(model, formula, engine=stormpy.Engine.DD)
-        assert type(result) is stormpy.SymbolicQuantitativeCheckResult[stormpy.models.DdType.Sylvan, float]
+        assert type(result) is stormpy.results.SymbolicQuantitativeCheckResult[stormpy.models.DdType.Sylvan, float]
         assert result.get_min() == 0.0
         assert result.get_max() == 1.0
         filter = stormpy.create_filter_initial_states(model)
@@ -467,7 +467,7 @@ class TestModelChecking:
         assert model.nr_states == 13
         assert model.nr_transitions == 20
         result = stormpy.model_checking(model, formula, engine=stormpy.Engine.HYBRID)
-        assert type(result) is stormpy.HybridQuantitativeCheckResult[stormpy.models.DdType.Sylvan, float]
+        assert type(result) is stormpy.results.HybridQuantitativeCheckResult[stormpy.models.DdType.Sylvan, float]
         values = result.get_explicit_value_vector()
         assert len(values) == 3
         assert math.isclose(values[0], 1 / 6, rel_tol=1e-6)
@@ -479,14 +479,14 @@ class TestModelChecking:
     def test_compute_expected_number_of_visits(self):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
         model = stormpy.build_model(program)
-        result = stormpy.compute_expected_number_of_visits(model)
+        result = stormpy.analysis.compute_expected_number_of_visits(model)
         assert result[0] == 1
         assert math.isclose(result[1], 2.0 / 3, rel_tol=1e-6)
 
     def test_compute_steady_state_distribution(self):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
         model = stormpy.build_model(program)
-        result = stormpy.compute_steady_state_distribution(model)
+        result = stormpy.analysis.compute_steady_state_distribution(model)
         values = result.get_finite_value_vector()
         assert len(values) == 13
         sorted(values)
@@ -551,7 +551,7 @@ class TestModelChecking:
         prop = stormpy.parse_property('multi(Pmax=? [ F<=3 s=2 ],R{"rew"}max=? [ F s=2 ])', program)
         model = stormpy.build_model(program, prop)
         result = stormpy.model_checking(model, prop)
-        assert type(result) is stormpy.ExplicitParetoCurveCheckResult[float]
+        assert type(result) is stormpy.results.ExplicitParetoCurveCheckResult[float]
         assert result.is_pareto_curve_check_result()
 
     def test_hint(self):
@@ -571,7 +571,7 @@ class TestModelChecking:
         parser = stormpy.expressions.ExpressionParser(program.expression_manager)
         parser.set_identifier_mapping({variable.name: variable.get_expression() for variable in program.expression_manager.get_variables()})
         state_filter = stormpy.create_filter(symbolic_model, parser.parse_from_string("s=0"))
-        assert type(state_filter) is stormpy.SymbolicQualitativeCheckResult[stormpy.models.DdType.Sylvan]
+        assert type(state_filter) is stormpy.results.SymbolicQualitativeCheckResult[stormpy.models.DdType.Sylvan]
         result = stormpy.model_checking(symbolic_model, prop)
         result.filter(state_filter)
         # Only the initial state satisfies s=0
@@ -586,7 +586,7 @@ class TestModelChecking:
         prop = stormpy.parse_property('"one"', program)
         model = stormpy.build_model(program, prop)
         result = stormpy.model_checking(model, prop)
-        assert isinstance(result, stormpy.QualitativeCheckResult)
+        assert isinstance(result, stormpy.results.QualitativeCheckResult)
         assert isinstance(result, stormpy.CheckResult)
         assert result.is_qualitative()
 
@@ -603,12 +603,12 @@ class TestSolutionBounds:
         return stormpy.build_model[value_type](program, properties), properties[0]
 
     def test_bounded_value(self):
-        value = stormpy.BoundedValue(0.5, 0.25, 0.75)
+        value = stormpy.results.BoundedValue(0.5, 0.25, 0.75)
         assert value.has_lower and value.has_upper
         assert value.lower != value.upper
         assert value == 0.5
-        assert value == stormpy.BoundedValue(0.5, 0.25, 0.75)
-        assert value != stormpy.BoundedValue(0.5, 0.25, None)
+        assert value == stormpy.results.BoundedValue(0.5, 0.25, 0.75)
+        assert value != stormpy.results.BoundedValue(0.5, 0.25, None)
         assert 0.4 < value <= 0.5
         assert float(value) == 0.5
         assert round(value, 1) == 0.5
@@ -616,128 +616,128 @@ class TestSolutionBounds:
         assert f"{value:.2f}" == "0.50 [0.25, 0.75]"
         assert f"{value}" == "0.5 [0.25, 0.75]"
         assert str(value) == "0.5 [0.25, 0.75]"
-        assert str(stormpy.BoundedValue(0.5, None, 0.75)) == "0.5 [-, 0.75]"
-        assert str(stormpy.BoundedValue(0.5)) == "0.5 [-, -]"
-        assert f"{stormpy.BoundedValue(0.5):.2f}" == "0.50 [-, -]"
-        assert f"{stormpy.BoundedValue(0.5, 0.25, math.inf):.2f}" == "0.50 [0.25, inf]"
+        assert str(stormpy.results.BoundedValue(0.5, None, 0.75)) == "0.5 [-, 0.75]"
+        assert str(stormpy.results.BoundedValue(0.5)) == "0.5 [-, -]"
+        assert f"{stormpy.results.BoundedValue(0.5):.2f}" == "0.50 [-, -]"
+        assert f"{stormpy.results.BoundedValue(0.5, 0.25, math.inf):.2f}" == "0.50 [0.25, inf]"
         # Exact numbers are formatted via their float approximation if a format specification is given
         third = stormpy.Rational("1/3")
-        assert str(stormpy.BoundedValue(third, third, third)) == "1/3 [1/3, 1/3]"
-        assert f"{stormpy.BoundedValue(third, third, third):.3f}" == "0.333 [0.333, 0.333]"
+        assert str(stormpy.results.BoundedValue(third, third, third)) == "1/3 [1/3, 1/3]"
+        assert f"{stormpy.results.BoundedValue(third, third, third):.3f}" == "0.333 [0.333, 0.333]"
 
     def test_bounded_value_addition(self):
-        value = stormpy.BoundedValue(0.5, 0.25, 0.75)
-        assert value + stormpy.BoundedValue(1.0, 0.5, 1.5) == stormpy.BoundedValue(1.5, 0.75, 2.25)
+        value = stormpy.results.BoundedValue(0.5, 0.25, 0.75)
+        assert value + stormpy.results.BoundedValue(1.0, 0.5, 1.5) == stormpy.results.BoundedValue(1.5, 0.75, 2.25)
         # Plain numbers are exact
-        assert value + 1 == stormpy.BoundedValue(1.5, 1.25, 1.75)
-        assert 1 + value == stormpy.BoundedValue(1.5, 1.25, 1.75)
+        assert value + 1 == stormpy.results.BoundedValue(1.5, 1.25, 1.75)
+        assert 1 + value == stormpy.results.BoundedValue(1.5, 1.25, 1.75)
         # A bound is only known if it is known for both summands
-        assert value + stormpy.BoundedValue(1.0, None, 1.0) == stormpy.BoundedValue(1.5, None, 1.75)
-        assert sum([value, value, value]) == stormpy.BoundedValue(1.5, 0.75, 2.25)
-        exact = stormpy.BoundedValue(stormpy.Rational("1/3"), stormpy.Rational("1/3"), stormpy.Rational("1/3"))
+        assert value + stormpy.results.BoundedValue(1.0, None, 1.0) == stormpy.results.BoundedValue(1.5, None, 1.75)
+        assert sum([value, value, value]) == stormpy.results.BoundedValue(1.5, 0.75, 2.25)
+        exact = stormpy.results.BoundedValue(stormpy.Rational("1/3"), stormpy.Rational("1/3"), stormpy.Rational("1/3"))
         two_thirds = stormpy.Rational("2/3")
-        assert exact + exact == stormpy.BoundedValue(two_thirds, two_thirds, two_thirds)
+        assert exact + exact == stormpy.results.BoundedValue(two_thirds, two_thirds, two_thirds)
 
     def test_bounded_value_subtraction(self):
-        value = stormpy.BoundedValue(0.5, 0.25, 0.75)
-        assert -value == stormpy.BoundedValue(-0.5, -0.75, -0.25)
+        value = stormpy.results.BoundedValue(0.5, 0.25, 0.75)
+        assert -value == stormpy.results.BoundedValue(-0.5, -0.75, -0.25)
         # The lower bound of a - b uses the upper bound of b and vice versa
-        assert value - stormpy.BoundedValue(1.0, 0.5, 1.5) == stormpy.BoundedValue(-0.5, -1.25, 0.25)
-        assert value - 1 == stormpy.BoundedValue(-0.5, -0.75, -0.25)
-        assert 1 - value == stormpy.BoundedValue(0.5, 0.25, 0.75)
-        assert value - stormpy.BoundedValue(1.0, 0.5, None) == stormpy.BoundedValue(-0.5, None, 0.25)
-        exact = stormpy.BoundedValue(stormpy.Rational("1/3"), stormpy.Rational("1/3"), stormpy.Rational("1/3"))
+        assert value - stormpy.results.BoundedValue(1.0, 0.5, 1.5) == stormpy.results.BoundedValue(-0.5, -1.25, 0.25)
+        assert value - 1 == stormpy.results.BoundedValue(-0.5, -0.75, -0.25)
+        assert 1 - value == stormpy.results.BoundedValue(0.5, 0.25, 0.75)
+        assert value - stormpy.results.BoundedValue(1.0, 0.5, None) == stormpy.results.BoundedValue(-0.5, None, 0.25)
+        exact = stormpy.results.BoundedValue(stormpy.Rational("1/3"), stormpy.Rational("1/3"), stormpy.Rational("1/3"))
         two_thirds = stormpy.Rational("2/3")
-        assert 1 - exact == stormpy.BoundedValue(two_thirds, two_thirds, two_thirds)
+        assert 1 - exact == stormpy.results.BoundedValue(two_thirds, two_thirds, two_thirds)
 
     def test_bounded_value_multiplication(self):
-        value = stormpy.BoundedValue(0.5, 0.25, 0.75)
-        assert value * stormpy.BoundedValue(2.0, 1.0, 3.0) == stormpy.BoundedValue(1.0, 0.25, 2.25)
+        value = stormpy.results.BoundedValue(0.5, 0.25, 0.75)
+        assert value * stormpy.results.BoundedValue(2.0, 1.0, 3.0) == stormpy.results.BoundedValue(1.0, 0.25, 2.25)
         # Mixed signs: the bounds are the smallest and largest products of the bounds
-        assert value * stormpy.BoundedValue(-1.0, -2.0, 1.0) == stormpy.BoundedValue(-0.5, -1.5, 0.75)
+        assert value * stormpy.results.BoundedValue(-1.0, -2.0, 1.0) == stormpy.results.BoundedValue(-0.5, -1.5, 0.75)
         # Constants, a negative one swaps the bounds
-        assert value * 2 == stormpy.BoundedValue(1.0, 0.5, 1.5)
-        assert -2 * value == stormpy.BoundedValue(-1.0, -1.5, -0.5)
-        assert 0 * stormpy.BoundedValue(0.5) == stormpy.BoundedValue(0.0, 0, 0)
+        assert value * 2 == stormpy.results.BoundedValue(1.0, 0.5, 1.5)
+        assert -2 * value == stormpy.results.BoundedValue(-1.0, -1.5, -0.5)
+        assert 0 * stormpy.results.BoundedValue(0.5) == stormpy.results.BoundedValue(0.0, 0, 0)
         # One-sided bounds are only multiplied for non-negative factors or constants
-        assert value * stormpy.BoundedValue(2.0, 1.0, None) == stormpy.BoundedValue(1.0, 0.25, None)
-        assert stormpy.BoundedValue(-0.5, -1.0, None) * stormpy.BoundedValue(2.0, 1.0, None) == stormpy.BoundedValue(-1.0)
-        assert 2 * stormpy.BoundedValue(1.0, None, 1.5) == stormpy.BoundedValue(2.0, None, 3.0)
-        exact = stormpy.BoundedValue(stormpy.Rational("1/3"), stormpy.Rational("1/3"), stormpy.Rational("1/3"))
+        assert value * stormpy.results.BoundedValue(2.0, 1.0, None) == stormpy.results.BoundedValue(1.0, 0.25, None)
+        assert stormpy.results.BoundedValue(-0.5, -1.0, None) * stormpy.results.BoundedValue(2.0, 1.0, None) == stormpy.results.BoundedValue(-1.0)
+        assert 2 * stormpy.results.BoundedValue(1.0, None, 1.5) == stormpy.results.BoundedValue(2.0, None, 3.0)
+        exact = stormpy.results.BoundedValue(stormpy.Rational("1/3"), stormpy.Rational("1/3"), stormpy.Rational("1/3"))
         ninth = stormpy.Rational("1/9")
-        assert exact * exact == stormpy.BoundedValue(ninth, ninth, ninth)
+        assert exact * exact == stormpy.results.BoundedValue(ninth, ninth, ninth)
         assert (exact * 3).value == 1
 
     def test_bounded_value_division(self):
-        value = stormpy.BoundedValue(0.5, 0.25, 0.75)
+        value = stormpy.results.BoundedValue(0.5, 0.25, 0.75)
         # Positive divisor: the bounds of a / b are the extreme quotients of the bounds
-        assert value / stormpy.BoundedValue(2.0, 1.0, 4.0) == stormpy.BoundedValue(0.25, 0.0625, 0.75)
+        assert value / stormpy.results.BoundedValue(2.0, 1.0, 4.0) == stormpy.results.BoundedValue(0.25, 0.0625, 0.75)
         # Negative divisor
-        assert value / stormpy.BoundedValue(-2.0, -4.0, -1.0) == stormpy.BoundedValue(-0.25, -0.75, -0.0625)
+        assert value / stormpy.results.BoundedValue(-2.0, -4.0, -1.0) == stormpy.results.BoundedValue(-0.25, -0.75, -0.0625)
         # Constants, a negative one swaps the bounds
-        assert value / 2 == stormpy.BoundedValue(0.25, 0.125, 0.375)
-        assert value / -2 == stormpy.BoundedValue(-0.25, -0.375, -0.125)
-        assert 1 / stormpy.BoundedValue(2.0, 1.0, 4.0) == stormpy.BoundedValue(0.5, 0.25, 1.0)
+        assert value / 2 == stormpy.results.BoundedValue(0.25, 0.125, 0.375)
+        assert value / -2 == stormpy.results.BoundedValue(-0.25, -0.375, -0.125)
+        assert 1 / stormpy.results.BoundedValue(2.0, 1.0, 4.0) == stormpy.results.BoundedValue(0.5, 0.25, 1.0)
         # Divisor bounds including 0: the quotient is unbounded
-        assert value / stormpy.BoundedValue(1.0, -1.0, 2.0) == stormpy.BoundedValue(0.5)
-        assert value / stormpy.BoundedValue(1.0, None, 2.0) == stormpy.BoundedValue(0.5)
+        assert value / stormpy.results.BoundedValue(1.0, -1.0, 2.0) == stormpy.results.BoundedValue(0.5)
+        assert value / stormpy.results.BoundedValue(1.0, None, 2.0) == stormpy.results.BoundedValue(0.5)
         # Divisor with only a positive lower bound: 1 / b is in (0, 1 / lower]
-        assert value / stormpy.BoundedValue(2.0, 1.0, None) == stormpy.BoundedValue(0.25, 0, 0.75)
+        assert value / stormpy.results.BoundedValue(2.0, 1.0, None) == stormpy.results.BoundedValue(0.25, 0, 0.75)
         with pytest.raises(ZeroDivisionError):
             value / 0
         third = stormpy.Rational("1/3")
-        exact = stormpy.BoundedValue(third, third, third)
+        exact = stormpy.results.BoundedValue(third, third, third)
         sixth = stormpy.Rational("1/6")
-        assert exact / 2 == stormpy.BoundedValue(sixth, sixth, sixth)
+        assert exact / 2 == stormpy.results.BoundedValue(sixth, sixth, sixth)
         assert (exact / exact).value == 1
         with pytest.raises(ZeroDivisionError):
             exact / stormpy.Rational(0)
 
     def test_bounded_value_arithmetic_with_nan(self):
         # An undefined value (not a number) stays undefined
-        undefined = stormpy.BoundedValue(math.inf) - stormpy.BoundedValue(math.inf)
+        undefined = stormpy.results.BoundedValue(math.inf) - stormpy.results.BoundedValue(math.inf)
         assert math.isnan(undefined.value)
         assert math.isnan((undefined * math.inf).value)
         assert math.isnan((undefined * 0).value)
         assert math.isnan((undefined + math.inf).value)
         assert math.isnan((undefined / math.inf).value)
-        assert math.isnan((stormpy.BoundedValue(1.0) / undefined).value)
-        assert math.isnan((stormpy.BoundedValue(stormpy.Rational(1)) + undefined).value)
+        assert math.isnan((stormpy.results.BoundedValue(1.0) / undefined).value)
+        assert math.isnan((stormpy.results.BoundedValue(stormpy.Rational(1)) + undefined).value)
         # Bounds which are not a number are unknown
-        assert stormpy.BoundedValue(1.0, math.nan, math.nan) == stormpy.BoundedValue(1.0)
-        value = stormpy.BoundedValue(0.5, 0.25, 0.75)
-        assert value * stormpy.BoundedValue(2.0, math.nan, 3.0) == stormpy.BoundedValue(1.0)
+        assert stormpy.results.BoundedValue(1.0, math.nan, math.nan) == stormpy.results.BoundedValue(1.0)
+        value = stormpy.results.BoundedValue(0.5, 0.25, 0.75)
+        assert value * stormpy.results.BoundedValue(2.0, math.nan, 3.0) == stormpy.results.BoundedValue(1.0)
 
     def test_bounded_value_arithmetic_with_infinity(self):
         third = stormpy.Rational("1/3")
-        infinite = stormpy.BoundedValue(math.inf, stormpy.Rational(2), math.inf)
-        exact = stormpy.BoundedValue(third, third, third)
+        infinite = stormpy.results.BoundedValue(math.inf, stormpy.Rational(2), math.inf)
+        exact = stormpy.results.BoundedValue(third, third, third)
         # Rational and float('inf') cannot be combined directly
-        assert infinite + exact == stormpy.BoundedValue(math.inf, stormpy.Rational("7/3"), math.inf)
-        assert infinite - exact == stormpy.BoundedValue(math.inf, stormpy.Rational("5/3"), math.inf)
-        assert infinite * exact == stormpy.BoundedValue(math.inf, stormpy.Rational("2/3"), math.inf)
-        assert exact - infinite == stormpy.BoundedValue(-math.inf, -math.inf, stormpy.Rational("-5/3"))
+        assert infinite + exact == stormpy.results.BoundedValue(math.inf, stormpy.Rational("7/3"), math.inf)
+        assert infinite - exact == stormpy.results.BoundedValue(math.inf, stormpy.Rational("5/3"), math.inf)
+        assert infinite * exact == stormpy.results.BoundedValue(math.inf, stormpy.Rational("2/3"), math.inf)
+        assert exact - infinite == stormpy.results.BoundedValue(-math.inf, -math.inf, stormpy.Rational("-5/3"))
         # Infinity minus infinity is not a number, the bounds are those of [2, inf] - [2, inf]
         difference = infinite - infinite
         assert math.isnan(difference.value)
         assert difference.lower == -math.inf and difference.upper == math.inf
         # A bound which is infinity minus infinity is unknown
-        unbounded = stormpy.BoundedValue(math.inf, math.inf, math.inf)
+        unbounded = stormpy.results.BoundedValue(math.inf, math.inf, math.inf)
         assert (unbounded - unbounded).lower is None and (unbounded - unbounded).upper is None
         # Division by infinity is 0, infinity divided by infinity is not a number
-        assert exact / infinite == stormpy.BoundedValue(0, 0, stormpy.Rational("1/6"))
-        assert infinite / stormpy.Rational(2) == stormpy.BoundedValue(math.inf, 1, math.inf)
+        assert exact / infinite == stormpy.results.BoundedValue(0, 0, stormpy.Rational("1/6"))
+        assert infinite / stormpy.Rational(2) == stormpy.results.BoundedValue(math.inf, 1, math.inf)
         assert math.isnan((infinite / infinite).value)
         # 0 * infinity = 0
-        assert infinite * 0 == stormpy.BoundedValue(0, 0, 0)
-        assert stormpy.BoundedValue(1.0, 0.0, math.inf) * stormpy.BoundedValue(1.0, 0.0, 2.0) == stormpy.BoundedValue(1.0, 0, math.inf)
+        assert infinite * 0 == stormpy.results.BoundedValue(0, 0, 0)
+        assert stormpy.results.BoundedValue(1.0, 0.0, math.inf) * stormpy.results.BoundedValue(1.0, 0.0, 2.0) == stormpy.results.BoundedValue(1.0, 0, math.inf)
 
     def test_result_values_with_bounds(self):
         model, formula = self._die_dtmc()
         result = stormpy.model_checking(model, formula)
         initial_state = model.initial_states[0]
         value = result[initial_state]
-        assert isinstance(value, stormpy.BoundedValue)
+        assert isinstance(value, stormpy.results.BoundedValue)
         assert isinstance(result.get_value(initial_state), float)
         assert value.value == result.get_value(initial_state)
         assert math.isclose(value, 1 / 6, rel_tol=1e-6)
@@ -763,14 +763,14 @@ class TestSolutionBounds:
         assert value.upper - value.lower < 1e-4
 
         bounds = result.get_solution_bounds()
-        assert isinstance(bounds, stormpy.SolutionBounds[float])
+        assert isinstance(bounds, stormpy.results.SolutionBounds[float])
         assert bounds.lower == result.get_lower_bound_vector()
         assert bounds.upper == result.get_upper_bound_vector()
         assert bounds.encloses(result.get_value_vector())
         assert bounds.is_within_precision(result.get_value_vector(), 1e-4, False)
 
-        aggregated = result.aggregate(stormpy.FilterType.MAX)
-        assert isinstance(aggregated, stormpy.AggregatedValue[float])
+        aggregated = result.aggregate(stormpy.results.FilterType.MAX)
+        assert isinstance(aggregated, stormpy.results.AggregatedValue[float])
         assert aggregated.value == result.get_max()
         assert aggregated.has_lower and aggregated.has_upper
         assert aggregated.lower <= aggregated.value <= aggregated.upper
@@ -798,16 +798,16 @@ class TestSolutionBounds:
         assert result.get_upper_bound_vector() == [before.upper]
 
     def test_set_bounds(self):
-        result = stormpy.ExplicitQuantitativeCheckResult[float]([0.5, 1.0])
+        result = stormpy.results.ExplicitQuantitativeCheckResult[float]([0.5, 1.0])
         assert not result.has_lower_bounds() and not result.has_upper_bounds()
         with pytest.raises(RuntimeError, match="unknown lower bounds"):
             result.get_lower_bound_vector()
-        assert result[0] == stormpy.BoundedValue(0.5)
+        assert result[0] == stormpy.results.BoundedValue(0.5)
         result.set_lower_bounds([0.25, 1.0])
-        assert result[0] == stormpy.BoundedValue(0.5, 0.25, None)
+        assert result[0] == stormpy.results.BoundedValue(0.5, 0.25, None)
         result.set_upper_bounds([0.75, math.inf])
-        assert result[1] == stormpy.BoundedValue(1.0, 1.0, math.inf)
-        assert stormpy.numbers.is_infinity(result.aggregate(stormpy.FilterType.SUM).upper)
+        assert result[1] == stormpy.results.BoundedValue(1.0, 1.0, math.inf)
+        assert stormpy.numbers.is_infinity(result.aggregate(stormpy.results.FilterType.SUM).upper)
         result.set_values_exact()
         assert result[0].lower == result[0].upper == result[0].value
         result.clear_bounds()
@@ -827,7 +827,7 @@ class TestSolutionBounds:
         formulas = stormpy.parse_properties('P=? [ F "one" ]', program)
         model = stormpy.build_symbolic_model(program, formulas)
         result = stormpy.model_checking(model, formulas[0], engine=stormpy.Engine.DD)
-        aggregated = result.aggregate(stormpy.FilterType.MAX)
+        aggregated = result.aggregate(stormpy.results.FilterType.MAX)
         assert aggregated.value == 1.0
         assert aggregated.lower is None and aggregated.upper is None
 

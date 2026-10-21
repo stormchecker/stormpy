@@ -48,7 +48,7 @@ def example_building_mdps_01():
     transition_matrix = builder.build()
 
     # State labeling
-    state_labeling = stormpy.datastructures.StateLabeling(nr_states)
+    state_labeling = stormpy.models.StateLabeling(nr_states)
     # Add labels
     labels = {"init", "one", "two", "three", "four", "five", "six", "done", "deadlock"}
     for label in labels:
@@ -67,7 +67,7 @@ def example_building_mdps_01():
     state_labeling.set_states("done", stormpy.datastructures.BitVector(nr_states, [7, 8, 9, 10, 11, 12]))
 
     # Choice labeling
-    choice_labeling = stormpy.datastructures.ChoiceLabeling(nr_choices)
+    choice_labeling = stormpy.models.ChoiceLabeling(nr_choices)
     choice_labels = {"a", "b"}
     # Add labels
     for label in choice_labels:

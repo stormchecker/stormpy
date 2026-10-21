@@ -1,18 +1,18 @@
 #include "storage.h"
 
+#include <storm/languages/SymbolicModelDescription.h>
+#include <storm/languages/jani/Model.h>
+#include <storm/languages/jani/ModelType.h>
+#include <storm/languages/jani/Property.h>
+#include <storm/languages/prism/Program.h>
 #include <storm/storage/BoostTypes.h>
-#include <storm/storage/SchedulerClass.h>
-#include <storm/storage/SymbolicModelDescription.h>
-#include <storm/storage/jani/Model.h>
-#include <storm/storage/jani/ModelType.h>
-#include <storm/storage/jani/Property.h>
-#include <storm/storage/prism/Program.h>
+#include <storm/storage/scheduler/SchedulerClass.h>
 
 #include "src/helpers.h"
 
 namespace stormpy {
 
-using SymbolicModelDescription = storm::storage::SymbolicModelDescription;
+using SymbolicModelDescription = storm::languages::SymbolicModelDescription;
 using ConstantDefinitions = std::map<storm::expressions::Variable, storm::expressions::Expression>;
 
 void define_storage(py::module& m) {
@@ -89,7 +89,7 @@ void define_storage(py::module& m) {
     py::implicitly_convertible<storm::prism::Program, SymbolicModelDescription>();
     py::implicitly_convertible<storm::jani::Model, SymbolicModelDescription>();
 
-    m.def("parse_constant_definition_string", &storm::storage::parseConstantDefinitionString, "Parse a string of constant definitions", py::arg("manager"),
+    m.def("parse_constant_definition_string", &storm::languages::parseConstantDefinitionString, "Parse a string of constant definitions", py::arg("manager"),
           py::arg("constant_definition_string"));
 
     py::native_enum<storm::storage::SchedulerClass::MemoryPattern>(m, "SchedulerMemoryPattern", "enum.Enum", "Memory pattern of a scheduler")

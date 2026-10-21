@@ -11,10 +11,10 @@
 #include <storm/environment/Environment.h>
 #include <storm/generator/NextStateGenerator.h>
 #include <storm/io/DirectEncodingExporter.h>
+#include <storm/languages/jani/Property.h>
 #include <storm/modelchecker/prctl/SparseDtmcPrctlModelChecker.h>
 #include <storm/modelchecker/prctl/SparseMdpPrctlModelChecker.h>
 #include <storm/models/symbolic/StandardRewardModel.h>
-#include <storm/storage/jani/Property.h>
 
 #include "src/binding_type_index.h"
 #include "src/numbers.h"
@@ -39,14 +39,14 @@ void define_api_builder_typed(py::module& m) {
     // Value type cannot be deduced from the arguments -> bind as template function families
     stormpy::bindings::bindTemplateFunction(
         m, "build_sparse_model", index,
-        py::overload_cast<storm::storage::SymbolicModelDescription const&, storm::builder::BuilderOptions const&, ExplorationOptions const&>(
+        py::overload_cast<storm::languages::SymbolicModelDescription const&, storm::builder::BuilderOptions const&, ExplorationOptions const&>(
             &storm::api::buildSparseModel<ValueType>),
         "Build model in sparse representation", py::arg("model"), py::arg("options"), py::arg("exploration_options") = ExplorationOptions(),
         py::call_guard<py::gil_scoped_release>());
     // Additional overload of the registered instantiation
     stormpy::bindings::bindInternalFunction(
         m, stormpy::bindings::templateClassName("build_sparse_model", index),
-        py::overload_cast<storm::storage::SymbolicModelDescription const&, Formulas const&>(&storm::api::buildSparseModel<ValueType>),
+        py::overload_cast<storm::languages::SymbolicModelDescription const&, Formulas const&>(&storm::api::buildSparseModel<ValueType>),
         "Build model in sparse representation preserving the given formulas", py::arg("model"), py::arg("formulas"), py::call_guard<py::gil_scoped_release>());
     stormpy::bindings::bindTemplateFunction(m, "make_explicit_model_builder", index, &storm::api::makeExplicitModelBuilder<ValueType>,
                                             "Construct an explicit model builder", py::arg("model"), py::arg("options"), py::arg("action_mask") = nullptr,

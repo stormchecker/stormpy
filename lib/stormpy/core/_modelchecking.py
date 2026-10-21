@@ -5,18 +5,14 @@ from __future__ import annotations
 from enum import Enum
 
 from stormpy import developer, environments
-from stormpy.developer import storage
-from stormpy.core._common import _formula, _result_value_type_of_model, _value_type_of_model
+from stormpy.core._common import _formula, _value_type_of_model
 from stormpy import Interval, Rational, RationalInterval
 from stormpy.developer import (
     CheckResult,
     CheckTask,
     Environment,
-    ExplicitQualitativeCheckResult,
     ModelCheckerHint,
     Property,
-    QualitativeCheckResult,
-    SymbolicQualitativeCheckResult,
     UncertaintyResolutionMode,
 )
 from stormpy.exceptions import StormError
@@ -59,7 +55,7 @@ def model_checking(
     :param uncertainty_resolution_mode: How uncertainty is resolved. Required for interval models, not allowed otherwise.
     :param engine: (optional) Engine to use. Defaults to the sparse engine for sparse models and the DD engine for symbolic models.
     :param environment: (optional) Environment configuring the solvers. Defaults to :func:`stormpy.environments.default`.
-    :return: The model checking result, e.g. an :class:`ExplicitQuantitativeCheckResult`. Use ``result[state]`` to get the value for a state together with its sound bounds as a :class:`BoundedValue`, or ``result.get_value(state)`` to get the value only.
+    :return: The model checking result, e.g. an :class:`stormpy.results.ExplicitQuantitativeCheckResult`. Use ``result[state]`` to get the value for a state together with its sound bounds as a :class:`stormpy.results.BoundedValue`, or ``result.get_value(state)`` to get the value only.
     """
     formula = _formula(property)
     environment = environment if environment is not None else environments.default(model)
@@ -101,44 +97,3 @@ def model_checking(
     if engine == Engine.DD:
         return developer.verify_with_dd_engine(environment, model, task)
     return developer.verify_with_hybrid_engine(environment, model, task)
-
-
-def create_filter_initial_states(model) -> QualitativeCheckResult:
-    """
-    Create a filter selecting the initial states of the model.
-
-    The filter can be applied to a model checking result via ``result.filter(filter)``.
-
-    :param model: The model (sparse or symbolic).
-    :return: Qualitative check result containing the initial states.
-    """
-    if model.is_sparse_model:
-        return ExplicitQualitativeCheckResult[_result_value_type_of_model(model)](model.initial_states_as_bitvector)
-    return SymbolicQualitativeCheckResult[storage.DdType.Sylvan](model.reachable_states, model.initial_states)
-
-
-def filter_initial_states(result: CheckResult, model) -> CheckResult:
-    """
-    Restrict the model checking result to the initial states of the model.
-
-    :param result: Model checking result (explicit, symbolic or hybrid).
-    :param model: The model (sparse or symbolic) the result was computed for.
-    :return: The filtered result (the same object as ``result``).
-    """
-    result.filter(create_filter_initial_states(model))
-    return result
-
-
-def create_filter(model, expression: storage.Expression) -> SymbolicQualitativeCheckResult:
-    """
-    Create a filter selecting the states of a symbolic model satisfying the given expression.
-
-    The filter can be applied to a model checking result via ``result.filter(filter)``.
-
-    :param model: The symbolic model.
-    :param expression: Boolean expression over the model variables.
-    :return: Qualitative check result containing the states satisfying the expression.
-    """
-    if not model.is_symbolic_model:
-        raise StormError("Filters from expressions are only supported for symbolic models.")
-    return SymbolicQualitativeCheckResult[storage.DdType.Sylvan](model.reachable_states, model.get_states(expression))

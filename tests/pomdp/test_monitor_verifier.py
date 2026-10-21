@@ -12,7 +12,7 @@ def _build_simple_mc():
     builder.add_next_value(2, 2, 1.0)
     matrix = builder.build(3, 3)
 
-    labeling = stormpy.datastructures.StateLabeling(3)
+    labeling = stormpy.models.StateLabeling(3)
     for lbl in ["init", "a", "b", "good"]:
         labeling.add_label(lbl)
     labeling.add_label_to_state("init", 0)
@@ -39,7 +39,7 @@ def _build_simple_monitor():
     builder.add_next_value(4, 2, 1.0)
     matrix = builder.build(5, 3)
 
-    labeling = stormpy.datastructures.StateLabeling(3)
+    labeling = stormpy.models.StateLabeling(3)
     for lbl in ["init", "step0", "step1", "accepting", "step2", "horizon"]:
         labeling.add_label(lbl)
     labeling.add_label_to_state("init", 0)
@@ -49,7 +49,7 @@ def _build_simple_monitor():
     labeling.add_label_to_state("step2", 2)
     labeling.add_label_to_state("horizon", 2)
 
-    choice_labeling = stormpy.datastructures.ChoiceLabeling(5)
+    choice_labeling = stormpy.models.ChoiceLabeling(5)
     choice_labeling.add_label("a")
     choice_labeling.add_label("b")
     choice_labeling.add_label_to_choice("a", 0)

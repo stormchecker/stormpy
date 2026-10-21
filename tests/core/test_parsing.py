@@ -41,10 +41,10 @@ class TestParseProperties:
 
     def test_parse_properties_symbolic_description_context(self):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
-        properties = stormpy.parse_properties("P=? [F s=7]", stormpy.SymbolicModelDescription(program))
+        properties = stormpy.parse_properties("P=? [F s=7]", stormpy.io.SymbolicModelDescription(program))
         assert len(properties) == 1
         jani_model, _ = stormpy.parse_jani_model(get_example_path("dtmc", "die.jani"))
-        properties = stormpy.parse_properties("P=? [F s=7]", stormpy.SymbolicModelDescription(jani_model))
+        properties = stormpy.parse_properties("P=? [F s=7]", stormpy.io.SymbolicModelDescription(jani_model))
         assert len(properties) == 1
 
     def test_parse_properties_invalid_context(self):
@@ -88,7 +88,7 @@ class TestParsePrismProgram:
         assert program.nr_modules == 1
         assert program.model_type == stormpy.io.PrismModelType.DTMC
         assert not program.has_undefined_constants
-        description = stormpy.SymbolicModelDescription(program)
+        description = stormpy.io.SymbolicModelDescription(program)
         assert description.is_prism_program()
         assert not description.is_jani_model()
 
@@ -112,9 +112,9 @@ class TestParseJaniModel:
     def test_parse_jani_model(self):
         jani_model, properties = stormpy.parse_jani_model(get_example_path("dtmc", "die.jani"))
         assert jani_model.name == "die.jani"
-        assert jani_model.model_type == stormpy.JaniModelType.DTMC
+        assert jani_model.model_type == stormpy.io.JaniModelType.DTMC
         assert not jani_model.has_undefined_constants
-        description = stormpy.SymbolicModelDescription(jani_model)
+        description = stormpy.io.SymbolicModelDescription(jani_model)
         assert not description.is_prism_program()
         assert description.is_jani_model()
 
@@ -123,9 +123,9 @@ class TestParseJaniModel:
             json_string = file.read()
         jani_model, properties = stormpy.parse_jani_model_from_string(json_string)
         assert jani_model.name == "die.jani"
-        assert jani_model.model_type == stormpy.JaniModelType.DTMC
+        assert jani_model.model_type == stormpy.io.JaniModelType.DTMC
         assert not jani_model.has_undefined_constants
-        description = stormpy.SymbolicModelDescription(jani_model)
+        description = stormpy.io.SymbolicModelDescription(jani_model)
         assert not description.is_prism_program()
         assert description.is_jani_model()
 
@@ -178,8 +178,8 @@ class TestInstantiate:
 
     def test_instantiate_constants_symbolic_description(self):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
-        instantiated, properties = stormpy.instantiate_constants(stormpy.SymbolicModelDescription(program), "")
-        assert isinstance(instantiated, stormpy.SymbolicModelDescription)
+        instantiated, properties = stormpy.instantiate_constants(stormpy.io.SymbolicModelDescription(program), "")
+        assert isinstance(instantiated, stormpy.io.SymbolicModelDescription)
         assert properties == []
 
 

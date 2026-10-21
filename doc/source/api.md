@@ -21,8 +21,8 @@ and POMDPs, and the [Developer API](developer_api.md) for internal bindings.
    stormpy.logic
    stormpy.models
    stormpy.numbers
+   stormpy.plotting
    stormpy.results
    stormpy.simulator
    stormpy.transformations
-   stormpy.utility
 ```

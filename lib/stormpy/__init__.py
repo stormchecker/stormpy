@@ -14,7 +14,6 @@ from .numbers import Interval, Polynomial, Rational, RationalFunction, RationalF
 from . import developer
 from . import exceptions
 from . import expressions, datastructures, models, io, logic
-from . import utility
 from . import environments
 from . import results
 from . import analysis, transformations

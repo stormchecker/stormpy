@@ -1,6 +1,6 @@
 """Raw bindings for Storm utilities, such as shortest paths and the Kwek-Mehlhorn algorithm.
 
-This module is intended for developers. Use :mod:`stormpy.utility` for the documented public API.
+This module is intended for developers.
 """
 
 from . import _utility

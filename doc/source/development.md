@@ -22,12 +22,13 @@ rewards, state/action views, labels, valuations, schedulers and memory structure
 descriptions, parsing, exporting and their options).
 ``stormpy.developer.storage`` contains the raw native module and template families such as advanced DD and transformation helpers.
 
-### Utility packages
-``stormpy.utility`` selects the public objects: logging and timeouts.
+### Analysis, plotting and developer utilities
+``stormpy.plotting`` provides Pareto-curve plotting helpers and requires the ``plot`` extra.
 Shortest paths, graph decompositions and numerical analyses belong to ``stormpy.analysis``.
-Model-checking results, bounds, aggregation and filters belong directly to ``stormpy``.
+Model-checking results, bounds and aggregation belong to ``stormpy.results``.
 Model transformations and their options, policies and mapping results belong to
-``stormpy.transformations``. Only ``add_uncertainty`` has a top-level shortcut.
+``stormpy.transformations``.
+Logging and timeouts are available through ``stormpy.developer``.
 ``stormpy.developer.utility`` contains the raw native module, including the Kwek-Mehlhorn algorithm.
 
 ## Public API and developer bindings

@@ -211,11 +211,9 @@ def test_sphinx_renders_public_and_developer_apis(monkeypatch, tmp_path):
     module.developer.Example = module.Example.publish_as("test.developer.Example")
     monkeypatch.setitem(sys.modules, "test", module)
     monkeypatch.setitem(sys.modules, "test.developer", module.developer)
-    monkeypatch.setitem(sys.modules, "test.plotting", ModuleType("test.plotting"))
     monkeypatch.setitem(sys.modules, "test.extension", ModuleType("test.extension"))
     source = Path(__file__).parents[2] / "doc/source"
     config = runpy.run_path(str(source / "conf.py"))
-    config["autosummary_context"]["api_submodules"]["test"] = ("plotting",)
     (tmp_path / "conf.py").write_text("")
     (tmp_path / "index.rst").write_text("Documentation\n=============\n\n.. toctree::\n\n   api\n   extensions_api\n   developer_api\n")
     (tmp_path / "api.rst").write_text(
@@ -256,9 +254,6 @@ def test_sphinx_renders_public_and_developer_apis(monkeypatch, tmp_path):
     assert warnings.getvalue() == ""
     extension_api = (tmp_path / "html/extensions_api.html").read_text()
     assert "extensions_api/generated/test.extension.html" in extension_api
-    public_module = (tmp_path / "html/api/generated/test.html").read_text()
-    assert "test.plotting.html" in public_module
-    assert (tmp_path / "html/api/generated/test.plotting.html").exists()
     developer_api = (tmp_path / "html/developer_api.html").read_text()
     assert 'href="api/generated/stormpy.io.JaniModel.html#stormpy.io.JaniModel"' in developer_api
     cached_env = pickle.loads((tmp_path / "doctrees/environment.pickle").read_bytes())

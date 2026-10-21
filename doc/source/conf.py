@@ -70,7 +70,6 @@ autosummary_context = {
         "template_function_info": template_function_info,
     }.items()
 }
-autosummary_context["api_submodules"] = {"stormpy.utility": ("multiobjective_plotting",)}
 
 # Wrap long signatures instead of scrolling them
 python_maximum_signature_line_length = 100

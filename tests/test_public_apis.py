@@ -10,7 +10,7 @@ import typing
 
 import pytest
 import stormpy
-from configurations import has_dft, has_gspn, has_pars
+from configurations import has_dft, has_gspn, has_pars, has_package
 
 
 def _core_documented_elsewhere(name):
@@ -42,7 +42,7 @@ _PUBLIC_MODULES = {
     "stormpy.datastructures": (True, _not_documented_elsewhere),
     "stormpy.expressions": (True, _not_documented_elsewhere),
     "stormpy.io": (True, _not_documented_elsewhere),
-    "stormpy.utility": (True, _not_documented_elsewhere),
+    "stormpy.plotting": (has_package("numpy") and has_package("matplotlib"), _not_documented_elsewhere),
     "stormpy.logic": (True, _not_documented_elsewhere),
     "stormpy.environments": (True, _not_documented_elsewhere),
     "stormpy.info": (True, _not_documented_elsewhere),

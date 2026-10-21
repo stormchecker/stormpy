@@ -1,16 +1,50 @@
 Changelog
 =============
 
-Version 1.14.x
+Version 2.0.x
 --------------
 
-### Version 1.14.1 (in development)
+### Version 2.0.0 (2026/10)
+Requires Storm version >= 2.0.0 and Python >= 3.11.
 
-- Revised number types:
-    * `stormpy.Polynomial` and `stormpy.RationalFunction` now refer to the correct (factorized) Storm number types and were formerly named `stormpy.FactorizedPolynomial` and `stormpy.FactorizedRationalFunction`.
-    * `stormpy.RawPolynomial` refers to the non-factorized polynomial.
-    * `stormpy.RationalFunctionCoefficient` replaces `stormpy.RationalRF`.
-    * Added `stormpy.Interval` and `stormpy.RationalInterval` aliases.
+Major redesign of the Python API. Code written for stormpy 1.x needs to be adapted.
+
+- New package structure split into public API and plain Storm bindings for developers:
+    * The public API is split into subpackages, for example `stormpy.analysis`, `stormpy.datastructures`, `stormpy.environments`, `stormpy.models`.
+    * The top-level `stormpy` keeps the main entry points, such as `parse_prism_program`, `parse_properties`, `build_model` and `model_checking`.
+    * Raw Python bindings aimed at fine-grained developer control moved to `stormpy.developer` (for example `stormpy.developer.storage` and `stormpy.developer.logic`).
+      The raw bindings map one-to-one to Storm's C++ functions and file structure.
+    * The extensions `stormpy.dft`, `stormpy.gspn`, `stormpy.pars` and `stormpy.pomdp` follow the same split into a public API and `.developer` bindings.
+- Generics: classes and functions are now named the same for each value type.
+  Value types are now explicitly given via `Class[value_type](...)` or `func[value_type](...)`, for example `stormpy.models.SparseDtmc[float]`.
+  Specializations are now automatically deduced from constructor arguments where possible. Models are returned with their specialized type and no explicit conversions are needed anymore.
+- Revised number types in `stormpy.numbers`. The names now match Storm's value types:
+    * `Polynomial` and `RationalFunction` now refer to the correct (factorized) Storm number types. They were previously named `FactorizedPolynomial` and `FactorizedRationalFunction`.
+    * `RawPolynomial` was previously named `Polynomial`.
+    * `RationalFunctionCoefficient` was previously named `RationalRF`.
+    * Added `stormpy.Interval` and `stormpy.RationalInterval`.
+    * The pycarl bindings moved to `stormpy.numbers.developer`.
+- Sound model checking is the default: use `stormpy.environments.default(model)` to automatically select the default environment depending on the value type of the model.
+- Results return sound bounds: `SolutionBounds` for all states or a `BoundedValue` for a single state.
+- Consistent use of UPPER_CASE for enum values.
+- Added bindings for the new API of `storm-pomdp`.
+- Added bindings for discounted reward formulas.
+- Adaption to changes in Storm:
+    * Replaced settings by environments.
+    * Support for `ExtendedNumber` allowing to represent infinity.
+    * Revised bindings for bisimulation.
+    * Revised bindings for `storm-pars`.
+    * Revised bindings for `storm-dft`.
+- Documentation is written in MyST Markdown.
+  Jupyter notebooks are generated via Jupytext.
+- Developer: migrated holders to `py::smart_holder`
+- Developer: added tests for the public API and the documentation examples
+- Developer: cleaned up rpaths
+- Developer: revised and restructured CI
+
+
+Version 1.14.x
+--------------
 
 ### Version 1.14.0 (2026/08)
 Requires Storm version >= 1.14.0.

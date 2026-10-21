@@ -10,7 +10,11 @@ import pytest
 import stormpy
 from stormpy._template import _TemplateClass, _TemplateFunction, _template_function, _deduce_default
 
-sys.path.insert(0, str(Path(__file__).parents[2] / "doc/source/_ext"))
+_DOC_SOURCE = Path(__file__).parents[2] / "doc/source"
+if not (_DOC_SOURCE / "_ext").is_dir():
+    pytest.skip("Documentation sources (doc/source) not available", allow_module_level=True)
+
+sys.path.insert(0, str(_DOC_SOURCE / "_ext"))
 import stormpy_templates as docs
 
 
@@ -212,7 +216,7 @@ def test_sphinx_renders_public_and_developer_apis(monkeypatch, tmp_path):
     monkeypatch.setitem(sys.modules, "test", module)
     monkeypatch.setitem(sys.modules, "test.developer", module.developer)
     monkeypatch.setitem(sys.modules, "test.extension", ModuleType("test.extension"))
-    source = Path(__file__).parents[2] / "doc/source"
+    source = _DOC_SOURCE
     config = runpy.run_path(str(source / "conf.py"))
     (tmp_path / "conf.py").write_text("")
     (tmp_path / "index.rst").write_text("Documentation\n=============\n\n.. toctree::\n\n   api\n   extensions_api\n   developer_api\n")
@@ -302,14 +306,14 @@ def test_sphinx_renders_public_and_developer_apis(monkeypatch, tmp_path):
 
 
 def test_public_api_filter_includes_refactored_implementations(monkeypatch):
-    config = runpy.run_path(str(Path(__file__).parents[2] / "doc/source/conf.py"))
+    config = runpy.run_path(str(_DOC_SOURCE / "conf.py"))
     implementation = type("Public", (), {"__module__": "test.developer._core"})
     monkeypatch.setitem(sys.modules, "test.public", SimpleNamespace(__all__=["Public"], Public=implementation, Imported=object(), _private=object()))
     assert config["_filter_api_members"]("test.public", ["Public", "Imported", "_private"]) == ["Public"]
 
 
 def test_developer_api_filter_omits_published_aliases(monkeypatch):
-    config = runpy.run_path(str(Path(__file__).parents[2] / "doc/source/conf.py"))
+    config = runpy.run_path(str(_DOC_SOURCE / "conf.py"))
 
     family = make_family().publish_as("stormpy.docs_test.developer.Example")
     wrapped = make_family().publish_as("stormpy.docs_test.developer.Wrapped")

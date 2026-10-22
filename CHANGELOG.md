@@ -8,6 +8,7 @@ Version 2.0.x
 Requires Storm version >= 2.0.0 and Python >= 3.11.
 
 Major redesign of the Python API. Code written for stormpy 1.x needs to be adapted.
+See the [migration helper](https://stormchecker.github.io/stormpy/changes_from_v1.html) for a table of renamed symbols and enum values.
 
 - New package structure split into public API and plain Storm bindings for developers:
     * The public API is split into subpackages, for example `stormpy.analysis`, `stormpy.datastructures`, `stormpy.environments`, `stormpy.models`.

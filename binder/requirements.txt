@@ -1,6 +1,6 @@
 # Storm libraries
 stormpy==2.0.0
-numpy==2.2.6
+numpy==2.4.6
 # Notebook generation
 jupytext==1.19.5
 # Jupyter extensions

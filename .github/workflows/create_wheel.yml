@@ -18,7 +18,7 @@ on:
         type: string
         default: ''
       full_build:
-        description: 'Build for all Python versions (if false, 3.13 and 3.14 only)'
+        description: 'Build for all Python versions (if false, 3.14 and 3.15 only)'
         required: true
         type: boolean
         default: false
@@ -52,7 +52,7 @@ on:
         type: string
         default: 'x.y.z'
       full_build:
-        description: 'Build for all Python versions (if false, 3.13 and 3.14 only)'
+        description: 'Build for all Python versions (if false, 3.14 and 3.15 only)'
         required: true
         type: boolean
         default: false
@@ -125,7 +125,7 @@ jobs:
           CIBW_ARCHS: ${{ matrix.archs }}
           MACOSX_DEPLOYMENT_TARGET: ${{ matrix.deploy_target }}
           # Build development version only on latest Python versions
-          CIBW_BUILD: "cp313-* cp314-*"
+          CIBW_BUILD: "cp314-* cp315-*"
           CIBW_ENVIRONMENT: >-
             STORM_VERSION=${{ inputs.storm_version }}
             NR_JOBS=${{ env.NR_JOBS }}
@@ -198,6 +198,8 @@ jobs:
         exclude:
           - arch: {name: linux-arm, runner: ubuntu-24.04-arm}
             distro: archlinux:latest
+          # Debian 13 ships Python 3.13 which is not covered by the development build
+          - distro: ${{ inputs.full_build && 'none' || 'debian:latest' }}
 
     steps:
       - uses: actions/download-artifact@v8

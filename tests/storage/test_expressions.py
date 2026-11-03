@@ -2,6 +2,7 @@ import stormpy
 
 import sys
 
+
 class TestExpressions:
     def test_expression_manager(self):
         manager = stormpy.expressions.ExpressionManager()

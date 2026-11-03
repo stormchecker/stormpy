@@ -195,7 +195,7 @@ void define_sparse_model(py::module& m) {
         .def_property_readonly("initial_states_as_bitvector", [](SparseModel<ValueType> const& model) { return model.getInitialStates(); })
         .def("set_initial_states", &SparseModel<ValueType>::setInitialStates, py::arg("states"), "Set initial states")
         .def_property_readonly(
-            "states", [](SparseModel<ValueType>& model) { return SparseModelStates<ValueType>(model); }, "Get states")
+            "states", py::cpp_function([](SparseModel<ValueType>& model) { return SparseModelStates<ValueType>(model); }, py::keep_alive<0, 1>()), "Get states")
         .def_property_readonly(
             "reward_models", [](SparseModel<ValueType>& model) { return model.getRewardModels(); }, "Reward models")
         .def_property_readonly("transition_matrix", py::cpp_function(&getTransitionMatrix<ValueType>, py::return_value_policy::reference_internal),

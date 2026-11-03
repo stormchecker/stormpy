@@ -13,7 +13,7 @@ void define_simulator_sparse_typed(py::module& m) {
     using Simulator = storm::simulator::DiscreteTimeSparseModelSimulator<ValueType>;
     stormpy::bindings::bindTemplateClass<Simulator>(m, "DiscreteTimeSparseModelSimulator", stormpy::bindings::typeIndex<ValueType>(),
                                                     "Simulator for sparse discrete-time models")
-        .def(py::init<storm::models::sparse::Model<ValueType> const&>(), "Create simulator", py::arg("model"))
+        .def(py::init<storm::models::sparse::Model<ValueType> const&>(), "Create simulator", py::arg("model"), py::keep_alive<1, 2>())
         .def("set_seed", &Simulator::setSeed, "Set the seed of the random generator", py::arg("seed"))
         .def("step", &Simulator::step, "Make a step with the given action", py::arg("action"))
         .def("random_step", &Simulator::randomStep, "Make a step with a randomly chosen action")
@@ -27,7 +27,8 @@ void define_simulator_prism_typed(py::module& m) {
     using Simulator = storm::simulator::DiscreteTimePrismProgramSimulator<ValueType>;
     stormpy::bindings::bindTemplateClass<Simulator>(m, "DiscreteTimePrismProgramSimulator", stormpy::bindings::typeIndex<ValueType>(),
                                                     "Simulator for Prism programs")
-        .def(py::init<storm::prism::Program const&, storm::builder::BuilderOptions const&>(), "Create simulator", py::arg("program"), py::arg("options"))
+        .def(py::init<storm::prism::Program const&, storm::builder::BuilderOptions const&>(), "Create simulator", py::arg("program"), py::arg("options"),
+             py::keep_alive<1, 2>())
         .def("set_seed", &Simulator::setSeed, "Set the seed of the random generator", py::arg("seed"))
         .def(
             // Thin wrapper as pybind11 does not support std::span

@@ -185,7 +185,8 @@ void define_prism(py::module& m) {
     // define_stateGeneration<uint32_t, storm::RationalNumber>(m);
 
     py::classh<OverlappingGuardAnalyser> oga(m, "OverlappingGuardAnalyser", "An SMT driven analysis for overlapping guards");
-    oga.def(py::init<Program const&, std::shared_ptr<storm::utility::solver::SmtSolverFactory>&>(), py::arg("program"), py::arg("smt solver factory"));
+    oga.def(py::init<Program const&, std::shared_ptr<storm::utility::solver::SmtSolverFactory>&>(), py::arg("program"), py::arg("smt solver factory"),
+            py::keep_alive<1, 2>());
     oga.def("has_module_with_inner_action_overlap", &OverlappingGuardAnalyser::hasModuleWithInnerActionOverlap);
 }
 

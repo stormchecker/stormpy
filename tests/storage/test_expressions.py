@@ -1,5 +1,6 @@
 import stormpy
 
+import sys
 
 class TestExpressions:
     def test_expression_manager(self):
@@ -53,3 +54,11 @@ class TestExpressions:
         ex_one = ep.parse_from_string("1.0")
         assert str(ex_one) == "1"
         assert ex_one.has_rational_type()
+
+    def test_expression_parser_keeps_manager_alive(self):
+        manager = stormpy.expressions.ExpressionManager()
+        refs = sys.getrefcount(manager)
+        ep = stormpy.expressions.ExpressionParser(manager)
+        assert sys.getrefcount(manager) == refs + 1
+        del ep
+        assert sys.getrefcount(manager) == refs

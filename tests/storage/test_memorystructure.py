@@ -1,3 +1,6 @@
+import gc
+import sys
+
 import stormpy
 from helpers.helper import get_example_path
 import pytest
@@ -53,4 +56,20 @@ class TestMemoryStructure:
         product_type = memorystructure_one.product_model(model=model) if keyword else memorystructure_one.product_model(model)
         product_model = product_type.build()
         assert product_model.model_type == stormpy.models.ModelType.DTMC
+        assert product_model.nr_states == 14
+
+    def test_memory_structure_lifetime(self):
+        program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
+        formula = stormpy.parse_property('P=? [ F "one" ]', program)
+        model = stormpy.build_model(program, formula)
+        refs = sys.getrefcount(model)
+        builder = stormpy.models.MemoryStructureBuilder(2, model, False)
+        assert sys.getrefcount(model) == refs + 1
+        del builder
+        assert sys.getrefcount(model) == refs
+        # The product keeps model and memory structure alive
+        product = self._build_memory_structure(model, model.labeling.get_states("one")).product_model(model)
+        del model
+        gc.collect()
+        product_model = product.build()
         assert product_model.nr_states == 14

@@ -4,6 +4,7 @@ import stormpy.simulator
 from helpers.helper import get_example_path
 
 import random
+import sys
 
 
 class TestSparseModelSimulator:
@@ -225,3 +226,21 @@ class TestPrismSimulator:
             assert all(isinstance(p["x"], stormpy.datastructures.JsonContainer[float]) for p in path[::2])
             assert all(isinstance(p, int) for p in path[1::2])
             assert len(path) <= 41
+
+
+class TestSimulatorLifetime:
+    def test_sparse_simulator_keeps_model_alive(self):
+        model = stormpy.build_model_from_explicit(get_example_path("dtmc", "die.tra"), get_example_path("dtmc", "die.lab"))
+        refs = sys.getrefcount(model)
+        simulator = stormpy.developer.DiscreteTimeSparseModelSimulator(model)
+        assert sys.getrefcount(model) == refs + 1
+        del simulator
+        assert sys.getrefcount(model) == refs
+
+    def test_prism_simulator_keeps_program_alive(self):
+        program = stormpy.parse_prism_program(stormpy.examples.files.prism_mdp_slipgrid)
+        refs = sys.getrefcount(program)
+        simulator = stormpy.developer.DiscreteTimePrismProgramSimulator[float](program, stormpy.BuilderOptions())
+        assert sys.getrefcount(program) == refs + 1
+        del simulator
+        assert sys.getrefcount(program) == refs

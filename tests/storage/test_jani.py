@@ -1,3 +1,5 @@
+import gc
+import sys
 import typing
 
 import stormpy
@@ -31,3 +33,16 @@ class TestJani:
     def test_export_annotations(self):
         hints = typing.get_type_hints(stormpy.io.export_jani_to_file)
         assert stormpy.logic.Property in typing.get_args(typing.get_args(hints["properties"])[0])
+
+    def test_variables_lifetime(self):
+        model, properties = stormpy.parse_jani_model(get_example_path("dtmc", "brp.jani"))
+        refs = sys.getrefcount(model)
+        expander = stormpy.developer.storage.JaniLocationExpander(model)
+        assert sys.getrefcount(model) == refs + 1
+        del expander
+        assert sys.getrefcount(model) == refs
+        variables = model.global_variables
+        var_s = variables.get_variable_by_name("s")
+        del model, properties, variables
+        gc.collect()
+        assert var_s.type.upper_bound.evaluate_as_int() == 6

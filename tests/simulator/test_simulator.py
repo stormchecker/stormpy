@@ -184,6 +184,18 @@ class TestPrismSimulator:
             assert choice.get_total_mass() == pytest.approx(1)
             assert len(choice) == choice.size() >= 1
 
+    def test_current_state_is_copy(self):
+        prism_program = stormpy.parse_prism_program(stormpy.examples.files.prism_dtmc_die)
+        simulator = stormpy.developer.DiscreteTimePrismProgramSimulator(prism_program, stormpy.BuilderOptions())
+        simulator.reset_to_initial()
+        initial = simulator.get_current_state()
+        initial_str = str(initial)
+        simulator.step(0)
+        after_step = simulator.get_current_state()
+        assert initial is not after_step
+        assert str(initial) == initial_str
+        assert str(after_step) != initial_str
+
     def test_negative_values(self):
         prism_program = stormpy.parse_prism_program(get_example_path("dtmc", "negativevals.pm"))
         prism_program, _ = stormpy.instantiate_constants(prism_program, "")

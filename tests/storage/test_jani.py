@@ -22,6 +22,12 @@ class TestJani:
         assert var_s.type.lower_bound.evaluate_as_int() == 0
         assert var_s.type.upper_bound.evaluate_as_int() == 6
 
+    def test_location_assignments(self):
+        model, properties = stormpy.parse_jani_model(get_example_path("dtmc", "brp.jani"))
+        location = model.automata[0].locations[0]
+        assert location.assignments is not None
+        assert len(list(location.assignments)) >= 0
+
     def test_flatten_composition(self):
         model, properties = stormpy.parse_jani_model(get_example_path("dtmc", "brp.jani"))
         assert len(model.automata) > 1

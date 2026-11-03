@@ -170,6 +170,34 @@ class TestGspnBuilder:
         gspn.set_name(gspn_new_name)
         assert gspn.get_name() == gspn_new_name
 
+    def test_gspn_element_references(self):
+        builder = stormpy.gspn.GspnBuilder()
+        id_p = builder.add_place(initial_tokens=1, name="p")
+        builder.add_immediate_transition(priority=1, weight=0.5, name="ti")
+        builder.add_timed_transition(priority=0, rate=0.4, name="tt")
+        builder.add_input_arc("p", "ti", multiplicity=1)
+        builder.add_output_arc("tt", "p", multiplicity=1)
+        gspn = builder.build_gspn()
+
+        # Getters return the elements and not copies
+        gspn.get_place(id_p).set_capacity(3)
+        assert gspn.get_place("p").get_capacity() == 3
+        gspn.get_timed_transition("tt").set_rate(0.8)
+        assert gspn.get_timed_transition("tt").get_rate() == 0.8
+
+        assert type(gspn.get_transition("ti")) is stormpy.gspn.ImmediateTransition
+        assert type(gspn.get_transition("tt")) is stormpy.gspn.TimedTransition
+        assert gspn.get_transition("tt").get_rate() == 0.8
+
+        assert gspn.get_place("unknown") is None
+        assert gspn.get_timed_transition("ti") is None
+        assert gspn.get_transition("unknown") is None
+
+        # References keep the GSPN alive
+        place = gspn.get_place(id_p)
+        del gspn
+        assert place.get_capacity() == 3
+
     @xml
     def test_export_to_pnpro(self, tmpdir):
         builder = stormpy.gspn.GspnBuilder()

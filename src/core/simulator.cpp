@@ -42,7 +42,7 @@ void define_simulator_prism_typed(py::module& m) {
         .def("step", &Simulator::step, "Make a step and randomly select the successor. The index of the choice is given as argument (see get_choices).",
              py::arg("action_number"))
         .def("get_last_rewards", &Simulator::getLastRewards, "Get the rewards obtained in the last step")
-        .def("get_current_state", &Simulator::getCurrentState, "Get the current state", py::return_value_policy::reference_internal)
+        .def("get_current_state", &Simulator::getCurrentState, "Get the current state")
         .def("get_current_state_as_valuation", &Simulator::getCurrentStateAsValuation, "Get the current state as valuation")
         .def("get_current_state_labelling", &Simulator::getCurrentStateLabelling, "Get the labels of the current state")
         .def("get_state_as_json", &Simulator::getStateAsJson, "Get the current state as JSON")

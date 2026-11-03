@@ -84,7 +84,7 @@ void define_belief_verification(py::module& m) {
         .def_property_readonly(
             "policy",
             [](Result<ValueType> const& result) -> Controller<ValueType> const* { return result.policy.has_value() ? &result.policy.value() : nullptr; },
-            py::return_value_policy::reference_internal, "Finite-state controller, None if no policy was generated");
+            "Finite-state controller, None if no policy was generated");
 
     // Only the same value types everywhere are bound.
     m.def(

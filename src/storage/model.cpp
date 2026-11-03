@@ -186,7 +186,7 @@ void define_sparse_model(py::module& m) {
             "has_choice_labeling", [](SparseModel<ValueType> const& model) { return model.hasChoiceLabeling(); },
             "Does the model have an associated choice labelling?")
         .def_property_readonly(
-            "choice_labeling", [](SparseModel<ValueType> const& model) { return model.getChoiceLabeling(); }, "get choice labelling")
+            "choice_labeling", [](SparseModel<ValueType> const& model) -> auto& { return model.getChoiceLabeling(); }, "get choice labelling")
         .def(
             "has_choice_origins", [](SparseModel<ValueType> const& model) { return model.hasChoiceOrigins(); }, "has choice origins?")
         .def_property_readonly("choice_origins", [](SparseModel<ValueType> const& model) { return model.getChoiceOrigins(); })
@@ -197,7 +197,7 @@ void define_sparse_model(py::module& m) {
         .def_property_readonly(
             "states", py::cpp_function([](SparseModel<ValueType>& model) { return SparseModelStates<ValueType>(model); }, py::keep_alive<0, 1>()), "Get states")
         .def_property_readonly(
-            "reward_models", [](SparseModel<ValueType>& model) { return model.getRewardModels(); }, "Reward models")
+            "reward_models", [](SparseModel<ValueType>& model) -> auto& { return model.getRewardModels(); }, "Reward models")
         .def_property_readonly("transition_matrix", py::cpp_function(&getTransitionMatrix<ValueType>, py::return_value_policy::reference_internal),
                                "Transition matrix")
         .def_property_readonly("backward_transition_matrix", &SparseModel<ValueType>::getBackwardTransitions, "Backward transition matrix")
@@ -212,7 +212,7 @@ void define_sparse_model(py::module& m) {
         .def(
             "has_state_valuations", [](SparseModel<ValueType> const& model) { return model.hasStateValuations(); }, "has state valuation?")
         .def_property_readonly(
-            "state_valuations", [](SparseModel<ValueType> const& model) { return model.getStateValuations(); }, "state valuations")
+            "state_valuations", [](SparseModel<ValueType> const& model) -> auto& { return model.getStateValuations(); }, "state valuations")
         .def("reduce_to_state_based_rewards", &SparseModel<ValueType>::reduceToStateBasedRewards)
         .def("is_sink_state", &SparseModel<ValueType>::isSinkState, py::arg("state"))
         .def("__str__", &getModelInfoPrinter)
@@ -344,7 +344,7 @@ void define_sparse_model(py::module& m) {
         .def_property_readonly("has_state_rewards", &SparseRewardModel<ValueType>::hasStateRewards)
         .def_property_readonly("has_state_action_rewards", &SparseRewardModel<ValueType>::hasStateActionRewards)
         .def_property_readonly("has_transition_rewards", &SparseRewardModel<ValueType>::hasTransitionRewards)
-        .def_property_readonly("transition_rewards", [](SparseRewardModel<ValueType>& rewardModel) { return rewardModel.getTransitionRewardMatrix(); })
+        .def_property_readonly("transition_rewards", [](SparseRewardModel<ValueType>& rewardModel) -> auto& { return rewardModel.getTransitionRewardMatrix(); })
         .def_property_readonly("state_rewards", [](SparseRewardModel<ValueType>& rewardModel) { return rewardModel.getStateRewardVector(); })
         .def("get_state_reward", [](SparseRewardModel<ValueType>& rewardModel, uint64_t state) { return rewardModel.getStateReward(state); })
         .def("set_state_reward",
@@ -369,7 +369,7 @@ void define_symbolic_model(py::module& m) {
     auto model = stormpy::bindings::bindTemplateClass<SymbolicModel<DdType, ValueType>, ModelBase>(m, "SymbolicModel", index,
                                                                                                    "A probabilistic model in a symbolic representation");
     model.def_property_readonly(
-             "reward_models", [](SymbolicModel<DdType, ValueType>& model) { return model.getRewardModels(); }, "Reward models")
+             "reward_models", [](SymbolicModel<DdType, ValueType>& model) -> auto& { return model.getRewardModels(); }, "Reward models")
         .def_property_readonly("dd_manager", &SymbolicModel<DdType, ValueType>::getManager, "dd manager")
         .def_property_readonly("reachable_states", &SymbolicModel<DdType, ValueType>::getReachableStates, "reachable states as DD")
         .def_property_readonly("initial_states", &SymbolicModel<DdType, ValueType>::getInitialStates, "initial states as DD")

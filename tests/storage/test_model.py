@@ -69,6 +69,20 @@ class TestSparseModel:
         assert not model.supports_parameters
         assert type(model) is stormpy.models.SparseDtmc[float]
 
+    def test_reward_model_lifetime(self):
+        # The reward model reference must keep the model alive
+        import gc
+
+        program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
+        formula = stormpy.parse_property('R=? [F "done"]', program)
+        model = stormpy.build_model(program, formula)
+        reward_model = model.get_reward_model("coin_flips")
+        assert reward_model is model.get_reward_model(name="coin_flips")
+        del model
+        gc.collect()
+        assert reward_model.has_state_action_rewards
+        assert sum(reward_model.state_action_rewards) == 7.0
+
     def test_reduce_to_state_based_rewards(self):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
         prop = 'R=? [F "done"]'

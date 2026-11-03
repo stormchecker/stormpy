@@ -198,16 +198,13 @@ void define_sparse_model(py::module& m) {
             "states", [](SparseModel<ValueType>& model) { return SparseModelStates<ValueType>(model); }, "Get states")
         .def_property_readonly(
             "reward_models", [](SparseModel<ValueType>& model) { return model.getRewardModels(); }, "Reward models")
-        .def_property_readonly("transition_matrix",
-                               py::cpp_function(&getTransitionMatrix<ValueType>, py::return_value_policy::reference, py::keep_alive<1, 0>()),
+        .def_property_readonly("transition_matrix", py::cpp_function(&getTransitionMatrix<ValueType>, py::return_value_policy::reference_internal),
                                "Transition matrix")
-        .def_property_readonly("backward_transition_matrix",
-                               py::cpp_function(&SparseModel<ValueType>::getBackwardTransitions, py::return_value_policy::reference, py::keep_alive<1, 0>()),
-                               "Backward transition matrix")
+        .def_property_readonly("backward_transition_matrix", &SparseModel<ValueType>::getBackwardTransitions, "Backward transition matrix")
         .def(
             "get_reward_model",
             [](SparseModel<ValueType>& model, std::string const& name) -> SparseRewardModel<ValueType>& { return model.getRewardModel(name); },
-            py::return_value_policy::reference, py::keep_alive<1, 0>(), "Reward model")
+            py::return_value_policy::reference_internal, py::arg("name"), "Reward model")
         .def(
             "has_reward_model", [](SparseModel<ValueType> const& model, std::string const& name) { return model.hasRewardModel(name); }, py::arg("name"))
         .def("add_reward_model",

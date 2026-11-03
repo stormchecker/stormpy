@@ -115,7 +115,7 @@ void define_sparse_matrix(py::module& m) {
         .def("make_row_grouping_trivial", &SparseMatrix<ValueType>::makeRowGroupingTrivial, "Makes row groups trivial. Use with care.")
         .def(
             "get_row", [](SparseMatrix<ValueType>& matrix, entry_index<ValueType> row) { return matrix.getRows(row, row + 1); },
-            py::return_value_policy::reference, py::keep_alive<1, 0>(), py::arg("row"), "Get row")
+            py::keep_alive<0, 1>() /* Keep matrix alive while rows are used */, py::arg("row"), "Get row")
         .def(
             "get_rows_for_group",
             [](SparseMatrix<ValueType>& matrix, entry_index<ValueType> group) {
@@ -151,7 +151,7 @@ void define_sparse_matrix(py::module& m) {
                     throw py::index_error();
                 return matrix.getRows(i, i + 1);
             },
-            py::return_value_policy::reference, py::keep_alive<1, 0>())
+            py::keep_alive<0, 1>() /* Keep matrix alive while rows are used */)
         .def(
             "__getitem__",
             [](SparseMatrix<ValueType>& matrix, py::slice slice) {
@@ -162,7 +162,7 @@ void define_sparse_matrix(py::module& m) {
                     throw py::value_error();  // not supported
                 return matrix.getRows(start, stop);
             },
-            py::return_value_policy::reference, py::keep_alive<1, 0>());
+            py::keep_alive<0, 1>() /* Keep matrix alive while rows are used */);
 
     // Rows
     stormpy::bindings::bindTemplateClass<typename SparseMatrix<ValueType>::rows>(m, "SparseMatrixRows", index, "Set of rows in a sparse matrix")

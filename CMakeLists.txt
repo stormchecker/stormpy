@@ -67,9 +67,12 @@ function(check_hint NAME DIR_FOUND HINT_DIR FOUND_VERSION)
     endif()
 endfunction(check_hint)
 
+# Minimal Storm version. Should be the same as STORM_GIT_TAG in pyproject.toml.
+# If stormpy requires unreleased changes from Storm master, then it can be set to a development version x.y.z.N
+# while STORM_GIT_TAG stays at the latest release.
+set(STORM_MIN_VERSION "2.0.0")
+
 if(STORMPY_ALLOW_STORM_SYSTEM)
-    # Version should be synced with STORM_GIT_TAG in pyproject.toml
-    set(STORM_MIN_VERSION "2.0.0")
     if (STORMPY_ALLOW_STORM_FETCH)
         find_package(storm HINTS ${STORM_DIR_HINT}) # NOT REQUIRED, can be fetched.
     else()
@@ -127,6 +130,17 @@ if (NOT storm_FOUND)
         )
         FETCHCONTENT_MAKEAVAILABLE(storm)
         include(${storm_BINARY_DIR}/stormOptions.cmake)
+        # Check version of fetched Storm
+        # STORM_VERSION_FULL (x.y.z.N) is only available in newer versions, otherwise fall back to STORM_VERSION (x.y.z)
+        if (DEFINED STORM_VERSION_FULL)
+            set(STORM_FETCHED_VERSION ${STORM_VERSION_FULL})
+        else()
+            set(STORM_FETCHED_VERSION ${STORM_VERSION})
+        endif()
+        message(STATUS "Stormpy - Using fetched Storm version ${STORM_FETCHED_VERSION} from ${STORM_GIT_REPO} (${STORM_GIT_TAG})")
+        if (${STORM_FETCHED_VERSION} VERSION_LESS ${STORM_MIN_VERSION})
+            MESSAGE(FATAL_ERROR "Stormpy - Fetched Storm version ${STORM_FETCHED_VERSION} is not supported anymore!\nStormpy requires at least Storm version >= ${STORM_MIN_VERSION}.\nPlease set STORM_GIT_TAG accordingly, Use 'master' if a development version of Storm is required.")
+        endif()
         set(STORMPY_HAVE_STORM_DFT TRUE)
         set(STORMPY_HAVE_STORM_GSPN TRUE)
         set(STORMPY_HAVE_STORM_PARS TRUE)

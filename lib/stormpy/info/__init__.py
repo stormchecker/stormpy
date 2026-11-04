@@ -14,6 +14,20 @@ def storm_version() -> str:
     return _config.STORM_VERSION
 
 
+def storm_full_version() -> str:
+    """
+    Get full Storm version including the development counter.
+
+    Development versions of Storm have version ``x.y.z.N`` where ``N > 0`` is the development counter.
+    Released versions have version ``x.y.z``.
+    Storm versions before 2.0.0.2 do not export the development counter; then ``x.y.z`` is returned.
+
+    :return: Full Storm version
+    :rtype: str
+    """
+    return _config.STORM_VERSION_FULL
+
+
 def storm_from_system() -> bool:
     """
     Does stormpy rely on a (pre-existing) system installation of Storm.
@@ -117,6 +131,7 @@ def storm_ratfunc_use_cln() -> bool:
 
 __all__ = [
     "storm_version",
+    "storm_full_version",
     "storm_long_version",
     "storm_build_info",
     "storm_development_version",

@@ -17,6 +17,18 @@ class TestInfo:
         # Development version
         assert stormpy.info.storm_development_version() == raw.version_dev
         assert (raw.version_dev and raw.short_version_string().endswith(" (dev)")) or not raw.version_dev
+        # Development counter
+        assert isinstance(raw.version_tweak, int)
+        assert raw.version_tweak >= 0
+        assert (raw.version_tweak > 0) == raw.version_dev
+        # storm_full_version()
+        full_version = stormpy.info.storm_full_version()
+        assert full_version.startswith(stormpy.info.storm_version())
+        if full_version != stormpy.info.storm_version():
+            # Development version x.y.z.N
+            assert raw.version_dev
+            assert full_version == f"{stormpy.info.storm_version()}.{raw.version_tweak}"
+            assert raw.short_version_string().startswith(full_version)
 
     def test_build_info(self):
         assert isinstance(stormpy.info.storm_build_info(), str)

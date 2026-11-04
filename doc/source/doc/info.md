@@ -32,6 +32,13 @@ The Storm version that stormpy is linked against is available via `storm_version
 stormpy.info.storm_version()
 ```
 
+Development versions of Storm have version `x.y.z.N` where `N > 0` is a development counter.
+The full version including this counter is available via `storm_full_version()`:
+
+```{code-cell} python3
+stormpy.info.storm_full_version()
+```
+
 The flag `storm_development_version()` tells whether the linked Storm is a development version, i.e. modified since the last release:
 
 ```{code-cell} python3

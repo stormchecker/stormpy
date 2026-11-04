@@ -2,6 +2,7 @@ from numbers import Rational
 
 import stormpy
 from helpers.helper import get_example_path
+import gc
 import pytest
 
 
@@ -68,6 +69,32 @@ class TestSparseModel:
         assert not model.reward_models["coin_flips"].has_transition_rewards
         assert not model.supports_parameters
         assert type(model) is stormpy.models.SparseDtmc[float]
+
+    def test_model_components_are_references(self):
+        program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))
+        options = stormpy.BuilderOptions(build_full=True)
+        options.set_build_choice_labels()
+        model = stormpy.build_model(program, options=options)
+
+        # Repeated access returns the model's objects instead of fresh copies
+        state_valuations = model.state_valuations
+        assert model.state_valuations is state_valuations
+        reward_model = model.reward_models["coin_flips"]
+        assert reward_model is model.get_reward_model("coin_flips")
+        assert model.reward_models["coin_flips"] is reward_model
+
+        # Changes are visible in the model
+        model.choice_labeling.add_label("new_label")
+        assert "new_label" in model.choice_labeling.get_labels()
+
+        # References keep the model alive
+        choice_labeling = model.choice_labeling
+        del model
+        gc.collect()
+        assert "new_label" in choice_labeling.get_labels()
+        assert state_valuations.to_string(0)
+        assert reward_model.has_state_action_rewards
+        assert sum(reward_model.state_action_rewards) == 7.0
 
     def test_reduce_to_state_based_rewards(self):
         program = stormpy.parse_prism_program(get_example_path("dtmc", "die.pm"))

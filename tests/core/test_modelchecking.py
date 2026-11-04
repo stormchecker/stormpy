@@ -1,5 +1,6 @@
-import pytest
 import math
+import pytest
+import sys
 
 import stormpy
 from stormpy.exceptions import StormError
@@ -837,3 +838,13 @@ class TestSolutionBounds:
         model = stormpy.build_model[stormpy.RationalFunction](program, formulas)
         result = stormpy.model_checking(model, formulas[0])
         assert isinstance(result[model.initial_states[0]], stormpy.RationalFunction)
+
+
+class TestCheckTask:
+    def test_check_task_keeps_formula_alive(self):
+        formula = stormpy.parse_property('P=? [F "one"]').get_raw_formula()
+        refs = sys.getrefcount(formula)
+        task = stormpy.developer.CheckTask[float](formula, True)
+        assert sys.getrefcount(formula) == refs + 1
+        del task
+        assert sys.getrefcount(formula) == refs

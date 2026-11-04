@@ -28,12 +28,12 @@ void define_jani(py::module& m) {
         .def_property_readonly(
             "automata", [](const Model& model) -> auto& { return model.getAutomata(); }, "get automata")
         .def_property_readonly(
-            "global_variables", [](const Model& model) -> auto& { return model.getGlobalVariables(); }, py::return_value_policy::reference)
+            "global_variables", [](const Model& model) -> auto& { return model.getGlobalVariables(); }, "get global variables")
         .def_property_readonly(
             "constants", [](const Model& model) -> auto& { return model.getConstants(); }, "get constants")
         .def("get_constant", &Model::getConstant, "name"_a, "get constant by name")
         .def("restrict_edges", &Model::restrictEdges, "restrict model to edges given by set", py::arg("edge_set"))
-        .def_property_readonly("expression_manager", &Model::getExpressionManager, "get expression manager", pybind11::return_value_policy::reference_internal)
+        .def_property_readonly("expression_manager", &Model::getExpressionManager, "get expression manager")
         .def_property_readonly("has_undefined_constants", &Model::hasUndefinedConstants, "Flag if program has undefined constants")
         .def_property_readonly("undefined_constants_are_graph_preserving", &Model::undefinedConstantsAreGraphPreserving,
                                "Flag if the undefined constants do not change the graph structure")
@@ -77,7 +77,7 @@ void define_jani(py::module& m) {
         .def_property_readonly("name", &Automaton::getName)
         .def_property_readonly("location_variable", &Automaton::getLocationExpressionVariable)
         .def_property_readonly(
-            "variables", [](Automaton& aut) -> VariableSet& { return aut.getVariables(); }, py::return_value_policy::reference_internal)
+            "variables", [](Automaton& aut) -> VariableSet& { return aut.getVariables(); }, "variables of the automaton")
         .def_property_readonly("locations", [](Automaton& aut) -> auto& { return aut.getLocations(); })
         .def("add_location", &Automaton::addLocation, "location"_a, "adds a new location, returns the index")
         .def(
@@ -145,7 +145,7 @@ void define_jani(py::module& m) {
     py::classh<Location> location(m, "JaniLocation", "A Location in JANI");
     location.def(py::init<std::string const&, OrderedAssignments const&>(), "name"_a, "assignments"_a)
         .def_property_readonly("name", &Location::getName, "name of the location")
-        .def_property_readonly("assignments", [](Location& loc) { loc.getAssignments(); }, "location assignments");
+        .def_property_readonly("assignments", [](Location& loc) -> auto& { return loc.getAssignments(); }, "location assignments");
 
     py::classh<VariableSet> variableSet(m, "JaniVariableSet", "Jani Set of Variables");
     variableSet.def(py::init<>())
@@ -154,10 +154,11 @@ void define_jani(py::module& m) {
         .def("add_variable", [](VariableSet& vs, Variable& v) -> void { vs.addVariable(v); })
         .def("empty", &VariableSet::empty, "is there a variable in the set?")
         .def(
-            "get_variable_by_name", [](VariableSet& v, std::string const& name) -> auto& { return v.getVariable(name); }, py::return_value_policy::reference)
+            "get_variable_by_name", [](VariableSet& v, std::string const& name) -> auto& { return v.getVariable(name); },
+            py::return_value_policy::reference_internal)
         .def(
             "get_variable_by_expr_variable", [](VariableSet& v, storm::expressions::Variable const& var) -> auto& { return v.getVariable(var); },
-            py::return_value_policy::reference)
+            py::return_value_policy::reference_internal)
         .def("erase_variable", &VariableSet::eraseVariable, "variable");
 
     py::classh<JaniType> janiType(m, "JaniType", "A Variable Type in JANI");
@@ -225,7 +226,7 @@ void define_jani(py::module& m) {
 
 void define_jani_transformers(py::module& m) {
     py::classh<JaniLocationExpander>(m, "JaniLocationExpander", "A transformer for Jani expanding variables into locations")
-        .def(py::init<Model const&>(), py::arg("model"))
+        .def(py::init<Model const&>(), py::arg("model"), py::keep_alive<1, 2>())
         .def("transform", &JaniLocationExpander::transform, py::arg("automaton_name"), py::arg("variable_name"));
 
     py::classh<JaniScopeChanger>(m, "JaniScopeChanger", "A transformer for Jani changing variables from local to global and vice versa")

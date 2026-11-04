@@ -13,8 +13,12 @@ void define_origins(py::module& m) {
     py::classh<ChoiceOrigins> co(m, "ChoiceOrigins", "This class represents the origin of choices of a model in terms of the input model spec.");
     co.def("is_prism_choice_origins", &ChoiceOrigins::isPrismChoiceOrigins)
         .def("is_jani_choice_origins", &ChoiceOrigins::isJaniChoiceOrigins)
-        .def("as_prism_choice_origins", [](ChoiceOrigins& co) -> PrismChoiceOrigins& { return co.asPrismChoiceOrigins(); })
-        .def("as_jani_choice_origins", [](ChoiceOrigins& co) -> JaniChoiceOrigins& { return co.asJaniChoiceOrigins(); })
+        .def(
+            "as_prism_choice_origins", [](ChoiceOrigins& co) -> PrismChoiceOrigins& { return co.asPrismChoiceOrigins(); },
+            py::return_value_policy::reference_internal)
+        .def(
+            "as_jani_choice_origins", [](ChoiceOrigins& co) -> JaniChoiceOrigins& { return co.asJaniChoiceOrigins(); },
+            py::return_value_policy::reference_internal)
         .def("get_identifier_info", &ChoiceOrigins::getIdentifierInfo, "identifier"_a, "human readable string")
         .def("get_choice_info", &ChoiceOrigins::getChoiceInfo, "identifier"_a, "human readable string")
         .def("get_number_of_identifiers", &ChoiceOrigins::getNumberOfIdentifiers, "the number of considered identifier");

@@ -133,7 +133,7 @@ void define_expressions(py::module& m) {
         .def_static("Disjunction", [](std::vector<Expression> const& expr) { return storm::expressions::disjunction(expr); });
 
     py::classh<storm::parser::ExpressionParser>(m, "ExpressionParser", "Parser for storm-expressions")
-        .def(py::init<storm::expressions::ExpressionManager const&>(), "Expression Manager to use", py::arg("expression_manager"))
+        .def(py::init<storm::expressions::ExpressionManager const&>(), "Expression Manager to use", py::arg("expression_manager"), py::keep_alive<1, 2>())
         .def(
             "set_identifier_mapping",
             [](storm::parser::ExpressionParser& p, std::unordered_map<std::string, storm::expressions::Expression> const& identifierMapping) {

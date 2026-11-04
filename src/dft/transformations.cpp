@@ -14,7 +14,8 @@ using DFTInstantiator = storm::dft::transformations::DftInstantiator<storm::Rati
 void define_transformations(py::module& m) {
     auto instantiator = stormpy::bindings::bindTemplateClass<DFTInstantiator>(
         m, "DftInstantiator", stormpy::bindings::typeIndex<storm::RationalFunction, double>(), "Instantiator for parametric DFT");
-    instantiator.def(py::init<storm::dft::storage::DFT<storm::RationalFunction> const&>(), "Initialize with parametric DFT", py::arg("dft"))
+    instantiator
+        .def(py::init<storm::dft::storage::DFT<storm::RationalFunction> const&>(), "Initialize with parametric DFT", py::arg("dft"), py::keep_alive<1, 2>())
         .def("instantiate", &DFTInstantiator::instantiate, "Instantiate parametric DFT and obtain concrete DFT", py::arg("valuation"));
 }
 

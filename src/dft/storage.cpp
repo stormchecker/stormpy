@@ -123,8 +123,7 @@ void define_failable_elements(py::module& m) {
         .def("__iter__", [](py::object s) { return FailableIterator(s.cast<Failable const&>(), s); }, py::keep_alive<0, 1>());
 
     py::classh<FailableIterator>(m, "FailableIterator")
-        .def(
-            "__iter__", [](FailableIterator& it) -> FailableIterator& { return it; }, py::keep_alive<0, 1>())
+        .def("__iter__", [](py::object self) { return self; })
         .def("__next__", &FailableIterator::next, py::keep_alive<0, 1>());
 
     py::classh<FailableIter>(m, "FailableElement", "Failable element")

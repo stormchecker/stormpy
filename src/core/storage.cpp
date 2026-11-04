@@ -72,8 +72,10 @@ void define_storage(py::module& m) {
         .def("has_model", &SymbolicModelDescription::hasModel, "Whether the description contains a model")
         .def("is_prism_program", &SymbolicModelDescription::isPrismProgram, "Whether the description is a Prism program")
         .def("is_jani_model", &SymbolicModelDescription::isJaniModel, "Whether the description is a Jani model")
-        .def("as_prism_program", py::overload_cast<>(&SymbolicModelDescription::asPrismProgram, py::const_), "Get the Prism program")
-        .def("as_jani_model", py::overload_cast<>(&SymbolicModelDescription::asJaniModel, py::const_), "Get the Jani model")
+        .def("as_prism_program", py::overload_cast<>(&SymbolicModelDescription::asPrismProgram, py::const_), "Get the Prism program",
+             py::return_value_policy::reference_internal)
+        .def("as_jani_model", py::overload_cast<>(&SymbolicModelDescription::asJaniModel, py::const_), "Get the Jani model",
+             py::return_value_policy::reference_internal)
         .def("get_parameter_names", &SymbolicModelDescription::getParameterNames, "Get the names of the parameters")
         .def("has_undefined_constants", &SymbolicModelDescription::hasUndefinedConstants, "Whether the description has undefined constants")
         .def("get_undefined_constants", &SymbolicModelDescription::getUndefinedConstants, "Get the undefined constants")

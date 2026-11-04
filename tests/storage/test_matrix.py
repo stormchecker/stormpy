@@ -53,6 +53,38 @@ class TestMatrix:
         for e in matrix:
             assert e.value == 0.5 or e.value == 0 or (e.value == 1 and e.column > 6)
 
+    def test_get_row_no_leak(self):
+        # Rows returned by get_row and [] must not be kept alive by the matrix
+        import tracemalloc
+
+        model = stormpy.build_model_from_explicit(get_example_path("dtmc", "die.tra"), get_example_path("dtmc", "die.lab"))
+        matrix = model.transition_matrix
+        gc.collect()
+        tracemalloc.start()
+        for _ in range(20000):
+            matrix.get_row(0)
+            matrix[0]
+        gc.collect()
+        alive = tracemalloc.get_traced_memory()[0]
+        tracemalloc.stop()
+        assert alive < 100000
+
+    def test_matrix_lifetime(self):
+        # Matrix and row views must keep their owner alive
+        model = stormpy.build_model_from_explicit(get_example_path("dtmc", "die.tra"), get_example_path("dtmc", "die.lab"))
+        expected = [(e.column, e.value) for e in model.transition_matrix.get_row(0)]
+        assert len(expected) == 2
+        matrix = model.transition_matrix
+        row = model.transition_matrix.get_row(0)
+        item = model.transition_matrix[0]
+        it = model.transition_matrix.row_iter(0, 0)
+        del model
+        gc.collect()
+        assert [(e.column, e.value) for e in row] == expected
+        assert [(e.column, e.value) for e in item] == expected
+        assert [(e.column, e.value) for e in it] == expected
+        assert [(e.column, e.value) for e in matrix.get_row(0)] == expected
+
     def test_matrix_row_groups(self):
         model = stormpy.build_model_from_explicit(get_example_path("mdp", "two_dice.tra"), get_example_path("mdp", "two_dice.lab"))
         matrix = model.transition_matrix

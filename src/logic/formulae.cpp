@@ -62,12 +62,10 @@ void define_formulae(py::module& m) {
         .def_property_readonly("is_multi_dimensional", &storm::logic::BoundedUntilFormula::isMultiDimensional, "Is the bound multi-dimensional")
         .def_property_readonly("has_lower_bound", [](storm::logic::BoundedUntilFormula const& form) { return form.hasLowerBound(); })
         .def_property_readonly("upper_bound_expression", [](storm::logic::BoundedUntilFormula const& form) { return form.getUpperBound(); })
-        .def_property_readonly(
-            "left_subformula", [](storm::logic::BoundedUntilFormula const& form) -> storm::logic::Formula const& { return form.getLeftSubformula(); },
-            py::return_value_policy::reference_internal)
-        .def_property_readonly(
-            "right_subformula", [](storm::logic::BoundedUntilFormula const& form) -> storm::logic::Formula const& { return form.getRightSubformula(); },
-            py::return_value_policy::reference_internal);
+        .def_property_readonly("left_subformula",
+                               [](storm::logic::BoundedUntilFormula const& form) -> storm::logic::Formula const& { return form.getLeftSubformula(); })
+        .def_property_readonly("right_subformula",
+                               [](storm::logic::BoundedUntilFormula const& form) -> storm::logic::Formula const& { return form.getRightSubformula(); });
     py::classh<storm::logic::ConditionalFormula>(m, "ConditionalFormula", "Formula with the right hand side being a condition.", formula)
         .def_property_readonly("main_subformula", &storm::logic::ConditionalFormula::getSubformula, "the subformula")
         .def_property_readonly("conditional_subformula", &storm::logic::ConditionalFormula::getConditionFormula, "the conditional subformula");

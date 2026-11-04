@@ -185,8 +185,8 @@ class TestGspnBuilder:
         gspn.get_timed_transition("tt").set_rate(0.8)
         assert gspn.get_timed_transition("tt").get_rate() == 0.8
 
-        assert type(gspn.get_transition("ti")) is stormpy.gspn.ImmediateTransition
-        assert type(gspn.get_transition("tt")) is stormpy.gspn.TimedTransition
+        assert isinstance(gspn.get_transition("ti"), stormpy.gspn.ImmediateTransition)
+        assert isinstance(gspn.get_transition("tt"), stormpy.gspn.TimedTransition)
         assert gspn.get_transition("tt").get_rate() == 0.8
 
         assert gspn.get_place("unknown") is None

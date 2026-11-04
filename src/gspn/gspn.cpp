@@ -108,7 +108,7 @@ void define_gspn(py::module& m) {
         .def("get_number_of_timed_transitions", &GSPN::getNumberOfTimedTransitions, "Get the number of timed transitions in this GSPN")
 
         .def(
-            "get_place", [](GSPN const& g, uint64_t id) { return g.getPlace(id); }, "id"_a, py::return_value_policy::reference_internal,
+            "get_place", [](GSPN const& g, uint64_t id) -> Place const* { return g.getPlace(id); }, "id"_a, py::return_value_policy::reference_internal,
             R"doc(
              Returns the place with the corresponding id.
 
@@ -116,16 +116,37 @@ void define_gspn(py::module& m) {
             :rtype: stormpy.gspn.Place or None if no such place exists
         )doc")
         .def(
-            "get_place", [](GSPN const& g, std::string const& name) { return g.getPlace(name); }, "name"_a, py::return_value_policy::reference_internal)
+            "get_place", [](GSPN const& g, std::string const& name) -> Place const* { return g.getPlace(name); }, "name"_a,
+            py::return_value_policy::reference_internal, R"doc(
+             Returns the place with the corresponding name.
+
+            :param str name: The name of the place.
+            :rtype: stormpy.gspn.Place or None if no such place exists
+        )doc")
         .def(
-            "get_timed_transition", [](GSPN const& g, std::string const& name) { return g.getTimedTransition(name); }, "name"_a,
-            py::return_value_policy::reference_internal, "Returns the timed transition with the corresponding name")
+            "get_timed_transition", [](GSPN const& g, std::string const& name) -> TimedTransition const* { return g.getTimedTransition(name); }, "name"_a,
+            py::return_value_policy::reference_internal, R"doc(
+             Returns the timed transition with the corresponding name.
+
+            :param str name: The name of the timed transition.
+            :rtype: stormpy.gspn.TimedTransition or None if no such timed transition exists
+        )doc")
         .def(
-            "get_immediate_transition", [](GSPN const& g, std::string const& name) { return g.getImmediateTransition(name); }, "name"_a,
-            py::return_value_policy::reference_internal, "Returns the immediate transition with the corresponding name")
+            "get_immediate_transition", [](GSPN const& g, std::string const& name) -> ImmediateTransition const* { return g.getImmediateTransition(name); },
+            "name"_a, py::return_value_policy::reference_internal, R"doc(
+             Returns the immediate transition with the corresponding name.
+
+            :param str name: The name of the immediate transition.
+            :rtype: stormpy.gspn.ImmediateTransition or None if no such immediate transition exists
+        )doc")
         .def(
-            "get_transition", [](GSPN const& g, std::string const& name) { return g.getTransition(name); }, "name"_a,
-            py::return_value_policy::reference_internal, "Returns the transition with the corresponding name")
+            "get_transition", [](GSPN const& g, std::string const& name) -> Transition const* { return g.getTransition(name); }, "name"_a,
+            py::return_value_policy::reference_internal, R"doc(
+             Returns the (timed or immediate) transition with the corresponding name.
+
+            :param str name: The name of the transition.
+            :rtype: stormpy.gspn.TimedTransition, stormpy.gspn.ImmediateTransition or None if no such transition exists
+        )doc")
 
         .def("get_partitions", &GSPN::getPartitions, "Get the partitions of this GSPN")
         .def("get_places", &GSPN::getPlaces, R"doc(

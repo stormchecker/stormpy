@@ -99,4 +99,4 @@ belong to the tests of that module, e.g. ``tests/core/test_api.py``.
 - The [Storm](https://www.stormchecker.org) version is set in ``pyproject.toml`` through ``STORM_GIT_TAG``, and in ``CMakeLists.txt`` through ``STORM_MIN_VERSION``.
   If stormpy development requires changes from Storm master which are not yet released, ``STORM_MIN_VERSION`` can be set to a development version ``x.y.z.N``.
   ``STORM_GIT_TAG`` stays at the latest Storm release. Building stormpy from source by fetching Storm requires ``--config-settings=cmake.define.STORM_GIT_TAG=master``.
-  The CI always uses Storm master.
+  The CI uses Storm master by default, or the stable branch for specific configurations.

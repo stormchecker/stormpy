@@ -153,21 +153,19 @@ def generic_docs(family, entries, families, name):
         for spec in other.metadata.instantiations:
             names = [argument_name(arg, index=index) for arg in spec.arguments]
             specializations.append((other, spec, names))
+    parameters = family.metadata.parameters
     result = []
     for inst, doc in entries:
         # Map each concrete spelling to (generic spelling, fixed spelling).
         replacements = {native: (public, public) for native, public in aliases.items()}
-        for arg, param in zip(inst.arguments, family.metadata.parameters):
+        for arg, param in zip(inst.arguments, parameters):
             if isinstance(arg, type):
                 for spelling in (argument_name(arg, index=index), f"{arg.__module__}.{arg.__qualname__}"):
                     replacements[spelling] = (param.name, spelling)
         # Published families share their native classes with developer families.
         # Apply public spellings last so raw bindings never hide a public alias.
         for other, spec, names in specializations:
-            params = [
-                next((param.name for value, param in zip(inst.arguments, family.metadata.parameters) if value is arg), name)
-                for arg, name in zip(spec.arguments, names)
-            ]
+            params = [next((param.name for value, param in zip(inst.arguments, parameters) if value is arg), name) for arg, name in zip(spec.arguments, names)]
             replacements[spec.native_name] = (f"{other.canonical_name}[{', '.join(params)}]", f"{other.canonical_name}[{', '.join(names)}]")
         pattern = re.compile(r"(?<![\w.])(?:" + "|".join(re.escape(key) for key in sorted(replacements, key=len, reverse=True)) + r")(?![\w.])")
         lines = doc.splitlines()

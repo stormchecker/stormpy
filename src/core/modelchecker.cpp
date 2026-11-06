@@ -52,7 +52,8 @@ template<typename ValueType>
 void define_modelchecker_typed(py::module& m) {
     stormpy::bindings::bindTemplateClass<CheckTask<ValueType>>(m, "CheckTask", stormpy::bindings::typeIndex<ValueType>(), "Task for model checking")
         .def(py::init<storm::logic::Formula const&, bool, storm::solver::UncertaintyResolutionMode>(), "Create check task", py::arg("formula"),
-             py::arg("only_initial_states_relevant") = false, py::arg("uncertainty_resolution_mode") = storm::solver::UncertaintyResolutionMode::Unset)
+             py::arg("only_initial_states_relevant") = false, py::arg("uncertainty_resolution_mode") = storm::solver::UncertaintyResolutionMode::Unset,
+             py::keep_alive<1, 2>() /* Task keeps a reference to the formula */)
         .def("is_only_initial_states_relevant_set", &CheckTask<ValueType>::isOnlyInitialStatesRelevantSet, "Whether only initial states are relevant")
         .def("set_produce_schedulers", &CheckTask<ValueType>::setProduceSchedulers, "Set whether schedulers are produced (if possible)",
              py::arg("produce_schedulers") = true)

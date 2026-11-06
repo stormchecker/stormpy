@@ -16,18 +16,35 @@ from stormpy._template import _TemplateClass, _TemplateFunction
 from stormpy_autosummary import is_developer_api_page, public_api_modules
 
 
-def argument_name(argument, namespaces=None):
+def public_name_index(namespaces=None):
+    """Map the id of each public export to its preferred public name."""
+    # Only these public namespaces own template argument types.
+    # In particular, do not search loaded modules or expose private classes.
+    if namespaces is None:
+        namespaces = public_api_modules()
+    index = {}
+    for module in namespaces:
+        for key in module.__all__:
+            alias = f"{module.__name__}.{key}"
+            obj_id = id(getattr(module, key))
+            if obj_id not in index or _alias_key(alias) < _alias_key(index[obj_id]):
+                index[obj_id] = alias
+    return index
+
+
+def _alias_key(alias):
+    return (alias.rpartition(".")[0] == "stormpy", alias.count("."), len(alias), alias)
+
+
+def argument_name(argument, namespaces=None, index=None):
     """Use public exports rather than the defining module of a native type."""
     cls = argument if isinstance(argument, type) else type(argument)
     if cls.__module__ == "builtins":
         name = cls.__qualname__
     else:
-        # Only these public namespaces own template argument types. In
-        # particular, do not search loaded modules or expose private classes.
-        if namespaces is None:
-            namespaces = public_api_modules()
-        aliases = (f"{module.__name__}.{key}" for module in namespaces for key in module.__all__ if getattr(module, key) is cls)
-        name = min(aliases, key=lambda s: (s.rpartition(".")[0] == "stormpy", s.count("."), len(s), s), default=f"{cls.__module__}.{cls.__qualname__}")
+        if index is None:
+            index = public_name_index(namespaces)
+        name = index.get(id(cls), f"{cls.__module__}.{cls.__qualname__}")
     return name if isinstance(argument, type) else f"{name}.{argument.name}" if hasattr(argument, "name") else repr(argument)
 
 
@@ -126,29 +143,30 @@ def generic_docs(family, entries, families, name):
     """Generalize signature tokens only if they vary between specializations."""
     if name == "property":
         return entries
-    aliases = _public_type_names()
+    index = public_name_index()
+    aliases = _public_type_names(index)
+    # Public spellings of all specializations; they do not depend on the entry.
+    specializations = []
+    for other in sorted(families, key=lambda obj: (".developer" not in obj.canonical_name, obj.canonical_name)):
+        if isinstance(other, _TemplateFunction):
+            continue
+        for spec in other.metadata.instantiations:
+            names = [argument_name(arg, index=index) for arg in spec.arguments]
+            specializations.append((other, spec, names))
+    parameters = family.metadata.parameters
     result = []
     for inst, doc in entries:
         # Map each concrete spelling to (generic spelling, fixed spelling).
         replacements = {native: (public, public) for native, public in aliases.items()}
-        for arg, param in zip(inst.arguments, family.metadata.parameters):
+        for arg, param in zip(inst.arguments, parameters):
             if isinstance(arg, type):
-                for spelling in (argument_name(arg), f"{arg.__module__}.{arg.__qualname__}"):
+                for spelling in (argument_name(arg, index=index), f"{arg.__module__}.{arg.__qualname__}"):
                     replacements[spelling] = (param.name, spelling)
         # Published families share their native classes with developer families.
         # Apply public spellings last so raw bindings never hide a public alias.
-        for other in sorted(families, key=lambda obj: (".developer" not in obj.canonical_name, obj.canonical_name)):
-            if isinstance(other, _TemplateFunction):
-                continue
-            for spec in other.metadata.instantiations:
-                params = [
-                    next((param.name for value, param in zip(inst.arguments, family.metadata.parameters) if value is arg), argument_name(arg))
-                    for arg in spec.arguments
-                ]
-                replacements[spec.native_name] = (
-                    f"{other.canonical_name}[{', '.join(params)}]",
-                    f"{other.canonical_name}[{', '.join(argument_name(arg) for arg in spec.arguments)}]",
-                )
+        for other, spec, names in specializations:
+            params = [next((param.name for value, param in zip(inst.arguments, parameters) if value is arg), name) for arg, name in zip(spec.arguments, names)]
+            replacements[spec.native_name] = (f"{other.canonical_name}[{', '.join(params)}]", f"{other.canonical_name}[{', '.join(names)}]")
         pattern = re.compile(r"(?<![\w.])(?:" + "|".join(re.escape(key) for key in sorted(replacements, key=len, reverse=True)) + r")(?![\w.])")
         lines = doc.splitlines()
         indexes = signature_lines(doc, name)
@@ -314,10 +332,11 @@ def _loaded_template_classes():
     )
 
 
-def _public_type_names():
+def _public_type_names(index=None):
     """Map native non-template types to their public or developer exports."""
     aliases, exports = {}, {}
-    namespaces = public_api_modules()
+    if index is None:
+        index = public_name_index()
     for module_name, module in list(sys.modules.items()):
         if not module_name.startswith("stormpy") or module is None or any(part.startswith("_") for part in module_name.split(".")):
             continue
@@ -327,7 +346,7 @@ def _public_type_names():
             if hasattr(module, "__all__") and name not in module.__all__:
                 continue
             native_name = f"{obj.__module__}.{obj.__qualname__}"
-            public_name = argument_name(obj, namespaces)
+            public_name = argument_name(obj, index=index)
             alias = public_name if public_name != native_name else f"{module_name}.{name}"
             aliases.setdefault(native_name, []).append(alias)
             exports[f"{module_name}.{name}"] = native_name
@@ -478,10 +497,11 @@ def template_docstring(app, what, name, obj, options, lines):
 
 def _normalize_public_signature(line):
     """Publish known native types before omitting unresolved annotations."""
-    aliases = _public_type_names()
+    index = public_name_index()
+    aliases = _public_type_names(index)
     for family in sorted(_loaded_template_classes(), key=lambda obj: (".developer" not in obj.canonical_name, obj.canonical_name)):
         for inst in family.metadata.instantiations:
-            aliases[inst.native_name] = f"{family.canonical_name}[{', '.join(argument_name(arg) for arg in inst.arguments)}]"
+            aliases[inst.native_name] = f"{family.canonical_name}[{', '.join(argument_name(arg, index=index) for arg in inst.arguments)}]"
     if aliases:
         pattern = re.compile(r"(?<![\w.])(?:" + "|".join(re.escape(key) for key in sorted(aliases, key=len, reverse=True)) + r")(?![\w.])")
         line = pattern.sub(lambda match: aliases[match.group()], line)

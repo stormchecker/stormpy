@@ -28,3 +28,12 @@ class TestInterval(PackageSelector):
         res = int1 + int2
         assert res.lower() == 1
         assert res.upper() == 5
+
+    def test_bounds_are_copies(self, package):
+        interval = package.Interval(package.Rational(1), package.Rational(2))
+        lower = interval.lower()
+        upper = interval.upper()
+        interval.setLower(package.Rational(0))
+        interval.setUpper(package.Rational(3))
+        assert lower == 1
+        assert upper == 2

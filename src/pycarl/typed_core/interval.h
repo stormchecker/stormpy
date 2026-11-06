@@ -19,9 +19,9 @@ void define_interval(py::module& m) {
 
         // TODO: does not work :-(
         //.def_property("lower", &Interval::lower, &Interval::setLower)
-        .def("lower", &Interval::lower, py::return_value_policy::reference_internal)
+        .def("lower", &Interval::lower)
         .def("setLower", &Interval::setLower)
-        .def("upper", &Interval::upper, py::return_value_policy::reference_internal)
+        .def("upper", &Interval::upper)
         .def("setUpper", &Interval::setUpper)
 
         .def("isInfinite", &Interval::isInfinite)

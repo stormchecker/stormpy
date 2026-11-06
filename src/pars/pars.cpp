@@ -11,7 +11,7 @@ void define_simplifier(py::module& m, std::string const& modelName) {
     using Simplifier = storm::transformer::SparseParametricModelSimplifier<SparseModel>;
     stormpy::bindings::bindTemplateClass<Simplifier>(m, "SparseParametricModelSimplifier", stormpy::bindings::typeIndex<ModelKind>(),
                                                      "Model simplifier for parametric " + modelName)
-        .def(py::init<SparseModel const&>(), "model"_a)
+        .def(py::init<SparseModel const&>(), "model"_a, py::keep_alive<1, 2>())
         .def(
             "simplify", [](Simplifier& simplifier, storm::logic::Formula const& formula) -> bool { return simplifier.simplify(formula); }, "Simplify model",
             "formula"_a)

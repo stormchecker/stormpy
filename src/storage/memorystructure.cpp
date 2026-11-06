@@ -15,7 +15,7 @@ void define_memorystructure_product_each(py::classh<storm::storage::MemoryStruct
     memoryStructure.def(
         "product_model",
         [](storm::storage::MemoryStructure& ms, storm::models::sparse::Model<ValueType> const& sparseModel) { return ms.product(sparseModel); },
-        py::arg("model"));
+        py::arg("model"), py::keep_alive<0, 1>(), py::keep_alive<0, 2>() /* Product keeps references to memory structure and model */);
     reverseData.def("create_memory_scheduler_from_product_scheduler",
                     &storm::storage::SparseModelMemoryProductReverseData::createMemorySchedulerFromProductScheduler<ValueType>, py::arg("product_scheduler"));
 }
@@ -40,7 +40,7 @@ void define_memorystructure_typed(py::module& m) {
     auto const index = stormpy::bindings::typeIndex<ValueType>();
     auto msb = stormpy::bindings::bindTemplateClass<MemoryStructureBuilder>(m, "MemoryStructureBuilder", index, "Memory structure builder");
     msb.def(py::init<uint_fast64_t, storm::models::sparse::Model<ValueType> const&, bool>(), py::arg("nr_memory_states"), py::arg("model"),
-            py::arg("only_initial_states_relevant") = true);
+            py::arg("only_initial_states_relevant") = true, py::keep_alive<1, 3>());
     msb.def("build", &MemoryStructureBuilder::build);
     msb.def("set_label", &MemoryStructureBuilder::setLabel, py::arg("state"), py::arg("label"));
     msb.def("set_transition", &MemoryStructureBuilder::setTransition, py::arg("start_state"), py::arg("goal_state"), py::arg("model_states"),

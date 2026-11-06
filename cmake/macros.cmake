@@ -42,3 +42,20 @@ function(set_optional_lib_var NAME)
         set(STORMPY_STORM_WITH_${NAME}_BOOL "False" PARENT_SCOPE)
     endif()
 endfunction(set_optional_lib_var)
+
+# Set STORM_VERSION_FULL to the full Storm version x.y.z.N for development versions (N > 0) and x.y.z for releases.
+# STORM_VERSION_FULL_DEV is only exported by Storm >= 2.0.0.2, otherwise fall back to STORM_VERSION (x.y.z).
+# Sets STORMPY_STORM_HAS_VERSION_TWEAK if Storm provides StormVersion::versionTweak.
+macro(set_storm_version_full)
+    if (DEFINED STORM_VERSION_FULL_DEV)
+        if (STORM_VERSION_DEV GREATER 0)
+            set(STORM_VERSION_FULL ${STORM_VERSION_FULL_DEV})
+        else()
+            set(STORM_VERSION_FULL ${STORM_VERSION})
+        endif()
+        set(STORMPY_STORM_HAS_VERSION_TWEAK ON)
+    else()
+        set(STORM_VERSION_FULL ${STORM_VERSION})
+        set(STORMPY_STORM_HAS_VERSION_TWEAK OFF)
+    endif()
+endmacro(set_storm_version_full)

@@ -36,5 +36,5 @@ jobs:
     - uses: actions/setup-python@v7
       with:
         python-version: '3.x'
-    - run: pip install black[jupyter] jupytext
-    - run: make check-format-doc
+    - run: pip install black[jupyter] jupytext nox
+    - run: nox -s check_format_doc

@@ -1,3 +1,4 @@
+import gc
 import math
 
 import stormpy
@@ -227,3 +228,18 @@ class TestState:
                     for transition in action.transitions:
                         assert transition.value == 1
                         assert transition.column == expected[state.id][action.id]
+
+    def test_states_lifetime(self):
+        # States, actions and transitions keep the model alive
+        model = stormpy.build_model_from_explicit(get_example_path("dtmc", "die.tra"), get_example_path("dtmc", "die.lab"))
+        expected = [(t.column, t.value) for t in model.states[0].actions[0].transitions]
+        states = model.states
+        state = model.states[0]
+        action = model.states[0].actions[0]
+        transitions = model.states[0].actions[0].transitions
+        del model
+        gc.collect()
+        assert len(states) == 13
+        assert [(t.column, t.value) for t in state.actions[0].transitions] == expected
+        assert [(t.column, t.value) for t in action.transitions] == expected
+        assert [(t.column, t.value) for t in transitions] == expected

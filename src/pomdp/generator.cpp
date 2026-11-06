@@ -24,10 +24,8 @@ void define_verimon_generator(py::module& m) {
         .def(py::init<SparsePomdp<ValueType> const&, std::map<std::pair<uint32_t, bool>, uint32_t> const&, std::map<uint32_t, std::string> const&>(),
              "product"_a, "observation_map"_a, "observation_default_action"_a)
         .def("get_product", &MonitorVerifier::getProduct, "Product POMDP", py::return_value_policy::reference_internal)
-        .def_property_readonly("observation_map", &MonitorVerifier::getObservationMap, "Mapping from (monitor state, accepting) to observations of the product",
-                               py::return_value_policy::reference_internal)
-        .def_property_readonly("observation_default_action", &MonitorVerifier::getObservationDefaultAction, "Default action label for each observation",
-                               py::return_value_policy::reference_internal);
+        .def_property_readonly("observation_map", &MonitorVerifier::getObservationMap, "Mapping from (monitor state, accepting) to observations of the product")
+        .def_property_readonly("observation_default_action", &MonitorVerifier::getObservationDefaultAction, "Default action label for each observation");
 
     using Generator = storm::generator::GenerateMonitorVerifier<ValueType>;
     stormpy::bindings::bindTemplateClass<typename Generator::Options>(m, "GenerateMonitorVerifierOptions", index,

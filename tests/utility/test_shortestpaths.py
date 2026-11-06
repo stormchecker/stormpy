@@ -3,8 +3,9 @@ from stormpy.datastructures import BitVector
 from stormpy.developer.utility import MatrixFormat, ShortestPathsGenerator
 from helpers.helper import get_example_path
 
-import pytest
 import math
+import pytest
+import sys
 
 # this is admittedly slightly overengineered
 
@@ -130,6 +131,18 @@ class TestShortestPaths:
 
     def test_spg_ctor_matrix_map(self, transition_matrix, target_prob_map, initial_states, matrix_format):
         _ = ShortestPathsGenerator(transition_matrix, target_prob_map, initial_states, matrix_format)
+
+    def test_spg_keeps_model_alive(self, model, target_label, transition_matrix, target_prob_map, initial_states, matrix_format):
+        refs = sys.getrefcount(model)
+        spg = ShortestPathsGenerator(model, target_label)
+        assert sys.getrefcount(model) > refs
+        del spg
+        assert sys.getrefcount(model) == refs
+        refs = sys.getrefcount(transition_matrix)
+        spg = ShortestPathsGenerator(transition_matrix, target_prob_map, initial_states, matrix_format)
+        assert sys.getrefcount(transition_matrix) > refs
+        del spg
+        assert sys.getrefcount(transition_matrix) == refs
 
     def test_spg_distance(self, model, target_label, index, expected_distance):
         spg = ShortestPathsGenerator(model, target_label)

@@ -8,6 +8,7 @@ from types import SimpleNamespace
 
 import pytest
 import stormpy
+from configurations import sphinx_avail
 from stormpy._template import _TemplateClass, _TemplateFunction, _template_function, _deduce_default
 
 _DOC_SOURCE = Path(__file__).parents[2] / "doc/source"
@@ -198,8 +199,8 @@ def test_real_python_function_resolves_forward_annotations():
     assert ":param model:" in info["overloads"][0]["description"]
 
 
+@sphinx_avail
 def test_sphinx_renders_public_and_developer_apis(monkeypatch, tmp_path):
-    pytest.importorskip("sphinx")
     import pickle
     from io import StringIO
     from types import ModuleType

@@ -22,6 +22,17 @@ PYBIND11_MODULE(_info, m) {
         .def_property_readonly_static(
             "version_dev", [](py::object /* self */) { return storm::StormVersion::versionDev; }, "Flag if Storm is development version.")
         .def_property_readonly_static(
+            "version_tweak",
+            [](py::object /* self */) {
+#ifdef STORMPY_STORM_HAS_VERSION_TWEAK
+                return storm::StormVersion::versionTweak;
+#else
+                // Older Storm versions only provide a flag whether it is a development version
+                return static_cast<unsigned>(storm::StormVersion::versionDev);
+#endif
+            },
+            "Development counter N of Storm version x.y.z.N. Zero for released versions.")
+        .def_property_readonly_static(
             "git_revision_hash", [](py::object /* self */) { return storm::StormVersion::gitRevisionHash; }, "Git commit hash from which Storm was built.")
         .def_static("short_version_string", &storm::StormVersion::shortVersionString, "Storm version in short representation.")
         .def_static("long_version_string", &storm::StormVersion::longVersionString, "Storm version in long representation.")

@@ -202,16 +202,20 @@ runs:
 
         status=0
         pip install -v "${ARGS[@]}" ".${EXTRAS}" 2>&1 | tee "${RUNNER_TEMP}/build-stormpy.log" || status=$?
+        # Allow build failures due to an unsupported Storm version (see STORM_MIN_VERSION).
         if [ "${status}" -ne 0 ] && [ "${ALLOW_INCOMPATIBLE}" = "true" ]; then
-          # Only compiler errors or an unsupported Storm version indicate an incompatibility with Storm.
-          # Other failures (e.g. dependencies, configuration, packaging) are still handled as failures.
-          if grep -qE ':[0-9]+:[0-9]+: (fatal )?error:|Storm version .* is not supported anymore' "${RUNNER_TEMP}/build-stormpy.log"; then
-            # Warn about possible incompatibility but do not handle as failure
-            echo "::warning file=CMakeLists.txt::Stormpy might be incompatible with Storm used in configuration '${{ inputs.name }}'"
+          # CMake wraps long error messages over several lines, so collapse whitespace before matching
+          LOG_FLAT=$(tr -s '[:space:]' ' ' < "${RUNNER_TEMP}/build-stormpy.log")
+          # Extract unsupported Storm version and required minimal version from the CMake error message
+          UNSUPPORTED_VERSION=$(sed -nE 's/.*Storm version ([^ ]+) (from [^ ]+ )?is not supported anymore.*/\1/p' <<< "${LOG_FLAT}")
+          if [ -n "${UNSUPPORTED_VERSION}" ]; then
+            MIN_VERSION=$(sed -nE 's/.*requires at least Storm version >= ([0-9.]*[0-9]).*/\1/p' <<< "${LOG_FLAT}")
+            # Warn about incompatibility but do not handle as failure
+            echo "::warning file=CMakeLists.txt::Stormpy is incompatible with Storm used in configuration '${{ inputs.name }}': Storm version ${UNSUPPORTED_VERSION} is not supported anymore (requires >= ${MIN_VERSION})"
             echo "run_tests=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          echo "::error::Building stormpy failed for a reason other than an incompatibility with Storm"
+          echo "::error::Building stormpy failed for a reason other than an unsupported Storm version"
         fi
         echo "run_tests=true" >> "$GITHUB_OUTPUT"
         exit ${status}

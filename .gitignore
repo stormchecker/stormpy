@@ -11,6 +11,7 @@ dist/
 __pycache__/
 _build/
 .pytest_cache/
+.nox/
 .vscode/
 cmake-build-debug/
 .cache/

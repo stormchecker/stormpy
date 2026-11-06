@@ -80,7 +80,7 @@ jobs:
 
       - name: Check documentation notebooks
         run: |
-          docker exec ci bash -c "cd /opt/stormpy; make check-doc"
+          docker exec ci bash -c "cd /opt/stormpy; pip install nox; nox -s check_doc"
       - name: Build documentation
         run: |
           docker exec ci bash -c "cd /opt/stormpy/doc; make html"

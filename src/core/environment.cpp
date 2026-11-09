@@ -1,7 +1,6 @@
 #include "environment.h"
 
 #include <pybind11/pytypes.h>
-#include <storm/dd/cudd/CuddReorderingTechnique.h>
 #include <storm/environment/Environment.h>
 #include <storm/environment/dd/AllDdEnvironments.h>
 #include <storm/environment/exploration/ExplorationEnvironment.h>
@@ -49,27 +48,6 @@ void define_environment(py::module& m) {
         .value("AUTO", storm::MultiObjectiveModelCheckerEnvironment::EncodingType::Auto)
         .value("CLASSIC", storm::MultiObjectiveModelCheckerEnvironment::EncodingType::Classic)
         .value("FLOW", storm::MultiObjectiveModelCheckerEnvironment::EncodingType::Flow)
-        .finalize();
-
-    py::native_enum<storm::dd::CuddReorderingTechnique>(m, "CuddReorderingTechnique", "enum.Enum", "Reordering technique used in CUDD library")
-        .value("NONE", storm::dd::CuddReorderingTechnique::None)
-        .value("RANDOM", storm::dd::CuddReorderingTechnique::Random)
-        .value("RANDOM_PIVOT", storm::dd::CuddReorderingTechnique::RandomPivot)
-        .value("SIFT", storm::dd::CuddReorderingTechnique::Sift)
-        .value("SIFT_CONV", storm::dd::CuddReorderingTechnique::SiftConv)
-        .value("SYMMETRIC_SIFT", storm::dd::CuddReorderingTechnique::SymmetricSift)
-        .value("SYMMETRIC_SIFT_CONV", storm::dd::CuddReorderingTechnique::SymmetricSiftConv)
-        .value("GROUP_SIFT", storm::dd::CuddReorderingTechnique::GroupSift)
-        .value("GROUP_SIFT_CONV", storm::dd::CuddReorderingTechnique::GroupSiftConv)
-        .value("WIN2", storm::dd::CuddReorderingTechnique::Win2)
-        .value("WIN2_CONV", storm::dd::CuddReorderingTechnique::Win2Conv)
-        .value("WIN3", storm::dd::CuddReorderingTechnique::Win3)
-        .value("WIN3_CONV", storm::dd::CuddReorderingTechnique::Win3Conv)
-        .value("WIN4", storm::dd::CuddReorderingTechnique::Win4)
-        .value("WIN4_CONV", storm::dd::CuddReorderingTechnique::Win4Conv)
-        .value("ANNEALING", storm::dd::CuddReorderingTechnique::Annealing)
-        .value("GENETIC", storm::dd::CuddReorderingTechnique::Genetic)
-        .value("EXACT", storm::dd::CuddReorderingTechnique::Exact)
         .finalize();
 
     py::native_enum<storm::modelchecker::exploration_detail::PrecomputationType>(m, "PrecomputationType", "enum.Enum",
@@ -294,11 +272,7 @@ void define_environment(py::module& m) {
         .def_property("maximal_memory", &storm::CuddDdManagerEnvironment::getMaximalMemory, &storm::CuddDdManagerEnvironment::setMaximalMemory,
                       "Maximal memory (in MB)")
         .def_property("constant_precision", &storm::CuddDdManagerEnvironment::getConstantPrecision, &storm::CuddDdManagerEnvironment::setConstantPrecision,
-                      "Precision for constants")
-        .def_property("reordering_enabled", &storm::CuddDdManagerEnvironment::isReorderingEnabled, &storm::CuddDdManagerEnvironment::setReorderingEnabled,
-                      "Whether reordering is enabled")
-        .def_property("reordering_technique", &storm::CuddDdManagerEnvironment::getReorderingTechnique,
-                      &storm::CuddDdManagerEnvironment::setReorderingTechnique, "Reordering technique");
+                      "Precision for constants");
 
     // Factories for environments
     using EnvironmentFactory = storm::utility::environment::EnvironmentFactory;

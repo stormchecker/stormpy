@@ -70,7 +70,7 @@ endfunction(check_hint)
 # Minimal Storm version. Should be the same as STORM_GIT_TAG in pyproject.toml.
 # If stormpy requires unreleased changes from Storm master, then it can be set to a development version x.y.z.N
 # while STORM_GIT_TAG stays at the latest release.
-set(STORM_MIN_VERSION "2.0.0.3")
+set(STORM_MIN_VERSION "2.0.0.4")
 
 if(STORMPY_ALLOW_STORM_SYSTEM)
     if (STORMPY_ALLOW_STORM_FETCH)

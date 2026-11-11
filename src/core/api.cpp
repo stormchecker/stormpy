@@ -17,6 +17,7 @@
 #include <storm/models/symbolic/StandardRewardModel.h>
 
 #include "src/binding_type_index.h"
+#include "src/interrupt.h"
 #include "src/numbers.h"
 
 namespace stormpy {
@@ -39,24 +40,24 @@ void define_api_builder_typed(py::module& m) {
     // Value type cannot be deduced from the arguments -> bind as template function families
     stormpy::bindings::bindTemplateFunction(
         m, "build_sparse_model", index,
-        py::overload_cast<storm::languages::SymbolicModelDescription const&, storm::builder::BuilderOptions const&, ExplorationOptions const&>(
-            &storm::api::buildSparseModel<ValueType>),
-        "Build model in sparse representation", py::arg("model"), py::arg("options"), py::arg("exploration_options") = ExplorationOptions(),
-        py::call_guard<py::gil_scoped_release>());
+        stormpy::interruptible(
+            py::overload_cast<storm::languages::SymbolicModelDescription const&, storm::builder::BuilderOptions const&, ExplorationOptions const&>(
+                &storm::api::buildSparseModel<ValueType>)),
+        "Build model in sparse representation", py::arg("model"), py::arg("options"), py::arg("exploration_options") = ExplorationOptions());
     // Additional overload of the registered instantiation
     stormpy::bindings::bindInternalFunction(
         m, stormpy::bindings::templateClassName("build_sparse_model", index),
-        py::overload_cast<storm::languages::SymbolicModelDescription const&, Formulas const&>(&storm::api::buildSparseModel<ValueType>),
-        "Build model in sparse representation preserving the given formulas", py::arg("model"), py::arg("formulas"), py::call_guard<py::gil_scoped_release>());
+        stormpy::interruptible(py::overload_cast<storm::languages::SymbolicModelDescription const&, Formulas const&>(&storm::api::buildSparseModel<ValueType>)),
+        "Build model in sparse representation preserving the given formulas", py::arg("model"), py::arg("formulas"));
     stormpy::bindings::bindTemplateFunction(m, "make_explicit_model_builder", index, &storm::api::makeExplicitModelBuilder<ValueType>,
                                             "Construct an explicit model builder", py::arg("model"), py::arg("options"), py::arg("action_mask") = nullptr,
                                             py::arg("exploration_options") = ExplorationOptions());
 
     if constexpr (!storm::IsIntervalType<ValueType>) {
-        stormpy::bindings::bindTemplateFunction(m, "build_symbolic_model", index, &storm::api::buildSymbolicModel<storm::dd::DdType::Sylvan, ValueType>,
+        stormpy::bindings::bindTemplateFunction(m, "build_symbolic_model", index,
+                                                stormpy::interruptible(&storm::api::buildSymbolicModel<storm::dd::DdType::Sylvan, ValueType>),
                                                 "Build model in symbolic representation", py::arg("env"), py::arg("model"), py::arg("formulas"),
-                                                py::arg("build_full_model") = false, py::arg("apply_maximum_progress") = true, py::arg("fix_deadlocks") = true,
-                                                py::call_guard<py::gil_scoped_release>());
+                                                py::arg("build_full_model") = false, py::arg("apply_maximum_progress") = true, py::arg("fix_deadlocks") = true);
     }
 }
 
@@ -113,29 +114,31 @@ void define_api_verification_typed(py::module& m) {
     if constexpr (storm::IsIntervalType<ValueType>) {
         // Interval models are checked with check tasks over the corresponding non-interval value type
         using TaskType = storm::IntervalBaseType<ValueType>;
-        m.def("verify_with_sparse_engine", &verifyIntervalModelWithSparseEngine<storm::models::sparse::Dtmc<ValueType>, TaskType>,
-              "Verify interval DTMC with sparse engine", py::arg("env"), py::arg("model"), py::arg("task"), py::call_guard<py::gil_scoped_release>());
-        m.def("verify_with_sparse_engine", &verifyIntervalModelWithSparseEngine<storm::models::sparse::Mdp<ValueType>, TaskType>,
-              "Verify interval MDP with sparse engine", py::arg("env"), py::arg("model"), py::arg("task"), py::call_guard<py::gil_scoped_release>());
+        m.def("verify_with_sparse_engine", stormpy::interruptible(&verifyIntervalModelWithSparseEngine<storm::models::sparse::Dtmc<ValueType>, TaskType>),
+              "Verify interval DTMC with sparse engine", py::arg("env"), py::arg("model"), py::arg("task"));
+        m.def("verify_with_sparse_engine", stormpy::interruptible(&verifyIntervalModelWithSparseEngine<storm::models::sparse::Mdp<ValueType>, TaskType>),
+              "Verify interval MDP with sparse engine", py::arg("env"), py::arg("model"), py::arg("task"));
     } else {
         // The MDP overload comes first such that POMDPs are checked as fully observable MDPs
         m.def("verify_with_sparse_engine",
-              py::overload_cast<storm::Environment const&, std::shared_ptr<storm::models::sparse::Mdp<ValueType>> const&, CheckTask<ValueType> const&>(
-                  &storm::api::verifyWithSparseEngine<ValueType>),
-              "Verify MDP with sparse engine", py::arg("env"), py::arg("mdp"), py::arg("task"), py::call_guard<py::gil_scoped_release>());
+              stormpy::interruptible(
+                  py::overload_cast<storm::Environment const&, std::shared_ptr<storm::models::sparse::Mdp<ValueType>> const&, CheckTask<ValueType> const&>(
+                      &storm::api::verifyWithSparseEngine<ValueType>)),
+              "Verify MDP with sparse engine", py::arg("env"), py::arg("mdp"), py::arg("task"));
         m.def("verify_with_sparse_engine",
-              py::overload_cast<storm::Environment const&, std::shared_ptr<storm::models::sparse::Model<ValueType>> const&, CheckTask<ValueType> const&, bool>(
-                  &storm::api::verifyWithSparseEngine<ValueType>),
-              "Verify model with sparse engine", py::arg("env"), py::arg("model"), py::arg("task"), py::arg("prefer_elimination_checker") = false,
-              py::call_guard<py::gil_scoped_release>());
+              stormpy::interruptible(py::overload_cast<storm::Environment const&, std::shared_ptr<storm::models::sparse::Model<ValueType>> const&,
+                                                       CheckTask<ValueType> const&, bool>(&storm::api::verifyWithSparseEngine<ValueType>)),
+              "Verify model with sparse engine", py::arg("env"), py::arg("model"), py::arg("task"), py::arg("prefer_elimination_checker") = false);
         m.def("verify_with_hybrid_engine",
-              py::overload_cast<storm::Environment const&, std::shared_ptr<storm::models::symbolic::Model<storm::dd::DdType::Sylvan, ValueType>> const&,
-                                CheckTask<ValueType> const&>(&storm::api::verifyWithHybridEngine<storm::dd::DdType::Sylvan, ValueType>),
-              "Verify model with hybrid engine", py::arg("env"), py::arg("model"), py::arg("task"), py::call_guard<py::gil_scoped_release>());
+              stormpy::interruptible(
+                  py::overload_cast<storm::Environment const&, std::shared_ptr<storm::models::symbolic::Model<storm::dd::DdType::Sylvan, ValueType>> const&,
+                                    CheckTask<ValueType> const&>(&storm::api::verifyWithHybridEngine<storm::dd::DdType::Sylvan, ValueType>)),
+              "Verify model with hybrid engine", py::arg("env"), py::arg("model"), py::arg("task"));
         m.def("verify_with_dd_engine",
-              py::overload_cast<storm::Environment const&, std::shared_ptr<storm::models::symbolic::Model<storm::dd::DdType::Sylvan, ValueType>> const&,
-                                CheckTask<ValueType> const&>(&storm::api::verifyWithDdEngine<storm::dd::DdType::Sylvan, ValueType>),
-              "Verify model with dd engine", py::arg("env"), py::arg("model"), py::arg("task"), py::call_guard<py::gil_scoped_release>());
+              stormpy::interruptible(
+                  py::overload_cast<storm::Environment const&, std::shared_ptr<storm::models::symbolic::Model<storm::dd::DdType::Sylvan, ValueType>> const&,
+                                    CheckTask<ValueType> const&>(&storm::api::verifyWithDdEngine<storm::dd::DdType::Sylvan, ValueType>)),
+              "Verify model with dd engine", py::arg("env"), py::arg("model"), py::arg("task"));
     }
 
     if constexpr (std::is_same_v<ValueType, double> || std::is_same_v<ValueType, storm::RationalNumber>) {

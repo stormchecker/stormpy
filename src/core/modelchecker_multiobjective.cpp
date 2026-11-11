@@ -10,6 +10,7 @@
 #include <storm/models/sparse/StandardRewardModel.h>
 
 #include "src/binding_type_index.h"
+#include "src/interrupt.h"
 
 namespace stormpy {
 
@@ -17,12 +18,12 @@ namespace multiobjective = storm::modelchecker::multiobjective;
 
 template<typename ValueType>
 void define_modelchecker_multiobjective_typed(py::module& m) {
-    m.def("perform_multi_objective_model_checking", &multiobjective::performMultiObjectiveModelChecking<storm::models::sparse::Mdp<ValueType>>,
-          "Perform multi-objective model checking on MDP", py::arg("env"), py::arg("model"), py::arg("formula"), py::arg("produce_scheduler") = false,
-          py::call_guard<py::gil_scoped_release>());
-    m.def("perform_multi_objective_model_checking", &multiobjective::performMultiObjectiveModelChecking<storm::models::sparse::MarkovAutomaton<ValueType>>,
-          "Perform multi-objective model checking on MA", py::arg("env"), py::arg("model"), py::arg("formula"), py::arg("produce_scheduler") = false,
-          py::call_guard<py::gil_scoped_release>());
+    m.def("perform_multi_objective_model_checking",
+          stormpy::interruptible(&multiobjective::performMultiObjectiveModelChecking<storm::models::sparse::Mdp<ValueType>>),
+          "Perform multi-objective model checking on MDP", py::arg("env"), py::arg("model"), py::arg("formula"), py::arg("produce_scheduler") = false);
+    m.def("perform_multi_objective_model_checking",
+          stormpy::interruptible(&multiobjective::performMultiObjectiveModelChecking<storm::models::sparse::MarkovAutomaton<ValueType>>),
+          "Perform multi-objective model checking on MA", py::arg("env"), py::arg("model"), py::arg("formula"), py::arg("produce_scheduler") = false);
 
     m.def(
         // Thin wrapper performing the preprocessing before creating the weight vector checker

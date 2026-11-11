@@ -9,6 +9,7 @@
 #include <storm/logic/Formula.h>
 
 #include "src/binding_type_index.h"
+#include "src/interrupt.h"
 
 namespace stormpy {
 
@@ -83,7 +84,7 @@ void define_builder_typed(py::module& m) {
                        "If set, no further states will be explored once the given number is exceeded.");
 
     stormpy::bindings::bindTemplateClass<Builder>(m, "ExplicitModelBuilder", index, "Model builder for sparse models")
-        .def("build", &Builder::build, "Build the model", py::call_guard<py::gil_scoped_release>())
+        .def("build", stormpy::interruptible(&Builder::build), "Build the model")
         .def("export_explicit_state_lookup", &Builder::exportExplicitStateLookup, "Export lookup of state ids");
 }
 

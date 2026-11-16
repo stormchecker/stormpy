@@ -272,14 +272,13 @@ jobs:
 
           cd /wheel
 
-          # Install Python & pip (varies per distro)
+          # Install Python, pip and libatomic (varies per distro)
           if command -v apt; then
-            apt update && DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt install -y python3 python3-pip python3-venv
+            apt update && DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt install -y python3 python3-pip python3-venv libatomic1
           elif command -v dnf; then
-            # libatomic is not shipped on fedora
             dnf install -y python3 python3-pip libatomic
           elif command -v pacman; then
-            pacman -Syu --noconfirm python python-pip
+            pacman -Syu --noconfirm python python-pip libatomic
           fi
 
           # Get major+minor version (e.g. "311" for Python 3.11)
